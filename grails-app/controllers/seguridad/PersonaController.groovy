@@ -1,7 +1,9 @@
 package seguridad
 
+import fida.Alerta
+
 //import bitacora.Actividad
-import compras.Alerta
+//import compras.Alerta
 //import bitacora.Base
 import groovy.json.JsonBuilder
 import org.apache.commons.lang.WordUtils

@@ -2,7 +2,7 @@
 import org.springframework.beans.SimpleTypeConverter
 import org.springframework.context.MessageSourceResolvable
 import org.springframework.web.servlet.support.RequestContextUtils
-import seguridad.Departamento
+import seguridad.UnidadEjecutora
 import seguridad.Persona
 
 class ElementosTagLib {

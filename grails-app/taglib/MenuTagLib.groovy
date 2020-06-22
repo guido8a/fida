@@ -1,4 +1,4 @@
-import compras.Alerta
+import fida.Alerta
 import seguridad.Prms
 
 class MenuTagLib {

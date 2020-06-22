@@ -38,7 +38,7 @@ class WardInterceptor {
 //                def usu = Persona.get(session.usuario.id)
                 println "session válida: ${usro.id}"
                 if (usro.estaActivo) {
-                    session.departamento = Departamento.get(session.departamento.id).refresh()
+                    session.departamento = UnidadEjecutora.get(session.unidad.id).refresh()
                     def perms = session.usuario.permisos
 //                    session.usuario = Persona.get(session.usuario.id).refresh()
                     session.usuario.permisos = perms

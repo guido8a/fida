@@ -140,7 +140,7 @@ class LoginController {
     }
 
     def validar() {
-//        println "valida " + params
+        println "valida " + params
         def user = Persona.withCriteria {
             eq("login", params.login, [ignoreCase: true])
             eq("activo", 1)
@@ -167,7 +167,7 @@ class LoginController {
                 session.usuario = user
 //                session.usuarioKerberos = user.login
                 session.time = new Date()
-                session.departamento = user.departamento
+                session.unidad = user.unidadEjecutora
 
 //                println "pone valores " + session.usuario
 
