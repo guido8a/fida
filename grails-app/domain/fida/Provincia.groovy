@@ -1,7 +1,6 @@
-package compras
+package fida
 
 class Provincia {
-    Zona zona
     String numero
     String nombre
     double longitud
@@ -16,7 +15,6 @@ class Provincia {
         version false
         columns {
             id column: 'prov__id'
-            zona column: 'zona__id'
             numero column: 'provnmro'
             nombre column: 'provnmbr'
             longitud column: 'provlong'
@@ -28,6 +26,5 @@ class Provincia {
         numero(maxSize: 2, blank: false, nullable: false, attributes: [title: 'numero'])
         latitud(blank: true, nullable: true, attributes: [title: 'latitud'])
         longitud(blank: true, nullable: true, attributes: [title: 'longitud'])
-        zona(blank: true, nullable: true)
     }
 }

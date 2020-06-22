@@ -1,8 +1,6 @@
 package compras
 
-import org.springframework.dao.DataIntegrityViolationException
-import seguridad.Departamento
-import seguridad.Persona
+import fida.Provincia
 
 class CantonController {
 

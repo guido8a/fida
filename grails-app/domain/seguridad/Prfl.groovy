@@ -2,6 +2,7 @@ package seguridad
 
 class Prfl {
     static auditable = true
+
     String nombre
     String descripcion
     Prfl padre
@@ -9,7 +10,6 @@ class Prfl {
     String codigo
 
     static hasMany = [permisos: Prms, perfiles: Prfl]
-
 
     static mapping = {
         table 'prfl'

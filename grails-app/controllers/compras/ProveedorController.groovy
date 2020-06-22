@@ -1,5 +1,7 @@
 package compras
 
+import fida.Provincia
+
 class ProveedorController {
 
     def dbConnectionService

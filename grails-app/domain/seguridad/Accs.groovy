@@ -5,7 +5,6 @@ class Accs {
     Date accsFechaInicial
     Date accsFechaFinal
     String accsObservaciones
-
     Persona usuario
     Persona asignadoPor
 
@@ -16,11 +15,10 @@ class Accs {
 
         columns {
             id column: 'accs__id'
-            usuario column: 'usro__id'
+            usuario column: 'prsn__id'
             accsFechaInicial column: 'accsfcin'
             accsFechaFinal column: 'accsfcfn'
             accsObservaciones column: 'accsobsr'
-
             asignadoPor column: 'prsnasgn'
         }
     }

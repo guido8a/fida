@@ -2,6 +2,7 @@ package seguridad
 
 class Permiso {
     static auditable = true
+
     String codigo
     String descripcion
     String texto

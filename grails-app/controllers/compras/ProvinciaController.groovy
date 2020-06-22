@@ -1,9 +1,6 @@
 package compras
 
-import grails.validation.ValidationException
-import static org.springframework.http.HttpStatus.*
-
-import org.springframework.dao.DataIntegrityViolationException
+import fida.Provincia
 
 class ProvinciaController {
 

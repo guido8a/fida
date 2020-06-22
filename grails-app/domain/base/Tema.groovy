@@ -1,27 +1,26 @@
-package seguridad
+package base
 
-class Tpac {
-
+class Tema {
     static auditable = true
-    String tipo
+    String nombre
 
     static mapping = {
-        table 'tpac'
+        table 'tema'
         cache usage: 'read-write', include: 'non-lazy'
         version false
         id generator: 'identity'
         columns {
-            id column: 'tpac__id'
-            tipo column: 'tpacdscr'
+            id column: 'tema__id'
+            nombre column: 'temanmbr'
         }
     }
 
     static constraints = {
-        tipo(blank: false, size: 0..31)
+        nombre(blank: false, size: 3..63)
     }
 
     String toString() {
-        "${this.tipo}"
+        "${this.nombre}"
     }
 
 }

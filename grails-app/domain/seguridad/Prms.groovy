@@ -17,7 +17,6 @@ class Prms {
             perfil column: 'prfl__id'
         }
     }
-
     static constraints = {
     }
 }

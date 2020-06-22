@@ -6,7 +6,6 @@ class PermisoUsuario {
     Permiso permisoTramite
     Date fechaInicio
     Date fechaFin
-//    String observaciones
     Persona asignadoPor
     Persona modificadoPor
     Accs acceso
@@ -21,13 +20,11 @@ class PermisoUsuario {
             id column: 'prus__id'
             persona column: 'prsn__id'
             permisoTramite column: 'perm__id'
+            acceso column: 'accs__id'
             fechaInicio column: 'prusfcin'
             fechaFin column: 'prusfcfn'
-//            observaciones column: 'prusobsv'
-
-            asignadoPor column: 'prsnasgn'
-            modificadoPor column: 'prsnmdfc'
-            acceso column: 'accs__id'
+            asignadoPor column: 'prusasgn'
+            modificadoPor column: 'prusmdfc'
         }
     }
     static constraints = {
@@ -35,8 +32,6 @@ class PermisoUsuario {
         permisoTramite(blank: true, nullable: true, attributes: [title: 'permisoTramite'])
         fechaInicio(blank: false, attributes: [title: 'fechaInicio'])
         fechaFin(blank: true, nullable: true, attributes: [title: 'fechaFin'])
-//        observaciones(blank: true, nullable: true, maxSize: 100, attributes: [title: 'observaciones'])
-
         asignadoPor(blank: false, nullable: false, attributes: [title: 'usuario que asigna el permiso'])
         modificadoPor(blank: true, nullable: true, attributes: [title: 'modificado por'])
         acceso(blank: true, nullable: true)

@@ -1,6 +1,7 @@
 package seguridad
 
 class Modulo {
+
     String nombre
     String descripcion
     int orden

@@ -2,6 +2,7 @@ package seguridad
 
 class Prpf {
     static auditable = true
+
     Permiso permiso
     Prfl perfil
 

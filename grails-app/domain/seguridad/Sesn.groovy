@@ -7,6 +7,7 @@ class Sesn {
     Prfl perfil
     Date fechaInicio
     Date fechaFin
+    Prpf permisoPerfil
 
     static mapping = {
         table 'sesn'
@@ -16,13 +17,13 @@ class Sesn {
         sort "perfil"
         columns {
             id column: 'sesn__id'
+            permisoPerfil column: 'prpf__id'
             perfil column: 'prfl__id'
             usuario column: 'prsn__id'
             fechaInicio column: 'sesnfcin'
             fechaFin column: 'sesnfcfn'
         }
     }
-
 
     static constraints = {
         fechaInicio(blank: true, nullable: true)
