@@ -132,7 +132,7 @@
             <td><elm:textoBusqueda texto='${fieldValue(bean: personaInstance, field: "login")}' search='${params.search}'/></td>
             <td><elm:textoBusqueda texto='${fieldValue(bean: personaInstance, field: "nombre")}' search='${params.search}'/></td>
             <td><elm:textoBusqueda texto='${fieldValue(bean: personaInstance, field: "apellido")}' search='${params.search}'/></td>
-            <td><elm:textoBusqueda texto='${personaInstance.departamento?.nombre}' search='${params.search}'/></td>
+            <td></td>
             <td style="font-size: 10px">
                 <g:each in="${perfiles}" var="per" status="p">
                     ${p > 0 ? ', ' : ''}<strong>${per.perfil.nombre}</strong>

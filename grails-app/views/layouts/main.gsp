@@ -28,7 +28,8 @@
     <asset:javascript src="/apli/moment.js"/>
     <asset:javascript src="/apli/moment-with-locales.js"/>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"/>
+%{--    <script href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>--}%
 %{--    <asset:javascript src="/apli/bootstrap.js"/>--}%
 
     <asset:javascript src="/apli/funciones.js"/>
@@ -43,7 +44,6 @@
 
     <asset:javascript src="/apli/jquery.pnotify.js"/>
     <asset:javascript src="/apli/fontawesome.all.min.js"/>
-
 
 %{--    <asset:javascript src="/jquery/bootstrap-datepicker.js"/>--}%
 %{--    <asset:javascript src="/jquery/bootstrap-datepicker.es.js"/>--}%

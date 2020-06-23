@@ -1,5 +1,5 @@
 
-<%@ page import="compras.Provincia; compras.Canton" %>
+<%@ page import="fida.Provincia; compras.Provincia; compras.Canton" %>
 
 <div id="create-cantonInstance" class="span" role="main">
     <g:form class="form-horizontal" name="frmSave-cantonInstance" action="save">
@@ -37,7 +37,7 @@
                     Provincia
                 </label>
                 <div class="col-md-6">
-                    <g:select id="provincia" name="provincia" from="${compras.Provincia.list()}" optionKey="id" optionValue="nombre" disabled="" class="many-to-one form-control" value="${cantonInstance?.provincia?.id ?: Provincia.get(padre)?.id}" noSelection="['null': '']"/>
+                    <g:select id="provincia" name="provincia" from="${fida.Provincia.list()}" optionKey="id" optionValue="nombre" disabled="" class="many-to-one form-control" value="${cantonInstance?.provincia?.id ?: fida.Provincia.get(padre)?.id}" noSelection="['null': '']"/>
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>

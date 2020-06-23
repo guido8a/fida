@@ -1,5 +1,5 @@
 
-<%@ page import="compras.Provincia" %>
+<%@ page import="fida.Provincia" %>
 
 <style type="text/css">
  .tama {

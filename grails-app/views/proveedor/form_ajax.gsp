@@ -21,7 +21,7 @@
                 Provincia
             </label>
             <div class="col-md-4">
-                <g:select name="provincia" id="provinciaId" from="${compras.Provincia.list().sort{it.nombre}}" optionValue="nombre" optionKey="id" class="form-control"/>
+                <g:select name="provincia" id="provinciaId" from="${fida.Provincia.list().sort{it.nombre}}" optionValue="nombre" optionKey="id" class="form-control"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
             <label for="canton" class="col-md-2 control-label text-info">
