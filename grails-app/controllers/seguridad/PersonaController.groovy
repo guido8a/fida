@@ -29,7 +29,7 @@ class PersonaController {
     } //index
 
     def getLista(params, all) {
-//        println "getLista: " + params
+        println "getLista: " + params
         params.offset = params.offset ?: 0
         if (params.search) {
             def tx = params.search.toList()
@@ -790,7 +790,7 @@ class PersonaController {
         }
 
 
-//        println("p " + personaInstanceList)
+        println("p " + personaInstanceList)
 //        println("p2 " + personaInstanceCount)
 
 

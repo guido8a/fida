@@ -86,21 +86,21 @@ class Persona implements Auditable{
         if (this.activo != 1) {
             return false
         }
+/*
         def now = new Date()
-        def accs = Accs.findAllByUsuarioAndAccsFechaFinalIsNull(this, now)
-//        println "accs "+accs?.accsFechaInicial+"  "+accs?.accsFechaFinal
+        println "---> ${this.activo}"
+        def accs = Accs.findAllByUsuarioAndAccsFechaFinalGreaterThanEquals(this, now)
+        println "accs "+accs?.accsFechaInicial+"  "+accs?.accsFechaFinal
         def res = true
         accs.each {
-//            println "it  "+it.accsFechaInicial.format('dd-MM-yyyy')+"  "+(it.accsFechaInicial >= now)+"  "+now.format('dd-MM-yyyy')
             if (res) {
                 if (it.accsFechaInicial <= now) {
-//                println "ret false"
                     res = false
                 }
             }
-
         }
-        return res
+*/
+        return true
     }
 
     def vaciarPermisos() {

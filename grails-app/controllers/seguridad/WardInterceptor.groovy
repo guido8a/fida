@@ -34,11 +34,12 @@ class WardInterceptor {
                 render "<script type='text/javascript'> window.location.href = '/' </script>"
                 session.finalize()
                 return false
-            } else {
+            } /*else {
 //                def usu = Persona.get(session.usuario.id)
-                println "session válida: ${usro.id}"
+                println "session válida: ${usro.id} --> ${session?.unidad?.id}"
                 if (usro.estaActivo) {
-                    session.departamento = UnidadEjecutora.get(session.unidad.id).refresh()
+//                    session.departamento = UnidadEjecutora.get(session.unidad.id).refresh()
+                    session.unidad = UnidadEjecutora.get(session.unidad.id)
                     def perms = session.usuario.permisos
 //                    session.usuario = Persona.get(session.usuario.id).refresh()
                     session.usuario.permisos = perms
@@ -66,11 +67,11 @@ class WardInterceptor {
                         return false
                     } else {
                         session.flag = session.flag - 1
-                        session.departamento = Departamento.get(session.departamento.id).refresh()
+                        session.unidad = Departamento.get(session.departamento.id).refresh()
                         return true
                     }
                 }
-            }
+            }*/
         }
 
         true
