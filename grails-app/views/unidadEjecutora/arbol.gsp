@@ -873,7 +873,7 @@
                 },
                 data           : {
                     // async : false,
-                    url   : '${createLink(controller: 'canton' , action:"loadTreePart_ajax")}',
+                    url   : '${createLink(controller: 'unidadEjecutora' , action:"loadTreePart_ajax")}',
                     data  : function (node) {
                         return {
                             id    : node.id,
