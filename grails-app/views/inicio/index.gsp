@@ -94,12 +94,12 @@
         <div class="ui-corner-all item fuera">
             <div class="ui-corner-all item">
                 <div class="imagen">
-                    %{--<img src="${resource(dir: 'images', file: 'conocimiento.png')}" width="100%" height="100%"/>--}%
-                    <asset:image src="apli/conocimiento.png" alt="Buscar en la Base de Conocimiento"  width="100%" height="100%"/>
+                    <asset:image src="apli/proyecto.png" title="Marco lógico de Proyecto"  width="100%"
+                                 height="100%"/>
                 </div>
 
                 <div class="texto">
-                    <span class="text-success"><strong>Items</strong></span></div>
+                    <span class="text-success"><strong>Proyecto</strong></span></div>
             </div>
         </div>
         </a>
@@ -108,10 +108,10 @@
         <div class="ui-corner-all item fuera">
             <div class="ui-corner-all item">
                 <div class="imagen">
-                    <asset:image src="apli/agenda.png" alt="Buscar en la Base de Conocimiento" width="100%" height="100%"/>
+                    <asset:image src="apli/convenio.png" title="Convenios" width="100%" height="100%"/>
                 </div>
                 <div class="texto">
-                    <span class="text-success"><strong>Proyectos</strong></span>
+                    <span class="text-success"><strong>Convenios</strong></span>
                 </div>
             </div>
         </div>
@@ -121,12 +121,13 @@
             <div class="ui-corner-all item2 fuera">
                 <div class="ui-corner-all item2">
                     <div class="imagen2">
-                        <asset:image src="apli/actividades.png" alt="División Geográfica"  width="100%" height="100%"/>
+                        <asset:image src="apli/plan.png" title="Plan Operativo Anual"  width="100%" height="100%"/>
                     </div>
 
                     <div style="margin-top: 50px; margin-left: 140px;">
-                        <span class="text-success" style="font-size: large"><strong>División Geográfica</strong></span></div>
-%{--                        <span class="text-success" style="margin-top: 20px; margin-left: 30px; width: 400px; display: block"><strong>Actividades en las que estoy involucrado o pertenecen a mi grupo de trabajo</strong></span></div>--}%
+                        <span class="text-success" style="font-size: large"><strong>Plan Operativo Anual</strong></span></div>
+                        <span class="text-success" style="margin-top: 20px; margin-left: 30px; width: 400px; display: block">
+                            <strong>POA: Asignaciones de inversión - Ejecución del POA - Avales - Reformas </strong></span></div>
                 </div>
             </div>
         </a>

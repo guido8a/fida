@@ -87,7 +87,7 @@ class Persona implements Auditable{
             return false
         }
         def now = new Date()
-        def accs = Accs.findAllByUsuarioAndAccsFechaFinalGreaterThanEquals(this, now)
+        def accs = Accs.findAllByUsuarioAndAccsFechaFinalIsNull(this, now)
 //        println "accs "+accs?.accsFechaInicial+"  "+accs?.accsFechaFinal
         def res = true
         accs.each {
