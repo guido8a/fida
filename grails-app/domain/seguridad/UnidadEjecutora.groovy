@@ -4,7 +4,6 @@ import fida.Provincia
 
 class UnidadEjecutora {
 
-    UnidadEjecutora unidadEjecutora
     UnidadEjecutora padre
     TipoInstitucion tipoInstitucion
     Provincia provincia
@@ -29,7 +28,6 @@ class UnidadEjecutora {
         version false
         columns {
             id column: 'unej__id'
-            unidadEjecutora column: 'unej_unej__id'
             tipoInstitucion column: 'tpin__id'
             provincia column: 'prov__id'
             padre column: 'unejpdre'
