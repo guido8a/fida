@@ -14,8 +14,15 @@
                 Unidad Padre
             </label>
             <div class="col-md-6">
-                <g:select from="${seguridad.UnidadEjecutora.list().sort{it.nombre}}" name="padre" class="form-control"
-                          value="${unidad?.padre?.id}" noSelection="[null:'- Ninguna -']" optionKey="id" optionValue="nombre"/>
+                <g:if test="${unidad?.id}">
+                    <g:select from="${seguridad.UnidadEjecutora.list().sort{it.nombre} - unidad}" name="padre" class="form-control"
+                              value="${unidad?.padre?.id}" noSelection="[null:'- Ninguna -']" optionKey="id" optionValue="nombre"/>
+                </g:if>
+                <g:else>
+                    <g:select from="${seguridad.UnidadEjecutora.list().sort{it.nombre}}" name="padre" class="form-control"
+                              value="${unidad?.padre?.id}" noSelection="[null:'- Ninguna -']" optionKey="id" optionValue="nombre"/>
+                </g:else>
+
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>

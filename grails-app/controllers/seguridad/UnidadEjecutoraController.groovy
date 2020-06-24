@@ -25,7 +25,7 @@ class UnidadEjecutoraController {
     }
 
     def saveUnidad_ajax(){
-        println("params sue " + params)
+//        println("params sue " + params)
 
         def unidad
         def texto
