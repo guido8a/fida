@@ -90,8 +90,8 @@
     </div>
 
     <div class="col-md-4 text-right pull-right" style="font-size: 14px">
-        <i class="fa fa-underline text-success fa-2x"></i> Unidad Ejecutora
-        <i class="fa fa-parking text-primary fa-2x"></i> Persona
+        <i class="fa fa-building text-success fa-2x"></i> Unidad Ejecutora / Organización
+        <i class="fa fa-user-circle text-primary fa-2x"></i> Persona
     </div>
 </div>
 
@@ -264,7 +264,8 @@
 
         var agregarUnidad = {
             label  : "Agregar Unidad Ejecutora",
-            icon   : "fa fa-underline text-success",
+            // icon   : "fa fa-underline text-success",
+            icon   : "fa fa-building text-success",
             action : function () {
                 createEditUnidad(null);
             }
@@ -272,7 +273,7 @@
 
         var agregarPersona = {
             label  : "Agregar Usuario",
-            icon   : "fa fa-parking text-info",
+            icon   : "fa fa-user-circle text-info",
             action : function () {
                 createEditPersona(null, nodeId);
             }
@@ -280,7 +281,7 @@
 
         var agregarPersona2 = {
             label  : "Agregar Usuario",
-            icon   : "fa fa-parking text-info",
+            icon   : "fa fa-user-circle text-info",
             action : function () {
                 createEditPersona(null, $node.parent().parent().children()[1].id.split("_")[1]);
             }
@@ -547,10 +548,10 @@
                     icon : "fa fa-sitemap text-info"
                 },
                 unidadPadreActivo   : {
-                    icon : "fa fa-building-o text-info"
+                    icon : "fa fa-building text-info"
                 },
                 unidadPadreInactivo : {
-                    icon : "fa fa-building-o text-muted"
+                    icon : "fa fa-building text-muted"
                 },
                 unidadHijoActivo    : {
                     icon : "fa fa-home text-success"

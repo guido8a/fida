@@ -76,7 +76,7 @@ class UnidadEjecutoraController {
         } else if (id == "root") {
             hijos = UnidadEjecutora.findAllByPadreIsNull().sort{it.nombre}
             def data = ""
-            ico = ", \"icon\":\"fa fa-underline text-success\""
+            ico = ", \"icon\":\"fa fa-building text-success\""
             hijos.each { hijo ->
 //                println "procesa ${hijo.nombre}"
                 clase = UnidadEjecutora.findByPadre(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
@@ -94,13 +94,13 @@ class UnidadEjecutoraController {
                     hijos.each { h ->
 //                        println "procesa $h"
                         if(h instanceof UnidadEjecutora){
-                            ico = ", \"icon\":\"fa fa-underline text-success\""
+                            ico = ", \"icon\":\"fa fa-building text-success\""
                             clase = UnidadEjecutora.findByPadre(h) ? "jstree-closed hasChildren" : "jstree-closed"
                             tree += "<li id='uni_" + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"
                             tree += "<a href='#' class='label_arbol'>" + h?.nombre + "</a>"
                             tree += "</li>"
                         }else{
-                            ico = ", \"icon\":\"fa fa-parking text-info\""
+                            ico = ", \"icon\":\"fa fa-user-circle text-info\""
                             clase = Persona.get(h.id)? "jstree-closed hasChildren" : ""
                             tree += "<li id='usu_" + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"persona"}\" ${ico}}'>"
                             tree += "<a href='#' class='label_arbol'>" + h.nombre + "</a>"

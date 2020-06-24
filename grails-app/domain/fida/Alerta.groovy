@@ -8,7 +8,6 @@ import seguridad.UnidadEjecutora
 class Alerta {
     static auditable = true
     Persona persona
-    UnidadEjecutora unidadEjecutora
     String mensaje
     String accion
     Date fechaCreacion = new Date()
