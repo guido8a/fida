@@ -26,6 +26,40 @@ class UnidadEjecutoraController {
 
     def saveUnidad_ajax(){
         println("params sue " + params)
+
+        def unidad
+        def texto
+
+        if(params.fechaInicio){
+            params.fechaInicio = new Date().parse("dd-MM-yyyy", params.fechaInicio)
+        }else{
+            params.fechaInicio = null
+        }
+
+        if(!params.orden){
+            params.orden = 0
+        }
+
+        if(!params.numero){
+            params.numero = 0
+        }
+
+        if(params.id){
+            unidad = UnidadEjecutora.get(params.id)
+            texto = "Unidad actualizada correctamente"
+        }else{
+            unidad = new UnidadEjecutora()
+            texto = "Unidad creada correctamente"
+        }
+
+        unidad.properties = params
+
+        if(!unidad.save(flush:true)){
+            println("Error en save de unidad ejecutora " + unidad.errors)
+            render "no_Error al guardar la unidad"
+        }else{
+            render "ok_" + texto
+        }
     }
 
     def arbol(){

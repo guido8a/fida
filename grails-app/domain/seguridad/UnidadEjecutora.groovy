@@ -17,8 +17,8 @@ class UnidadEjecutora {
     String telefono
     String mail
     String observaciones
-    int numero
-    int orden
+    int numero = 0
+    int orden = 0
 
     static mapping = {
         table 'unej'
@@ -55,6 +55,9 @@ class UnidadEjecutora {
         observaciones(size: 0..127, blank: true, nullable: true, attributes: [title: 'observaciones'])
         numero(blank: true, nullable: true, attributes: [title: 'numero'])
         orden(blank: true, nullable: true, attributes: [title: 'orden'])
-
+        padre(blank: true, nullable: true)
+        mail(blank: true, nullable: true)
+        fechaInicio(blank: true, nullable: true)
+        fechaFin(blank: true, nullable: true)
     }
 }

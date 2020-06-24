@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>
-        <g:layoutTitle default="Bitácora"/>
+        <g:layoutTitle default="FIDA"/>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
@@ -60,6 +60,27 @@
     <script type="text/javascript">
         var spinner = $('<asset:image src="apli/spinner32.gif" style="padding: 40px;"/>');
         var spinnerSquare64 = $('<asset:image src="/spinner_64.GIF" style="padding: 40px;"/>');
+
+
+        function log(msg, type, title, hide) {
+            if (!hide) {
+                hide = type != "error";
+            }
+            if (!title) {
+                title = type == 'error' ? "Ha ocurrido un error" : "";
+            }
+            $.pnotify({
+                title        : title,
+//        addclass     : "stack-bar-top",
+//        cornerclass  : 'ui-pnotify-sharp',
+//        icon         : "",
+                closer_hover : false,
+                text         : msg,
+                type         : type,
+                hide         : hide
+            });
+        }
+
     </script>
 
 
