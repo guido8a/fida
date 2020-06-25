@@ -824,9 +824,10 @@ class PersonaController {
     } //show para cargar con ajax en un dialog
 
     def form_ajax() {
+        println("params fp " + params)
         def unidad = null
-        if(params.unidad){
-            unidad = UnidadEjecutora.get(params.unidad)
+        if(params.padre){
+            unidad = UnidadEjecutora.get(params.padre)
         }
         def personaInstance = new Persona(params)
         def perfiles = []
@@ -1319,7 +1320,34 @@ class PersonaController {
     def savePersona_ajax(){
 
         println("params sp " + params)
+        def persona
 
+        def texto = ''
+
+        if(params.id){
+            persona = Persona.get(params.id)
+            if(params.password != persona.password){
+             params.password = params.password.encodeAsMD5()
+             params.fecha = new Date()
+            }
+            params.unidadEjecutora = persona.unidadEjecutora
+            texto = "Usuario actualizado correctamente"
+        }else{
+            persona = new Persona()
+            params.password = params.password.encodeAsMD5()
+            params.fechaInicio = new Date()
+            params.fecha = new Date()
+            texto = "Usuario creado correctamente"
+        }
+
+        persona.properties = params
+
+        if(!persona.save(flush:true)){
+            println("error al guardar el usuario " + persona.errors)
+            render "no_" + texto
+        }else{
+            render "ok_" + texto
+        }
     }
 
 }

@@ -14,10 +14,11 @@
 <g:else>
 
     <div class="modal-contenido">
-        <g:form class="form-horizontal" name="frmPersona" autocomplete="off" role="form" controller="persona" action="savePersona_ajax" method="POST">
+        <g:form class="form-horizontal" name="frmPersona" role="form" controller="persona" action="savePersona_ajax" method="POST">
 
             <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'login', 'error')} ${hasErrors(bean: personaInstance, field: 'password', 'error')}">
                 <g:hiddenField name="id" value="${personaInstance?.id}"/>
+                <g:hiddenField name="unidadEjecutora" value="${unidad?.id}"/>
 
                 <div class="col-md-6">
                     <span class="grupo">
@@ -26,12 +27,16 @@
                         </label>
 
                         <div class="col-md-8">
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-addon"><i class="fa fa-user"></i>
-                                </span>
-                                <g:field type="login" name="login" maxlength="15" style="" class="form-control input-sm noEspacios required" value="${personaInstance?.login ?: ''}"/>
-                            </div>
+                            <g:textField name="login" maxlength="15" required="" class="form-control input-sm required" value="${personaInstance?.login}"/>
                         </div>
+
+%{--                        <div class="col-md-8">--}%
+%{--                            <div class="input-group input-group-sm">--}%
+%{--                                <span class="input-group-addon"><i class="fa fa-user"></i>--}%
+%{--                                </span>--}%
+%{--                                <g:field type="login" name="login" maxlength="15" style="" class="form-control input-sm noEspacios required" value="${personaInstance?.login ?: ''}"/>--}%
+%{--                            </div>--}%
+%{--                        </div>--}%
                     </span>
                 </div>
 
@@ -42,10 +47,13 @@
                         </label>
 
                         <div class="col-md-8">
-                            <div class="input-group input-group-sm"><span class="input-group-addon"><i class="fa fa-key"></i>
-                            </span><g:field type="password" name="password"  maxlength="63" class="form-control input-sm noEspacios required" value="${personaInstance?.password ?: ''}"/>
-                            </div>
+                            <g:textField name="password" maxlength="63" required="" class="form-control input-sm required" value="${personaInstance?.password}"/>
                         </div>
+%{--                        <div class="col-md-8">--}%
+%{--                            <div class="input-group input-group-sm"><span class="input-group-addon"><i class="fa fa-key"></i>--}%
+%{--                            </span><g:field type="password" name="password"  maxlength="63" class="form-control input-sm noEspacios required" value="${personaInstance?.password ?: ''}"/>--}%
+%{--                            </div>--}%
+%{--                        </div>--}%
                     </span>
                 </div>
             </div>
@@ -163,13 +171,13 @@
                         </label>
 
                         <div class="col-md-8">
-                            <g:textField name="titulo" maxlength="4"  class="form-control input-sm" value="${personaInstance?.apellido}"/>
+                            <g:textField name="titulo" maxlength="4"  class="form-control input-sm" value="${personaInstance?.titulo}"/>
                         </div>
                     </span>
                 </div>
             </div>
 
-            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'login', 'error')} ${hasErrors(bean: personaInstance, field: 'sigla', 'error')}">
+            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'sigla', 'error')} ${hasErrors(bean: personaInstance, field: 'activo', 'error')}">
                 <div class="col-md-12">
                     <span class="grupo">
                         <label for="sigla" class="col-md-2 control-label">
@@ -201,15 +209,15 @@
                 </div>
             </div>
 
-            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'autorizacion', 'error')} ${hasErrors(bean: personaInstance, field: 'discapacidad', 'error')}">
+            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'autorizacion', 'error')}">
                 <div class="col-md-12">
                     <span class="grupo">
-                        <label for="sigla" class="col-md-2 control-label">
+                        <label for="autorizacion" class="col-md-2 control-label">
                             Autorización
                         </label>
 
                         <div class="col-md-6">
-                            <g:textField name="sigla" maxlength="63" class="form-control input-sm" value="${personaInstance?.autorizacion}"/>
+                            <g:textField name="autorizacion" maxlength="63" class="form-control input-sm" value="${personaInstance?.autorizacion}"/>
                         </div>
                     </span>
                 </div>
