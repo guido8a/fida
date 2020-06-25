@@ -8,12 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+    <asset:javascript src="/jstree-3.0.8/dist/jstree.min.js"/>
+    <asset:stylesheet src="/jstree-3.0.8/dist/themes/default/style.min.css"/>
     <meta name="layout" content="main">
 
     <title>Estructura de Unidades Ejecutoras</title>
 
-    <asset:javascript src="/jstree-3.0.8/dist/jstree.min.js"/>
-    <asset:stylesheet src="/jstree-3.0.8/dist/themes/default/style.min.css"/>
 
     <style type="text/css">
     #tree {

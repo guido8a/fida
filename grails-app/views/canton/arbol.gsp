@@ -12,7 +12,8 @@
 
     <title>División Política de la Provincia de Pichincha</title>
 
-    <asset:javascript src="/jstree-3.0.8/dist/jstree.min.js"/>
+%{--    <asset:javascript src="/jstree-3.0.8/dist/jstree.min.js"/>--}%
+    <asset:javascript src="/jstree-3.0.8/dist/jstree.js"/>
     <asset:stylesheet src="/jstree-3.0.8/dist/themes/default/style.min.css"/>
 
     <style type="text/css">
