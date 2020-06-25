@@ -355,6 +355,14 @@
         //     return false;
         // });
 
+        $("input[maxlength]").maxlength( {
+            alwaysShow: true,
+            threshold: 10,
+            warningClass: "label label-success",
+            limitReachedClass: "label label-danger"
+        });
+        $("textarea[maxlength]").maxlength();
+
     </script>
 
 </g:else>
