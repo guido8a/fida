@@ -1,8 +1,9 @@
 package seguridad
 
+import audita.Auditable
 import fida.Provincia
 
-class UnidadEjecutora {
+class UnidadEjecutora implements Auditable{
 
     UnidadEjecutora padre
     TipoInstitucion tipoInstitucion
@@ -19,6 +20,8 @@ class UnidadEjecutora {
     String observaciones
     int numero = 0
     int orden = 0
+
+    static auditable = true
 
     static mapping = {
         table 'unej'

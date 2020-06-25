@@ -24,6 +24,8 @@ class Persona implements Auditable{
     String discapacidad
     String direccion
 
+    static auditable = true
+
     static hasMany = [perfiles: Sesn]
 
     def permisos = []
