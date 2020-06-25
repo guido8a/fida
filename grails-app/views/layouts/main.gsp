@@ -50,6 +50,7 @@
     <asset:javascript src="/apli/fontawesome.all.min.js"/>
 
     <asset:javascript src="/apli/bootstrap-datetimepicker.min.js"/>
+    <asset:javascript src="/apli/bootstrap-maxlength.min.js"/>
 
 %{--    <asset:javascript src="/jquery/bootstrap-datepicker.js"/>--}%
 %{--    <asset:javascript src="/jquery/bootstrap-datepicker.es.js"/>--}%
@@ -88,6 +89,28 @@
 </div>
 
 <asset:javascript src="jquery/application.js"/>
+
+<script type="text/javascript">
+
+
+    var affixElement = '#navbar-main';
+
+    $(affixElement).affix({
+        offset: {
+            // Distance of between element and top page
+            top: function () {
+                return (this.top = $(affixElement).offset().top)
+            },
+            // when start #footer
+            bottom: function () {
+                return (this.bottom = $('#footer').outerHeight(true))
+            }
+        }
+    });
+
+
+</script>
+
 
 </body>
 </html>

@@ -634,7 +634,10 @@
             $("#divSearchRes").addClass("hidden");
             $("#spanSearchRes").text("");
         });
+
     });
+
+
 </script>
 
 </body>

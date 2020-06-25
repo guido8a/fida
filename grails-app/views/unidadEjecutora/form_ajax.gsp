@@ -77,7 +77,7 @@
                 Nombre
             </label>
             <div class="col-md-6">
-                <g:textField name="nombre" maxlength="63" class="form-control required" value="${unidad?.nombre}"/>
+                <g:textField name="nombre" maxlength="63" class="form-control required valid" value="${unidad?.nombre}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -207,4 +207,14 @@
         }
         return true;
     });
+
+    $("input[maxlength]").maxlength( {
+        alwaysShow: true,
+        threshold: 10,
+        warningClass: "label label-success",
+        limitReachedClass: "label label-danger"
+    });
+    $("textarea[maxlength]").maxlength();
+
+
 </script>
