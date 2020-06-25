@@ -2,14 +2,7 @@ package seguridad
 
 class UnidadEjecutoraController {
 
-    UnidadEjecutoraService unidadEjecutoraService
-
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond unidadEjecutoraService.list(params), model:[unidadEjecutoraCount: unidadEjecutoraService.count()]
-    }
 
     def form_ajax(){
 
