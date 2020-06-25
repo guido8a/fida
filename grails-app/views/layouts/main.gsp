@@ -13,6 +13,7 @@
     <asset:stylesheet src="/bootstrap-grid.css"/>
     <asset:stylesheet src="/bootstrap-reboot.css"/>
     <asset:stylesheet src="/jquery/jquery-ui-1.10.3.custom.min.css"/>
+    <asset:stylesheet src="/apli/custom.css"/>
     <asset:stylesheet src="/apli/lzm.context-0.5.css"/>
     <asset:stylesheet src="/apli/jquery.pnotify.js"/>
     <asset:stylesheet src="/apli/jquery.pnotify.default.css"/>

@@ -58,7 +58,7 @@
                 Código
             </label>
             <div class="col-md-3">
-                <g:textField name="codigo" maxlength="4" class="form-control required" value="${unidad?.codigo}"/>
+                <g:textField name="codigo" maxlength="4" required="" class="form-control required" value="${unidad?.codigo}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
