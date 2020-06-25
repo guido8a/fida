@@ -62,6 +62,26 @@ class UnidadEjecutoraController {
         }
     }
 
+
+    def show_ajax(){
+        def unidad = UnidadEjecutora.get(params.id)
+
+        return[unidad: unidad]
+    }
+
+    def borrarUnidad_ajax(){
+        def unidad = UnidadEjecutora.get(params.id)
+
+        unidad.fechaFin = new Date()
+
+        if(!unidad.save(flush:true)){
+            println("error al borrar la unidad ejecutora " + unidad.error)
+            render "no"
+        }else{
+            render "ok"
+        }
+    }
+
     def arbol(){
 
     }
@@ -76,6 +96,7 @@ class UnidadEjecutoraController {
         def tipo = ""
         def liId = ""
         def ico = ""
+        def tam = 0
 
         if(id.contains("_")) {
             id = params.id.split("_")[1]
@@ -86,7 +107,7 @@ class UnidadEjecutoraController {
             params.order = "asc"
         }
 
-        String tree = "", clase = "", rel = ""
+        String tree = "", clase = "", rel = "", clase2=""
         def padre
         def hijos = []
 
@@ -108,13 +129,16 @@ class UnidadEjecutoraController {
             }
 
         } else if (id == "root") {
-            hijos = UnidadEjecutora.findAllByPadreIsNull().sort{it.nombre}
+            hijos = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre}
             def data = ""
+
             ico = ", \"icon\":\"fa fa-building text-success\""
             hijos.each { hijo ->
 //                println "procesa ${hijo.nombre}"
                 clase = UnidadEjecutora.findByPadre(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
-                tree += "<li id='uni_" + hijo.id + "' class='" + clase + "' ${data} data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"
+                clase2 = Persona.findAllByUnidadEjecutora(hijo) ? " hasChildren" : ''
+//                clase += Persona.findAllByUnidadEjecutora(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
+                tree += "<li id='uni_" + hijo.id + "' class='" + clase + clase2 + "' ${data} data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"
                 tree += "<a href='#' class='label_arbol'>" + hijo?.nombre + "</a>"
                 tree += "</li>"
             }
@@ -122,20 +146,22 @@ class UnidadEjecutoraController {
 //            println ("---- no es raiz..." + tipo + " - " + id)
             switch(tipo) {
                 case "uni":
-                    hijos += UnidadEjecutora.findAllByPadre(UnidadEjecutora.get(id), [sort: params.sort])
+                    hijos += UnidadEjecutora.findAllByPadreAndFechaFinIsNull(UnidadEjecutora.get(id), [sort: params.sort])
                     hijos += Persona.findAllByUnidadEjecutora(UnidadEjecutora.get(id), [sort: params.sort, order: params.order])
-//                    liId = "usu_"
                     hijos.each { h ->
 //                        println "procesa $h"
                         if(h instanceof UnidadEjecutora){
                             ico = ", \"icon\":\"fa fa-building text-success\""
                             clase = UnidadEjecutora.findByPadre(h) ? "jstree-closed hasChildren" : "jstree-closed"
-                            tree += "<li id='uni_" + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"
+                            clase2 = Persona.findAllByUnidadEjecutora(h) ? " hasChildren" : ''
+//                            clase = tam > 0 ? "jstree-closed hasChildren" : "jstree-closed"
+                            tree += "<li id='uni_" + h.id + "' class='" + clase + clase2 + "' data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"
                             tree += "<a href='#' class='label_arbol'>" + h?.nombre + "</a>"
                             tree += "</li>"
                         }else{
                             ico = ", \"icon\":\"fa fa-user-circle text-info\""
-                            clase = Persona.get(h.id)? "jstree-closed hasChildren" : ""
+//                            clase = Persona.get(h.id)? "jstree-closed hasChildren" : ""
+                            clase = "jstree-closed"
                             tree += "<li id='usu_" + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"persona"}\" ${ico}}'>"
                             tree += "<a href='#' class='label_arbol'>" + h.nombre + "</a>"
                             tree += "</li>"

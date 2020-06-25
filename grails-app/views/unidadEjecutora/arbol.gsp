@@ -259,6 +259,7 @@
         var esRoot = nodeType == "root";
         var esPrincipal = nodeType == "unidadEjecutora";
         var esCanton = nodeType.contains("persona");
+        var tieneHijos = $node.hasClass("hasChildren");
 
         var items = {};
 
@@ -384,7 +385,7 @@
                             var dialog = cargarLoader("Borrando...");
                             $.ajax({
                                 type: 'POST',
-                                url: '${createLink(controller: 'provincia', action: 'borrarProvincia_ajax')}',
+                                url: '${createLink(controller: 'unidadEjecutora', action: 'borrarUnidad_ajax')}',
                                 data:{
                                     id: nodeId
                                 },
@@ -458,7 +459,10 @@
             items.agregarPersona = agregarPersona;
             items.verUnidad = verUnidad;
             items.editarUnidad = editarUnidad;
-            items.borrarUnidad = borrarUnidadEjecutora;
+            if(!tieneHijos){
+                items.borrarUnidad = borrarUnidadEjecutora;
+            }
+
         } else if (esCanton) {
             items.agregarPersona = agregarPersona2;
             items.verPersona = verPersona;
