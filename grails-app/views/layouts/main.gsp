@@ -34,6 +34,7 @@
 %{--    <asset:javascript src="/apli/bootstrap.js"/>--}%
 
 %{--empieza funciones--}%
+%{--empieza funciones--}%
     <asset:javascript src="/apli/funciones.js"/>
     <asset:javascript src="/apli/functions.js"/>
     <asset:javascript src="/apli/loader.js"/>
