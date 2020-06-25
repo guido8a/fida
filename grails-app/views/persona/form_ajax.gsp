@@ -46,14 +46,17 @@
                             Password
                         </label>
 
-                        <div class="col-md-8">
-                            <g:textField name="password" maxlength="63" required="" class="form-control input-sm required" value="${personaInstance?.password}"/>
-                        </div>
 %{--                        <div class="col-md-8">--}%
-%{--                            <div class="input-group input-group-sm"><span class="input-group-addon"><i class="fa fa-key"></i>--}%
-%{--                            </span><g:field type="password" name="password"  maxlength="63" class="form-control input-sm noEspacios required" value="${personaInstance?.password ?: ''}"/>--}%
-%{--                            </div>--}%
+%{--                            <g:textField name="password" maxlength="63" required="" class="form-control input-sm required" value="${personaInstance?.password}"/>--}%
 %{--                        </div>--}%
+
+%{--                        <input name="password"  maxlength="63" type="password" class="form-control input-sm required"--}%
+%{--                               placeholder="Contraseña" required value="${personaInstance?.password}">--}%
+                        <div class="col-md-8">
+                            <div class="input-group input-group-sm"><span class="input-group-addon"><i class="fa fa-key"></i>
+                            </span><g:field type="password" name="password"  maxlength="63" class="form-control input-sm noEspacios required" value="${personaInstance?.password ?: ''}"/>
+                            </div>
+                        </div>
                     </span>
                 </div>
             </div>
