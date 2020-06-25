@@ -200,6 +200,7 @@
                     if(parts[0] == 'ok'){
                         log(parts[1], "success");
                         setTimeout(function () {
+                            var dialog = cargarLoader("Cargando...");
                             location.reload(true);
                         }, 1000);
                     }else{
@@ -214,10 +215,9 @@
     }
 
     function submitFormPersona() {
-        var $form = $("#frmSave-cantonInstance");
-        var $btn = $("#dlgCreateEditC").find("#btnSave");
+        var $form = $("#frmPersona");
+        var $btn = $("#dlgCreateEditPersona").find("#btnSave");
         if ($form.valid()) {
-            $("#provincia").attr("disabled", false)
             var data = $form.serialize();
             $btn.replaceWith(spinner);
             var dialog = cargarLoader("Guardando...");
@@ -391,13 +391,21 @@
                                 },
                                 success: function (msg) {
                                     dialog.modal('hide');
-                                    if(msg == 'ok'){
-                                        log("Provincia borrado correctamente","success");
+                                    var parts = msg.split("_");
+                                    if(parts[0] == 'ok'){
+                                        log("Unidad borrada correctamente","success");
                                         setTimeout(function () {
+                                            var dialog = cargarLoader("Cargando...");
                                             location.reload(true);
                                         }, 1000);
-                                    }else{
-                                        log("Error al borrar la provincia", "error")
+                                    }
+                                     else{
+                                         if(parts[0] == 'res'){
+                                             bootbox.alert('<i class="fa fa-exclamation-triangle text-danger fa-3x"></i> ' + '<strong style="font-size: 14px">' + parts[1] + '</strong>');
+                                             return false;
+                                         }else{
+                                             log("Error al borrar la unidad", "error")
+                                         }
                                     }
                                 }
                             });

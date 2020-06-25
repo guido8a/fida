@@ -65,13 +65,20 @@ class UnidadEjecutoraController {
     def borrarUnidad_ajax(){
         def unidad = UnidadEjecutora.get(params.id)
 
-        unidad.fechaFin = new Date()
+        def hijos = UnidadEjecutora.findAllByPadre(unidad)
+         hijos += Persona.findAllByUnidadEjecutora(unidad)
 
-        if(!unidad.save(flush:true)){
-            println("error al borrar la unidad ejecutora " + unidad.error)
-            render "no"
+        if(hijos.size() > 0){
+            render "res_La unidad tiene unidades/usuarios asociados a ella "
         }else{
-            render "ok"
+            unidad.fechaFin = new Date()
+
+            if(!unidad.save(flush:true)){
+                println("error al borrar la unidad ejecutora " + unidad.error)
+                render "no"
+            }else{
+                render "ok"
+            }
         }
     }
 
@@ -128,7 +135,7 @@ class UnidadEjecutoraController {
             ico = ", \"icon\":\"fa fa-building text-success\""
             hijos.each { hijo ->
 //                println "procesa ${hijo.nombre}"
-                clase = UnidadEjecutora.findByPadre(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
+                clase = UnidadEjecutora.findByPadreAndFechaFinIsNull(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
                 clase2 = Persona.findAllByUnidadEjecutora(hijo) ? " hasChildren" : ''
 //                clase += Persona.findAllByUnidadEjecutora(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
                 tree += "<li id='uni_" + hijo.id + "' class='" + clase + clase2 + "' ${data} data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"
@@ -145,7 +152,7 @@ class UnidadEjecutoraController {
 //                        println "procesa $h"
                         if(h instanceof UnidadEjecutora){
                             ico = ", \"icon\":\"fa fa-building text-success\""
-                            clase = UnidadEjecutora.findByPadre(h) ? "jstree-closed hasChildren" : "jstree-closed"
+                            clase = UnidadEjecutora.findByPadreAndFechaFinIsNull(h) ? "jstree-closed hasChildren" : "jstree-closed"
                             clase2 = Persona.findAllByUnidadEjecutora(h) ? " hasChildren" : ''
 //                            clase = tam > 0 ? "jstree-closed hasChildren" : "jstree-closed"
                             tree += "<li id='uni_" + h.id + "' class='" + clase + clase2 + "' data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"

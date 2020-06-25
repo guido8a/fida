@@ -17,7 +17,6 @@
         </div>
     </g:if>
 
-
     <div class="row">
         <label class="col-md-3  text-info">
             Tipo Institución

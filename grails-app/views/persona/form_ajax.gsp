@@ -1,4 +1,12 @@
-<%@ page import="seguridad.Departamento; seguridad.Prfl; seguridad.Persona" %>
+<%@ page import="seguridad.Prfl; seguridad.Persona" %>
+
+
+<style type="text/css">
+
+
+
+
+</style>
 
 <g:if test="${!personaInstance}">
     <elm:notFound elem="Persona" genero="o"/>
@@ -6,8 +14,9 @@
 <g:else>
 
     <div class="modal-contenido">
-        <g:form class="form-horizontal" name="frmPersona" role="form" action="save_ajax" method="POST">
-            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'sexo', 'error')} ${hasErrors(bean: personaInstance, field: 'sexo', 'error')} required">
+        <g:form class="form-horizontal" name="frmPersona" autocomplete="off" role="form" controller="persona" action="savePersona_ajax" method="POST">
+
+            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'login', 'error')} ${hasErrors(bean: personaInstance, field: 'password', 'error')}">
                 <g:hiddenField name="id" value="${personaInstance?.id}"/>
 
                 <div class="col-md-6">
@@ -15,21 +24,27 @@
                         <label for="login" class="col-md-4 control-label">
                             Usuario
                         </label>
+
+                        <div class="col-md-8">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-user"></i>
+                                </span>
+                                <g:field type="login" name="login" maxlength="15" style="" class="form-control input-sm noEspacios required" value="${personaInstance?.login ?: ''}"/>
+                            </div>
+                        </div>
                     </span>
-                    <div class="col-md-8">
-                        <g:textField name="login" maxlength="15" class="form-control input-sm unique noEspacios required" value="${personaInstance?.login}" style="width: 160px"/>
-                    </div>
                 </div>
 
                 <div class="col-md-6">
                     <span class="grupo">
-                        <label for="sexo" class="col-md-4 control-label">
-                            Sexo
+                        <label for="password" class="col-md-4 control-label">
+                            Password
                         </label>
 
                         <div class="col-md-8">
-                            <g:select name="sexo" from="${['F': 'Femenino', 'M': 'Masculino']}" required="" optionKey="key" optionValue="value"
-                                      class="form-control input-sm required" value="${personaInstance?.sexo}"/>
+                            <div class="input-group input-group-sm"><span class="input-group-addon"><i class="fa fa-key"></i>
+                            </span><g:field type="password" name="password"  maxlength="63" class="form-control input-sm noEspacios required" value="${personaInstance?.password ?: ''}"/>
+                            </div>
                         </div>
                     </span>
                 </div>
@@ -68,7 +83,20 @@
                         </label>
 
                         <div class="col-md-8">
-                            <g:textField name="cedula" maxlength="10" class="form-control input-sm" value="${personaInstance?.cedula}"/>
+                            <g:textField name="cedula" maxlength="10" class="form-control input-sm required digits" value="${personaInstance?.cedula}"/>
+                        </div>
+                    </span>
+                </div>
+
+                <div class="col-md-6">
+                    <span class="grupo">
+                        <label for="sexo" class="col-md-4 control-label">
+                            Sexo
+                        </label>
+
+                        <div class="col-md-8">
+                            <g:select name="sexo" from="${['F': 'Femenino', 'M': 'Masculino']}" required="" optionKey="key" optionValue="value"
+                                      class="form-control input-sm required" value="${personaInstance?.sexo}"/>
                         </div>
                     </span>
                 </div>
@@ -83,7 +111,7 @@
 
                         <div class="col-md-8">
                             <div class="input-group input-group-sm"><span class="input-group-addon"><i class="fa fa-envelope"></i>
-                            </span><g:field type="email" name="mail" maxlength="40" class="form-control input-sm unique noEspacios" value="${personaInstance?.mail}"/>
+                            </span><g:field type="email" name="mail" maxlength="63" class="form-control input-sm unique noEspacios" value="${personaInstance?.mail}"/>
                             </div>
                         </div>
                     </span>
@@ -96,45 +124,54 @@
                         </label>
 
                         <div class="col-md-8">
-                            <g:textField name="telefono" maxlength="10" class="form-control input-sm" value="${personaInstance?.telefono}"/>
+                            <g:textField name="telefono" maxlength="31" class="form-control input-sm digits" value="${personaInstance?.telefono}"/>
                         </div>
                     </span>
                 </div>
             </div>
-            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'departamento', 'error')} ${hasErrors(bean: personaInstance, field: 'cargoPersonal', 'error')}">
-                <div class="col-md-12">
+            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'direccion', 'error')} ">
+                <div class="col-md-12 ">
                     <span class="grupo">
-                        <label for="departamento" class="col-md-2 control-label">
-                            Departamento
+                        <label for="direccion" class="col-md-2 control-label">
+                            Dirección
                         </label>
 
                         <div class="col-md-10">
-                            <g:select id="departamento" name="departamento.id" from="${Departamento.list([sort:'nombre'])}" optionKey="id" value="${departamento ? departamento?.id : personaInstance?.departamento?.id}" class="many-to-one form-control input-sm" noSelection="['-1': 'Seleccione...']"/>
+                            <g:textArea name="direccion" cols="80" rows="1" maxlength="15" class="form-control input-sm" value="${personaInstance?.direccion}" style="resize: none"/>
                         </div>
-
                     </span>
                 </div>
             </div>
+            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'cargo', 'error')} ${hasErrors(bean: personaInstance, field: 'titulo', 'error')} ">
 
-            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'cargo', 'error')} ">
-
-                <div class="col-md-12 ">
+                <div class="col-md-6">
                     <span class="grupo">
-                        <label for="cargo" class="col-md-2 control-label">
+                        <label for="cargo" class="col-md-4 control-label">
                             Cargo
                         </label>
 
-                        <div class="col-md-10">
-                            <g:textArea name="cargo" cols="80" rows="1" maxlength="250" class="form-control input-sm" value="${personaInstance?.cargo}" style="resize: none"/>
+                        <div class="col-md-8">
+                            <g:textField name="cargo" maxlength="127"  class="form-control input-sm" value="${personaInstance?.cargo}"/>
                         </div>
+                    </span>
+                </div>
 
+                <div class="col-md-6">
+                    <span class="grupo">
+                        <label for="titulo" class="col-md-4 control-label">
+                            Título
+                        </label>
+
+                        <div class="col-md-8">
+                            <g:textField name="titulo" maxlength="4"  class="form-control input-sm" value="${personaInstance?.apellido}"/>
+                        </div>
                     </span>
                 </div>
             </div>
+
             <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'login', 'error')} ${hasErrors(bean: personaInstance, field: 'sigla', 'error')}">
                 <div class="col-md-12">
                     <span class="grupo">
-
                         <label for="sigla" class="col-md-2 control-label">
                             Sigla
                         </label>
@@ -142,7 +179,6 @@
                         <div class="col-md-2">
                             <g:textField name="sigla" maxlength="8" class="form-control input-sm" value="${personaInstance?.sigla}"/>
                         </div>
-
 
                         <label for="activo" class="col-md-2 control-label">
                             Activo
@@ -152,9 +188,34 @@
                             <g:select name="activo" value="${personaInstance.activo}" class="form-control input-sm required" required=""
                                       from="${[1: 'Sí', 0: 'No']}" optionKey="key" optionValue="value"/>
                         </div>
+
+                        <label for="discapacidad" class="col-md-2 control-label">
+                            Discapacidad
+                        </label>
+
+                        <div class="col-md-2">
+                            <g:select name="discapacidad" value="${personaInstance.discapacidad}" class="form-control input-sm"
+                                      from="${[0: 'No', 1: 'Sí']}" optionKey="key" optionValue="value"/>
+                        </div>
                     </span>
                 </div>
             </div>
+
+            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'autorizacion', 'error')} ${hasErrors(bean: personaInstance, field: 'discapacidad', 'error')}">
+                <div class="col-md-12">
+                    <span class="grupo">
+                        <label for="sigla" class="col-md-2 control-label">
+                            Autorización
+                        </label>
+
+                        <div class="col-md-6">
+                            <g:textField name="sigla" maxlength="63" class="form-control input-sm" value="${personaInstance?.autorizacion}"/>
+                        </div>
+                    </span>
+                </div>
+            </div>
+
+
         %{--            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'perfil', 'error')} ">--}%
         %{--                <div class="col-md-12">--}%
         %{--                    <span class="grupo">--}%
