@@ -30,11 +30,8 @@
     <asset:javascript src="/apli/moment-with-locales.js"/>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-%{--    <script href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>--}%
 %{--    <asset:javascript src="/apli/bootstrap.js"/>--}%
 
-%{--empieza funciones--}%
-%{--empieza funciones--}%
     <asset:javascript src="/apli/funciones.js"/>
     <asset:javascript src="/apli/functions.js"/>
     <asset:javascript src="/apli/loader.js"/>
@@ -63,27 +60,6 @@
     <script type="text/javascript">
         var spinner = $('<asset:image src="apli/spinner32.gif" style="padding: 40px;"/>');
         var spinnerSquare64 = $('<asset:image src="/spinner_64.GIF" style="padding: 40px;"/>');
-
-
-//         function log(msg, type, title, hide) {
-//             if (!hide) {
-//                 hide = type != "error";
-//             }
-//             if (!title) {
-//                 title = type == 'error' ? "Ha ocurrido un error" : "";
-//             }
-//             $.pnotify({
-//                 title        : title,
-// //        addclass     : "stack-bar-top",
-// //        cornerclass  : 'ui-pnotify-sharp',
-// //        icon         : "",
-//                 closer_hover : false,
-//                 text         : msg,
-//                 type         : type,
-//                 hide         : hide
-//             });
-//         }
-
     </script>
 
 
