@@ -11,11 +11,11 @@
 
 <div class="btn-toolbar toolbar">
     <div class="btn-group">
-        <g:link action="form" class="btn btn-primary btnCrear">
-            <i class="fa fa-file-o"></i> Crear perfil
+        <g:link action="form" class="btn btn-azul btnCrear">
+            <i class="fa fa-pencil-square-o"></i> Crear perfil
         </g:link>
         <a href="#" class="btn btn-primary btnEdit">
-            <i class="fa fa-pencil"></i> Editar perfil
+            <i class="fa fa-camera-retro fa-lg"></i> Editar perfil
         </a>
         <a href="#" class="btn btn-primary btnDelete">
             <i class="fa fa-trash-o"></i> Eliminar perfil

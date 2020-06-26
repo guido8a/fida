@@ -304,9 +304,9 @@ class PersonaController {
 
     def personal() {
         def usuario = Persona.get(session.usuario.id)
-        def dep = usuario.departamento
+        def dep = usuario.unidadEjecutora
 
-        def personas = Persona.findAllByDepartamentoAndActivo(dep, 1, [sort: 'apellido', order: 'apellido'])
+        def personas = Persona.findAllByUnidadEjecutoraAndActivo(dep, 1, [sort: 'apellido', order: 'apellido'])
         def personasFiltradas = []
 
         personas.each {

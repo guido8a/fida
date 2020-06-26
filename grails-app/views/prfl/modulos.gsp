@@ -10,25 +10,25 @@
         <div class="btn-toolbar toolbar">
             <div class="btn-group">
                 <g:link action="form" class="btn btn-primary btnCrear">
-                    <i class="fa fa-file-o"></i> Crear perfil
+                    <i class="far fa-file"></i> Crear perfil
                 </g:link>
                 <a href="#" class="btn btn-primary btnEdit">
-                    <i class="fa fa-pencil"></i> Editar perfil
+                    <i class="far fa-edit"></i> Editar perfil
                 </a>
                 <a href="#" class="btn btn-primary btnDelete">
-                    <i class="fa fa-trash-o"></i> Eliminar perfil
+                    <i class="far fa-trash-alt"></i> Eliminar perfil
                 </a>
             </div>
 
             <div class="btn-group">
                 <a href="#" class="btn btn-primary btnCrearMdlo">
-                    <i class="fa fa-file-o"></i> Crear módulo
+                    <i class="far fa-file"></i> Crear módulo
                 </a>
                 <a href="#" class="btn btn-primary btnEditMdlo">
-                    <i class="fa fa-pencil"></i> Editar módulo
+                    <i class="far fa-edit"></i> Editar módulo
                 </a>
                 <a href="#" class="btn btn-primary btnDeleteMdlo">
-                    <i class="fa fa-trash-o"></i> Eliminar módulo
+                    <i class="far fa-trash-alt"></i> Eliminar módulo
                 </a>
             </div>
         </div>
