@@ -31,29 +31,52 @@
 
     $(".btn-deletePerfil").click(function() {
         var id = $(this).data("id");
-        $.ajax({
-            type: 'POST',
-            url: '${createLink(controller: 'persona', action: 'borrarPerfil_ajax')}',
-            data:{
-                perfil: id,
-                id: '${persona?.id}'
+        bootbox.confirm({
+            title: "Borrar perfil",
+            message: "Está seguro de borrar este perfil? Esta acción no puede deshacerse.",
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> Cancelar',
+                    className: 'btn-primary'
+                },
+                confirm: {
+                    label: '<i class="fa fa-trash"></i> Borrar',
+                    className: 'btn-danger'
+                }
             },
-            success: function (msg) {
-                var parts = msg.split("_");
-                if(parts[0] == 'ok'){
-                    log("Perfil borrado correctamente","success");
-                    cargarPerfilesDisponibles();
-                    cargarPerfiles();
-                }else{
-                    if(parts[0] == 'er'){
-                        bootbox.alert('<i class="fa fa-exclamation-triangle text-danger fa-3x"></i> ' + '<strong style="font-size: 14px">' + parts[1] + '</strong>');
-                        return false;
-                    }else{
-                        log("Error al borrar el perfil","error");
-                    }
+            callback: function (result) {
+                if(result){
+                    $.ajax({
+                        type: 'POST',
+                        url: '${createLink(controller: 'persona', action: 'borrarPerfil_ajax')}',
+                        data:{
+                            perfil: id,
+                            id: '${persona?.id}'
+                        },
+                        success: function (msg) {
+                            var parts = msg.split("_");
+                            if(parts[0] == 'ok'){
+                                log("Perfil borrado correctamente","success");
+                                cargarPerfilesDisponibles();
+                                cargarPerfiles();
+                            }else{
+                                if(parts[0] == 'er'){
+                                    bootbox.alert('<i class="fa fa-exclamation-triangle text-danger fa-3x"></i> ' + '<strong style="font-size: 14px">' + parts[1] + '</strong>');
+                                    return false;
+                                }else{
+                                    log("Error al borrar el perfil","error");
+                                }
+                            }
+                        }
+                    })
                 }
             }
-        })
+        });
+
+
+
+
+
     })
 
 </script>

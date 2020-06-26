@@ -317,6 +317,9 @@ class PersonaController {
         }
 
         personasFiltradas.remove(usuario)
+
+        println("usuario " + usuario?.id)
+
         return [usuario: usuario, params: params, personas: personasFiltradas]
     }
 
@@ -379,32 +382,54 @@ class PersonaController {
     }
 
 
+//    def savePass_ajax() {
+//        println "savePass_ajax  $params"
+//        def persona = Persona.get(params.id)
+//        def str = params.tipo == "pass" ? "contraseña" : "autorización"
+//        params.input2 = params.input2.trim()
+//        params.input3 = params.input3.trim()
+//        if (params.input2 == params.input3) {
+//            println "....1 autoriz: ${persona.autorizacion}"
+//            if (params.tipo == "pass") {
+//                persona.password = params.input2.encodeAsMD5()
+//                persona.save(flush: true)
+//            } else {
+//                if (persona.autorizacion == params.input1.trim().encodeAsMD5() || !persona.autorizacion) {
+//                    persona.autorizacion = params.input2.encodeAsMD5()
+//                    persona.save(flush: true)
+//                } else {
+//                    render "ERROR*La autorización actual es incorrecta"
+//                    return
+//                }
+//            }
+//        } else {
+//            render "ERROR*La ${str} y la verificación no coinciden"
+//            return
+//        }
+//        render "SUCCESS*La ${str} ha sido modificada exitosamente"
+//    }
+
+
     def savePass_ajax() {
         println "savePass_ajax  $params"
         def persona = Persona.get(params.id)
-        def str = params.tipo == "pass" ? "contraseña" : "autorización"
         params.input2 = params.input2.trim()
-        params.input3 = params.input3.trim()
-        if (params.input2 == params.input3) {
-            println "....1 autoriz: ${persona.autorizacion}"
-            if (params.tipo == "pass") {
-                persona.password = params.input2.encodeAsMD5()
-                persona.save(flush: true)
-            } else {
-                if (persona.autorizacion == params.input1.trim().encodeAsMD5() || !persona.autorizacion) {
-                    persona.autorizacion = params.input2.encodeAsMD5()
-                    persona.save(flush: true)
-                } else {
-                    render "ERROR*La autorización actual es incorrecta"
-                    return
-                }
+
+        if(params.nuevoPass.trim() == params.passConfirm.trim()){
+
+            persona.password = params.nuevoPass.encodeAsMD5()
+            if(!persona.save(flush: true)){
+                println("error al guardar el nuevo password " + persona.errors)
+                render "error*Error al guardar el password"
+            }else{
+                render "SUCCESS*La contraseña ha sido modificada exitosamente"
             }
-        } else {
-            render "ERROR*La ${str} y la verificación no coinciden"
-            return
+        }else{
+            render "error*El password ingresado y su confirmación no coinciden"
         }
-        render "SUCCESS*La ${str} ha sido modificada exitosamente"
     }
+
+
 
     def saveTelf() {
         def usuario = Persona.get(session.usuario.id)
@@ -1398,13 +1423,13 @@ class PersonaController {
 //        if(sesionActual.toInteger() == sesion.id.toInteger()){
 //            render "er_No se puede borrar el perfil, está siendo usado por el usuario actual!"
 //        }else{
-           sesion.fechaFin = new Date()
-            if(!sesion.save(flush: true)){
-                println("error al borrar el perfil " + sesion.errors)
-                render "no"
-            }else{
-                render "ok"
-            }
+        sesion.fechaFin = new Date()
+        if(!sesion.save(flush: true)){
+            println("error al borrar el perfil " + sesion.errors)
+            render "no"
+        }else{
+            render "ok"
+        }
 //        }
     }
 

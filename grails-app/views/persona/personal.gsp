@@ -73,7 +73,9 @@
 
     <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headerPass">
         <div class="panel-body">
-            <g:form class="form-inline" name="frmPass" action="updatePass">
+%{--            <g:form class="form-inline" name="frmPass" action="updatePass">--}%
+            <g:form class="form-inline" name="frmPass" action="savePass_ajax">
+                <g:hiddenField name="id" value="${usuario?.id}"/>
                 <div class="form-group">
                     <label for="input2">Clave actual</label>
 
@@ -115,91 +117,91 @@
         var $frmAuth = $("#frmAuth");
         var $frmPass = $("#frmPass");
 
-        $frmAuth.validate({
-            errorClass     : "help-block",
-            errorPlacement : function (error, element) {
-                if (element.parent().hasClass("input-group")) {
-                    error.insertAfter(element.parent());
-                } else {
-                    error.insertAfter(element);
-                }
-                element.parents(".grupo").addClass('has-error');
-            },
-            success        : function (label) {
-                label.parents(".grupo").removeClass('has-error');
-                label.remove();
-            },
-            rules          : {
-                input1 : {
-                    remote : {
-                        url  : "${createLink(action: 'validar_aut_previa_ajax')}",
-                        type : "post",
-                        data : {
-                            id : "${persona?.id}"
-                        }
-                    }
-                }
-            },
-            messages       : {
-                input1 : {
-                    remote : "La autorización no concuerda"
-                }
-            }
-        });
+        %{--$frmAuth.validate({--}%
+        %{--    errorClass     : "help-block",--}%
+        %{--    errorPlacement : function (error, element) {--}%
+        %{--        if (element.parent().hasClass("input-group")) {--}%
+        %{--            error.insertAfter(element.parent());--}%
+        %{--        } else {--}%
+        %{--            error.insertAfter(element);--}%
+        %{--        }--}%
+        %{--        element.parents(".grupo").addClass('has-error');--}%
+        %{--    },--}%
+        %{--    success        : function (label) {--}%
+        %{--        label.parents(".grupo").removeClass('has-error');--}%
+        %{--        label.remove();--}%
+        %{--    },--}%
+        %{--    rules          : {--}%
+        %{--        input1 : {--}%
+        %{--            remote : {--}%
+        %{--                url  : "${createLink(action: 'validar_aut_previa_ajax')}",--}%
+        %{--                type : "post",--}%
+        %{--                data : {--}%
+        %{--                    id : "${persona?.id}"--}%
+        %{--                }--}%
+        %{--            }--}%
+        %{--        }--}%
+        %{--    },--}%
+        %{--    messages       : {--}%
+        %{--        input1 : {--}%
+        %{--            remote : "La autorización no concuerda"--}%
+        %{--        }--}%
+        %{--    }--}%
+        %{--});--}%
 
 
-        $frmPass.validate({
-            errorClass     : "help-block",
-            errorPlacement : function (error, element) {
-                if (element.parent().hasClass("input-group")) {
-                    error.insertAfter(element.parent());
-                } else {
-                    error.insertAfter(element);
-                }
-                element.parents(".grupo").addClass('has-error');
-            },
-            success        : function (label) {
-                label.parents(".grupo").removeClass('has-error');
-                label.remove();
-            },
-            rules          : {
-                input2 : {
-                    remote : {
-                        url  : "${createLink(action: 'validar_pass_ajax')}",
-                        type : "post",
-                        data : {
-                            id : "${persona?.id}"
-                        }
-                    }
-                }
-            },
-            messages       : {
-                input2 : {
-                    remote : "La clave no concuerda"
-                }
-            }
-        });
+        %{--$frmPass.validate({--}%
+        %{--    errorClass     : "help-block",--}%
+        %{--    errorPlacement : function (error, element) {--}%
+        %{--        if (element.parent().hasClass("input-group")) {--}%
+        %{--            error.insertAfter(element.parent());--}%
+        %{--        } else {--}%
+        %{--            error.insertAfter(element);--}%
+        %{--        }--}%
+        %{--        element.parents(".grupo").addClass('has-error');--}%
+        %{--    },--}%
+        %{--    success        : function (label) {--}%
+        %{--        label.parents(".grupo").removeClass('has-error');--}%
+        %{--        label.remove();--}%
+        %{--    },--}%
+        %{--    rules          : {--}%
+        %{--        input2 : {--}%
+        %{--            remote : {--}%
+        %{--                url  : "${createLink(action: 'validar_pass_ajax')}",--}%
+        %{--                type : "post",--}%
+        %{--                data : {--}%
+        %{--                    id : "${persona?.id}"--}%
+        %{--                }--}%
+        %{--            }--}%
+        %{--        }--}%
+        %{--    },--}%
+        %{--    messages       : {--}%
+        %{--        input2 : {--}%
+        %{--            remote : "La clave no concuerda"--}%
+        %{--        }--}%
+        %{--    }--}%
+        %{--});--}%
 
 
-        $("#btnSaveAuth").click(function () {
-            if ($frmAuth.valid()) {
-                $.ajax({
-                    type    : "POST",
-                    url     : $frmAuth.attr("action"),
-                    data    : $frmAuth.serialize(),
-                    success : function (msg) {
-                        var parts = msg.split("*");
-                        log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                        closeLoader();
-                        $frmAuth[0].reset();
-                        if (parts[0] == "SUCCESS") {
-                            location.href = "${createLink(controller: "inicio", action: "inicio" )}"
-                        }
-                    }
-                });
-            }
-            return false;
-        });
+        %{--$("#btnSaveAuth").click(function () {--}%
+        %{--    if ($frmAuth.valid()) {--}%
+        %{--        $.ajax({--}%
+        %{--            type    : "POST",--}%
+        %{--            url     : $frmAuth.attr("action"),--}%
+        %{--            data    : $frmAuth.serialize(),--}%
+        %{--            success : function (msg) {--}%
+        %{--                var parts = msg.split("*");--}%
+        %{--                log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)--}%
+        %{--                closeLoader();--}%
+        %{--                $frmAuth[0].reset();--}%
+        %{--                if (parts[0] == "SUCCESS") {--}%
+        %{--                    location.href = "${createLink(controller: "inicio", action: "index" )}"--}%
+        %{--                }--}%
+        %{--            }--}%
+        %{--        });--}%
+        %{--    }--}%
+        %{--    return false;--}%
+        %{--});--}%
 
 
         $("#btnSavePass").click(function () {
@@ -215,7 +217,7 @@
                         log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                         setTimeout(function () {
                             if (parts[0] == "SUCCESS") {
-                                location.href = "${createLink(controller: "inicio", action: "inicio" )}"
+                                location.href = "${createLink(controller: "login", action: "logout" )}"
                             } else {
                             }
                         }, 1000);
