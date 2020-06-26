@@ -413,11 +413,12 @@ class PersonaController {
     def savePass_ajax() {
         println "savePass_ajax  $params"
         def persona = Persona.get(params.id)
-        params.input2 = params.input2.trim()
+//        params.input2 = params.input2.trim()
 
         if(params.nuevoPass.trim() == params.passConfirm.trim()){
 
             persona.password = params.nuevoPass.encodeAsMD5()
+            persona.fecha = new Date() + 90
             if(!persona.save(flush: true)){
                 println("error al guardar el nuevo password " + persona.errors)
                 render "error*Error al guardar el password"

@@ -80,7 +80,7 @@
                     <label for="input2">Clave actual</label>
 
                     <div class="input-group">
-                        <g:passwordField name="input2" class="form-control auth"/>
+                        <g:passwordField name="input2" class="form-control auth" />
                         <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
                     </div>
                 </div>
