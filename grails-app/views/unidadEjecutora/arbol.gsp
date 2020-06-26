@@ -231,6 +231,7 @@
                     if(parts[0] == 'ok'){
                         log(parts[1], "success");
                         setTimeout(function () {
+                            var dialog = cargarLoader("Cargando...");
                             location.reload(true);
                         }, 1000);
                     }else{
@@ -260,6 +261,7 @@
         var esPrincipal = nodeType == "unidadEjecutora";
         var esCanton = nodeType.contains("persona");
         var tieneHijos = $node.hasClass("hasChildren");
+        var inactivo = $node.hasClass("inactivo");
 
         var items = {};
 
@@ -290,7 +292,7 @@
 
         var editarUnidad = {
             label  : "Editar Unidad Ejecutora",
-            icon   : "fa fa-pen text-info",
+            icon   : "fa fa-pen text-warning",
             action : function () {
                 createEditUnidad(nodeId);
             }
@@ -298,7 +300,7 @@
 
         var editarPersona = {
             label  : "Editar Usuario",
-            icon   : "fa fa-pen text-info",
+            icon   : "fa fa-pen text-warning",
             action : function () {
                 createEditPersona(nodeId, null);
             }
@@ -306,7 +308,7 @@
 
         var verUnidad = {
             label            : "Ver datos de la Unidad Ejecutora",
-            icon             : "fa fa-laptop text-info",
+            icon             : "fa fa-laptop text-primary",
             separator_before : true,
             action           : function () {
                 $.ajax({
@@ -335,7 +337,7 @@
 
         var verPersona = {
             label            : "Ver datos del usuario",
-            icon             : "fa fa-laptop text-info",
+            icon             : "fa fa-laptop text-primary",
             separator_before : true,
             action           : function () {
                 $.ajax({
@@ -438,23 +440,53 @@
                             var dialog = cargarLoader("Borrando...");
                             $.ajax({
                                 type: 'POST',
-                                url: '${createLink(controller: 'canton', action: 'borrarCanton_ajax')}',
+                                url: '${createLink(controller: 'persona', action: 'borrarPersona_ajax')}',
                                 data:{
                                     id: nodeId
                                 },
                                 success: function (msg) {
                                     dialog.modal('hide');
                                     if(msg == 'ok'){
-                                        log("Cantón borrado correctamente","success");
+                                        log("Usuario borrado correctamente","success");
                                         setTimeout(function () {
+                                            var dialog = cargarLoader("Cargando...");
                                             location.reload(true);
                                         }, 1000);
                                     }else{
-                                        log("Error al borrar el canton", "error")
+                                        log("Error al borrar el usuario", "error")
                                     }
                                 }
                             });
                         }
+                    }
+                });
+            }
+        };
+
+        var perfiles = {
+            label            : "Perfiles del usuario",
+            icon             : "fa fa-list text-primary",
+            separator_before : true,
+            action           : function () {
+                $.ajax({
+                    type    : "POST",
+                    url     : "${createLink(controller: "persona", action:'perfiles_ajax')}",
+                    data    : {
+                        id : nodeId
+                    },
+                    success : function (msg) {
+                        bootbox.dialog({
+                            title   : "Perfiles",
+                            message : msg,
+                            buttons : {
+                                ok : {
+                                    label     : "Aceptar",
+                                    className : "btn-primary",
+                                    callback  : function () {
+                                    }
+                                }
+                            }
+                        });
                     }
                 });
             }
@@ -475,7 +507,9 @@
             items.agregarPersona = agregarPersona2;
             items.verPersona = verPersona;
             items.editarPersona = editarPersona;
-            items.borrarPersona = borrarPersona;
+            if(!inactivo){
+             items.perfiles = perfiles;
+            }
         }
         return items;
     }

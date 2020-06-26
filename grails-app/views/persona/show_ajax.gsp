@@ -5,137 +5,113 @@
 </g:if>
 <g:else>
     <div class="modal-contenido">
-        <g:if test="${personaInstance?.nombre || personaInstance?.apellido}">
-            <div class="row">
-                <div class="col-md-2 show-label">
-                    Nombre
-                </div>
-
-                <div class="col-md-4 text-info">
-                    <g:fieldValue bean="${personaInstance}" field="nombre"/>
-                </div>
-
-                <div class="col-md-2 show-label">
-                    Apellido
-                </div>
-
-                <div class="col-md-4 text-info">
-                    <g:fieldValue bean="${personaInstance}" field="apellido"/>
-                </div>
-
+        <div class="row">
+            <label class="col-md-3  text-info">
+                Usuario/Login
+            </label>
+            <div class="col-md-3 text-success">
+                ${personaInstance?.login}
             </div>
-        </g:if>
-
-        <g:if test="${personaInstance?.sexo}">
-            <div class="row">
-                <div class="col-md-2 show-label">
-                    Sexo
-                </div>
-
-                <div class="col-md-4  text-info">
-                    ${personaInstance.sexo == "M" ? "Masculino" : "Femenino"}
-                </div>
-
+        </div>
+        <div class="row">
+            <label class="col-md-3  text-info">
+                Nombre
+            </label>
+            <div class="col-md-3">
+                ${personaInstance?.nombre}
             </div>
-        </g:if>
 
-        <g:if test="${personaInstance?.telefono}">
-            <div class="row">
-                <div class="col-md-2 show-label">
-                    Teléfono
-                </div>
-
-                <div class="col-md-4 text-info">
-                    <g:fieldValue bean="${personaInstance}" field="telefono"/>
-                </div>
-
+            <label class="col-md-2  text-info">
+                Apellido
+            </label>
+            <div class="col-md-4">
+                ${personaInstance?.apellido}
             </div>
-        </g:if>
-
-        <g:if test="${personaInstance?.mail}">
-            <div class="row">
-                <div class="col-md-2 show-label">
-                    E-mail
-                </div>
-
-                <div class="col-md-4  text-info">
-                    <g:fieldValue bean="${personaInstance}" field="mail"/>
-                </div>
-
+        </div>
+        <div class="row">
+            <label class="col-md-3  text-info">
+                Cédula
+            </label>
+            <div class="col-md-3">
+                ${personaInstance?.cedula}
             </div>
-        </g:if>
 
-        <g:if test="${personaInstance?.departamento || personaInstance?.cargo}">
-            <div class="row">
-                <div class="col-md-2 show-label">
-                    Departamento
-                </div>
-
-                <div class="col-md-4 text-info">
-                    ${personaInstance?.departamento?.encodeAsHTML()}
-                </div>
-
-                <div class="col-md-2 show-label">
-                    Cargo
-                </div>
-
-                <div class="col-md-4 text-info">
-                    %{--${personaInstance?.cargoPersonal?.encodeAsHTML()}--}%
-                    ${personaInstance?.cargo ?: ''}
-                </div>
-
+            <label class="col-md-2  text-info">
+                Sexo
+            </label>
+            <div class="col-md-4">
+                ${personaInstance?.sexo == 'F' ? 'Femenino' : 'Masculino'}
             </div>
-        </g:if>
-
-        <g:if test="${personaInstance?.login || personaInstance?.sigla}">
-            <div class="row">
-                <div class="col-md-2 show-label">
-                    Usuario
-                </div>
-
-                <div class="col-md-4 text-info">
-                    <g:fieldValue bean="${personaInstance}" field="login"/>
-                </div>
-
-                <div class="col-md-2 show-label">
-                    Sigla
-                </div>
-
-                <div class="col-md-4 text-info">
-                    <g:fieldValue bean="${personaInstance}" field="sigla"/>
-                </div>
-
+        </div>
+        <div class="row">
+            <label class="col-md-3  text-info">
+                Email
+            </label>
+            <div class="col-md-3">
+                ${personaInstance?.mail}
             </div>
-        </g:if>
 
-        <g:if test="${personaInstance?.estaActivo}">
-            <div class="row">
-                <div class="col-md-2 show-label">
-                    Activo
-                </div>
-
-                <div class="col-md-4 text-info">
-                    ${personaInstance.estaActivo == 1 ? "Sí" : "No"}
-                </div>
-
+            <label class="col-md-2  text-info">
+                Teléfono
+            </label>
+            <div class="col-md-4">
+                ${personaInstance?.telefono}
             </div>
-        </g:if>
-
-        <g:if test="${perfiles.size() > 0}">
-            <div class="row">
-                <div class="col-md-2 show-label">
-                    Perfiles
-                </div>
-
-                <div class="col-md-10 text-info">
-                    <ul>
-                        <g:each in="${perfiles.perfil}" var="perfil">
-                            <li>${perfil.nombre}</li>
-                        </g:each>
-                    </ul>
-                </div>
-
+        </div>
+        <div class="row">
+            <label class="col-md-3  text-info">
+                Dirección
+            </label>
+            <div class="col-md-6">
+                ${personaInstance?.direccion}
             </div>
-        </g:if>
+        </div>
+        <div class="row">
+            <label class="col-md-3  text-info">
+                Cargo
+            </label>
+            <div class="col-md-3">
+                ${personaInstance?.cargo}
+            </div>
+
+            <label class="col-md-2  text-info">
+                Título
+            </label>
+            <div class="col-md-4">
+                ${personaInstance?.titulo}
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-3  text-info">
+                Activo
+            </label>
+            <div class="col-md-3" style="color: ${personaInstance?.activo == 1 ? '#47B636' : '#c42623'}">
+                <strong>${personaInstance?.activo == 1 ? 'SI' : 'NO'}</strong>
+            </div>
+
+            <label class="col-md-2  text-info">
+                Discapacidad
+            </label>
+            <div class="col-md-4">
+                ${personaInstance?.discapacidad == 1 ? 'SI' : 'NO'}
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-3  text-info">
+                Fecha de Inicio
+            </label>
+            <div class="col-md-3">
+                ${personaInstance?.fechaInicio?.format("dd-MM-yyyy")}
+            </div>
+
+            <g:if test="${personaInstance?.fechaFin}">
+                <label class="col-md-2  text-info">
+                    Fecha Fin
+                </label>
+                <div class="col-md-4">
+                    ${personaInstance?.fechaFin?.format("dd-MM-yyyy")}
+                </div>
+            </g:if>
+        </div>
     </div>
 </g:else>

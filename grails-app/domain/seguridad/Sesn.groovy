@@ -28,6 +28,7 @@ class Sesn {
     static constraints = {
         fechaInicio(blank: true, nullable: true)
         fechaFin(blank: true, nullable: true)
+        permisoPerfil(blank:true, nullable: true)
     }
 
     boolean getEstaActivo() {

@@ -15,11 +15,11 @@
             </label>
             <div class="col-md-6">
                 <g:if test="${unidad?.id}">
-                    <g:select from="${seguridad.UnidadEjecutora.findAllByFechaFinIsNull().sort{it.nombre} - unidad}" name="padre" class="form-control"
+                    <g:select from="${seguridad.UnidadEjecutora.findAllByFechaFinIsNull().sort{it.nombre} - unidad}" name="padre" class="form-control input-sm"
                               value="${unidad?.padre?.id}" noSelection="[null:'- Ninguna -']" optionKey="id" optionValue="nombre"/>
                 </g:if>
                 <g:else>
-                    <g:select from="${seguridad.UnidadEjecutora.findAllByFechaFinIsNull().sort{it.nombre}}" name="padre" class="form-control"
+                    <g:select from="${seguridad.UnidadEjecutora.findAllByFechaFinIsNull().sort{it.nombre}}" name="padre" class="form-control input-sm"
                               value="${unidad?.padre?.id}" noSelection="[null:'- Ninguna -']" optionKey="id" optionValue="nombre"/>
                 </g:else>
                 <p class="help-block ui-helper-hidden"></p>
@@ -33,7 +33,7 @@
                 Tipo Institución
             </label>
             <div class="col-md-3">
-                <g:select from="${seguridad.TipoInstitucion.list().sort{it.descripcion}}" name="tipoInstitucion" class="form-control"
+                <g:select from="${seguridad.TipoInstitucion.list().sort{it.descripcion}}" name="tipoInstitucion" class="form-control input-sm"
                           value="${unidad?.tipoInstitucion?.id}" optionKey="id" optionValue="descripcion"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
@@ -43,7 +43,7 @@
                 Provincia
             </label>
             <div class="col-md-4">
-                <g:select from="${fida.Provincia.list().sort{it.nombre}}" name="provincia" class="form-control"
+                <g:select from="${fida.Provincia.list().sort{it.nombre}}" name="provincia" class="form-control input-sm"
                           value="${unidad?.provincia?.id}" optionKey="id" optionValue="nombre"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
@@ -56,7 +56,7 @@
                 Código
             </label>
             <div class="col-md-3">
-                <g:textField name="codigo" maxlength="4" required="" class="form-control required" value="${unidad?.codigo}"/>
+                <g:textField name="codigo" maxlength="4" required="" class="form-control required input-sm" value="${unidad?.codigo}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -77,7 +77,7 @@
                 Nombre
             </label>
             <div class="col-md-6">
-                <g:textField name="nombre" maxlength="63" class="form-control required valid" value="${unidad?.nombre}"/>
+                <g:textField name="nombre" maxlength="63" class="form-control required valid input-sm" value="${unidad?.nombre}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -86,7 +86,7 @@
                 Sigla
             </label>
             <div class="col-md-2">
-                <g:textField name="sigla" maxlength="7" class="form-control" value="${unidad?.sigla}"/>
+                <g:textField name="sigla" maxlength="7" class="form-control input-sm" value="${unidad?.sigla}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -98,7 +98,7 @@
                 Dirección
             </label>
             <div class="col-md-9">
-                <g:textArea name="direccion"  maxlength="127" class="form-control" style="resize: none" value="${unidad?.direccion}"/>
+                <g:textArea name="direccion"  maxlength="127" class="form-control input-sm" style="resize: none" value="${unidad?.direccion}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -110,7 +110,7 @@
                 Objetivo
             </label>
             <div class="col-md-9">
-                <g:textArea name="objetivo"  maxlength="63" class="form-control" style="resize: none" value="${unidad?.objetivo}"/>
+                <g:textArea name="objetivo"  maxlength="63" class="form-control input-sm" style="resize: none" value="${unidad?.objetivo}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -122,7 +122,7 @@
                 Teléfono
             </label>
             <div class="col-md-3">
-                <g:textField name="telefono" maxlength="63" class="form-control digits" value="${unidad?.telefono}"/>
+                <g:textField name="telefono" maxlength="63" class="form-control digits input-sm" value="${unidad?.telefono}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -131,7 +131,7 @@
                 Mail
             </label>
             <div class="col-md-4">
-                <g:textField name="mail" maxlength="63" class="form-control email" value="${unidad?.mail}"/>
+                <g:textField name="mail" maxlength="63" class="form-control email input-sm" value="${unidad?.mail}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -143,7 +143,7 @@
                 Número estado
             </label>
             <div class="col-md-3">
-                <g:textField name="numero" maxlength="10" class="form-control digits" value="${unidad?.numero ?: ''}"/>
+                <g:textField name="numero" maxlength="10" class="form-control digits input-sm" value="${unidad?.numero ?: ''}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -152,7 +152,7 @@
                 Orden
             </label>
             <div class="col-md-4">
-                <g:textField name="orden" maxlength="3" class="form-control digits" value="${unidad?.orden ?: ''}"/>
+                <g:textField name="orden" maxlength="3" class="form-control digits input-sm" value="${unidad?.orden ?: ''}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -164,7 +164,7 @@
                 Observaciones
             </label>
             <div class="col-md-9">
-                <g:textArea name="observaciones"  maxlength="127" class="form-control" style="resize: none" value="${unidad?.observaciones}"/>
+                <g:textArea name="observaciones"  maxlength="127" class="form-control input-sm" style="resize: none" value="${unidad?.observaciones}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>

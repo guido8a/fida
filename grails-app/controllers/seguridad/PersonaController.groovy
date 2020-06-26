@@ -1265,8 +1265,8 @@ class PersonaController {
                                 perfilB.fechaFin = new Date()
 
                                 if(!perfilB.save(flush: true)){
-                                errores += "Ha ocurrido un error al eliminar el perfil " + perfilB.errors
-                                println "error al eliminar perfil: " + perfilB.errors
+                                    errores += "Ha ocurrido un error al eliminar el perfil " + perfilB.errors
+                                    println "error al eliminar perfil: " + perfilB.errors
                                 }
                             }
                         }
@@ -1319,16 +1319,16 @@ class PersonaController {
 
     def savePersona_ajax(){
 
-        println("params sp " + params)
-        def persona
+//        println("params sp " + params)
 
+        def persona
         def texto = ''
 
         if(params.id){
             persona = Persona.get(params.id)
             if(params.password != persona.password){
-             params.password = params.password.encodeAsMD5()
-             params.fecha = new Date()
+                params.password = params.password.encodeAsMD5()
+                params.fecha = new Date()
             }
             params.unidadEjecutora = persona.unidadEjecutora
             texto = "Usuario actualizado correctamente"
@@ -1340,6 +1340,11 @@ class PersonaController {
             texto = "Usuario creado correctamente"
         }
 
+        if(params.activo == '0'){
+            params.fechaFin = new Date()
+        }else{
+            params.fechaFin = null
+        }
         persona.properties = params
 
         if(!persona.save(flush:true)){
@@ -1350,4 +1355,74 @@ class PersonaController {
         }
     }
 
+    def borrarPersona_ajax(){
+
+    }
+
+    def perfiles_ajax(){
+
+        def persona = Persona.get(params.id)
+
+        return[personaInstance: persona]
+    }
+
+
+    def perfilesDisponibles_ajax(){
+        def persona = Persona.get(params.id)
+        def perfilesActuales = Sesn.findAllByUsuarioAndFechaFinIsNull(persona).perfil
+//        println("perfil actual " + perfilesActuales)
+        def perfilesDisponibles
+        if(perfilesActuales){
+            perfilesDisponibles = Prfl.findAllByIdNotInList(perfilesActuales.id).sort{it.nombre}
+        }else{
+            perfilesDisponibles = Prfl.list().sort{it.nombre}
+        }
+
+//        println("perfil disponible " + perfilesDisponibles)
+
+        return[persona: persona, perfiles: perfilesDisponibles]
+    }
+
+    def tablaPerfiles_ajax(){
+        def persona = Persona.get(params.id)
+        def perfilesActuales = Sesn.findAllByUsuarioAndFechaFinIsNull(persona)
+        return[persona: persona, perfiles: perfilesActuales]
+    }
+
+    def borrarPerfil_ajax(){
+
+        def persona = Persona.get(params.id)
+        def perfil =  Prfl.get(params.perfil)
+        def sesionActual = session.pr.id
+        def sesion = Sesn.findByUsuarioAndPerfilAndFechaFinIsNull(persona, perfil)
+//        if(sesionActual.toInteger() == sesion.id.toInteger()){
+//            render "er_No se puede borrar el perfil, está siendo usado por el usuario actual!"
+//        }else{
+           sesion.fechaFin = new Date()
+            if(!sesion.save(flush: true)){
+                println("error al borrar el perfil " + sesion.errors)
+                render "no"
+            }else{
+                render "ok"
+            }
+//        }
+    }
+
+    def agregarPerfil_ajax(){
+        def persona = Persona.get(params.id)
+        def perfil =  Prfl.get(params.perfil)
+        def sesion = new Sesn()
+
+        sesion.fechaInicio = new Date()
+        sesion.perfil = perfil
+        sesion.usuario = persona
+        sesion.permisoPerfil = null
+
+        if(!sesion.save(flush: true)){
+            println("error al guardar el perfil" + sesion.errors)
+            render "no"
+        }else{
+            render "ok"
+        }
+    }
 }
