@@ -25,7 +25,7 @@
                 <div class='input-group input-group-sm'>
                     <g:textField name="maxInversion" class="form-control input-sm required number money"
                                  value="${presupuesto ? g.formatNumber(number: presupuesto.maxInversion, maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
                 <div class='input-group input-group-sm'>
                     <g:textField name="maxCorrientes" class="form-control input-sm required number money"
                                  value="${presupuesto ? g.formatNumber(number: presupuesto.maxCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
                 <div class='input-group input-group-sm'>
                     <g:textField name="originalInversion" class="form-control input-sm required number money" readonly=""
                                  value="${presupuesto ? g.formatNumber(number: presupuesto.originalInversion, maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
                 <div class='input-group input-group-sm'>
                     <g:textField name="originalCorrientes" class="form-control input-sm required number money" readonly=""
                                  value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </div>
         </div>
@@ -94,14 +94,15 @@
             }
         });
 
-        $("#anio").change(function () {
-            var anioId = $("#anio").val();
+        cargarPresupuestoAnio($("#anio option:selected").val());
+
+        function cargarPresupuestoAnio (anio) {
             var unidadId = "${unidad?.id}";
             $.ajax({
                 type    : "POST",
-                url     : "${createLink(action: 'getPresupuestoAnio_ajax')}",
+                url     : "${createLink(controller: 'unidadEjecutora', action: 'getPresupuestoAnio_ajax')}",
                 data    : {
-                    anio   : anioId,
+                    anio   : anio,
                     unidad : unidadId
                 },
                 success : function (msg) {
@@ -110,6 +111,11 @@
                     $("#originalCorrientes").val(parts[1]);
                 }
             });
+        }
+
+        $("#anio").change(function () {
+            var anioId = $("#anio").val();
+           cargarPresupuestoAnio(anioId)
         });
     });
 </script>

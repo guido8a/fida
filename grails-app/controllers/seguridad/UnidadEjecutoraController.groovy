@@ -1,5 +1,8 @@
 package seguridad
 
+import parametros.Anio
+import proyectos.PresupuestoUnidad
+
 class UnidadEjecutoraController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -130,14 +133,16 @@ class UnidadEjecutoraController {
 
         } else if (id == "root") {
             hijos = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre}
+            def presupuesto = ""
             def data = ""
 
             ico = ", \"icon\":\"fa fa-building text-success\""
             hijos.each { hijo ->
 //                println "procesa ${hijo.nombre}"
+                presupuesto = UnidadEjecutora.findByCodigoAndFechaFinIsNull('FRPS') ? ' presupuesto' : ''
                 clase = UnidadEjecutora.findByPadreAndFechaFinIsNull(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
                 clase2 = Persona.findAllByUnidadEjecutora(hijo) ? " hasChildren" : ''
-                tree += "<li id='uni_" + hijo.id + "' class='" + clase + clase2 + "' ${data} data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"
+                tree += "<li id='uni_" + hijo.id + "' class='" + clase + clase2 + presupuesto + "' ${data} data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"
                 tree += "<a href='#' class='label_arbol'>" + hijo?.nombre + "</a>"
                 tree += "</li>"
             }
@@ -233,6 +238,79 @@ class UnidadEjecutoraController {
     def presupuestoEntidad_ajax() {
         def unidad = UnidadEjecutora.get(params.id)
         return [unidad: unidad]
+    }
+
+    /**
+     * Acción llamada con ajax que busca el presupuesto de un año de una unidad ejecutora
+     * @param anio el id del año
+     * @param unidad el id de la unidad
+     */
+    def getPresupuestoAnio_ajax() {
+
+        def anio = Anio.get(params.anio)
+        def unidad = UnidadEjecutora.get(params.unidad)
+        def presupuesto = PresupuestoUnidad.findByAnioAndUnidad(anio, unidad)
+        def str = (presupuesto ? g.formatNumber(number: presupuesto.maxInversion, maxFractionDigits: 2, minFractionDigits: 2) : '0,00')
+        str += "_"
+        str += (presupuesto ? g.formatNumber(number: presupuesto?.originalCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : '0,00')
+        render(str)
+    }
+
+
+    /**
+     * Acción llamada con ajax que guarda las modificaciones del presupuesto anual de una unidad ejecutora
+     */
+    def savePresupuestoEntidad_ajax() {
+
+        println("guardar " + params)
+
+
+        def unidad = UnidadEjecutora.get(params.unidad)
+        def anio = parametros.Anio.get(params.anio)
+        def inversion = params.maxInversion
+        def corrientes = params.maxCorrientes
+        def originalCorrientes = params.originalCorrientes
+        def originalInversion = params.originalInversion
+
+        if (!inversion) inversion = 0
+        if (!corrientes) corrientes = 0
+        if (!originalInversion) originalInversion = 0
+        if (!originalCorrientes) originalCorrientes = 0
+
+        inversion = (inversion.toString().replaceAll(",", "")).toDouble()
+        corrientes = (corrientes.toString().replaceAll(",", "")).toDouble()
+        originalInversion = (originalInversion.toString().replaceAll(",", "")).toDouble()
+        originalCorrientes = (originalCorrientes.toString().replaceAll(",", "")).toDouble()
+
+        // se pone valores originales d einversión y corrientes solo cuando estos son ceros
+        if(inversion > 0 && originalInversion == 0) {
+            originalInversion = inversion
+        }
+        if(corrientes > 0 && originalCorrientes == 0) {
+            originalCorrientes = corrientes
+        }
+
+        def presupuestoUnidad = PresupuestoUnidad.findAllByUnidadAndAnio(unidad, anio)
+        if (presupuestoUnidad.size() == 1) {
+            presupuestoUnidad = presupuestoUnidad.first()
+        } else if (presupuestoUnidad.size() == 0) {
+            presupuestoUnidad = new PresupuestoUnidad()
+            presupuestoUnidad.unidad = unidad
+            presupuestoUnidad.anio = anio
+        } else {
+            println "Hay ${presupuestoUnidad.size()} presupuestos para el anio ${anio.anio}, unidad ${unidad.codigo}"
+            presupuestoUnidad = presupuestoUnidad.first()
+        }
+        presupuestoUnidad.maxCorrientes = corrientes
+        presupuestoUnidad.originalCorrientes = originalCorrientes
+        presupuestoUnidad.originalInversion = originalInversion
+        presupuestoUnidad.maxInversion = inversion
+
+        if (!presupuestoUnidad.save(flush: true)) {
+            render "ERROR*" + renderErrors(bean: presupuestoUnidad)
+        } else {
+            render "SUCCESS*Presupuesto modificado exitosamente"
+        }
     }
 
 }

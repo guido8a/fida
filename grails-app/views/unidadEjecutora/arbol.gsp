@@ -262,6 +262,7 @@
         var esCanton = nodeType.contains("persona");
         var tieneHijos = $node.hasClass("hasChildren");
         var inactivo = $node.hasClass("inactivo");
+        var tienePresupuesto = $node.hasClass("presupuesto");
 
         var items = {};
 
@@ -463,6 +464,60 @@
             }
         };
 
+        var presupuestoEntidad = {
+            label            : "Presupuesto de la Unidad",
+            icon             : "fa fa-dollar-sign text-success",
+            separator_before : true,
+            action           : function () {
+                $.ajax({
+                    type    : "POST",
+                    url     : "${createLink(controller: 'unidadEjecutora',  action:'presupuestoEntidad_ajax')}",
+                    data    : {
+                        id : nodeId
+                    },
+                    success : function (msg) {
+                        bootbox.dialog({
+                            title   : "Presupuesto de la Unidad",
+                            message : msg,
+                            buttons : {
+                                cancelar : {
+                                    label     : "Cancelar",
+                                    className : "btn-primary",
+                                    callback  : function () {
+                                    }
+                                },
+                                guardar  : {
+                                    label     : "Guardar",
+                                    icon      : "fa fa-save",
+                                    className : "btn-success",
+                                    callback  : function () {
+                                        var $frm = $("#frmPresupuestoEntidad");
+                                        if ($frm.valid()) {
+                                            var dialog = cargarLoader("Cargando...");
+                                            var data = $frm.serialize();
+                                            data += "&unidad=" + nodeId;
+                                            $.ajax({
+                                                type    : "POST",
+                                                url     : "${createLink(controller: 'unidadEjecutora', action:'savePresupuestoEntidad_ajax')}",
+                                                data    : data,
+                                                success : function (msg) {
+                                                    var parts = msg.split("*");
+                                                    log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
+                                                    closeLoader();
+                                                }
+                                            });
+                                            return true;
+                                        }
+                                        return false;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        };
+
         var perfiles = {
             label            : "Perfiles del usuario",
             icon             : "fa fa-list text-primary",
@@ -501,6 +556,9 @@
             items.editarUnidad = editarUnidad;
             if(!tieneHijos){
                 items.borrarUnidad = borrarUnidadEjecutora;
+            }
+            if(tienePresupuesto){
+                items.presupuesto = presupuestoEntidad;
             }
 
         } else if (esCanton) {
