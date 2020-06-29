@@ -1,5 +1,4 @@
 
-<%@ page import="bitacora.Base" %>
 <!DOCTYPE html>
 <html>
     <head>

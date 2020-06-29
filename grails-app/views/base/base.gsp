@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="main">
-    <title>Bitácora - Artículo</title>
+    <title>Base de conocimiento - Artículo</title>
 
     <asset:javascript src="/ckeditor/ckeditor.js"/>
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/vendor/jquery.ui.widget.js"/>
@@ -102,7 +102,7 @@
 
         <h3 class="panel-title" style="margin-left: 420px" title="${base?.problema ?: ''}">
             <i class="fa fa-pen"></i> Artículo:
-        "${base?.problema?.size() < 65 ? base?.problema : base?.problema[0..64]+"..."}"
+         ${base?.problema ? base?.problema?.size() < 65 ? base?.problema : base?.problema[0..64]+"..." : ''}
         </h3>
 
         <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultarr"
@@ -125,9 +125,9 @@
     <div class="panel-group" style="height: 730px">
         <div class="col-md-12" style="margin-top: 10px">
             <ul class="nav nav-pills">
-                <li class="show active col-md-5"><a data-toggle="tab" href="#home"><h4><i class="fa fa-atlas"></i> Problema</h4></a></li>
-                <li class="col-md-3"><a data-toggle="tab" href="#imagenes"><h4><i class="fa fa-clipboard"></i> Imágenes (${contadorImas})</h4></a></li>
-                <li class="col-md-3"><a data-toggle="tab" href="#archivos"><h4><i class="fa fa-folder-open"></i> Archivos (${contadorOtros})</h4></a></li>
+%{--                <li class="show active col-md-5"><a data-toggle="tab" href="#home"><h4><i class="fa fa-atlas"></i> Problema</h4></a></li>--}%
+%{--                <li class="col-md-3"><a data-toggle="tab" href="#imagenes"><h4><i class="fa fa-clipboard"></i> Imágenes (${contadorImas})</h4></a></li>--}%
+%{--                <li class="col-md-3"><a data-toggle="tab" href="#archivos"><h4><i class="fa fa-folder-open"></i> Archivos (${contadorOtros})</h4></a></li>--}%
             </ul>
             <div style="height: 3px; background-color: #CEDDE6"></div>
 
@@ -139,7 +139,7 @@
                             <div class="col-md-12">
                                 <span class="col-md-2 label label-primary text-info mediano">Tema</span>
                                 <div class="col-md-8">
-                                    <g:select name="tema" id="temaId" from="${bitacora.Tema.list()}" optionKey="id"
+                                    <g:select name="tema" id="temaId" from="${base.Tema.list()}" optionKey="id"
                                               value="${base?.tema?.id}" optionValue="nombre" class="form-control"
                                               style="color: #3d658a"/>
                                 </div>
@@ -343,35 +343,40 @@
         var texto = CKEDITOR.instances.algoritmo.getData();
         var base_id = '${base?.id}';
 
-        if($form.valid()){
-            var dialog = cargarLoader("Guardando...");
-            $.ajax({
-                type: 'POST',
-                url: "${createLink(controller: 'base', action: 'guardarProblema_ajax')}",
-                data:  {
-                    id: base_id,
-                    algoritmo: texto,
-                    tema: $("#temaId").val(),
-                    problema: $("#prbl").val(),
-                    clave: $("#clve").val(),
-                    solucion: $("#slcn").val(),
-                    referencia: $("#refe").val(),
-                    observacion: $("#obsr").val()
-                },
-                success: function (msg) {
-                    var parte = msg.split("_");
-                    if(parte[0] == 'ok'){
-                        log("Problema guardado correctamente","success");
-                        dialog.modal('hide');
-                        // setTimeout(function () {
-                        //     reCargar(parte[1]);
-                        // }, 500);
-                    }else{
-                        dialog.modal('hide');
-                        log("Error al guardar el problema","error")
+
+        if($("#temaId").val()){
+            if($form.valid()){
+                var dialog = cargarLoader("Guardando...");
+                $.ajax({
+                    type: 'POST',
+                    url: "${createLink(controller: 'base', action: 'guardarProblema_ajax')}",
+                    data:  {
+                        id: base_id,
+                        algoritmo: texto,
+                        tema: $("#temaId").val(),
+                        problema: $("#prbl").val(),
+                        clave: $("#clve").val(),
+                        solucion: $("#slcn").val(),
+                        referencia: $("#refe").val(),
+                        observacion: $("#obsr").val()
+                    },
+                    success: function (msg) {
+                        var parte = msg.split("_");
+                        if(parte[0] == 'ok'){
+                            log("Problema guardado correctamente","success");
+                            dialog.modal('hide');
+                            // setTimeout(function () {
+                            //     reCargar(parte[1]);
+                            // }, 500);
+                        }else{
+                            dialog.modal('hide');
+                            log("Error al guardar el problema","error")
+                        }
                     }
-                }
-            });
+                });
+            }
+        }else{
+            bootbox.alert('<i class="fa fa-exclamation-triangle fa-3x text-warning"></i>' + " No existen cargados" +  '<strong>' + " temas " + '</strong>' + "para crear una entrada en la base de conocimiento")
         }
     });
 

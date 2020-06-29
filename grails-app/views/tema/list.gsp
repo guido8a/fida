@@ -13,35 +13,21 @@
         <div class="btn-toolbar toolbar" style="margin-bottom: 15px">
             <div class="btn-group">
                 <g:link action="form" class="btn btn-default btnCrear">
-                    <i class="fa fa-file"></i> Nuevo Tema
+                    <i class="fa fa-clipboard-list"></i> Nuevo Tema
                 </g:link>
             </div>
-%{--            <div class="btn-group pull-right col-md-3">--}%
-%{--                <div class="input-group">--}%
-%{--                    <input type="text" class="form-control" placeholder="Buscar" value="${params.search}">--}%
-%{--                    <span class="input-group-btn">--}%
-%{--                        <g:link action="list" class="btn btn-default btn-search" type="button">--}%
-%{--                            <i class="fa fa-search"></i>&nbsp;--}%
-%{--                        </g:link>--}%
-%{--                    </span>--}%
-%{--                </div><!-- /input-group -->--}%
-%{--            </div>--}%
         </div>
 
         <table class="table table-condensed table-bordered table-striped">
             <thead>
                 <tr>
-                    
                     <g:sortableColumn property="nombre" title="Nombre" />
-                    
                 </tr>
             </thead>
             <tbody>
                 <g:each in="${temaInstanceList}" status="i" var="temaInstance">
                     <tr data-id="${temaInstance.id}">
-                        
                         <td>${fieldValue(bean: temaInstance, field: "nombre")}</td>
-                        
                     </tr>
                 </g:each>
             </tbody>

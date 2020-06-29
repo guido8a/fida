@@ -1,6 +1,4 @@
-<%@ page import="bitacora.Tema" %>
 
-%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
 <g:if test="${!temaInstance}">
     <elm:notFound elem="Tema" genero="o" />
 </g:if>
@@ -14,7 +12,6 @@
                     Nombre
                 </label>
                 <div class="col-md-8">
-                    %{--<g:textField name="nombre" maxlength="63" required="" class="allCaps form-control required" value="${temaInstance?.nombre}"/>--}%
                     <g:textArea name="nombre" maxlength="63" class="form-control required" value="${temaInstance?.nombre}" style="height: 75px; resize: none"/>
                 </div>
                 
