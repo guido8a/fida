@@ -1,5 +1,10 @@
 import seguridad.Persona
 
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
+
 class UtilitariosTagLib {
 
     static namespace = "util"
@@ -225,4 +230,118 @@ class UtilitariosTagLib {
         }
         out << salida
     }
+
+    Closure formatNumber = { attrs ->
+        if (!attrs.containsKey('number')) {
+            throwTagError("Tag [formatNumber] is missing required attribute [number]")
+        }
+
+        def number = attrs.number
+        if (number == null) return
+
+        def formatName = attrs.formatName
+        def format = attrs.format
+        def type = attrs.type
+        def locale = resolveLocale(attrs.locale)
+
+        if (type == null) {
+            if (!format && formatName) {
+                format = messageHelper(formatName,null,null,locale)
+                if (!format) {
+                    throwTagError("Attribute [formatName] of Tag [formatNumber] specifies a format key [$formatName] that does not exist within a message bundle!")
+                }
+            }
+            else if (!format) {
+                format = messageHelper("number.format", { messageHelper("default.number.format", "0", null, locale) } ,null ,locale)
+            }
+        }
+
+        DecimalFormatSymbols dcfs = locale ? new DecimalFormatSymbols(locale) : new DecimalFormatSymbols()
+//        DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
+//        decimalSymbols.setDecimalSeparator('.');
+        dcfs.setDecimalSeparator('.')
+
+        DecimalFormat decimalFormat
+
+        if (!type) {
+            decimalFormat = new DecimalFormat(format, dcfs)
+        }
+        else {
+            if (type == 'currency') {
+                decimalFormat = NumberFormat.getCurrencyInstance(locale)
+            }
+            else if (type == 'number') {
+                decimalFormat = NumberFormat.getNumberInstance(locale)
+            }
+            else if (type == 'percent') {
+                decimalFormat = NumberFormat.getPercentInstance(locale)
+            }
+            else {
+                throwTagError("Attribute [type] of Tag [formatNumber] specifies an unknown type. Known types are currency, number and percent.")
+            }
+        }
+
+        if (attrs.nan) {
+            dcfs.naN = attrs.nan
+            decimalFormat.decimalFormatSymbols = dcfs
+        }
+
+        // ensure formatting accuracy
+        decimalFormat.setParseBigDecimal(true)
+
+        if (attrs.currencyCode != null) {
+            Currency currency = Currency.getInstance(attrs.currencyCode as String)
+            decimalFormat.setCurrency(currency)
+        }
+        if (attrs.currencySymbol != null) {
+            dcfs = decimalFormat.getDecimalFormatSymbols()
+            dcfs.setCurrencySymbol(attrs.currencySymbol as String)
+            decimalFormat.setDecimalFormatSymbols(dcfs)
+        }
+        if (attrs.groupingUsed != null) {
+            if (attrs.groupingUsed instanceof Boolean) {
+                decimalFormat.setGroupingUsed(attrs.groupingUsed)
+            }
+            else {
+                // accept true, y, 1, yes
+                decimalFormat.setGroupingUsed(attrs.groupingUsed.toString().toBoolean() ||
+                        attrs.groupingUsed.toString() == 'yes')
+            }
+        }
+        if (attrs.maxIntegerDigits != null) {
+            decimalFormat.setMaximumIntegerDigits(attrs.maxIntegerDigits as Integer)
+        }
+        if (attrs.minIntegerDigits != null) {
+            decimalFormat.setMinimumIntegerDigits(attrs.minIntegerDigits as Integer)
+        }
+        if (attrs.maxFractionDigits != null) {
+            decimalFormat.setMaximumFractionDigits(attrs.maxFractionDigits as Integer)
+        }
+        if (attrs.minFractionDigits != null) {
+            decimalFormat.setMinimumFractionDigits(attrs.minFractionDigits as Integer)
+        }
+        if (attrs.roundingMode != null) {
+            def roundingMode = attrs.roundingMode
+            if (!(roundingMode instanceof RoundingMode)) {
+                roundingMode = RoundingMode.valueOf(roundingMode)
+            }
+            decimalFormat.setRoundingMode(roundingMode)
+        }
+
+        if (!(number instanceof Number)) {
+            number = decimalFormat.parse(number as String)
+        }
+
+        def formatted
+        try {
+            formatted = decimalFormat.format(number)
+        }
+        catch(ArithmeticException e) {
+            // if roundingMode is UNNECESSARY and ArithemeticException raises, just return original number formatted with default number formatting
+            formatted = NumberFormat.getNumberInstance(locale).format(number)
+        }
+        return formatted
+    }
+
+
 }

@@ -24,7 +24,7 @@
             <div class='grupo'>
                 <div class='input-group input-group-sm'>
                     <g:textField name="maxInversion" class="form-control input-sm required number money"
-                                 value="${presupuesto ? g.formatNumber(number: presupuesto.maxInversion, maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
+                                 value="${presupuesto ? g.formatNumber(number: presupuesto.maxInversion, maxFractionDigits: 2, minFractionDigits: 2) : 0}"/>
                     <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </div>
@@ -38,7 +38,7 @@
             <div class='grupo'>
                 <div class='input-group input-group-sm'>
                     <g:textField name="maxCorrientes" class="form-control input-sm required number money"
-                                 value="${presupuesto ? g.formatNumber(number: presupuesto.maxCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
+                                 value="${presupuesto ? g.formatNumber(number: presupuesto.maxCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : 0}"/>
                     <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </div>
@@ -52,7 +52,7 @@
             <div class='grupo'>
                 <div class='input-group input-group-sm'>
                     <g:textField name="originalInversion" class="form-control input-sm required number money" readonly=""
-                                 value="${presupuesto ? g.formatNumber(number: presupuesto.originalInversion, maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
+                                 value="${presupuesto ? g.formatNumber(number: presupuesto.originalInversion, maxFractionDigits: 2, minFractionDigits: 2) : 0}"/>
                     <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </div>
@@ -65,14 +65,15 @@
         <div class="col-md-6">
             <div class='grupo'>
                 <div class='input-group input-group-sm'>
+%{--                    <g:textField name="originalCorrientes" class="form-control input-sm required number money" readonly=""--}%
+%{--                                 value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : 0}"/>--}%
                     <g:textField name="originalCorrientes" class="form-control input-sm required number money" readonly=""
-                                 value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : ''}"/>
+                                 value="${presupuesto ? util.formatNumber(number: presupuesto.originalCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : 0}"/>
                     <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </div>
         </div>
     </div>
-
 </form>
 
 <script type="text/javascript">
