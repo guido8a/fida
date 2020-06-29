@@ -1,4 +1,4 @@
-package fida
+package geografia
 
 class Provincia {
     String numero

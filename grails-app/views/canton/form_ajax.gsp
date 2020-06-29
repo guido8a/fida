@@ -37,7 +37,7 @@
                     Provincia
                 </label>
                 <div class="col-md-6">
-                    <g:select id="provincia" name="provincia" from="${fida.Provincia.list()}" optionKey="id" optionValue="nombre" disabled="" class="many-to-one form-control" value="${cantonInstance?.provincia?.id ?: fida.Provincia.get(padre)?.id}" noSelection="['null': '']"/>
+                    <g:select id="provincia" name="provincia" from="${geografia.Provincia.list()}" optionKey="id" optionValue="nombre" disabled="" class="many-to-one form-control" value="${cantonInstance?.provincia?.id ?: geografia.Provincia.get(padre)?.id}" noSelection="['null': '']"/>
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>

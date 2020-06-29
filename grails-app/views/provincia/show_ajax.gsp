@@ -1,5 +1,5 @@
 
-<%@ page import="fida.Provincia" %>
+<%@ page import="geografia.Provincia" %>
 
 <style type="text/css">
  .tama {

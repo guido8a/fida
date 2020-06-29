@@ -1,7 +1,7 @@
 package seguridad
 
 import audita.Auditable
-import fida.Provincia
+import geografia.Provincia
 
 class UnidadEjecutora implements Auditable{
 

@@ -1,4 +1,4 @@
-<%@ page import="fida.Provincia" %>
+<%@ page import="geografia.Provincia" %>
 <%--
   Created by IntelliJ IDEA.
   User: fabricio
@@ -43,7 +43,7 @@
                 Provincia
             </label>
             <div class="col-md-4">
-                <g:select from="${fida.Provincia.list().sort{it.nombre}}" name="provincia" class="form-control input-sm"
+                <g:select from="${geografia.Provincia.list().sort{it.nombre}}" name="provincia" class="form-control input-sm"
                           value="${unidad?.provincia?.id}" optionKey="id" optionValue="nombre"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>

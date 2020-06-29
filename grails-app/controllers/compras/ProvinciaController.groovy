@@ -1,6 +1,6 @@
 package compras
 
-import fida.Provincia
+import geografia.Provincia
 
 class ProvinciaController {
 

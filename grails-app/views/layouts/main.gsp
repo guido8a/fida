@@ -84,7 +84,7 @@
 
 <mn:menu title="${g.layoutTitle(default: 'Bitácora')}"/>
 
-<div class="container" style="min-width: 1000px !important; margin-top: 80px; overflow-y: hidden">
+<div class="container" style="min-width: 1000px !important; margin-top: 0px; overflow-y: hidden">
     <g:layoutBody/>
 </div>
 

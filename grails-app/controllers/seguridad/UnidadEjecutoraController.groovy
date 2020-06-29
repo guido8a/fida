@@ -226,4 +226,13 @@ class UnidadEjecutoraController {
             render ""
         }
     }
+
+    /**
+     * Acción llamada con ajax que carga el presupuesto de la entidad
+     */
+    def presupuestoEntidad_ajax() {
+        def unidad = UnidadEjecutora.get(params.id)
+        return [unidad: unidad]
+    }
+
 }
