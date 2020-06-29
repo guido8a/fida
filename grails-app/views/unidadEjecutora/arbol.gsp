@@ -503,7 +503,7 @@
                                                 success : function (msg) {
                                                     var parts = msg.split("*");
                                                     log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                                                    closeLoader();
+                                                    dialog.modal('hide')
                                                 }
                                             });
                                             return true;

@@ -263,10 +263,6 @@ class UnidadEjecutoraController {
      * Acción llamada con ajax que guarda las modificaciones del presupuesto anual de una unidad ejecutora
      */
     def savePresupuestoEntidad_ajax() {
-
-        println("guardar " + params)
-
-
         def unidad = UnidadEjecutora.get(params.unidad)
         def anio = parametros.Anio.get(params.anio)
         def inversion = params.maxInversion
