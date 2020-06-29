@@ -250,9 +250,11 @@ class UnidadEjecutoraController {
         def anio = Anio.get(params.anio)
         def unidad = UnidadEjecutora.get(params.unidad)
         def presupuesto = PresupuestoUnidad.findByAnioAndUnidad(anio, unidad)
-        def str = (presupuesto ? g.formatNumber(number: presupuesto.maxInversion, maxFractionDigits: 2, minFractionDigits: 2) : '0,00')
+        def str = (presupuesto ? util.formatNumber(number: presupuesto.maxInversion, maxFractionDigits: 2, minFractionDigits: 2) : '0.00')
+//        def str = (presupuesto ? g.formatNumber(number: presupuesto.maxInversion, maxFractionDigits: 2, minFractionDigits: 2) : '0,00')
         str += "_"
-        str += (presupuesto ? g.formatNumber(number: presupuesto?.originalCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : '0,00')
+        str += (presupuesto ? util.formatNumber(number: presupuesto?.originalCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : '0.00')
+//        str += (presupuesto ? g.formatNumber(number: presupuesto?.originalCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : '0,00')
         render(str)
     }
 

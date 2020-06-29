@@ -1,3 +1,10 @@
+import groovy.transform.CompileStatic
+import org.grails.encoder.CodecLookup
+import org.grails.plugins.web.GrailsTagDateHelper
+import org.grails.web.servlet.mvc.GrailsWebRequest
+import org.springframework.context.MessageSource
+import org.springframework.context.NoSuchMessageException
+import org.springframework.util.StringUtils
 import seguridad.Persona
 
 import java.math.RoundingMode
@@ -231,6 +238,51 @@ class UtilitariosTagLib {
         out << salida
     }
 
+    MessageSource messageSource
+    CodecLookup codecLookup
+    GrailsTagDateHelper grailsTagDateHelper
+
+    @CompileStatic
+    String messageHelper(String code, Object defaultMessage = null, List args = null, Locale locale = null) {
+        if (locale == null) {
+            locale = GrailsWebRequest.lookup().getLocale()
+        }
+        def message
+        try {
+            message = messageSource.getMessage(code, args == null ? null : args.toArray(), locale)
+        }
+        catch (NoSuchMessageException e) {
+            if (defaultMessage != null) {
+                if (defaultMessage instanceof Closure) {
+                    message = defaultMessage()
+                }
+                else {
+                    message = defaultMessage as String
+                }
+            }
+        }
+        return message
+    }
+
+    @CompileStatic
+    static Locale resolveLocale(Object localeAttr) {
+        Locale locale
+        if (localeAttr instanceof Locale) {
+            locale = (Locale)localeAttr
+        } else if (localeAttr != null) {
+            locale = StringUtils.parseLocaleString(localeAttr.toString())
+        }
+        if (locale == null) {
+            locale = GrailsWebRequest.lookup().getLocale()
+            if (locale == null) {
+                locale = Locale.getDefault()
+            }
+        }
+        return locale
+    }
+
+
+
     Closure formatNumber = { attrs ->
         if (!attrs.containsKey('number')) {
             throwTagError("Tag [formatNumber] is missing required attribute [number]")
@@ -256,10 +308,11 @@ class UtilitariosTagLib {
             }
         }
 
-        DecimalFormatSymbols dcfs = locale ? new DecimalFormatSymbols(locale) : new DecimalFormatSymbols()
-//        DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
+//        DecimalFormatSymbols dcfs = locale ? new DecimalFormatSymbols(locale) : new DecimalFormatSymbols()
+        DecimalFormatSymbols dcfs = DecimalFormatSymbols.getInstance();
 //        decimalSymbols.setDecimalSeparator('.');
-        dcfs.setDecimalSeparator('.')
+        Character a = '.'
+        dcfs.setDecimalSeparator(a)
 
         DecimalFormat decimalFormat
 
