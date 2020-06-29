@@ -68,7 +68,7 @@
 %{--                    <g:textField name="originalCorrientes" class="form-control input-sm required number money" readonly=""--}%
 %{--                                 value="${presupuesto ? g.formatNumber(number: presupuesto.originalCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : 0}"/>--}%
                     <g:textField name="originalCorrientes" class="form-control input-sm required number money" readonly=""
-                                 value="${presupuesto ? util.formatNumber(number: presupuesto.originalCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : 0}"/>
+                                 value="${presupuesto ? util.formatNumber(number: presupuesto.originalCorrientes, maxFractionDigits: 2, minFractionDigits: 2) : 10.3}"/>
                     <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </div>

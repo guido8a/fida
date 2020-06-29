@@ -145,6 +145,7 @@ class ProyectoController {
      * @render ERROR*[mensaje] cuando no se pudo grabar correctamente, SUCCESS*[mensaje] cuando se grabó correctamente
      */
     def save_ajax() {
+        println "$params"
         def proyectoInstance = new Proyecto()
         if (params.id) {
             proyectoInstance = Proyecto.get(params.id)
@@ -158,7 +159,7 @@ class ProyectoController {
             render "ERROR*Ha ocurrido un error al guardar Proyecto: " + renderErrors(bean: proyectoInstance)
             return
         }
-        render "SUCCESS*${params.id ? 'Actualización' : 'Creación'} de Proyecto exitosa.*" + proyectoInstance.id
+        render "ok_${params.id ? 'Actualización' : 'Creación'} de Proyecto exitosa.*" + proyectoInstance.id
         return
     } //save para grabar desde ajax
 
@@ -636,5 +637,16 @@ class ProyectoController {
     }
 
 
+    def validarNombre_ajax() {
+        def nombre = params.nombre
+        println "nombre: $nombre --> ${nombre.contains('FAREPS')}"
+        if (nombre.contains('FAREPS')) {
+            render true
+            return
+        } else {
+            render false
+            return
+        }
+    }
 
 }
