@@ -140,7 +140,7 @@ class Proyecto {
 
             codigoEsigef column: 'proysigf'
 
-            unidadAdministradora column: 'proyunad'
+//            unidadAdministradora column: 'proyunad'
             codigo column: 'proycdgo'
             justificacion column: 'proyjust'
 
@@ -174,7 +174,7 @@ class Proyecto {
 
         codigoEsigef(size: 0..3, blank: true, nullable: true, attributes: [mensaje: 'Número proyecto eSIGEF'])
 
-        unidadAdministradora(blank: true, nullable: true, attributes: [mensaje: 'Unidad administradora'])
+//        unidadAdministradora(blank: true, nullable: true, attributes: [mensaje: 'Unidad administradora'])
         codigo(blank: true, nullable: true, attributes: [mensaje: 'Código'])
         justificacion(size: 0..1023, blank: true, nullable: true, attributes: [mensaje: 'Justificación del Proyecto'])
 

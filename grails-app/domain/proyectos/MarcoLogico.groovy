@@ -48,7 +48,10 @@ class MarcoLogico {
      * Número del marco lógico
      */
     int numero = 0;
-
+    /**
+    * Estado del marco lógico (0: activo, 1: modificado)
+    */
+    int estado = 0 /* 0 -> activo por facilidad en la base de datos  1-> modificado*/
     /**
      * Reforma que genera la creación de la actividad
      */
@@ -78,6 +81,7 @@ class MarcoLogico {
             fechaInicio column: 'mrlgfcin'
             fechaFin column: 'mrlgfcfn'
             numero column: 'mrlgnmro'
+            estado column: 'mrlgetdo'
         }
     }
 
@@ -92,6 +96,7 @@ class MarcoLogico {
         monto(blank: true, nullable: true, attributes: [mensaje: 'Monto o valor planificado, se aplica sólo en actividades'])
         fechaFin(nullable: true, blank: true)
         fechaInicio(nullable: true, blank: true)
+        estado(nullable: false, blank: false)
     }
 
     /**

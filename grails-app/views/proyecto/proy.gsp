@@ -21,61 +21,8 @@
         font-size: 14px;
     }
 
-
-    .nav-tabs > li > a {
-        border: medium none;
-
-    }
-
-    .nav-tabs > li > a:hover {
-        background-color: #475563 !important;
-        border: medium none;
-        border-radius: 0;
-        color: #fff;
-    }
-
-    .conError {
-        border: 1px solid #f00000;
-    }
-
-    .progress-svt {
-        width: 0;
-        height: 23px;
-        padding-top: 5px;
-        padding-bottom: 2px;
-        background-color: #428BCA;
-        text-align: center;
-        line-height: 100%;
-        font-size: 14px;
+    .negrita {
         font-weight: bold;
-
-    }
-
-    .background-image {
-        background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 10%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
-        background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
-        -webkit-animation: progress-bar-stripes-svt 2s linear infinite;
-        background-size: 60px 60px;
-        animation: progress-bar-stripes-svt 2s linear infinite;
-    }
-
-    @-webkit-keyframes progress-bar-stripes-svt {
-        /*el x del from tiene que ser multiplo del x del background size...... mientas mas grande mas rapida es la animacion*/
-        from {
-            background-position: 120px 0;
-        }
-        to {
-            background-position: 0 0;
-        }
-    }
-
-    @keyframes progress-bar-stripes-svt {
-        from {
-            background-position: 120px 0;
-        }
-        to {
-            background-position: 0 0;
-        }
     }
     </style>
 
@@ -114,7 +61,7 @@
         <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 423px" title="Ver registro">
             <i class="fa fa-search"></i> Ver Marco Lógico
         </a>
-        <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 575px" title="Ver registro">
+        <a href="#" id="editMrlg" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 575px" title="Ver registro">
             <i class="fa fa-search"></i> Editar Marco Lógico
         </a>
         <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 745px" title="Ver registro">
@@ -133,13 +80,14 @@
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
             <g:form class="form-horizontal" name="frmProyecto" controller="proyecto" action="save_ajax">
+                <g:hiddenField name="id" value="${proy?.id}"/>
                 <div class="row">
                     <div class="col-md-12 input-group">
-                        <span class="col-md-2 label label-primary text-info mediano">Código Esigef</span>
+                        <span class="col-md-2 label label-primary text-info mediano">Código CUP</span>
 
                         <div class="col-md-3">
-                            <g:textField name="codigoEsigef" id="clve" class="form-control required"
-                                         maxlength="20" value="${proy?.codigoEsigef}"/>
+                            <g:textField name="codigoProyecto" id="codigoProyecto" class="form-control required"
+                                         maxlength="20" value="${proy?.codigoProyecto}" readonly=""/>
                         </div>
                     </div>
                 </div>
@@ -209,10 +157,10 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Fecha Inicio</span>
                         <span class="grupo">
-                            <div class="col-md-2 input-group">
+                            <div class="col-md-2 ">
                                 <input name="fechaInicio" id='fechaInicio' type='text' class="form-control"
                                        value="${proy?.fechaInicio?.format("dd-MM-yyyy")}"/>
 
@@ -222,7 +170,7 @@
                         <span class="col-md-2 mediano"></span>
                         <span class="col-md-2 label label-primary text-info mediano">Fecha Fin</span>
                         <span class="grupo">
-                            <div class="col-md-2 input-group">
+                            <div class="col-md-2">
                                 <input name="fechaFin" id='fechaFin' type='text' class="form-control"
                                        value="${proy?.fechaFin?.format("dd-MM-yyyy")}"/>
 
@@ -233,107 +181,36 @@
                 </div>
 
                 <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-12 input-group">
-                        <span class="col-md-2 label label-primary text-info mediano">Informar cada (meses)</span>
+                    <div class="col-md-6 input-group">
+                        <span class="col-md-4 label label-primary text-info mediano">Informar cada (meses)</span>
 
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <g:textField name="mes" id="mes" class="form-control" maxlength="5" value="${proy?.mes}"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6 input-group">
+                        <span class="col-md-4 label label-primary text-info mediano">Monto del Proyecto</span>
+
+                        <div class="col-md-4">
+                            <g:textField name="monto" id="monto" class="form-control negrita" maxlength="16"
+                                         value="${util.formatNumber(number: proy.monto, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                         </div>
                     </div>
                 </div>
             </g:form>
         </div>
-        %{--//tab imágenes--}%
-        <div id="imagenes" class="tab-pane fade">
-
-            <g:if test="${proy?.id}">
-                <div class="row">
-                    <div class="col-md-12">
-                        <label class="control-label text-info" style="font-size: 14px">
-                            Cargue imágenes referentes al tema: <strong>'${proy?.problema}"</strong>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4"></div>
-
-                    <div class="col-md-6">
-                        %{--                                    <span class="btn btn-success fileinput-button" style="position: relative;height: 40px;margin-top: 10px">--}%
-                        %{--                                        <i class="glyphicon glyphicon-plus"></i>--}%
-                        %{--                                        <span>Seleccionar archivos</span>--}%
-                        <input type="file" name="file" id="file" title="Buscar Archivo" class="file btn btn-success"
-                               multiple accept=".jpeg, .jpg, .png">
-                        %{--                                    </span>--}%
-                    </div>
-                </div>
-            </g:if>
-
-            <div style="margin-top:15px;margin-bottom: 20px" class="vertical-container" id="files">
-                <p class="css-vertical-text" id="titulo-arch" style="display: none">Imagen</p>
-
-                <div class="linea" id="linea-arch" style="display: none"></div>
-            </div>
-
-
-            <div id="divCarrusel"></div>
-        </div>
-
-        <div id="archivos" class="tab-pane fade">
-            <div class="row">
-                <div class="col-md-12">
-                    <label class="control-label text-info" style="font-size: 14px">
-                        Archivos referentes al tema: <strong>'${proy?.problema}"</strong>
-                    </label>
-                </div>
-            </div>
-            <g:if test="${proy?.id}">
-                <g:uploadForm controller="proyecto" action="subirArchivo">
-                    <g:hiddenField name="idBase" value="${proy?.id}"/>
-                    <div class="row">
-                        <div class="col-md-4"></div>
-
-                        <div class="col-md-6">
-                            <input type="file" name="archivo" id="archivo" title="Buscar pdf" class="file btn btn-info"
-                                   multiple accept=".pdf, .xls">
-                        </div>
-                        <input type="submit" class="btn btn-success" value="Subir Archivo"/>
-                    </div>
-                </g:uploadForm>
-            </g:if>
-
-            <div id="tablaArchivos" style="margin-top: 40px"></div>
-
-        </div>
-        %{--            </div>--}%
-        %{--        </div>--}%
-        %{--    </div>--}%
     </div>
 
-    <div class="modal fade " id="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    Problema y Solución
-                </div>
-
-                <div class="modal-body" id="dialog-body" style="padding: 15px">
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
 
 
     <script type="text/javascript">
 
         $("#btnBase").click(function () {
             location.href = "${createLink(controller: 'proyecto', action: 'proy')}"
+        });
+
+        $("#editMrlg").click(function () {
+            location.href = "${createLink(controller: 'marcoLogico', action: 'marcoLogicoProyecto')}/${proy.id}?list=list"
         });
 
         $("#btnGuardar").click(function () {
@@ -344,40 +221,25 @@
             console.log('val:', $form.validate());
             console.log('val:', $form.validate().label);
             if($form.valid()){
-
                 var dialog = cargarLoader("Guardando...");
                 console.log('ok')
-                $form.submit();
-                /*
-                            $.ajax({
-                                type: 'POST',
-                                url: "
-                ${createLink(controller: 'proyecto', action: 'save_ajax')}",
-                data:  {
-                    id: base_id,
-                    algoritmo: texto,
-                    tema: $("#temaId").val(),
-                    problema: $("#prbl").val(),
-                    clave: $("#clve").val(),
-                    solucion: $("#slcn").val(),
-                    referencia: $("#refe").val(),
-                    observacion: $("#obsr").val()
-                },
+                $.ajax({type: 'POST',
+                        url: "${createLink(controller: 'proyecto', action: 'save_ajax')}",
+                data:  $form.serialize(),
                 success: function (msg) {
                     var parte = msg.split("_");
                     if(parte[0] == 'ok'){
-                        log("Problema guardado correctamente","success");
-                        dialog.modal('hide');
+                        // log("Problema guardado correctamente","success");
+                        // dialog.modal('hide');
                         // setTimeout(function () {
-                        //     reCargar(parte[1]);
+                            reCargar(parte[1]);
                         // }, 500);
                     }else{
                         dialog.modal('hide');
-                        log("Error al guardar el problema","error")
+                        log("Error al guardar el proyecto" + parte[1],"error")
                     }
                 }
             });
-*/
             }
         });
 

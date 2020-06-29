@@ -154,12 +154,19 @@ class ProyectoController {
                 return
             }
         }
+        params.monto = params.monto.toDouble()
+        params.fechaInicio = params.fechaInicio ? new Date().parse("dd-MM-yyyy", params.fechaInicio) : null
+        params.fechaFin = params.fechaFin ? new Date().parse("dd-MM-yyyy", params.fechaFin) : null
+
         proyectoInstance.properties = params
+
         if (!proyectoInstance.save(flush: true)) {
-            render "ERROR*Ha ocurrido un error al guardar Proyecto: " + renderErrors(bean: proyectoInstance)
+            println proyectoInstance.errors
+            render "er_" + renderErrors(bean: proyectoInstance)
             return
         }
-        render "ok_${params.id ? 'Actualización' : 'Creación'} de Proyecto exitosa.*" + proyectoInstance.id
+        println "ok_${proyectoInstance.id} ${params.id ? 'Actualización' : 'Creación'} de Proyecto exitosa.*"
+        render "ok_${proyectoInstance.id}_${params.id ? 'Actualización' : 'Creación'} de Proyecto exitosa.*"
         return
     } //save para grabar desde ajax
 
