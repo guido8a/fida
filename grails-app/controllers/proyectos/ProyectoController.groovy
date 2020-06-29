@@ -154,7 +154,7 @@ class ProyectoController {
                 return
             }
         }
-        params.monto = params.monto.toDouble()
+        params.monto = params.monto ? params.monto.toDouble() : 0
         params.fechaInicio = params.fechaInicio ? new Date().parse("dd-MM-yyyy", params.fechaInicio) : null
         params.fechaFin = params.fechaFin ? new Date().parse("dd-MM-yyyy", params.fechaFin) : null
 

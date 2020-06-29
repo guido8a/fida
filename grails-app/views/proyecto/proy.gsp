@@ -85,10 +85,18 @@
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Código CUP</span>
 
-                        <div class="col-md-3">
-                            <g:textField name="codigoProyecto" id="codigoProyecto" class="form-control required"
-                                         maxlength="20" value="${proy?.codigoProyecto}" readonly=""/>
-                        </div>
+                        <g:if test="${proy?.id}">
+                            <div class="col-md-3">
+                                <g:textField name="codigoProyecto" id="codigoProyecto" class="form-control required"
+                                             maxlength="20" value="${proy?.codigoProyecto}" readonly=""/>
+                            </div>
+                        </g:if>
+                        <g:else>
+                            <div class="col-md-3">
+                                <g:textField name="codigoProyecto" id="codigoProyecto" class="form-control required"
+                                             maxlength="20" value="${proy?.codigoProyecto}"/>
+                            </div>
+                        </g:else>
                     </div>
                 </div>
 
@@ -193,7 +201,7 @@
 
                         <div class="col-md-4">
                             <g:textField name="monto" id="monto" class="form-control negrita" maxlength="16"
-                                         value="${util.formatNumber(number: proy.monto, maxFractionDigits: 2, minFractionDigits: 2)}"/>
+                                         value="${util.formatNumber(number: proy?.monto, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                         </div>
                     </div>
                 </div>
@@ -210,7 +218,7 @@
         });
 
         $("#editMrlg").click(function () {
-            location.href = "${createLink(controller: 'marcoLogico', action: 'marcoLogicoProyecto')}/${proy.id}?list=list"
+            location.href = "${createLink(controller: 'marcoLogico', action: 'marcoLogicoProyecto')}/${proy?.id}?list=list"
         });
 
         $("#btnGuardar").click(function () {
