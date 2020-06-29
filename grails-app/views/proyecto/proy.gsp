@@ -340,10 +340,10 @@
 
             var $form = $("#frmProyecto");
             var base_id = '${proy?.id}';
-            // validator;
+            $form.validate();
             console.log('val:', $form.validate());
-            console.log('val:', $form.validate().invalid.isNull);
-            if($form.validate()){
+            console.log('val:', $form.validate().label);
+            if($form.valid()){
 
                 var dialog = cargarLoader("Guardando...");
                 console.log('ok')
