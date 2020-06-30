@@ -58,7 +58,7 @@
         <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 335px" title="Ver registro">
             <i class="fa fa-search"></i> Estado
         </a>
-        <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 423px" title="Ver registro">
+        <a href="#" id="btnVerMarco" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 423px" title="Ver marco lógico">
             <i class="fa fa-search"></i> Ver Marco Lógico
         </a>
         <a href="#" id="editMrlg" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 575px" title="Ver registro">
@@ -212,6 +212,10 @@
 
 
     <script type="text/javascript">
+
+        $("#btnVerMarco").click(function () {
+           location.href="${createLink(controller: 'marcoLogico', action: 'verMarco')}/${proy?.id}"
+        });
 
         $("#btnBase").click(function () {
             location.href = "${createLink(controller: 'proyecto', action: 'proy')}"

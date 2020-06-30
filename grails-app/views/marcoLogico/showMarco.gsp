@@ -115,11 +115,7 @@
             <input type="hidden" name="edicion" value="1" id="edicion">
         </div>
 
-
-
         <div class="dialog col-md-12" title="MATRIZ DE MARCO LOGICO DEL PROYECTO">
-
-
             <div class="btn-toolbar toolbar col-md-2" style="margin-bottom: 15px">
                 <div class="btn-group">
                     <g:link controller="proyecto" action="proy" id="${proyecto?.id}" class="btn btn-default" title="Regresar al proyecto">
@@ -129,6 +125,7 @@
             </div>
             <div class="panel panel-primary col-md-10" style="text-align: center; float: right">
                 <h4>MATRIZ DE MARCO LOGICO DEL PROYECTO</h4>
+                <strong style="color: #5596ff">${proyecto?.nombre}</strong>
             </div>
 
             %{--<div class="breadCrumbHolder module">--}%
@@ -190,10 +187,10 @@
                                          ml="Fin" tipo="2" div="mf_${med.id}" indicador="${indicador.id}"
                                          identificador="${med.id}">${med.descripcion}</div>
                                 </g:each>
-                                <div class=" texto agregado ui-corner-all md fin varios edicion" pref="mf_"
+                                <div class=" texto agregado ui-corner-all md varios edicion btn btn-success" pref="mf_"
                                      id="mf_0${i + 1}" ml="Fin" div="mf_0${i + 1}" tipo="2"
                                      indicador="${indicador.id}"
-                                     identificador="0">Agregar</div>
+                                     identificador="0"><i class="fa fa-folder-plus"></i> Agregar</div>
                             </div>
                         </div>
                     </g:each>
@@ -201,17 +198,17 @@
                     <div class="matriz ui-corner-all  fila " id="ind"
                          style="${(band.toInteger() == 0) ? 'margin-top:-10px;' : ''}">
                         <div class="filaMedio izq ">
-                            <div class="texto agregado ui-corner-all fin varios edicion  " pref="if_" id="if_0"
+                            <div class="texto agregado ui-corner-all varios edicion btn btn-success " pref="if_" id="if_0"
                                  ml="Fin"
-                                 div="if_0" tipo="1" identificador="0" indicador="${fin?.id}">
+                                 div="if_0" tipo="1" identificador="0" indicador="${fin?.id}"><i class="fa fa-folder-plus"></i>
                                 Agregar
                             </div>
                         </div>
 
                         <div class="filaMedio der">
-                            <div class=" texto agregado ui-corner-all md fin varios edicion" pref="mf_"
+                            <div class=" texto agregado ui-corner-all md varios edicion btn btn-success " pref="mf_"
                                  id="mf_0"
-                                 ml="Fin" div="mf_0" indicador="0" tipo="2" identificador="0">Agregar</div>
+                                 ml="Fin" div="mf_0" indicador="0" tipo="2" identificador="0"><i class="fa fa-folder-plus"></i> Agregar</div>
                         </div>
                     </div>
 
@@ -228,9 +225,9 @@
                                  identificador="${su.id}" tipo="3"
                                  indicador="${fin?.id}">${su.descripcion}</div>
                         </g:each>
-                        <div class="agregado ui-corner-all md fin varios editar edicion" id="sf_0" ml="Fin"
+                        <div class="agregado ui-corner-all md varios editar edicion btn btn-success " id="sf_0" ml="Fin"
                              div="sf_0"
-                             identificador="0" tipo="3" indicador="${fin?.id}">Agregar</div>
+                             identificador="0" tipo="3" indicador="${fin?.id}"><i class="fa fa-folder-plus"></i> Agregar</div>
                     </div>
                 </div>
 
@@ -280,10 +277,10 @@
                                          indicador="${indiProp.id}"
                                          tipo="2" identificador="${med.id}">${med.descripcion}</div>
                                 </g:each>
-                                <div class=" texto agregado ui-corner-all md proposito varios edicion"
+                                <div class=" texto agregado ui-corner-all md varios edicion btn btn-success "
                                      pref="mp_"
                                      id="mp_0${i + 1}" ml="Proposito" div="mp_0${i + 1}" tipo="2"
-                                     indicador="${indiProp.id}" identificador="0">Agregar</div>
+                                     indicador="${indiProp.id}" identificador="0"><i class="fa fa-folder-plus"></i> Agregar</div>
                             </div>
                         </div>
                     </g:each>
@@ -291,19 +288,19 @@
                     <div class="matriz ui-corner-all  fila " id="ind"
                          style="${(band.toInteger() == 0) ? 'margin-top:-10px;' : ''}">
                         <div class="filaMedio izq ">
-                            <div class="texto agregado ui-corner-all proposito varios edicion  "
+                            <div class="texto agregado ui-corner-all varios edicion btn btn-success "
                                  pref="div_indicador_prop_" id="div_indicador_prop_0" ml="Proposito"
                                  div="div_indicador_prop_0" identificador="0" tipo="1"
-                                 indicador="${proposito?.id}">
+                                 indicador="${proposito?.id}"><i class="fa fa-folder-plus"></i>
                                 Agregar
                             </div>
                         </div>
 
                         <div class="filaMedio der">
-                            <div class=" texto agregado ui-corner-all md proposito varios edicion" pref="mp_"
+                            <div class=" texto agregado ui-corner-all md btn btn-success varios edicion" pref="mp_"
                                  id="mp_0"
                                  ml="Proposito" div="mp_0" indicador="0" tipo="2"
-                                 identificador="0">Agregar</div>
+                                 identificador="0"><i class="fa fa-folder-plus"></i> Agregar</div>
                         </div>
                     </div>
 
@@ -319,9 +316,10 @@
                                  div="sp_${su.id}" identificador="${su.id}" tipo="3"
                                  indicador="${proposito?.id}">${su.descripcion}</div>
                         </g:each>
-                        <div class="agregado ui-corner-all proposito varios editar edicion" id="sp_0"
+%{--                        <div class="agregado ui-corner-all btn btn-success proposito varios editar edicion" id="sp_0"--}%
+                        <div class="agregado ui-corner-all btn btn-success varios editar edicion" id="sp_0"
                              ml="Proposito"
-                             div="sp_0" identificador="0" tipo="3" indicador="${proposito?.id}">Agregar</div>
+                             div="sp_0" identificador="0" tipo="3" indicador="${proposito?.id}"><i class="fa fa-folder-plus"></i> Agregar</div>
 
                     </div>
                 </div>
@@ -609,7 +607,7 @@
                     success : function (msg) {
                         var b = bootbox.dialog({
                             id    : "dlgCreateEditMarco",
-                            title : "Ingresar " + tipo,
+                            title : "Ingresar " + (tipo == '1' ? 'Indicador' : (tipo == '2' ? 'Medio de Verificación' : 'Supuesto')),
                             // class : "modal-lg",
                             message : msg,
                             buttons : {

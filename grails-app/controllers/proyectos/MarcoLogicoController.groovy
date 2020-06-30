@@ -607,5 +607,41 @@ class MarcoLogicoController {
         }
     }
 
+    def verMarco() {
+        def proyecto = Proyecto.get(params.id)
+        if(proyecto.aprobado=="a"){
+            response.sendError(403)
+        }else{
+            def fin = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Fin"))
+            def indicadores
+            def medios = []
+            def sup
+            def indiProps
+            def mediosProp = []
+            def supProp
+            if (proyecto) {
+                fin = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Fin"))
+                if (fin) {
+                    indicadores =  Indicador.findAllByMarcoLogico(fin).sort{it.descripcion}
+                    sup = Supuesto.findAllByMarcoLogico(fin).sort{it.descripcion}
+                }
+                indicadores.each {
+                    medios += MedioVerificacion.findAllByIndicador(it).sort{it.descripcion}
+                }
+
+            }
+            def proposito = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Proposito"))
+            if (proposito) {
+                indiProps = Indicador.findAllByMarcoLogico(proposito).sort{it.descripcion}
+                indiProps.each {
+                    mediosProp += MedioVerificacion.findAllByIndicador(it).sort{it.descripcion}
+                }
+                supProp = Supuesto.findAllByMarcoLogico(proposito).sort{it.descripcion}
+            }
+
+            [fin: fin, indicadores: indicadores, medios: medios, sup: sup, proyecto: proyecto, proposito: proposito, indiProps: indiProps, mediosProp: mediosProp, supProp: supProp]
+        }
+    }
+
 
 }
