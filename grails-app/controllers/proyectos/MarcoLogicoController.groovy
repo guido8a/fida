@@ -1,6 +1,7 @@
 package proyectos
 
 import org.springframework.dao.DataIntegrityViolationException
+import parametros.proyectos.IndicadorOrms
 import parametros.proyectos.TipoElemento
 //import vesta.poa.Asignacion
 
@@ -378,12 +379,12 @@ class MarcoLogicoController {
         def resp = Respaldo.findAllByProyecto(proy)
         [resp:resp,proy:proy]
     }
-    
+
     def verRespaldo(){
         def resp = Respaldo.get(params.id)
         def comps = MarcoLogicoRespaldo.findAllByRespaldoAndTipoElemento(resp,TipoElemento.get(2),[sort:"numeroComp"])
         [componentes:comps,resp:resp]
-        
+
     }
 
     /**
@@ -434,25 +435,22 @@ class MarcoLogicoController {
             if (proyecto) {
                 fin = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Fin"))
                 if (fin) {
-                    indicadores =  Indicador.findAllByMarcoLogico(fin)
-                    sup = Supuesto.findAllByMarcoLogico(fin)
+                    indicadores =  Indicador.findAllByMarcoLogico(fin).sort{it.descripcion}
+                    sup = Supuesto.findAllByMarcoLogico(fin).sort{it.descripcion}
                 }
                 indicadores.each {
-                    medios += MedioVerificacion.findAllByIndicador(it)
+                    medios += MedioVerificacion.findAllByIndicador(it).sort{it.descripcion}
                 }
 
             }
             def proposito = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Proposito"))
             if (proposito) {
-                indiProps = Indicador.findAllByMarcoLogico(proposito)
+                indiProps = Indicador.findAllByMarcoLogico(proposito).sort{it.descripcion}
                 indiProps.each {
-                    mediosProp += MedioVerificacion.findAllByIndicador(it)
+                    mediosProp += MedioVerificacion.findAllByIndicador(it).sort{it.descripcion}
                 }
-                supProp = Supuesto.findAllByMarcoLogico(proposito)
+                supProp = Supuesto.findAllByMarcoLogico(proposito).sort{it.descripcion}
             }
-
-            println("1 " + fin)
-            println("2 " + indicadores)
 
             [fin: fin, indicadores: indicadores, medios: medios, sup: sup, proyecto: proyecto, proposito: proposito, indiProps: indiProps, mediosProp: mediosProp, supProp: supProp]
         }
@@ -461,13 +459,12 @@ class MarcoLogicoController {
 
 
     def marcoDialog_ajax(){
-        println("params md " + params)
         def marco = MarcoLogico.get(params.id)
         return[marco: marco]
     }
 
     def guardarDatosMarco = {
-        println "gdm " + params
+//        println "gdm " + params
         def proyecto = Proyecto.get(params.proyecto)
         def ml = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion(params.tipo))
         if (ml) {
@@ -475,7 +472,7 @@ class MarcoLogicoController {
             if (ml.save(flush: true)) {
                 render "ok"
             } else {
-                println "errores " + ml.errors
+                println "error al guardar el fin en ml " + ml.errors
                 render "no"
             }
         } else {
@@ -483,11 +480,131 @@ class MarcoLogicoController {
             if (ml.save(flush: true)) {
                 render "ok"
             } else {
-                println "errores " + ml.errors
+                println "error al guardar el fin en ml " + ml.errors
                 render "no"
             }
         }
+    }
 
+    def variosDialog_ajax () {
+
+//        println("--> " + params)
+
+        def objeto
+
+        switch(params.tipo){
+            case "1":
+                objeto = Indicador.get(params.id)
+                return[objeto:objeto]
+            break
+            case "2":
+                objeto = MedioVerificacion.get(params.id)
+                return[objeto:objeto]
+            break
+            case "3":
+                objeto = Supuesto.get(params.id)
+                return[objeto:objeto]
+                break
+        }
+
+    }
+
+    def guardarDatosIndMedSup = {
+        println "gdims " + params
+        switch (params.tipo) {
+        /*Inidicadores*/ case "1":
+                def indicador
+                if (params.id && params.id != "" && params.id != " " && params.id != "0") {
+                    indicador = Indicador.get(params.id)
+                    indicador.descripcion = params.datos
+                } else {
+                    indicador = new Indicador([marcoLogico: MarcoLogico.get(params.indicador), descripcion: params.datos])
+                }
+
+                indicador.indicadorOrms = IndicadorOrms.get(1);
+
+                if(!indicador.save(flush:true)){
+                    println("error al guardar el indicador " + indicador.errors)
+                    render "no"
+                }else{
+                    render indicador.id
+                }
+
+//                println " indicador " + indicador.errors.getErrorCount()
+//                if (indicador.errors.getErrorCount() != 0) {
+//                    render "no"
+//                } else {
+//                    render indicador.id
+//                }
+                break;
+        /*Medios*/ case "2":
+                def medio
+                if (params.id && params.id != "" && params.id != " " && params.id != "0") {
+                    medio = MedioVerificacion.get(params.id)
+                    medio.descripcion = params.datos
+                } else {
+
+                    medio = new MedioVerificacion([indicador: Indicador.get(params.indicador), descripcion: params.datos])
+
+                }
+
+                if(!medio.save(flush:true)){
+                    println("error al guardar el medio " + medio.errors)
+                    render "no"
+                }else{
+                    render medio.id
+                }
+
+//                println " medio " + medio.errors.getErrorCount()
+//                if (medio.errors.getErrorCount() != 0) {
+//                    render "no"
+//                } else {
+//                    render medio.id
+//                }
+                break;
+        /*Supuestos*/ case "3":
+                def supuesto
+
+                if (params.id && params.id != "" && params.id != " " && params.id != "0") {
+                    supuesto = Supuesto.get(params.id)
+                    supuesto.descripcion = params.datos
+                } else {
+                    def marco = MarcoLogico.get(params.indicador)
+                    supuesto = new Supuesto([descripcion: params.datos, marcoLogico: marco])
+
+                }
+
+                if(!supuesto.save(flush:true)){
+                    println("error al guardar el supuesto " + supuesto.errors)
+                    render "no"
+                }else{
+                    render "" + supuesto.id + "&&" + supuesto.descripcion
+                }
+
+//                println " supuesto " + supuesto.errors.getErrorCount()
+//                if (supuesto.errors.getErrorCount() != 0) {
+//                    render "no"
+//                } else {
+//                    render "" + supuesto.id + "&&" + supuesto.descripcion
+//                }
+                break;
+        }
+
+
+
+    }
+
+    def agregarSupuesto = {
+        println "as " + params
+        def tp = TipoSupuesto.get(params.id)
+        def marco = MarcoLogico.get(params.marco)
+        def supuesto = new Supuesto([MarcoLogico: marco, tipo: tp])
+        supuesto = kerberosService.saveObject(supuesto, Supuesto, session.perfil, session.usuario, "datosSupuesto", "marcoLogico", session)
+        if (supuesto.errors.getErrorCount() != 0) {
+            render "no"
+        } else {
+            render "" + supuesto.id + "&&" + supuesto.descripcion
+        }
     }
 
 

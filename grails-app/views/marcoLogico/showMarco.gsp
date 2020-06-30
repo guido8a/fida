@@ -108,247 +108,261 @@
 <body>
 
 <div class="body">
-<g:form action="guardarMarco" class="marcoLogico">
-<div id="divSubmit">
-    <input type="hidden" name="proyecto" value="${proyecto.id}" id="proyecto">
-    <input type="hidden" name="proyectoId" value="${proyecto.id}" id="id">
-    <input type="hidden" name="edicion" value="1" id="edicion">
-</div>
-
-<div class="dialog" title="MATRIZ DE MARCO LOGICO DEL PROYECTO">
-
-%{--<div class="breadCrumbHolder module">--}%
-%{--    <div id="breadCrumb" class="breadCrumb module">--}%
-%{--        <ul>--}%
-%{--            <li>--}%
-%{--                <g:link class="bc" controller="proyecto" action="show" id="${proyecto.id}">--}%
-%{--                    Proyecto--}%
-%{--                </g:link>--}%
-%{--            </li>--}%
-%{--            <li>--}%
-%{--                Marco L&oacute;gico--}%
-%{--            </li>--}%
-%{--        </ul>--}%
-%{--    </div>--}%
-%{--</div>--}%
-
-%{--<div id="" class="toolbar ui-widget-header ui-corner-all" style="margin-bottom: 5px;height: 30px;">--}%
-%{--    <a href="#" id="btn_componentes" style="float:right;">Agregar/Editar componente</a>--}%
-%{--</div>--}%
-
-<div style="width: 1030px;float: left;border: 1px solid  rgba(145, 192, 95,0.6)" class="ui-corner-all">
-
-    <div class="matriz ui-corner-all campo cmp datos " ml="Fin" div="div_fin"
-         identificador="${fin?.id}">
-        <div class="titulo">Fin</div>
-
-        <div class="texto agregado ui-corner-all fin" style="min-height: 115px;" id="div_fin"
-             identificador="${fin?.id}">
-            ${fin?.objeto}
-        </div>
-    </div>
-
-    <div class="matriz ui-corner-all campo cmpDoble " id="div_indi_medios_fin">
-        <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
-            <div class="titulo">Indicadores</div>
+    <g:form action="guardarMarco" class="marcoLogico">
+        <div id="divSubmit">
+            <input type="hidden" name="proyecto" value="${proyecto.id}" id="proyecto">
+            <input type="hidden" name="proyectoId" value="${proyecto.id}" id="id">
+            <input type="hidden" name="edicion" value="1" id="edicion">
         </div>
 
-        <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
-            <div class="titulo">Medios de Verificación</div>
-        </div>
-        <g:set var="band" value="0"></g:set>
-        <g:each in="${indicadores}" var="indicador" status="i">
-            <g:set var="band" value="1"></g:set>
-            <div class="matriz ui-corner-all  fila " id="ind"
-                 style="${(i == 0) ? 'margin-top:-10px;' : ''}">
-                <div class="filaMedio izq ">
-                    <div class="texto agregado ui-corner-all fin varios  " pref="if_"
-                         id="if_${indicador.id}" ml="Fin" tipo="1" div="if_${indicador.id}"
-                         identificador="${indicador.id}" indicador="${fin.id}">
-                        ${indicador?.descripcion}
+
+
+        <div class="dialog col-md-12" title="MATRIZ DE MARCO LOGICO DEL PROYECTO">
+
+
+            <div class="btn-toolbar toolbar col-md-2" style="margin-bottom: 15px">
+                <div class="btn-group">
+                    <g:link controller="proyecto" action="proy" id="${proyecto?.id}" class="btn btn-default" title="Regresar al proyecto">
+                        <i class="fa fa-arrow-left"></i> Regresar
+                    </g:link>
+                </div>
+            </div>
+            <div class="panel panel-primary col-md-10" style="text-align: center; float: right">
+                <h4>MATRIZ DE MARCO LOGICO DEL PROYECTO</h4>
+            </div>
+
+            %{--<div class="breadCrumbHolder module">--}%
+            %{--    <div id="breadCrumb" class="breadCrumb module">--}%
+            %{--        <ul>--}%
+            %{--            <li>--}%
+            %{--                <g:link class="bc" controller="proyecto" action="show" id="${proyecto.id}">--}%
+            %{--                    Proyecto--}%
+            %{--                </g:link>--}%
+            %{--            </li>--}%
+            %{--            <li>--}%
+            %{--                Marco L&oacute;gico--}%
+            %{--            </li>--}%
+            %{--        </ul>--}%
+            %{--    </div>--}%
+            %{--</div>--}%
+
+            %{--<div id="" class="toolbar ui-widget-header ui-corner-all" style="margin-bottom: 5px;height: 30px;">--}%
+            %{--    <a href="#" id="btn_componentes" style="float:right;">Agregar/Editar componente</a>--}%
+            %{--</div>--}%
+
+            <div style="width: 100%;float: left;border: 1px solid  rgba(145, 192, 95,0.6)" class="ui-corner-all">
+
+                <div class="matriz ui-corner-all campo cmp datos " ml="Fin" div="div_fin"
+                     identificador="${fin?.id}">
+                    <div class="titulo">Fin</div>
+
+                    <div class="texto agregado ui-corner-all fin" style="min-height: 115px;" id="div_fin"
+                         identificador="${fin?.id}">
+                        ${fin?.objeto}
                     </div>
                 </div>
 
-                <div class="filaMedio der">
-                    <g:each in="${proyectos.MedioVerificacion.findAllByIndicador(indicador)}" var="med">
-                        <div class="texto agregado ui-corner-all md fin varios" pref="mf_"
-                             id="mf_${med.id}"
-                             ml="Fin" tipo="2" div="mf_${med.id}" indicador="${indicador.id}"
-                             identificador="${med.id}">${med.descripcion}</div>
+                <div class="matriz ui-corner-all campo cmpDoble " id="div_indi_medios_fin">
+                    <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
+                        <div class="titulo">Indicadores</div>
+                    </div>
+
+                    <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
+                        <div class="titulo">Medios de Verificación</div>
+                    </div>
+                    <g:set var="band" value="0"></g:set>
+                    <g:each in="${indicadores}" var="indicador" status="i">
+                        <g:set var="band" value="1"></g:set>
+                        <div class="matriz ui-corner-all  fila " id="ind"
+                             style="${(i == 0) ? 'margin-top:-10px;' : ''}">
+                            <div class="filaMedio izq ">
+                                <div class="texto agregado ui-corner-all fin varios  " pref="if_"
+                                     id="if_${indicador.id}" ml="Fin" tipo="1" div="if_${indicador.id}"
+                                     identificador="${indicador.id}" indicador="${fin.id}">
+                                    ${indicador?.descripcion}
+                                </div>
+                            </div>
+
+                            <div class="filaMedio der">
+                                <g:each in="${proyectos.MedioVerificacion.findAllByIndicador(indicador)}" var="med">
+                                    <div class="texto agregado ui-corner-all md fin varios" pref="mf_"
+                                         id="mf_${med.id}"
+                                         ml="Fin" tipo="2" div="mf_${med.id}" indicador="${indicador.id}"
+                                         identificador="${med.id}">${med.descripcion}</div>
+                                </g:each>
+                                <div class=" texto agregado ui-corner-all md fin varios edicion" pref="mf_"
+                                     id="mf_0${i + 1}" ml="Fin" div="mf_0${i + 1}" tipo="2"
+                                     indicador="${indicador.id}"
+                                     identificador="0">Agregar</div>
+                            </div>
+                        </div>
                     </g:each>
-                    <div class=" texto agregado ui-corner-all md fin varios edicion" pref="mf_"
-                         id="mf_0${i + 1}" ml="Fin" div="mf_0${i + 1}" tipo="2"
-                         indicador="${indicador.id}"
-                         identificador="0">Agregar</div>
+
+                    <div class="matriz ui-corner-all  fila " id="ind"
+                         style="${(band.toInteger() == 0) ? 'margin-top:-10px;' : ''}">
+                        <div class="filaMedio izq ">
+                            <div class="texto agregado ui-corner-all fin varios edicion  " pref="if_" id="if_0"
+                                 ml="Fin"
+                                 div="if_0" tipo="1" identificador="0" indicador="${fin?.id}">
+                                Agregar
+                            </div>
+                        </div>
+
+                        <div class="filaMedio der">
+                            <div class=" texto agregado ui-corner-all md fin varios edicion" pref="mf_"
+                                 id="mf_0"
+                                 ml="Fin" div="mf_0" indicador="0" tipo="2" identificador="0">Agregar</div>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-        </g:each>
-
-        <div class="matriz ui-corner-all  fila " id="ind"
-             style="${(band.toInteger() == 0) ? 'margin-top:-10px;' : ''}">
-            <div class="filaMedio izq ">
-                <div class="texto agregado ui-corner-all fin varios edicion  " pref="if_" id="if_0"
-                     ml="Fin"
-                     div="if_0" tipo="1" identificador="0" indicador="${fin?.id}">
-                    Agregar
-                </div>
-            </div>
-
-            <div class="filaMedio der">
-                <div class=" texto agregado ui-corner-all md fin varios edicion" pref="mf_"
-                     id="mf_0"
-                     ml="Fin" div="mf_0" indicador="0" tipo="2" identificador="0">Agregar</div>
-            </div>
-        </div>
-
-    </div>
 
 
-    <div class="matriz ui-corner-all campo cmp">
-        <div class="titulo">Supuestos</div>
+                <div class="matriz ui-corner-all campo cmp">
+                    <div class="titulo">Supuestos</div>
 
-        <div class="texto" style=" min-height: 115px;" id="supuestos">
-            <g:each in="${sup}" var="su">
-                <div class="agregado ui-corner-all fin varios" id="sf_${su.id}" ml="Fin"
-                     div="sf_${su.id}"
-                     identificador="${su.id}" tipo="3"
-                     indicador="${fin?.id}">${su.descripcion}</div>
-            </g:each>
-            <div class="agregado ui-corner-all md fin varios editar edicion" id="sf_0" ml="Fin"
-                 div="sf_0"
-                 identificador="0" tipo="3" indicador="${fin?.id}">Agregar</div>
-        </div>
-    </div>
-
-</div>%{--end del fin--}%
-
-<div style="width: 1030px;float: left;border: 1px solid  rgba(110, 182, 213,0.6);margin-top: 5px;"
-     class="ui-corner-all">
-    <div class="matriz ui-corner-all campoProp cmp datos" ml="Proposito" div="div_prop"
-         identificador="${proposito?.id}">
-        <div class="titulo">Propósito</div>
-
-        <div class="texto agregado ui-corner-all proposito" style="min-height: 115px;" id="div_prop"
-             identificador="${proposito?.id}">
-            ${proposito?.objeto}
-        </div>
-
-    </div>
-
-
-    <div class="matriz ui-corner-all  cmpDoble  campoProp" id="div_indi_medios_prop">
-        <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
-            <div class="titulo">Indicadores</div>
-        </div>
-
-        <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
-            <div class="titulo">Medios de Verificación</div>
-        </div>
-        <g:set var="band" value="0"></g:set>
-        <g:each in="${indiProps}" var="indiProp" status="i">
-            <g:set var="band" value="1"></g:set>
-            <div class="matriz ui-corner-all  fila " id="ind"
-                 style="${(i == 0) ? 'margin-top:-10px;' : ''}">
-                <div class="filaMedio izq ">
-                    <div class="texto agregado ui-corner-all proposito varios"
-                         pref="div_indicador_prop_"
-                         id="div_indicador_prop_${indiProp.id}" ml="Proposito" tipo="1"
-                         div="div_indicador_prop_${indiProp.id}" identificador="${indiProp.id}"
-                         indicador="${proposito?.id}">
-                        ${indiProp?.descripcion}
+                    <div class="texto" style=" min-height: 115px;" id="supuestos">
+                        <g:each in="${sup}" var="su">
+                            <div class="agregado ui-corner-all fin varios" id="sf_${su.id}" ml="Fin"
+                                 div="sf_${su.id}"
+                                 identificador="${su.id}" tipo="3"
+                                 indicador="${fin?.id}">${su.descripcion}</div>
+                        </g:each>
+                        <div class="agregado ui-corner-all md fin varios editar edicion" id="sf_0" ml="Fin"
+                             div="sf_0"
+                             identificador="0" tipo="3" indicador="${fin?.id}">Agregar</div>
                     </div>
                 </div>
 
-                <div class="filaMedio der">
-                    <g:each in="${proyectos.MedioVerificacion.findAllByIndicador(indiProp)}" var="med">
-                        <div class="texto agregado ui-corner-all md proposito varios" pref="mp_"
-                             id="mp_${med.id}" ml="Proposito" div="mp_${med.id}"
-                             indicador="${indiProp.id}"
-                             tipo="2" identificador="${med.id}">${med.descripcion}</div>
+            </div>%{--end del fin--}%
+
+            <div style="width: 100%;float: left;border: 1px solid  rgba(110, 182, 213,0.6);margin-top: 5px;"
+                 class="ui-corner-all">
+                <div class="matriz ui-corner-all campoProp cmp datos" ml="Proposito" div="div_prop"
+                     identificador="${proposito?.id}">
+                    <div class="titulo">Propósito</div>
+
+                    <div class="texto agregado ui-corner-all proposito" style="min-height: 115px;" id="div_prop"
+                         identificador="${proposito?.id}">
+                        ${proposito?.objeto}
+                    </div>
+
+                </div>
+
+
+                <div class="matriz ui-corner-all  cmpDoble  campoProp" id="div_indi_medios_prop">
+                    <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
+                        <div class="titulo">Indicadores</div>
+                    </div>
+
+                    <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
+                        <div class="titulo">Medios de Verificación</div>
+                    </div>
+                    <g:set var="band" value="0"/>
+                    <g:each in="${indiProps}" var="indiProp" status="i">
+                        <g:set var="band" value="1"/>
+                        <div class="matriz ui-corner-all  fila " id="ind"
+                             style="${(i == 0) ? 'margin-top:-10px;' : ''}">
+                            <div class="filaMedio izq ">
+                                <div class="texto agregado ui-corner-all proposito varios"
+                                     pref="div_indicador_prop_"
+                                     id="div_indicador_prop_${indiProp.id}" ml="Proposito" tipo="1"
+                                     div="div_indicador_prop_${indiProp.id}" identificador="${indiProp.id}"
+                                     indicador="${proposito?.id}">
+                                    ${indiProp?.descripcion}
+                                </div>
+                            </div>
+
+                            <div class="filaMedio der">
+                                <g:each in="${proyectos.MedioVerificacion.findAllByIndicador(indiProp)}" var="med">
+                                    <div class="texto agregado ui-corner-all md proposito varios" pref="mp_"
+                                         id="mp_${med.id}" ml="Proposito" div="mp_${med.id}"
+                                         indicador="${indiProp.id}"
+                                         tipo="2" identificador="${med.id}">${med.descripcion}</div>
+                                </g:each>
+                                <div class=" texto agregado ui-corner-all md proposito varios edicion"
+                                     pref="mp_"
+                                     id="mp_0${i + 1}" ml="Proposito" div="mp_0${i + 1}" tipo="2"
+                                     indicador="${indiProp.id}" identificador="0">Agregar</div>
+                            </div>
+                        </div>
                     </g:each>
-                    <div class=" texto agregado ui-corner-all md proposito varios edicion"
-                         pref="mp_"
-                         id="mp_0${i + 1}" ml="Proposito" div="mp_0${i + 1}" tipo="2"
-                         indicador="${indiProp.id}" identificador="0">Agregar</div>
-                </div>
-            </div>
-        </g:each>
 
-        <div class="matriz ui-corner-all  fila " id="ind"
-             style="${(band.toInteger() == 0) ? 'margin-top:-10px;' : ''}">
-            <div class="filaMedio izq ">
-                <div class="texto agregado ui-corner-all proposito varios edicion  "
-                     pref="div_indicador_prop_" id="div_indicador_prop_0" ml="Proposito"
-                     div="div_indicador_prop_0" identificador="0" tipo="1"
-                     indicador="${proposito?.id}">
-                    Agregar
-                </div>
-            </div>
+                    <div class="matriz ui-corner-all  fila " id="ind"
+                         style="${(band.toInteger() == 0) ? 'margin-top:-10px;' : ''}">
+                        <div class="filaMedio izq ">
+                            <div class="texto agregado ui-corner-all proposito varios edicion  "
+                                 pref="div_indicador_prop_" id="div_indicador_prop_0" ml="Proposito"
+                                 div="div_indicador_prop_0" identificador="0" tipo="1"
+                                 indicador="${proposito?.id}">
+                                Agregar
+                            </div>
+                        </div>
 
-            <div class="filaMedio der">
-                <div class=" texto agregado ui-corner-all md proposito varios edicion" pref="mp_"
-                     id="mp_0"
-                     ml="Proposito" div="mp_0" indicador="0" tipo="2"
-                     identificador="0">Agregar</div>
-            </div>
+                        <div class="filaMedio der">
+                            <div class=" texto agregado ui-corner-all md proposito varios edicion" pref="mp_"
+                                 id="mp_0"
+                                 ml="Proposito" div="mp_0" indicador="0" tipo="2"
+                                 identificador="0">Agregar</div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="matriz ui-corner-all campoProp cmp">
+                    <div class="titulo">Supuestos</div>
+
+                    <div class="texto" style=" min-height: 115px;" id="div_sup_prop">
+                        <g:each in="${supProp}" var="su">
+                            <div class="agregado ui-corner-all proposito varios" id="sp_${su.id}" ml="Proposito"
+                                 div="sp_${su.id}" identificador="${su.id}" tipo="3"
+                                 indicador="${proposito?.id}">${su.descripcion}</div>
+                        </g:each>
+                        <div class="agregado ui-corner-all proposito varios editar edicion" id="sp_0"
+                             ml="Proposito"
+                             div="sp_0" identificador="0" tipo="3" indicador="${proposito?.id}">Agregar</div>
+
+                    </div>
+                </div>
+
+            </div>%{--end del proposito--}%
+
         </div>
 
-    </div>
+    %{--<div id="dlg_datos">--}%
+    %{--    <input type="hidden" id="ml">--}%
+    %{--    <input type="hidden" id="div">--}%
+    %{--    <input type="hidden" id="iden">--}%
 
+    %{--    <div class="texto" style="min-height: 270px">--}%
+    %{--        <textarea name="mdo" id="txt_datos" style="min-height: 270px"></textarea>--}%
+    %{--    </div>--}%
+    %{--</div>--}%
 
-    <div class="matriz ui-corner-all campoProp cmp">
-        <div class="titulo">Supuestos</div>
+    %{--<div id="dlg_combo">--}%
+    %{--    <input type="hidden" id="c_ml">--}%
+    %{--    <input type="hidden" id="c_div">--}%
+    %{--    <input type="hidden" id="c_iden">--}%
+    %{--    <input type="hidden" id="c_indi">--}%
+    %{--    <input type="hidden" id="c_tipo">--}%
+    %{--    <div class="texto" style="min-height: 270px">--}%
+    %{--        <textarea name="txt_varios" id="txt_varios" style="min-height: 270px"></textarea>--}%
+    %{--    </div>--}%
 
-        <div class="texto" style=" min-height: 115px;" id="div_sup_prop">
-            <g:each in="${supProp}" var="su">
-                <div class="agregado ui-corner-all proposito varios" id="sp_${su.id}" ml="Proposito"
-                     div="sp_${su.id}" identificador="${su.id}" tipo="3"
-                     indicador="${proposito?.id}">${su.descripcion}</div>
-            </g:each>
-            <div class="agregado ui-corner-all proposito varios editar edicion" id="sp_0"
-                 ml="Proposito"
-                 div="sp_0" identificador="0" tipo="3" indicador="${proposito?.id}">Agregar</div>
+    %{--</div>--}%
 
-        </div>
-    </div>
-
-</div>%{--end del proposito--}%
-
-</div>
-
-%{--<div id="dlg_datos">--}%
-%{--    <input type="hidden" id="ml">--}%
-%{--    <input type="hidden" id="div">--}%
-%{--    <input type="hidden" id="iden">--}%
-
-%{--    <div class="texto" style="min-height: 270px">--}%
-%{--        <textarea name="mdo" id="txt_datos" style="min-height: 270px"></textarea>--}%
-%{--    </div>--}%
-%{--</div>--}%
-
-%{--<div id="dlg_combo">--}%
-%{--    <input type="hidden" id="c_ml">--}%
-%{--    <input type="hidden" id="c_div">--}%
-%{--    <input type="hidden" id="c_iden">--}%
-%{--    <input type="hidden" id="c_indi">--}%
-%{--    <input type="hidden" id="c_tipo">--}%
-%{--    <div class="texto" style="min-height: 270px">--}%
-%{--        <textarea name="txt_varios" id="txt_varios" style="min-height: 270px"></textarea>--}%
-%{--    </div>--}%
-
-%{--</div>--}%
-
-</g:form>
+    </g:form>
 
 </div>
 
 <script type="text/javascript">
 
-/*
-    $("#breadCrumb").jBreadCrumb({
-        beginingElementsToLeaveOpen: 10
-    });
-*/
+    /*
+        $("#breadCrumb").jBreadCrumb({
+            beginingElementsToLeaveOpen: 10
+        });
+    */
 
     function reajustar() {
         var tam = 215
@@ -375,12 +389,9 @@
 
             if ($(this).find(".izq").height() < $(this).find(".der").height())
                 $(this).find(".izq").children().height($(this).find(".der").height() - 10)
-
-
         });
-
-
     }
+
     $(function() {
         reajustar()
 //                $("#edicion").val("-1")
@@ -410,104 +421,68 @@
             location.href = "${createLink(controller:'marcoLogico',action:'componentes')}/" + $("#proyecto").val()
         });
 
-        $("#btnAgregar").button().click(function() {
-            if ($("").val() != "-1") {
-                $.ajax({
-                    type: "POST",
-                    url: "${createLink(action:'agregarSupuesto')}",
-                    data: {
-                        marco:$("#c_indi").val(),
-                        id:$("#tipoSupuesto").val()
-                    },
-                    success: function(msg) {
-                        if (msg != "no") {
-                            var partes = msg.split("&&")
-                            if ($("#c_iden").val() == "0") {
-                                var div = $("<div>")
-                                if ($("#c_ml").val() == "Proposito") {
-                                    div.attr("ml", "Proposito").attr("id", "sp_0").attr("div", "sp_0").attr("identificador", "0").attr("tipo", "3").attr("indicador", $("#c_indi").val())
-                                    div.addClass("agregado ui-corner-all proposito varios editar nuevo edicion")
-                                } else {
-                                    div.attr("ml", "Fin").attr("id", "sf_0").attr("div", "sf_0").attr("identificador", "0").attr("tipo", "3").attr("indicador", $("#c_indi").val())
-                                    div.addClass("agregado ui-corner-all fin varios editar nuevo edicion")
-                                }
-                                div.html("Agregar")
-                                $("#" + $("#c_div").val()).parent().append(div)
-                                div.bind("click", function() {
-                                    $("#txt_varios").val("")
-                                    $("#c_ml").val($(this).attr("ml"))
-                                    $("#c_div").val($(this).attr("div"))
-                                    $("#c_iden").val($(this).attr("identificador"))
-                                    $("#c_indi").val($(this).attr("indicador"))
-                                    $("#c_tipo").val($(this).attr("tipo"))
-                                    if ($(this).attr("tipo") != "3")
-                                        $("#filaCombo").hide()
-                                    else
-                                    if ($("#c_iden").val() == "0")
-                                        $("#filaCombo").show()
-                                    if ($("#" + $(this).attr("div")).html())
-                                        $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())
-                                    if ($("#txt_varios").val() == "Agregar")
-                                        $("#txt_varios").val("")
+        %{--$("#btnAgregar").button().click(function() {--}%
+        %{--    if ($("").val() != "-1") {--}%
+        %{--        $.ajax({--}%
+        %{--            type: "POST",--}%
+        %{--            url: "${createLink(action:'agregarSupuesto')}",--}%
+        %{--            data: {--}%
+        %{--                marco:$("#c_indi").val(),--}%
+        %{--                id:$("#tipoSupuesto").val()--}%
+        %{--            },--}%
+        %{--            success: function(msg) {--}%
+        %{--                if (msg != "no") {--}%
+        %{--                    var partes = msg.split("&&")--}%
+        %{--                    if ($("#c_iden").val() == "0") {--}%
+        %{--                        var div = $("<div>")--}%
+        %{--                        if ($("#c_ml").val() == "Proposito") {--}%
+        %{--                            div.attr("ml", "Proposito").attr("id", "sp_0").attr("div", "sp_0").attr("identificador", "0").attr("tipo", "3").attr("indicador", $("#c_indi").val())--}%
+        %{--                            div.addClass("agregado ui-corner-all proposito varios editar nuevo edicion")--}%
+        %{--                        } else {--}%
+        %{--                            div.attr("ml", "Fin").attr("id", "sf_0").attr("div", "sf_0").attr("identificador", "0").attr("tipo", "3").attr("indicador", $("#c_indi").val())--}%
+        %{--                            div.addClass("agregado ui-corner-all fin varios editar nuevo edicion")--}%
+        %{--                        }--}%
+        %{--                        div.html("Agregar")--}%
+        %{--                        $("#" + $("#c_div").val()).parent().append(div)--}%
+        %{--                        div.bind("click", function() {--}%
+        %{--                            $("#txt_varios").val("")--}%
+        %{--                            $("#c_ml").val($(this).attr("ml"))--}%
+        %{--                            $("#c_div").val($(this).attr("div"))--}%
+        %{--                            $("#c_iden").val($(this).attr("identificador"))--}%
+        %{--                            $("#c_indi").val($(this).attr("indicador"))--}%
+        %{--                            $("#c_tipo").val($(this).attr("tipo"))--}%
+        %{--                            if ($(this).attr("tipo") != "3")--}%
+        %{--                                $("#filaCombo").hide()--}%
+        %{--                            else--}%
+        %{--                            if ($("#c_iden").val() == "0")--}%
+        %{--                                $("#filaCombo").show()--}%
+        %{--                            if ($("#" + $(this).attr("div")).html())--}%
+        %{--                                $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())--}%
+        %{--                            if ($("#txt_varios").val() == "Agregar")--}%
+        %{--                                $("#txt_varios").val("")--}%
 
-                                    $("#dlg_combo").dialog("open")
-                                });
-                            }
+        %{--                            $("#dlg_combo").dialog("open")--}%
+        %{--                        });--}%
+        %{--                    }--}%
 
 
-                            $("#" + $("#c_div").val()).html(partes[1])
-                            $("#" + $("#c_div").val()).attr("identificador", partes[0])
-                            $("#" + $("#c_div").val()).removeClass("nuevo")
-                            $("#" + $("#c_div").val()).removeClass("edicion")
-                            $("#" + $("#c_div").val()).attr("div", $("#" + $("#c_div").val()).attr("pref") + partes[0])
-                            $("#" + $("#c_div").val()).attr("id", $("#" + $("#c_div").val()).attr("pref") + partes[0])
+        %{--                    $("#" + $("#c_div").val()).html(partes[1])--}%
+        %{--                    $("#" + $("#c_div").val()).attr("identificador", partes[0])--}%
+        %{--                    $("#" + $("#c_div").val()).removeClass("nuevo")--}%
+        %{--                    $("#" + $("#c_div").val()).removeClass("edicion")--}%
+        %{--                    $("#" + $("#c_div").val()).attr("div", $("#" + $("#c_div").val()).attr("pref") + partes[0])--}%
+        %{--                    $("#" + $("#c_div").val()).attr("id", $("#" + $("#c_div").val()).attr("pref") + partes[0])--}%
 
-                            reajustar()
-                            $("#dlg_combo").dialog("close")
-                        } else {
-                            alert("algo salio mal")
-                        }
-                    }
-                });
-            }
-        });
+        %{--                    reajustar()--}%
+        %{--                    $("#dlg_combo").dialog("close")--}%
+        %{--                } else {--}%
+        %{--                    alert("algo salio mal")--}%
+        %{--                }--}%
+        %{--            }--}%
+        %{--        });--}%
+        %{--    }--}%
+        %{--});--}%
 
-        function cargarDialogo(tipo){
-            $.ajax({
-                type    : "POST",
-                url     : "${createLink(controller:'marcoLogico', action:'marcoDialog_ajax')}",
-                data    : {
-
-                },
-                success : function (msg) {
-                    var b = bootbox.dialog({
-                        id    : "dlgCreateEditMarco",
-                        title : "Ingresar " + tipo,
-                        // class : "modal-lg",
-                        message : msg,
-                        buttons : {
-                            cancelar : {
-                                label     : "Cancelar",
-                                className : "btn-primary",
-                                callback  : function () {
-                                }
-                            },
-                            guardar  : {
-                                id        : "btnSave",
-                                label     : "<i class='fa fa-save'></i> Guardar",
-                                className : "btn-success",
-                                callback  : function () {
-                                    // return submitForm();
-                                } //callback
-                            } //guardar
-                        } //buttons
-                    }); //dialog
-                    setTimeout(function () {
-                        b.find(".form-control").first().focus()
-                    }, 500);
-                } //success
-            }); //ajax
-        }
 
         $(".datos").click(function() {
             if ($("#edicion").val() == "1") {
@@ -531,8 +506,8 @@
                     type    : "POST",
                     url     : "${createLink(controller:'marcoLogico', action:'marcoDialog_ajax')}",
                     data    : {
-                            id: id,
-                            tipo: tipo
+                        id: id,
+                        tipo: tipo
                     },
                     success : function (msg) {
                         var b = bootbox.dialog({
@@ -558,21 +533,26 @@
                                                 type: "POST",
                                                 url: "${createLink(action:'guardarDatosMarco')}",
                                                 data: {
-                                                    tipo:$("#ml").val(),
+                                                    // tipo:$("#ml").val(),
+                                                    tipo:tipo,
                                                     datos:$("#txt_datos").val(),
                                                     proyecto:$("#proyecto").val()
                                                 },
                                                 success: function(msg) {
                                                     if (msg == "ok") {
-                                                        $("#" + $("#div").val()).html($("#txt_datos").val())
-                                                        $("#txt_datos").val("")
+                                                        log(tipo + " ingresado correctamente", "success");
+                                                        $("#" + $("#div").val()).html($("#txt_datos").val());
+                                                        // $("#txt_datos").val("");
+                                                        //
+                                                        // if ($("#iden").val() == "" || $("#iden").val() == " ")
+                                                        setTimeout(function () {
+                                                            location.reload(true);
+                                                            reajustar();
+                                                        }, 800);
 
-                                                        if ($("#iden").val() == "" || $("#iden").val() == " ")
-                                                            location.reload(true)
-                                                        reajustar()
-                                                        $("#dlg_datos").dialog("close")
+                                                        // $("#dlg_datos").dialog("close")
                                                     } else {
-                                                        alert("algo salio mal")
+                                                        log("Error al ingresar el " + tipo, "error")
                                                     }
                                                 }
                                             });
@@ -605,16 +585,249 @@
                 else
                 if ($("#c_iden").val() == "0")
                     $("#filaCombo").show()
-                /* TODO hay un trim aqui que no valdria en ie... cambiar por la funcion */
                 if ($("#" + $(this).attr("div")).html())
                     $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())
                 if ($("#txt_varios").val() == "Agregar")
                     $("#txt_varios").val("")
 
                 // $("#dlg_combo").dialog("open")
+                // cargarDialogo($("#c_ml").val());
 
-                cargarDialogo($("#c_ml").val());
+                var id = $(this).attr("identificador");
+                var tipo = $(this).attr("tipo");
+                var indicador = $(this).attr("indicador");
+                var proyecto = '${proyecto?.id}';
+                var mlog = $(this).attr("ml");
 
+                $.ajax({
+                    type    : "POST",
+                    url     : "${createLink(controller:'marcoLogico', action:'variosDialog_ajax')}",
+                    data    : {
+                        id: id,
+                        tipo: tipo
+                    },
+                    success : function (msg) {
+                        var b = bootbox.dialog({
+                            id    : "dlgCreateEditMarco",
+                            title : "Ingresar " + tipo,
+                            // class : "modal-lg",
+                            message : msg,
+                            buttons : {
+                                cancelar : {
+                                    label     : "Cancelar",
+                                    className : "btn-primary",
+                                    callback  : function () {
+                                    }
+                                },
+                                guardar  : {
+                                    id        : "btnSave",
+                                    label     : "<i class='fa fa-save'></i> Guardar",
+                                    className : "btn-success",
+                                    callback  : function () {
+
+
+                                        if ($("#txt_varios").val() != "" && $("#txt_varios").val() != " ") {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "${createLink(action:'guardarDatosIndMedSup')}",
+                                                data: {
+                                                    ml:mlog,
+                                                    // ml:$("#c_ml").val(),
+                                                    datos:$("#txt_varios").val(),
+                                                    // proyecto:$("#proyecto").val(),
+                                                    proyecto:proyecto,
+                                                    // id:$("#c_iden").val(),
+                                                    id:id,
+                                                    // indicador:$("#c_indi").val(),
+                                                    indicador:indicador,
+                                                    // tipo:$("#c_tipo").val()
+                                                    tipo:tipo
+                                                },
+                                                success: function(msg) {
+                                                    if (msg != "no") {
+                                                        if ($("#c_iden").val() == "0" && $("#c_tipo").val() * 1 == 1) {
+                                                            var d1 = $("<div>")
+                                                            d1.addClass("matriz ui-corner-all  fila ")
+                                                            var d2 = $("<div>")
+                                                            d2.addClass("filaMedio")
+                                                            var d3 = $("<div>")
+                                                            d3.attr("indicador", $("#c_indi").val())
+                                                            d3.html("Agregar")
+                                                            var d4 = $("<div>")
+                                                            d4.addClass("filaMedio der")
+                                                            var d5 = $("<div>")
+                                                            d5.attr("indicador", "0")
+                                                            d5.html("Agregar")
+                                                            d2.append(d3)
+                                                            d4.append(d5)
+                                                            d5.bind("click", function() {
+                                                                if ($("#edicion").val() == "1") {
+                                                                    $("#txt_varios").val("")
+                                                                    $("#c_ml").val($(this).attr("ml"))
+                                                                    $("#c_div").val($(this).attr("div"))
+                                                                    $("#c_iden").val($(this).attr("identificador"))
+                                                                    $("#c_indi").val($(this).attr("indicador"))
+                                                                    $("#c_tipo").val($(this).attr("tipo"))
+                                                                    if ($(this).attr("ml") != "Supuestos")
+                                                                        $("#filaCombo").hide()
+                                                                    else
+                                                                        $("#filaCombo").show()
+                                                                    if ($("#" + $(this).attr("div")).html())
+                                                                        $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())
+                                                                    if ($("#txt_varios").val() == "Agregar")
+                                                                        $("#txt_varios").val("")
+
+                                                                    // $("#dlg_combo").dialog("open")
+                                                                }
+                                                            });
+                                                            d3.bind("click", function() {
+                                                                if ($("#edicion").val() == "1") {
+                                                                    $("#txt_varios").val("")
+                                                                    $("#c_ml").val($(this).attr("ml"))
+                                                                    $("#c_div").val($(this).attr("div"))
+                                                                    $("#c_iden").val($(this).attr("identificador"))
+                                                                    $("#c_indi").val($(this).attr("indicador"))
+                                                                    $("#c_tipo").val($(this).attr("tipo"))
+                                                                    if ($(this).attr("ml") != "Supuestos")
+                                                                        $("#filaCombo").hide()
+                                                                    else
+                                                                        $("#filaCombo").show()
+                                                                    if ($("#" + $(this).attr("div")).html())
+                                                                        $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())
+                                                                    if ($("#txt_varios").val() == "Agregar")
+                                                                        $("#txt_varios").val("")
+
+                                                                    // $("#dlg_combo").dialog("open")
+                                                                }
+                                                            });
+                                                            d1.append(d2)
+                                                            d1.append(d4)
+                                                            var num =Math.floor(Math.random()*101)
+                                                            if ($("#c_ml").val() == "Fin") {
+                                                                d3.addClass("texto agregado ui-corner-all fin varios edicion").attr("pref", "div_indicador_").attr("id", "div_indicador_0"+num).attr("ml", "Fin").attr("div", "div_indicador_0"+num).attr("identificador", "0").attr("tipo", "1")
+                                                                d5.addClass(" texto agregado ui-corner-all md fin varios edicion").attr("pref", "mp_").attr("id", "mp_0"+num).attr("ml", "Fin").attr("div", "mp_0"+num).attr("identificador", "0").attr("tipo", "2")
+                                                                $("#div_indi_medios_fin").append(d1)
+                                                            } else {
+                                                                d3.addClass("texto agregado ui-corner-all proposito varios edicion").attr("pref", "div_indicador_").attr("id", "div_indicador_0"+num).attr("ml", "Proposito").attr("div", "div_indicador_0"+num).attr("identificador", "0").attr("tipo", "1")
+                                                                d5.addClass("texto agregado ui-corner-all md proposito varios edicion").attr("pref", "mp_").attr("id", "mp_0"+num).attr("ml", "Proposito").attr("div", "mp_0"+num).attr("identificador", "0").attr("tipo", "2")
+                                                                $("#div_indi_medios_prop").append(d1)
+                                                            }
+                                                            $("#" + $("#c_div").val()).parent().parent().find(".der").children().attr("indicador", msg)
+                                                        }
+                                                        if ($("#c_iden").val() == "0" && $("#c_tipo").val() * 1 == 2) {
+                                                            var d1 = $("<div>")
+                                                            d1.html("Agregar")
+                                                            if ($("#c_ml").val() == "Fin") {
+                                                                d1.addClass("texto agregado ui-corner-all md fin varios nuevo edicion")
+                                                                d1.attr("pref", "mp_").attr("div", $("#c_div").val()).attr("ml", "Fin").attr("tipo", "2").attr("indicador", $("#c_indi").val()).attr("identificador", "0")
+                                                            } else {
+                                                                d1.addClass(" texto agregado ui-corner-all md proposito varios nuevo edicion")
+                                                                d1.attr("pref", "mp_").attr("div", $("#c_div").val()).attr("ml", "Proposito").attr("tipo", "2").attr("indicador", $("#c_indi").val()).attr("identificador", "0")
+                                                            }
+
+                                                            $("#" + $("#c_div").val()).parent().append(d1)
+                                                            d1.bind("click", function() {
+                                                                if ($("#edicion").val() == "1") {
+                                                                    $("#txt_varios").val("")
+                                                                    $("#c_ml").val($(this).attr("ml"))
+                                                                    $("#c_div").val($(this).attr("div"))
+                                                                    $("#c_iden").val($(this).attr("identificador"))
+                                                                    $("#c_indi").val($(this).attr("indicador"))
+                                                                    $("#c_tipo").val($(this).attr("tipo"))
+                                                                    if ($(this).attr("ml") != "Supuestos")
+                                                                        $("#filaCombo").hide()
+                                                                    else
+                                                                        $("#filaCombo").show()
+                                                                    if ($("#" + $(this).attr("div")).html())
+                                                                        $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())
+                                                                    if ($("#txt_varios").val() == "Agregar")
+                                                                        $("#txt_varios").val("")
+
+                                                                    // $("#dlg_combo").dialog("open")
+                                                                }
+                                                            });
+                                                        }
+
+                                                        if ($("#c_iden").val() == "0" && $("#c_tipo").val() * 1 == 3) {
+                                                            var div = $("<div>")
+                                                            if ($("#c_ml").val() == "Proposito") {
+                                                                div.attr("ml", "Proposito").attr("id", "sp_0").attr("div", "sp_0").attr("identificador", "0").attr("tipo", "3").attr("indicador", $("#c_indi").val())
+                                                                div.addClass("texto agregado ui-corner-all proposito varios editar nuevo edicion")
+                                                            } else {
+                                                                div.attr("ml", "Fin").attr("id", "sf_0").attr("div", "sf_0").attr("identificador", "0").attr("tipo", "3").attr("indicador", $("#c_indi").val())
+                                                                div.addClass("texto agregado ui-corner-all fin varios editar nuevo edicion")
+                                                            }
+                                                            div.html("Agregar")
+                                                            $("#" + $("#c_div").val()).parent().append(div)
+                                                            div.bind("click", function() {
+                                                                if ($("#edicion").val() == "1") {
+                                                                    $("#txt_varios").val("")
+                                                                    $("#c_ml").val($(this).attr("ml"))
+                                                                    $("#c_div").val($(this).attr("div"))
+                                                                    $("#c_iden").val($(this).attr("identificador"))
+                                                                    $("#c_indi").val($(this).attr("indicador"))
+                                                                    $("#c_tipo").val($(this).attr("tipo"))
+                                                                    if ($(this).attr("tipo") != "3")
+                                                                        $("#filaCombo").hide()
+                                                                    else
+                                                                    if ($("#c_iden").val() == "0")
+                                                                        $("#filaCombo").show()
+                                                                    if ($("#" + $(this).attr("div")).html())
+                                                                        $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())
+                                                                    if ($("#txt_varios").val() == "Agregar")
+                                                                        $("#txt_varios").val("")
+
+                                                                    // $("#dlg_combo").dialog("open")
+                                                                }
+                                                            });
+                                                        }
+
+                                                        if ($("#c_tipo").val() != "3") {
+                                                            var id = $("#c_div").val()
+                                                            var div = $("#" + $("#c_div").val())
+                                                            $("#" + $("#c_div").val()).removeClass("nuevo")
+                                                            $("#" + $("#c_div").val()).html($("#txt_varios").val())
+                                                            $("#" + $("#c_div").val()).attr("div", $("#" + $("#c_div").val()).attr("pref") + msg)
+                                                            $("#" + $("#c_div").val()).attr("identificador", msg)
+                                                            $("#" + $("#c_div").val()).removeClass("edicion")
+                                                            $("#" + $("#c_div").val()).attr("id", $("#" + $("#c_div").val()).attr("pref") + msg)
+                                                            if ($("#c_iden").val() == "0" && $("#c_tipo").val() * 1 == 2) {
+                                                                div.parent().find(".nuevo").attr("id", id)
+                                                            }
+                                                        } else {
+                                                            var partes = msg.split("&&")
+                                                            $("#" + $("#c_div").val()).html(partes[1])
+                                                            $("#" + $("#c_div").val()).attr("identificador", partes[0])
+                                                            $("#" + $("#c_div").val()).removeClass("edicion")
+                                                            $("#" + $("#c_div").val()).removeClass("nuevo")
+                                                            $("#" + $("#c_div").val()).attr("div", $("#" + $("#c_div").val()).attr("pref") + partes[0])
+                                                            $("#" + $("#c_div").val()).attr("id", $("#" + $("#c_div").val()).attr("pref") + partes[0])
+                                                        }
+                                                        // reajustar()
+
+                                                        log("Guardado correctamente","success");
+                                                        setTimeout(function () {
+                                                            location.reload(true);
+                                                            reajustar();
+                                                        }, 800);
+
+                                                        // $("#dlg_combo").dialog("close")
+                                                    } else {
+                                                        // $("#dlg_combo").dialog("close")
+                                                        log("Error al guardar los datos","error");
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    } //callback
+                                } //guardar
+                            } //buttons
+                        }); //dialog
+                        setTimeout(function () {
+                            b.find(".form-control").first().focus()
+                        }, 500);
+                    } //success
+                }); //ajax
             }
         });
 
@@ -678,241 +891,241 @@
         %{--    }--}%
         %{--});--}%
 
-        %{--$("#dlg_combo").dialog({--}%
-        %{--    width:300,--}%
-        %{--    height:440,--}%
-        %{--    position:"center",--}%
-        %{--    modal:true,--}%
-        %{--    autoOpen:false,--}%
-        %{--    title:"Ingreso de datos",--}%
-        %{--    buttons:{--}%
-        %{--        "Eliminar":function() {--}%
-        %{--            if (confirm("Esta seguro que desea eliminar?. Esta acción es irreversible") && $("#c_iden").val() != "0") {--}%
-        %{--                $.ajax({--}%
-        %{--                    type: "POST",--}%
-        %{--                    url: "${createLink(action:'eliminarIndiMedSup')}",--}%
-        %{--                    data: {--}%
-        %{--                        ml:$("#c_ml").val(),--}%
-        %{--                        datos:$("#txt_varios").val(),--}%
-        %{--                        proyecto:$("#proyecto").val(),--}%
-        %{--                        id:$("#c_iden").val(),--}%
-        %{--                        indicador:$("#c_indi").val(),--}%
-        %{--                        tipo:$("#c_tipo").val()--}%
-        %{--                    },--}%
-        %{--                    success: function(msg) {--}%
-        %{--                        if (msg == "ok") {--}%
-        %{--                            if ($("#c_tipo").val() == "1") {--}%
-        %{--                                $.each($("#" + $("#c_div").val()).parent().parent().find(".der").children(), function() {--}%
-        %{--                                    if (!$(this).hasClass("edicion"))--}%
-        %{--                                        $(this).remove()--}%
-        %{--                                    else--}%
-        %{--                                        $(this).attr("indicador", "0")--}%
-        %{--                                });--}%
-        %{--                                $("#" + $("#c_div").val()).attr("iden", "0")--}%
-        %{--                                $("#" + $("#c_div").val()).html("Agregar")--}%
+        %{--    $("#dlg_combo").dialog({--}%
+        %{--        width:300,--}%
+        %{--        height:440,--}%
+        %{--        position:"center",--}%
+        %{--        modal:true,--}%
+        %{--        autoOpen:false,--}%
+        %{--        title:"Ingreso de datos",--}%
+        %{--        buttons:{--}%
+        %{--            "Eliminar":function() {--}%
+        %{--                if (confirm("Esta seguro que desea eliminar?. Esta acción es irreversible") && $("#c_iden").val() != "0") {--}%
+        %{--                    $.ajax({--}%
+        %{--                        type: "POST",--}%
+        %{--                        url: "${createLink(action:'eliminarIndiMedSup')}",--}%
+        %{--                        data: {--}%
+        %{--                            ml:$("#c_ml").val(),--}%
+        %{--                            datos:$("#txt_varios").val(),--}%
+        %{--                            proyecto:$("#proyecto").val(),--}%
+        %{--                            id:$("#c_iden").val(),--}%
+        %{--                            indicador:$("#c_indi").val(),--}%
+        %{--                            tipo:$("#c_tipo").val()--}%
+        %{--                        },--}%
+        %{--                        success: function(msg) {--}%
+        %{--                            if (msg == "ok") {--}%
+        %{--                                if ($("#c_tipo").val() == "1") {--}%
+        %{--                                    $.each($("#" + $("#c_div").val()).parent().parent().find(".der").children(), function() {--}%
+        %{--                                        if (!$(this).hasClass("edicion"))--}%
+        %{--                                            $(this).remove()--}%
+        %{--                                        else--}%
+        %{--                                            $(this).attr("indicador", "0")--}%
+        %{--                                    });--}%
+        %{--                                    $("#" + $("#c_div").val()).attr("iden", "0")--}%
+        %{--                                    $("#" + $("#c_div").val()).html("Agregar")--}%
+        %{--                                } else {--}%
+        %{--                                    $("#" + $("#c_div").val()).remove()--}%
+        %{--                                }--}%
+        %{--                                $("#dlg_combo").dialog("close")--}%
+
         %{--                            } else {--}%
-        %{--                                $("#" + $("#c_div").val()).remove()--}%
+        %{--                                alert("algo salio mal")--}%
         %{--                            }--}%
-        %{--                            $("#dlg_combo").dialog("close")--}%
-
-        %{--                        } else {--}%
-        %{--                            alert("algo salio mal")--}%
         %{--                        }--}%
-        %{--                    }--}%
-        %{--                });--}%
-        %{--            } else {--}%
-        %{--                $("#dlg_combo").dialog("close")--}%
-        %{--            }--}%
-        %{--        },--}%
-        %{--        "Aceptar":function() {--}%
-        %{--            if ($("#txt_varios").val() != "" && $("#txt_varios").val() != " ") {--}%
-        %{--                $.ajax({--}%
-        %{--                    type: "POST",--}%
-        %{--                    url: "${createLink(action:'guardarDatosIndMedSup')}",--}%
-        %{--                    data: {--}%
-        %{--                        ml:$("#c_ml").val(),--}%
-        %{--                        datos:$("#txt_varios").val(),--}%
-        %{--                        proyecto:$("#proyecto").val(),--}%
-        %{--                        id:$("#c_iden").val(),--}%
-        %{--                        indicador:$("#c_indi").val(),--}%
-        %{--                        tipo:$("#c_tipo").val()--}%
-        %{--                    },--}%
-        %{--                    success: function(msg) {--}%
-        %{--                        if (msg != "no") {--}%
-        %{--                            if ($("#c_iden").val() == "0" && $("#c_tipo").val() * 1 == 1) {--}%
-        %{--                                var d1 = $("<div>")--}%
-        %{--                                d1.addClass("matriz ui-corner-all  fila ")--}%
-        %{--                                var d2 = $("<div>")--}%
-        %{--                                d2.addClass("filaMedio")--}%
-        %{--                                var d3 = $("<div>")--}%
-        %{--                                d3.attr("indicador", $("#c_indi").val())--}%
-        %{--                                d3.html("Agregar")--}%
-        %{--                                var d4 = $("<div>")--}%
-        %{--                                d4.addClass("filaMedio der")--}%
-        %{--                                var d5 = $("<div>")--}%
-        %{--                                d5.attr("indicador", "0")--}%
-        %{--                                d5.html("Agregar")--}%
-        %{--                                d2.append(d3)--}%
-        %{--                                d4.append(d5)--}%
-        %{--                                d5.bind("click", function() {--}%
-        %{--                                    if ($("#edicion").val() == "1") {--}%
-        %{--                                        $("#txt_varios").val("")--}%
-        %{--                                        $("#c_ml").val($(this).attr("ml"))--}%
-        %{--                                        $("#c_div").val($(this).attr("div"))--}%
-        %{--                                        $("#c_iden").val($(this).attr("identificador"))--}%
-        %{--                                        $("#c_indi").val($(this).attr("indicador"))--}%
-        %{--                                        $("#c_tipo").val($(this).attr("tipo"))--}%
-        %{--                                        if ($(this).attr("ml") != "Supuestos")--}%
-        %{--                                            $("#filaCombo").hide()--}%
-        %{--                                        else--}%
-        %{--                                            $("#filaCombo").show()--}%
-        %{--                                        /* TODO hay un trim aqui que no valdria en ie... cambiar por la funcion */--}%
-        %{--                                        if ($("#" + $(this).attr("div")).html())--}%
-        %{--                                            $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())--}%
-        %{--                                        if ($("#txt_varios").val() == "Agregar")--}%
+        %{--                    });--}%
+        %{--                } else {--}%
+        %{--                    $("#dlg_combo").dialog("close")--}%
+        %{--                }--}%
+        %{--            },--}%
+        %{--            "Aceptar":function() {--}%
+        %{--                if ($("#txt_varios").val() != "" && $("#txt_varios").val() != " ") {--}%
+        %{--                    $.ajax({--}%
+        %{--                        type: "POST",--}%
+        %{--                        url: "${createLink(action:'guardarDatosIndMedSup')}",--}%
+        %{--                        data: {--}%
+        %{--                            ml:$("#c_ml").val(),--}%
+        %{--                            datos:$("#txt_varios").val(),--}%
+        %{--                            proyecto:$("#proyecto").val(),--}%
+        %{--                            id:$("#c_iden").val(),--}%
+        %{--                            indicador:$("#c_indi").val(),--}%
+        %{--                            tipo:$("#c_tipo").val()--}%
+        %{--                        },--}%
+        %{--                        success: function(msg) {--}%
+        %{--                            if (msg != "no") {--}%
+        %{--                                if ($("#c_iden").val() == "0" && $("#c_tipo").val() * 1 == 1) {--}%
+        %{--                                    var d1 = $("<div>")--}%
+        %{--                                    d1.addClass("matriz ui-corner-all  fila ")--}%
+        %{--                                    var d2 = $("<div>")--}%
+        %{--                                    d2.addClass("filaMedio")--}%
+        %{--                                    var d3 = $("<div>")--}%
+        %{--                                    d3.attr("indicador", $("#c_indi").val())--}%
+        %{--                                    d3.html("Agregar")--}%
+        %{--                                    var d4 = $("<div>")--}%
+        %{--                                    d4.addClass("filaMedio der")--}%
+        %{--                                    var d5 = $("<div>")--}%
+        %{--                                    d5.attr("indicador", "0")--}%
+        %{--                                    d5.html("Agregar")--}%
+        %{--                                    d2.append(d3)--}%
+        %{--                                    d4.append(d5)--}%
+        %{--                                    d5.bind("click", function() {--}%
+        %{--                                        if ($("#edicion").val() == "1") {--}%
         %{--                                            $("#txt_varios").val("")--}%
+        %{--                                            $("#c_ml").val($(this).attr("ml"))--}%
+        %{--                                            $("#c_div").val($(this).attr("div"))--}%
+        %{--                                            $("#c_iden").val($(this).attr("identificador"))--}%
+        %{--                                            $("#c_indi").val($(this).attr("indicador"))--}%
+        %{--                                            $("#c_tipo").val($(this).attr("tipo"))--}%
+        %{--                                            if ($(this).attr("ml") != "Supuestos")--}%
+        %{--                                                $("#filaCombo").hide()--}%
+        %{--                                            else--}%
+        %{--                                                $("#filaCombo").show()--}%
+        %{--                                            /* TODO hay un trim aqui que no valdria en ie... cambiar por la funcion */--}%
+        %{--                                            if ($("#" + $(this).attr("div")).html())--}%
+        %{--                                                $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())--}%
+        %{--                                            if ($("#txt_varios").val() == "Agregar")--}%
+        %{--                                                $("#txt_varios").val("")--}%
 
-        %{--                                        $("#dlg_combo").dialog("open")--}%
-        %{--                                    }--}%
-        %{--                                });--}%
-        %{--                                d3.bind("click", function() {--}%
-        %{--                                    if ($("#edicion").val() == "1") {--}%
-        %{--                                        $("#txt_varios").val("")--}%
-        %{--                                        $("#c_ml").val($(this).attr("ml"))--}%
-        %{--                                        $("#c_div").val($(this).attr("div"))--}%
-        %{--                                        $("#c_iden").val($(this).attr("identificador"))--}%
-        %{--                                        $("#c_indi").val($(this).attr("indicador"))--}%
-        %{--                                        $("#c_tipo").val($(this).attr("tipo"))--}%
-        %{--                                        if ($(this).attr("ml") != "Supuestos")--}%
-        %{--                                            $("#filaCombo").hide()--}%
-        %{--                                        else--}%
-        %{--                                            $("#filaCombo").show()--}%
-        %{--                                        /* TODO hay un trim aqui que no valdria en ie... cambiar por la funcion */--}%
-        %{--                                        if ($("#" + $(this).attr("div")).html())--}%
-        %{--                                            $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())--}%
-        %{--                                        if ($("#txt_varios").val() == "Agregar")--}%
+        %{--                                            $("#dlg_combo").dialog("open")--}%
+        %{--                                        }--}%
+        %{--                                    });--}%
+        %{--                                    d3.bind("click", function() {--}%
+        %{--                                        if ($("#edicion").val() == "1") {--}%
         %{--                                            $("#txt_varios").val("")--}%
+        %{--                                            $("#c_ml").val($(this).attr("ml"))--}%
+        %{--                                            $("#c_div").val($(this).attr("div"))--}%
+        %{--                                            $("#c_iden").val($(this).attr("identificador"))--}%
+        %{--                                            $("#c_indi").val($(this).attr("indicador"))--}%
+        %{--                                            $("#c_tipo").val($(this).attr("tipo"))--}%
+        %{--                                            if ($(this).attr("ml") != "Supuestos")--}%
+        %{--                                                $("#filaCombo").hide()--}%
+        %{--                                            else--}%
+        %{--                                                $("#filaCombo").show()--}%
+        %{--                                            /* TODO hay un trim aqui que no valdria en ie... cambiar por la funcion */--}%
+        %{--                                            if ($("#" + $(this).attr("div")).html())--}%
+        %{--                                                $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())--}%
+        %{--                                            if ($("#txt_varios").val() == "Agregar")--}%
+        %{--                                                $("#txt_varios").val("")--}%
 
-        %{--                                        $("#dlg_combo").dialog("open")--}%
+        %{--                                            $("#dlg_combo").dialog("open")--}%
+        %{--                                        }--}%
+        %{--                                    });--}%
+        %{--                                    d1.append(d2)--}%
+        %{--                                    d1.append(d4)--}%
+        %{--                                    var num =Math.floor(Math.random()*101)--}%
+        %{--                                    if ($("#c_ml").val() == "Fin") {--}%
+        %{--                                        d3.addClass("texto agregado ui-corner-all fin varios edicion").attr("pref", "div_indicador_").attr("id", "div_indicador_0"+num).attr("ml", "Fin").attr("div", "div_indicador_0"+num).attr("identificador", "0").attr("tipo", "1")--}%
+        %{--                                        d5.addClass(" texto agregado ui-corner-all md fin varios edicion").attr("pref", "mp_").attr("id", "mp_0"+num).attr("ml", "Fin").attr("div", "mp_0"+num).attr("identificador", "0").attr("tipo", "2")--}%
+        %{--                                        $("#div_indi_medios_fin").append(d1)--}%
+        %{--                                    } else {--}%
+        %{--                                        d3.addClass("texto agregado ui-corner-all proposito varios edicion").attr("pref", "div_indicador_").attr("id", "div_indicador_0"+num).attr("ml", "Proposito").attr("div", "div_indicador_0"+num).attr("identificador", "0").attr("tipo", "1")--}%
+        %{--                                        d5.addClass("texto agregado ui-corner-all md proposito varios edicion").attr("pref", "mp_").attr("id", "mp_0"+num).attr("ml", "Proposito").attr("div", "mp_0"+num).attr("identificador", "0").attr("tipo", "2")--}%
+        %{--                                        $("#div_indi_medios_prop").append(d1)--}%
         %{--                                    }--}%
-        %{--                                });--}%
-        %{--                                d1.append(d2)--}%
-        %{--                                d1.append(d4)--}%
-        %{--                                var num =Math.floor(Math.random()*101)--}%
-        %{--                                if ($("#c_ml").val() == "Fin") {--}%
-        %{--                                    d3.addClass("texto agregado ui-corner-all fin varios edicion").attr("pref", "div_indicador_").attr("id", "div_indicador_0"+num).attr("ml", "Fin").attr("div", "div_indicador_0"+num).attr("identificador", "0").attr("tipo", "1")--}%
-        %{--                                    d5.addClass(" texto agregado ui-corner-all md fin varios edicion").attr("pref", "mp_").attr("id", "mp_0"+num).attr("ml", "Fin").attr("div", "mp_0"+num).attr("identificador", "0").attr("tipo", "2")--}%
-        %{--                                    $("#div_indi_medios_fin").append(d1)--}%
-        %{--                                } else {--}%
-        %{--                                    d3.addClass("texto agregado ui-corner-all proposito varios edicion").attr("pref", "div_indicador_").attr("id", "div_indicador_0"+num).attr("ml", "Proposito").attr("div", "div_indicador_0"+num).attr("identificador", "0").attr("tipo", "1")--}%
-        %{--                                    d5.addClass("texto agregado ui-corner-all md proposito varios edicion").attr("pref", "mp_").attr("id", "mp_0"+num).attr("ml", "Proposito").attr("div", "mp_0"+num).attr("identificador", "0").attr("tipo", "2")--}%
-        %{--                                    $("#div_indi_medios_prop").append(d1)--}%
+        %{--                                    $("#" + $("#c_div").val()).parent().parent().find(".der").children().attr("indicador", msg)--}%
         %{--                                }--}%
-        %{--                                $("#" + $("#c_div").val()).parent().parent().find(".der").children().attr("indicador", msg)--}%
-        %{--                            }--}%
-        %{--                            if ($("#c_iden").val() == "0" && $("#c_tipo").val() * 1 == 2) {--}%
-        %{--                                var d1 = $("<div>")--}%
-        %{--                                d1.html("Agregar")--}%
-        %{--                                if ($("#c_ml").val() == "Fin") {--}%
-        %{--                                    d1.addClass("texto agregado ui-corner-all md fin varios nuevo edicion")--}%
-        %{--                                    d1.attr("pref", "mp_").attr("div", $("#c_div").val()).attr("ml", "Fin").attr("tipo", "2").attr("indicador", $("#c_indi").val()).attr("identificador", "0")--}%
-        %{--                                } else {--}%
-        %{--                                    d1.addClass(" texto agregado ui-corner-all md proposito varios nuevo edicion")--}%
-        %{--                                    d1.attr("pref", "mp_").attr("div", $("#c_div").val()).attr("ml", "Proposito").attr("tipo", "2").attr("indicador", $("#c_indi").val()).attr("identificador", "0")--}%
-        %{--                                }--}%
-
-        %{--                                $("#" + $("#c_div").val()).parent().append(d1)--}%
-        %{--                                d1.bind("click", function() {--}%
-        %{--                                    if ($("#edicion").val() == "1") {--}%
-        %{--                                        $("#txt_varios").val("")--}%
-        %{--                                        $("#c_ml").val($(this).attr("ml"))--}%
-        %{--                                        $("#c_div").val($(this).attr("div"))--}%
-        %{--                                        $("#c_iden").val($(this).attr("identificador"))--}%
-        %{--                                        $("#c_indi").val($(this).attr("indicador"))--}%
-        %{--                                        $("#c_tipo").val($(this).attr("tipo"))--}%
-        %{--                                        if ($(this).attr("ml") != "Supuestos")--}%
-        %{--                                            $("#filaCombo").hide()--}%
-        %{--                                        else--}%
-        %{--                                            $("#filaCombo").show()--}%
-        %{--                                        /* TODO hay un trim aqui que no valdria en ie... cambiar por la funcion */--}%
-        %{--                                        if ($("#" + $(this).attr("div")).html())--}%
-        %{--                                            $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())--}%
-        %{--                                        if ($("#txt_varios").val() == "Agregar")--}%
-        %{--                                            $("#txt_varios").val("")--}%
-
-        %{--                                        $("#dlg_combo").dialog("open")--}%
-        %{--                                    }--}%
-        %{--                                });--}%
-        %{--                            }--}%
-
-        %{--                            if ($("#c_iden").val() == "0" && $("#c_tipo").val() * 1 == 3) {--}%
-        %{--                                var div = $("<div>")--}%
-        %{--                                if ($("#c_ml").val() == "Proposito") {--}%
-        %{--                                    div.attr("ml", "Proposito").attr("id", "sp_0").attr("div", "sp_0").attr("identificador", "0").attr("tipo", "3").attr("indicador", $("#c_indi").val())--}%
-        %{--                                    div.addClass("texto agregado ui-corner-all proposito varios editar nuevo edicion")--}%
-        %{--                                } else {--}%
-        %{--                                    div.attr("ml", "Fin").attr("id", "sf_0").attr("div", "sf_0").attr("identificador", "0").attr("tipo", "3").attr("indicador", $("#c_indi").val())--}%
-        %{--                                    div.addClass("texto agregado ui-corner-all fin varios editar nuevo edicion")--}%
-        %{--                                }--}%
-        %{--                                div.html("Agregar")--}%
-        %{--                                $("#" + $("#c_div").val()).parent().append(div)--}%
-        %{--                                div.bind("click", function() {--}%
-        %{--                                    if ($("#edicion").val() == "1") {--}%
-        %{--                                        $("#txt_varios").val("")--}%
-        %{--                                        $("#c_ml").val($(this).attr("ml"))--}%
-        %{--                                        $("#c_div").val($(this).attr("div"))--}%
-        %{--                                        $("#c_iden").val($(this).attr("identificador"))--}%
-        %{--                                        $("#c_indi").val($(this).attr("indicador"))--}%
-        %{--                                        $("#c_tipo").val($(this).attr("tipo"))--}%
-        %{--                                        if ($(this).attr("tipo") != "3")--}%
-        %{--                                            $("#filaCombo").hide()--}%
-        %{--                                        else--}%
-        %{--                                        if ($("#c_iden").val() == "0")--}%
-        %{--                                            $("#filaCombo").show()--}%
-        %{--                                        /* TODO hay un trim aqui que no valdria en ie... cambiar por la funcion */--}%
-        %{--                                        if ($("#" + $(this).attr("div")).html())--}%
-        %{--                                            $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())--}%
-        %{--                                        if ($("#txt_varios").val() == "Agregar")--}%
-        %{--                                            $("#txt_varios").val("")--}%
-
-        %{--                                        $("#dlg_combo").dialog("open")--}%
-        %{--                                    }--}%
-        %{--                                });--}%
-        %{--                            }--}%
-
-        %{--                            if ($("#c_tipo").val() != "3") {--}%
-        %{--                                var id = $("#c_div").val()--}%
-        %{--                                var div = $("#" + $("#c_div").val())--}%
-        %{--                                $("#" + $("#c_div").val()).removeClass("nuevo")--}%
-        %{--                                $("#" + $("#c_div").val()).html($("#txt_varios").val())--}%
-        %{--                                $("#" + $("#c_div").val()).attr("div", $("#" + $("#c_div").val()).attr("pref") + msg)--}%
-        %{--                                $("#" + $("#c_div").val()).attr("identificador", msg)--}%
-        %{--                                $("#" + $("#c_div").val()).removeClass("edicion")--}%
-        %{--                                $("#" + $("#c_div").val()).attr("id", $("#" + $("#c_div").val()).attr("pref") + msg)--}%
         %{--                                if ($("#c_iden").val() == "0" && $("#c_tipo").val() * 1 == 2) {--}%
-        %{--                                    div.parent().find(".nuevo").attr("id", id)--}%
+        %{--                                    var d1 = $("<div>")--}%
+        %{--                                    d1.html("Agregar")--}%
+        %{--                                    if ($("#c_ml").val() == "Fin") {--}%
+        %{--                                        d1.addClass("texto agregado ui-corner-all md fin varios nuevo edicion")--}%
+        %{--                                        d1.attr("pref", "mp_").attr("div", $("#c_div").val()).attr("ml", "Fin").attr("tipo", "2").attr("indicador", $("#c_indi").val()).attr("identificador", "0")--}%
+        %{--                                    } else {--}%
+        %{--                                        d1.addClass(" texto agregado ui-corner-all md proposito varios nuevo edicion")--}%
+        %{--                                        d1.attr("pref", "mp_").attr("div", $("#c_div").val()).attr("ml", "Proposito").attr("tipo", "2").attr("indicador", $("#c_indi").val()).attr("identificador", "0")--}%
+        %{--                                    }--}%
+
+        %{--                                    $("#" + $("#c_div").val()).parent().append(d1)--}%
+        %{--                                    d1.bind("click", function() {--}%
+        %{--                                        if ($("#edicion").val() == "1") {--}%
+        %{--                                            $("#txt_varios").val("")--}%
+        %{--                                            $("#c_ml").val($(this).attr("ml"))--}%
+        %{--                                            $("#c_div").val($(this).attr("div"))--}%
+        %{--                                            $("#c_iden").val($(this).attr("identificador"))--}%
+        %{--                                            $("#c_indi").val($(this).attr("indicador"))--}%
+        %{--                                            $("#c_tipo").val($(this).attr("tipo"))--}%
+        %{--                                            if ($(this).attr("ml") != "Supuestos")--}%
+        %{--                                                $("#filaCombo").hide()--}%
+        %{--                                            else--}%
+        %{--                                                $("#filaCombo").show()--}%
+        %{--                                            /* TODO hay un trim aqui que no valdria en ie... cambiar por la funcion */--}%
+        %{--                                            if ($("#" + $(this).attr("div")).html())--}%
+        %{--                                                $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())--}%
+        %{--                                            if ($("#txt_varios").val() == "Agregar")--}%
+        %{--                                                $("#txt_varios").val("")--}%
+
+        %{--                                            $("#dlg_combo").dialog("open")--}%
+        %{--                                        }--}%
+        %{--                                    });--}%
         %{--                                }--}%
+
+        %{--                                if ($("#c_iden").val() == "0" && $("#c_tipo").val() * 1 == 3) {--}%
+        %{--                                    var div = $("<div>")--}%
+        %{--                                    if ($("#c_ml").val() == "Proposito") {--}%
+        %{--                                        div.attr("ml", "Proposito").attr("id", "sp_0").attr("div", "sp_0").attr("identificador", "0").attr("tipo", "3").attr("indicador", $("#c_indi").val())--}%
+        %{--                                        div.addClass("texto agregado ui-corner-all proposito varios editar nuevo edicion")--}%
+        %{--                                    } else {--}%
+        %{--                                        div.attr("ml", "Fin").attr("id", "sf_0").attr("div", "sf_0").attr("identificador", "0").attr("tipo", "3").attr("indicador", $("#c_indi").val())--}%
+        %{--                                        div.addClass("texto agregado ui-corner-all fin varios editar nuevo edicion")--}%
+        %{--                                    }--}%
+        %{--                                    div.html("Agregar")--}%
+        %{--                                    $("#" + $("#c_div").val()).parent().append(div)--}%
+        %{--                                    div.bind("click", function() {--}%
+        %{--                                        if ($("#edicion").val() == "1") {--}%
+        %{--                                            $("#txt_varios").val("")--}%
+        %{--                                            $("#c_ml").val($(this).attr("ml"))--}%
+        %{--                                            $("#c_div").val($(this).attr("div"))--}%
+        %{--                                            $("#c_iden").val($(this).attr("identificador"))--}%
+        %{--                                            $("#c_indi").val($(this).attr("indicador"))--}%
+        %{--                                            $("#c_tipo").val($(this).attr("tipo"))--}%
+        %{--                                            if ($(this).attr("tipo") != "3")--}%
+        %{--                                                $("#filaCombo").hide()--}%
+        %{--                                            else--}%
+        %{--                                            if ($("#c_iden").val() == "0")--}%
+        %{--                                                $("#filaCombo").show()--}%
+        %{--                                            /* TODO hay un trim aqui que no valdria en ie... cambiar por la funcion */--}%
+        %{--                                            if ($("#" + $(this).attr("div")).html())--}%
+        %{--                                                $("#txt_varios").val($("#" + $(this).attr("div")).html().trim())--}%
+        %{--                                            if ($("#txt_varios").val() == "Agregar")--}%
+        %{--                                                $("#txt_varios").val("")--}%
+
+        %{--                                            $("#dlg_combo").dialog("open")--}%
+        %{--                                        }--}%
+        %{--                                    });--}%
+        %{--                                }--}%
+
+        %{--                                if ($("#c_tipo").val() != "3") {--}%
+        %{--                                    var id = $("#c_div").val()--}%
+        %{--                                    var div = $("#" + $("#c_div").val())--}%
+        %{--                                    $("#" + $("#c_div").val()).removeClass("nuevo")--}%
+        %{--                                    $("#" + $("#c_div").val()).html($("#txt_varios").val())--}%
+        %{--                                    $("#" + $("#c_div").val()).attr("div", $("#" + $("#c_div").val()).attr("pref") + msg)--}%
+        %{--                                    $("#" + $("#c_div").val()).attr("identificador", msg)--}%
+        %{--                                    $("#" + $("#c_div").val()).removeClass("edicion")--}%
+        %{--                                    $("#" + $("#c_div").val()).attr("id", $("#" + $("#c_div").val()).attr("pref") + msg)--}%
+        %{--                                    if ($("#c_iden").val() == "0" && $("#c_tipo").val() * 1 == 2) {--}%
+        %{--                                        div.parent().find(".nuevo").attr("id", id)--}%
+        %{--                                    }--}%
+        %{--                                } else {--}%
+        %{--                                    var partes = msg.split("&&")--}%
+        %{--                                    $("#" + $("#c_div").val()).html(partes[1])--}%
+        %{--                                    $("#" + $("#c_div").val()).attr("identificador", partes[0])--}%
+        %{--                                    $("#" + $("#c_div").val()).removeClass("edicion")--}%
+        %{--                                    $("#" + $("#c_div").val()).removeClass("nuevo")--}%
+        %{--                                    $("#" + $("#c_div").val()).attr("div", $("#" + $("#c_div").val()).attr("pref") + partes[0])--}%
+        %{--                                    $("#" + $("#c_div").val()).attr("id", $("#" + $("#c_div").val()).attr("pref") + partes[0])--}%
+        %{--                                }--}%
+        %{--                                reajustar()--}%
+        %{--                                $("#dlg_combo").dialog("close")--}%
         %{--                            } else {--}%
-        %{--                                var partes = msg.split("&&")--}%
-        %{--                                $("#" + $("#c_div").val()).html(partes[1])--}%
-        %{--                                $("#" + $("#c_div").val()).attr("identificador", partes[0])--}%
-        %{--                                $("#" + $("#c_div").val()).removeClass("edicion")--}%
-        %{--                                $("#" + $("#c_div").val()).removeClass("nuevo")--}%
-        %{--                                $("#" + $("#c_div").val()).attr("div", $("#" + $("#c_div").val()).attr("pref") + partes[0])--}%
-        %{--                                $("#" + $("#c_div").val()).attr("id", $("#" + $("#c_div").val()).attr("pref") + partes[0])--}%
+        %{--                                $("#dlg_combo").dialog("close")--}%
+        %{--                                alert("Error al guardar los datos")--}%
         %{--                            }--}%
-        %{--                            reajustar()--}%
-        %{--                            $("#dlg_combo").dialog("close")--}%
-        %{--                        } else {--}%
-        %{--                            $("#dlg_combo").dialog("close")--}%
-        %{--                            alert("Error al guardar los datos")--}%
         %{--                        }--}%
-        %{--                    }--}%
-        %{--                });--}%
+        %{--                    });--}%
+        %{--                }--}%
         %{--            }--}%
         %{--        }--}%
-        %{--    }--}%
-        %{--});--}%
+        %{--    });--}%
 
     });
 
