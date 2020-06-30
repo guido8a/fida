@@ -12,6 +12,11 @@
     <!-- botones -->
         <div class="btn-toolbar toolbar" style="margin-bottom: 15px">
             <div class="btn-group">
+                <g:link controller="inicio" action="parametros" class="btn btn-default">
+                    <i class="fa fa-arrow-left"></i> Regresar
+                </g:link>
+            </div>
+            <div class="btn-group">
                 <g:link action="form" class="btn btn-default btnCrear">
                     <i class="fa fa-clipboard-list"></i> Nuevo Tema
                 </g:link>

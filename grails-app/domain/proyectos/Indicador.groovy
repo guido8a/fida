@@ -1,5 +1,7 @@
 package proyectos
 
+import parametros.proyectos.IndicadorOrms
+
 class Indicador implements Serializable {
     MarcoLogico marcoLogico
     IndicadorOrms indicadorOrms

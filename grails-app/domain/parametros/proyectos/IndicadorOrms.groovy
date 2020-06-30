@@ -1,4 +1,4 @@
-package proyectos
+package parametros.proyectos
 
 class IndicadorOrms implements Serializable {
 

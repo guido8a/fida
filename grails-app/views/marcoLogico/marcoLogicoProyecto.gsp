@@ -71,15 +71,15 @@
                             <span class="btn-group pull-right">
                                 <a href="#" class="btn btn-xs btn-success btnAddAct" title="Agregar actividad"
                                    data-id="${comp.id}" data-show="${k + 1}">
-                                    <i class="fa fa-plus"></i> actividad
+                                    <i class="fa fa-plus"></i> Actividad
                                 </a>
                                 <a href="#" class="btn btn-xs btn-info btnEditComp" title="Editar componente"
                                    data-id="${comp.id}" data-show="${k + 1}">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="far fa-edit"></i>
                                 </a>
                                 <a href="#" class="btn btn-xs btn-danger btnDeleteComp" title="Eliminar componente"
                                    data-id="${comp.id}" data-info="${compInfo}">
-                                    <i class="fa fa-trash-o"></i>
+                                    <i class="far fa-trash-alt"></i>
                                 </a>
                             </span>
                         </g:if>
