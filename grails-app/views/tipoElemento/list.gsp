@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta name="layout" content="main">
-        <title>Lista de TipoElemento</title>
+        <title>Tipos de Elemento ML</title>
     </head>
     <body>
 
@@ -19,7 +19,7 @@
         </div>
             <div class="btn-group">
                 <a href="#" class="btn btn-default btnCrear">
-                    <i class="fa fa-clipboard-list"></i> Crear
+                    <i class="fa fa-clipboard-list"></i> Nuevo Elemento
                 </a>
             </div>
         </div>

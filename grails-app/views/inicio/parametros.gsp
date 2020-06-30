@@ -76,7 +76,7 @@
 
                             <li>
                                 <i class="fa-li fas fa-highlighter text-info"></i>
-                                <g:link class="over" controller="estrategia" action="list">
+                                <g:link class="over" controller="indicadorOrms" action="list">
                                     Indicadores ORMS
                                 </g:link> que se aplican al proyecto
 
@@ -118,7 +118,7 @@
 
                             <li>
                                 <i class="fa-li fa fa-suitcase text-info"></i>
-                                <g:link class="over" controller="politicaBuenVivir" action="list">
+                                <g:link class="over" controller="fuente" action="list">
                                     Fuente de financiamiento
                                 </g:link> de las actividades y componentes del Proyecto
 

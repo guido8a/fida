@@ -1,33 +1,28 @@
-
-<%@ page import="parametros.Anio" %>
+<%@ page import="vesta.parametros.poaPac.Presupuesto" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta name="layout" content="main">
-        <title>Lista de Años Fiscales</title>
+        <title>Lista de Presupuesto</title>
     </head>
+
     <body>
 
         <elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>
 
-    <!-- botones -->
+        <!-- botones -->
         <div class="btn-toolbar toolbar">
-        <div class="btn-group">
-            <g:link controller="inicio" action="parametros" class="btn btn-default">
-                <i class="fa fa-arrow-left"></i> Regresar
-            </g:link>
-        </div>
-
-        <div class="btn-group">
+            <div class="btn-group">
                 <a href="#" class="btn btn-default btnCrear">
-                    <i class="fa fa fa-calendar"></i> Nuevo Año Fiscal
+                    <i class="fa fa-file-o"></i> Crear
                 </a>
             </div>
+
             <div class="btn-group pull-right col-md-3">
                 <div class="input-group">
                     <input type="text" class="form-control input-search" placeholder="Buscar" value="${params.search}">
                     <span class="input-group-btn">
-                        <g:link controller="anio" action="list" class="btn btn-default btn-search">
+                        <g:link controller="presupuesto" action="list" class="btn btn-default btn-search">
                             <i class="fa fa-search"></i>&nbsp;
                         </g:link>
                     </span>
@@ -38,29 +33,41 @@
         <table class="table table-condensed table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    
-                    <g:sortableColumn property="anio" title="Anio" />
-                    
-                    %{--<g:sortableColumn property="estado" title="Estado" />--}%
-                    
+
+                    <th>Presupuesto</th>
+
+                    <g:sortableColumn property="numero" title="Numero"/>
+
+                    <g:sortableColumn property="descripcion" title="Descripcion"/>
+
+                    <g:sortableColumn property="nivel" title="Nivel"/>
+
+                    <g:sortableColumn property="movimiento" title="Movimiento"/>
+
                 </tr>
             </thead>
             <tbody>
-                <g:if test="${anioInstanceCount > 0}">
-                    <g:each in="${anioInstanceList}" status="i" var="anioInstance">
-                        <tr data-id="${anioInstance.id}">
-                            
-                            <td>${anioInstance.anio}</td>
-                            
-                            %{--<td><g:fieldValue bean="${anioInstance}" field="estado"/></td>--}%
-                            
+                <g:if test="${presupuestoInstanceCount > 0}">
+                    <g:each in="${presupuestoInstanceList}" status="i" var="presupuestoInstance">
+                        <tr data-id="${presupuestoInstance.id}">
+
+                            <td>${presupuestoInstance.presupuesto}</td>
+
+                            <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${presupuestoInstance}" field="numero"/></elm:textoBusqueda></td>
+
+                            <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${presupuestoInstance}" field="descripcion"/></elm:textoBusqueda></td>
+
+                            <td><g:fieldValue bean="${presupuestoInstance}" field="nivel"/></td>
+
+                            <td><g:fieldValue bean="${presupuestoInstance}" field="movimiento"/></td>
+
                         </tr>
                     </g:each>
                 </g:if>
                 <g:else>
                     <tr class="danger">
-                        <td class="text-center" colspan="2">
-                            <g:if test="${params.search && params.search!= ''}">
+                        <td class="text-center" colspan="5">
+                            <g:if test="${params.search && params.search != ''}">
                                 No se encontraron resultados para su búsqueda
                             </g:if>
                             <g:else>
@@ -72,42 +79,42 @@
             </tbody>
         </table>
 
-        <elm:pagination total="${anioInstanceCount}" params="${params}"/>
+        <elm:pagination total="${presupuestoInstanceCount}" params="${params}"/>
 
         <script type="text/javascript">
             var id = null;
-            function submitForm() {
-                var $form = $("#frmAnio");
-                var $btn = $("#dlgCreateEdit").find("#btnSave");
+            function submitFormPresupuesto() {
+                var $form = $("#frmPresupuesto");
+                var $btn = $("#dlgCreateEditPresupuesto").find("#btnSave");
                 if ($form.valid()) {
                     $btn.replaceWith(spinner);
-                    openLoader("Guardando Año");
+                    openLoader("Guardando Presupuesto");
                     $.ajax({
                         type    : "POST",
                         url     : $form.attr("action"),
                         data    : $form.serialize(),
-                            success : function (msg) {
-                        var parts = msg.split("_");
-                        log(parts[1], parts[0] == "ok" ? "success" : "error"); // log(msg, type, title, hide)
-                        setTimeout(function() {
-                            if (parts[0] == "ok") {
-                                location.reload(true);
-                            } else {
-                                spinner.replaceWith($btn);
-                                return false;
-                            }
-                        }, 1000);
-                    }
-                });
-            } else {
-                return false;
-            } //else
+                        success : function (msg) {
+                            var parts = msg.split("*");
+                            log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
+                            setTimeout(function () {
+                                if (parts[0] == "SUCCESS") {
+                                    location.reload(true);
+                                } else {
+                                    spinner.replaceWith($btn);
+                                    return false;
+                                }
+                            }, 1000);
+                        }
+                    });
+                } else {
+                    return false;
+                } //else
             }
-            function deleteRow(itemId) {
+            function deletePresupuesto(itemId) {
                 bootbox.dialog({
                     title   : "Alerta",
                     message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i><p>" +
-                              "¿Está seguro que desea eliminar el Año seleccionado? Esta acción no se puede deshacer.</p>",
+                            "¿Está seguro que desea eliminar el Presupuesto seleccionado? Esta acción no se puede deshacer.</p>",
                     buttons : {
                         cancelar : {
                             label     : "Cancelar",
@@ -119,10 +126,10 @@
                             label     : "<i class='fa fa-trash-o'></i> Eliminar",
                             className : "btn-danger",
                             callback  : function () {
-                                openLoader("Eliminando Año");
+                                openLoader("Eliminando Presupuesto");
                                 $.ajax({
                                     type    : "POST",
-                                    url     : '${createLink(action:'delete_ajax')}',
+                                    url     : '${createLink(controller: 'presupuesto', action:'delete_ajax')}',
                                     data    : {
                                         id : itemId
                                     },
@@ -130,12 +137,15 @@
                                         var parts = msg.split("*");
                                         log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                                         if (parts[0] == "SUCCESS") {
-                                            setTimeout(function() {
+                                            setTimeout(function () {
                                                 location.reload(true);
                                             }, 1000);
                                         } else {
                                             closeLoader();
                                         }
+                                    },
+                                    error   : function () {
+                                        log("Ha ocurrido un error interno", "error");
                                     }
                                 });
                             }
@@ -143,18 +153,18 @@
                     }
                 });
             }
-            function createEditRow(id) {
+            function createEditPresupuesto(id) {
                 var title = id ? "Editar" : "Crear";
-                var data = id ? { id: id } : {};
+                var data = id ? {id : id} : {};
                 $.ajax({
                     type    : "POST",
-                    url     : "${createLink(action:'form_ajax')}",
+                    url     : "${createLink(controller: 'presupuesto', action:'form_ajax')}",
                     data    : data,
                     success : function (msg) {
                         var b = bootbox.dialog({
-                            id      : "dlgCreateEdit",
-                            title   : title + " Año",
-                            
+                            id    : "dlgCreateEditPresupuesto",
+                            title : title + " Presupuesto",
+
                             message : msg,
                             buttons : {
                                 cancelar : {
@@ -168,7 +178,7 @@
                                     label     : "<i class='fa fa-save'></i> Guardar",
                                     className : "btn-success",
                                     callback  : function () {
-                                        return submitForm();
+                                        return submitFormPresupuesto();
                                     } //callback
                                 } //guardar
                             } //buttons
@@ -182,8 +192,8 @@
 
             $(function () {
 
-                $(".btnCrear").click(function() {
-                    createEditRow();
+                $(".btnCrear").click(function () {
+                    createEditPresupuesto();
                     return false;
                 });
 
@@ -200,13 +210,13 @@
                                 var id = $element.data("id");
                                 $.ajax({
                                     type    : "POST",
-                                    url     : "${createLink(action:'show_ajax')}",
+                                    url     : "${createLink(controller: 'presupuesto', action:'show_ajax')}",
                                     data    : {
                                         id : id
                                     },
                                     success : function (msg) {
                                         bootbox.dialog({
-                                            title   : "Ver Año",
+                                            title   : "Ver Presupuesto",
                                             message : msg,
                                             buttons : {
                                                 ok : {
@@ -226,7 +236,7 @@
                             icon   : "fa fa-pencil",
                             action : function ($element) {
                                 var id = $element.data("id");
-                                createEditRow(id);
+                                createEditPresupuesto(id);
                             }
                         },
                         eliminar : {
@@ -235,7 +245,7 @@
                             separator_before : true,
                             action           : function ($element) {
                                 var id = $element.data("id");
-                                deleteRow(id);
+                                deletePresupuesto(id);
                             }
                         }
                     },

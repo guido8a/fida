@@ -1,12 +1,11 @@
-package seguridad
+package parametros.proyectos
 
-import base.Tema
 import grails.validation.ValidationException
-import parametros.proyectos.TipoElemento
-
 import static org.springframework.http.HttpStatus.*
 
-class TipoInstitucionController {
+class IndicadorOrmsController {
+
+//    IndicadorOrmsService indicadorOrmsService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -26,7 +25,7 @@ class TipoInstitucionController {
         }
         def list
         if (params.search) {
-            def c = TipoInstitucion.createCriteria()
+            def c = IndicadorOrms.createCriteria()
             list = c.list(params) {
                 or {
                     /* TODO: cambiar aqui segun sea necesario */
@@ -35,7 +34,7 @@ class TipoInstitucionController {
                 }
             }
         } else {
-            list = TipoInstitucion.list(params)
+            list = IndicadorOrms.list(params)
         }
         if (!all && params.offset.toInteger() > 0 && list.size() == 0) {
             params.offset = params.offset.toInteger() - 1
@@ -49,9 +48,15 @@ class TipoInstitucionController {
      * @return tipoElementoInstanceList: la lista de elementos filtrados, tipoElementoInstanceCount: la cantidad total de elementos (sin máximo)
      */
     def list() {
-        def tipoInstitucionInstanceList = getList(params, false)
-        def tipoInstitucionInstanceCount = getList(params, true).size()
-        return [tipoInstitucionInstanceList: tipoInstitucionInstanceList, tipoInstitucionInstanceCount: tipoInstitucionInstanceCount]
+        def indicadorOrmsInstanceList = getList(params, false)
+        def indicadorOrmsInstanceCount = getList(params, true).size()
+        return [indicadorOrmsInstanceList: indicadorOrmsInstanceList, indicadorOrmsInstanceCount: indicadorOrmsInstanceCount]
+    }
+
+
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond IndicadorOrmsService.list(params), model:[IndicadorOrmsCount: IndicadorOrmsService.count()]
     }
 
 
@@ -61,16 +66,16 @@ class TipoInstitucionController {
      * @render ERROR*[mensaje] cuando no se encontró el elemento
      */
     def form_ajax() {
-        def tipoInstitucionInstance = new TipoInstitucion()
+        def indicadorOrmsInstance = new IndicadorOrms()
         if (params.id) {
-            tipoInstitucionInstance = TipoInstitucion.get(params.id)
-            if (!tipoInstitucionInstance) {
-                render "ERROR*No se encontró TipoElemento."
+            indicadorOrmsInstance = IndicadorOrms.get(params.id)
+            if (!indicadorOrmsInstance) {
+                render "ERROR*No se encontró Indicador ORMS."
                 return
             }
         }
-        tipoInstitucionInstance.properties = params
-        return [tipoInstitucionInstance: tipoInstitucionInstance]
+        indicadorOrmsInstance.properties = params
+        return [indicadorOrmsInstance: indicadorOrmsInstance]
     } //form para cargar con ajax en un dialog
 
     /**
@@ -80,18 +85,19 @@ class TipoInstitucionController {
     def save_ajax() {
         println "---> $params"
         withForm {
-            def tipoInstitucionInstance = new TipoInstitucion()
+            def indicadorOrmsInstance = new IndicadorOrms()
             if (params.id) {
-                tipoInstitucionInstance = TipoInstitucion.get(params.id)
-                if (!tipoInstitucionInstance) {
+                indicadorOrmsInstance = IndicadorOrms.get(params.id)
+                if (!indicadorOrmsInstance) {
                     notFound_ajax()
                     return
                 }
             } //update
-            tipoInstitucionInstance.properties = params
-            if (!tipoInstitucionInstance.save(flush: true)) {
+//            params.codigo = params.codigo.toString().toUpperCase()
+            indicadorOrmsInstance.properties = params
+            if (!indicadorOrmsInstance.save(flush: true)) {
                 def msg = "NO_No se pudo ${params.id ? 'actualizar' : 'crear'} Tema."
-                msg += renderErrors(bean: tipoInstitucionInstance)
+                msg += renderErrors(bean: indicadorOrmsInstance)
                 render msg
                 return
             }
@@ -103,10 +109,10 @@ class TipoInstitucionController {
 
     def delete_ajax() {
         if (params.id) {
-            def tipoInstitucionInstance = TipoInstitucion.get(params.id)
-            if (tipoInstitucionInstance) {
+            def indicadorOrmsInstance = IndicadorOrms.get(params.id)
+            if (indicadorOrmsInstance) {
                 try {
-                    tipoInstitucionInstance.delete(flush: true)
+                    indicadorOrmsInstance.delete(flush: true)
                     render "OK_Eliminación de Tema exitosa."
                 } catch (e) {
                     render "NO_No se pudo eliminar Tema."
@@ -122,19 +128,19 @@ class TipoInstitucionController {
 
     /**
      * Acción llamada con ajax que muestra la información de un elemento particular
-     * @return tipoElementoInstance el objeto a mostrar cuando se encontró el elemento
+     * @return Indicador ORMSInstance el objeto a mostrar cuando se encontró el elemento
      * @render ERROR*[mensaje] cuando no se encontró el elemento
      */
     def show_ajax() {
         if (params.id) {
-            def tipoInstitucionInstance = TipoInstitucion.get(params.id)
-            if (!tipoInstitucionInstance) {
-                render "ERROR*No se encontró TipoElemento."
+            def indicadorOrmsInstance = IndicadorOrms.get(params.id)
+            if (!indicadorOrmsInstance) {
+                render "ERROR*No se encontró Indicador ORMS."
                 return
             }
-            return [tipoInstitucionInstance: tipoInstitucionInstance]
+            return [indicadorOrmsInstance: indicadorOrmsInstance]
         } else {
-            render "ERROR*No se encontró TipoElemento."
+            render "ERROR*No se encontró Indicador ORMS."
         }
     } //show para cargar con ajax en un dialog
 

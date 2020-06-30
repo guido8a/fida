@@ -1722,5 +1722,10 @@ class ElementosTagLib {
         out << html << body() << '</div></div></div>'
     }
 
+    def poneHtml = { attrs ->
+//        println "funcion: ${attrs.funcion}"
+        def html = attrs.textoHtml
+        out << html
+    }
 
 }

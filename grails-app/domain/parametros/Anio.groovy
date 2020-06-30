@@ -45,7 +45,7 @@ class Anio {
      * Define las restricciones de cada uno de los campos
      */
     static constraints = {
-        anio(size: 1..31, blank: false, attributes: [mensaje: 'Año al cual corresponde el PAPP'])
+        anio(size: 1..4, blank: false, attributes: [mensaje: 'Año al cual corresponde el POA'])
         estado(blank: false, nullable: false)
         estadoGp(blank: false, nullable: false)
     }

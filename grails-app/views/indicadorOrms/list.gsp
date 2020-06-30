@@ -1,102 +1,67 @@
 
-<%@ page import="parametros.Anio" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta name="layout" content="main">
-        <title>Lista de Años Fiscales</title>
+        <title>Indicador ORMS</title>
     </head>
     <body>
 
-        <elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>
+        <elm:flashMessage tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:flashMessage>
 
     <!-- botones -->
-        <div class="btn-toolbar toolbar">
-        <div class="btn-group">
-            <g:link controller="inicio" action="parametros" class="btn btn-default">
-                <i class="fa fa-arrow-left"></i> Regresar
-            </g:link>
-        </div>
-
-        <div class="btn-group">
-                <a href="#" class="btn btn-default btnCrear">
-                    <i class="fa fa fa-calendar"></i> Nuevo Año Fiscal
-                </a>
+        <div class="btn-toolbar toolbar" style="margin-bottom: 15px">
+            <div class="btn-group">
+                <g:link controller="inicio" action="parametros" class="btn btn-default">
+                    <i class="fa fa-arrow-left"></i> Regresar
+                </g:link>
             </div>
-            <div class="btn-group pull-right col-md-3">
-                <div class="input-group">
-                    <input type="text" class="form-control input-search" placeholder="Buscar" value="${params.search}">
-                    <span class="input-group-btn">
-                        <g:link controller="anio" action="list" class="btn btn-default btn-search">
-                            <i class="fa fa-search"></i>&nbsp;
-                        </g:link>
-                    </span>
-                </div><!-- /input-group -->
+            <div class="btn-group">
+                <g:link action="form" class="btn btn-default btnCrear">
+                    <i class="fa fa-clipboard-list"></i> Nuevo Indicador
+                </g:link>
             </div>
         </div>
 
-        <table class="table table-condensed table-bordered table-striped table-hover">
+        <table class="table table-condensed table-bordered table-striped">
             <thead>
                 <tr>
-                    
-                    <g:sortableColumn property="anio" title="Anio" />
-                    
-                    %{--<g:sortableColumn property="estado" title="Estado" />--}%
-                    
+                    <g:sortableColumn property="codigo" title="Código" />
+                    <g:sortableColumn property="nombre" title="Nombre" />
                 </tr>
             </thead>
             <tbody>
-                <g:if test="${anioInstanceCount > 0}">
-                    <g:each in="${anioInstanceList}" status="i" var="anioInstance">
-                        <tr data-id="${anioInstance.id}">
-                            
-                            <td>${anioInstance.anio}</td>
-                            
-                            %{--<td><g:fieldValue bean="${anioInstance}" field="estado"/></td>--}%
-                            
-                        </tr>
-                    </g:each>
-                </g:if>
-                <g:else>
-                    <tr class="danger">
-                        <td class="text-center" colspan="2">
-                            <g:if test="${params.search && params.search!= ''}">
-                                No se encontraron resultados para su búsqueda
-                            </g:if>
-                            <g:else>
-                                No se encontraron registros que mostrar
-                            </g:else>
-                        </td>
+                <g:each in="${indicadorOrmsInstanceList}" status="i" var="dataInstance">
+                    <tr data-id="${dataInstance.id}">
+                        <td>${fieldValue(bean: dataInstance, field: "codigo")}</td>
+                        <td>${fieldValue(bean: dataInstance, field: "descripcion")}</td>
                     </tr>
-                </g:else>
+                </g:each>
             </tbody>
         </table>
 
-        <elm:pagination total="${anioInstanceCount}" params="${params}"/>
+        <elm:pagination total="${indicadorOrmsInstanceCount}" params="${params}"/>
 
         <script type="text/javascript">
             var id = null;
             function submitForm() {
-                var $form = $("#frmAnio");
+                var $form = $("#frmOrms");
                 var $btn = $("#dlgCreateEdit").find("#btnSave");
                 if ($form.valid()) {
-                    $btn.replaceWith(spinner);
-                    openLoader("Guardando Año");
+                $btn.replaceWith(spinner);
                     $.ajax({
                         type    : "POST",
-                        url     : $form.attr("action"),
+                        url     : '${createLink(controller: 'IndicadorOrms', action:'save_ajax')}',
                         data    : $form.serialize(),
                             success : function (msg) {
                         var parts = msg.split("_");
-                        log(parts[1], parts[0] == "ok" ? "success" : "error"); // log(msg, type, title, hide)
-                        setTimeout(function() {
-                            if (parts[0] == "ok") {
-                                location.reload(true);
-                            } else {
-                                spinner.replaceWith($btn);
-                                return false;
-                            }
-                        }, 1000);
+                        log(parts[1], parts[0] == "OK" ? "success" : "error"); // log(msg, type, title, hide)
+                        if (parts[0] == "OK") {
+                            location.reload(true);
+                        } else {
+                            spinner.replaceWith($btn);
+                            return false;
+                        }
                     }
                 });
             } else {
@@ -106,8 +71,8 @@
             function deleteRow(itemId) {
                 bootbox.dialog({
                     title   : "Alerta",
-                    message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i><p>" +
-                              "¿Está seguro que desea eliminar el Año seleccionado? Esta acción no se puede deshacer.</p>",
+                    message : "<i class='fa fa-trash fa-2x pull-left text-danger text-shadow'></i><p>" +
+                        "¿Está seguro que desea eliminar el Indicador ORMS? Esta acción no se puede deshacer.</p>",
                     buttons : {
                         cancelar : {
                             label     : "Cancelar",
@@ -116,10 +81,9 @@
                             }
                         },
                         eliminar : {
-                            label     : "<i class='fa fa-trash-o'></i> Eliminar",
+                            label     : "<i class='fa fa-trash'></i> Eliminar",
                             className : "btn-danger",
                             callback  : function () {
-                                openLoader("Eliminando Año");
                                 $.ajax({
                                     type    : "POST",
                                     url     : '${createLink(action:'delete_ajax')}',
@@ -127,14 +91,10 @@
                                         id : itemId
                                     },
                                     success : function (msg) {
-                                        var parts = msg.split("*");
-                                        log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                                        if (parts[0] == "SUCCESS") {
-                                            setTimeout(function() {
-                                                location.reload(true);
-                                            }, 1000);
-                                        } else {
-                                            closeLoader();
+                                        var parts = msg.split("_");
+                                        log(parts[1], parts[0] == "OK" ? "success" : "error"); // log(msg, type, title, hide)
+                                        if (parts[0] == "OK") {
+                                            location.reload(true);
                                         }
                                     }
                                 });
@@ -148,13 +108,12 @@
                 var data = id ? { id: id } : {};
                 $.ajax({
                     type    : "POST",
-                    url     : "${createLink(action:'form_ajax')}",
+                    url     : "${createLink(controller: 'IndicadorOrms', action:'form_ajax')}",
                     data    : data,
                     success : function (msg) {
                         var b = bootbox.dialog({
                             id      : "dlgCreateEdit",
-                            title   : title + " Año",
-                            
+                            title   : title + " Indicador ORMS",
                             message : msg,
                             buttons : {
                                 cancelar : {
@@ -187,7 +146,7 @@
                     return false;
                 });
 
-                $("tbody>tr").contextMenu({
+                $("tbody tr").contextMenu({
                     items  : {
                         header   : {
                             label  : "Acciones",
@@ -206,7 +165,7 @@
                                     },
                                     success : function (msg) {
                                         bootbox.dialog({
-                                            title   : "Ver Año",
+                                            title   : "Ver",
                                             message : msg,
                                             buttons : {
                                                 ok : {
@@ -223,7 +182,7 @@
                         },
                         editar   : {
                             label  : "Editar",
-                            icon   : "fa fa-pencil",
+                            icon   : "fa fa-pen",
                             action : function ($element) {
                                 var id = $element.data("id");
                                 createEditRow(id);
@@ -231,7 +190,7 @@
                         },
                         eliminar : {
                             label            : "Eliminar",
-                            icon             : "fa fa-trash-o",
+                            icon             : "fa fa-trash",
                             separator_before : true,
                             action           : function ($element) {
                                 var id = $element.data("id");
@@ -240,12 +199,13 @@
                         }
                     },
                     onShow : function ($element) {
-                        $element.addClass("success");
+                        $element.addClass("trHighlight");
                     },
                     onHide : function ($element) {
-                        $(".success").removeClass("success");
+                        $(".trHighlight").removeClass("trHighlight");
                     }
                 });
+
             });
         </script>
 
