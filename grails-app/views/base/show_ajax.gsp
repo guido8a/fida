@@ -1,4 +1,3 @@
-<%@ page import="bitacora.Base" %>
 
 <style type="text/css">
 

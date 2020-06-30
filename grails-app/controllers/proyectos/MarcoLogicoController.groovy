@@ -417,6 +417,9 @@ class MarcoLogicoController {
 
 
     def showMarco = {
+
+        println("params " + params)
+
         def proyecto = Proyecto.get(params.id)
         if(proyecto.aprobado=="a"){
             response.sendError(403)
@@ -431,7 +434,7 @@ class MarcoLogicoController {
             if (proyecto) {
                 fin = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Fin"))
                 if (fin) {
-                    indicadores = Indicador.findAllByMarcoLogico(fin)
+                    indicadores =  Indicador.findAllByMarcoLogico(fin)
                     sup = Supuesto.findAllByMarcoLogico(fin)
                 }
                 indicadores.each {
@@ -448,7 +451,41 @@ class MarcoLogicoController {
                 supProp = Supuesto.findAllByMarcoLogico(proposito)
             }
 
+            println("1 " + fin)
+            println("2 " + indicadores)
+
             [fin: fin, indicadores: indicadores, medios: medios, sup: sup, proyecto: proyecto, proposito: proposito, indiProps: indiProps, mediosProp: mediosProp, supProp: supProp]
+        }
+
+    }
+
+
+    def marcoDialog_ajax(){
+        println("params md " + params)
+        def marco = MarcoLogico.get(params.id)
+        return[marco: marco]
+    }
+
+    def guardarDatosMarco = {
+        println "gdm " + params
+        def proyecto = Proyecto.get(params.proyecto)
+        def ml = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion(params.tipo))
+        if (ml) {
+            ml.objeto = params.datos
+            if (ml.save(flush: true)) {
+                render "ok"
+            } else {
+                println "errores " + ml.errors
+                render "no"
+            }
+        } else {
+            ml = new MarcoLogico([proyecto: proyecto, objeto: params.datos, tipoElemento: TipoElemento.findByDescripcion(params.tipo)])
+            if (ml.save(flush: true)) {
+                render "ok"
+            } else {
+                println "errores " + ml.errors
+                render "no"
+            }
         }
 
     }
