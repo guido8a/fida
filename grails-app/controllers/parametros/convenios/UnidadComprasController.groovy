@@ -2,7 +2,6 @@ package parametros.convenios
 
 import grails.validation.ValidationException
 import parametros.convenios.UnidadCompras
-import parametros.convenios.UnidadComprasService
 
 import static org.springframework.http.HttpStatus.*
 

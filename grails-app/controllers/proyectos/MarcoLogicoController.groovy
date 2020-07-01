@@ -496,11 +496,11 @@ class MarcoLogicoController {
             case "1":
                 objeto = Indicador.get(params.id)
                 return[objeto:objeto]
-            break
+                break
             case "2":
                 objeto = MedioVerificacion.get(params.id)
                 return[objeto:objeto]
-            break
+                break
             case "3":
                 objeto = Supuesto.get(params.id)
                 return[objeto:objeto]
@@ -641,6 +641,92 @@ class MarcoLogicoController {
 
             [fin: fin, indicadores: indicadores, medios: medios, sup: sup, proyecto: proyecto, proposito: proposito, indiProps: indiProps, mediosProp: mediosProp, supProp: supProp]
         }
+    }
+
+//    def eliminarMarco = {
+//        println("params elm " + params)
+//
+//            def proyecto = Proyecto.get(params.proyecto)
+//            def ml = MarcoLogico.get(params.id)
+//            if (ml) {
+//                def control = MarcoLogico.findAllByMarcoLogico(ml).size()
+//                control += Meta.findAllByMarcoLogico(ml).size()
+////                control += Asignacion.findAllByMarcoLogico(ml).size()
+//                println "control " + control
+//                if (control < 1) {
+//                    def indicadores = Indicador.findAllByMarcoLogico(ml)
+//                    indicadores.each {
+//                        MedioVerificacion.findAllByIndicador(it).each { m ->
+//                            params.id = m.id
+//                            kerberosService.delete(params, MedioVerificacion, session.perfil, session.usuario)
+//                        }
+//                        params.id = it.id
+//                        kerberosService.delete(params, Indicador, session.perfil, session.usuario)
+//                    }
+//                    Supuesto.findAllByMarcoLogico(ml).each {
+//                        params.id = it.id
+//                        kerberosService.delete(params, Supuesto, session.perfil, session.usuario)
+//                    }
+//                    params.id = ml.id
+//                    kerberosService.delete(params, MarcoLogico, session.perfil, session.usuario)
+//                    render("ok")
+//                } else {
+//                    render "error"
+//                }
+//
+//            } else {
+//                render "error"
+//            }
+//    }
+
+    def eliminarMarco () {
+
+//        println("params elm " + params)
+
+        def errores = ''
+        def ml = MarcoLogico.get(params.id)
+        def indicadores = Indicador.findAllByMarcoLogico(ml)
+
+        if(indicadores){
+            def medios = MedioVerificacion.findAllByIndicadorInList(indicadores)
+
+            if(medios){
+                medios.each {m->
+                    if(!m.delete(flush:true)){
+                        errores += m.errors
+                    }
+                }
+            }
+
+            indicadores.each {i->
+                if(!i.delete(flush:true)){
+                    errores += i.errors
+                }
+            }
+        }
+
+        def supuestos = Supuesto.findAllByMarcoLogico(ml)
+
+        supuestos.each {s->
+            if(!s.delete(flush:true)){
+                errores += s.errors
+            }
+        }
+
+        try{
+            ml.delete(flush: true)
+            render"ok"
+        }catch(e){
+            println("error al borrar el marco logico " + e + errores)
+            render "no"
+        }
+    }
+
+    def eliminarVarios(){
+
+        println("params elv " + params)
+
+
     }
 
 
