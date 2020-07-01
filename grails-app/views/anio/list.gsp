@@ -106,7 +106,7 @@
             function deleteRow(itemId) {
                 bootbox.dialog({
                     title   : "Alerta",
-                    message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i><p>" +
+                    message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
                               "¿Está seguro que desea eliminar el Año seleccionado? Esta acción no se puede deshacer.</p>",
                     buttons : {
                         cancelar : {
@@ -116,7 +116,7 @@
                             }
                         },
                         eliminar : {
-                            label     : "<i class='fa fa-trash-o'></i> Eliminar",
+                            label     : "<i class='fa fa-trash'></i> Eliminar",
                             className : "btn-danger",
                             callback  : function () {
                                 openLoader("Eliminando Año");
@@ -223,7 +223,7 @@
                         },
                         editar   : {
                             label  : "Editar",
-                            icon   : "fa fa-pencil",
+                            icon   : "fa fa-edit",
                             action : function ($element) {
                                 var id = $element.data("id");
                                 createEditRow(id);
@@ -231,7 +231,7 @@
                         },
                         eliminar : {
                             label            : "Eliminar",
-                            icon             : "fa fa-trash-o",
+                            icon             : "fa fa-trash",
                             separator_before : true,
                             action           : function ($element) {
                                 var id = $element.data("id");

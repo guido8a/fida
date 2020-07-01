@@ -120,9 +120,9 @@
             }
             function deletePresupuesto(itemId) {
                 bootbox.dialog({
-                    title   : "Alerta",
-                    message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i><p>" +
-                            "¿Está seguro que desea eliminar el Presupuesto seleccionado? Esta acción no se puede deshacer.</p>",
+                    title   : "Eliminar el Registro",
+                    message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'> </i><p style='margin-left: 40px'>¿Está seguro " +
+                        "que desea eliminar el Presupuesto seleccionado?<br/>Esta acción no se puede deshacer.</p>",
                     buttons : {
                         cancelar : {
                             label     : "Cancelar",
@@ -131,7 +131,7 @@
                             }
                         },
                         eliminar : {
-                            label     : "<i class='fa fa-trash-o'></i> Eliminar",
+                            label     : "<i class='fa fa-trash'></i> Eliminar",
                             className : "btn-danger",
                             callback  : function () {
                                 openLoader("Eliminando Presupuesto");
@@ -224,7 +224,7 @@
 
                 var crearHijo = {
                     label           : "Crear Hijo",
-                    icon            : "fa fa-money text-success",
+                    icon            : "far fa-edit text-success",
                     separator_after : true,
                     action          : function () {
                         createEditPresupuesto(nodeId);
@@ -232,7 +232,7 @@
                 };
                 var editar = {
                     label           : "Editar",
-                    icon            : "fa fa-pencil text-info",
+                    icon            : "fa fa-pen text-info",
                     separator_after : true,
                     action          : function () {
                         createEditPresupuesto(null, nodeId);
@@ -240,7 +240,7 @@
                 };
                 var eliminar = {
                     label           : "Eliminar",
-                    icon            : "fa fa-trash-o text-danger",
+                    icon            : "fa fa-trash text-danger",
                     separator_after : true,
                     action          : function () {
                         deletePresupuesto(nodeId);

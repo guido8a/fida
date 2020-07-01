@@ -1,4 +1,4 @@
-<%@ page import="parametros.poa.Presupuesto" %>
+<%@ page import="poa.Presupuesto" %>
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
 <g:if test="${!presupuestoInstance}">

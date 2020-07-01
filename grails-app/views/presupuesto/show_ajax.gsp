@@ -1,5 +1,5 @@
 
-<%@ page import="vesta.parametros.poaPac.Presupuesto" %>
+<%@ page import="poa.Presupuesto" %>
 
 <g:if test="${!presupuestoInstance}">
     <elm:notFound elem="Presupuesto" genero="o" />

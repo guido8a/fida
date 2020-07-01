@@ -105,7 +105,7 @@
 
                             <li>
                                 <i class="fa-li far fa-folder text-info"></i>
-                                <g:link class="over" controller="objetivoBuenVivir" action="list">
+                                <g:link class="over" controller="grupoProcesos" action="list">
                                     Grupo de procesos
                                 </g:link> del proyecto: Inicio, Planificación, ejecución y cierre
 
@@ -134,7 +134,7 @@
 
                             <li>
                                 <i class="fa-li fas fa-list text-info"></i>
-                                <g:link class="over" controller="metaBuenVivir" action="list">
+                                <g:link class="over" controller="mes" action="list">
                                     Meses
                                 </g:link> para el registro del cronograma del POA de Proyecto
 
@@ -147,7 +147,7 @@
 
                             <li>
                                 <i class="fa-li fa fa-map-marker text-info"></i>
-                                <g:link class="over" controller="localizacion" action="list">
+                                <g:link class="over" controller="unidad" action="list">
                                     Unidad de medida
                                 </g:link> para definir las Metas del Proyecto
 
