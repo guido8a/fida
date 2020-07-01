@@ -1,10 +1,10 @@
 
-<%@ page import="parametros.TipoElemento" %>
+<%@ page import="parametros.convenios.TipoEvaluacion" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta name="layout" content="main">
-        <title>Tipos de Elemento ML</title>
+        <title>Tipos de Evaluación ML</title>
     </head>
     <body>
 
@@ -19,7 +19,7 @@
         </div>
             <div class="btn-group">
                 <a href="#" class="btn btn-default btnCrear">
-                    <i class="fa fa-clipboard-list"></i> Nuevo Elemento
+                    <i class="fa fa-clipboard-list"></i> Nuevo Evaluación
                 </a>
             </div>
         </div>
@@ -33,11 +33,11 @@
                 </tr>
             </thead>
             <tbody>
-                <g:if test="${tipoElementoInstanceCount > 0}">
-                    <g:each in="${tipoElementoInstanceList}" status="i" var="tipoElementoInstance">
-                        <tr data-id="${tipoElementoInstance.id}">
+                <g:if test="${tipoEvaluacionInstanceCount > 0}">
+                    <g:each in="${tipoEvaluacionInstanceList}" status="i" var="tipoEvaluacionInstance">
+                        <tr data-id="${tipoEvaluacionInstance.id}">
                             
-                            <td>${tipoElementoInstance.descripcion}</td>
+                            <td>${tipoEvaluacionInstance.descripcion}</td>
                             
                         </tr>
                     </g:each>
@@ -57,16 +57,16 @@
             </tbody>
         </table>
 
-        <elm:pagination total="${tipoElementoInstanceCount}" params="${params}"/>
+        <elm:pagination total="${tipoEvaluacionInstanceCount}" params="${params}"/>
 
         <script type="text/javascript">
             var id = null;
             function submitForm() {
-                var $form = $("#frmTipoElemento");
+                var $form = $("#frmTipoEvaluación");
                 var $btn = $("#dlgCreateEdit").find("#btnSave");
                 if ($form.valid()) {
                     $btn.replaceWith(spinner);
-                    openLoader("Guardando TipoElemento");
+                    openLoader("Guardando TipoEvaluación");
                     $.ajax({
                         type    : "POST",
                         url     : $form.attr("action"),
@@ -92,7 +92,7 @@
                 bootbox.dialog({
                     title   : "Alerta",
                     message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
-                              "¿Está seguro que desea eliminar el TipoElemento seleccionado? Esta acción no se puede deshacer.</p>",
+                              "¿Está seguro que desea eliminar el TipoEvaluación seleccionado? Esta acción no se puede deshacer.</p>",
                     buttons : {
                         cancelar : {
                             label     : "Cancelar",
@@ -104,7 +104,7 @@
                             label     : "<i class='fa fa-trash'></i> Eliminar",
                             className : "btn-danger",
                             callback  : function () {
-                                openLoader("Eliminando TipoElemento");
+                                openLoader("Eliminando TipoEvaluación");
                                 $.ajax({
                                     type    : "POST",
                                     url     : '${createLink(action:'delete_ajax')}',
@@ -138,7 +138,7 @@
                     success : function (msg) {
                         var b = bootbox.dialog({
                             id      : "dlgCreateEdit",
-                            title   : title + " TipoElemento",
+                            title   : title + " TipoEvaluación",
                             
                             message : msg,
                             buttons : {
@@ -191,7 +191,7 @@
                                     },
                                     success : function (msg) {
                                         bootbox.dialog({
-                                            title   : "Ver TipoElemento",
+                                            title   : "Ver TipoEvaluación",
                                             message : msg,
                                             buttons : {
                                                 ok : {

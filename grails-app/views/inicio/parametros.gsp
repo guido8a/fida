@@ -3,6 +3,11 @@
     <head>
         <meta name="layout" content="main">
         <title>Parámetros</title>
+
+        <style type="text/css">
+        ul {padding:0.2em}
+        li {padding:0.2em}
+        </style>
     </head>
 
     <body>
@@ -160,7 +165,7 @@
 
                             <li>
                                 <i class="fa-li fas fa-chart-line text-success"></i>
-                                <g:link class="over text-success" controller="objetivoGastoCorriente" action="list">
+                                <g:link class="over text-success" controller="tipoEvaluacion" action="list">
                                     Tipo de evaluación
                                 </g:link> de los indicadores del Convenio: Linea base y Evaluaciones posteriores
 
@@ -174,7 +179,7 @@
                             </li>
                             <li>
                                 <i class="fa-li fas fa-box text-success"></i>
-                                <g:link class="over text-success" controller="macroActividad" action="list">
+                                <g:link class="over text-success" controller="unidadCompras" action="list">
                                     Unidad de compras públicas
                                 </g:link> para la contratación de bienes o servicios del PNS
 
@@ -185,6 +190,7 @@
                                     parte del Plan de Negocios Solidario</p>
                                 </div>
                             </li>
+%{--
                             <li>
                                 <i class="fa-li fas fa-boxes text-success"></i>
                                 <g:link class="over text-success" controller="macroActividad" action="list">
@@ -198,6 +204,7 @@
                                     parte del Plan de Negocios Solidario</p>
                                 </div>
                             </li>
+--}%
                             <li>
                                 <i class="fa-li fas fa-dollar-sign text-success"></i>
                                 <g:link class="over text-success" controller="macroActividad" action="list">
@@ -211,6 +218,7 @@
                                     parte del Plan de Negocios Solidario</p>
                                 </div>
                             </li>
+%{--
                             <li>
                                 <i class="fa-li far fa-calendar-alt text-success"></i>
                                 <g:link class="over text-success" controller="macroActividad" action="list">
@@ -224,9 +232,10 @@
                                     Solidario, una vez que se tiene la fecha de inicio del Convenio.</p>
                                 </div>
                             </li>
+--}%
                             <li>
                                 <i class="fa-li fas fa-cogs text-success"></i>
-                                <g:link class="over text-success" controller="macroActividad" action="list">
+                                <g:link class="over text-success" controller="estadoAval" action="list">
                                     Estado del Aval y Reforma
                                 </g:link> para la emisión de Avales y Reformas al POA
 
