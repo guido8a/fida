@@ -643,41 +643,7 @@ class MarcoLogicoController {
         }
     }
 
-//    def eliminarMarco = {
-//        println("params elm " + params)
-//
-//            def proyecto = Proyecto.get(params.proyecto)
-//            def ml = MarcoLogico.get(params.id)
-//            if (ml) {
-//                def control = MarcoLogico.findAllByMarcoLogico(ml).size()
-//                control += Meta.findAllByMarcoLogico(ml).size()
-////                control += Asignacion.findAllByMarcoLogico(ml).size()
-//                println "control " + control
-//                if (control < 1) {
-//                    def indicadores = Indicador.findAllByMarcoLogico(ml)
-//                    indicadores.each {
-//                        MedioVerificacion.findAllByIndicador(it).each { m ->
-//                            params.id = m.id
-//                            kerberosService.delete(params, MedioVerificacion, session.perfil, session.usuario)
-//                        }
-//                        params.id = it.id
-//                        kerberosService.delete(params, Indicador, session.perfil, session.usuario)
-//                    }
-//                    Supuesto.findAllByMarcoLogico(ml).each {
-//                        params.id = it.id
-//                        kerberosService.delete(params, Supuesto, session.perfil, session.usuario)
-//                    }
-//                    params.id = ml.id
-//                    kerberosService.delete(params, MarcoLogico, session.perfil, session.usuario)
-//                    render("ok")
-//                } else {
-//                    render "error"
-//                }
-//
-//            } else {
-//                render "error"
-//            }
-//    }
+
 
     def eliminarMarco () {
 
@@ -723,11 +689,53 @@ class MarcoLogicoController {
     }
 
     def eliminarVarios(){
+//        println("params elv " + params)
+        def errores = ''
+        switch(params.tipo){
+            case "1":
+                def indicador = Indicador.get(params.id)
+                def medios = MedioVerificacion.findAllByIndicador(indicador)
 
-        println("params elv " + params)
+                if(medios){
+                    medios.each {m->
+                        if(!m.delete(flush:true)){
+                            errores += m.errors
+                        }
+                    }
+                }
 
+                try{
+                    indicador.delete(flush: true)
+                    render"ok"
+                }catch(e){
+                    println("error al borrar el indicador " + e + errores)
+                    render "no"
+                }
+                break
+            case "2":
+                def medio = MedioVerificacion.get(params.id)
 
+                try{
+                    medio.delete(flush: true)
+                    render"ok"
+                }catch(e){
+                    println("error al borrar el medio de verificacion  " + e)
+                    render "no"
+                }
+
+                break
+            case "3":
+                def supuesto = Supuesto.get(params.id)
+
+                try{
+                    supuesto.delete(flush: true)
+                    render"ok"
+                }catch(e){
+                    println("error al borrar el supuesto  " + e)
+                    render "no"
+                }
+                break
+        }
     }
-
 
 }

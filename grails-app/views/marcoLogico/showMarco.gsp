@@ -719,7 +719,7 @@
                     },
                 };
 
-                if (id){
+                if (id != 0){
                     buttons.btn3 = {
                         id        : "btnEliminar",
                         label     : "<i class='fa fa-trash'></i> Eliminar",
@@ -738,7 +738,7 @@
                                         },
                                         success: function(msg) {
                                             if (msg == "ok") {
-                                                log((tipo == '1' ? 'Indicador' : (tipo == '2' ? 'Medio de Verificación' : 'Supuesto')) + "eliminado correctamente","success");
+                                                log((tipo == '1' ? 'Indicador' : (tipo == '2' ? 'Medio de Verificación' : 'Supuesto')) + " borrado correctamente","success");
                                                 setTimeout(function () {
                                                     location.reload(true);
                                                     reajustar();
