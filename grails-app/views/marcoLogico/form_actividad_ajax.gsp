@@ -1,4 +1,4 @@
-<%@ page import="vesta.parametros.UnidadEjecutora; vesta.proyectos.Categoria; vesta.proyectos.MarcoLogico" %>
+%{--<%@ page import="vesta.parametros.UnidadEjecutora; vesta.proyectos.Categoria; vesta.proyectos.MarcoLogico" %>--}%
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
 <g:if test="${!marcoLogicoInstance}">
@@ -29,7 +29,7 @@
                     </label>
 
                     <div class="col-md-7">
-                        <g:select id="responsable" name="responsable.id" from="${UnidadEjecutora.list([sort: 'nombre'])}"
+                        <g:select id="responsable" name="responsable.id" from="${seguridad.UnidadEjecutora.list([sort: 'nombre'])}"
                                   optionKey="id" value="${marcoLogicoInstance?.responsable?.id}"
                                   class="many-to-one form-control input-sm required" noSelection="['': '']"/>
                     </div>

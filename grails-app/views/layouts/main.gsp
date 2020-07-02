@@ -8,11 +8,21 @@
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
+
     <asset:stylesheet src="/apli/bootstrap.min.css"/>
+%{--    <asset:stylesheet src="/apli/bootstrap4/bootstrap.min.css"/>--}%
+%{--    <asset:stylesheet src="/apli/bootstrap-theme.min.css.map"/>--}%
 %{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">--}%
     <asset:stylesheet src="/bootstrap-grid.css"/>
     <asset:stylesheet src="/bootstrap-reboot.css"/>
-    <asset:stylesheet src="/jquery/jquery-ui-1.10.3.custom.min.css"/>
+
+
+
+
+    %{--    <asset:stylesheet src="/jquery/jquery-ui-1.10.3.custom.min.css"/>--}%
+    <asset:stylesheet src="/apli/jquery-ui.css"/>
+    <asset:stylesheet src="/apli/jquery-ui.structure.css"/>
+    <asset:stylesheet src="/apli/jquery-ui.theme.css"/>
     <asset:stylesheet src="/apli/custom.css"/>
     <asset:stylesheet src="/apli/lzm.context-0.5.css"/>
     <asset:stylesheet src="/apli/jquery.pnotify.js"/>
@@ -21,13 +31,16 @@
     <asset:stylesheet src="/apli/CustomSvt.css"/>
     <asset:stylesheet src="/apli/tulpen/stylesheet.css"/>
 
+
+
     <asset:stylesheet src="/fonts/fontawesome-webfont.woff"/>
     <asset:stylesheet src="/apli/bootstrap-datetimepicker.min.css"/>
 
     %{--    <asset:stylesheet src="/jquery/datepicker.css"/>--}%
 
     <asset:javascript src="/jquery/jquery-2.2.4.js"/>
-    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>
+%{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
+    <asset:javascript src="/jquery/jquery-ui.js"/>
 
     <asset:javascript src="/apli/moment.js"/>
     <asset:javascript src="/apli/moment-with-locales.js"/>
@@ -82,7 +95,7 @@
 
 <div id="modalTabelGray"></div>
 
-<mn:menu title="${g.layoutTitle(default: 'Bitácora')}"/>
+<mn:menu title="${g.layoutTitle(default: 'FIDA')}"/>
 
 <div class="container" style="min-width: 1000px !important; margin-top: 0px; overflow-y: hidden">
     <g:layoutBody/>
