@@ -492,23 +492,41 @@ class CantonController {
         if (id == "#") {
             //root
 //            def hh = Provincia.countByZonaIsNull()
-//            def hh = Provincia.count()
-//            if (hh > 0) {
-//                clase = "hasChildren jstree-closed"
-//            }
-//
-//            tree = "<li id='root' class='root ${clase}' data-jstree='{\"type\":\"root\"}' data-level='0' >" +
-//                    "<a href='#' class='label_arbol'>Estructura Principal</a>" +
-//                    "</li>"
-//            if (clase == "") {
-//                tree = ""
-//            }
+            def hh = Provincia.count()
+            if (hh > 0) {
+                clase = "hasChildren jstree-closed"
+            }
+
+            tree = "<li id='root' class='root ${clase}' data-jstree='{\"type\":\"root\"}' data-level='0' >" +
+                    "<a href='#' class='label_arbol'>Estructura Principal</a>" +
+                    "</li>"
+            if (clase == "") {
+                tree = ""
+            }
 //            println "clase: $clase, hh: $hh"
 //            hijos = Provincia.findAllByZonaIsNull().sort{it.nombre}
-            hijos = Provincia.findAll().sort{it.nombre}
-            def data = ""
-            ico = ", \"icon\":\"fa fa-parking text-success\""
-            hijos.each { hijo ->
+//            hijos = Provincia.findAll().sort{it.nombre}
+//            def data = ""
+//            ico = ", \"icon\":\"fa fa-parking text-success\""
+//            hijos.each { hijo ->
+////                println "procesa ${hijo.nombre}"
+//                    clase = Canton.findByProvincia(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
+//
+////                    tree += "<ul>"
+//                    tree += "<li id='prov_" + hijo.id + "' class='" + clase + "' ${data} data-jstree='{\"type\":\"${"principal"}\" ${ico}}' >"
+//                    tree += "<a href='#' class='label_arbol'>" + hijo?.nombre + "</a>"
+//                    tree += "</li>"
+//            }
+
+        } else {
+//            println "---- no es raiz... procesa: $tipo"
+
+
+            if(id == 'root'){
+                hijos = Provincia.findAll().sort{it.nombre}
+                def data = ""
+                ico = ", \"icon\":\"fa fa-parking text-success\""
+                hijos.each { hijo ->
 //                println "procesa ${hijo.nombre}"
                     clase = Canton.findByProvincia(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
 
@@ -516,39 +534,37 @@ class CantonController {
                     tree += "<li id='prov_" + hijo.id + "' class='" + clase + "' ${data} data-jstree='{\"type\":\"${"principal"}\" ${ico}}' >"
                     tree += "<a href='#' class='label_arbol'>" + hijo?.nombre + "</a>"
                     tree += "</li>"
-            }
-
-        } else {
-//            println "---- no es raiz... procesa: $tipo"
-            switch(tipo) {
-                case "prov":
-                    hijos = Canton.findAllByProvincia(Provincia.get(id), [sort: params.sort])
-                    liId = "cntn_"
+                }
+            }else{
+                switch(tipo) {
+                    case "prov":
+                        hijos = Canton.findAllByProvincia(Provincia.get(id), [sort: params.sort])
+                        liId = "cntn_"
 //                    println "tipo: $tipo, ${hijos.size()}"
-                    ico = ", \"icon\":\"fa fa-copyright text-info\""
-                    hijos.each { h ->
+                        ico = ", \"icon\":\"fa fa-copyright text-info\""
+                        hijos.each { h ->
 //                        println "procesa $h"
-                        clase = Parroquia.findByCanton(h)? "jstree-closed hasChildren" : ""
-                        tree += "<li id='" + liId + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"canton"}\" ${ico}}'>"
-                        tree += "<a href='#' class='label_arbol'>" + h.nombre + "</a>"
-                        tree += "</li>"
-                    }
-                    break
-                case "cntn":
-                    hijos = Parroquia.findAllByCanton(Canton.get(id), [sort: params.sort])
-                    liId = "parr_"
+                            clase = Parroquia.findByCanton(h)? "jstree-closed hasChildren" : ""
+                            tree += "<li id='" + liId + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"canton"}\" ${ico}}'>"
+                            tree += "<a href='#' class='label_arbol'>" + h.nombre + "</a>"
+                            tree += "</li>"
+                        }
+                        break
+                    case "cntn":
+                        hijos = Parroquia.findAllByCanton(Canton.get(id), [sort: params.sort])
+                        liId = "parr_"
 //                    println "tipo: $tipo, ${hijos.size()}"
-                    ico = ", \"icon\":\"fa fa-registered text-danger\""
-                    hijos.each { h ->
+                        ico = ", \"icon\":\"fa fa-registered text-danger\""
+                        hijos.each { h ->
 //                        println "procesa $h"
 //                        clase = Comunidad.findByParroquia(h)? "jstree-closed hasChildren" : ""
-                        clase = ""
-                        tree += "<li id='" + liId + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"parroquia"}\" ${ico}}'>"
-                        tree += "<a href='#' class='label_arbol'>" + h.nombre + "</a>"
-                        tree += "</li>"
-                    }
-                    break
-                case "parr":
+                            clase = ""
+                            tree += "<li id='" + liId + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"parroquia"}\" ${ico}}'>"
+                            tree += "<a href='#' class='label_arbol'>" + h.nombre + "</a>"
+                            tree += "</li>"
+                        }
+                        break
+                    case "parr":
 //                    hijos = Comunidad.findAllByParroquia(Parroquia.get(id), [sort: params.sort])
 //                    liId = "cmnd_"
 //                    ico = ", \"icon\":\"fa fa-info-circle text-warning\""
@@ -558,15 +574,14 @@ class CantonController {
 //                        tree += "<a href='#' class='label_arbol'>" + h.nombre + "</a>"
 //                        tree += "</li>"
 //                    }
-                    break
+                        break
+                }
             }
 
-        }
 
-//        println "---> tipo: $tipo"
-        switch (tipo) {
 
         }
+
 //        println "arbol: $tree"
         return tree
     }
