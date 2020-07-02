@@ -1,5 +1,5 @@
 
-<%@ page import="fida.Provincia; compras.Provincia; compras.Canton" %>
+%{--<%@ page import="fida.Provincia;" %>--}%
 
 <div id="create-cantonInstance" class="span" role="main">
     <g:form class="form-horizontal" name="frmSave-cantonInstance" action="save">

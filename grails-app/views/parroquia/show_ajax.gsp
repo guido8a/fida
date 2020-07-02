@@ -1,5 +1,5 @@
 
-<%@ page import="compras.Parroquia" %>
+%{--<%@ page import="compras.Parroquia" %>--}%
 
 <style type="text/css">
 .tama {
@@ -16,7 +16,7 @@
                 <div class="col-md-2 text-info">
                     Cantón
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-8">
                     ${parroquiaInstance?.canton?.nombre}
                 </div>
             </div>
@@ -38,22 +38,22 @@
                 <div class="col-md-2 text-info">
                     Nombre
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <g:fieldValue bean="${parroquiaInstance}" field="nombre"/>
                 </div>
             </div>
         </g:if>
 
-        <g:if test="${parroquiaInstance?.urbana}">
-            <div class="row">
-                <div class="col-md-2 text-info">
-                    Urbana
-                </div>
-                <div class="col-md-6">
-                    ${parroquiaInstance?.urbana == '0' ? 'SI' : 'NO'}
-                </div>
-            </div>
-        </g:if>
+%{--        <g:if test="${parroquiaInstance?.urbana}">--}%
+%{--            <div class="row">--}%
+%{--                <div class="col-md-2 text-info">--}%
+%{--                    Urbana--}%
+%{--                </div>--}%
+%{--                <div class="col-md-6">--}%
+%{--                    ${parroquiaInstance?.urbana == '0' ? 'SI' : 'NO'}--}%
+%{--                </div>--}%
+%{--            </div>--}%
+%{--        </g:if>--}%
 
         <g:if test="${parroquiaInstance?.latitud}">
             <div class="row">
@@ -66,7 +66,7 @@
             </div>
         </g:if>
 
-        <g:if test="${cantonInstance?.longitud}">
+        <g:if test="${parroquiaInstance?.longitud}">
             <div class="row">
                 <div class="col-md-2 text-info">
                     Longitud

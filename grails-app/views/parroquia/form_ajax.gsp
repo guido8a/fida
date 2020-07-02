@@ -1,5 +1,5 @@
 
-<%@ page import="compras.Canton; compras.Parroquia" %>
+%{--<%@ page import="compras.Canton; compras.Parroquia" %>--}%
 <div id="create-parroquiaInstance" class="span" role="main">
     <g:form class="form-horizontal" name="frmSave-parroquiaInstance" action="save">
         <g:hiddenField name="id" value="${parroquiaInstance?.id}"/>
@@ -34,23 +34,23 @@
                     Cantón
                 </label>
                 <div class="col-md-6">
-                    <g:select id="canton" name="canton" from="${compras.Canton.list()}" optionKey="id" optionValue="nombre" disabled="" class="many-to-one form-control" value="${parroquiaInstance?.canton?.id ?: compras.Canton.get(padre)?.id}" noSelection="['null': '']"/>
+                    <g:select id="canton" name="canton" from="${geografia.Canton.list().sort{it.nombre}}" optionKey="id" optionValue="nombre" disabled="" class="many-to-one form-control" value="${parroquiaInstance?.canton?.id ?: geografia.Canton.get(padre)?.id}" noSelection="['null': '']"/>
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>
         </div>
 
-        <div class="form-group ${hasErrors(bean: parroquiaInstance, field: 'urbana', 'error')} ">
-            <span class="grupo">
-                <label for="urbana" class="col-md-2 control-label text-info">
-                    Urbana
-                </label>
-                <div class="col-md-2">
-                    <g:select id="urbana" name="urbana" from="${['0':'SI', '1': 'NO']}" optionValue="value" optionKey="key" class="form-control" value="${parroquiaInstance?.urbana}"/>
-                    <p class="help-block ui-helper-hidden"></p>
-                </div>
-            </span>
-        </div>
+%{--        <div class="form-group ${hasErrors(bean: parroquiaInstance, field: 'urbana', 'error')} ">--}%
+%{--            <span class="grupo">--}%
+%{--                <label for="urbana" class="col-md-2 control-label text-info">--}%
+%{--                    Urbana--}%
+%{--                </label>--}%
+%{--                <div class="col-md-2">--}%
+%{--                    <g:select id="urbana" name="urbana" from="${['0':'SI', '1': 'NO']}" optionValue="value" optionKey="key" class="form-control" value="${parroquiaInstance?.urbana}"/>--}%
+%{--                    <p class="help-block ui-helper-hidden"></p>--}%
+%{--                </div>--}%
+%{--            </span>--}%
+%{--        </div>--}%
 
         <div class="form-group ${hasErrors(bean: parroquiaInstance, field: 'latitud', 'error')} ">
             <span class="grupo">

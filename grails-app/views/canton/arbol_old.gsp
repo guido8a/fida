@@ -1,19 +1,19 @@
 <%--
   Created by IntelliJ IDEA.
   User: fabricio
-  Date: 01/07/20
-  Time: 16:48
+  Date: 27/08/19
+  Time: 12:37
 --%>
-
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main">
 
-    <title>División Política</title>
+    <title>División Política de la Provincia de Pichincha</title>
 
-    <asset:javascript src="/jstree-3.0.8/dist/jstree.min.js"/>
+%{--    <asset:javascript src="/jstree-3.0.8/dist/jstree.min.js"/>--}%
+    <asset:javascript src="/jstree-3.0.8/dist/jstree.js"/>
     <asset:stylesheet src="/jstree-3.0.8/dist/themes/default/style.min.css"/>
 
     <style type="text/css">
@@ -43,11 +43,12 @@
 
     <div class="btn-toolbar toolbar">
         <div class="btn-group">
-            <g:link controller="inicio" action="parametros" class="btn btn-info">
+            <g:link controller="parametros" action="list" class="btn btn-info">
                 <i class="fa fa-arrow-left"></i> Parámetros
             </g:link>
         </div>
     </div>
+
 
     <div class="col-md-2">
         <div class="input-group input-group-sm">
@@ -93,7 +94,7 @@
         <i class="fa fa-parking text-success"></i> Provincia
         <i class="fa fa-copyright text-primary"></i> Cantón
         <i class="fa fa-registered text-danger"></i> Parroquia
-%{--        <i class="fa fa-info-circle text-warning"></i> Comunidad--}%
+        <i class="fa fa-info-circle text-warning"></i> Comunidad
     </div>
 </div>
 
@@ -132,7 +133,7 @@
                             label     : "<i class='fa fa-save'></i> Guardar",
                             className : "btn-success",
                             callback  : function () {
-                                return submitFormProvincia();
+                                   return submitFormProvincia();
                             } //callback
                         } //guardar
                     } //buttons
@@ -817,7 +818,7 @@
             items.borrarCanton = borrarCanton;
         } else if (esParroquia) {
             items.agregarParroquia = agregarParroquia2;
-            // items.agregarComunidad = agregarComunidad;
+            items.agregarComunidad = agregarComunidad;
             items.verParroquia = verParroquia;
             items.editarParroquia = editarParroquia;
             items.borrarParroquia = borrarParroquia;
@@ -888,7 +889,7 @@
                 fuzzy             : false,
                 show_only_matches : false,
                 ajax              : {
-                    url     : "${createLink(controller: 'canton', action:'arbolSearch_ajax')}",
+                    url     : "${createLink(controller: 'departamento', action:'arbolSearch_ajax')}",
                     success : function (msg) {
                         var json = $.parseJSON(msg);
                         $.each(json, function (i, obj) {

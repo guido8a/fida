@@ -1,5 +1,5 @@
 
-<%@ page import="compras.Canton" %>
+%{--<%@ page import="compras.Canton" %>--}%
 
 <style type="text/css">
  .tama {

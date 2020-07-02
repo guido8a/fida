@@ -1,6 +1,4 @@
-package compras
-
-import geografia.Provincia
+package geografia
 
 class ProvinciaController {
 
