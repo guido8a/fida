@@ -498,26 +498,8 @@ class CantonController {
             }
 
             tree = "<li id='root' class='root ${clase}' data-jstree='{\"type\":\"root\"}' data-level='0' >" +
-                    "<a href='#' class='label_arbol'>Estructura Principal</a>" +
+                    "<a href='#' class='label_arbol'>División Geográfica</a>" +
                     "</li>"
-            if (clase == "") {
-                tree = ""
-            }
-//            println "clase: $clase, hh: $hh"
-//            hijos = Provincia.findAllByZonaIsNull().sort{it.nombre}
-//            hijos = Provincia.findAll().sort{it.nombre}
-//            def data = ""
-//            ico = ", \"icon\":\"fa fa-parking text-success\""
-//            hijos.each { hijo ->
-////                println "procesa ${hijo.nombre}"
-//                    clase = Canton.findByProvincia(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
-//
-////                    tree += "<ul>"
-//                    tree += "<li id='prov_" + hijo.id + "' class='" + clase + "' ${data} data-jstree='{\"type\":\"${"principal"}\" ${ico}}' >"
-//                    tree += "<a href='#' class='label_arbol'>" + hijo?.nombre + "</a>"
-//                    tree += "</li>"
-//            }
-
         } else {
 //            println "---- no es raiz... procesa: $tipo"
 

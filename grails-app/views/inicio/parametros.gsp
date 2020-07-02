@@ -54,6 +54,23 @@
                             </li>
 
                             <li>
+                                <i class="fa-li fas fa-map-marker-alt text-info"></i>
+                                <g:link data-info="categoria" class="over" controller="canton" action="arbol">
+                                    Distribución geográfica
+                                </g:link> del país para referenciar las metas y los Convenios
+
+                                <div class="descripcion hidden">
+                                    <h4>istribución geográfica de Ecuador</h4>
+
+                                    <p>Permitirá referenciar geográficamente las metas del proyeto y los lugares donde
+                                        se firmen los Convenios.
+                                    </p>
+                                    <p>Cuenta con las provincias, cantones y parroquias.
+                                    </p>
+                                </div>
+                            </li>
+
+                            <li>
                                 <i class="fa-li far fa-money-bill-alt text-info"></i>
                                 <g:link class="over" controller="presupuesto" action="arbol">
                                     Plan de cuentas Presupuestario
