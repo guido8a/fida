@@ -9,17 +9,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
 
-    <asset:stylesheet src="/apli/bootstrap.min.css"/>
-%{--    <asset:stylesheet src="/apli/bootstrap4/bootstrap.min.css"/>--}%
-%{--    <asset:stylesheet src="/apli/bootstrap-theme.min.css.map"/>--}%
-%{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">--}%
-    <asset:stylesheet src="/bootstrap-grid.css"/>
-    <asset:stylesheet src="/bootstrap-reboot.css"/>
+%{--    prueba--}%
+    <asset:stylesheet src="/bootstrap-3.3.2/dist/css/bootstrap.css"/>
+    <asset:stylesheet src="/bootstrap-3.3.2/dist/css/bootstrap-theme.min.css"/>
+    %{--  fin  prueba--}%
+
+
+%{--    <asset:stylesheet src="/apli/bootstrap.min.css"/>--}%
+%{--    <asset:stylesheet src="/bootstrap-grid.css"/>--}%
+%{--    <asset:stylesheet src="/bootstrap-reboot.css"/>--}%
 
 
 
-
-    %{--    <asset:stylesheet src="/jquery/jquery-ui-1.10.3.custom.min.css"/>--}%
+    <asset:stylesheet src="/jquery/jquery-ui-1.10.3.custom.min.css"/>
     <asset:stylesheet src="/apli/jquery-ui.css"/>
     <asset:stylesheet src="/apli/jquery-ui.structure.css"/>
     <asset:stylesheet src="/apli/jquery-ui.theme.css"/>
@@ -36,18 +38,13 @@
     <asset:stylesheet src="/fonts/fontawesome-webfont.woff"/>
     <asset:stylesheet src="/apli/bootstrap-datetimepicker.min.css"/>
 
-    %{--    <asset:stylesheet src="/jquery/datepicker.css"/>--}%
-
     <asset:javascript src="/jquery/jquery-2.2.4.js"/>
-%{--    <asset:javascript src="/jquery/jquery-ui-1.10.3.custom.min.js"/>--}%
     <asset:javascript src="/jquery/jquery-ui.js"/>
 
     <asset:javascript src="/apli/moment.js"/>
     <asset:javascript src="/apli/moment-with-locales.js"/>
 
-    <asset:javascript src="/apli/bootstrap.min.js"/>
-
-%{--    <asset:javascript src="/apli/bootstrap.js"/>--}%
+%{--    <asset:javascript src="/apli/bootstrap.min.js"/>--}%
 
     <asset:javascript src="/apli/funciones.js"/>
     <asset:javascript src="/apli/functions.js"/>
@@ -65,18 +62,8 @@
     <asset:javascript src="/apli/bootstrap-datetimepicker.min.js"/>
     <asset:javascript src="/apli/bootstrap-maxlength.min.js"/>
 
-%{--    <asset:javascript src="/jquery/bootstrap-datepicker.js"/>--}%
-%{--    <asset:javascript src="/jquery/bootstrap-datepicker.es.js"/>--}%
-%{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>--}%
 
-%{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>--}%
-%{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">--}%
-
-
-
-%{--    <asset:stylesheet src="/fontawesome-5.9.0/css/fontawesome.css"/>--}%
-%{--    <asset:stylesheet src="/fontawesome-5.9.0/css/brands.css"/>--}%
-%{--    <asset:stylesheet src="/fontawesome-5.9.0/css/solid.css"/>--}%
+    <asset:javascript src="/bootstrap-3.3.2/dist/js/bootstrap.min.js"/>
 
     <script type="text/javascript">
         var spinner = $('<asset:image src="apli/spinner32.gif" style="padding: 40px;"/>');
