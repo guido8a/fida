@@ -1,5 +1,5 @@
-<script src="${resource(dir: 'js/plugins/fixed-header-table-1.3', file: 'jquery.fixedheadertable.js')}"></script>
-<link rel="stylesheet" type="text/css" href="${resource(dir: 'js/plugins/fixed-header-table-1.3/css', file: 'defaultTheme.css')}"/>
+%{--<script src="${resource(dir: 'js/plugins/fixed-header-table-1.3', file: 'jquery.fixedheadertable.js')}"></script>--}%
+%{--<link rel="stylesheet" type="text/css" href="${resource(dir: 'js/plugins/fixed-header-table-1.3/css', file: 'defaultTheme.css')}"/>--}%
 
 <table id="tblFinanciamiento" class="table table-condensed table-hover table-striped table-bordered">
     <thead>
@@ -35,7 +35,7 @@
                 </td>
                 <td class="text-center">
                     <a id="${fin.id}" href="#" class="btn btn-sm btn-danger btn-delete-fin">
-                        <i class="fa fa-trash-o"></i>
+                        <i class="fa fa-trash"></i>
                     </a>
                 </td>
             </tr>
@@ -68,12 +68,12 @@
         setSuma(suma);
         setRestante(restante);
 
-        setTimeout(function () {
-            $("#tblFinanciamiento").fixedHeaderTable({
-                height : 250,
-                footer : true
-            });
-        }, 500);
+        // setTimeout(function () {
+        //     $("#tblFinanciamiento").fixedHeaderTable({
+        //         height : 250,
+        //         footer : true
+        //     });
+        // }, 500);
 
         $(".btn-delete-fin").click(function () {
             var id = $(this).attr("id");

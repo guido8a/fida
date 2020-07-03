@@ -35,7 +35,7 @@
 <div class="panel panel-primary col-md-12">
 
     <div class="panel-heading" style="padding: 3px; margin-top: 2px">
-        <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultar"
+        <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultarBase"
            class="btn btn-sm btn-info" title="Consultar artículo">
             <i class="fas fa-clipboard-check"></i> Base de Conocimiento
         </a>
@@ -46,8 +46,8 @@
         <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
         </a>
-        <a href="#" id="btnBase" class="btn btn-sm btn-info" title="Crear nuevo registro">
-            <i class="fa fa-check"></i> Financiamiento
+        <a href="#" id="btnFinanciamiento" class="btn btn-sm btn-info" title="Crear nuevo registro">
+            <i class="fa fa-dollar-sign"></i> Financiamiento
         </a>
         <a href="#" id="btnVer" class="btn btn-sm btn-info" title="Ver registro">
             <i class="fa fa-search"></i> Estado
@@ -58,7 +58,7 @@
         <a href="#" id="editMrlg" class="btn btn-sm btn-info" title="Ver registro">
             <i class="fa fa-search"></i> Editar Marco Lógico
         </a>
-        <a href="#" id="btnVer" class="btn btn-sm btn-info" title="Ver registro">
+        <a href="#" id="btnVerCronograma" class="btn btn-sm btn-info" title="Ver cronograma">
             <i class="fa fa-search"></i> Ver Cronograma
         </a>
         <a href="#" id="btnVer" class="btn btn-sm btn-info"  title="Ver registro">
@@ -207,8 +207,38 @@
 
     <script type="text/javascript">
 
+        $("#btnVerCronograma").click(function () {
+
+        });
+
+        $("#btnFinanciamiento").click(function () {
+            var id = '${proy?.id}';
+            $.ajax({
+                type    : "POST",
+                url     : "${createLink(controller: 'financiamiento', action:'list_ajax')}",
+                data    : {
+                    id : id
+                },
+                success : function (msg) {
+                    bootbox.dialog({
+                        title   : "Presupuesto/Fuentes",
+                        class   : "modal-lg",
+                        message : msg,
+                        buttons : {
+                            ok : {
+                                label     : "Salir",
+                                className : "btn-primary",
+                                callback  : function () {
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
         $("#btnVerMarco").click(function () {
-           location.href="${createLink(controller: 'marcoLogico', action: 'verMarco')}/${proy?.id}"
+            location.href="${createLink(controller: 'marcoLogico', action: 'verMarco')}/${proy?.id}"
         });
 
         $("#btnBase").click(function () {
@@ -224,28 +254,27 @@
             var $form = $("#frmProyecto");
             var base_id = '${proy?.id}';
             $form.validate();
-            console.log('val:', $form.validate());
-            console.log('val:', $form.validate().label);
+            // console.log('val:', $form.validate());
+            // console.log('val:', $form.validate().label);
             if($form.valid()){
                 var dialog = cargarLoader("Guardando...");
-                console.log('ok')
                 $.ajax({type: 'POST',
-                        url: "${createLink(controller: 'proyecto', action: 'save_ajax')}",
-                data:  $form.serialize(),
-                success: function (msg) {
-                    var parte = msg.split("_");
-                    if(parte[0] == 'ok'){
-                        // log("Problema guardado correctamente","success");
-                        // dialog.modal('hide');
-                        // setTimeout(function () {
-                            reCargar(parte[1]);
-                        // }, 500);
-                    }else{
+                    url: "${createLink(controller: 'proyecto', action: 'save_ajax')}",
+                    data:  $form.serialize(),
+                    success: function (msg) {
                         dialog.modal('hide');
-                        log("Error al guardar el proyecto" + parte[1],"error")
+                        var parte = msg.split("_");
+                        if(parte[0] == 'ok'){
+                            log("Proyecto guardado correctamente","success");
+                            setTimeout(function () {
+                            reCargar(parte[1]);
+                            }, 800);
+                        }else{
+                            dialog.modal('hide');
+                            log("Error al guardar el proyecto" + parte[1],"error")
+                        }
                     }
-                }
-            });
+                });
             }
         });
 

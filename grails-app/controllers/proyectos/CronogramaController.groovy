@@ -61,7 +61,7 @@ class CronogramaController {
             eq("proyecto", proyecto)
             eq("tipoElemento", TipoElemento.get(2))
             eq("estado", 0)
-            order("numeroComp", "asc")
+            order("numero", "asc")
         }
         def anio
         if (!params.anio) {

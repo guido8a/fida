@@ -259,7 +259,7 @@ class MarcoLogico {
     }
 */
 
-/*
+
     def getTotalCronograma() {
         def cronos = Cronograma.findAllByMarcoLogico(this)
         def total = 0
@@ -277,6 +277,6 @@ class MarcoLogico {
         }
         return total
     }
-*/
+
 
 }
