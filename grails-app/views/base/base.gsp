@@ -98,27 +98,30 @@
 
 <div class="panel panel-primary col-md-12">
 
-    <div class="panel-heading">
+    <div class="panel-heading" style="padding: 3px; margin-top: 2px">
 
-        <h3 class="panel-title" style="margin-left: 420px" title="${base?.problema ?: ''}">
-            <i class="fa fa-pen"></i> Artículo:
-         ${base?.problema ? base?.problema?.size() < 65 ? base?.problema : base?.problema[0..64]+"..." : ''}
-        </h3>
-
+        <a href="${createLink(controller: 'proyecto', action: 'proy', id:"1")}"
+           class="btn btn-sm btn-info" title="Consultar artículo">
+            <i class="fa fa-chevron-circle-left"></i> Proyecto
+        </a>
         <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultarr"
-           class="btn btn-sm btn-info sobrepuesto" title="Consultar artículo">
+           class="btn btn-sm btn-info" title="Consultar artículo">
             <i class="fa fa-chevron-circle-left"></i> Consultar
         </a>
-        <a href="#" id="btnGuardar" class="btn btn-sm btn-success sobrepuesto" style="margin-left: 105px" title="Guardar información">
+        <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
         </a>
-        <a href="#" id="btnBase" class="btn btn-sm btn-warning sobrepuesto"
-           style="margin-left: 200px" title="Crear nuevo registro">
+        <a href="#" id="btnBase" class="btn btn-sm btn-warning" title="Crear nuevo registro">
             <i class="fa fa-check"></i> Crear Nuevo
         </a>
-        <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 325px" title="Ver registro">
+        <a href="#" id="btnVer" class="btn btn-sm btn-info" title="Ver registro">
             <i class="fa fa-search"></i> Ver
         </a>
+        <span style="font-size: small; margin-left: 40px;" title="${base?.problema ?: ''}">
+            <i class="fa fa-pen"></i> Artículo:
+        ${base?.problema ? base?.problema?.size() < 65 ? base?.problema : base?.problema[0..64]+"..." : ''}
+        </span>
+
     </div>
 
 
@@ -182,7 +185,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <span class="col-md-2 label label-primary text-info mediano">Algoritmo</span>
+                                <span class="col-md-2 label label-primary text-info mediano">Algoritmo / Forma de solución</span>
                                 <div class="col-md-10">
                                     %{--<ckeditor:editor name="algoritmo" height="240px" width="100%" toolbar="Basico2">${base?.algoritmo}</ckeditor:editor>--}%
                                     <textArea name="algoritmo" id="algoritmo">${base?.algoritmo}</textArea>

@@ -38,6 +38,11 @@
 
     <div>
         <div class="col-md-12">
+            <a href="${createLink(controller: 'proyecto', action: 'proy', id:"1")}"
+               class="btn btn-sm btn-info" title="Consultar artículo">
+                <i class="fa fa-chevron-circle-left"></i> Proyecto
+            </a>
+
             Buscar en la base de conocimiento por:
             <div class="btn-group">
                 <input id="buscar" type="search" class="form-control">

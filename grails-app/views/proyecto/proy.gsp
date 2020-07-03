@@ -34,16 +34,12 @@
 
 <div class="panel panel-primary col-md-12">
 
-    <div class="panel-heading" style="height: 36px; padding: 2px; margin-top: 2px">
-
-        %{--
-                <h3 class="panel-title" style="margin-left: 420px" title="${proy?.problema ?: ''}">
-                    <i class="fa fa-pen"></i> Artículo:
-                "${proy?.problema?.size() < 65 ? proy?.problema : proy?.problema[0..64]+"..."}"
-                </h3>
-        --}%
-
+    <div class="panel-heading" style="padding: 3px; margin-top: 2px">
         <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultar"
+           class="btn btn-sm btn-info" title="Consultar artículo">
+            <i class="fas fa-clipboard-check"></i> Base de Conocimiento
+        </a>
+        <a href="${createLink(controller: 'documento', action: 'listProyecto_ajax')}" id="btnConsultar"
            class="btn btn-sm btn-info" title="Consultar artículo">
             <i class="fas fa-book-reader"></i> Biblioteca
         </a>

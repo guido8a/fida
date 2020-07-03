@@ -75,8 +75,13 @@
                     <g:set var="otros" value="${totComp + totOtros}"/>
                     <div class="col-md-4">
                         <div class="input-group input-group-sm">
+%{--
                             <g:textField name="monto" value="${fieldValue(bean: marcoLogicoInstance, field: 'monto')}"
                                          class="number money form-control input-sm "
+                                         tdnMax="${((finan - otros) + marcoLogicoInstance.monto)}"/>
+--}%
+                            <g:textField name="monto" value="${marcoLogicoInstance.monto}"
+                                         class="form-control input-sm "
                                          tdnMax="${((finan - otros) + marcoLogicoInstance.monto)}"/>
                             %{--tdnMax="${(totFin - (totComp + totOtros)) + marcoLogicoInstance.monto}"/>--}%
                             <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
