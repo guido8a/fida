@@ -44,30 +44,28 @@
         --}%
 
         <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultar"
-           class="btn btn-sm btn-info sobrepuesto" title="Consultar artículo">
+           class="btn btn-sm btn-info" title="Consultar artículo">
             <i class="fas fa-book-reader"></i> Biblioteca
         </a>
-        <a href="#" id="btnGuardar" class="btn btn-sm btn-success sobrepuesto" style="margin-left: 105px"
-           title="Guardar información">
+        <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
         </a>
-        <a href="#" id="btnBase" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 195px"
-           title="Crear nuevo registro">
+        <a href="#" id="btnBase" class="btn btn-sm btn-info" title="Crear nuevo registro">
             <i class="fa fa-check"></i> Financiamiento
         </a>
-        <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 335px" title="Ver registro">
+        <a href="#" id="btnVer" class="btn btn-sm btn-info" title="Ver registro">
             <i class="fa fa-search"></i> Estado
         </a>
-        <a href="#" id="btnVerMarco" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 423px" title="Ver marco lógico">
+        <a href="#" id="btnVerMarco" class="btn btn-sm btn-info" title="Ver marco lógico">
             <i class="fa fa-search"></i> Ver Marco Lógico
         </a>
-        <a href="#" id="editMrlg" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 575px" title="Ver registro">
+        <a href="#" id="editMrlg" class="btn btn-sm btn-info" title="Ver registro">
             <i class="fa fa-search"></i> Editar Marco Lógico
         </a>
-        <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 745px" title="Ver registro">
+        <a href="#" id="btnVer" class="btn btn-sm btn-info" title="Ver registro">
             <i class="fa fa-search"></i> Ver Cronograma
         </a>
-        <a href="#" id="btnVer" class="btn btn-sm btn-info sobrepuesto" style="margin-left: 890px" title="Ver registro">
+        <a href="#" id="btnVer" class="btn btn-sm btn-info"  title="Ver registro">
             <i class="fa fa-search"></i> Editar Cronograma
         </a>
     </div>
