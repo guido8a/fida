@@ -245,7 +245,7 @@ class MarcoLogicoController {
                 try {
                     def control = MarcoLogico.findAllByMarcoLogico(marcoLogicoInstance).size()
                     control += Meta.findAllByMarcoLogico(marcoLogicoInstance).size()
-                    control += Asignacion.findAllByMarcoLogico(marcoLogicoInstance).size()
+//                    control += Asignacion.findAllByMarcoLogico(marcoLogicoInstance).size()
                     if (control < 1) {
                         def indicadores = Indicador.findAllByMarcoLogico(marcoLogicoInstance)
                         indicadores.each { indi ->
@@ -362,7 +362,7 @@ class MarcoLogicoController {
             params.monto = 0
         }
         params.monto = params.monto.toString().replaceAll(",", "")
-        println "2: " + params
+//        println "2: " + params
         params.fecha = new Date();
         marcoLogicoInstance.properties = params
         marcoLogicoInstance.monto = params.monto.toDouble()

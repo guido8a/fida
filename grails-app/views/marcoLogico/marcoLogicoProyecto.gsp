@@ -224,12 +224,13 @@
             var $btn = $("#dlgCreateEditComponente").find("#btnSave");
             if ($form.valid()) {
                 $btn.replaceWith(spinner);
-                openLoader("Guardando Componente");
+                var dialog = cargarLoader("Guardando...");
                 $.ajax({
                     type    : "POST",
                     url     : $form.attr("action"),
                     data    : $form.serialize(),
                     success : function (msg) {
+                        dialog.modal('hide');
                         var parts = msg.split("*");
                         log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                         setTimeout(function () {
@@ -287,12 +288,13 @@
             var $btn = $("#dlgCreateEditActividad").find("#btnSave");
             if ($form.valid()) {
                 $btn.replaceWith(spinner);
-                openLoader("Guardando Actividad");
+                var dialog = cargarLoader("Guardando...");
                 $.ajax({
                     type    : "POST",
                     url     : $form.attr("action"),
                     data    : $form.serialize(),
                     success : function (msg) {
+                        dialog.modal('hide');
                         var parts = msg.split("*");
                         log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                         setTimeout(function () {
@@ -364,7 +366,7 @@
             }
             bootbox.dialog({
                 title   : "Alerta",
-                message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i>" +
+                message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i>" +
                     "<p>¿Está seguro que desea eliminar <span class='text-danger'><strong>" + itemInfo + "</strong></span>?</p>" +
                     "<p>Esta acción no se puede deshacer.</p>" +
                     "<p>" + infoDel + "</p>",
@@ -379,7 +381,7 @@
                         label     : "<i class='fa fa-trash-o'></i> Eliminar",
                         className : "btn-danger",
                         callback  : function () {
-                            openLoader("Eliminando " + str);
+                            var dialog = cargarLoader("Borrando...");
                             $.ajax({
                                 type    : "POST",
                                 url     : '${createLink(controller:'marcoLogico', action:'delete_marcoLogico_ajax')}',
@@ -388,14 +390,17 @@
                                     tipo : tipo
                                 },
                                 success : function (msg) {
+                                    dialog.modal('hide');
                                     var parts = msg.split("*");
-                                    log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                                     if (parts[0] == "SUCCESS") {
+                                        log(parts[1],"success");
                                         setTimeout(function () {
                                             location.reload(true);
                                         }, 1000);
                                     } else {
                                         closeLoader();
+                                        bootbox.alert(parts[1]);
+
                                     }
                                 }
                             });
@@ -407,48 +412,48 @@
 
         $(function () {
 
-            $("tbody>tr").contextMenu({
-                items  : {
-                    header     : {
-                        label  : "Acciones",
-                        header : true
-                    },
-                    editar     : {
-                        label  : "Editar",
-                        icon   : "fa fa-pencil",
-                        action : function ($element) {
-                            var id = $element.data("id");
-                            var show = $element.data("show");
-                            createEditActividad(show, null, id);
-                        }
-                    },
-                    cronograma : {
-                        label  : "Cronograma",
-                        icon   : "fa fa-calendar",
-                        action : function ($element) {
-                            var id = $element.data("id");
-                            var show = $element.data("show");
-                            location.href = "${createLink(controller: 'cronograma', action:'show', id:proyecto.id)}?act=" + id + "&list=${reqParams.list}";
-                        }
-                    },
-                    eliminar   : {
-                        label            : "Eliminar",
-                        icon             : "fa fa-trash-o",
-                        separator_before : true,
-                        action           : function ($element) {
-                            var id = $element.data("id");
-                            var info = $element.data("info");
-                            deleteMarcoLogico(id, info, "act");
-                        }
-                    }
-                },
-                onShow : function ($element) {
-                    $element.addClass("success");
-                },
-                onHide : function ($element) {
-                    $(".success").removeClass("success");
-                }
-            });
+            %{--$("tbody>tr").contextMenu({--}%
+            %{--    items  : {--}%
+            %{--        header     : {--}%
+            %{--            label  : "Acciones",--}%
+            %{--            header : true--}%
+            %{--        },--}%
+            %{--        editar     : {--}%
+            %{--            label  : "Editar",--}%
+            %{--            icon   : "fa fa-pencil",--}%
+            %{--            action : function ($element) {--}%
+            %{--                var id = $element.data("id");--}%
+            %{--                var show = $element.data("show");--}%
+            %{--                createEditActividad(show, null, id);--}%
+            %{--            }--}%
+            %{--        },--}%
+            %{--        cronograma : {--}%
+            %{--            label  : "Cronograma",--}%
+            %{--            icon   : "fa fa-calendar",--}%
+            %{--            action : function ($element) {--}%
+            %{--                var id = $element.data("id");--}%
+            %{--                var show = $element.data("show");--}%
+            %{--                location.href = "${createLink(controller: 'cronograma', action:'show', id:proyecto.id)}?act=" + id + "&list=${reqParams.list}";--}%
+            %{--            }--}%
+            %{--        },--}%
+            %{--        eliminar   : {--}%
+            %{--            label            : "Eliminar",--}%
+            %{--            icon             : "fa fa-trash-o",--}%
+            %{--            separator_before : true,--}%
+            %{--            action           : function ($element) {--}%
+            %{--                var id = $element.data("id");--}%
+            %{--                var info = $element.data("info");--}%
+            %{--                deleteMarcoLogico(id, info, "act");--}%
+            %{--            }--}%
+            %{--        }--}%
+            %{--    },--}%
+            %{--    onShow : function ($element) {--}%
+            %{--        $element.addClass("success");--}%
+            %{--    },--}%
+            %{--    onHide : function ($element) {--}%
+            %{--        $(".success").removeClass("success");--}%
+            %{--    }--}%
+            %{--});--}%
 
             $("#btnAddComp").click(function () {
                 createEditComponente($(this).data("show"));
@@ -471,9 +476,19 @@
 
             $(".btnEditAct").click(function () {
                 createEditActividad($(this).data("show"), $(this).data("com"), $(this).data("id"));
-                // createEditActividad($(this).data("show"), null, $(this).data("id"));
                 return false;
             });
+
+            $(".btnDeleteAct").click(function () {
+                deleteMarcoLogico($(this).data("id"), $(this).data("info"), "act");
+                return false;
+            });
+
+            $(".btnCronoAct").click(function () {
+                var id = $(this).data("id");
+                location.href = "${createLink(controller: 'cronograma', action:'show', id:proyecto.id)}?act=" + id + "&list=${reqParams.list}";
+            });
+
         });
     </script>
 </g:if>
