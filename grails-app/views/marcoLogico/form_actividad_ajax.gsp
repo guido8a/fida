@@ -1,6 +1,6 @@
 %{--<%@ page import="vesta.parametros.UnidadEjecutora; vesta.proyectos.Categoria; vesta.proyectos.MarcoLogico" %>--}%
 
-<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
 <g:if test="${!marcoLogicoInstance}">
     <elm:notFound elem="MarcoLogico" genero="o"/>
 </g:if>
@@ -22,35 +22,35 @@
             <g:hiddenField name="tipoElemento.id" value="${marcoLogicoInstance.tipoElementoId}"/>
             <g:hiddenField name="marcoLogico.id" value="${marcoLogicoInstance.marcoLogicoId}"/>
 
-            <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'responsable', 'error')} ">
-                <span class="grupo">
-                    <label for="responsable" class="col-md-2 control-label">
-                        Responsable
-                    </label>
+%{--            <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'responsable', 'error')} ">--}%
+%{--                <span class="grupo">--}%
+%{--                    <label for="responsable" class="col-md-2 control-label">--}%
+%{--                        Responsable--}%
+%{--                    </label>--}%
 
-                    <div class="col-md-7">
-                        <g:select id="responsable" name="responsable.id" from="${seguridad.UnidadEjecutora.list([sort: 'nombre'])}"
-                                  optionKey="id" value="${marcoLogicoInstance?.responsable?.id}"
-                                  class="many-to-one form-control input-sm required" noSelection="['': '']"/>
-                    </div>
-                </span>
-            </div>
+%{--                    <div class="col-md-7">--}%
+%{--                        <g:select id="responsable" name="responsable.id" from="${seguridad.UnidadEjecutora.list([sort: 'nombre'])}"--}%
+%{--                                  optionKey="id" value="${marcoLogicoInstance?.responsable?.id}"--}%
+%{--                                  class="many-to-one form-control input-sm required" noSelection="['': '']"/>--}%
+%{--                    </div>--}%
+%{--                </span>--}%
+%{--            </div>--}%
 
-            <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'categoria', 'error')} ">
-                <span class="grupo">
-                    <label for="categoria" class="col-md-2 control-label">
-                        Categoría
-                    </label>
+%{--            <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'categoria', 'error')} ">--}%
+%{--                <span class="grupo">--}%
+%{--                    <label for="categoria" class="col-md-2 control-label">--}%
+%{--                        Categoría--}%
+%{--                    </label>--}%
 
-                    <div class="col-md-7">
-                        <g:select id="categoria" name="categoria.id" from="${Categoria.list([sort: 'descripcion'])}"
-                                  optionKey="id" optionValue="descripcion"
-                                  value="${marcoLogicoInstance?.categoria?.id}"
-                                  class="many-to-one form-control input-sm" noSelection="['null': '']"/>
-                    </div>
+%{--                    <div class="col-md-7">--}%
+%{--                        <g:select id="categoria" name="categoria.id" from="${Categoria.list([sort: 'descripcion'])}"--}%
+%{--                                  optionKey="id" optionValue="descripcion"--}%
+%{--                                  value="${marcoLogicoInstance?.categoria?.id}"--}%
+%{--                                  class="many-to-one form-control input-sm" noSelection="['null': '']"/>--}%
+%{--                    </div>--}%
 
-                </span>
-            </div>
+%{--                </span>--}%
+%{--            </div>--}%
 
             <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'objeto', 'error')} ">
                 <span class="grupo">
@@ -79,36 +79,36 @@
                                          class="number money form-control input-sm "
                                          tdnMax="${((finan - otros) + marcoLogicoInstance.monto)}"/>
                             %{--tdnMax="${(totFin - (totComp + totOtros)) + marcoLogicoInstance.monto}"/>--}%
-                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                         </div>
                     </div>
                 </span>
             </div>
 
-            <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'fechaInicio', 'error')} ">
-                <span class="grupo">
-                    <label for="fechaInicio" class="col-md-2 control-label">
-                        Fecha Inicio
-                    </label>
+%{--            <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'fechaInicio', 'error')} ">--}%
+%{--                <span class="grupo">--}%
+%{--                    <label for="fechaInicio" class="col-md-2 control-label">--}%
+%{--                        Fecha Inicio--}%
+%{--                    </label>--}%
 
-                    <div class="col-md-5">
-                        <elm:datepicker name="fechaInicio" class="datepicker form-control input-sm required"
-                                        value="${marcoLogicoInstance?.fechaInicio ?: new Date()}" default="none" noSelection="['': '']"/>
-                    </div>
-                </span>
-            </div>
+%{--                    <div class="col-md-5">--}%
+%{--                        <elm:datepicker name="fechaInicio" class="datepicker form-control input-sm required"--}%
+%{--                                        value="${marcoLogicoInstance?.fechaInicio ?: new Date()}" default="none" noSelection="['': '']"/>--}%
+%{--                    </div>--}%
+%{--                </span>--}%
+%{--            </div>--}%
 
-            <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'fechaFin', 'error')} ">
-                <span class="grupo">
-                    <label for="fechaFin" class="col-md-2 control-label">
-                        Fecha Fin
-                    </label>
+%{--            <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'fechaFin', 'error')} ">--}%
+%{--                <span class="grupo">--}%
+%{--                    <label for="fechaFin" class="col-md-2 control-label">--}%
+%{--                        Fecha Fin--}%
+%{--                    </label>--}%
 
-                    <div class="col-md-5">
-                        <elm:datepicker name="fechaFin" class="datepicker form-control input-sm" value="${marcoLogicoInstance?.fechaFin}" default="none" noSelection="['': '']"/>
-                    </div>
-                </span>
-            </div>
+%{--                    <div class="col-md-5">--}%
+%{--                        <elm:datepicker name="fechaFin" class="datepicker form-control input-sm" value="${marcoLogicoInstance?.fechaFin}" default="none" noSelection="['': '']"/>--}%
+%{--                    </div>--}%
+%{--                </span>--}%
+%{--            </div>--}%
         </g:form>
     </div>
     <script type="text/javascript">

@@ -299,6 +299,7 @@ class MarcoLogicoController {
                 return
             }
         }
+
         marcoLogicoInstance.properties = params
 
         if (marcoLogicoInstance.marcoLogico) {
@@ -356,12 +357,13 @@ class MarcoLogicoController {
             }
             marcoLogicoInstance.numero = maxNum
         }
-        println "1: " + params
+//        println "1: " + params
         if (!params.monto) {
             params.monto = 0
         }
         params.monto = params.monto.toString().replaceAll(",", "")
-        println "2: " + params
+//        println "2: " + params
+        params.fecha = new Date();
         marcoLogicoInstance.properties = params
         if (!marcoLogicoInstance.save(flush: true)) {
             println "Error save actividad: " + marcoLogicoInstance.errors

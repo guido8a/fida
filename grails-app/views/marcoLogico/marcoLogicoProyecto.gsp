@@ -82,7 +82,7 @@
                                 </a>
                                 <a href="#" class="btn btn-xs btn-info btnEditComp" title="Editar componente"
                                    data-id="${comp.id}" data-show="${k + 1}">
-                                    <i class="far fa-edit"></i>
+                                    <i class="far fa-edit"></i> Editar Componente
                                 </a>
                                 <a href="#" class="btn btn-xs btn-danger btnDeleteComp" title="Eliminar componente"
                                    data-id="${comp.id}" data-info="${compInfo}">
@@ -98,15 +98,15 @@
                     <table class="table table-bordered table-condensed table-hover azul">
                         <thead>
                         <tr style="width: 100%">
-                            <th style="width: 15%">#</th>
-                            <th style="width: 15%">Actividad</th>
+                            <th style="width: 10%">#</th>
+                            <th style="width: 60%">Actividad</th>
                             <th style="width: 15%">Monto</th>
-                            <th style="width: 15%">Inicio</th>
-                            <th style="width: 15%">Fin</th>
-                            <th style="width: 10%">Responsable</th>
-                            <th style="width: 10%">Categoría</th>
+                            %{--                            <th style="width: 15%">Inicio</th>--}%
+                            %{--                            <th style="width: 15%">Fin</th>--}%
+                            %{--                            <th style="width: 10%">Responsable</th>--}%
+                            %{--                            <th style="width: 10%">Categoría</th>--}%
                             %{--<g:if test="${editable}">--}%
-                            %{--<th width="100">Acciones</th>--}%
+                            <th style="width: 15%">Acciones</th>
                             %{--</g:if>--}%
                         </tr>
                         </thead>
@@ -118,28 +118,28 @@
                                 <td class="text-center">${act.numero}</td>
                                 <td>${act?.objeto}</td>
                                 <td class="text-right"><g:formatNumber number="${act.monto}" type="currency" currencySymbol=""/></td>
-                                <td class="text-center">${act.fechaInicio?.format('dd-MM-yyyy')}</td>
-                                <td class="text-center">${act.fechaFin?.format('dd-MM-yyyy')}</td>
-                                <td>${act.responsable?.nombre}</td>
-                                <td>${act.categoria?.descripcion}</td>
-                                %{--<g:if test="${editable}">--}%
-                                %{--<td>--}%
-                                %{--<div class="btn-group ">--}%
-                                %{--<a href="#" class="btn btn-xs btn-info btnEditAct" title="Editar actividad"--}%
-                                %{--data-id="${act.id}" data-show="${k}">--}%
-                                %{--<i class="fa fa-pencil"></i>--}%
-                                %{--</a>--}%
-                                %{--<a href="#" class="btn btn-xs btn-danger btnDeleteAct" title="Eliminar actividad"--}%
-                                %{--data-id="${act.id}" data-show="${k}" data-info="${act.objeto}">--}%
-                                %{--<i class="fa fa-trash-o"></i>--}%
-                                %{--</a>--}%
-                                %{--<a href="#" class="btn btn-xs btn-warning btnCronoAct" title="Cronograma"--}%
-                                %{--data-id="${act.id}" data-show="${k}">--}%
-                                %{--<i class="fa fa-calendar"></i>--}%
-                                %{--</a>--}%
-                                %{--</div>--}%
-                                %{--</td>--}%
-                                %{--</g:if>--}%
+                            %{--                                <td class="text-center">${act.fechaInicio?.format('dd-MM-yyyy')}</td>--}%
+                            %{--                                <td class="text-center">${act.fechaFin?.format('dd-MM-yyyy')}</td>--}%
+                            %{--                                <td>${act.responsable?.nombre}</td>--}%
+                            %{--                                <td>${act.categoria?.descripcion}</td>--}%
+                                <g:if test="${editable}">
+                                    <td style="text-align: center">
+                                        <div class="btn-group ">
+                                            <a href="#" class="btn btn-xs btn-info btnEditAct" title="Editar actividad"
+                                               data-id="${act.id}" data-show="${k}" data-com="${act?.marcoLogico?.id}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-xs btn-danger btnDeleteAct" title="Eliminar actividad"
+                                               data-id="${act.id}" data-show="${k}" data-info="${act.objeto}">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-xs btn-warning btnCronoAct" title="Cronograma"
+                                               data-id="${act.id}" data-show="${k}">
+                                                <i class="fa fa-calendar"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </g:if>
                             </tr>
                         </g:each>
                         </tbody>
@@ -468,6 +468,12 @@
                 createEditActividad($(this).data("show"), $(this).data("id"));
                 return false;
             });
+
+            $(".btnEditAct").click(function () {
+                createEditActividad($(this).data("show"), $(this).data("com"), $(this).data("id"));
+                // createEditActividad($(this).data("show"), null, $(this).data("id"));
+                return false;
+            });
         });
     </script>
 </g:if>
@@ -484,7 +490,7 @@
             var $btn = $("#dlgCreateEditComponente").find("#btnSave");
             if ($form.valid()) {
                 $btn.replaceWith(spinner);
-                openLoader("Guardando Componente");
+                var dialog = cargarLoader("Guardando...");
                 $.ajax({
                     type    : "POST",
                     url     : $form.attr("action"),

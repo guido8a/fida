@@ -35,14 +35,14 @@ class MarcoLogico {
      * Padre de la modificación del marco lógico
      */
 //    MarcoLogico padreMod
-    /**
-     * Fecha de inicio del marco lógico
-     */
-    Date fechaInicio
-    /**
-     * Fecha de fin del marco lógico
-     */
-    Date fechaFin
+//    /**
+//     * Fecha de inicio del marco lógico
+//     */
+//    Date fechaInicio
+//    /**
+//     * Fecha de fin del marco lógico
+//     */
+//    Date fechaFin
 
     /**
      * Número del marco lógico
@@ -56,6 +56,8 @@ class MarcoLogico {
      * Reforma que genera la creación de la actividad
      */
 //    Reforma reforma
+
+    Date fecha
 
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
@@ -78,10 +80,11 @@ class MarcoLogico {
             marcoLogico column: 'mrlgpdre'
             objeto column: 'mrlgobjt'
             monto column: 'mrlgmnto'
-            fechaInicio column: 'mrlgfcin'
-            fechaFin column: 'mrlgfcfn'
+//            fechaInicio column: 'mrlgfcin'
+//            fechaFin column: 'mrlgfcfn'
             numero column: 'mrlgnmro'
             estado column: 'mrlgetdo'
+            fecha column: 'mrlgfcha'
         }
     }
 
@@ -94,9 +97,10 @@ class MarcoLogico {
         marcoLogico(blank: true, nullable: true, attributes: [mensaje: 'Marco lógico original (elemento) en caso de haber modificaciones'])
         objeto(size: 1..1023, blank: true, nullable: true, attributes: [mensaje: 'Objetivo, objeto o descripción del elemento'])
         monto(blank: true, nullable: true, attributes: [mensaje: 'Monto o valor planificado, se aplica sólo en actividades'])
-        fechaFin(nullable: true, blank: true)
-        fechaInicio(nullable: true, blank: true)
+//        fechaFin(nullable: true, blank: true)
+//        fechaInicio(nullable: true, blank: true)
         estado(nullable: false, blank: false)
+        fecha(blank:true, nullable: true)
     }
 
     /**

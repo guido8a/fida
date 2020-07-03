@@ -1,6 +1,4 @@
-<%@ page import="proyectos.MarcoLogico" %>
 
-<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
 <g:if test="${!marcoLogicoInstance}">
     <elm:notFound elem="MarcoLogico" genero="o"/>
 </g:if>
@@ -31,35 +29,35 @@
                     </label>
 
                     <div class="col-md-10">
-                        <g:textArea name="objeto" cols="70" rows="5" maxlength="1023" class="form-control input-sm required" value="${marcoLogicoInstance?.objeto}"/>
+                        <g:textArea name="objeto" cols="70" rows="5" style="resize: none" maxlength="1023" class="form-control input-sm required" value="${marcoLogicoInstance?.objeto}"/>
                     </div>
                 </span>
             </div>
         </g:form>
     </div>
-    <script type="text/javascript">
-        var validator = $("#frmComponente").validate({
-            errorClass     : "help-block",
-            errorPlacement : function (error, element) {
-                if (element.parent().hasClass("input-group")) {
-                    error.insertAfter(element.parent());
-                } else {
-                    error.insertAfter(element);
-                }
-                element.parents(".grupo").addClass('has-error');
-            },
-            success        : function (label) {
-                label.parents(".grupo").removeClass('has-error');
-label.remove();
-            }
-
-        });
-        $(".form-control").keydown(function (ev) {
-            if (ev.keyCode == 13) {
-                submitFormComponente("${show}");
-                return false;
-            }
-            return true;
-        });
-    </script>
 </g:else>
+<script type="text/javascript">
+    var validator = $("#frmComponente").validate({
+        errorClass     : "help-block",
+        errorPlacement : function (error, element) {
+            if (element.parent().hasClass("input-group")) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+            element.parents(".grupo").addClass('has-error');
+        },
+        success        : function (label) {
+            label.parents(".grupo").removeClass('has-error');
+            label.remove();
+        }
+
+    });
+    $(".form-control").keydown(function (ev) {
+        if (ev.keyCode == 13) {
+            submitFormComponente("${show}");
+            return false;
+        }
+        return true;
+    });
+</script>
