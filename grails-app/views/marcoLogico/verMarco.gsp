@@ -124,14 +124,17 @@
     </div>
 
     <div class="dialog col-md-12" title="MATRIZ DE MARCO LOGICO DEL PROYECTO">
-        <div class="btn-toolbar toolbar col-md-2" style="margin-bottom: 15px">
+        <div class="btn-toolbar toolbar col-md-3" style="margin-bottom: 15px">
             <div class="btn-group">
                 <g:link controller="proyecto" action="proy" id="${proyecto?.id}" class="btn btn-default" title="Regresar al proyecto">
                     <i class="fa fa-arrow-left"></i> Regresar
                 </g:link>
+                <a href="#" id="btnEditarMarcoLogico" class="btn btn-success">
+                    <i class="fa fa-edit"></i> Editar
+                </a>
             </div>
         </div>
-        <div class="panel panel-primary col-md-10" style="text-align: center; float: right">
+        <div class="panel panel-primary col-md-9" style="text-align: center; float: right">
             <h4>MATRIZ DE MARCO LOGICO DEL PROYECTO</h4>
            <strong style="color: #5596ff">${proyecto?.nombre}</strong>
         </div>
@@ -304,6 +307,14 @@
 </g:form>
 
 </div>
+
+<script type="text/javascript">
+
+    $("#btnEditarMarcoLogico").click(function () {
+        location.href="${createLink(controller: 'marcoLogico', action: 'showMarco')}/" + '${proyecto?.id}'
+    })
+
+</script>
 
 </body>
 

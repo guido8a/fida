@@ -34,7 +34,7 @@
                     ${fin.anio.anio}
                 </td>
                 <td class="text-center">
-                    <a id="${fin.id}" href="#" class="btn btn-sm btn-danger btn-delete-fin">
+                    <a id="${fin.id}" href="#" class="btn btn-xs btn-danger btn-delete-fin">
                         <i class="fa fa-trash"></i>
                     </a>
                 </td>
