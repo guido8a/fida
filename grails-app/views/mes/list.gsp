@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <table class="table table-condensed table-bordered table-striped">
+        <table class="table table-condensed table-bordered table-striped table-hover">
             <thead>
                 <tr>
                     <g:sortableColumn property="codigo" title="Número" />
