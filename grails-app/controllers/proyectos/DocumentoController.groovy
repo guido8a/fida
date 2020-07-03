@@ -219,27 +219,29 @@ class DocumentoController {
      * @render ERROR*[mensaje] cuando no se pudo grabar correctamente, SUCCESS*[mensaje] cuando se grabó correctamente
      */
     def save_ajax() {
-        def proyecto, unidad, proyName, uniName
+        println "save_ajax: $params"
+        def proyecto, convenio, proyName, convName
         if (params.proyecto && params.proyecto.id) {
             proyecto = Proyecto.get(params.proyecto.id.toLong())
             proyName = proyecto.nombre.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
         }
-        if (params.unidad && params.unidad.id) {
-            unidad = UnidadEjecutora.get(params.unidad.id.toLong())
-            uniName = (unidad.nombre + "_" + unidad.codigo).tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
+        if (params.convedio && params.convenio.id) {
+            convenio = UnidadEjecutora.get(params.unidad.id.toLong())
+            convName = (unidad.nombre + "_" + unidad.codigo).tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
         }
 
         def anio = new Date().format("yyyy")
         def pathSave = ""
         if (proyName) {
-            pathSave = "${session.unidad.codigo}/" + anio + "/" + proyName + "/"
-        } else if (uniName) {
-            pathSave = uniName + "/" + anio + "/"
+//            pathSave = "${session.unidad.codigo}/" + anio + "/" + proyName + "/"
+            pathSave = "proy/"
+        } else if (convName) {
+            pathSave = convName + "/"+ anio + "/"
         }
-        def path = servletContext.getRealPath("/") //+ "documentosProyecto/" + pathSave
+        def path = "/var/fida/"
         if (proyName) {
             path += "documentosProyecto/" + pathSave
-        } else if (uniName) {
+        } else if (convName) {
             path += "documentosUnidad/" + pathSave
         }
         //web-app/archivos
@@ -297,6 +299,7 @@ class DocumentoController {
                 def fn = fileName
                 def src = new File(pathFile)
                 def i = 1
+                println "---> $pathFile"
                 while (src.exists()) {
                     nombre = fn + "_" + i + "." + ext
                     pathFile = path + nombre
@@ -363,8 +366,8 @@ class DocumentoController {
                 params.remove("documento")
                 documentoInstance.properties = params
                 documentoInstance.documento = pathSave + nombre
-                if (unidad) {
-                    documentoInstance.unidadEjecutora = unidad
+                if (convenio) {
+                    documentoInstance.unidadEjecutora = convenio
                 }
 //                documentoInstance.unidadEjecutora = session.unidad
                 if (!documentoInstance.save(flush: true)) {
@@ -392,11 +395,13 @@ class DocumentoController {
                 }
                 params.remove("documento")
                 documentoInstance.properties = params
+/*
                 if (params.unidad && params.unidad.id) {
                     documentoInstance.unidadEjecutora = UnidadEjecutora.get(params.unidad.id.toLong())
                 } else {
                     documentoInstance.unidadEjecutora = session.unidad
                 }
+*/
                 if (!documentoInstance.save(flush: true)) {
                     render "ERROR*Ha ocurrido un error al guardar Documento: " + renderErrors(bean: documentoInstance)
                     return
@@ -443,13 +448,15 @@ class DocumentoController {
      * Acción llamada con ajax que verifica la existencia de un documento antes de ser descargado
      */
     def existeDoc_ajax() {
+//        println "existeDoc_ajax $params"
         def doc = Documento.get(params.id)
         def path
         if (doc.proyecto) {
-            path = servletContext.getRealPath("/") + "documentosProyecto/" + doc.documento
+            path = "/var/fida/documentosProyecto/" + doc.documento
         } else {
-            path = servletContext.getRealPath("/") + "documentosUnidad/" + doc.documento
+            path = "/var/fida/documentosUnidad/" + doc.documento
         }
+//        println "--> ${path}"
         def file = new File(path)
         if (file.exists()) {
             render "OK"
@@ -465,9 +472,9 @@ class DocumentoController {
         def doc = Documento.get(params.id)
         def path
         if (doc.proyecto) {
-            path = servletContext.getRealPath("/") + "documentosProyecto/" + doc.documento
+            path = "/var/fida/documentosProyecto/" + doc.documento
         } else {
-            path = servletContext.getRealPath("/") + "documentosUnidad/" + doc.documento
+            path = "/var/fida/documentosUnidad/" + doc.documento
         }
         def nombre = doc.documento.split("/").last()
         def parts = nombre.split("\\.")

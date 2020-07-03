@@ -38,14 +38,15 @@
 
     <div>
         <div class="col-md-12">
-            <a href="${createLink(controller: 'proyecto', action: 'proy', id:"1")}"
-               class="btn btn-sm btn-info" title="Consultar artículo">
-                <i class="fa fa-chevron-circle-left"></i> Proyecto
-            </a>
-
-            Buscar en la base de conocimiento por:
             <div class="btn-group">
-                <input id="buscar" type="search" class="form-control">
+                <g:link controller="proyecto" action="proy" id="1" class="btn btn-sm btn-default">
+                    <i class="fa fa-arrow-left"></i> Regresar a proyectos
+                </g:link>
+            </div>
+
+            <span style="margin-left: 30px">Buscar en la base de conocimiento por:</span>
+            <div class="btn-group">
+                <input id="buscar" type="search" class="form-control" style="width: 200px">
             </div>
             <a href="#" name="busqueda" id="btnBuscar" class="btn btn-info btnBusqueda btn-ajax"><i
                     class="fas fa-search"></i> Buscar</a>

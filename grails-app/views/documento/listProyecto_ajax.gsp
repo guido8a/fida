@@ -7,12 +7,17 @@
 
 <div class="panel panel-primary col-md-12">
     <h3>Biblioteca del Proyecto</h3>
-    <div class="panel-heading" style="padding: 3px; margin-top: 2px">
+    <div class="panel-info" style="padding: 3px; margin-top: 2px">
     <div class="btn-toolbar toolbar">
+        <div class="btn-group">
+            <g:link controller="proyecto" action="proy" id="1" class="btn btn-sm btn-default">
+                <i class="fa fa-arrow-left"></i> Regresar a proyectos
+            </g:link>
+        </div>
 
     <div class="btn-group">
         <a href="#" class="btn btn-sm btn-success" id="btnAddDoc">
-            <i class="fa fa-plus"></i> Agregar
+            <i class="fa fa-plus"></i> Agregar documento de la Biblioteca
         </a>
     </div>
 
@@ -26,8 +31,8 @@
     </div>
 </div>
     </div>
-</div>
 <div id="tabla"></div>
+</div>
 
 
 
@@ -54,9 +59,9 @@
         var $form = $("#frmDocumento");
         var $btn = $("#dlgCreateEdit").find("#btnSave");
         // $form.validate();
-        console.log('submit');
+        // console.log('submit');
         if ($form.valid()) {
-            console.log('submit--')
+            // console.log('submit--')
             $btn.replaceWith(spinner);
             openLoader("Guardando Documento");
             var formData = new FormData($form[0]);
@@ -91,7 +96,7 @@
     function deleteDocumento(itemId) {
         bootbox.dialog({
             title   : "Alerta",
-            message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i><p>" +
+            message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
                     "¿Está seguro que desea eliminar el Documento seleccionado? Esta acción no se puede deshacer.</p>",
             buttons : {
                 cancelar : {
@@ -101,7 +106,7 @@
                     }
                 },
                 eliminar : {
-                    label     : "<i class='fa fa-trash-o'></i> Eliminar",
+                    label     : "<i class='fa fa-trash'></i> Eliminar",
                     className : "btn-danger",
                     callback  : function () {
                         openLoader("Eliminando Documento");

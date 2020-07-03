@@ -8,15 +8,15 @@
 <g:else>
 
     <div class="modal-contenido">
-%{--        <g:uploadForm class="form-horizontal" name="frmDocumento" controller="documento" action="save_ajax" method="POST">--}%
-        <g:form class="form-horizontal" name="frmDocumento" controller="documento" action="save_ajax" method="POST"
-                attrs.enctype = "multipart/form-data">
+        <g:uploadForm class="form-horizontal" name="frmDocumento" controller="documento" action="save_ajax" method="POST">
+%{--        <g:form class="form-horizontal" name="frmDocumento" controller="documento" action="save_ajax" method="POST"--}%
+%{--                attrs.enctype = "multipart/form-data">--}%
             <g:hiddenField name="id" value="${documentoInstance?.id}"/>
             <g:hiddenField name="proyecto.id" value="${documentoInstance?.proyectoId}"/>
 
             <div class="form-group keeptogether ${hasErrors(bean: documentoInstance, field: 'grupoProcesos', 'error')} ">
                 <span class="grupo">
-                    <label for="grupoProcesos" class="col-md-4 control-label">
+                    <label for="grupoProcesos" class="col-md-3 control-label">
                         Grupo de Procesos
                     </label>
 
@@ -30,7 +30,7 @@
 
             <div class="form-group keeptogether ${hasErrors(bean: documentoInstance, field: 'descripcion', 'error')} ">
                 <span class="grupo">
-                    <label for="descripcion" class="col-md-4 control-label">
+                    <label for="descripcion" class="col-md-3 control-label">
                         Descripción
                     </label>
 
@@ -43,7 +43,7 @@
 
             <div class="form-group keeptogether ${hasErrors(bean: documentoInstance, field: 'clave', 'error')} ">
                 <span class="grupo">
-                    <label for="clave" class="col-md-4 control-label">
+                    <label for="clave" class="col-md-3 control-label">
                         Palabras Clave
                     </label>
 
@@ -56,7 +56,7 @@
             <div class="form-group keeptogether ${hasErrors(bean: documentoInstance, field: 'resumen', 'error')} ">
 %{--            <div class="row">--}%
                 <span class="grupo">
-                    <label for="resumen" class="col-md-4 control-label">
+                    <label for="resumen" class="col-md-3 control-label">
                         Resumen
                     </label>
 
@@ -70,7 +70,7 @@
             <g:if test="${!documentoInstance.id}">
                 <div class="form-group keeptogether ${hasErrors(bean: documentoInstance, field: 'documento', 'error')} ">
                     <span class="grupo">
-                        <label for="documento" class="col-md-4 control-label">
+                        <label for="documento" class="col-md-3 control-label">
                             Documento
                         </label>
 
@@ -81,7 +81,7 @@
                     </span>
                 </div>
             </g:if>
-        </g:form>
+        </g:uploadForm>
     </div>
 
     <script type="text/javascript">
@@ -120,7 +120,7 @@
             }
             okExt += ext;
             okExt2 += ext;
-            console.log('ext:', okExt, okExt2)
+            // console.log('ext:', okExt, okExt2)
         });
 
         // var validator = $("#frmDocumento").validate({

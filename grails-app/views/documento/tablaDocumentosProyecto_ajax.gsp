@@ -26,10 +26,10 @@
                             <i class="fa fa-download"></i>
                         </a>
                         <a href="#" class="btn btn-xs btn-info btnEditDoc" data-id="${doc.id}" title="Editar">
-                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-edit"></i>
                         </a>
                         <a href="#" class="btn btn-xs btn-danger btnDelDoc" data-id="${doc.id}" title="Eliminar">
-                            <i class="fa fa-trash-o"></i>
+                            <i class="fa fa-trash"></i>
                         </a>
                     </div>
                 </td>
