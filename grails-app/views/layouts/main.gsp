@@ -11,14 +11,14 @@
 
 %{--    prueba--}%
     <asset:stylesheet src="/bootstrap-3.3.2/dist/css/bootstrap.css"/>
-    <asset:stylesheet src="/bootstrap-3.3.2/dist/css/bootstrap-theme.min.css"/>
-    %{--  fin  prueba--}%
+%{--    <asset:stylesheet src="/bootstrap-3.3.2/dist/css/bootstrap.min.css"/>--}%
+    <asset:stylesheet src="/bootstrap-3.3.2/dist/css/bootstrap-theme.css"/>
+%{--  fin  prueba--}%
 
 
 %{--    <asset:stylesheet src="/apli/bootstrap.min.css"/>--}%
 %{--    <asset:stylesheet src="/bootstrap-grid.css"/>--}%
 %{--    <asset:stylesheet src="/bootstrap-reboot.css"/>--}%
-
 
 
     <asset:stylesheet src="/jquery/jquery-ui-1.10.3.custom.min.css"/>
@@ -73,14 +73,12 @@
 
     <g:layoutHead/>
 
-
-
 </head>
 
 <body>
 
 
-<div id="modalTabelGray"></div>
+%{--<div id="modalTableGray"></div>--}%
 
 <mn:menu title="${g.layoutTitle(default: 'FIDA')}"/>
 

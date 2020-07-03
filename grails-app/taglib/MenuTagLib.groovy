@@ -188,7 +188,7 @@ class MenuTagLib {
         html += '<span class="icon-bar"></span>'
         html += '</button>'
         html += '<a class="navbar-brand navbar-logo" href="' + g.createLink(controller: 'inicio', action: 'index') +
-                '"> <img src="' + g.assetPath(src: 'apli/logo.png') + '" style="float:left; height:32px">' + '</a>'
+                '"> <img src="' + g.assetPath(src: 'apli/logo.png') + '" style="float:left; height:40px">' + '</a>'
 
         html += '</div>'
 

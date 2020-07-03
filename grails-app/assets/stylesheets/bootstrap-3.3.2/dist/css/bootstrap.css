@@ -4050,8 +4050,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar {
   position: relative;
-  min-height: 65px;
-  margin-bottom: 20px;
+  /*min-height: 65px;*/
+  /*margin-bottom: 20px;*/
   border: 1px solid transparent;
 }
 @media (min-width: 1105px) {
@@ -4159,10 +4159,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-brand {
   float: left;
-  height: 65px;
-  padding: 22.5px 15px;
-  font-size: 18px;
-  line-height: 20px;
+  /*height: 65px;*/
+  /*padding: 22.5px 15px;*/
+  /*font-size: 18px;*/
+  /*line-height: 20px;*/
 }
 .navbar-brand:hover,
 .navbar-brand:focus {
@@ -6587,7 +6587,8 @@ button.close {
   color: #333;
 }
 .navbar-brand {
-  padding-top: 20px;
+  padding-top: 10px;
+  padding-left: 10px;
 }
 .navbar .navbar-nav > .open > a,
 .navbar .navbar-nav > .open > a:hover,
@@ -6605,7 +6606,7 @@ button.close {
   border-radius: 4px;
 }
 .navbar-fixed-top {
-  top: 50px;
+  top: 0px;
 }
 @media (max-width: 1105px) {
   .navbar .navbar-nav > li > a {
