@@ -51,7 +51,9 @@
             ${(comp.objeto.length() > 80) ? comp.objeto.substring(0, 80) + "..." : comp.objeto}
             </th>
         </tr>
+        ${comp?.id}
         <g:each in="${proyectos.MarcoLogico.findAllByMarcoLogicoAndEstado(comp, 0, [sort: 'id'])}" var="act" status="i">
+
 %{--            <g:if test="${!actSel || (actSel && actSel.id == act.id)}">--}%
                 <g:set var="asignadoAct" value="${act.getTotalCronograma()}"/> %{-- / --}%
                 <g:set var="asignadoActAnio" value="${act.getTotalCronogramaAnio(anio)}"/> %{-- / --}%
@@ -76,6 +78,7 @@
                         <g:set var="crga" value='${proyectos.Cronograma.findAllByMarcoLogicoAndMes(act, mes)}'/>
                         <g:set var="valor" value="${0}"/>
                         <g:set var="clase" value="disabled"/>
+
 
                         <g:if test="${crga.size() > 0}">
                             <g:each in="${crga}" var="c">

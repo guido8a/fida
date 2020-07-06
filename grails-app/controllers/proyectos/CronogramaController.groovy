@@ -418,6 +418,11 @@ class CronogramaController {
 
         def anio = Anio.get(params.anio)
         def proyecto = Proyecto.get(params.proyecto)
+        def actividad
+
+        if(params.actSel){
+            actividad = MarcoLogico.get(params.actSel)
+        }
 
         def componentes = MarcoLogico.withCriteria {
             eq("proyecto", proyecto)
@@ -425,6 +430,8 @@ class CronogramaController {
             eq("estado", 0)
             order("numero", "asc")
         }
+
+        println("com " + componentes)
 
         return[anio: anio, componentes: componentes, actSel: params.actSel]
     }

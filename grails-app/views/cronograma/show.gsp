@@ -191,7 +191,7 @@
             data:{
                 anio: anio,
                 proyecto: '${proyecto?.id}',
-                actSel: '${actSel}'
+                actSel: '${actSel?.id}'
             },
             success: function (msg) {
                 $(".divTabla").html(msg)

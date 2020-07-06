@@ -90,9 +90,36 @@
                 </div>
             </g:if>
 
-            <div class="divTabla">
-                <g:render template="/templates/tablaCrono" model="[anio: anio, componentes: componentes, actSel: actSel]"/>
+            <table class="table table-condensed table-bordered table-hover table-striped" id="tblCrono">
+                <thead>
+                <tr>
+                    <th>Año</th>
+                    <th colspan="16">
+                        <g:select from="${parametros.Anio.list([sort: 'anio'])}" optionKey="id" optionValue="anio" class="form-control input-sm"
+                                  style="width: 100px; display: inline" name="anio" id="anio" value="${anio.id}"/>
+                    </th>
+                </tr>
+
+                <tr id="trMeses">
+                    <th colspan="2" style="width:300px;">Componentes/Rubros</th>
+                    <g:each in="${parametros.Mes.list()}" var="mes">
+                        <th style="width:100px;" data-id="${mes.id}" title="${mes.descripcion} ${anio.anio}">
+                            ${mes.descripcion[0..2]}.
+                        </th>
+                    </g:each>
+                    <th>Total<br/>Año</th>
+                    <th>Sin<br/>asignar</th>
+                    <th>Total<br/>Asignado</th>
+                </tr>
+                </thead>
+            </table>
+            <div class="divTabla" style="margin-top: -20px">
+
             </div>
+
+%{--            <div class="divTabla">--}%
+%{--                <g:render template="/templates/tablaCrono" model="[anio: anio, componentes: componentes, actSel: actSel]"/>--}%
+%{--            </div>--}%
         </elm:container>
         <div class="modal fade" id="modalCrono">
             <div class="modal-dialog">
@@ -250,6 +277,26 @@
         </div><!-- /.modal -->
 
         <script type="text/javascript">
+
+        cargarTablaCronograma('${anio?.id}');
+
+        function cargarTablaCronograma(anio){
+            $.ajax({
+                type: 'POST',
+                url: '${createLink(controller: 'cronograma', action: 'tablaCronograma_ajax')}',
+                data:{
+                    anio: anio,
+                    proyecto: '${proyecto?.id}',
+                    actSel: '${actSel?.id}'
+                },
+                success: function (msg) {
+                    $(".divTabla").html(msg)
+                }
+
+            });
+        }
+
+
             function armaParams() {
                 var params = "";
                 if ("${params.search_programa}" != "") {
@@ -700,11 +747,22 @@
 
                 var $container = $(".divTabla");
                 $container.scrollTop(0 - $container.offset().top + $container.scrollTop());
+                %{--$("#anio").change(function () {--}%
+                %{--    openLoader();--}%
+                %{--    location.href = "${createLink(controller: 'cronograma', action: 'form', id: proyecto.id)}?anio=" + $("#anio").val() +--}%
+                %{--                    armaParams() + "&act=${actSel?.id}";--}%
+                %{--});--}%
+
                 $("#anio").change(function () {
-                    openLoader();
-                    location.href = "${createLink(controller: 'cronograma', action: 'form', id: proyecto.id)}?anio=" + $("#anio").val() +
-                                    armaParams() + "&act=${actSel?.id}";
+                    var a = $("#anio option:selected").val();
+                    %{--openLoader();--}%
+                    %{--location.href = "${createLink(controller: 'cronograma', action: 'show', id: proyecto.id)}?anio=" +--}%
+                    %{--    $("#anio").val() + armaParams() + "&act=${actSel?.id}&list=${params.list}";--}%
+
+                    cargarTablaCronograma(a)
+
                 });
+
 
                 $(".scrollComp").click(function () {
                     var $scrollTo = $($(this).attr("href"));
