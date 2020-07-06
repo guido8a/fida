@@ -408,4 +408,21 @@ class CronogramaController {
         }
     }
 
+    def tablaCronograma_ajax() {
+
+        println("params tc " + params)
+
+        def anio = Anio.get(params.anio)
+        def proyecto = Proyecto.get(params.proyecto)
+
+        def componentes = MarcoLogico.withCriteria {
+            eq("proyecto", proyecto)
+            eq("tipoElemento", TipoElemento.get(2))
+            eq("estado", 0)
+            order("numero", "asc")
+        }
+
+        return[anio: anio, componentes: componentes, actSel: params.actSel]
+    }
+
 }

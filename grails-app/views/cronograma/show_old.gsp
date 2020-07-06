@@ -90,32 +90,9 @@
         </div>
     </g:if>
 
-
-    <table class="table table-condensed table-bordered table-hover table-striped" id="tblCrono">
-        <thead>
-        <tr>
-            <th>Año</th>
-            <th colspan="16">
-                <g:select from="${parametros.Anio.list([sort: 'anio'])}" optionKey="id" optionValue="anio" class="form-control input-sm"
-                          style="width: 100px; display: inline" name="anio" id="anio" value="${anio.id}"/>
-            </th>
-        </tr>
-
-        <tr id="trMeses">
-            <th colspan="2" style="width:300px;">Componentes/Rubros</th>
-            <g:each in="${parametros.Mes.list()}" var="mes">
-                <th style="width:100px;" data-id="${mes.id}" title="${mes.descripcion} ${anio.anio}">
-                    ${mes.descripcion[0..2]}.
-                </th>
-            </g:each>
-            <th>Total<br/>Año</th>
-            <th>Sin<br/>asignar</th>
-            <th>Total<br/>Asignado</th>
-        </tr>
-        </thead>
-    </table>
-    <div class="divTabla" style="margin-top: -20px">
-
+    <div class="divTabla">
+        <g:render template="/templates/tablaCrono"
+                  model="[anio: anio, componentes: componentes, actSel: actSel]"/>
     </div>
 </elm:container>
 
@@ -186,16 +163,16 @@
 
     function cargarTablaCronograma(anio){
         $.ajax({
-            type: 'POST',
-            url: '${createLink(controller: 'cronograma', action: 'tablaCronograma_ajax')}',
-            data:{
-                anio: anio,
-                proyecto: '${proyecto?.id}',
-                actSel: '${actSel}'
-            },
-            success: function (msg) {
-                $(".divTabla").html(msg)
-            }
+           type: 'POST',
+           url: '${createLink(controller: 'cronograma', action: 'tablaCronograma_ajax')}',
+           data:{
+               anio: anio,
+               proyecto: '${proyecto?.id}',
+               actSel: '${actSel}'
+           },
+           success: function (msg) {
+               $(".divTabla").html(msg)
+           }
 
         });
     }
@@ -350,14 +327,10 @@
         $(".btn-edit").click(function () {
             openLoader();
         });
-        %{--$("#anio").val(${anio.id}).change(function () {--}%
-        $("#anio").change(function () {
-            var a = $("#anio option:selected").val();
-            %{--openLoader();--}%
-            %{--location.href = "${createLink(controller: 'cronograma', action: 'show', id: proyecto.id)}?anio=" +--}%
-            %{--    $("#anio").val() + armaParams() + "&act=${actSel?.id}&list=${params.list}";--}%
-
-            cargarTablaCronograma(a)
+        $("#anio").val(${anio.id}).change(function () {
+            openLoader();
+            location.href = "${createLink(controller: 'cronograma', action: 'show', id: proyecto.id)}?anio=" +
+                $("#anio").val() + armaParams() + "&act=${actSel?.id}&list=${params.list}";
 
         });
 

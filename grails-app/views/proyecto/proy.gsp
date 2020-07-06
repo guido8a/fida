@@ -208,7 +208,7 @@
     <script type="text/javascript">
 
         $("#btnVerCronograma").click(function () {
-
+            location.href="${createLink(controller: 'cronograma', action: 'show')}/" + '${proy?.id}'
         });
 
         $("#btnFinanciamiento").click(function () {

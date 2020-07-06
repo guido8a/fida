@@ -11,7 +11,7 @@
 
         <tr id="trMeses">
             <th colspan="2" style="width:300px;">Componentes/Rubros</th>
-            <g:each in="${Mes.list()}" var="mes">
+            <g:each in="${parametros.Mes.list()}" var="mes">
                 <th style="width:100px;" data-id="${mes.id}" title="${mes.descripcion} ${anio.anio}">
                     ${mes.descripcion[0..2]}.
                 </th>
@@ -62,7 +62,7 @@
                         <th class="success">
                             ${act.numero}
                         </th>
-                        <th class="success actividad" title="${act.responsable} - ${act.objeto}" style="width:300px;">
+                        <th class="success actividad" title="${act.objeto}" style="width:300px;">
                             ${(act.objeto.length() > 100) ? act.objeto.substring(0, 100) + "..." : act.objeto}
                         </th>
                         <g:each in="${parametros.Mes.list()}" var="mes" status="k">
