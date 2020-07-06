@@ -77,11 +77,7 @@
                         ${(act.objeto.length() > 100) ? act.objeto.substring(0, 100) + "..." : act.objeto}
                     </th>
                     <g:each in="${parametros.Mes.list()}" var="mes" status="k">
-                        ${mes}
                         <g:set var="crga" value='${proyectos.Cronograma.findAllByMarcoLogicoAndMes(act, mes)}'/>
-
-                        ${crga}
-
                         <g:set var="valor" value="${0}"/>
                         <g:set var="clase" value="disabled"/>
 
@@ -118,16 +114,16 @@
                         </g:if>
                     </g:each>
                     <th class="disabled text-right asignado nop" data-val="${asignadoAct}">
-                        1/
+%{--                        1/--}%
                         <g:formatNumber number="${asignadoActAnio}" type="currency" currencySymbol=""/>
                     </th>
                     <th class="disabled text-right sinAsignar nop" data-val="${sinAsignarAct}">
-                        1*
+%{--                        1*--}%
                         <g:formatNumber number="${sinAsignarAct}" type="currency" currencySymbol=""/>
                     </th>
                     <th class="disabled text-right total nop" data-val="${totalAct}">
-                        1-
-                        ${act.id}*${act.monto}
+%{--                        1---}%
+%{--                        ${act.id}*${act.monto}--}%
                         <g:formatNumber number="${totalAct}" type="currency" currencySymbol=""/>
                     </th>
                 </tr>
