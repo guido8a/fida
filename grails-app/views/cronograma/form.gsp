@@ -5,7 +5,7 @@
   Time: 04:40 PM
 --%>
 
-<%@ page import="vesta.proyectos.MarcoLogico; vesta.proyectos.Cronograma; vesta.parametros.poaPac.Mes; vesta.parametros.poaPac.Anio" contentType="text/html;charset=UTF-8" %>
+<%@ page import="proyectos.MarcoLogico; proyectos.Cronograma; parametros.Mes; parametros.Anio" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta name="layout" content="main">
@@ -83,7 +83,7 @@
                 <div class="divIndice ">
                     <g:each in="${componentes}" var="comp">
                         <a href="#comp${comp.id}" class="scrollComp ">
-                            <strong>Componente ${comp.numeroComp}</strong>:
+                            <strong>Componente ${comp.numero}</strong>:
                         ${(comp.objeto.length() > 100) ? comp.objeto.substring(0, 100) + "..." : comp.objeto}
                         </a>
                     </g:each>

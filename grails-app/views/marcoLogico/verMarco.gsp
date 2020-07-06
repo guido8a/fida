@@ -139,7 +139,7 @@
         <input type="hidden" name="edicion" value="1" id="edicion">
     </div>
 
-    <div class="dialog col-md-12" title="MARCO LOGICO">
+    <div class="dialog col-md-12 panel panel-primary" title="MARCO LOGICO">
         <div class="btn-toolbar toolbar col-md-3" style="margin-bottom: 15px">
             <div class="btn-group">
                 <g:link controller="proyecto" action="proy" id="${proyecto?.id}" class="btn btn-default" title="Regresar al proyecto">
@@ -155,7 +155,7 @@
         </div>
 
 
-        <div style="width: 100%;float: left;border: 1px solid  rgba(145, 192, 95,0.6)" class="ui-corner-all">
+        <div style="width: 100%;float: left;border: 1px solid" class="panel panel-primary">
 
             <div class="matriz ui-corner-all campo cmp datos " ml="Fin" div="div_fin"
                  identificador="${fin?.id}">

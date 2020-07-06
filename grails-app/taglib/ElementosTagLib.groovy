@@ -1761,4 +1761,24 @@ class ElementosTagLib {
         out << html
     }
 
+    /**
+     * pone un field segun el standar rapido rapido
+     */
+    def fieldRapido = { attrs, body ->
+        def html = ""
+        def claseField = (attrs.claseField ? attrs.claseField : 'col-md-3')
+        def claseLabel = (attrs.claseLabel ? attrs.claseLabel : 'col-md-2')
+        html += '<div class="form-group keeptogether">'
+        html += '<span class="grupo">'
+        html += '<label class="' + claseLabel + ' control-label">'
+        html += attrs.label
+        html += '</label>'
+        html += '<div class="' + claseField + '">'
+        html += body()
+        html += '</div>'
+        html += '</span>'
+        html += '</div>'
+        out << html
+    }
+
 }

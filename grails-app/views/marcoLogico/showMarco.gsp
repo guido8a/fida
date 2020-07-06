@@ -144,7 +144,7 @@
 
             </div>
 
-            <div style="width: 100%;float: left;border: 1px solid  rgba(145, 192, 95,0.6)" class="ui-corner-all">
+            <div style="width: 100%;float: left;" class="panel panel-primary">
                 <div class="matriz ui-corner-all campo cmp datos " ml="Fin" div="div_fin"
                      identificador="${fin?.id}">
                     <div class="titulo">Fin</div>
@@ -240,8 +240,8 @@
                 </div>
             </div>%{--end del fin--}%
 
-            <div style="width: 100%;float: left;border: 1px solid  rgba(110, 182, 213,0.6);margin-top: 5px;"
-                 class="ui-corner-all">
+            <div style="width: 100%;float: left;border: 1px solid;margin-top: -10px;"
+                 class="panel panel-primary">
                 <div class="matriz ui-corner-all campoProp cmp datos" ml="Proposito" div="div_prop"
                      identificador="${proposito?.id}">
                     <div class="titulo">Propósito</div>

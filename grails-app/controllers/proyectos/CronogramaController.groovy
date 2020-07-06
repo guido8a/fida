@@ -73,7 +73,8 @@ class CronogramaController {
             anio = Anio.findAll("from Anio order by anio").pop()
         }
 
-        def editable = anio.estado == 0 && proyecto.aprobado != 'a'
+        def editable = (anio.estado == 0) && (proyecto?.aprobado != 'a')
+        println "anio: ${anio.estado}, proyecto.aprobado ${proyecto.aprobado} --> editable: ${editable}"
 
         if (editable) {
             def finan = Financiamiento.findAllByProyectoAndAnio(proyecto, anio)
