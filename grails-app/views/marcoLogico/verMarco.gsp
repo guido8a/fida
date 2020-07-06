@@ -13,33 +13,49 @@
 
     <style type="text/css">
     .cmp {
-        width      : 235px;
+        width      : 240px;
         margin     : 5px;
-        min-height : 215px;
+        min-height : 150px;
+        float      : left;
+        padding    : 5px;
+        position   : relative;
+    }
+
+    .supuesto {
+        width      : 205px;
+        margin     : 0px;
+        min-height : 150px;
         float      : left;
         padding    : 5px;
         position   : relative;
     }
 
     .cmpDoble {
-        width      : 470px;
+        width      : 640px;
         margin     : 5px;
-        min-height : 215px;
+        min-height : 150px;
         float      : left;
         padding    : 5px;
         position   : relative;
     }
 
     .fila {
-        width      : 98%;
-        margin     : 1%;
+        width      : 100%;
+        margin     : 0%;
         min-height : 50px;
         float      : left;
     }
 
     .filaMedio {
-        width      : 47.5%;
-        margin     : 1%;
+        width      : 57%;
+        margin-right: 1%;
+        min-height : 50px;
+        float      : left;
+    }
+
+    .filaMedio2 {
+        width      : 40%;
+        margin-left: 2%;
         min-height : 50px;
         float      : left;
     }
@@ -75,7 +91,7 @@
 
     .texto {
         width      : 90%;
-        min-height : 115px;
+        min-height : 75px;
         margin     : 5%;
         cursor     : pointer;
     }
@@ -83,13 +99,13 @@
     textarea {
         width      : 93%;
         padding    : 5px;
-        min-height : 115px;
+        min-height : 100px;
         resize     : vertical;
     }
 
     .agregado {
-        width      : 90%;
-        margin     : 1.5%;
+        width      : 100%;
+        margin     : 1%;
         padding    : 4px;
         min-height : 20px;
         word-wrap  : break-word;
@@ -123,7 +139,7 @@
         <input type="hidden" name="edicion" value="1" id="edicion">
     </div>
 
-    <div class="dialog col-md-12" title="MATRIZ DE MARCO LOGICO DEL PROYECTO">
+    <div class="dialog col-md-12" title="MARCO LOGICO">
         <div class="btn-toolbar toolbar col-md-3" style="margin-bottom: 15px">
             <div class="btn-group">
                 <g:link controller="proyecto" action="proy" id="${proyecto?.id}" class="btn btn-default" title="Regresar al proyecto">
@@ -134,9 +150,8 @@
                 </a>
             </div>
         </div>
-        <div class="panel panel-primary col-md-9" style="text-align: center; float: right">
-            <h4>MATRIZ DE MARCO LOGICO DEL PROYECTO</h4>
-           <strong style="color: #5596ff">${proyecto?.nombre}</strong>
+        <div class="panel-primary col-md-9" style="text-align: center; float: right; margin-left: -70px; width: 900px">
+            <h4>MARCO LOGICO: <strong style="color: #5596ff">${proyecto?.nombre}</strong></h4>
         </div>
 
 
@@ -146,7 +161,7 @@
                  identificador="${fin?.id}">
                 <div class="titulo">Fin</div>
 
-                <div class="texto agregado ui-corner-all fin" style="min-height: 115px;" id="div_fin"
+                <div class="texto agregado ui-corner-all fin" style="min-height: 75px;" id="div_fin"
                      identificador="${fin?.id}">
                     ${fin?.objeto}
                 </div>
@@ -157,7 +172,7 @@
                     <div class="titulo">Indicadores</div>
                 </div>
 
-                <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
+                <div class="filaMedio2" style="min-height: 25px;margin-top: 0px">
                     <div class="titulo">Medios de Verificación</div>
                 </div>
                 <g:set var="band" value="0"></g:set>
@@ -173,7 +188,7 @@
                             </div>
                         </div>
 
-                        <div class="filaMedio der">
+                        <div class="filaMedio2 der">
                             <g:each in="${proyectos.MedioVerificacion.findAllByIndicador(indicador)}" var="med">
                                 <div class="texto agregado ui-corner-all md fin varios" pref="mf_"
                                      id="mf_${med.id}"
@@ -204,10 +219,10 @@
             </div>
 
 
-            <div class="matriz ui-corner-all campo cmp">
+            <div class="matriz ui-corner-all campo supuesto">
                 <div class="titulo">Supuestos</div>
 
-                <div class="texto" style=" min-height: 115px;" id="supuestos">
+                <div class="texto" style=" min-height: 75px;" id="supuestos">
                     <g:each in="${sup}" var="su">
                         <div class="agregado ui-corner-all fin varios" id="sf_${su.id}" ml="Fin"
                              div="sf_${su.id}"
@@ -241,7 +256,7 @@
                     <div class="titulo">Indicadores</div>
                 </div>
 
-                <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
+                <div class="filaMedio2" style="min-height: 25px;margin-top: 0px">
                     <div class="titulo">Medios de Verificación</div>
                 </div>
                 <g:set var="band" value="0"/>
@@ -259,7 +274,7 @@
                             </div>
                         </div>
 
-                        <div class="filaMedio der">
+                        <div class="filaMedio2 der">
                             <g:each in="${proyectos.MedioVerificacion.findAllByIndicador(indiProp)}" var="med">
                                 <div class="texto agregado ui-corner-all md proposito varios" pref="mp_"
                                      id="mp_${med.id}" ml="Proposito" div="mp_${med.id}"
@@ -288,7 +303,7 @@
             </div>
 
 
-            <div class="matriz ui-corner-all campoProp cmp">
+            <div class="matriz ui-corner-all campoProp supuesto">
                 <div class="titulo">Supuestos</div>
 
                 <div class="texto" style=" min-height: 115px;" id="div_sup_prop">

@@ -6,18 +6,27 @@
 
     <style type="text/css">
     .cmp {
-        width      : 250px;
+        width      : 240px;
         margin     : 5px;
-        min-height : 215px;
+        min-height : 150px;
+        float      : left;
+        padding    : 5px;
+        position   : relative;
+    }
+
+    .supuesto {
+        width      : 205px;
+        margin     : 0px;
+        min-height : 150px;
         float      : left;
         padding    : 5px;
         position   : relative;
     }
 
     .cmpDoble {
-        width      : 540px;
+        width      : 640px;
         margin     : 5px;
-        min-height : 215px;
+        min-height : 150px;
         float      : left;
         padding    : 5px;
         position   : relative;
@@ -25,14 +34,21 @@
 
     .fila {
         width      : 100%;
-        margin     : 1%;
+        margin     : 0%;
         min-height : 50px;
         float      : left;
     }
 
     .filaMedio {
-        width      : 47.5%;
-        margin     : 1%;
+        width      : 57%;
+        margin-right: 1%;
+        min-height : 50px;
+        float      : left;
+    }
+
+    .filaMedio2 {
+        width      : 40%;
+        margin-left: 2%;
         min-height : 50px;
         float      : left;
     }
@@ -68,7 +84,7 @@
 
     .texto {
         width      : 90%;
-        min-height : 115px;
+        min-height : 75px;
         margin     : 5%;
         cursor     : pointer;
     }
@@ -76,13 +92,13 @@
     textarea {
         width      : 93%;
         padding    : 5px;
-        min-height : 115px;
+        min-height : 100px;
         resize     : vertical;
     }
 
     .agregado {
         width      : 100%;
-        margin     : 1.5%;
+        margin     : 1%;
         padding    : 4px;
         min-height : 20px;
         word-wrap  : break-word;
@@ -116,16 +132,16 @@
         </div>
 
         <div class="dialog col-md-12" title="MATRIZ DE MARCO LOGICO DEL PROYECTO">
-            <div class="btn-toolbar toolbar col-md-2" style="margin-bottom: 15px">
+            <div class="btn-toolbar toolbar col-md-1" style="margin-bottom: 15px">
                 <div class="btn-group">
                     <g:link controller="proyecto" action="proy" id="${proyecto?.id}" class="btn btn-default" title="Regresar al proyecto">
                         <i class="fa fa-arrow-left"></i> Regresar
                     </g:link>
                 </div>
             </div>
-            <div class="panel panel-primary col-md-10" style="text-align: center; float: right">
-                <h4>MATRIZ DE MARCO LOGICO DEL PROYECTO</h4>
-                <strong style="color: #5596ff">${proyecto?.nombre}</strong>
+            <div class="panel-primary col-md-11" style="text-align: center; float: right">
+                <h4>MARCO LOGICO DEL PROYECTO: <strong style="color: #5596ff">${proyecto?.nombre}</strong></h4>
+
             </div>
 
             <div style="width: 100%;float: left;border: 1px solid  rgba(145, 192, 95,0.6)" class="ui-corner-all">
@@ -133,7 +149,7 @@
                      identificador="${fin?.id}">
                     <div class="titulo">Fin</div>
 
-                    <div class="texto agregado ui-corner-all fin" style="min-height: 115px;" id="div_fin"
+                    <div class="texto agregado ui-corner-all fin cmp" style="min-height: 75px;" id="div_fin"
                          identificador="${fin?.id}">
                         ${fin?.objeto}
                     </div>
@@ -144,7 +160,7 @@
                         <div class="titulo">Indicadores</div>
                     </div>
 
-                    <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
+                    <div class="filaMedio2" style="min-height: 25px;margin-top: 0px">
                         <div class="titulo">Medios de Verificación</div>
                     </div>
                     <g:set var="band" value="0"/>
@@ -160,7 +176,7 @@
                                 </div>
                             </div>
 
-                            <div class="filaMedio der">
+                            <div class="filaMedio2 der">
                                 <g:each in="${proyectos.MedioVerificacion.findAllByIndicador(indicador)}" var="med">
                                     <div class="texto agregado ui-corner-all md fin varios" pref="mf_"
                                          id="mf_${med.id}"
@@ -205,10 +221,10 @@
                     </div>
                 </div>
 
-                <div class="matriz ui-corner-all campo cmp">
+                <div class="matriz ui-corner-all campo supuesto">
                     <div class="titulo">Supuestos</div>
 
-                    <div class="texto" style=" min-height: 115px;" id="supuestos">
+                    <div class="texto" style=" min-height: 75px;" id="supuestos">
                         <g:each in="${sup}" var="su">
                             <div class="agregado ui-corner-all fin varios" id="sf_${su.id}" ml="Fin"
                                  div="sf_${su.id}"
@@ -241,7 +257,7 @@
                         <div class="titulo">Indicadores</div>
                     </div>
 
-                    <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
+                    <div class="filaMedio2" style="min-height: 25px;margin-top: 0px">
                         <div class="titulo">Medios de Verificación</div>
                     </div>
                     <g:set var="band" value="0"/>
@@ -259,7 +275,7 @@
                                 </div>
                             </div>
 
-                            <div class="filaMedio der">
+                            <div class="filaMedio2 der">
                                 <g:each in="${proyectos.MedioVerificacion.findAllByIndicador(indiProp)}" var="med">
                                     <div class="texto agregado ui-corner-all md proposito varios" pref="mp_"
                                          id="mp_${med.id}" ml="Proposito" div="mp_${med.id}"
@@ -305,7 +321,7 @@
                     </div>
                 </div>
 
-                <div class="matriz ui-corner-all campoProp cmp">
+                <div class="matriz ui-corner-all campoProp supuesto">
                     <div class="titulo">Supuestos</div>
 
                     <div class="texto" style=" min-height: 115px;" id="div_sup_prop">
@@ -329,20 +345,20 @@
 <script type="text/javascript">
 
     function reajustar() {
-        var tam = 215
+        var tam = 115
         $.each($(".campo"), function() {
             if ($(this).height() * 1 > tam)
                 tam = $(this).height() * 1
         });
         $(".campo").css("min-height", tam)
-        $("#div_fin").css("min-height", tam - 60)
+        $("#div_fin").css("min-height", tam - 100)
         tam = 215
         $.each($(".campoProp"), function() {
             if ($(this).height() * 1 > tam)
                 tam = $(this).height() * 1
         });
         $(".campoProp").css("min-height", tam)
-        $("#div_prop").css("min-height", tam - 60)
+        $("#div_prop").css("min-height", tam - 100)
         $.each($(".fila"), function() {
             tam = 0
             if ($(this).find(".izq").height() < $(this).find(".der").height())
