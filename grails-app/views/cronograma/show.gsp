@@ -79,16 +79,16 @@
 
 %{--        <elm:container tipo="vertical" titulo="Cronograma del proyecto ${proyecto?.toStringMedio()}, para el año ${anio}" color="black">--}%
 <elm:container tipo="vertical" titulo="Cronograma" color="black">
-    <g:if test="${!params.act}">
-        <div class="divIndice ">
-            <g:each in="${componentes}" var="comp">
-                <a href="#comp${comp.id}" class="scrollComp ">
-                    <strong>Componente ${comp.numero}</strong>:
-                ${(comp.objeto.length() > 100) ? comp.objeto.substring(0, 100) + "..." : comp.objeto}
-                </a>
-            </g:each>
-        </div>
-    </g:if>
+%{--    <g:if test="${!params.act}">--}%
+%{--        <div class="divIndice ">--}%
+%{--            <g:each in="${componentes}" var="comp">--}%
+%{--                <a href="#comp${comp.id}" class="scrollComp ">--}%
+%{--                    <strong>Componente ${comp.numero}</strong>:--}%
+%{--                ${(comp.objeto.length() > 100) ? comp.objeto.substring(0, 100) + "..." : comp.objeto}--}%
+%{--                </a>--}%
+%{--            </g:each>--}%
+%{--        </div>--}%
+%{--    </g:if>--}%
 
 
     <table class="table table-condensed table-bordered table-hover table-striped" id="tblCrono">

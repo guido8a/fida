@@ -71,7 +71,7 @@
                     <th class="success">
                         ${act?.numero}
                     </th>
-                    <th class="success actividad" title="${act.objeto}" style="width:300px;">
+                    <th class="success actividad" title="${act.objeto}" style="width:140px;">
                         ${(act.objeto.length() > 100) ? act.objeto.substring(0, 100) + "..." : act.objeto}
                     </th>
                     <g:each in="${parametros.Mes.list()}" var="mes" status="k">
@@ -96,7 +96,7 @@
                         <g:else>
                             <g:set var="clase" value="nop"/>
                         </g:else>
-                        <td style="width:100px;" class="text-right ${clase} ${crg && crg.fuente ? 'fnte_' + crg.fuente.id : ''} ${crg && crg.fuente2 ? 'fnte_' + crg.fuente2.id : ''}"
+                        <td style="width:80px;" class="text-right ${clase} ${crg && crg.fuente ? 'fnte_' + crg.fuente.id : ''} ${crg && crg.fuente2 ? 'fnte_' + crg.fuente2.id : ''}"
                             data-id="${crg?.id}" data-val="${valor}"
                             data-presupuesto1="${crg?.valor}" data-bsc-desc-partida1="${crg?.presupuesto?.toString()}"
                             data-partida1="${crg?.presupuesto?.id}"
@@ -111,15 +111,15 @@
                             <g:set var="crg" value="${null}"/>
                         </g:if>
                     </g:each>
-                    <th class="disabled text-right asignado nop" data-val="${asignadoAct}">
+                    <th style="width: 80px" class="disabled text-right asignado nop" data-val="${asignadoAct}">
 %{--                        1/--}%
                         <g:formatNumber number="${asignadoActAnio}" type="currency" currencySymbol=""/>
                     </th>
-                    <th class="disabled text-right sinAsignar nop" data-val="${sinAsignarAct}">
+                    <th style="width: 80px" class="disabled text-right sinAsignar nop" data-val="${sinAsignarAct}">
 %{--                        1*--}%
                         <g:formatNumber number="${sinAsignarAct}" type="currency" currencySymbol=""/>
                     </th>
-                    <th class="disabled text-right total nop" data-val="${totalAct}">
+                    <th style="width: 80px" class="disabled text-right total nop" data-val="${totalAct}">
 %{--                        1---}%
 %{--                        ${act.id}*${act.monto}--}%
                         <g:formatNumber number="${totalAct}" type="currency" currencySymbol=""/>

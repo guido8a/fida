@@ -28,7 +28,7 @@ class CronogramaController {
         }
         def componentes = MarcoLogico.withCriteria {
             eq("proyecto", proyecto)
-            eq("tipoElemento", TipoElemento.get(2))
+            eq("tipoElemento", TipoElemento.get(3))
             eq("estado", 0)
             order("numero", "asc")
         }
@@ -59,7 +59,7 @@ class CronogramaController {
         }
         def componentes = MarcoLogico.withCriteria {
             eq("proyecto", proyecto)
-            eq("tipoElemento", TipoElemento.get(2))
+            eq("tipoElemento", TipoElemento.get(3))
             eq("estado", 0)
             order("numero", "asc")
         }
