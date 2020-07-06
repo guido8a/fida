@@ -91,8 +91,7 @@
             </g:if>
 
             <div class="divTabla">
-                <g:render template="/templates/tablaCrono"
-                          model="[anio: anio, componentes: componentes, actSel: actSel]"/>
+                <g:render template="/templates/tablaCrono" model="[anio: anio, componentes: componentes, actSel: actSel]"/>
             </div>
         </elm:container>
         <div class="modal fade" id="modalCrono">

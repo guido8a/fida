@@ -74,17 +74,20 @@ class CronogramaController {
         }
 
         def editable = (anio.estado == 0) && (proyecto?.aprobado != 'a')
-        println "anio: ${anio.estado}, proyecto.aprobado ${proyecto.aprobado} --> editable: ${editable}"
+        println "anio: ${anio.id}, proyecto.aprobado ${proyecto.aprobado} --> editable: ${editable}"
 
         if (editable) {
             def finan = Financiamiento.findAllByProyectoAndAnio(proyecto, anio)
             def fuentes = []
             def totAnios = [:]
+//            println "....1 --> $finan"
             finan.each {
+//                println "....2"
                 fuentes.add(it)
                 totAnios.put(it.fuente.id, it.monto)
             }
             def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+            println "proyecto: $proyecto, componentes: $componentes, anio: $anio, fuentes: $fuentes, totAnios: $totAnios, actSel: $act, campos: $campos"
             return [proyecto: proyecto, componentes: componentes, anio: anio, fuentes: fuentes, totAnios: totAnios, actSel: act, campos: campos]
         } else {
             redirect(action: 'show', params: params)

@@ -40,8 +40,8 @@
     <g:set var="asignadoTotal" value="${0}"/> %{-- /// --}%
     <g:set var="sinAsignarTotal" value="${0}"/> %{-- *** --}%
     <g:set var="totalTotal" value="${0}"/> %{-- --- --}%
-
     <g:each in="${componentes}" var="comp" status="j">
+
         <g:set var="asignadoComp" value="${0}"/> %{-- // --}%
         <g:set var="sinAsignarComp" value="${0}"/> %{-- ** --}%
         <g:set var="totalComp" value="${0}"/> %{-- -- --}%
