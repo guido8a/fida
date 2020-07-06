@@ -52,8 +52,9 @@
             </th>
         </tr>
 
-        <g:each in="${proyectos.MarcoLogico.findAllByMarcoLogicoAndEstado(MarcoLogico.get(comp.id), 0)}" var="act" status="i">
-            <g:if test="${!actSel || (actSel && actSel.id == act.id)}">
+        <g:each in="${proyectos.MarcoLogico.findAllByMarcoLogicoAndEstado(comp, 0)}" var="act" status="i">
+
+%{--            <g:if test="${!actSel || (actSel && actSel.id == act.id)}">--}%
                 <g:set var="asignadoAct" value="${act.getTotalCronograma()}"/> %{-- / --}%
                 <g:set var="asignadoActAnio" value="${act.getTotalCronogramaAnio(anio)}"/> %{-- / --}%
                 <g:set var="totalAct" value="${act.monto}"/> %{-- - --}%
@@ -71,7 +72,7 @@
                     <th class="success">
                         ${act?.numero}
                     </th>
-                    <th class="success actividad" title="${act.objeto}" style="width:140px;">
+                    <th class="success actividad" title="${act.objeto}" style="width:300px;">
                         ${(act.objeto.length() > 100) ? act.objeto.substring(0, 100) + "..." : act.objeto}
                     </th>
                     <g:each in="${parametros.Mes.list()}" var="mes" status="k">
@@ -96,7 +97,7 @@
                         <g:else>
                             <g:set var="clase" value="nop"/>
                         </g:else>
-                        <td style="width:80px;" class="text-right ${clase} ${crg && crg.fuente ? 'fnte_' + crg.fuente.id : ''} ${crg && crg.fuente2 ? 'fnte_' + crg.fuente2.id : ''}"
+                        <td style="width:100px;" class="text-right ${clase} ${crg && crg.fuente ? 'fnte_' + crg.fuente.id : ''} ${crg && crg.fuente2 ? 'fnte_' + crg.fuente2.id : ''}"
                             data-id="${crg?.id}" data-val="${valor}"
                             data-presupuesto1="${crg?.valor}" data-bsc-desc-partida1="${crg?.presupuesto?.toString()}"
                             data-partida1="${crg?.presupuesto?.id}"
@@ -105,27 +106,28 @@
                             data-partida2="${crg?.presupuesto2?.id}"
                             data-fuente2="${crg?.fuente2?.id}" data-desc-fuente2="${crg?.fuente2?.descripcion}">
 %{--                            id: ${crg?.id}*${crg?.valor}*${crg?.valor2}--}%
-                            <g:formatNumber number="${valor}" type="currency" currencySymbol=""/>
+%{--                            <g:formatNumber number="${valor}" type="currency" currencySymbol=""/>--}%
+                            ${valor}
                         </td>
                         <g:if test="${crg}">
                             <g:set var="crg" value="${null}"/>
                         </g:if>
                     </g:each>
-                    <th style="width: 80px" class="disabled text-right asignado nop" data-val="${asignadoAct}">
+                    <th class="disabled text-right asignado nop" data-val="${asignadoAct}">
 %{--                        1/--}%
                         <g:formatNumber number="${asignadoActAnio}" type="currency" currencySymbol=""/>
                     </th>
-                    <th style="width: 80px" class="disabled text-right sinAsignar nop" data-val="${sinAsignarAct}">
+                    <th class="disabled text-right sinAsignar nop" data-val="${sinAsignarAct}">
 %{--                        1*--}%
                         <g:formatNumber number="${sinAsignarAct}" type="currency" currencySymbol=""/>
                     </th>
-                    <th style="width: 80px" class="disabled text-right total nop" data-val="${totalAct}">
+                    <th class="disabled text-right total nop" data-val="${totalAct}">
 %{--                        1---}%
 %{--                        ${act.id}*${act.monto}--}%
                         <g:formatNumber number="${totalAct}" type="currency" currencySymbol=""/>
                     </th>
                 </tr>
-            </g:if>
+%{--            </g:if>--}%
         </g:each>
         <tr class="warning total comp${comp.id}">
             <th colspan="14">TOTAL</th>
