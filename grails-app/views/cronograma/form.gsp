@@ -118,7 +118,7 @@
         </tr>
         </thead>
     </table>
-    <div class="divTabla" style="margin-top: -20px">
+    <div id="divTabla" style="margin-top: -20px">
 
     </div>
 
@@ -126,160 +126,160 @@
 %{--                <g:render template="/templates/tablaCrono" model="[anio: anio, componentes: componentes, actSel: actSel]"/>--}%
 %{--            </div>--}%
 </elm:container>
-%{--        <div class="modal fade" id="modalCrono">--}%
-%{--            <div class="modal-dialog">--}%
-%{--                <div class="modal-content">--}%
-%{--                    <div class="modal-header">--}%
-%{--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>--}%
-%{--                        </button>--}%
-%{--                        <h4 class="modal-title" id="modalTitle">Cronograma</h4>--}%
-%{--                    </div>--}%
+        <div class="modal fade" id="modalCrono">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modalTitle">Cronograma</h4>
+                    </div>
 
-%{--                    <div class="modal-body">--}%
-%{--                        <div id="noFuentes" class="alert alert-danger ${fuentes.size() == 0 ? '' : 'hidden'}">--}%
-%{--                            <span class="fa-stack fa-lg">--}%
-%{--                                <i class="fa fa-money text-success fa-stack-1x"></i>--}%
-%{--                                <i class="fa fa-ban fa-stack-2x"></i>--}%
-%{--                            </span> No se encontraron fuentes! Debe asignar al menos una para poder modificar el cronograma.--}%
-%{--                        </div>--}%
+                    <div class="modal-body">
+                        <div id="noFuentes" class="alert alert-danger ${fuentes.size() == 0 ? '' : 'hidden'}">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-money text-success fa-stack-1x"></i>
+                                <i class="fa fa-ban fa-stack-2x"></i>
+                            </span> No se encontraron fuentes! Debe asignar al menos una para poder modificar el cronograma.
+                        </div>
 
-%{--                        <div id="divOk" class="${fuentes.size() == 0 ? 'hidden' : ''}">--}%
-%{--                            <div class="alert alert-info">--}%
-%{--                                <div id="divActividad"></div>--}%
+                        <div id="divOk" class="${fuentes.size() == 0 ? 'hidden' : ''}">
+                            <div class="alert alert-info">
+                                <div id="divActividad"></div>
 
-%{--                                <div id="divInfo" class="text-warning"></div>--}%
-%{--                            </div>--}%
+                                <div id="divInfo" class="text-warning"></div>
+                            </div>
 
-%{--                            <g:form action="save_ajax" class="form-horizontal frmCrono" style="height: 300px; overflow:auto;">--}%
-%{--                                <elm:fieldRapido label="Presupuesto (1)" claseLabel="col-md-3" claseField="col-md-4">--}%
-%{--                                    <div class="input-group input-group-sm">--}%
-%{--                                        <g:textField name="presupuesto1" class="form-control required number money"/>--}%
-%{--                                        <span class="input-group-addon"><i class="fa fa-usd"></i></span>--}%
-%{--                                    </div>--}%
-%{--                                </elm:fieldRapido>--}%
-%{--                                <elm:fieldRapido label="Partida (1)" claseLabel="col-md-3" claseField="col-md-4">--}%
-%{--                                    <bsc:buscador name="partida1" id="partida1" controlador="asignacion"--}%
-%{--                                                  accion="buscarPresupuesto" tipo="search" titulo="Busque una partida"--}%
-%{--                                                  campos="${campos}" clase="required"/>--}%
-%{--                                </elm:fieldRapido>--}%
-%{--                                <elm:fieldRapido label="Fuente (1)" claseLabel="col-md-3" claseField="col-md-7">--}%
-%{--                                    <elm:select name="fuente1" from="${fuentes}" id="fuente1"--}%
-%{--                                                optionKey="${{ it.fuente.id }}"--}%
-%{--                                                optionValue="${{--}%
-%{--                                                    it.fuente.descripcion + ' (' + g.formatNumber(number: it.monto, type: 'currency') + ')'--}%
-%{--                                                }}"--}%
-%{--                                                optionClass="${{--}%
-%{--                                                    g.formatNumber(number: it.monto, minFractionDigits: 2, maxFractionDigits: 8)--}%
-%{--                                                }}"--}%
-%{--                                                class="form-control input-sm"/>--}%
-%{--                                </elm:fieldRapido>--}%
-%{--                                <hr/>--}%
-%{--                                <elm:fieldRapido label="Presupuesto (2)" claseLabel="col-md-3" claseField="col-md-4">--}%
-%{--                                    <div class="input-group input-group-sm">--}%
-%{--                                        <g:textField name="presupuesto2" class="form-control number money"/>--}%
-%{--                                        <span class="input-group-addon"><i class="fa fa-usd"></i></span>--}%
-%{--                                    </div>--}%
-%{--                                </elm:fieldRapido>--}%
-%{--                                <elm:fieldRapido label="Partida (2)" claseLabel="col-md-3" claseField="col-md-4">--}%
-%{--                                --}%%{--<bsc:buscador name="partida2" id="partida2" controlador="asignacion"--}%
-%{--                                --}%%{--accion="buscarPresupuesto" tipo="search" titulo="Busque una partida"--}%
-%{--                                --}%%{--campos="${campos}" clase=""/>--}%
-%{--                                    <span class="grupo">--}%
-%{--                                        <div class="input-group input-group-sm" style="width:294px;">--}%
-%{--                                            <input type="text" class="form-control bsc_desc-2 buscador-2 " id="bsc-desc-partida2" name="bsc-desc-partida2">--}%
-%{--                                            <span class="input-group-btn">--}%
-%{--                                                <a href="#" id="btn-abrir-2" class="btn btn-info buscador-2" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>--}%
-%{--                                                </a>--}%
-%{--                                            </span>--}%
-%{--                                        </div>--}%
-%{--                                    </span>--}%
-%{--                                    <input type="hidden" id="partida2" class="bsc_id " name="partida2" value="">--}%
-%{--                                </elm:fieldRapido>--}%
-%{--                                <elm:fieldRapido label="Fuente (2)" claseLabel="col-md-3" claseField="col-md-7">--}%
-%{--                                    <elm:select name="fuente2" from="${fuentes}" id="fuente2"--}%
-%{--                                                optionKey="${{ it.fuente.id }}"--}%
-%{--                                                optionValue="${{--}%
-%{--                                                    it.fuente.descripcion + ' (' + g.formatNumber(number: it.monto, type: 'currency') + ')'--}%
-%{--                                                }}"--}%
-%{--                                                optionClass="${{--}%
-%{--                                                    g.formatNumber(number: it.monto, minFractionDigits: 2, maxFractionDigits: 8)--}%
-%{--                                                }}"--}%
-%{--                                                class="form-control input-sm"/>--}%
-%{--                                </elm:fieldRapido>--}%
-%{--                            </g:form>--}%
-%{--                        </div>--}%
-%{--                    </div>--}%
+                            <g:form action="save_ajax" class="form-horizontal frmCrono" style="height: 300px; overflow:auto;">
+                                <elm:fieldRapido label="Presupuesto (1)" claseLabel="col-md-3" claseField="col-md-4">
+                                    <div class="input-group input-group-sm">
+                                        <g:textField name="presupuesto1" class="form-control required number money"/>
+                                        <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                    </div>
+                                </elm:fieldRapido>
+                                <elm:fieldRapido label="Partida (1)" claseLabel="col-md-3" claseField="col-md-4">
+                                    <bsc:buscador name="partida1" id="partida1" controlador="asignacion"
+                                                  accion="buscarPresupuesto" tipo="search" titulo="Busque una partida"
+                                                  campos="${campos}" clase="required"/>
+                                </elm:fieldRapido>
+                                <elm:fieldRapido label="Fuente (1)" claseLabel="col-md-3" claseField="col-md-7">
+                                    <elm:select name="fuente1" from="${fuentes}" id="fuente1"
+                                                optionKey="${{ it.fuente.id }}"
+                                                optionValue="${{
+                                                    it.fuente.descripcion + ' (' + g.formatNumber(number: it.monto, type: 'currency') + ')'
+                                                }}"
+                                                optionClass="${{
+                                                    g.formatNumber(number: it.monto, minFractionDigits: 2, maxFractionDigits: 8)
+                                                }}"
+                                                class="form-control input-sm"/>
+                                </elm:fieldRapido>
+                                <hr/>
+                                <elm:fieldRapido label="Presupuesto (2)" claseLabel="col-md-3" claseField="col-md-4">
+                                    <div class="input-group input-group-sm">
+                                        <g:textField name="presupuesto2" class="form-control number money"/>
+                                        <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                    </div>
+                                </elm:fieldRapido>
+                                <elm:fieldRapido label="Partida (2)" claseLabel="col-md-3" claseField="col-md-4">
+                                <bsc:buscador name="partida2" id="partida2" controlador="asignacion"
+                                accion="buscarPresupuesto" tipo="search" titulo="Busque una partida"
+                                campos="${campos}" clase=""/>
+                                    <span class="grupo">
+                                        <div class="input-group input-group-sm" style="width:294px;">
+                                            <input type="text" class="form-control bsc_desc-2 buscador-2 " id="bsc-desc-partida2" name="bsc-desc-partida2">
+                                            <span class="input-group-btn">
+                                                <a href="#" id="btn-abrir-2" class="btn btn-info buscador-2" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </span>
+                                    <input type="hidden" id="partida2" class="bsc_id " name="partida2" value="">
+                                </elm:fieldRapido>
+                                <elm:fieldRapido label="Fuente (2)" claseLabel="col-md-3" claseField="col-md-7">
+                                    <elm:select name="fuente2" from="${fuentes}" id="fuente2"
+                                                optionKey="${{ it.fuente.id }}"
+                                                optionValue="${{
+                                                    it.fuente.descripcion + ' (' + g.formatNumber(number: it.monto, type: 'currency') + ')'
+                                                }}"
+                                                optionClass="${{
+                                                    g.formatNumber(number: it.monto, minFractionDigits: 2, maxFractionDigits: 8)
+                                                }}"
+                                                class="form-control input-sm"/>
+                                </elm:fieldRapido>
+                            </g:form>
+                        </div>
+                    </div>
 
-%{--                    <div class="modal-footer">--}%
-%{--                        <a href="#" class="btn btn-default" id="btnModalCancel">${fuentes.size() == 0 ? 'Cerrar' : 'Cancelar'}</a>--}%
-%{--                        <g:if test="${fuentes.size() > 0}">--}%
-%{--                            <a href="#" class="btn btn-success" id="btnModalSave"><i class="fa fa-save"></i> Guardar</a>--}%
-%{--                        </g:if>--}%
-%{--                    </div>--}%
-%{--                </div><!-- /.modal-content -->--}%
-%{--            </div><!-- /.modal-dialog -->--}%
-%{--        </div><!-- /.modal -->--}%
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-default" id="btnModalCancel">${fuentes.size() == 0 ? 'Cerrar' : 'Cancelar'}</a>
+                        <g:if test="${fuentes.size() > 0}">
+                            <a href="#" class="btn btn-success" id="btnModalSave"><i class="fa fa-save"></i> Guardar</a>
+                        </g:if>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
-%{--        <div class="modal fade" id="modalCronoVer">--}%
-%{--            <div class="modal-dialog">--}%
-%{--                <div class="modal-content">--}%
-%{--                    <div class="modal-header">--}%
-%{--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>--}%
-%{--                        </button>--}%
-%{--                        <h4 class="modal-title" id="modalTitleVer">Cronograma</h4>--}%
-%{--                    </div>--}%
+        <div class="modal fade" id="modalCronoVer">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modalTitleVer">Cronograma</h4>
+                    </div>
 
-%{--                    <div class="modal-body">--}%
-%{--                        <div class="alert alert-info">--}%
-%{--                            <div id="divActividadVer"></div>--}%
+                    <div class="modal-body">
+                        <div class="alert alert-info">
+                            <div id="divActividadVer"></div>
 
-%{--                            <div id="divInfoVer" class="text-warning"></div>--}%
-%{--                        </div>--}%
+                            <div id="divInfoVer" class="text-warning"></div>
+                        </div>
 
-%{--                        <div class="row">--}%
-%{--                            <div class="col-md-3 show-label">Presupuesto (1)</div>--}%
+                        <div class="row">
+                            <div class="col-md-3 show-label">Presupuesto (1)</div>
 
-%{--                            <div class="col-md-9" id="div_presupuesto1"></div>--}%
-%{--                        </div>--}%
+                            <div class="col-md-9" id="div_presupuesto1"></div>
+                        </div>
 
-%{--                        <div class="row">--}%
-%{--                            <div class="col-md-3 show-label">Partida (1)</div>--}%
+                        <div class="row">
+                            <div class="col-md-3 show-label">Partida (1)</div>
 
-%{--                            <div class="col-md-9" id="div_bsc-desc-partida1"></div>--}%
-%{--                        </div>--}%
+                            <div class="col-md-9" id="div_bsc-desc-partida1"></div>
+                        </div>
 
-%{--                        <div class="row">--}%
-%{--                            <div class="col-md-3 show-label">Fuente (1)</div>--}%
+                        <div class="row">
+                            <div class="col-md-3 show-label">Fuente (1)</div>
 
-%{--                            <div class="col-md-9" id="div_desc-fuente1"></div>--}%
-%{--                        </div>--}%
-%{--                        <hr/>--}%
+                            <div class="col-md-9" id="div_desc-fuente1"></div>
+                        </div>
+                        <hr/>
 
-%{--                        <div class="row">--}%
-%{--                            <div class="col-md-3 show-label">Presupuesto (2)</div>--}%
+                        <div class="row">
+                            <div class="col-md-3 show-label">Presupuesto (2)</div>
 
-%{--                            <div class="col-md-9" id="div_presupuesto2"></div>--}%
-%{--                        </div>--}%
+                            <div class="col-md-9" id="div_presupuesto2"></div>
+                        </div>
 
-%{--                        <div class="row">--}%
-%{--                            <div class="col-md-3 show-label">Partida (2)</div>--}%
+                        <div class="row">
+                            <div class="col-md-3 show-label">Partida (2)</div>
 
-%{--                            <div class="col-md-9" id="div_bsc-desc-partida2"></div>--}%
-%{--                        </div>--}%
+                            <div class="col-md-9" id="div_bsc-desc-partida2"></div>
+                        </div>
 
-%{--                        <div class="row">--}%
-%{--                            <div class="col-md-3 show-label">Fuente (2)</div>--}%
+                        <div class="row">
+                            <div class="col-md-3 show-label">Fuente (2)</div>
 
-%{--                            <div class="col-md-9" id="div_desc-fuente2"></div>--}%
-%{--                        </div>--}%
-%{--                    </div>--}%
+                            <div class="col-md-9" id="div_desc-fuente2"></div>
+                        </div>
+                    </div>
 
-%{--                    <div class="modal-footer">--}%
-%{--                        <a href="#" class="btn btn-default" id="btnModalCancelVer">Cerrar</a>--}%
-%{--                    </div>--}%
-%{--                </div><!-- /.modal-content -->--}%
-%{--            </div><!-- /.modal-dialog -->--}%
-%{--        </div><!-- /.modal -->--}%
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-default" id="btnModalCancelVer">Cerrar</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
 <script type="text/javascript">
 
@@ -295,7 +295,7 @@
                 actSel: '${actSel?.id}'
             },
             success: function (msg) {
-                $(".divTabla").html(msg)
+                $("#divTabla").html(msg)
             }
 
         });
@@ -419,6 +419,194 @@
         });
     }
 
+
+    function createContextMenu(node) {
+        var $tr = $(node);
+        var data = id ? { id: id } : {};
+        var inactivo = $tr.hasClass("nop");
+
+        var items = {
+            header : {
+                label  : "Acciones",
+                header : true
+            }
+        };
+
+        var id = $tr.data("id");
+
+        var ver = {
+            %{--label  : 'Ver',--}%
+            %{--icon   : "fa fa-search",--}%
+            %{--action : function (e) {--}%
+            %{--    $("#dialog-body").html(spinner);--}%
+            %{--    $.ajax({--}%
+            %{--        type    : 'POST',--}%
+            %{--        url     : '${createLink(controller: 'actividad', action: 'show_ajax')}',--}%
+            %{--        data    : {--}%
+            %{--            id : id--}%
+            %{--        },--}%
+            %{--        success : function (msg) {--}%
+            %{--            $("#dialog-body").html(msg)--}%
+            %{--        }--}%
+            %{--    });--}%
+            %{--    $("#dialog").modal("show");--}%
+            %{--}--}%
+
+
+            label  : "Ver",
+            icon   : "fa fa-search",
+            action : function ($element) {
+                var id = $element.data("id");
+                var $tr = $element.parents("tr");
+                var index = $element.index() - 1;
+
+                var $mes = $("#trMeses").children().eq(index);
+                var mes = $mes.attr("title");
+                $('#modalCronoVer').modal("show");
+                $("#modalTitleVer").text("Cronograma - " + mes);
+
+                var $actividad = $tr.find(".actividad");
+                var $asignado = $tr.find(".asignado");
+                var $sinAsignar = $tr.find(".sinAsignar");
+                var $total = $tr.find(".total");
+
+                var actividad = $actividad.attr("title");
+                var asignado = $asignado.data("val");
+                var sinAsignar = $sinAsignar.data("val");
+                var total = $total.data("val");
+
+                $("#divActividadVer").text(actividad);
+                $("#divInfoVer").html("<ul>" +
+                    "<li><strong>Monto total:</strong> $" + number_format(total, 2, ".", ",") + "</li>" +
+                    "<li><strong>Asignado:</strong> $" + number_format(asignado, 2, ".", ",") + "</li>" +
+                    "<li><strong>Por asignar:</strong> $" + number_format(sinAsignar, 2, ".", ",") + "</li>" +
+                    "</ul>").data({
+                    total      : total,
+                    asignado   : asignado,
+                    sinAsignar : sinAsignar,
+                    crono      : id,
+                    mes        : $mes.data("id"),
+                    actividad  : $tr.data("id")
+                });
+                setDivs($element);
+            }
+
+        };
+
+        var editar = {
+            // label: 'Editar',
+            // icon: "fa fa-pen text-info",
+            // action : function () {
+            //     createEditTipoProveedor(id);
+            // }
+
+            label  : "Editar",
+            icon   : "fa fa-edit text-info",
+            action : function ($element) {
+                var id = $element.data("id");
+                var $tr = $element.parents("tr");
+                var index = $element.index() - 1;
+
+                var $mes = $("#trMeses").children().eq(index);
+                var mes = $mes.attr("title");
+                $('#modalCrono').modal("show");
+                $("#modalTitle").text("Cronograma - " + mes);
+
+                if (!$("#divOk").hasClass("hidden")) {
+                    var $actividad = $tr.find(".actividad");
+                    var $asignado = $tr.find(".asignado");
+                    var $sinAsignar = $tr.find(".sinAsignar");
+                    var $total = $tr.find(".total");
+
+                    var actividad = $actividad.attr("title");
+                    var asignado = $asignado.data("val");
+                    var sinAsignar = $sinAsignar.data("val");
+                    var total = $total.data("val");
+
+                    $("#divActividad").text(actividad);
+                    $("#divInfo").html("<ul>" +
+                        "<li><strong>Monto total:</strong> $" + number_format(total, 2, ".", ",") + "</li>" +
+                        "<li><strong>Asignado:</strong> $" + number_format(asignado, 2, ".", ",") + "</li>" +
+                        "<li><strong>Por asignar:</strong> $" + number_format(sinAsignar, 2, ".", ",") + "</li>" +
+                        "</ul>").data({
+                        total      : total,
+                        asignado   : asignado,
+                        sinAsignar : sinAsignar,
+                        crono      : id,
+                        mes        : $mes.data("id"),
+                        actividad  : $tr.data("id")
+                    });
+                    $(".frmCrono").removeClass("hidden");
+                    $("#btnModalSave").removeClass("hidden");
+                    $("#btnModalCancel").text("Cancelar");
+                    setForm($element);
+                }
+            }
+
+        };
+        var borrar = {
+            label            : "Eliminar",
+            icon             : "fa fa-trash text-danger",
+            separator_before : true,
+            action           : function ($element) {
+                var id = $element.data("id");
+
+                bootbox.dialog({
+                    title   : "Alerta",
+                    message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i><p>" +
+                        "¿Está seguro que desea eliminar toda la información del registro del cronograma seleccionado?<br/>" +
+                        "Esta acción no se puede deshacer.</p>",
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        eliminar : {
+                            label     : "<i class='fa fa-trash-o'></i> Eliminar",
+                            className : "btn-danger",
+                            callback  : function () {
+                                openLoader("Eliminando valores");
+                                $.ajax({
+                                    type    : "POST",
+                                    url     : '${createLink(action:'deleteCrono_ajax')}',
+                                    data    : {
+                                        id : id
+                                    },
+                                    success : function (msg) {
+                                        var parts = msg.split("*");
+                                        log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
+                                        if (parts[0] == "SUCCESS") {
+                                            setTimeout(function () {
+                                                location.reload(true);
+                                            }, 1000);
+                                        } else {
+                                            closeLoader();
+                                        }
+                                    },
+                                    error   : function () {
+                                        closeLoader();
+                                        log("Ha ocurrido un error interno", "error");
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        };
+
+        if(!inactivo){
+            items.ver = ver;
+            items.editar = editar;
+            items.borrar = borrar;
+        }
+
+        return items
+    }
+
+
     $(function () {
 
         $(".comp").each(function () {
@@ -541,6 +729,19 @@
             return false;
         });
 
+        $("#anio").change(function () {
+            var a = $("#anio option:selected").val();
+            %{--openLoader();--}%
+            %{--location.href = "${createLink(controller: 'cronograma', action: 'show', id: proyecto.id)}?anio=" +--}%
+            %{--    $("#anio").val() + armaParams() + "&act=${actSel?.id}&list=${params.list}";--}%
+
+            cargarTablaCronograma(a)
+
+        });
+
+
+
+
         $(".nop").contextMenu({
             items  : {
                 header : {
@@ -618,12 +819,12 @@
                             var $asignado = $tr.find(".asignado");
                             var $sinAsignar = $tr.find(".sinAsignar");
                             var $total = $tr.find(".total");
-//
+
                             var actividad = $actividad.attr("title");
                             var asignado = $asignado.data("val");
                             var sinAsignar = $sinAsignar.data("val");
                             var total = $total.data("val");
-//
+
                             $("#divActividad").text(actividad);
                             $("#divInfo").html("<ul>" +
                                 "<li><strong>Monto total:</strong> $" + number_format(total, 2, ".", ",") + "</li>" +
@@ -705,6 +906,9 @@
             }
         });
 
+
+
+
 //                $(".clickable").click(function () {
 //                    var $this = $(this);
 //                    var $tr = $this.parents("tr");
@@ -750,7 +954,7 @@
 //                    }
 //                });
 
-        var $container = $(".divTabla");
+        var $container = $("#divTabla");
         $container.scrollTop(0 - $container.offset().top + $container.scrollTop());
         %{--$("#anio").change(function () {--}%
         %{--    openLoader();--}%
@@ -758,15 +962,6 @@
         %{--                    armaParams() + "&act=${actSel?.id}";--}%
         %{--});--}%
 
-        $("#anio").change(function () {
-            var a = $("#anio option:selected").val();
-            %{--openLoader();--}%
-            %{--location.href = "${createLink(controller: 'cronograma', action: 'show', id: proyecto.id)}?anio=" +--}%
-            %{--    $("#anio").val() + armaParams() + "&act=${actSel?.id}&list=${params.list}";--}%
-
-            cargarTablaCronograma(a)
-
-        });
 
 
         $(".scrollComp").click(function () {
