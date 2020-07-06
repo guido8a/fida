@@ -53,9 +53,7 @@
         </tr>
 
         <g:each in="${proyectos.MarcoLogico.findAllByMarcoLogicoAndEstado(MarcoLogico.get(comp.id), 0)}" var="act" status="i">
-
-
-%{--            <g:if test="${!actSel || (actSel && actSel.id == act.id)}">--}%
+            <g:if test="${!actSel || (actSel && actSel.id == act.id)}">
                 <g:set var="asignadoAct" value="${act.getTotalCronograma()}"/> %{-- / --}%
                 <g:set var="asignadoActAnio" value="${act.getTotalCronogramaAnio(anio)}"/> %{-- / --}%
                 <g:set var="totalAct" value="${act.monto}"/> %{-- - --}%
@@ -106,7 +104,7 @@
                             data-presupuesto2="${crg?.valor2}" data-bsc-desc-partida2="${crg?.presupuesto2?.toString()}"
                             data-partida2="${crg?.presupuesto2?.id}"
                             data-fuente2="${crg?.fuente2?.id}" data-desc-fuente2="${crg?.fuente2?.descripcion}">
-                            id: ${crg?.id}*${crg?.valor}*${crg?.valor2}
+%{--                            id: ${crg?.id}*${crg?.valor}*${crg?.valor2}--}%
                             <g:formatNumber number="${valor}" type="currency" currencySymbol=""/>
                         </td>
                         <g:if test="${crg}">
@@ -127,7 +125,7 @@
                         <g:formatNumber number="${totalAct}" type="currency" currencySymbol=""/>
                     </th>
                 </tr>
-%{--            </g:if>--}%
+            </g:if>
         </g:each>
         <tr class="warning total comp${comp.id}">
             <th colspan="14">TOTAL</th>
