@@ -41,21 +41,22 @@
             </div>
         </div>
         <g:form action="save_ajax" class="form-horizontal frmCrono" style="height: 300px; overflow:auto;">
+            <g:hiddenField name="id" value="${cronograma?.id}"/>
             <elm:fieldRapido label="Presupuesto (1)" claseLabel="col-md-3" claseField="col-md-4">
                 <div class="input-group input-group-sm">
-                    <g:textField name="presupuesto1" class="form-control required number money"/>
+                    <g:textField name="presupuesto1" class="form-control required number money" value="${cronograma?.valor ?: ''}"/>
                     <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </elm:fieldRapido>
             <elm:fieldRapido label="Partida (1)" claseLabel="col-md-3" claseField="col-md-4">
-                <g:hiddenField name="partida1" value=""/>
+                <g:hiddenField name="partida1" value="${cronograma?.presupuesto?.id}"/>
 %{--                <bsc:buscador name="partida1" id="partida1" controlador="asignacion"--}%
 %{--                              accion="buscarPresupuesto" tipo="search" titulo="Busque una partida"--}%
 %{--                              campos="${campos}" clase="required"/>--}%
 
                 <span class="grupo">
                     <div class="input-group input-group-sm" style="width:294px;">
-                        <input type="text" class="form-control buscarPartida" name="partidaName" id="partida1Texto" data-tipo="1">
+                        <input type="text" class="form-control buscarPartida" name="partidaName" id="partida1Texto" data-tipo="1" value="${cronograma?.presupuesto}">
                         <span class="input-group-btn">
                             <a href="#" id="btn-abrir-1" class="btn btn-info buscarPartida" data-tipo="1" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             </a>
@@ -74,30 +75,26 @@
                             optionClass="${{
                                 g.formatNumber(number: it.monto, minFractionDigits: 2, maxFractionDigits: 8)
                             }}"
-                            class="form-control input-sm"/>
+                            class="form-control input-sm" value="${cronograma?.fuente?.id}"/>
             </elm:fieldRapido>
             <hr/>
             <elm:fieldRapido label="Presupuesto (2)" claseLabel="col-md-3" claseField="col-md-4">
                 <div class="input-group input-group-sm">
-                    <g:textField name="presupuesto2" class="form-control number money"/>
+                    <g:textField name="presupuesto2" class="form-control number money" value="${cronograma?.valor2}"/>
                     <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </elm:fieldRapido>
             <elm:fieldRapido label="Partida (2)" claseLabel="col-md-3" claseField="col-md-4">
-            %{--<bsc:buscador name="partida2" id="partida2" controlador="asignacion"--}%
-            %{--accion="buscarPresupuesto" tipo="search" titulo="Busque una partida"--}%
-            %{--campos="${campos}" clase=""/>--}%
+                <g:hiddenField name="partida2" value="${cronograma?.presupuesto2?.id}"/>
                 <span class="grupo">
                     <div class="input-group input-group-sm" style="width:294px;">
-                        <input type="text" class="form-control buscarPartida" name="partida2" data-tipo="2">
+                        <input type="text" class="form-control buscarPartida2" name="partidaName2" id="partida2Texto" data-tipo="2" value="${cronograma?.presupuesto2}">
                         <span class="input-group-btn">
-                            <a href="#" id="btn-abrir-2" class="btn btn-info buscarPartida" data-tipo="2" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            <a href="#" id="btn-abrir-2" class="btn btn-info buscarPartida2" data-tipo="2" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             </a>
                         </span>
                     </div>
                 </span>
-
-                <input type="hidden" id="partida2" class="bsc_id " name="partida2" value="">
             </elm:fieldRapido>
             <elm:fieldRapido label="Fuente (2)" claseLabel="col-md-3" claseField="col-md-7">
                 <elm:select name="fuente2" from="${fuentes}" id="fuente2"
@@ -108,7 +105,7 @@
                             optionClass="${{
                                 g.formatNumber(number: it.monto, minFractionDigits: 2, maxFractionDigits: 8)
                             }}"
-                            class="form-control input-sm"/>
+                            class="form-control input-sm" value="${cronograma?.fuente2?.id}"/>
             </elm:fieldRapido>
         </g:form>
     </div>
@@ -117,6 +114,7 @@
 <script type="text/javascript">
 
     var bp
+    var bp2
 
     $(document).ready(function() {
 
@@ -148,11 +146,44 @@
         });
 
 
+        $(".buscarPartida2").click(function () {
+            var tipo = $(this).data("tipo");
+            $.ajax({
+                type: 'POST',
+                url: '${createLink(controller: 'cronograma', action: 'buscarPartida_ajax')}',
+                data:{
+                    tipo: tipo
+                },
+                success:function (msg) {
+                    bp2 = bootbox.dialog({
+                        id    : "dlgBuscarPartida2",
+                        title : "Buscar Partida",
+                        class : "modal-lg",
+                        message : msg,
+                        buttons : {
+                            cancelar : {
+                                label     : "Cancelar",
+                                className : "btn-primary",
+                                callback  : function () {
+                                }
+                            }
+                        } //buttons
+                    }); //dialog
+                }
+            });
+        });
+
+
     });
 
     function cerrarDialogo(){
         bp.dialog().dialog('open');
-        bp.dialog("close")
+        bp.modal("hide");
+    }
+
+    function cerrarDialogo2(){
+        bp2.dialog().dialog('open');
+        bp2.modal("hide")
     }
 </script>
 

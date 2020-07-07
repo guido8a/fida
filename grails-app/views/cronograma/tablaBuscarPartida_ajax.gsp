@@ -30,9 +30,15 @@
     $(".btnSelePartida").click(function () {
         var id = $(this).data("id");
         var nombre = $(this).data("nombre");
-        $("#partida1Texto").val(nombre);
-        $("#partida1").val(id);
-        cerrarDialogo();
+        if(${tipo == '1'}){
+            $("#partida1Texto").val(nombre);
+            $("#partida1").val(id);
+            cerrarDialogo();
+        }else{
+            $("#partida2Texto").val(nombre);
+            $("#partida2").val(id);
+            cerrarDialogo2();
+        }
     });
 
 </script>

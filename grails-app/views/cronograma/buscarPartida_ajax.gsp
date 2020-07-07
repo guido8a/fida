@@ -59,7 +59,8 @@
             url: '${createLink(controller: 'cronograma', action: 'tablaBuscarPartida_ajax')}',
             data:{
                 operador: operador,
-                texto: texto
+                texto: texto,
+                tipo: '${tipo}'
             },
             success: function (msg) {
                 dialog.modal('hide');
