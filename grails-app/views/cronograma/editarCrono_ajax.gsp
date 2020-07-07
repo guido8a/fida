@@ -44,13 +44,26 @@
             <elm:fieldRapido label="Presupuesto (1)" claseLabel="col-md-3" claseField="col-md-4">
                 <div class="input-group input-group-sm">
                     <g:textField name="presupuesto1" class="form-control required number money"/>
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </elm:fieldRapido>
             <elm:fieldRapido label="Partida (1)" claseLabel="col-md-3" claseField="col-md-4">
+                <g:hiddenField name="partida1" value=""/>
 %{--                <bsc:buscador name="partida1" id="partida1" controlador="asignacion"--}%
 %{--                              accion="buscarPresupuesto" tipo="search" titulo="Busque una partida"--}%
 %{--                              campos="${campos}" clase="required"/>--}%
+
+                <span class="grupo">
+                    <div class="input-group input-group-sm" style="width:294px;">
+                        <input type="text" class="form-control buscarPartida" name="partidaName" id="partida1Texto" data-tipo="1">
+                        <span class="input-group-btn">
+                            <a href="#" id="btn-abrir-1" class="btn btn-info buscarPartida" data-tipo="1" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            </a>
+                        </span>
+                    </div>
+                </span>
+
+
             </elm:fieldRapido>
             <elm:fieldRapido label="Fuente (1)" claseLabel="col-md-3" claseField="col-md-7">
                 <elm:select name="fuente1" from="${fuentes}" id="fuente1"
@@ -67,7 +80,7 @@
             <elm:fieldRapido label="Presupuesto (2)" claseLabel="col-md-3" claseField="col-md-4">
                 <div class="input-group input-group-sm">
                     <g:textField name="presupuesto2" class="form-control number money"/>
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </elm:fieldRapido>
             <elm:fieldRapido label="Partida (2)" claseLabel="col-md-3" claseField="col-md-4">
@@ -76,13 +89,14 @@
             %{--campos="${campos}" clase=""/>--}%
                 <span class="grupo">
                     <div class="input-group input-group-sm" style="width:294px;">
-                        <input type="text" class="form-control bsc_desc-2 buscador-2 " id="bsc-desc-partida2" name="bsc-desc-partida2">
+                        <input type="text" class="form-control buscarPartida" name="partida2" data-tipo="2">
                         <span class="input-group-btn">
-                            <a href="#" id="btn-abrir-2" class="btn btn-info buscador-2" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            <a href="#" id="btn-abrir-2" class="btn btn-info buscarPartida" data-tipo="2" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             </a>
                         </span>
                     </div>
                 </span>
+
                 <input type="hidden" id="partida2" class="bsc_id " name="partida2" value="">
             </elm:fieldRapido>
             <elm:fieldRapido label="Fuente (2)" claseLabel="col-md-3" claseField="col-md-7">
@@ -99,6 +113,48 @@
         </g:form>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    var bp
+
+    $(document).ready(function() {
+
+        $(".buscarPartida").click(function () {
+            var tipo = $(this).data("tipo");
+            $.ajax({
+                type: 'POST',
+                url: '${createLink(controller: 'cronograma', action: 'buscarPartida_ajax')}',
+                data:{
+                    tipo: tipo
+                },
+                success:function (msg) {
+                    bp = bootbox.dialog({
+                        id    : "dlgBuscarPartida",
+                        title : "Buscar Partida",
+                        class : "modal-lg",
+                        message : msg,
+                        buttons : {
+                            cancelar : {
+                                label     : "Cancelar",
+                                className : "btn-primary",
+                                callback  : function () {
+                                }
+                            }
+                        } //buttons
+                    }); //dialog
+                }
+            });
+        });
+
+
+    });
+
+    function cerrarDialogo(){
+        bp.dialog().dialog('open');
+        bp.dialog("close")
+    }
+</script>
 
 %{--        <div class="modal-footer">--}%
 %{--            <a href="#" class="btn btn-default" id="btnModalCancel">${fuentes.size() == 0 ? 'Cerrar' : 'Cancelar'}</a>--}%

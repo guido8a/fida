@@ -561,15 +561,15 @@
                         // $("#modalTitle").text("Cronograma - " + mes);
 
                         // if (!$("#divOk").hasClass("hidden")) {
-                            var $actividad = $tr.find(".actividad");
-                            var $asignado = $tr.find(".asignado");
-                            var $sinAsignar = $tr.find(".sinAsignar");
-                            var $total = $tr.find(".total");
+                        var $actividad = $tr.find(".actividad");
+                        var $asignado = $tr.find(".asignado");
+                        var $sinAsignar = $tr.find(".sinAsignar");
+                        var $total = $tr.find(".total");
                         //
-                            var actividad = $actividad.attr("title");
-                            var asignado = $asignado.data("val");
-                            var sinAsignar = $sinAsignar.data("val");
-                            var total = $total.data("val");
+                        var actividad = $actividad.attr("title");
+                        var asignado = $asignado.data("val");
+                        var sinAsignar = $sinAsignar.data("val");
+                        var total = $total.data("val");
                         //
                         //     $("#divActividad").text(actividad);
                         //     $("#divInfo").html("<ul>" +
@@ -619,7 +619,7 @@
                                             label     : "<i class='fa fa-save'></i> Guardar",
                                             className : "btn-success",
                                             callback  : function () {
-
+                                                guardarCronograma($mes,$actividad);
                                             } //callback
                                         } //guardar
                                     } //buttons
@@ -629,12 +629,6 @@
                                 // }, 500);
                             } //success
                         }); //ajax
-
-
-
-
-
-
                     }
                 },
                 eliminar : {
@@ -799,6 +793,34 @@
             });
             $(".modal-search").modal("show")
         });
+
+        function guardarCronograma(mes, actividad) {
+            var $frm = $(".frmCrono");
+            // if ($frm.valid()) {
+                var $div = $("#divInfo");
+                var data = $frm.serialize();
+                data += "&anio=" + '${anio?.id}' + "&actividad=" + actividad + "&mes=" + mes;
+                %{--data += "&id=" + $div.data("crono") + "&mes=" + $div.data("mes") + "&anio=${anio.id}" + "&act=" + $div.data("actividad");--}%
+                $.ajax({
+                    type    : "POST",
+                    url     : $frm.attr("action"),
+                    data    : data,
+                    success : function (msg) {
+                        var parts = msg.split("*");
+                        log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
+                        if (parts[0] == "SUCCESS") {
+                            setTimeout(function () {
+                                if (parts[0] == "SUCCESS") {
+                                    location.reload(true);
+                                }
+                            }, 1000);
+                        } else {
+                        }
+                    }
+                });
+            // }
+            return false;
+        }
     });
 </script>
 

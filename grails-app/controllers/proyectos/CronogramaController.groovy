@@ -98,63 +98,62 @@ class CronogramaController {
      * Acción llamada con ajax que guarda los datos de un cronograma modificado
      */
     def save_ajax() {
-        println "PARAMS"
-        println params
+        println "PARAMS" + params
 
-        def actividad = MarcoLogico.get(params.act)
-        def valor = 0
-        if (params.id) {
-            Cronograma.findAllByMarcoLogico(actividad).each {
-                if (it.id.toLong() != params.id.toLong()) {
-                    valor += (it.valor + it.valor2)
-                }
-            }
-        }
-        if (!params.presupuesto2) {
-            params.presupuesto2 = 0
-        } else {
-            params.presupuesto2 = params.presupuesto2.replaceAll(",", "").toDouble()
-        }
-        if (params.presupuesto1) {
-            params.presupuesto1 = params.presupuesto1.replaceAll(",", "").toDouble()
-        }
-
-        def sum = (valor + params.presupuesto1 + params.presupuesto2)
-        sum = Math.round(sum * 100) / 100
-
-        if (actividad.monto >= sum) {
-            def crono = new Cronograma()
-            if (params.id) {
-                crono = Cronograma.get(params.id)
-            }
-            def mes = Mes.get(params.mes.toLong())
-
-            crono.mes = mes
-            crono.anio = Anio.get(params.anio.toLong())
-            crono.marcoLogico = actividad
-
-            crono.fuente = Fuente.get(params.fuente1.toLong())
-            crono.presupuesto = Presupuesto.get(params.partida1)
-            crono.valor = params.presupuesto1.toDouble()
-
-            if (params.presupuesto2.toDouble() > 0) {
-                crono.fuente2 = Fuente.get(params.fuente2.toLong())
-                crono.presupuesto2 = Presupuesto.get(params.partida2)
-                crono.valor2 = params.presupuesto2.toDouble()
-            } else {
-                crono.fuente2 = null
-                crono.presupuesto2 = null
-                crono.valor2 = params.presupuesto2.toDouble()
-            }
-
-            if (crono.save(flush: true)) {
-                render "SUCCESS*Cronograma guardado exitosamente"
-            } else {
-                render "ERROR*" + crono.errors
-            }
-        } else {
-            render "ERROR*Los valores ingresados superan el máximo disponible para la actividad"
-        }
+//        def actividad = MarcoLogico.get(params.act)
+//        def valor = 0
+//        if (params.id) {
+//            Cronograma.findAllByMarcoLogico(actividad).each {
+//                if (it.id.toLong() != params.id.toLong()) {
+//                    valor += (it.valor + it.valor2)
+//                }
+//            }
+//        }
+//        if (!params.presupuesto2) {
+//            params.presupuesto2 = 0
+//        } else {
+//            params.presupuesto2 = params.presupuesto2.replaceAll(",", "").toDouble()
+//        }
+//        if (params.presupuesto1) {
+//            params.presupuesto1 = params.presupuesto1.replaceAll(",", "").toDouble()
+//        }
+//
+//        def sum = (valor + params.presupuesto1 + params.presupuesto2)
+//        sum = Math.round(sum * 100) / 100
+//
+//        if (actividad.monto >= sum) {
+//            def crono = new Cronograma()
+//            if (params.id) {
+//                crono = Cronograma.get(params.id)
+//            }
+//            def mes = Mes.get(params.mes.toLong())
+//
+//            crono.mes = mes
+//            crono.anio = Anio.get(params.anio.toLong())
+//            crono.marcoLogico = actividad
+//
+//            crono.fuente = Fuente.get(params.fuente1.toLong())
+//            crono.presupuesto = Presupuesto.get(params.partida1)
+//            crono.valor = params.presupuesto1.toDouble()
+//
+//            if (params.presupuesto2.toDouble() > 0) {
+//                crono.fuente2 = Fuente.get(params.fuente2.toLong())
+//                crono.presupuesto2 = Presupuesto.get(params.partida2)
+//                crono.valor2 = params.presupuesto2.toDouble()
+//            } else {
+//                crono.fuente2 = null
+//                crono.presupuesto2 = null
+//                crono.valor2 = params.presupuesto2.toDouble()
+//            }
+//
+//            if (crono.save(flush: true)) {
+//                render "SUCCESS*Cronograma guardado exitosamente"
+//            } else {
+//                render "ERROR*" + crono.errors
+//            }
+//        } else {
+//            render "ERROR*Los valores ingresados superan el máximo disponible para la actividad"
+//        }
     }
 
     def deleteCrono_ajax() {
@@ -449,6 +448,29 @@ class CronogramaController {
         }
 
         return[campos: campos, fuentes: fuentes, actividad: params.actividad, total: params.total.toDouble(), asignado: params.asignado.toDouble(), sinAsignar: params.sinAsignar.toDouble()]
+    }
+
+    def buscarPartida_ajax() {
+        def tipo =params.tipo
+        return [tipo: tipo]
+    }
+
+    def tablaBuscarPartida_ajax(){
+//        println("params busqueda ptd " + params)
+        def operador = ''
+        if(params.operador == '0'){
+            operador = 'prspnmro'
+        }else{
+            operador = 'prspdscr'
+        }
+
+        def cn = dbConnectionService.getConnection()
+        def sql = "select * from prsp where ${operador} ilike '%${params.texto}%' order by prspnmro asc"
+        def res = cn.rows(sql.toString())
+
+//        println("sql " + sql)
+
+        return [partidas: res]
     }
 
 }

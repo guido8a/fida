@@ -24,6 +24,10 @@
     .negrita {
         font-weight: bold;
     }
+
+    .izquierda{
+        margin-left: 4px;
+    }
     </style>
 
 </head>
@@ -34,7 +38,7 @@
 
 <div class="panel panel-primary col-md-12">
 
-    <div class="panel-heading" style="padding: 3px; margin-top: 2px">
+    <div class="panel-heading" style="padding: 3px; margin-top: 2px; text-align: center">
         <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultarBase"
            class="btn btn-sm btn-info" title="Consultar artículo">
             <i class="fas fa-clipboard-check"></i> Base de Conocimiento
@@ -43,26 +47,26 @@
            class="btn btn-sm btn-info" title="Consultar artículo">
             <i class="fas fa-book-reader"></i> Biblioteca
         </a>
-        <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
-            <i class="fa fa-save"></i> Guardar
-        </a>
         <a href="#" id="btnFinanciamiento" class="btn btn-sm btn-info" title="Crear nuevo registro">
             <i class="fa fa-dollar-sign"></i> Financiamiento
         </a>
-        <a href="#" id="btnVer" class="btn btn-sm btn-info" title="Ver registro">
-            <i class="fa fa-search"></i> Estado
+        <a href="#" id="btnEstado" class="btn btn-sm btn-info" title="Estado">
+            <i class="fa fa-check"></i> Estado
         </a>
         <a href="#" id="btnVerMarco" class="btn btn-sm btn-info" title="Ver marco lógico">
             <i class="fa fa-search"></i> Ver Marco Lógico
         </a>
         <a href="#" id="editMrlg" class="btn btn-sm btn-info" title="Ver registro">
-            <i class="fa fa-search"></i> Editar Marco Lógico
+            <i class="fa fa-clipboard"></i> Editar Marco Lógico
         </a>
         <a href="#" id="btnVerCronograma" class="btn btn-sm btn-info" title="Ver cronograma">
-            <i class="fa fa-search"></i> Ver Cronograma
+            <i class="fa fa-calendar-alt"></i> Ver Cronograma
         </a>
         <a href="#" id="btnVer" class="btn btn-sm btn-info"  title="Ver registro">
             <i class="fa fa-search"></i> Editar Cronograma
+        </a>
+        <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
+            <i class="fa fa-save"></i> Guardar
         </a>
     </div>
 
@@ -75,7 +79,7 @@
         <div id="home" class="tab-pane fade in active">
             <g:form class="form-horizontal" name="frmProyecto" controller="proyecto" action="save_ajax">
                 <g:hiddenField name="id" value="${proy?.id}"/>
-                <div class="row">
+                <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Código CUP</span>
 
@@ -94,7 +98,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Nombre</span>
 
@@ -107,7 +111,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Productos</span>
 
@@ -122,7 +126,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Descripción</span>
 
@@ -135,7 +139,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Problema</span>
 
@@ -146,7 +150,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Justificación</span>
 
@@ -158,7 +162,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Fecha Inicio</span>
                         <span class="grupo">
@@ -182,7 +186,7 @@
                     </div>
                 </div>
 
-                <div class="row" style="margin-bottom: 20px">
+                <div class="row izquierda" style="margin-bottom: 20px">
                     <div class="col-md-6 input-group">
                         <span class="col-md-4 label label-primary text-info mediano">Informar cada (meses)</span>
 
