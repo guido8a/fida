@@ -436,4 +436,19 @@ class CronogramaController {
         return[anio: anio, componentes: componentes, actSel: params.actSel]
     }
 
+    def editarCrono_ajax () {
+        def proyecto = Proyecto.get(params.proyecto)
+        def anio = Anio.get(params.anio)
+        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def finan = Financiamiento.findAllByProyectoAndAnio(proyecto, anio)
+        def fuentes = []
+        def totAnios = [:]
+        finan.each {
+            fuentes.add(it)
+            totAnios.put(it.fuente.id, it.monto)
+        }
+
+        return[campos: campos, fuentes: fuentes, actividad: params.actividad, total: params.total.toDouble(), asignado: params.asignado.toDouble(), sinAsignar: params.sinAsignar.toDouble()]
+    }
+
 }
