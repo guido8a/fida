@@ -68,8 +68,8 @@ class Meta {
         marcoLogico(blank: true, nullable: true, attributes: [mensaje: 'Componente del marco lógico'])
         unidad(blank: true, nullable: true, attributes: [mensaje: 'Unidad de medida'])
         indicadorOrms(blank: true, nullable: true, attributes: [mensaje: 'Indicador orms'])
-        descripcion(size: 1..255, blank: true, nullable: true, attributes: [mensaje: 'Descripción de la meta a alcanzar'])
-        valor(blank: false, nullable: false, attributes: [mensaje: 'Valor de la meta'])
+        descripcion(size: 1..255, blank: false, nullable: false, attributes: [mensaje: 'Descripción de la meta a alcanzar'])
+        valor(blank: true, nullable: true, attributes: [mensaje: 'Valor de la meta'])
     }
 
     /**

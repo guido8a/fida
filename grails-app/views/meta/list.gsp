@@ -44,37 +44,25 @@
     </tr>
     </thead>
     <tbody>
-%{--    <g:if test="${marcoLogicoInstanceCount > 0}">--}%
-%{--        <g:each in="${marcoLogicoInstanceList}" status="i" var="marcoLogicoInstance">--}%
-%{--            <tr data-id="${marcoLogicoInstance.id}">--}%
-
-%{--                <td>${marcoLogicoInstance.proyecto}</td>--}%
-
-%{--                <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${marcoLogicoInstance}" field="tipoElemento"/></elm:textoBusqueda></td>--}%
-
-%{--                <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${marcoLogicoInstance}" field="marcoLogico"/></elm:textoBusqueda></td>--}%
-
-%{--                <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${marcoLogicoInstance}" field="modificacionProyecto"/></elm:textoBusqueda></td>--}%
-
-%{--                <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${marcoLogicoInstance}" field="objeto"/></elm:textoBusqueda></td>--}%
-
-%{--                <td><g:fieldValue bean="${marcoLogicoInstance}" field="monto"/></td>--}%
-
-%{--            </tr>--}%
-%{--        </g:each>--}%
-%{--    </g:if>--}%
-%{--    <g:else>--}%
-%{--        <tr class="danger">--}%
-%{--            <td class="text-center" colspan="15">--}%
-%{--                <g:if test="${params.search && params.search != ''}">--}%
-%{--                    No se encontraron resultados para su búsqueda--}%
-%{--                </g:if>--}%
-%{--                <g:else>--}%
-%{--                    No se encontraron registros que mostrar--}%
-%{--                </g:else>--}%
-%{--            </td>--}%
-%{--        </tr>--}%
-%{--    </g:else>--}%
+    <g:if test="${metas?.size() > 0}">
+        <g:each in="${metas}" status="i" var="meta">
+            <tr data-id="${meta.id}">
+                <td>${meta?.parroquia?.nombre}</td>
+                <td>${meta?.marcoLogico?.objeto}</td>
+                <td>${meta?.unidad?.descripcion}</td>
+                <td>${meta?.indicadorOrms?.descripcion}</td>
+                <td>${meta?.descripcion}</td>
+                <td>${meta?.valor}</td>
+            </tr>
+        </g:each>
+    </g:if>
+    <g:else>
+        <tr class="danger">
+            <td class="text-center" colspan="15">
+                    No se encontraron registros que mostrar
+            </td>
+        </tr>
+    </g:else>
     </tbody>
 </table>
 
@@ -98,16 +86,15 @@
                 url     : $form.attr("action"),
                 data    : $form.serialize(),
                 success : function (msg) {
-                    var parts = msg.split("*");
-                    log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                    setTimeout(function () {
-                        if (parts[0] == "SUCCESS") {
+                    var parts = msg.split("_");
+                    if (parts[0] == "ok") {
+                        log(parts[1], "success");
+                        setTimeout(function () {
                             location.reload(true);
-                        } else {
-                            spinner.replaceWith($btn);
-                            return false;
-                        }
-                    }, 1000);
+                        }, 1000);
+                    }else{
+                        log(parts[1], "error");
+                    }
                 }
             });
         } else {
@@ -118,7 +105,7 @@
         bootbox.dialog({
             title   : "Alerta",
             message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i><p>" +
-                "¿Está seguro que desea eliminar el MarcoLogico seleccionado? Esta acción no se puede deshacer.</p>",
+                "¿Está seguro que desea eliminar la meta seleccionada? Esta acción no se puede deshacer.</p>",
             buttons : {
                 cancelar : {
                     label     : "Cancelar",
@@ -130,25 +117,25 @@
                     label     : "<i class='fa fa-trash-o'></i> Eliminar",
                     className : "btn-danger",
                     callback  : function () {
-                        openLoader("Eliminando MarcoLogico");
-                        $.ajax({
-                            type    : "POST",
-                            url     : '${createLink(controller:'marcoLogico', action:'delete_ajax')}',
-                            data    : {
-                                id : itemId
-                            },
-                            success : function (msg) {
-                                var parts = msg.split("*");
-                                log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                                if (parts[0] == "SUCCESS") {
-                                    setTimeout(function () {
-                                        location.reload(true);
-                                    }, 1000);
-                                } else {
-                                    closeLoader();
-                                }
-                            }
-                        });
+                        %{--openLoader("Eliminando MarcoLogico");--}%
+                        %{--$.ajax({--}%
+                        %{--    type    : "POST",--}%
+                        %{--    url     : '${createLink(controller:'marcoLogico', action:'delete_ajax')}',--}%
+                        %{--    data    : {--}%
+                        %{--        id : itemId--}%
+                        %{--    },--}%
+                        %{--    success : function (msg) {--}%
+                        %{--        var parts = msg.split("*");--}%
+                        %{--        log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)--}%
+                        %{--        if (parts[0] == "SUCCESS") {--}%
+                        %{--            setTimeout(function () {--}%
+                        %{--                location.reload(true);--}%
+                        %{--            }, 1000);--}%
+                        %{--        } else {--}%
+                        %{--            closeLoader();--}%
+                        %{--        }--}%
+                        %{--    }--}%
+                        %{--});--}%
                     }
                 }
             }
@@ -157,10 +144,15 @@
     function createEditMeta(id) {
         var title = id ? "Editar" : "Crear";
         var data = id ? {id : id} : {};
+        data += "&proyecto=" + '${proyecto?.id}';
         $.ajax({
             type    : "POST",
             url     : "${createLink(controller:'meta', action:'form_ajax')}",
-            data    : data,
+            // data    : data,
+            data    : {
+                id: id,
+                proyecto : '${proyecto?.id}'
+            },
             success : function (msg) {
                 var b = bootbox.dialog({
                     id    : "dlgCreateEditMeta",
@@ -193,11 +185,6 @@
 
     $(function () {
 
-        $(".btnCrear").click(function () {
-            createEditRow();
-            return false;
-        });
-
         $("tbody>tr").contextMenu({
             items  : {
                 header   : {
@@ -211,7 +198,7 @@
                         var id = $element.data("id");
                         $.ajax({
                             type    : "POST",
-                            url     : "${createLink(controller:'marcoLogico', action:'show_ajax')}",
+                            url     : "${createLink(controller:'meta', action:'show_ajax')}",
                             data    : {
                                 id : id
                             },
@@ -234,15 +221,15 @@
                 },
                 editar   : {
                     label  : "Editar",
-                    icon   : "fa fa-pencil",
+                    icon   : "fa fa-edit",
                     action : function ($element) {
                         var id = $element.data("id");
-                        createEditRow(id);
+                        createEditMeta(id);
                     }
                 },
                 eliminar : {
                     label            : "Eliminar",
-                    icon             : "fa fa-trash-o",
+                    icon             : "fa fa-trash",
                     separator_before : true,
                     action           : function ($element) {
                         var id = $element.data("id");
