@@ -27,25 +27,25 @@
                 </div>
             </span>
         </div>
-        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'marcoLogico', 'error')} ">
-            <span class="grupo">
-                <label for="marcoLogico" class="col-md-3 control-label">
-                    Actividad (Marco lógico)
-                </label>
-                <div class="col-md-7">
-                    <g:hiddenField name="parroquia" value="${meta?.parroquia?.id}"/>
-                    <span class="grupo">
-                        <div class="input-group input-group-sm" >
-                            <input type="text" class="form-control buscarParroquia" name="parrroquiaName" id="parroquiaTexto" value="${meta?.parroquia?.nombre}">
-                            <span class="input-group-btn">
-                                <a href="#" class="btn btn-info buscarParroquia" title="Buscar Parroquia"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                </a>
-                            </span>
-                        </div>
-                    </span>
-                </div>
-            </span>
-        </div>
+%{--        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'marcoLogico', 'error')} ">--}%
+%{--            <span class="grupo">--}%
+%{--                <label for="marcoLogico" class="col-md-3 control-label">--}%
+%{--                    Actividad (Marco lógico)--}%
+%{--                </label>--}%
+%{--                <div class="col-md-7">--}%
+%{--                    <g:hiddenField name="parroquia" value="${meta?.parroquia?.id}"/>--}%
+%{--                    <span class="grupo">--}%
+%{--                        <div class="input-group input-group-sm" >--}%
+%{--                            <input type="text" class="form-control buscarParroquia" name="parrroquiaName" id="parroquiaTexto" value="${meta?.parroquia?.nombre}">--}%
+%{--                            <span class="input-group-btn">--}%
+%{--                                <a href="#" class="btn btn-info buscarParroquia" title="Buscar Parroquia"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>--}%
+%{--                                </a>--}%
+%{--                            </span>--}%
+%{--                        </div>--}%
+%{--                    </span>--}%
+%{--                </div>--}%
+%{--            </span>--}%
+%{--        </div>--}%
     </g:form>
 </div>
 
