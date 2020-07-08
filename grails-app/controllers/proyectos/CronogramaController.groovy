@@ -98,108 +98,90 @@ class CronogramaController {
      * Acción llamada con ajax que guarda los datos de un cronograma modificado
      */
     def save_ajax() {
-        println "PARAMS" + params
+//        println "PARAMS" + params
 
         def actividad = MarcoLogico.get(params.act)
         def valor = 0
-        if (params.id) {
-            Cronograma.findAllByMarcoLogico(actividad).each {
-                if (it.id.toLong() != params.id.toLong()) {
-                    valor += (it.valor + it.valor2)
+        def band = 0
+
+        if(params.presupuesto1){
+            if(!params.partida1){
+                band = 1
+            }else{
+                if(params.presupuesto2){
+                    if(!params.partida2){
+                        band = 1
+                    }else{
+
+                    }
                 }
             }
-        }
-        if (!params.presupuesto2) {
-            params.presupuesto2 = 0
-        } else {
-            params.presupuesto2 = params.presupuesto2.replaceAll(",", "").toDouble()
-        }
-        if (params.presupuesto1) {
-            params.presupuesto1 = params.presupuesto1.replaceAll(",", "").toDouble()
+        }else{
+            render "er*Ingrese un presupuesto"
         }
 
-        def sum = (valor + params.presupuesto1 + params.presupuesto2)
-        sum = Math.round(sum * 100) / 100
-
-        if (actividad.monto >= sum) {
-            def crono = new Cronograma()
+        if(band == 0){
             if (params.id) {
-                crono = Cronograma.get(params.id)
+                Cronograma.findAllByMarcoLogico(actividad).each {
+                    if (it.id.toLong() != params.id.toLong()) {
+                        valor += (it.valor + it.valor2)
+                    }
+                }
             }
-            def mes = Mes.get(params.mes.toLong())
-
-            crono.mes = mes
-            crono.anio = Anio.get(params.anio.toLong())
-            crono.marcoLogico = actividad
-
-            crono.fuente = Fuente.get(params.fuente1.toLong())
-            crono.presupuesto = Presupuesto.get(params.partida1)
-            crono.valor = params.presupuesto1.toDouble()
-
-            if (params.presupuesto2.toDouble() > 0) {
-                crono.fuente2 = Fuente.get(params.fuente2.toLong())
-                crono.presupuesto2 = Presupuesto.get(params.partida2)
-                crono.valor2 = params.presupuesto2.toDouble()
+            if (!params.presupuesto2) {
+                params.presupuesto2 = 0
             } else {
-                crono.fuente2 = null
-                crono.presupuesto2 = null
-                crono.valor2 = params.presupuesto2.toDouble()
+                params.presupuesto2 = params.presupuesto2.replaceAll(",", "").toDouble()
+            }
+            if (params.presupuesto1) {
+                params.presupuesto1 = params.presupuesto1.replaceAll(",", "").toDouble()
             }
 
-            if (crono.save(flush: true)) {
-                render "SUCCESS*Cronograma guardado exitosamente"
+            def sum = (valor + params.presupuesto1 + params.presupuesto2)
+            sum = Math.round(sum * 100) / 100
+
+            if (actividad.monto >= sum) {
+                def crono = new Cronograma()
+                if (params.id) {
+                    crono = Cronograma.get(params.id)
+                }
+                def mes = Mes.get(params.mes.toLong())
+
+                crono.mes = mes
+                crono.anio = Anio.get(params.anio.toLong())
+                crono.marcoLogico = actividad
+
+                crono.fuente = Fuente.get(params.fuente1.toLong())
+                crono.presupuesto = Presupuesto.get(params.partida1)
+                crono.valor = params.presupuesto1.toDouble()
+
+                if (params.presupuesto2.toDouble() > 0) {
+                    crono.fuente2 = Fuente.get(params.fuente2.toLong())
+                    crono.presupuesto2 = Presupuesto.get(params.partida2)
+                    crono.valor2 = params.presupuesto2.toDouble()
+                } else {
+                    crono.fuente2 = null
+                    crono.presupuesto2 = null
+                    crono.valor2 = params.presupuesto2.toDouble()
+                }
+
+                if (crono.save(flush: true)) {
+                    render "SUCCESS*Cronograma guardado exitosamente"
+                } else {
+                    render "ERROR*" + crono.errors
+                }
             } else {
-                render "ERROR*" + crono.errors
+                render "ERROR*Los valores ingresados superan el máximo disponible para la actividad"
             }
-        } else {
-            render "ERROR*Los valores ingresados superan el máximo disponible para la actividad"
+        }else{
+            render "er*Ingrese una partida para los presupuestos!"
         }
     }
 
-
-//    def save_ajax(){
-//
-//        println("params sc " + params)
-////        def actividad = MarcoLogico.get(params.act)
-////        def valor = 0
-////        if (params.id) {
-////            Cronograma.findAllByMarcoLogico(actividad).each {
-////                if (it.id.toLong() != params.id.toLong()) {
-////                    valor += (it.valor + it.valor2)
-////                }
-////            }
-////        }
-//
-//        //        if (!params.presupuesto2) {
-////            params.presupuesto2 = 0
-////        } else {
-////            params.presupuesto2 = params.presupuesto2.replaceAll(",", "").toDouble()
-////        }
-////        if (params.presupuesto1) {
-////            params.presupuesto1 = params.presupuesto1.replaceAll(",", "").toDouble()
-////        }
-//
-//        //        def sum = (valor + params.presupuesto1 + params.presupuesto2)
-////        sum = Math.round(sum * 100) / 100
-//
-//    }
-
-
     def deleteCrono_ajax() {
+
         try {
             def crono = Cronograma.get(params.id)
-
-//            ProgramacionAsignacion.findAllByCronograma(crono).each { p ->
-//                try {
-//                    def asg = p.asignacion
-//                    p.delete(flush: true)
-//                    asg.delete(flush:true)
-//                } catch (e) {
-//                    println "error al eliminar p: "
-//                    e.printStackTrace()
-//                }
-//            }
-
             crono.delete(flush: true)
             render "SUCCESS*Se han eliminado los valores correctamente"
         } catch (e) {

@@ -50,10 +50,6 @@
             </elm:fieldRapido>
             <elm:fieldRapido label="Partida (1)" claseLabel="col-md-3" claseField="col-md-4">
                 <g:hiddenField name="partida1" value="${cronograma?.presupuesto?.id}"/>
-%{--                <bsc:buscador name="partida1" id="partida1" controlador="asignacion"--}%
-%{--                              accion="buscarPresupuesto" tipo="search" titulo="Busque una partida"--}%
-%{--                              campos="${campos}" clase="required"/>--}%
-
                 <span class="grupo">
                     <div class="input-group input-group-sm" style="width:294px;">
                         <input type="text" class="form-control buscarPartida" name="partidaName" id="partida1Texto" data-tipo="1" value="${cronograma?.presupuesto}">
@@ -63,8 +59,6 @@
                         </span>
                     </div>
                 </span>
-
-
             </elm:fieldRapido>
             <elm:fieldRapido label="Fuente (1)" claseLabel="col-md-3" claseField="col-md-7">
                 <elm:select name="fuente1" from="${fuentes}" id="fuente1"
@@ -80,7 +74,7 @@
             <hr/>
             <elm:fieldRapido label="Presupuesto (2)" claseLabel="col-md-3" claseField="col-md-4">
                 <div class="input-group input-group-sm">
-                    <g:textField name="presupuesto2" class="form-control number money" value="${cronograma?.valor2}"/>
+                    <g:textField name="presupuesto2" class="form-control number money" value="${cronograma?.valor2 ?: ''}"/>
                     <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </elm:fieldRapido>
@@ -120,60 +114,69 @@
 
         $(".buscarPartida").click(function () {
             var tipo = $(this).data("tipo");
-            $.ajax({
-                type: 'POST',
-                url: '${createLink(controller: 'cronograma', action: 'buscarPartida_ajax')}',
-                data:{
-                    tipo: tipo
-                },
-                success:function (msg) {
-                    bp = bootbox.dialog({
-                        id    : "dlgBuscarPartida",
-                        title : "Buscar Partida",
-                        class : "modal-lg",
-                        message : msg,
-                        buttons : {
-                            cancelar : {
-                                label     : "Cancelar",
-                                className : "btn-primary",
-                                callback  : function () {
+            if($("#presupuesto1").val() != ''){
+                $.ajax({
+                    type: 'POST',
+                    url: '${createLink(controller: 'cronograma', action: 'buscarPartida_ajax')}',
+                    data:{
+                        tipo: tipo
+                    },
+                    success:function (msg) {
+                        bp = bootbox.dialog({
+                            id    : "dlgBuscarPartida",
+                            title : "Buscar Partida",
+                            class : "modal-lg",
+                            message : msg,
+                            buttons : {
+                                cancelar : {
+                                    label     : "Cancelar",
+                                    className : "btn-primary",
+                                    callback  : function () {
+                                    }
                                 }
-                            }
-                        } //buttons
-                    }); //dialog
-                }
-            });
+                            } //buttons
+                        }); //dialog
+                    }
+                });
+            }else{
+                bootbox.alert('<i class="fa fa-exclamation-triangle text-danger fa-3x"></i> ' + '<strong style="font-size: 14px">' + "Ingrese un presupuesto (1)" + '</strong>');
+                return false;
+            }
+
         });
 
 
         $(".buscarPartida2").click(function () {
             var tipo = $(this).data("tipo");
-            $.ajax({
-                type: 'POST',
-                url: '${createLink(controller: 'cronograma', action: 'buscarPartida_ajax')}',
-                data:{
-                    tipo: tipo
-                },
-                success:function (msg) {
-                    bp2 = bootbox.dialog({
-                        id    : "dlgBuscarPartida2",
-                        title : "Buscar Partida",
-                        class : "modal-lg",
-                        message : msg,
-                        buttons : {
-                            cancelar : {
-                                label     : "Cancelar",
-                                className : "btn-primary",
-                                callback  : function () {
+            if($("#presupuesto2").val() != ''){
+                $.ajax({
+                    type: 'POST',
+                    url: '${createLink(controller: 'cronograma', action: 'buscarPartida_ajax')}',
+                    data:{
+                        tipo: tipo
+                    },
+                    success:function (msg) {
+                        bp2 = bootbox.dialog({
+                            id    : "dlgBuscarPartida2",
+                            title : "Buscar Partida",
+                            class : "modal-lg",
+                            message : msg,
+                            buttons : {
+                                cancelar : {
+                                    label     : "Cancelar",
+                                    className : "btn-primary",
+                                    callback  : function () {
+                                    }
                                 }
-                            }
-                        } //buttons
-                    }); //dialog
-                }
-            });
-        });
-
-
+                            } //buttons
+                        }); //dialog
+                    }
+                });
+            }else{
+                bootbox.alert('<i class="fa fa-exclamation-triangle text-danger fa-3x"></i> ' + '<strong style="font-size: 14px">' + "Ingrese un presupuesto (2)" + '</strong>');
+                return false;
+            }
+         });
     });
 
     function cerrarDialogo(){

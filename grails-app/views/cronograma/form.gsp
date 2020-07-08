@@ -624,6 +624,7 @@
                                             className : "btn-success",
                                             callback  : function () {
                                                 guardarCronograma(mesesId,actividadId);
+                                                return false;
                                             } //callback
                                         } //guardar
                                     } //buttons
@@ -644,7 +645,7 @@
 
                         bootbox.dialog({
                             title   : "Alerta",
-                            message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i><p>" +
+                            message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
                                 "¿Está seguro que desea eliminar toda la información del registro del cronograma seleccionado?<br/>" +
                                 "Esta acción no se puede deshacer.</p>",
                             buttons : {
@@ -800,30 +801,37 @@
 
         function guardarCronograma(mes, actividad) {
             var $frm = $(".frmCrono");
-            // if ($frm.valid()) {
+            if ($frm.valid()) {
                 var $div = $("#divInfo");
                 var data = $frm.serialize();
                 data += "&anio=" + '${anio?.id}' + "&act=" + actividad + "&mes=" + mes;
-                %{--data += "&id=" + $div.data("crono") + "&mes=" + $div.data("mes") + "&anio=${anio.id}" + "&act=" + $div.data("actividad");--}%
+                var dialog = cargarLoader("Guardando...");
                 $.ajax({
                     type    : "POST",
                     url     : $frm.attr("action"),
                     data    : data,
                     success : function (msg) {
+
                         var parts = msg.split("*");
-                        log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                         if (parts[0] == "SUCCESS") {
+                            dialog.modal("hide");
+                            log(parts[1], "success");
                             setTimeout(function () {
-                                if (parts[0] == "SUCCESS") {
                                     location.reload(true);
-                                }
                             }, 1000);
-                        } else {
+                        }else{
+                            dialog.modal("hide");
+                            if(parts[0] == 'er'){
+                                bootbox.alert('<i class="fa fa-exclamation-triangle text-danger fa-3x"></i> ' + '<strong style="font-size: 14px">' + parts[1] + '</strong>');
+                                return false;
+                            }else{
+                                log(parts[1], "error");
+                            }
                         }
                     }
                 });
-            // }
-            return false;
+            }
+            // return false;
         }
     });
 </script>
