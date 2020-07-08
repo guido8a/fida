@@ -1,6 +1,13 @@
 <%--
   Created by IntelliJ IDEA.
   User: fabricio
+  Date: 08/07/20
+  Time: 13:33
+--%>
+
+<%--
+  Created by IntelliJ IDEA.
+  User: fabricio
   Date: 07/07/20
   Time: 11:25
 --%>
@@ -12,14 +19,14 @@
             <label>Buscar:</label>
         </div>
         <div class="col-md-3">
-            <g:select name="tipoB" from="${[0: 'Número', 1: 'Descripción']}" class="form-control" optionValue="value" optionKey="key"/>
+            <g:select name="buscarP" from="${[0: 'Provincia', 1: 'Cantón', 2: 'Parroquia']}" class="form-control" optionValue="value" optionKey="key"/>
         </div>
         <div class="col-md-4">
             <g:textField name="txtBuscar" value="${''}" class="form-control" />
         </div>
 
         <div class="col-md-4 btn-group">
-            <a href="#" class="btn btn-success" id="btnBuscarPartida">
+            <a href="#" class="btn btn-success" id="btnBuscarParroquia">
                 <i class="fa fa-search"></i> Buscar
             </a>
             <a href="#" class="btn btn-warning" id="btnLimpiarBusqueda">
@@ -31,13 +38,13 @@
     <table class="table table-condensed table-bordered table-striped table-hover" style="width:100%;margin-top: 20px !important;">
         <thead style="width: 100%">
         <th style="width: 10%"><i class="fa fa-check"></i> </th>
-        <th style="width: 20%">Número</th>
-        <th style="width: 70%">Descripcion</th>
+        <th style="width: 30%">Provincia</th>
+        <th style="width: 30%">Cantón</th>
+        <th style="width: 30%">Parroquia</th>
         </thead>
     </table>
 
-
-    <div id="divTablaPartida">
+    <div id="divTablaParroquia">
 
     </div>
 </g:form>
@@ -48,27 +55,26 @@
         $("#txtBuscar").val('')
     });
 
-    cargarTablaPartida($("#tipoB").val(), $("#txtBuscar").val());
+    cargarTablaParroquia($("#buscarP").val(), $("#txtBuscar").val());
 
-    $("#btnBuscarPartida").click(function (){
-        var operador = $("#tipoB").val();
+    $("#btnBuscarParroquia").click(function (){
+        var operador = $("#buscarP").val();
         var texto = $("#txtBuscar").val();
-        cargarTablaPartida(operador, texto);
+        cargarTablaParroquia(operador, texto);
     });
 
-    function cargarTablaPartida(operador, texto){
+    function cargarTablaParroquia(operador, texto){
         var dialog = cargarLoader("Cargando...");
         $.ajax({
             type: 'POST',
-            url: '${createLink(controller: 'cronograma', action: 'tablaBuscarPartida_ajax')}',
+            url: '${createLink(controller: 'parroquia', action: 'tablaBuscarParroquia_ajax')}',
             data:{
                 operador: operador,
-                texto: texto,
-                tipo: '${tipo}'
+                texto: texto
             },
             success: function (msg) {
                 dialog.modal('hide');
-                $("#divTablaPartida").html(msg)
+                $("#divTablaParroquia").html(msg)
             }
         });
     }

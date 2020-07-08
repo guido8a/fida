@@ -476,7 +476,7 @@ class CronogramaController {
     }
 
     def tablaBuscarPartida_ajax(){
-        println("params busqueda ptd " + params)
+//        println("params busqueda ptd " + params)
         def operador = ''
         if(params.operador == '0'){
             operador = 'prspnmro'

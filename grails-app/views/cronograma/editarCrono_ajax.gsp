@@ -189,12 +189,3 @@
         bp2.modal("hide")
     }
 </script>
-
-%{--        <div class="modal-footer">--}%
-%{--            <a href="#" class="btn btn-default" id="btnModalCancel">${fuentes.size() == 0 ? 'Cerrar' : 'Cancelar'}</a>--}%
-%{--            <g:if test="${fuentes.size() > 0}">--}%
-%{--                <a href="#" class="btn btn-success" id="btnModalSave"><i class="fa fa-save"></i> Guardar</a>--}%
-%{--            </g:if>--}%
-%{--        </div>--}%
-%{--    </div><!-- /.modal-content -->--}%
-%{--</div><!-- /.modal-dialog -->--}%

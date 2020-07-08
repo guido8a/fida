@@ -4,6 +4,8 @@ class ParroquiaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    def dbConnectionService
+
     def index() {
         redirect(action: "list", params: params)
     } //index
@@ -151,4 +153,36 @@ class ParroquiaController {
             render "no"
         }
     }
+
+    def buscarParroquia_ajax() {
+
+    }
+
+
+    def tablaBuscarParroquia_ajax(){
+//        println("params busqueda parro " + params)
+        def sql = ''
+        def operador = ''
+
+        switch (params.operador) {
+            case "0":
+                operador = "provnmbr"
+                break;
+            case '1':
+                operador = "cntnnmbr"
+            break;
+            case "2":
+                operador = "parrnmbr"
+            break;
+        }
+
+        def cn = dbConnectionService.getConnection()
+        sql = "select * from parr, prov, cntn where prov.prov__id = cntn.prov__id and cntn.cntn__id = parr.cntn__id and ${operador} ilike '%${params.texto}%' order by provnmbr asc"
+        def res = cn.rows(sql.toString())
+
+//        println("sql " + sql)
+
+        return [parroquias: res]
+    }
+
 } //fin controller

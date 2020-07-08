@@ -216,7 +216,7 @@
         });
 
         $("#btnMeta").click(function () {
-            location.href="${createLink(controller: 'meta', action: 'list')}"
+            location.href="${createLink(controller: 'meta', action: 'list')}/" + '${proy?.id}'
         });
 
         $("#btnFinanciamiento").click(function () {

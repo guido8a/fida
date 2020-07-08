@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="layout" content="main">
-    <title>Lista de Mestas</title>
+    <title>Lista de Metas</title>
 </head>
 
 <body>
@@ -19,39 +19,28 @@
 <!-- botones -->
 <div class="btn-toolbar toolbar">
     <div class="btn-group">
-        <a href="#" class="btn btn-default btnCrear">
+        <div class="btn-group">
+            <g:link controller="proyecto" action="proy" id="${proyecto?.id}" class="btn btn-sm btn-default">
+                <i class="fa fa-arrow-left"></i> Regresar a proyectos
+            </g:link>
+        </div>
+    </div>
+    <div class="btn-group">
+        <a href="#" class="btn btn-info btnCrearMeta">
             <i class="fa fa-file"></i> Nueva Meta
         </a>
-    </div>
-
-    <div class="btn-group pull-right col-md-3">
-        <div class="input-group">
-            <input type="text" class="form-control input-search" placeholder="Buscar" value="${params.search}">
-            <span class="input-group-btn">
-                <g:link controller="marcologico" action="list" class="btn btn-default btn-search">
-                    <i class="fa fa-search"></i>&nbsp;
-                </g:link>
-            </span>
-        </div><!-- /input-group -->
     </div>
 </div>
 
 <table class="table table-condensed table-bordered table-striped table-hover">
     <thead>
     <tr>
-
-        <th>Proyecto</th>
-
-        <th>Tipo Elemento</th>
-
-        <th>Marco Logico</th>
-
-        <th>Modificacion Proyecto</th>
-
-        <g:sortableColumn property="objeto" title="Objeto"/>
-
-        <g:sortableColumn property="monto" title="Monto"/>
-
+        <th>Parroquia</th>
+        <th>Actividad (Marco lógico)</th>
+        <th>Unidad</th>
+        <th>Indicador ORMS</th>
+        <th>Descripción</th>
+        <th>Valor</th>
     </tr>
     </thead>
     <tbody>
@@ -92,13 +81,18 @@
 %{--<elm:pagination total="${marcoLogicoInstanceCount}" params="${params}"/>--}%
 
 <script type="text/javascript">
+
+
+    $(".btnCrearMeta").click(function () {
+        createEditMeta()
+    });
+
     var id = null;
-    function submitFormMarcoLogico() {
-        var $form = $("#frmMarcoLogico");
-        var $btn = $("#dlgCreateEdit").find("#btnSave");
+    function submitFormMeta() {
+        var $form = $("#frmMeta");
+        var $btn = $("#dlgCreateEditMeta").find("#btnSave");
         if ($form.valid()) {
             $btn.replaceWith(spinner);
-            openLoader("Guardando MarcoLogico");
             $.ajax({
                 type    : "POST",
                 url     : $form.attr("action"),
@@ -160,20 +154,18 @@
             }
         });
     }
-    function createEditRow(id) {
+    function createEditMeta(id) {
         var title = id ? "Editar" : "Crear";
         var data = id ? {id : id} : {};
         $.ajax({
             type    : "POST",
-            url     : "${createLink(controller:'marcoLogico', action:'form_ajax')}",
+            url     : "${createLink(controller:'meta', action:'form_ajax')}",
             data    : data,
             success : function (msg) {
                 var b = bootbox.dialog({
-                    id    : "dlgCreateEdit",
-                    title : title + " MarcoLogico",
-
+                    id    : "dlgCreateEditMeta",
+                    title : title + " Meta",
                     class : "modal-lg",
-
                     message : msg,
                     buttons : {
                         cancelar : {
@@ -187,7 +179,7 @@
                             label     : "<i class='fa fa-save'></i> Guardar",
                             className : "btn-success",
                             callback  : function () {
-                                return submitForm();
+                                return submitFormMeta();
                             } //callback
                         } //guardar
                     } //buttons
