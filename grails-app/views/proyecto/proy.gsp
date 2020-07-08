@@ -62,8 +62,8 @@
         <a href="#" id="btnVerCronograma" class="btn btn-sm btn-info" title="Ver cronograma">
             <i class="fa fa-calendar-alt"></i> Ver Cronograma
         </a>
-        <a href="#" id="btnVer" class="btn btn-sm btn-info"  title="Ver registro">
-            <i class="fa fa-search"></i> Editar Cronograma
+        <a href="#" id="btnMeta" class="btn btn-sm btn-info"  title="Ver metas">
+            <i class="fa fa-bullseye"></i> Metas
         </a>
         <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
@@ -213,6 +213,10 @@
 
         $("#btnVerCronograma").click(function () {
             location.href="${createLink(controller: 'cronograma', action: 'show')}/" + '${proy?.id}'
+        });
+
+        $("#btnMeta").click(function () {
+            location.href="${createLink(controller: 'meta', action: 'list')}"
         });
 
         $("#btnFinanciamiento").click(function () {
