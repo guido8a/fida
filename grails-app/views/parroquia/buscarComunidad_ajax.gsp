@@ -19,7 +19,7 @@
             <label>Buscar:</label>
         </div>
         <div class="col-md-3">
-            <g:select name="buscarP" from="${[2: 'Parroquia', 1: 'Cantón', 0: 'Provincia']}" class="form-control" optionValue="value" optionKey="key"/>
+            <g:select name="buscarP" from="${[3: 'Comunidad', 2: 'Parroquia', 1: 'Cantón', 0: 'Provincia']}" class="form-control" optionValue="value" optionKey="key"/>
         </div>
         <div class="col-md-4">
             <g:textField name="txtBuscar" value="${''}" class="form-control" />
@@ -37,10 +37,11 @@
 
     <table class="table table-condensed table-bordered table-striped table-hover" style="width:100%;margin-top: 20px !important;">
         <thead style="width: 100%">
-        <th style="width: 10%"><i class="fa fa-check"></i> </th>
-        <th style="width: 20%">Provincia</th>
-        <th style="width: 30%">Cantón</th>
-        <th style="width: 40%">Parroquia</th>
+        <th style="width: 5%"><i class="fa fa-check"></i> </th>
+        <th style="width: 15%">Provincia</th>
+        <th style="width: 20%">Cantón</th>
+        <th style="width: 30%">Parroquia</th>
+        <th style="width: 30%">Comunidad</th>
         </thead>
     </table>
 
@@ -75,7 +76,7 @@
         var dialog = cargarLoader("Cargando...");
         $.ajax({
             type: 'POST',
-            url: '${createLink(controller: 'parroquia', action: 'tablaBuscarParroquia_ajax')}',
+            url: '${createLink(controller: 'parroquia', action: 'tablaBuscarComunidad_ajax')}',
             data:{
                 operador: operador,
                 texto: texto

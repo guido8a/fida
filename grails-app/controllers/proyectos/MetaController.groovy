@@ -40,7 +40,9 @@ class MetaController {
             meta = new Meta()
         }
 
+        params.valor = params.valor.toDouble()
         meta.properties = params
+
 
         if(!meta.save(flush: true)){
             println("error al guardar la meta " + meta.errors)
@@ -48,9 +50,6 @@ class MetaController {
         }else{
             render "ok_Meta guardada correctamente"
         }
-
-
-
 
     }
 

@@ -43,7 +43,7 @@
            class="btn btn-sm btn-info" title="Consultar artículo">
             <i class="fas fa-clipboard-check"></i> Base de Conocimiento
         </a>
-        <a href="${createLink(controller: 'documento', action: 'listProyecto_ajax')}" id="btnConsultar"
+        <a href="${createLink(controller: 'documento', action: 'listProyecto')}" id="btnConsultar"
            class="btn btn-sm btn-info" title="Consultar artículo">
             <i class="fas fa-book-reader"></i> Biblioteca
         </a>

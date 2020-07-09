@@ -10,6 +10,11 @@ body {
     color       : #444;
 }
 
+.show-label {
+    font-weight : bold;
+    text-align: right;
+}
+
 .bloqueo {
     width    : 200px;
     height   : 240px;

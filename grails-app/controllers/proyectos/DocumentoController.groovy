@@ -149,7 +149,7 @@ class DocumentoController {
     /**
      * Acción llamada con ajax que muestra y permite modificar los documentos de un proyecto
      */
-    def listProyecto_ajax() {
+    def listProyecto() {
         def proyecto = Proyecto.get(1)
         return [proyecto: proyecto]
     }

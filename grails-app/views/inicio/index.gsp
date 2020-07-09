@@ -12,8 +12,8 @@
     }
 
     .item {
-        width: 320px;
-        height: 220px;
+        width: 260px;
+        height: 225px;
         float: left;
         margin: 4px;
         font-family: 'open sans condensed';
@@ -51,7 +51,7 @@
 
     .texto {
         width: 90%;
-        height: 50px;
+        /*height: 50px;*/
         padding-top: 0px;
         margin: auto;
         margin: 8px;
@@ -87,7 +87,7 @@
         </h2>
     </div>
 
-    <div class="body ui-corner-all" style="width: 680px;position: relative;margin: auto;margin-top: 40px;height: 280px; ">
+    <div class="body ui-corner-all" style="width: 860px;position: relative;margin: auto;margin-top: 40px;height: 280px; ">
 
 
         <a href= "${createLink(controller:'proyecto', action: 'proy', id:1)}" style="text-decoration: none">
@@ -100,6 +100,22 @@
 
                 <div class="texto">
                     <span class="text-success"><strong>Proyecto</strong></span></div>
+            </div>
+        </div>
+        </a>
+
+        <a href= "${createLink(controller:'taller', action: 'listTaller')}" style="text-decoration: none">
+        <div class="ui-corner-all item fuera">
+            <div class="ui-corner-all item" style="padding-left: 10px; padding-right: 10px">
+                <div class="imagen">
+                    <asset:image src="apli/taller.png" title="Talleres" width="100%" height="100%"/>
+                </div>
+                <span class="texto">
+                    <span class="text-success"><strong>Talleres</strong></span>
+                </span>
+                <div style="display: inline">
+                Fortalecimiento de las capacidades de las familias y sus organizaciones
+                </div>
             </div>
         </div>
         </a>
@@ -117,6 +133,20 @@
         </div>
         </a>
 
+        <a href= "${createLink(controller:'proyecto', action: 'registroProyecto')}" style="text-decoration: none">
+        <div class="ui-corner-all item fuera">
+            <div class="ui-corner-all item">
+                <div class="imagen">
+                    <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="100%" height="100%"/>
+                </div>
+                <div class="texto">
+                    <span class="text-success"><strong>Plan Operativo Anual</strong></span>
+                </div>
+            </div>
+        </div>
+        </a>
+
+%{--
         <a href= "${createLink(controller:'canton', action: 'arbol')}" style="text-decoration: none">
             <div class="ui-corner-all item2 fuera">
                 <div class="ui-corner-all item2">
@@ -131,6 +161,7 @@
                 </div>
             </div>
         </a>
+--}%
 
 
 

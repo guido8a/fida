@@ -63,4 +63,9 @@ class UnidadEjecutora implements Auditable{
         fechaInicio(blank: true, nullable: true)
         fechaFin(blank: true, nullable: true)
     }
+
+    @Override
+    String toString() {
+        return this.nombre
+    }
 }

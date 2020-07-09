@@ -1,5 +1,5 @@
 
-<%@ page import="janus.Parroquia" %>
+<%@ page import="geografia.Parroquia" %>
 <!doctype html>
 <html>
     <head>
