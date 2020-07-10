@@ -155,7 +155,7 @@
                 var b = bootbox.dialog({
                     id    : "dlgCreateEditMeta",
                     title : title + " Meta",
-                    class : "modal-lg",
+                    // class : "modal-lg",
                     message : msg,
                     buttons : {
                         cancelar : {

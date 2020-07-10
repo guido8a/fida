@@ -13,7 +13,7 @@
                 <label for="parroquia" class="col-md-3 control-label">
                     Parroquia
                 </label>
-                <div class="col-md-7">
+                <div class="col-md-9">
                     <g:hiddenField name="parroquia" value="${meta?.parroquia?.id}"/>
                     <span class="grupo">
                         <div class="input-group input-group-sm" >
@@ -32,7 +32,7 @@
                 <label for="marcoLogico" class="col-md-3 control-label">
                     Actividad (Marco lógico)
                 </label>
-                <div class="col-md-7">
+                <div class="col-md-9">
                     <g:select name="marcoLogico" from="${actividades}" optionKey="id" optionValue="objeto" value="${meta?.marcoLogico?.id}" class="many-to-one form-control input-sm"/>
                 </div>
             </span>
@@ -42,7 +42,7 @@
                 <label for="unidad" class="col-md-3 control-label">
                     Unidad
                 </label>
-                <div class="col-md-7">
+                <div class="col-md-9">
                     <g:select name="unidad" from="${parametros.proyectos.Unidad.list().sort{it.descripcion}}" optionKey="id" optionValue="descripcion" value="${meta?.unidad?.id}" class="many-to-one form-control input-sm"/>
                 </div>
             </span>
@@ -52,7 +52,7 @@
                 <label for="indicadorOrms" class="col-md-3 control-label">
                     Indicador ORMS
                 </label>
-                <div class="col-md-7">
+                <div class="col-md-9">
                     <g:select name="indicadorOrms" from="${parametros.proyectos.IndicadorOrms.list().sort{it.descripcion}}" optionKey="id" optionValue="descripcion" value="${meta?.indicadorOrms?.id}" class="many-to-one form-control input-sm"/>
                 </div>
             </span>
@@ -62,7 +62,7 @@
                 <label for="descripcion" class="col-md-3 control-label">
                     Descripción
                 </label>
-                <div class="col-md-7">
+                <div class="col-md-9">
                     <g:textArea name="descripcion" style="height: 100px; resize: none;" maxlength="255" value="${meta?.descripcion}" class="many-to-one form-control input-sm required"/>
                 </div>
             </span>
@@ -72,7 +72,7 @@
                 <label for="valor" class="col-md-3 control-label">
                     Valor
                 </label>
-                <div class="col-md-7">
+                <div class="col-md-4">
                     <g:textField name="valor" value="${meta?.valor}" class="many-to-one form-control input-sm"/>
                 </div>
             </span>
