@@ -192,7 +192,12 @@ class TallerController {
     def comunidad_ajax(){
         def parroquia = Parroquia.get(params.id)
         def cantones = Comunidad.findAllByParroquia(parroquia)
-        def taller = Taller.get(params.taller)
+        def taller
+        if(params.tipo == '3'){
+            taller = PersonaTaller.get(params.taller)
+        }else{
+           taller = Taller.get(params.taller)
+        }
         return [cantones: cantones, taller: taller]
     }
 

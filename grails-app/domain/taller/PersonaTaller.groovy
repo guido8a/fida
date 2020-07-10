@@ -21,6 +21,7 @@ class PersonaTaller implements Auditable{
     String sexo
     String discapacidad
     String direccion
+    String telefono
 
     static auditable = true
 
@@ -48,13 +49,14 @@ class PersonaTaller implements Auditable{
             sexo column: 'prtlsexo'
             discapacidad column: 'prtldscp'
             direccion column: 'prtldire'
+            telefono column: 'prtltelf'
         }
     }
     static constraints = {
         comunidad(blank: true, nullable: true)
         parroquia(blank: false, nullable: false)
         raza(blank: false, nullable: false)
-        cedula(size: 3..10, blank: false)
+        cedula(size: 3..10, blank: false, nullable: false)
         nombre(size: 3..255, blank: false)
         apellido(size: 3..255, blank: false)
         fecha(blank: false, nullable: false, attributes: [title: 'Fecha de inicio'])
@@ -63,6 +65,8 @@ class PersonaTaller implements Auditable{
         sexo(blank: false, nullable: false)
         discapacidad(blank: false, nullable: false)
         direccion(blank: true, nullable: true)
+        telefono(blank: true, nullable: true)
+        mail(blank: true, nullable: true)
     }
 
     String toString() {

@@ -39,6 +39,8 @@
 
 <script type="text/javascript">
 
+    var bpt
+
     function reloadTablaTaller(search) {
         var data = {
             id : "${taller.id}"
@@ -57,14 +59,14 @@
     }
 
     function submitFormTaller() {
-        var $form = $("#frmTaller");
+        var $form = $("#frmPersonaTaller");
         var $btn = $("#dlgCreateEdit").find("#btnSave");
         // $form.validate();
         // console.log('submit');
         if ($form.valid()) {
             // console.log('submit--')
             $btn.replaceWith(spinner);
-            openLoader("Guardando Taller");
+            var dialog = cargarLoader("Guardando...");
             var formData = new FormData($form[0]);
             $.ajax({
                 url         : $form.attr("action"),
@@ -75,15 +77,20 @@
                 contentType : false,
                 processData : false,
                 success     : function (msg) {
+                    dialog.modal('hide');
                     var parts = msg.split("*");
-                    log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                    closeLoader();
                     if (parts[0] == "SUCCESS") {
+                        log(parts[1],"success");
                         reloadTablaTaller();
-                        $("#dlgCreateEdit").modal("hide");
+                        bpt.modal("hide");
                     } else {
-                        spinner.replaceWith($btn);
-                        return false;
+                        if(parts[0] == 'er'){
+                            bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> " + parts[1])
+                        }else{
+                            spinner.replaceWith($btn);
+                            log(parts[1],"error");
+                            return false;
+                        }
                     }
                 },
                 error       : function () {
@@ -94,11 +101,11 @@
             return false;
         } //else
     }
-    function deleteTaller(itemId) {
+    function boorarPersonaTaller(itemId) {
         bootbox.dialog({
             title   : "Alerta",
             message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
-                    "¿Está seguro que desea eliminar el Taller seleccionado? Esta acción no se puede deshacer.</p>",
+                    "¿Está seguro que desea eliminar la persona del taller seleccionado? Esta acción no se puede deshacer.</p>",
             buttons : {
                 cancelar : {
                     label     : "Cancelar",
@@ -113,7 +120,7 @@
                         openLoader("Eliminando Taller");
                         $.ajax({
                             type    : "POST",
-                            url     : '${createLink(controller:'taller', action:'delete_ajax')}',
+                            url     : '${createLink(controller:'personaTaller', action:'delete_ajax')}',
                             data    : {
                                 id : itemId
                             },
@@ -132,15 +139,19 @@
         });
     }
 
-    function createEditTaller(id) {
-        var title = id ? "Editar" : "Crear";
-        var data = id ? {id : id} : {};
+    function createEditPersonaTaller(id) {
+        var title = id ? "Editar" : "Nueva";
+        %{--var data = id ? {id : id} : {};--}%
+        %{--data += '&taller=' + '${taller?.id}';--}%
         $.ajax({
             type    : "POST",
             url     : "${createLink(controller:'personaTaller', action:'formPersonaTaller_ajax')}",
-            data    : data,
+            data    : {
+                id: id,
+                taller: '${taller?.id}'
+            },
             success : function (msg) {
-                var b = bootbox.dialog({
+                bpt = bootbox.dialog({
                     id      : "dlgCreateEdit",
                     title   : title + " Asistentes al Taller",
                     message : msg,
@@ -162,7 +173,7 @@
                     } //buttons
                 }); //dialog
                 setTimeout(function () {
-                    b.find(".form-control").first().focus()
+                    bpt.find(".form-control").first().focus()
                 }, 500);
             } //success
         }); //ajax
@@ -195,7 +206,7 @@
         }
     });
     $("#btnPrtl").click(function () {
-        createEditTaller();
+        createEditPersonaTaller();
     });
 
 

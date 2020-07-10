@@ -64,6 +64,7 @@ class PersonaTallerController {
      */
     def formPersonaTaller_ajax() {
         println "formPersonaTaller_ajax: $params"
+        def taller = Taller.get(params.taller)
         def lugar = ""
         def prtlInstance = new PersonaTaller()
         if (params.id) {
@@ -75,11 +76,12 @@ class PersonaTallerController {
             }
         }
         prtlInstance.properties = params
-        if(prtlInstance.comunidad) {
-            lugar = "${prtlInstance.comunidad.nombre} Parr: ${prtlInstance.parroquia.nombre} " +
+        if(prtlInstance?.parroquia){
+            lugar = "${prtlInstance.parroquia.nombre} " +
                     "(${prtlInstance.parroquia.canton.provincia.nombre})"
         }
-        return [prtlInstance: prtlInstance, lugar: lugar]
+
+        return [prtlInstance: prtlInstance, lugar: lugar, taller: taller]
     } //form para cargar con ajax en un dialog
 
     /**
@@ -87,7 +89,7 @@ class PersonaTallerController {
      * @render ERROR*[mensaje] cuando no se pudo grabar correctamente, SUCCESS*[mensaje] cuando se grabó correctamente
      */
     def save_ajax() {
-        def taller
+        def personaTaller
         def texto
         def cmnd = null
 
@@ -102,22 +104,21 @@ class PersonaTallerController {
             params.fechaFin = params.fechaFin ? new Date().parse("dd-MM-yyyy", params.fechaFin) : null
 
             if(params.id){
-                taller = Taller.get(params.id)
-                texto = "Taller actualizada correctamente"
+                personaTaller = PersonaTaller.get(params.id)
+                texto = "Persona actualizada correctamente"
             }else{
-                taller = new Taller()
-                texto = "Taller creado correctamente"
+                personaTaller = new PersonaTaller()
+                texto = "Persona creada correctamente"
             }
 
-            taller.properties = params
-            taller.fecha = new Date()
-            taller.valor = params.valor.toDouble()
-            taller.parroquia = parroquia
-            taller.comunidad = cmnd
+            personaTaller.properties = params
+            personaTaller.fecha = new Date()
+            personaTaller.parroquia = parroquia
+            personaTaller.comunidad = cmnd
 
-            if(!taller.save(flush:true)){
-                println "Error en save de taller ejecutora\n" + taller.errors
-                render "no*Error al guardar la taller"
+            if(!personaTaller.save(flush:true)){
+                println "Error en save de persona taller\n" + personaTaller.errors
+                render "no*Error al guardar la persona"
             }else{
                 render "SUCCESS*" + texto
             }
@@ -138,20 +139,14 @@ class PersonaTallerController {
                 return
             }
             try {
-                def path = servletContext.getRealPath("/") + "prsnTallersProyecto/" + prtlInstance.prsnTaller
                 prtlInstance.delete(flush: true)
-                println path
-                def f = new File(path)
-                println f.delete()
-                render "SUCCESS*Eliminación de PersonaTaller exitosa."
-                return
+                render "SUCCESS*Eliminación de Persona del taller exitosa."
             } catch (DataIntegrityViolationException e) {
+                println("error al borrar la persona del taller " + e)
                 render "ERROR*Ha ocurrido un error al eliminar PersonaTaller"
-                return
             }
         } else {
             render "ERROR*No se encontró PersonaTaller."
-            return
         }
     } //delete para eliminar via ajax
 
