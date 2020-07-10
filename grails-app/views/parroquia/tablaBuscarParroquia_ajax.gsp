@@ -37,7 +37,9 @@
 
         $("#parroquiaTexto").val(nombre + " (" + provincia + ")");
         $("#parroquia").val(id);
+        $(".buscarParroquia").removeAttr('disabled');
         cerrarDialogoParroquia();
+
     });
 
 </script>

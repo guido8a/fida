@@ -88,6 +88,7 @@
 
         $(".buscarParroquia").click(function () {
             var dialog = cargarLoader("Cargando...");
+            $(this).attr('disabled','disabled');
             $.ajax({
                 type: 'POST',
                 url: '${createLink(controller: 'parroquia', action: 'buscarParroquia_ajax')}',
@@ -95,6 +96,7 @@
                 },
                 success:function (msg) {
                     dialog.modal('hide');
+                    // $(".buscarParroquia").removeAttr('disabled');
                     bp = bootbox.dialog({
                         id    : "dlgBuscarParroquia",
                         title : "Buscar Parroquia",
@@ -105,6 +107,7 @@
                                 label     : "Cancelar",
                                 className : "btn-primary",
                                 callback  : function () {
+                                    $(".buscarParroquia").removeAttr('disabled');
                                 }
                             }
                         } //buttons
