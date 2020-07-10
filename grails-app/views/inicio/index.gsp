@@ -92,14 +92,18 @@
 
         <a href= "${createLink(controller:'proyecto', action: 'proy', id:1)}" style="text-decoration: none">
         <div class="ui-corner-all item fuera">
-            <div class="ui-corner-all item">
+            <div class="ui-corner-all item" style="padding-left: 10px; padding-right: 10px">
                 <div class="imagen">
                     <asset:image src="apli/proyecto.png" title="Marco lógico de Proyecto"  width="100%"
                                  height="100%"/>
                 </div>
 
-                <div class="texto">
-                    <span class="text-success"><strong>Proyecto</strong></span></div>
+                <span class="texto">
+                    <span class="text-success"><strong>Proyecto</strong></span>
+                </span>
+                <div style="display: inline">
+                    Fortalecimiento de los Actores Rurales de la Economía Popular y Solidaria
+                </div>
             </div>
         </div>
         </a>
@@ -122,12 +126,15 @@
 
         <a href= "${createLink(controller:'proyecto', action: 'registroProyecto')}" style="text-decoration: none">
         <div class="ui-corner-all item fuera">
-            <div class="ui-corner-all item">
+            <div class="ui-corner-all item" style="padding-left: 10px; padding-right: 10px">
                 <div class="imagen">
                     <asset:image src="apli/convenio.png" title="Convenios" width="100%" height="100%"/>
                 </div>
-                <div class="texto">
+                <span class="texto">
                     <span class="text-success"><strong>Convenios</strong></span>
+                </span>
+                <div style="display: inline">
+                    Convenios...
                 </div>
             </div>
         </div>
@@ -135,35 +142,51 @@
 
         <a href= "${createLink(controller:'proyecto', action: 'registroProyecto')}" style="text-decoration: none">
         <div class="ui-corner-all item fuera">
-            <div class="ui-corner-all item">
+            <div class="ui-corner-all item" style="padding-left: 10px; padding-right: 10px">
                 <div class="imagen">
                     <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="100%" height="100%"/>
                 </div>
-                <div class="texto">
+                <span class="texto">
                     <span class="text-success"><strong>Plan Operativo Anual</strong></span>
+                </span>
+                <div style="display: inline">
+                    POA...
                 </div>
             </div>
         </div>
         </a>
 
-%{--
-        <a href= "${createLink(controller:'canton', action: 'arbol')}" style="text-decoration: none">
-            <div class="ui-corner-all item2 fuera">
-                <div class="ui-corner-all item2">
-                    <div class="imagen2">
-                        <asset:image src="apli/plan.png" title="Plan Operativo Anual"  width="100%" height="100%"/>
-                    </div>
-
-                    <div style="margin-top: 50px; margin-left: 140px;">
-                        <span class="text-success" style="font-size: large"><strong>Plan Operativo Anual</strong></span></div>
-                        <span class="text-success" style="margin-top: 20px; margin-left: 30px; width: 400px; display: block">
-                            <strong>POA: Asignaciones de inversión - Ejecución del POA - Avales - Reformas </strong></span></div>
+        <a href= "${createLink(controller:'proyecto', action: 'registroProyecto')}" style="text-decoration: none">
+        <div class="ui-corner-all item fuera">
+            <div class="ui-corner-all item" style="padding-left: 10px; padding-right: 10px">
+                <div class="imagen">
+                    <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="100%" height="100%"/>
+                </div>
+                <span class="texto">
+                    <span class="text-success"><strong>Administración del POA</strong></span>
+                </span>
+                <div style="display: inline">
+                    Avales...
                 </div>
             </div>
+        </div>
         </a>
---}%
 
-
+        <a href= "${createLink(controller:'proyecto', action: 'registroProyecto')}" style="text-decoration: none">
+        <div class="ui-corner-all item fuera">
+            <div class="ui-corner-all item" style="padding-left: 10px; padding-right: 10px">
+                <div class="imagen">
+                    <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="100%" height="100%"/>
+                </div>
+                <span class="texto">
+                    <span class="text-success"><strong>Seguimiento</strong></span>
+                </span>
+                <div style="display: inline">
+                    Ejecución del POA...
+                </div>
+            </div>
+        </div>
+        </a>
 
     </div>
 

@@ -10,7 +10,7 @@ class PersonaTaller implements Auditable{
     Parroquia parroquia
     Comunidad comunidad
     Taller taller
-
+    Raza raza
     String cedula
     String nombre
     String apellido
@@ -37,6 +37,7 @@ class PersonaTaller implements Auditable{
             parroquia column: 'parr__id'
             comunidad column: 'cmnd__id'
             taller column: 'tllr__id'
+            raza column: 'raza__id'
             cedula column: 'prtlcdla'
             nombre column: 'prtlnmbr'
             apellido column: 'prtlapll'
@@ -52,6 +53,7 @@ class PersonaTaller implements Auditable{
     static constraints = {
         comunidad(blank: true, nullable: true)
         parroquia(blank: false, nullable: false)
+        raza(blank: false, nullable: false)
         cedula(size: 3..10, blank: false)
         nombre(size: 3..255, blank: false)
         apellido(size: 3..255, blank: false)
@@ -64,7 +66,7 @@ class PersonaTaller implements Auditable{
     }
 
     String toString() {
-        "${this.nombre}"
+        "${this.nombre} ${this.apellido}"
     }
 
 }

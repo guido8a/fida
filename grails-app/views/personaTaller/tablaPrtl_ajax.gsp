@@ -5,25 +5,27 @@
 <table id="tblDocumentos" class="table table-condensed table-hover table-striped table-bordered">
     <thead>
         <tr>
-            <th>Taller</th>
-            <th>Objetivo</th>
-            <th>Tipo de taller</th>
-            <th>Inicio</th>
-            <th>Fin</th>
-            <th>Valor</th>
-            <th>Instructor</th>
+            <th>Cédula</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Parroquia</th>
+            <th>Comunidad</th>
+            <th>Cargo</th>
+            <th>Sexo</th>
+            <th>Autodetermanación</th>
         </tr>
     </thead>
     <tbody id="tbDoc">
-        <g:each in="${taller}" var="tl">
-            <tr data-id="${tl.id}">
-                <td><elm:textoBusqueda busca="${params.search}">${tl.nombre}</elm:textoBusqueda></td>
-                <td><elm:textoBusqueda busca="${params.search}">${tl.objetivo}</elm:textoBusqueda></td>
-                <td>${tl.tipoTaller.descripcion}</td>
-                <td>${tl.fechaInicio}</td>
-                <td>${tl.fechaFin}</td>
-                <td>${tl.valor}</td>
-                <td><elm:textoBusqueda busca="${params.search}">${tl.instructor}</elm:textoBusqueda></td>
+        <g:each in="${prsnTaller}" var="pt">
+            <tr data-id="${pt.id}">
+                <td>${pt.cedula}</td>
+                <td><elm:textoBusqueda busca="${params.search}">${pt.nombre}</elm:textoBusqueda></td>
+                <td><elm:textoBusqueda busca="${params.search}">${pt.apellido}</elm:textoBusqueda></td>
+                <td>${pt.parroquia.nombre}</td>
+                <td>${pt.comunidad.nombre}</td>
+                <td>${pt.cargo}</td>
+                <td>${pt.sexo}</td>
+                <td><elm:textoBusqueda busca="${params.search}">${pt.raza}</elm:textoBusqueda></td>
 
             </tr>
         </g:each>

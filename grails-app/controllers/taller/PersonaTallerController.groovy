@@ -12,27 +12,6 @@ class PersonaTallerController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     /**
-     * Acción llamada con ajax que muestra un formulario para crear o modificar un elemento
-     * @return prsnTallerInstance el objeto a modificar cuando se encontró el elemento
-     * @render ERROR*[mensaje] cuando no se encontró el elemento
-     */
-    def formPrsnTaller_ajax() {
-        def prsnTaller = prsnTallerEjecutora.get(params.prsnTaller.toLong())
-        def prsnTallerInstance = new PersonaTaller()
-        if (params.id) {
-            prsnTallerInstance = PersonaTaller.get(params.id)
-            if (!prsnTallerInstance) {
-//                render "ERROR*No se encontró PersonaTaller."
-//                return
-                prsnTallerInstance = new PersonaTaller()
-            }
-        }
-        prsnTallerInstance.properties = params
-        prsnTallerInstance.prsnTallerEjecutora = prsnTaller
-        return [prsnTallerInstance: prsnTallerInstance]
-    } //form para cargar con ajax en un dialog
-
-    /**
      * Acción llamada con ajax que muestra y permite modificar los prsnTallers de un proyecto
      */
     def listPrtl() {
@@ -59,19 +38,19 @@ class PersonaTallerController {
 
     /**
      * Acción llamada con ajax que muestra la información de un elemento particular
-     * @return prsnTallerInstance el objeto a mostrar cuando se encontró el elemento
+     * @return prtlInstance el objeto a mostrar cuando se encontró el elemento
      * @render ERROR*[mensaje] cuando no se encontró el elemento
      */
     def show_ajax() {
         println "show_ajax: $params"
         if (params.id) {
-            def prsnTallerInstance = PersonaTaller.get(params.id)
-            if (!prsnTallerInstance) {
+            def prtlInstance = PersonaTaller.get(params.id)
+            if (!prtlInstance) {
                 render "ERROR*No se encontró PersonaTaller."
                 return
             }
-//            println ".... show_ajax ${prsnTallerInstance?.proyecto.nombre}"
-            return [prsnTallerInstance: prsnTallerInstance]
+//            println ".... show_ajax ${prtlInstance?.proyecto.nombre}"
+            return [prtlInstance: prtlInstance]
         } else {
             render "ERROR*No se encontró PersonaTaller."
         }
@@ -79,27 +58,27 @@ class PersonaTallerController {
 
     /**
      * Acción llamada con ajax que muestra un formulario para crear o modificar un elemento
-     * @return prsnTallerInstance el objeto a modificar cuando se encontró el elemento
+     * @return prtlInstance el objeto a modificar cuando se encontró el elemento
      * @render ERROR*[mensaje] cuando no se encontró el elemento
      */
     def formPersonaTaller_ajax() {
         println "formPersonaTaller_ajax: $params"
         def lugar = ""
-        def prsnTallerInstance = new PersonaTaller()
+        def prtlInstance = new PersonaTaller()
         if (params.id) {
-            prsnTallerInstance = PersonaTaller.get(params.id)
-            if (!prsnTallerInstance) {
+            prtlInstance = PersonaTaller.get(params.id)
+            if (!prtlInstance) {
 //                render "ERROR*No se encontró PersonaTaller."
 //                return
-                prsnTallerInstance = new PersonaTaller()
+                prtlInstance = new PersonaTaller()
             }
         }
-        prsnTallerInstance.properties = params
-        if(prsnTallerInstance.comunidad) {
-            lugar = "${prsnTallerInstance.comunidad.nombre} Parr: ${prsnTallerInstance.parroquia.nombre} " +
-                    "(${prsnTallerInstance.parroquia.canton.provincia.nombre})"
+        prtlInstance.properties = params
+        if(prtlInstance.comunidad) {
+            lugar = "${prtlInstance.comunidad.nombre} Parr: ${prtlInstance.parroquia.nombre} " +
+                    "(${prtlInstance.parroquia.canton.provincia.nombre})"
         }
-        return [prsnTallerInstance: prsnTallerInstance, lugar: lugar]
+        return [prtlInstance: prtlInstance, lugar: lugar]
     } //form para cargar con ajax en un dialog
 
     /**
@@ -143,14 +122,14 @@ class PersonaTallerController {
      */
     def delete_ajax() {
         if (params.id) {
-            def prsnTallerInstance = PersonaTaller.get(params.id)
-            if (!prsnTallerInstance) {
+            def prtlInstance = PersonaTaller.get(params.id)
+            if (!prtlInstance) {
                 render "ERROR*No se encontró PersonaTaller."
                 return
             }
             try {
-                def path = servletContext.getRealPath("/") + "prsnTallersProyecto/" + prsnTallerInstance.prsnTaller
-                prsnTallerInstance.delete(flush: true)
+                def path = servletContext.getRealPath("/") + "prsnTallersProyecto/" + prtlInstance.prsnTaller
+                prtlInstance.delete(flush: true)
                 println path
                 def f = new File(path)
                 println f.delete()

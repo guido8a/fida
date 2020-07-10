@@ -2,7 +2,7 @@
 
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
 %{--<script type="text/javascript" src="${resource(dir: 'js/plugins/jquery-validation-1.13.1/dist', file: 'additional-methods.min.js')}"></script>--}%
-<g:if test="${!tallerInstance}">
+<g:if test="${!prtlInstance}">
     <elm:notFound elem="Taller" genero="o"/>
 </g:if>
 <g:else>
@@ -11,7 +11,7 @@
         <g:form class="form-horizontal" name="frmTaller" controller="taller" action="save_ajax" method="POST">
 %{--        <g:form class="form-horizontal" name="frmTaller" controller="taller" action="save_ajax" method="POST"--}%
 %{--                attrs.enctype = "multipart/form-data">--}%
-            <g:hiddenField name="id" value="${tallerInstance?.id}"/>
+            <g:hiddenField name="id" value="${prtlInstance?.id}"/>
 
 
             <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'comunidad', 'error')} ">
@@ -20,7 +20,7 @@
                         Comunidad
                     </label>
                     <div class="col-md-9">
-                        <g:hiddenField name="comunidad" id="comunidad" value="${tallerInstance?.comunidad?.id}"/>
+                        <g:hiddenField name="comunidad" id="comunidad" value="${prtlInstance?.comunidad?.id}"/>
                         <span class="grupo">
                             <div class="input-group input-group-sm" >
                                 <input type="text" class="form-control buscarComunidad" name="comunidadName"
@@ -42,7 +42,7 @@
                         Parroquia
                     </label>
                     <div class="col-md-9">
-                        <g:hiddenField name="parroquia" id="parroquia" value="${tallerInstance?.parroquia?.id}"/>
+                        <g:hiddenField name="parroquia" id="parroquia" value="${prtlInstance?.parroquia?.id}"/>
                         <span class="grupo">
                             <div class="input-group input-group-sm" >
                                 <input type="text" class="form-control buscarParroquia" name="parroquiaName"
@@ -59,79 +59,22 @@
             </div>
 
 
-            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'unidadEjecutora', 'error')} ">
+            <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'raza', 'error')} ">
                 <span class="grupo">
-                    <label for="unidadEjecutora" class="col-md-3 control-label">
-                        Organización
+                    <label for="raza" class="col-md-3 control-label">
+                        Raza
                     </label>
 
                     <div class="col-md-9">
-                        <g:select id="unidadEjecutora" name="unidadEjecutora.id"
-                                  from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(1))}"
-                                  optionKey="id" value="${tallerInstance?.unidadEjecutora?.id}"
+                        <g:select id="raza" name="raza.id"
+                                  from="${taller.Raza.list()}"
+                                  optionKey="id" value="${prtlInstance?.raza?.id}"
                                   class="many-to-one form-control input-sm"/>
                     </div>
                 </span>
             </div>
 
-            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'unidadEps', 'error')} ">
-                <span class="grupo">
-                    <label for="unidadEps" class="col-md-3 control-label">
-                        Unidad EPS
-                    </label>
-
-                    <div class="col-md-9">
-                        <g:select id="unidadEps" name="unidadEps.id"
-                                  from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2))}"
-                                  optionKey="id" value="${tallerInstance?.unidadEps?.id}"
-                                  class="many-to-one form-control input-sm"/>
-                    </div>
-                </span>
-            </div>
-
-            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'institucion', 'error')} ">
-                <span class="grupo">
-                    <label for="institucion" class="col-md-3 control-label">
-                        Institución
-                    </label>
-
-                    <div class="col-md-9">
-                        <g:select id="institucion" name="institucion.id" from="${taller.Institucion.list()}"
-                                  optionKey="id" value="${tallerInstance?.institucion?.id}"
-                                  class="many-to-one form-control input-sm" noSelection="['null': '']"/>
-                    </div>
-                </span>
-            </div>
-
-            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'tipoTaller', 'error')} ">
-                <span class="grupo">
-                    <label for="tipoTaller" class="col-md-3 control-label">
-                        Tipo de Taller
-                    </label>
-
-                    <div class="col-md-9">
-                        <g:select id="tipoTaller" name="tipoTaller.id" from="${taller.TipoTaller.list()}"
-                                  optionKey="id" value="${tallerInstance?.tipoTaller?.id}"
-                                  class="many-to-one form-control input-sm" noSelection="['null': '']"/>
-                    </div>
-                </span>
-            </div>
-
-            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'capacidad', 'error')} ">
-                <span class="grupo">
-                    <label for="capacidad" class="col-md-3 control-label">
-                        Capacidad del PFI
-                    </label>
-
-                    <div class="col-md-9">
-                        <g:select id="capacidad" name="capacidad.id" from="${taller.Capacidad.list()}"
-                                  optionKey="id" value="${tallerInstance?.capacidad?.id}"
-                                  class="many-to-one form-control input-sm" noSelection="['null': '']"/>
-                    </div>
-                </span>
-            </div>
-
-            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'nombre', 'error')} ">
+            <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'nombre', 'error')} ">
                 <span class="grupo">
                     <label for="nombre" class="col-md-3 control-label">
                         Nombre
@@ -139,74 +82,71 @@
 
                     <div class="col-md-9">
                         <g:textField name="nombre" maxlength="63" class="form-control input-sm required"
-                                     value="${tallerInstance?.nombre}"/>
+                                     value="${prtlInstance?.nombre}"/>
                     </div>
                 </span>
             </div>
 
-            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'objetivo', 'error')} ">
+            <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'apellido', 'error')} ">
                 <span class="grupo">
-                    <label for="objetivo" class="col-md-3 control-label">
-                        Objetivo
+                    <label for="apellido" class="col-md-3 control-label">
+                        Apellido
                     </label>
 
                     <div class="col-md-9">
-                        <g:textArea name="objetivo" rows="2" maxlength="1024" class="form-control input-sm"
-                                    value="${tallerInstance?.objetivo}"/>
+                        <g:textField name="apellido" maxlength="63" class="form-control input-sm required"
+                                     value="${prtlInstance?.apellido}"/>
                     </div>
                 </span>
             </div>
 
-            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'objetivo', 'error')} ">
-                <label for="fechaInicio" class="col-md-3 control-label">
-                    Fecha Inicio
+            <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'cargo', 'error')} ">
+                <span class="grupo">
+                    <label for="cargo" class="col-md-3 control-label">
+                        Cargo
+                    </label>
+
+                    <div class="col-md-9">
+                        <g:textField name="cargo" maxlength="63" class="form-control input-sm required"
+                                     value="${prtlInstance?.cargo}"/>
+                    </div>
+                </span>
+            </div>
+
+            <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'direccion', 'error')} ">
+                <span class="grupo">
+                    <label for="direccion" class="col-md-3 control-label">
+                        Dirección
+                    </label>
+
+                    <div class="col-md-9">
+                        <g:textArea name="direccion" rows="2" maxlength="1024" class="form-control input-sm"
+                                    value="${prtlInstance?.direccion}"/>
+                    </div>
+                </span>
+            </div>
+
+            <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'titulo', 'error')} ">
+                <label for="titulo" class="col-md-3 control-label">
+                    Titulo
                 </label>
                     <span class="grupo">
                         <div class="col-md-3 ">
-                            <input name="fechaInicio" id='fechaInicio' type='text' class="form-control"
-                                   value="${tallerInstance?.fechaInicio?.format("dd-MM-yyyy")}"/>
-
-                            <p class="help-block ui-helper-hidden"></p>
+                            <g:textField name="titulo" maxlength="63" class="form-control input-sm"
+                                         value="${prtlInstance?.titulo}"/>
                         </div>
                     </span>
-                <label for="fechaFin" class="col-md-3 control-label">
-                    Fecha Fin
+                <label for="discapacidad" class="col-md-3 control-label">
+                    Discapacidad
                 </label>
                     <span class="grupo">
                         <div class="col-md-3">
-                            <input name="fechaFin" id='fechaFin' type='text' class="form-control"
-                                   value="${tallerInstance?.fechaFin?.format("dd-MM-yyyy")}"/>
-
-                            <p class="help-block ui-helper-hidden"></p>
+                            <g:textField name="discapacidad" maxlength="63" class="form-control input-sm required"
+                                         value="${prtlInstance?.discapacidad}"/>
                         </div>
                     </span>
             </div>
 
-            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'valor', 'error')} ">
-                <span class="grupo">
-                    <label for="valor" class="col-md-3 control-label">
-                        Valor del taller
-                    </label>
-
-                    <div class="col-md-4">
-                        <g:textField name="valor" class="form-control input-sm required"
-                                     value="${tallerInstance?.valor}"/>
-                    </div>
-                </span>
-            </div>
-
-            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'instructor', 'error')} ">
-                <span class="grupo">
-                    <label for="instructor" class="col-md-3 control-label">
-                        Instructor
-                    </label>
-
-                    <div class="col-md-9">
-                        <g:textField name="instructor" class="form-control input-sm required"
-                                     value="${tallerInstance?.instructor}"/>
-                    </div>
-                </span>
-            </div>
 
         </g:form>
     </div>

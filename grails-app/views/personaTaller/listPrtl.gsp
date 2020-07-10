@@ -11,7 +11,7 @@
     <div class="btn-toolbar toolbar">
 
     <div class="btn-group">
-        <a href="#" class="btn btn-sm btn-success" id="btnAddTllr">
+        <a href="#" class="btn btn-sm btn-success" id="btnPrtl">
             <i class="fa fa-plus"></i> Agregar Asistente
         </a>
     </div>
@@ -131,12 +131,12 @@
         var data = id ? {id : id} : {};
         $.ajax({
             type    : "POST",
-            url     : "${createLink(controller:'taller', action:'formTaller_ajax')}",
+            url     : "${createLink(controller:'personaTaller', action:'formPersonaTaller_ajax')}",
             data    : data,
             success : function (msg) {
                 var b = bootbox.dialog({
                     id      : "dlgCreateEdit",
-                    title   : title + " Taller de Fortalecimiento de Capacidades",
+                    title   : title + " Asistentes al Taller",
                     message : msg,
                     buttons : {
                         cancelar : {
@@ -188,7 +188,7 @@
             reloadTablaTaller($.trim($("#searchDoc").val()));
         }
     });
-    $("#btnAddTllr").click(function () {
+    $("#btnPrtl").click(function () {
         createEditTaller();
     });
 
