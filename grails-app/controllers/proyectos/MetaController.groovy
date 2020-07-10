@@ -50,7 +50,25 @@ class MetaController {
         }else{
             render "ok_Meta guardada correctamente"
         }
+    }
 
+    def borrarMeta_ajax(){
+
+        def meta = Meta.get(params.id)
+
+        try{
+            meta.delete(flush:true)
+            render "ok"
+        }catch(e){
+            println("error al borrar la meta " + e + meta.errors)
+            render "no"
+        }
+    }
+
+    def show_ajax(){
+        def meta = Meta.get(params.id)
+
+        return[meta: meta]
     }
 
 

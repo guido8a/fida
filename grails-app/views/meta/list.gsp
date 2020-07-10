@@ -101,10 +101,10 @@
             return false;
         } //else
     }
-    function deleteRow(itemId) {
+    function deleteRow(id) {
         bootbox.dialog({
             title   : "Alerta",
-            message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i><p>" +
+            message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
                 "¿Está seguro que desea eliminar la meta seleccionada? Esta acción no se puede deshacer.</p>",
             buttons : {
                 cancelar : {
@@ -114,28 +114,26 @@
                     }
                 },
                 eliminar : {
-                    label     : "<i class='fa fa-trash-o'></i> Eliminar",
+                    label     : "<i class='fa fa-trash'></i> Eliminar",
                     className : "btn-danger",
                     callback  : function () {
-                        %{--openLoader("Eliminando MarcoLogico");--}%
-                        %{--$.ajax({--}%
-                        %{--    type    : "POST",--}%
-                        %{--    url     : '${createLink(controller:'marcoLogico', action:'delete_ajax')}',--}%
-                        %{--    data    : {--}%
-                        %{--        id : itemId--}%
-                        %{--    },--}%
-                        %{--    success : function (msg) {--}%
-                        %{--        var parts = msg.split("*");--}%
-                        %{--        log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)--}%
-                        %{--        if (parts[0] == "SUCCESS") {--}%
-                        %{--            setTimeout(function () {--}%
-                        %{--                location.reload(true);--}%
-                        %{--            }, 1000);--}%
-                        %{--        } else {--}%
-                        %{--            closeLoader();--}%
-                        %{--        }--}%
-                        %{--    }--}%
-                        %{--});--}%
+                         $.ajax({
+                            type    : "POST",
+                            url     : '${createLink(controller:'meta', action:'borrarMeta_ajax')}',
+                            data    : {
+                                id : id
+                            },
+                            success : function (msg) {
+                                if (msg == 'ok') {
+                                    log("Meta borrada correctamente","success");
+                                    setTimeout(function () {
+                                        location.reload(true);
+                                    }, 1000);
+                                }else {
+                                    log("Error al borrar la meta","error");
+                                }
+                            }
+                        });
                     }
                 }
             }
@@ -204,7 +202,7 @@
                             },
                             success : function (msg) {
                                 bootbox.dialog({
-                                    title   : "Ver MarcoLogico",
+                                    title   : "Ver Meta",
                                     message : msg,
                                     buttons : {
                                         ok : {
