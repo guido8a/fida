@@ -103,10 +103,16 @@ class TallerController {
             }
         }
         tallerInstance.properties = params
-        if(tallerInstance.comunidad) {
-            lugar = "${tallerInstance.comunidad.nombre} Parr: ${tallerInstance.parroquia.nombre} " +
+//        if(tallerInstance.comunidad) {
+//            lugar = "${tallerInstance.comunidad.nombre} Parr: ${tallerInstance.parroquia.nombre} " +
+//                    "(${tallerInstance.parroquia.canton.provincia.nombre})"
+
+        if(tallerInstance?.parroquia){
+            lugar = "${tallerInstance.parroquia.nombre} " +
                     "(${tallerInstance.parroquia.canton.provincia.nombre})"
         }
+
+//        }
         return [tallerInstance: tallerInstance, lugar: lugar]
     } //form para cargar con ajax en un dialog
 
@@ -122,7 +128,7 @@ class TallerController {
         if(params.parroquia){
             def parroquia = Parroquia.get(params.parroquia)
 
-            if(params.comunidad){
+            if(params.comunidad != "null"){
                 cmnd = Comunidad.get(params.comunidad.toInteger())
             }
 
@@ -152,10 +158,6 @@ class TallerController {
         }else{
             render "er*Seleccione una parroquia!"
         }
-
-
-
-
     } //save para grabar desde ajax
 
     /**
@@ -190,7 +192,8 @@ class TallerController {
     def comunidad_ajax(){
         def parroquia = Parroquia.get(params.id)
         def cantones = Comunidad.findAllByParroquia(parroquia)
-        return [cantones: cantones]
+        def taller = Taller.get(params.taller)
+        return [cantones: cantones, taller: taller]
     }
 
 }

@@ -8,37 +8,13 @@
 <g:else>
 
     <div class="modal-contenido">
-        <g:form class="form-horizontal" name="frmTaller" controller="taller" action="save_ajax" method="POST">
-%{--        <g:form class="form-horizontal" name="frmTaller" controller="taller" action="save_ajax" method="POST"--}%
-%{--                attrs.enctype = "multipart/form-data">--}%
+        <g:form class="form-horizontal" name="frmTaller" controller="personaTaller" action="save_ajax" method="POST">
             <g:hiddenField name="id" value="${prtlInstance?.id}"/>
 
 
-            <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'comunidad', 'error')} ">
+            <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'parroquia', 'error')} ">
                 <span class="grupo">
-                    <label for="comunidad" class="col-md-3 control-label">
-                        Comunidad
-                    </label>
-                    <div class="col-md-9">
-                        <g:hiddenField name="comunidad" id="comunidad" value="${prtlInstance?.comunidad?.id}"/>
-                        <span class="grupo">
-                            <div class="input-group input-group-sm" >
-                                <input type="text" class="form-control buscarComunidad" name="comunidadName"
-                                       id="comunidadTexto" value="${lugar}">
-                                <span class="input-group-btn">
-                                    <a href="#" class="btn btn-info buscarComunidad" title="Buscar Comunidad">
-                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                    </a>
-                                </span>
-                            </div>
-                        </span>
-                    </div>
-                </span>
-            </div>
-
-            <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'parroquia', 'error')} ">
-                <span class="grupo">
-                    <label for="comunidad" class="col-md-3 control-label">
+                    <label for="parroquia" class="col-md-3 control-label">
                         Parroquia
                     </label>
                     <div class="col-md-9">
@@ -58,6 +34,15 @@
                 </span>
             </div>
 
+            <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'comunidad', 'error')} ">
+                <span class="grupo">
+                    <label class="col-md-3 control-label">
+                        Comunidad
+                    </label>
+                    <div class="col-md-9" id="divComunidadPersona">
+                    </div>
+                </span>
+            </div>
 
             <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'raza', 'error')} ">
                 <span class="grupo">
@@ -120,7 +105,7 @@
                     </label>
 
                     <div class="col-md-9">
-                        <g:textArea name="direccion" rows="2" maxlength="1024" class="form-control input-sm"
+                        <g:textArea name="direccion" rows="2" maxlength="1024" class="form-control input-sm" style="resize: none"
                                     value="${prtlInstance?.direccion}"/>
                     </div>
                 </span>
@@ -131,20 +116,32 @@
                     Titulo
                 </label>
                     <span class="grupo">
-                        <div class="col-md-3 ">
+                        <div class="col-md-6">
                             <g:textField name="titulo" maxlength="63" class="form-control input-sm"
                                          value="${prtlInstance?.titulo}"/>
                         </div>
                     </span>
+%{--                <label for="discapacidad" class="col-md-3 control-label">--}%
+%{--                    Discapacidad--}%
+%{--                </label>--}%
+%{--                    <span class="grupo">--}%
+%{--                        <div class="col-md-3">--}%
+%{--                            <g:textField name="discapacidad" maxlength="63" class="form-control input-sm required"--}%
+%{--                                         value="${prtlInstance?.discapacidad}"/>--}%
+%{--                        </div>--}%
+%{--                    </span>--}%
+            </div>
+
+            <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'titulo', 'error')} ">
                 <label for="discapacidad" class="col-md-3 control-label">
                     Discapacidad
                 </label>
-                    <span class="grupo">
-                        <div class="col-md-3">
-                            <g:textField name="discapacidad" maxlength="63" class="form-control input-sm required"
-                                         value="${prtlInstance?.discapacidad}"/>
-                        </div>
-                    </span>
+                <span class="grupo">
+                    <div class="col-md-9">
+                        <g:textField name="discapacidad" maxlength="63" class="form-control input-sm required"
+                                     value="${prtlInstance?.discapacidad}"/>
+                    </div>
+                </span>
             </div>
 
 
@@ -162,55 +159,34 @@
             return true;
         });
 
-        $(".buscarComunidad").click(function () {
-            var dialog = cargarLoader("Cargando...");
-            $.ajax({
-                type: 'POST',
-                url: '${createLink(controller: 'parroquia', action: 'buscarComunidad_ajax')}',
-                data:{
-                },
-                success:function (msg) {
-                    dialog.modal('hide');
-                    bp = bootbox.dialog({
-                        id    : "dlgBuscarComunidad",
-                        title : "Buscar Comunidad",
-                        class : "modal-lg",
-                        message : msg,
-                        buttons : {
-                            cancelar : {
-                                label     : "Cancelar",
-                                className : "btn-primary",
-                                callback  : function () {
-                                }
-                            }
-                        } //buttons
-                    }); //dialog
-                }
-            });
-        });
+
 
         $(".buscarParroquia").click(function () {
             var dialog = cargarLoader("Cargando...");
+            $(this).attr('disabled','disabled');
             $.ajax({
                 type: 'POST',
                 url: '${createLink(controller: 'parroquia', action: 'buscarParroquia_ajax')}',
                 data:{
+                    tipo: 3
                 },
                 success:function (msg) {
                     dialog.modal('hide');
                     bp = bootbox.dialog({
                         id    : "dlgBuscarComunidad",
-                        title : "Buscar Comunidad",
+                        title : "Buscar Parroquia",
                         class : "modal-lg",
+                        closeButton: false,
                         message : msg,
                         buttons : {
                             cancelar : {
                                 label     : "Cancelar",
                                 className : "btn-primary",
                                 callback  : function () {
+                                    $(".buscarParroquia").removeAttr('disabled');
                                 }
                             }
-                        } //buttons
+                        }
                     }); //dialog
                 }
             });
@@ -236,6 +212,24 @@
             sideBySide: true,
             showClose: true,
         });
+
+        if('${prtlInstance?.id}'){
+            comboComunidadPrincipal('${prtlInstance?.parroquia?.id}')
+        }
+
+        function comboComunidadPrincipal(id){
+            $.ajax({
+                type: 'POST',
+                url: '${createLink(controller: 'taller', action: 'comunidad_ajax')}',
+                data:{
+                    id: id,
+                    taller: '${prtlInstance?.id}'
+                },
+                success: function (msg) {
+                    $("#divComunidadPersona").html(msg)
+                }
+            })
+        }
 
 
 

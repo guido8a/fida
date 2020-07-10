@@ -1,7 +1,5 @@
 <%@ page import="seguridad.TipoInstitucion; taller.Capacidad; taller.TipoTaller; seguridad.UnidadEjecutora; taller.Taller" %>
 
-%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
-%{--<script type="text/javascript" src="${resource(dir: 'js/plugins/jquery-validation-1.13.1/dist', file: 'additional-methods.min.js')}"></script>--}%
 <g:if test="${!tallerInstance}">
     <elm:notFound elem="Taller" genero="o"/>
 </g:if>
@@ -9,14 +7,9 @@
 
     <div class="modal-contenido">
         <g:form class="form-horizontal" name="frmTaller" controller="taller" action="save_ajax" method="POST">
-        %{--        <g:form class="form-horizontal" name="frmTaller" controller="taller" action="save_ajax" method="POST"--}%
-        %{--                attrs.enctype = "multipart/form-data">--}%
             <g:hiddenField name="id" value="${tallerInstance?.id}"/>
 
-
-
-
-            <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'parroquia', 'error')} ">
+            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'parroquia', 'error')} ">
                 <span class="grupo">
                     <label for="parroquia" class="col-md-3 control-label">
                         Parroquia
@@ -38,28 +31,15 @@
                 </span>
             </div>
 
-            <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'comunidad', 'error')} ">
+            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'comunidad', 'error')} ">
                 <span class="grupo">
                     <label class="col-md-3 control-label">
                         Comunidad
                     </label>
                     <div class="col-md-9" id="divComunidad">
-                        %{--                        <g:hiddenField name="comunidad" id="comunidad" value="${tallerInstance?.comunidad?.id}"/>--}%
-                        %{--                        <span class="grupo">--}%
-                        %{--                            <div class="input-group input-group-sm" >--}%
-                        %{--                                <input type="text" class="form-control buscarComunidad" name="comunidadName"--}%
-                        %{--                                       id="comunidadTexto" value="${lugar}">--}%
-                        %{--                                <span class="input-group-btn">--}%
-                        %{--                                    <a href="#" class="btn btn-info buscarComunidad" title="Buscar Comunidad">--}%
-                        %{--                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>--}%
-                        %{--                                    </a>--}%
-                        %{--                                </span>--}%
-                        %{--                            </div>--}%
-                        %{--                        </span>--}%
                     </div>
                 </span>
             </div>
-
 
             <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'unidadEjecutora', 'error')} ">
                 <span class="grupo">
@@ -224,33 +204,6 @@
             return true;
         });
 
-        %{--$(".buscarComunidad").click(function () {--}%
-        %{--    var dialog = cargarLoader("Cargando...");--}%
-        %{--    $.ajax({--}%
-        %{--        type: 'POST',--}%
-        %{--        url: '${createLink(controller: 'parroquia', action: 'buscarComunidad_ajax')}',--}%
-        %{--        data:{--}%
-        %{--        },--}%
-        %{--        success:function (msg) {--}%
-        %{--            dialog.modal('hide');--}%
-        %{--            bp = bootbox.dialog({--}%
-        %{--                id    : "dlgBuscarComunidad",--}%
-        %{--                title : "Buscar Comunidad",--}%
-        %{--                class : "modal-lg",--}%
-        %{--                message : msg,--}%
-        %{--                buttons : {--}%
-        %{--                    cancelar : {--}%
-        %{--                        label     : "Cancelar",--}%
-        %{--                        className : "btn-primary",--}%
-        %{--                        callback  : function () {--}%
-        %{--                        }--}%
-        %{--                    }--}%
-        %{--                } //buttons--}%
-        %{--            }); //dialog--}%
-        %{--        }--}%
-        %{--    });--}%
-        %{--});--}%
-
         $(".buscarParroquia").click(function () {
             var dialog = cargarLoader("Cargando...");
             $(this).attr('disabled','disabled');
@@ -277,12 +230,6 @@
                                 }
                             }
                         }
-                        // ,
-                        // onClose:{
-                        //     callback  : function () {
-                        //         $(".buscarParroquia").removeAttr('disabled');
-                        //     }
-                        // }//buttons
                     }); //dialog
                 }
             });
@@ -318,7 +265,8 @@
                 type: 'POST',
                 url: '${createLink(controller: 'taller', action: 'comunidad_ajax')}',
                 data:{
-                    id: id
+                    id: id,
+                    taller: '${tallerInstance?.id}'
                 },
                 success: function (msg) {
                     $("#divComunidad").html(msg)
@@ -326,8 +274,5 @@
             })
         }
 
-
-
     </script>
-
 </g:else>

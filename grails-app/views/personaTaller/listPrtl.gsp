@@ -10,6 +10,12 @@
     <div class="panel-info" style="padding: 3px; margin-top: 2px">
     <div class="btn-toolbar toolbar">
 
+        <div class="btn-group">
+            <g:link controller="taller" action="listTaller" class="btn btn-sm btn-default">
+                <i class="fa fa-arrow-left"></i> Lista de talleres
+            </g:link>
+        </div>
+
     <div class="btn-group">
         <a href="#" class="btn btn-sm btn-success" id="btnPrtl">
             <i class="fa fa-plus"></i> Agregar Asistente

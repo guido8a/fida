@@ -34,11 +34,11 @@
 
 <script type="text/javascript">
     $(function () {
-        setTimeout(function () {
-            $("#tblDocumentos").fixedHeaderTable({
-                height : 250
-            });
-        }, 500);
+        // setTimeout(function () {
+        //     $("#tblDocumentos").fixedHeaderTable({
+        //         height : 250
+        //     });
+        // }, 500);
 
         $(".btnDelDoc").click(function () {
             deleteDocumento($(this).data("id"));

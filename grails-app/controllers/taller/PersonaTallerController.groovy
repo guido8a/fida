@@ -1,6 +1,7 @@
 package taller
 
 import geografia.Comunidad
+import geografia.Parroquia
 import grails.validation.ValidationException
 import org.springframework.dao.DataIntegrityViolationException
 import proyectos.Proyecto
@@ -86,34 +87,43 @@ class PersonaTallerController {
      * @render ERROR*[mensaje] cuando no se pudo grabar correctamente, SUCCESS*[mensaje] cuando se grabó correctamente
      */
     def save_ajax() {
-        def prsnTaller
+        def taller
         def texto
-        def cmnd = Comunidad.get(params.comunidad.toInteger())
+        def cmnd = null
 
-        params.fechaInicio = params.fechaInicio ? new Date().parse("dd-MM-yyyy", params.fechaInicio) : null
-        params.fechaFin = params.fechaFin ? new Date().parse("dd-MM-yyyy", params.fechaFin) : null
+        if(params.parroquia){
+            def parroquia = Parroquia.get(params.parroquia)
 
-        if(params.id){
-            prsnTaller = PersonaTaller.get(params.id)
-            texto = "prsnTaller actualizada correctamente"
+            if(params.comunidad != "null"){
+                cmnd = Comunidad.get(params.comunidad.toInteger())
+            }
+
+            params.fechaInicio = params.fechaInicio ? new Date().parse("dd-MM-yyyy", params.fechaInicio) : null
+            params.fechaFin = params.fechaFin ? new Date().parse("dd-MM-yyyy", params.fechaFin) : null
+
+            if(params.id){
+                taller = Taller.get(params.id)
+                texto = "Taller actualizada correctamente"
+            }else{
+                taller = new Taller()
+                texto = "Taller creado correctamente"
+            }
+
+            taller.properties = params
+            taller.fecha = new Date()
+            taller.valor = params.valor.toDouble()
+            taller.parroquia = parroquia
+            taller.comunidad = cmnd
+
+            if(!taller.save(flush:true)){
+                println "Error en save de taller ejecutora\n" + taller.errors
+                render "no*Error al guardar la taller"
+            }else{
+                render "SUCCESS*" + texto
+            }
         }else{
-            prsnTaller = new PersonaTaller()
-            texto = "prsnTaller creada correctamente"
+            render "er*Seleccione una parroquia!"
         }
-
-        prsnTaller.properties = params
-        prsnTaller.fecha = new Date()
-        prsnTaller.valor = params.valor.toDouble()
-        println "Comunidad --> ${cmnd.nombre}, ${cmnd.parroquia.id}"
-        prsnTaller.parroquia = cmnd.parroquia
-
-        if(!prsnTaller.save(flush:true)){
-            println "Error en save de prsnTaller ejecutora\n" + prsnTaller.errors
-            render "no*Error al guardar la prsnTaller"
-        }else{
-            render "SUCCESS*" + texto
-        }
-
     } //save para grabar desde ajax
 
     /**

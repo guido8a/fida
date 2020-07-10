@@ -5,4 +5,4 @@
   Time: 10:26
 --%>
 
-<g:select name="comunidad" from="${cantones}" optionValue="nombre" optionKey="id" class="form-control" value="${}"/>
+<g:select name="comunidad" from="${cantones}" optionValue="nombre" optionKey="id" class="form-control" value="${taller?.comunidad?.id}" noSelection="${[null:'Ninguna']}"/>

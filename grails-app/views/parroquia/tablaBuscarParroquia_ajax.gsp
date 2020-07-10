@@ -38,11 +38,10 @@
         $("#parroquiaTexto").val(nombre + " (" + provincia + ")");
         $("#parroquia").val(id);
         $(".buscarParroquia").removeAttr('disabled');
-        if(${tipo == '2'}){
+        if(${tipo != '1'}){
             comboComunidad(id)
         }
         cerrarDialogoParroquia();
-
     });
 
     function comboComunidad(id){
@@ -53,9 +52,20 @@
                 id: id
             },
             success: function (msg) {
-                $("#divComunidad").html(msg)
+                colocarDiv(msg)
             }
         })
+    }
+
+    function colocarDiv(msg){
+        var n = '';
+        if(${tipo == '3'}){
+            n = $("#divComunidadPersona").html(msg)
+        }else{
+            n = $("#divComunidad").html(msg)
+        }
+
+        return n
     }
 
 </script>

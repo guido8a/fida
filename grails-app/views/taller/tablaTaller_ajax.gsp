@@ -12,19 +12,20 @@
             <th>Fin</th>
             <th>Valor</th>
             <th>Instructor</th>
+            <th>Parroquia</th>
         </tr>
     </thead>
     <tbody id="tbDoc">
         <g:each in="${taller}" var="tl">
-            <tr data-id="${tl.id}">
-                <td><elm:textoBusqueda busca="${params.search}">${tl.nombre}</elm:textoBusqueda></td>
-                <td><elm:textoBusqueda busca="${params.search}">${tl.objetivo}</elm:textoBusqueda></td>
-                <td>${tl.tipoTaller.descripcion}</td>
-                <td>${tl.fechaInicio}</td>
-                <td>${tl.fechaFin}</td>
-                <td>${tl.valor}</td>
-                <td><elm:textoBusqueda busca="${params.search}">${tl.instructor}</elm:textoBusqueda></td>
-
+            <tr data-id="${tl.id}" style="width: 100%">
+                <td style="width: 10%"><elm:textoBusqueda busca="${params.search}">${tl.nombre}</elm:textoBusqueda></td>
+                <td style="width: 17%"><elm:textoBusqueda busca="${params.search}">${tl.objetivo}</elm:textoBusqueda></td>
+                <td style="width: 23%">${tl.tipoTaller.descripcion}</td>
+                <td style="width: 7%">${tl.fechaInicio?.format("dd-MM-yyyy")}</td>
+                <td style="width: 7%">${tl.fechaFin?.format("dd-MM-yyyy")}</td>
+                <td style="width: 8%">${tl.valor}</td>
+                <td style="width: 12%"><elm:textoBusqueda busca="${params.search}">${tl.instructor}</elm:textoBusqueda></td>
+                <td style="width: 16%"><elm:textoBusqueda busca="${params.search}">${tl.parroquia}</elm:textoBusqueda></td>
             </tr>
         </g:each>
     </tbody>
