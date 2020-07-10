@@ -83,7 +83,7 @@
             },
             success: function (msg) {
                 dialog.modal('hide');
-                $("#divTablaParroquia").html(msg)
+                 $("#divTablaParroquia").html(msg)
             }
         });
     }

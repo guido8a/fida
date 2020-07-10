@@ -264,8 +264,9 @@
                     dialog.modal('hide');
                     bp = bootbox.dialog({
                         id    : "dlgBuscarComunidad",
-                        title : "Buscar Comunidad",
+                        title : "Buscar Parroquia",
                         class : "modal-lg",
+                        closeButton: false,
                         message : msg,
                         buttons : {
                             cancelar : {
@@ -275,7 +276,13 @@
                                     $(".buscarParroquia").removeAttr('disabled');
                                 }
                             }
-                        } //buttons
+                        }
+                        // ,
+                        // onClose:{
+                        //     callback  : function () {
+                        //         $(".buscarParroquia").removeAttr('disabled');
+                        //     }
+                        // }//buttons
                     }); //dialog
                 }
             });
