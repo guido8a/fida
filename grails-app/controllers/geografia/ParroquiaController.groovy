@@ -155,11 +155,10 @@ class ParroquiaController {
     }
 
     def buscarParroquia_ajax() {
-
+        return[tipo: params.tipo]
     }
 
     def buscarComunidad_ajax() {
-
     }
 
 
@@ -188,7 +187,7 @@ class ParroquiaController {
 
 //        println("sql " + sql)
 
-        return [parroquias: res]
+        return [parroquias: res, tipo: params.tipo]
     }
 
     def tablaBuscarComunidad_ajax(){

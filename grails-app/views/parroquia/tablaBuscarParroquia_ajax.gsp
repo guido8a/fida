@@ -38,8 +38,24 @@
         $("#parroquiaTexto").val(nombre + " (" + provincia + ")");
         $("#parroquia").val(id);
         $(".buscarParroquia").removeAttr('disabled');
+        if(${tipo == '2'}){
+            comboComunidad(id)
+        }
         cerrarDialogoParroquia();
 
     });
+
+    function comboComunidad(id){
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'taller', action: 'comunidad_ajax')}',
+            data:{
+                id: id
+            },
+            success: function (msg) {
+                $("#divComunidad").html(msg)
+            }
+        })
+    }
 
 </script>

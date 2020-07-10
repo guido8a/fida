@@ -32,6 +32,7 @@
 
 
 <script type="text/javascript">
+    var bm
 
     function reloadTablaTaller(search) {
         var data = {
@@ -58,8 +59,8 @@
         if ($form.valid()) {
             // console.log('submit--')
             $btn.replaceWith(spinner);
-            openLoader("Guardando Taller");
             var formData = new FormData($form[0]);
+            var dialog = cargarLoader("Guardando...");
             $.ajax({
                 url         : $form.attr("action"),
                 type        : 'POST',
@@ -69,24 +70,30 @@
                 contentType : false,
                 processData : false,
                 success     : function (msg) {
+                    dialog.modal('hide');
                     var parts = msg.split("*");
-                    log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                    closeLoader();
                     if (parts[0] == "SUCCESS") {
+                        log(parts[1],"success");
                         reloadTablaTaller();
-                        $("#dlgCreateEdit").modal("hide");
+                        bm.modal("hide");
                     } else {
-                        spinner.replaceWith($btn);
-                        return false;
+                        if(parts[0] == 'er'){
+                            bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> " + parts[1])
+                            // return false;
+                        }else{
+                            spinner.replaceWith($btn);
+                            log(parts[1],"error");
+                            return false;
+                        }
                     }
                 },
                 error       : function () {
-
                 }
             });
         } else {
             return false;
         } //else
+        return false;
     }
     function deleteTaller(itemId) {
         bootbox.dialog({
@@ -134,7 +141,7 @@
             url     : "${createLink(controller:'taller', action:'formTaller_ajax')}",
             data    : data,
             success : function (msg) {
-                var b = bootbox.dialog({
+                bm = bootbox.dialog({
                     id      : "dlgCreateEdit",
                     title   : title + " Taller de Fortalecimiento de Capacidades",
                     message : msg,
@@ -156,7 +163,7 @@
                     } //buttons
                 }); //dialog
                 setTimeout(function () {
-                    b.find(".form-control").first().focus()
+                    bm.find(".form-control").first().focus()
                 }, 500);
             } //success
         }); //ajax

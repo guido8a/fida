@@ -1,6 +1,8 @@
 package taller
 
+import geografia.Canton
 import geografia.Comunidad
+import geografia.Parroquia
 import grails.validation.ValidationException
 import org.springframework.dao.DataIntegrityViolationException
 import taller.Taller
@@ -115,31 +117,44 @@ class TallerController {
     def save_ajax() {
         def taller
         def texto
-        def cmnd = Comunidad.get(params.comunidad.toInteger())
+        def cmnd = null
 
-        params.fechaInicio = params.fechaInicio ? new Date().parse("dd-MM-yyyy", params.fechaInicio) : null
-        params.fechaFin = params.fechaFin ? new Date().parse("dd-MM-yyyy", params.fechaFin) : null
+        if(params.parroquia){
+            def parroquia = Parroquia.get(params.parroquia)
 
-        if(params.id){
-            taller = Taller.get(params.id)
-            texto = "taller actualizada correctamente"
+            if(params.comunidad){
+                cmnd = Comunidad.get(params.comunidad.toInteger())
+            }
+
+            params.fechaInicio = params.fechaInicio ? new Date().parse("dd-MM-yyyy", params.fechaInicio) : null
+            params.fechaFin = params.fechaFin ? new Date().parse("dd-MM-yyyy", params.fechaFin) : null
+
+            if(params.id){
+                taller = Taller.get(params.id)
+                texto = "Taller actualizada correctamente"
+            }else{
+                taller = new Taller()
+                texto = "Taller creado correctamente"
+            }
+
+            taller.properties = params
+            taller.fecha = new Date()
+            taller.valor = params.valor.toDouble()
+            taller.parroquia = parroquia
+            taller.comunidad = cmnd
+
+            if(!taller.save(flush:true)){
+                println "Error en save de taller ejecutora\n" + taller.errors
+                render "no*Error al guardar la taller"
+            }else{
+                render "SUCCESS*" + texto
+            }
         }else{
-            taller = new Taller()
-            texto = "taller creada correctamente"
+            render "er*Seleccione una parroquia!"
         }
 
-        taller.properties = params
-        taller.fecha = new Date()
-        taller.valor = params.valor.toDouble()
-        println "Comunidad --> ${cmnd.nombre}, ${cmnd.parroquia.id}"
-        taller.parroquia = cmnd.parroquia
 
-        if(!taller.save(flush:true)){
-            println "Error en save de taller ejecutora\n" + taller.errors
-            render "no*Error al guardar la taller"
-        }else{
-            render "SUCCESS*" + texto
-        }
+
 
     } //save para grabar desde ajax
 
@@ -171,5 +186,11 @@ class TallerController {
             return
         }
     } //delete para eliminar via ajax
+
+    def comunidad_ajax(){
+        def parroquia = Parroquia.get(params.id)
+        def cantones = Comunidad.findAllByParroquia(parroquia)
+        return [cantones: cantones]
+    }
 
 }

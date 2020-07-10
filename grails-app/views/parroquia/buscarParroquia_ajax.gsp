@@ -78,7 +78,8 @@
             url: '${createLink(controller: 'parroquia', action: 'tablaBuscarParroquia_ajax')}',
             data:{
                 operador: operador,
-                texto: texto
+                texto: texto,
+                tipo: '${tipo}'
             },
             success: function (msg) {
                 dialog.modal('hide');
