@@ -292,6 +292,34 @@
         return false;
     }
 
+    $("#btnBuscarConvenio").click(function () {
+        var dialog = cargarLoader("Cargando...");
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'convenio', action: 'buscarConvenio_ajax')}',
+            data:{
+            },
+            success:function (msg) {
+                dialog.modal('hide');
+                var b = bootbox.dialog({
+                    id    : "dlgBuscarConvenio",
+                    title : "Buscar Convenio",
+                    class : "modal-lg",
+                    closeButton: false,
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        }
+                    }
+                }); //dialog
+            }
+        });
+    });
+
     $(".buscarParroquia").click(function () {
         var dialog = cargarLoader("Cargando...");
         $(this).attr('disabled','disabled');

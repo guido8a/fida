@@ -10,6 +10,7 @@ import convenio.Convenio
 class ConvenioController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    def dbConnectionService
 
 
     /**
@@ -159,6 +160,41 @@ class ConvenioController {
             convenio = new Convenio()
         }
         return[convenio: convenio]
+    }
+
+    def buscarConvenio_ajax(){
+
+    }
+
+    def tablaBuscarConvenio_ajax(){
+//        println("params buc " + params)
+        def sql = ''
+        def operador = ''
+
+        switch (params.operador) {
+            case "0":
+                operador = "cnvnnmbr"
+                break;
+            case '1':
+                operador = "cnvncdgo"
+                break;
+            case "2":
+                operador = "unejnmbr"
+                break;
+            case "3":
+                operador = "parrnmbr"
+                break;
+        }
+
+        def cn = dbConnectionService.getConnection()
+        sql = "select * from cnvn, unej, parr where cnvn.parr__id = parr.parr__id and unej.unej__id = cnvn.unej__id and ${operador} ilike '%${params.texto}%' order by cnvnnmbr asc limit 20"
+
+        def res = cn.rows(sql.toString())
+
+//        println("sql " + sql)
+
+        return [convenios: res]
+
     }
 
 }
