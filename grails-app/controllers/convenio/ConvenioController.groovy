@@ -115,7 +115,7 @@ class ConvenioController {
                 println "Error en save de convenio ejecutora\n" + convenio.errors
                 render "no*Error al guardar la convenio"
             }else{
-                render "SUCCESS*" + texto
+                render "SUCCESS*" + texto + "*" + convenio?.id
             }
         }else{
             render "er*Seleccione una parroquia!"

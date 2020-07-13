@@ -272,7 +272,7 @@
                     if (parts[0] == "SUCCESS") {
                         log(parts[1],"success");
                         setTimeout(function () {
-                            location.reload(true);
+                            location.href="${createLink(controller: 'convenio', action: 'convenio')}/" + parts[2]
                         }, 800);
                     } else {
                         if(parts[0] == 'er'){
