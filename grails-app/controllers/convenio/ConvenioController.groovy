@@ -89,7 +89,6 @@ class ConvenioController {
     def save_ajax() {
         def convenio
         def texto
-        def cmnd = null
 
         if(params.parroquia){
             def parroquia = Parroquia.get(params.parroquia)
@@ -99,7 +98,7 @@ class ConvenioController {
 
             if(params.id){
                 convenio = Convenio.get(params.id)
-                texto = "Convenio actualizada correctamente"
+                texto = "Convenio actualizado correctamente"
             }else{
                 convenio = new Convenio()
                 texto = "Convenio creado correctamente"
@@ -130,24 +129,18 @@ class ConvenioController {
         if (params.id) {
             def convenioInstance = Convenio.get(params.id)
             if (!convenioInstance) {
-                render "ERROR*No se encontró Convenio."
+                render "ERROR*No se encontró el Convenio."
                 return
             }
             try {
-                def path = servletContext.getRealPath("/") + "conveniosProyecto/" + convenioInstance.convenio
                 convenioInstance.delete(flush: true)
-                println path
-                def f = new File(path)
-                println f.delete()
                 render "SUCCESS*Eliminación de Convenio exitosa."
-                return
             } catch (DataIntegrityViolationException e) {
+                println("error al borrar el convenio " + e + convenioInstance.errors )
                 render "ERROR*Ha ocurrido un error al eliminar Convenio"
-                return
             }
         } else {
-            render "ERROR*No se encontró Convenio."
-            return
+            render "ERROR*No se encontró el Convenio."
         }
     } //delete para eliminar via ajax
 

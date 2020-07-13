@@ -124,7 +124,7 @@
         </div>
         </a>
 
-        <a href= "${createLink(controller:'convenio', action: 'listConvenio')}" style="text-decoration: none">
+        <a href= "${createLink(controller:'convenio', action: 'convenio')}" style="text-decoration: none">
         <div class="ui-corner-all item fuera">
             <div class="ui-corner-all item" style="padding-left: 10px; padding-right: 10px">
                 <div class="imagen">
