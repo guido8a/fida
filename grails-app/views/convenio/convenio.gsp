@@ -41,11 +41,11 @@
 
 <div class="panel panel-primary col-md-12">
     <div class="panel-heading" style="padding: 3px; margin-top: 2px; text-align: center">
-        <a href="${createLink(controller: 'buscarBase', action: 'busquedaBase')}" id="btnConsultarBase"
-           class="btn btn-sm btn-info" title="Consultar artículo">
+        <a href="#" id="btnBuscarConvenio"
+           class="btn btn-sm btn-info" title="Consultar convenio">
             <i class="fas fa-clipboard-check"></i> Lista de convenios
         </a>
-        <a href="${createLink(controller: 'documento', action: 'listProyecto')}" id="btnConsultar"
+        <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"
            class="btn btn-sm btn-info" title="Consultar artículo">
             <i class="fas fa-book-reader"></i> Nuevo convenio
         </a>
