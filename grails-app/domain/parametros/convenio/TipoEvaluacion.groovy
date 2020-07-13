@@ -1,4 +1,4 @@
-package parametros.convenios
+package parametros.convenio
 
 class TipoEvaluacion {
     /**

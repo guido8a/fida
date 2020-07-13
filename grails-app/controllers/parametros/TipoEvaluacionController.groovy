@@ -2,7 +2,7 @@ package parametros
 
 
 import org.springframework.dao.DataIntegrityViolationException
-import parametros.convenios.TipoEvaluacion
+import parametros.convenio.TipoEvaluacion
 
 class TipoEvaluacionController {
 

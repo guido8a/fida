@@ -1,9 +1,4 @@
-package parametros.convenios
-
-import grails.validation.ValidationException
-import parametros.convenios.UnidadCompras
-
-import static org.springframework.http.HttpStatus.*
+package parametros.convenio
 
 class UnidadComprasController {
 

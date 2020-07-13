@@ -1,5 +1,5 @@
 
-<%@ page import="parametros.convenios.TipoEvaluacion" %>
+<%@ page import="parametros.convenio.TipoEvaluacion" %>
 
 <g:if test="${!tipoEvaluacionInstance}">
     <elm:notFound elem="TipoEvaluacion" genero="o" />

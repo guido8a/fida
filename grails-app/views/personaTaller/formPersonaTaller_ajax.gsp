@@ -50,7 +50,7 @@
                         Cédula
                     </label>
 
-                    <div class="col-md-9">
+                    <div class="col-md-3">
                         <g:textField name="cedula" maxlength="10" class="form-control input-sm required digits"
                                      value="${prtlInstance?.cedula}"/>
                     </div>
@@ -96,7 +96,7 @@
                                   class="many-to-one form-control input-sm"/>
                     </div>
 
-                    <label for="titulo" class="col-md-1 control-label">
+                    <label for="titulo" class="col-md-2 control-label">
                         Sexo
                     </label>
                     <span class="grupo">
@@ -135,15 +135,15 @@
 
             <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'titulo', 'error')} ">
                 <label for="titulo" class="col-md-3 control-label">
-                    Titulo
+                    Titulo (abreviatura)
                 </label>
                 <span class="grupo">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <g:textField name="titulo" maxlength="4" class="form-control input-sm"
                                      value="${prtlInstance?.titulo}"/>
                     </div>
                 </span>
-                <label for="discapacidad" class="col-md-3 control-label">
+                <label for="discapacidad" class="col-md-4 control-label">
                     Discapacidad
                 </label>
                 <span class="grupo">
@@ -157,7 +157,7 @@
                     Teléfono
                 </label>
                 <span class="grupo">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <g:textField name="telefono" maxlength="31" class="form-control input-sm digits"
                                      value="${prtlInstance?.telefono}"/>
                     </div>
@@ -167,7 +167,7 @@
                     Mail
                 </label>
                 <span class="grupo">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <g:textField name="mail" maxlength="63" class="form-control input-sm email"
                                      value="${prtlInstance?.mail}"/>
                     </div>

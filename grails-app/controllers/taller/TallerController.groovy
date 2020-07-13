@@ -21,27 +21,6 @@ class TallerController {
 
 
     /**
-     * Acción llamada con ajax que muestra un formulario para crear o modificar un elemento
-     * @return tallerInstance el objeto a modificar cuando se encontró el elemento
-     * @render ERROR*[mensaje] cuando no se encontró el elemento
-     */
-    def formtaller_ajax() {
-        def taller = tallerEjecutora.get(params.taller.toLong())
-        def tallerInstance = new Taller()
-        if (params.id) {
-            tallerInstance = Taller.get(params.id)
-            if (!tallerInstance) {
-//                render "ERROR*No se encontró Taller."
-//                return
-                tallerInstance = new Taller()
-            }
-        }
-        tallerInstance.properties = params
-        tallerInstance.tallerEjecutora = taller
-        return [tallerInstance: tallerInstance]
-    } //form para cargar con ajax en un dialog
-
-    /**
      * Acción llamada con ajax que muestra y permite modificar los tallers de un proyecto
      */
     def listTaller() {
@@ -102,7 +81,7 @@ class TallerController {
                 tallerInstance = new Taller()
             }
         }
-        tallerInstance.properties = params
+//        tallerInstance.properties = params
 //        if(tallerInstance.comunidad) {
 //            lugar = "${tallerInstance.comunidad.nombre} Parr: ${tallerInstance.parroquia.nombre} " +
 //                    "(${tallerInstance.parroquia.canton.provincia.nombre})"

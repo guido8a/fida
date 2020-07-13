@@ -1,5 +1,5 @@
 
-<%@ page import="parametros.convenios.TipoEvaluacion" %>
+<%@ page import="parametros.convenio.TipoEvaluacion" %>
 <!DOCTYPE html>
 <html>
     <head>

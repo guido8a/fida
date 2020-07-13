@@ -1,4 +1,4 @@
-<%@ page import="parametros.convenios.TipoEvaluacion" %>
+<%@ page import="parametros.convenio.TipoEvaluacion" %>
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
 <g:if test="${!tipoEvaluacionInstance}">

@@ -2,17 +2,17 @@
 <html>
 <head>
 <meta name="layout" content="main">
-<title>Talleres</title>
+<title>Convenios</title>
 </head>
 
 <div class="panel panel-primary col-md-12">
-    <h3>Talleres para Fortalecimiento de Capacidades</h3>
+    <h3>Convenios</h3>
     <div class="panel-info" style="padding: 3px; margin-top: 2px">
     <div class="btn-toolbar toolbar">
 
     <div class="btn-group">
-        <a href="#" class="btn btn-sm btn-success" id="btnAddTllr">
-            <i class="fa fa-plus"></i> Agregar nuevo Taller
+        <a href="#" class="btn btn-sm btn-success" id="btnAddCnvn">
+            <i class="fa fa-plus"></i> Agregar nuevo Convenio
         </a>
     </div>
 
@@ -34,7 +34,7 @@
 <script type="text/javascript">
     var bm
 
-    function reloadTablaTaller(search) {
+    function reloadTablaConvenio(search) {
         var data = {
             id : "${proyecto.id}"
         };
@@ -43,7 +43,7 @@
         }
         $.ajax({
             type    : "POST",
-            url     : "${createLink(controller:'taller', action:'tablaTaller_ajax')}",
+            url     : "${createLink(controller:'convenio', action:'tablaConvenio_ajax')}",
             data    : data,
             success : function (msg) {
                 $("#tabla").html(msg);
@@ -51,8 +51,8 @@
         });
     }
 
-    function submitFormTaller() {
-        var $form = $("#frmTaller");
+    function submitFormConvenio() {
+        var $form = $("#frmConvenio");
         var $btn = $("#dlgCreateEdit").find("#btnSave");
         // $form.validate();
         // console.log('submit');
@@ -74,7 +74,7 @@
                     var parts = msg.split("*");
                     if (parts[0] == "SUCCESS") {
                         log(parts[1],"success");
-                        reloadTablaTaller();
+                        reloadTablaConvenio();
                         bm.modal("hide");
                     } else {
                         if(parts[0] == 'er'){
@@ -95,11 +95,11 @@
         } //else
         return false;
     }
-    function deleteTaller(itemId) {
+    function deleteConvenio(itemId) {
         bootbox.dialog({
             title   : "Alerta",
             message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
-                    "¿Está seguro que desea eliminar el Taller seleccionado? Esta acción no se puede deshacer.</p>",
+                    "¿Está seguro que desea eliminar el Convenio seleccionado? Esta acción no se puede deshacer.</p>",
             buttons : {
                 cancelar : {
                     label     : "Cancelar",
@@ -111,10 +111,10 @@
                     label     : "<i class='fa fa-trash'></i> Eliminar",
                     className : "btn-danger",
                     callback  : function () {
-                        openLoader("Eliminando Taller");
+                        openLoader("Eliminando Convenio");
                         $.ajax({
                             type    : "POST",
-                            url     : '${createLink(controller:'taller', action:'delete_ajax')}',
+                            url     : '${createLink(controller:'convenio', action:'delete_ajax')}',
                             data    : {
                                 id : itemId
                             },
@@ -123,7 +123,7 @@
                                 log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                                 closeLoader();
                                 if (parts[0] == "SUCCESS") {
-                                    reloadTablaTaller();
+                                    reloadTablaConvenio();
                                 }
                             }
                         });
@@ -133,17 +133,17 @@
         });
     }
 
-    function createEditTaller(id) {
+    function createEditConvenio(id) {
         var title = id ? "Editar" : "Crear";
         var data = id ? {id : id} : {};
         $.ajax({
             type    : "POST",
-            url     : "${createLink(controller:'taller', action:'formTaller_ajax')}",
+            url     : "${createLink(controller:'convenio', action:'formConvenio_ajax')}",
             data    : data,
             success : function (msg) {
                 bm = bootbox.dialog({
                     id      : "dlgCreateEdit",
-                    title   : title + " Taller de Fortalecimiento de Capacidades",
+                    title   : title + " Convenio",
                     message : msg,
                     buttons : {
                         cancelar : {
@@ -157,7 +157,7 @@
                             label     : "<i class='fa fa-save'></i> Guardar",
                             className : "btn-success",
                             callback  : function () {
-                                return submitFormTaller();
+                                return submitFormConvenio();
                             } //callback
                         } //guardar
                     } //buttons
@@ -169,18 +169,18 @@
         }); //ajax
     } //createEdit
 
-    reloadTablaTaller();
+    reloadTablaConvenio();
 
     $("#btnSearchDoc").click(function () {
-        reloadTablaTaller($.trim($("#searchDoc").val()));
+        reloadTablaConvenio($.trim($("#searchDoc").val()));
     });
     $("#searchDoc").keyup(function (ev) {
         if (ev.keyCode == 13) {
-            reloadTablaTaller($.trim($("#searchDoc").val()));
+            reloadTablaConvenio($.trim($("#searchDoc").val()));
         }
     });
-    $("#btnAddTllr").click(function () {
-        createEditTaller();
+    $("#btnAddCnvn").click(function () {
+        createEditConvenio();
     });
 
 
