@@ -1,5 +1,6 @@
 package proyectos
 
+import convenio.Convenio
 import parametros.proyectos.GrupoProcesos
 
 /*Es toda documentación importante que debe ser archivada en el proyecto. Este comprende el archivo de proyecto o el archivo de casos de proyecto.
@@ -15,6 +16,8 @@ class Documento {
      * Proyecto al cual pertenece el documento
      */
     Proyecto proyecto
+
+    Convenio convenio
     /**
      * Grupo de procesos del documento
      */
@@ -53,6 +56,7 @@ class Documento {
         columns {
             id column: 'dcmt__id'
             proyecto column: 'proy__id'
+            convenio column: 'cnvn__id'
             grupoProcesos column: 'grpr__id'
             descripcion column: 'dcmtdscr'
             clave column: 'dcmtclve'
@@ -66,6 +70,7 @@ class Documento {
      */
     static constraints = {
         proyecto(blank: true, nullable: true, attributes: [mensaje: 'Proyecto'])
+        convenio(blank: true, nullable: true, attributes: [mensaje: 'Convenio'])
         grupoProcesos(blank: true, nullable: true, attributes: [mensaje: 'Grupo de Procesos'])
         descripcion(size: 1..63, blank: true, nullable: true, attributes: [mensaje: 'Descripción del documento'])
         clave(size: 1..63, blank: true, nullable: true, attributes: [mensaje: 'Palabras clave'])

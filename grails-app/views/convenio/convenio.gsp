@@ -46,8 +46,8 @@
             <i class="fas fa-list-alt"></i> Lista de convenios
         </a>
         <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"
-           class="btn btn-sm btn-info" title="Consultar artículo">
-            <i class="fas fa-book-reader"></i> Nuevo convenio
+           class="btn btn-sm btn-success" title="Consultar artículo">
+            <i class="fas fa-plus"></i> Nuevo convenio
         </a>
         <g:if test="${convenio?.id}">
             <a href="#" id="btnFinanciamiento" class="btn btn-sm btn-info" title="Crear nuevo registro">
@@ -56,8 +56,9 @@
             <a href="#" id="btnEstado" class="btn btn-sm btn-info" title="Estado">
                 <i class="fa fa-scroll"></i> Indicadores
             </a>
-            <a href="#" id="btnVerMarco" class="btn btn-sm btn-info" title="Ver marco lógico">
-                <i class="fa fa-search"></i> Biblioteca
+            <a href="${createLink(controller: 'documento', action: 'listConvenio')}" id="btnNuevoConvenio"
+               class="btn btn-sm btn-info" title="Consultar artículo">
+                <i class="fas fa-book-reader"></i> Biblioteca
             </a>
             <a href="#" id="editMrlg" class="btn btn-sm btn-info" title="Ver registro">
                 <i class="fa fa-clipboard"></i> Plan de negocio solidario

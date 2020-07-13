@@ -12,7 +12,7 @@
 %{--        <g:form class="form-horizontal" name="frmDocumento" controller="documento" action="save_ajax" method="POST"--}%
 %{--                attrs.enctype = "multipart/form-data">--}%
             <g:hiddenField name="id" value="${documentoInstance?.id}"/>
-            <g:hiddenField name="proyecto.id" value="${documentoInstance?.proyectoId?: proyecto.id}"/>
+            <g:hiddenField name="convenio.id" value="${documentoInstance?.convenioId?: convenio.id}"/>
 
             <div class="form-group keeptogether ${hasErrors(bean: documentoInstance, field: 'grupoProcesos', 'error')} ">
                 <span class="grupo">

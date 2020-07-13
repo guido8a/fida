@@ -1,5 +1,6 @@
 package proyectos
 
+import convenio.Convenio
 import grails.validation.ValidationException
 import org.springframework.dao.DataIntegrityViolationException
 
@@ -170,7 +171,34 @@ class DocumentoController {
             }
             order("descripcion", "asc")
         }
-        return [proyecto: proyecto, documentos: documentos]
+        return [documentos: documentos]
+    }
+
+    /**
+     * Acción llamada con ajax que muestra y permite modificar los documentos de un proyecto
+     */
+    def listConvenio() {
+        def convenio = convenio.Convenio.get(1)
+        return [convenio: convenio]
+    }
+
+    /**
+     * Acción llamada con ajax que llena la tabla de los documentos de un proyecto
+     */
+    def tablaDocConvenio_ajax() {
+        def convenio = Convenio.get(params.id)
+        def documentos = Documento.withCriteria {
+            eq("convenio", convenio)
+            if (params.search && params.search != "") {
+                or {
+                    ilike("descripcion", "%" + params.search + "%")
+                    ilike("clave", "%" + params.search + "%")
+                    ilike("resumen", "%" + params.search + "%")
+                }
+            }
+            order("descripcion", "asc")
+        }
+        return [convenio: convenio, documentos: documentos]
     }
 
     /**
@@ -209,9 +237,29 @@ class DocumentoController {
                 documentoInstance = new Documento()
             }
         }
-        documentoInstance.properties = params
-        documentoInstance.proyecto = proyecto
-        return [documentoInstance: documentoInstance]
+//        documentoInstance.properties = params
+//        documentoInstance.proyecto = proyecto
+        return [documentoInstance: documentoInstance, proyecto: proyecto]
+    } //form para cargar con ajax en un dialog
+
+    /**
+     * Acción llamada con ajax que muestra un formulario para crear o modificar un elemento
+     * @return documentoInstance el objeto a modificar cuando se encontró el elemento
+     * @render ERROR*[mensaje] cuando no se encontró el elemento
+     */
+    def formConvenio_ajax() {
+        println "formConvenio_ajax: $params"
+        def convenio = Convenio.get(params.convenio.toLong())
+        def documentoInstance = new Documento()
+        if (params.id) {
+            documentoInstance = Documento.get(params.id)
+            if (!documentoInstance) {
+//                render "ERROR*No se encontró Documento."
+//                return
+                documentoInstance = new Documento()
+            }
+        }
+        return [documentoInstance: documentoInstance, convenio: convenio]
     } //form para cargar con ajax en un dialog
 
     /**
@@ -225,9 +273,9 @@ class DocumentoController {
             proyecto = Proyecto.get(params.proyecto.id.toLong())
             proyName = proyecto.nombre.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
         }
-        if (params.convedio && params.convenio.id) {
-            convenio = UnidadEjecutora.get(params.unidad.id.toLong())
-            convName = (unidad.nombre + "_" + unidad.codigo).tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
+        if (params.convenio && params.convenio.id) {
+            convenio = Convenio.get(params.convenio.id.toLong())
+            convName = (convenio.nombre + "_" + convenio.codigo).tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
         }
 
         def anio = new Date().format("yyyy")
@@ -236,13 +284,13 @@ class DocumentoController {
 //            pathSave = "${session.unidad.codigo}/" + anio + "/" + proyName + "/"
             pathSave = "proy/"
         } else if (convName) {
-            pathSave = convName + "/"+ anio + "/"
+            pathSave = "conv${convenio.id}/"
         }
         def path = "/var/fida/"
         if (proyName) {
             path += "documentosProyecto/" + pathSave
         } else if (convName) {
-            path += "documentosUnidad/" + pathSave
+            path += "documentosConvenio/" + pathSave
         }
         //web-app/archivos
         new File(path).mkdirs()
@@ -366,10 +414,12 @@ class DocumentoController {
                 params.remove("documento")
                 documentoInstance.properties = params
                 documentoInstance.documento = pathSave + nombre
+
+                println "archivo --> $pathSave  + $nombre"
                 if (convenio) {
-                    documentoInstance.unidadEjecutora = convenio
+                    documentoInstance.convenio = convenio
+                    println "convenio --> $convenio"
                 }
-//                documentoInstance.unidadEjecutora = session.unidad
                 if (!documentoInstance.save(flush: true)) {
                     render "ERROR*Ha ocurrido un error al guardar Documento: " + renderErrors(bean: documentoInstance)
                     def file = new File(pathFile)
@@ -454,7 +504,7 @@ class DocumentoController {
         if (doc.proyecto) {
             path = "/var/fida/documentosProyecto/" + doc.documento
         } else {
-            path = "/var/fida/documentosUnidad/" + doc.documento
+            path = "/var/fida/documentosConvenio/" + doc.documento
         }
 //        println "--> ${path}"
         def file = new File(path)
@@ -474,7 +524,7 @@ class DocumentoController {
         if (doc.proyecto) {
             path = "/var/fida/documentosProyecto/" + doc.documento
         } else {
-            path = "/var/fida/documentosUnidad/" + doc.documento
+            path = "/var/fida/documentosConvenio/" + doc.documento
         }
         def nombre = doc.documento.split("/").last()
         def parts = nombre.split("\\.")

@@ -114,7 +114,7 @@
                         icon: "fas fa-user",
                         action: function ($element) {
                             var id = $element.data("id");
-                            var url = "${createLink(controller:'personaTaller', action:'listPrtl')}";
+                            var url = "${createLink(controller:'documento', action:'listConvenio')}";
                             location.href = url + "/" + id;
                         }
                     },
