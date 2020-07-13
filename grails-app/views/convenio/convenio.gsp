@@ -42,7 +42,7 @@
 <div class="panel panel-primary col-md-12">
     <div class="panel-heading" style="padding: 3px; margin-top: 2px; text-align: ${convenio?.id ? 'center' : 'left'}">
         <a href="#" id="btnBuscarConvenio"
-           class="btn btn-sm btn-info" title="Consultar convenio">
+           class="btn btn-sm btn-info" title="Buscar convenio">
             <i class="fas fa-list-alt"></i> Lista de convenios
         </a>
         <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"
@@ -50,10 +50,10 @@
             <i class="fas fa-plus"></i> Nuevo convenio
         </a>
         <g:if test="${convenio?.id}">
-            <a href="#" id="btnFinanciamiento" class="btn btn-sm btn-info" title="Crear nuevo registro">
+            <a href="#" id="btnAdministradorCon" class="btn btn-sm btn-info" title="Administrador del convenio">
                 <i class="fa fa-user"></i> Administrador
             </a>
-            <a href="#" id="btnEstado" class="btn btn-sm btn-info" title="Estado">
+            <a href="#" id="btnEstado" class="btn btn-sm btn-info" title="Indicadores">
                 <i class="fa fa-scroll"></i> Indicadores
             </a>
             <a href="${createLink(controller: 'documento', action: 'listConvenio')}" id="btnNuevoConvenio"
@@ -206,6 +206,35 @@
 </div>
 
 <script type="text/javascript">
+
+    $("#btnAdministradorCon").click(function () {
+        var dialog = cargarLoader("Cargando...");
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'administradorConvenio', action: 'administrador_ajax')}',
+            data:{
+                id: '${convenio?.id}'
+            },
+            success:function (msg) {
+                dialog.modal('hide');
+                var ad = bootbox.dialog({
+                    id    : "dlgBuscarAdministradorCon",
+                    title : "Asignar administrador",
+                    class : "modal-lg",
+                    closeButton: false,
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        }
+                    }
+                }); //dialog
+            }
+        });
+    });
 
     $("#btnEliminar").click(function () {
         bootbox.dialog({
