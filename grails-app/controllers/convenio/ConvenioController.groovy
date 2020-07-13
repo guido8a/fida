@@ -158,4 +158,14 @@ class ConvenioController {
         return [cantones: cantones, convenio: convenio]
     }
 
+    def convenio(){
+        def convenio
+        if(params.id){
+            convenio = Convenio.get(params.id)
+        }else{
+            convenio = new Convenio()
+        }
+        return[convenio: convenio]
+    }
+
 }
