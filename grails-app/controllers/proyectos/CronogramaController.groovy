@@ -274,11 +274,17 @@ class CronogramaController {
                 def maxNum = 1
                 def band = true
                 def prsp1 = false
-                Cronograma.findAll("from Cronograma where marcoLogico = ${row.mrlg} " +
-                        "and fuente = ${row.fuente} " +
-                        "and anio = ${anio.id} " +
-                        "and presupuesto = ${row.prsp}").each { crg ->
-                    // println crg.valor+"  mes "+crg.mes.descripcion+" mrlg "+crg.marcoLogico.id
+                println "${row.mrlg} -- ${row.fuente} -- ${anio.id} -- ${row.prsp}"
+/*
+                Cronograma.findAll("from Cronograma where marcoLogico = ${row.mrlg} and fuente = ${row.fuente} " +
+                        "and anio = ${anio.id} and presupuesto = ${row.prsp}").each { crg ->
+
+*/
+                def ml = MarcoLogico.get(row.mrlg)
+                Cronograma.findAll("from Cronograma where marcoLogico = ${ml} and fuente = 3 " +
+                        "and anio = 1 and presupuesto = 416").each { crg ->
+
+                     println "---> " + crg.valor + "  mes "+crg.mes.descripcion+" mrlg "+crg.marcoLogico.id
 
                     maxNum = crg.mes.numero
 //                    def progra = new ProgramacionAsignacion()
