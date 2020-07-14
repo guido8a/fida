@@ -11,8 +11,7 @@ class AdministradorConvenioController {
 
         def existente = AdministradorConvenio.findByConvenioAndFechaFinIsNull(convenio)
         if(existente){
-            administradores = Persona.findAllByUnidadEjecutora(convenio.unidadEjecutora) - Persona.get(existente.persona.id)
-            println("--> " + administradores)
+            administradores = Persona.findAllByUnidadEjecutoraAndIdNotEqual(convenio.unidadEjecutora, existente.persona.id)
         }else{
             administradores = Persona.findAllByUnidadEjecutora(convenio.unidadEjecutora)
         }
@@ -53,7 +52,19 @@ class AdministradorConvenioController {
         }else{
             render "ok"
         }
+    }
 
+    def guardarObservacion_ajax(){
+
+        def administrador = AdministradorConvenio.get(params.id)
+        administrador.observaciones = params.texto
+
+        if(!administrador.save(flush:true)){
+            println("error al guardar la observacion del administrador convenio " + administrador.errors)
+            render "no"
+        }else{
+            render "ok"
+        }
     }
 
 }

@@ -197,4 +197,9 @@ class ConvenioController {
 
     }
 
+    def observaciones_ajax(){
+        def administrador = AdministradorConvenio.get(params.id)
+        return[administrador:administrador]
+    }
+
 }
