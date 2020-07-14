@@ -4,6 +4,7 @@ import parametros.Anio
 import parametros.Mes
 import parametros.proyectos.Fuente
 import parametros.proyectos.TipoElemento
+import poa.Asignacion
 import poa.Presupuesto
 
 
@@ -191,88 +192,87 @@ class CronogramaController {
     }
 
     def calcularAsignaciones_ajax() {
-//        //println "calc asg "+params
-//        def proyecto = Proyecto.get(params.proyecto)
-//        def anio = Anio.get(params.anio)
-//        def cn = dbConnectionService.getConnection()
-//        def res = true
-//        def asignaciones = []
-//        def bandUnidad = true
-//        def errores = ""
-//
-//        MarcoLogico.withCriteria {
-//            eq("tipoElemento", TipoElemento.get(3))
-//            eq("proyecto", proyecto)
-//            eq("estado", 0)
-//        }.each { comp ->
-////            println "comp "+comp.responsable
-//            if (!comp.responsable) {
+        //println "calc asg "+params
+        def proyecto = Proyecto.get(params.proyecto)
+        def anio = Anio.get(params.anio)
+        def cn = dbConnectionService.getConnection()
+        def res = true
+        def asignaciones = []
+        def bandUnidad = true
+        def errores = ""
+
+        MarcoLogico.withCriteria {
+            eq("tipoElemento", TipoElemento.get(3))
+            eq("proyecto", proyecto)
+            eq("estado", 0)
+        }.each { comp ->
+//            if (!comp?.responsable) {
 //                bandUnidad = false
 //            }
-//            Asignacion.withCriteria {
-//                eq("marcoLogico", comp)
-//                eq("anio", anio)
-//                isNull("padre")
-//            }.each { aa ->
-//                if (res) {
-//                    res = verificarHijas(aa)
-//                    asignaciones.add(aa)
-//                }
-//            }
-//
-//        }
-//        print "band unidad " + bandUnidad
+            Asignacion.withCriteria {
+                eq("marcoLogico", comp)
+                eq("anio", anio)
+                isNull("padre")
+            }.each { aa ->
+                if (res) {
+                    res = verificarHijas(aa)
+                    asignaciones.add(aa)
+                }
+            }
+
+        }
+        print "band unidad " + bandUnidad
 //        if (bandUnidad) {
-//            if (res) {
-//                asignaciones.each { asg ->
-//                    res = eliminaHijas(asg)
-//                    if (res) {
-//                        try {
-//                            asg.delete(flush: true)
-//                        } catch (e) {
-//                            println "no pudo borrar  " + asg.id + "  e " + e
-//                            res = false
-//                        }
-//                    }
-//                }
-//            }
+            if (res) {
+                asignaciones.each { asg ->
+                    res = eliminaHijas(asg)
+                    if (res) {
+                        try {
+                            asg.delete(flush: true)
+                        } catch (e) {
+                            println "no pudo borrar  " + asg.id + "  e " + e
+                            res = false
+                        }
+                    }
+                }
+            }
 //        } else {
 //            render "ERROR*No se pueden crear las asignaciones, revise que todas las actividades del proyecto tengan responsables"
 //            return
 //        }
-//        /*Inicio del cambio!!! usando views*/
-//        if (!res) {
-//            render "ERROR*No se pudo eliminar todas las asignaciones, revise que no tengan modificaciones o certificaciones"
-//        } else {
-//            //creo la vista
-//            def nombreVista = "vista_asg_${session.usuario.id}"
+        /*Inicio del cambio!!! usando views*/
+        if (!res) {
+            render "ERROR*No se pudo eliminar todas las asignaciones, revise que no tengan modificaciones o certificaciones"
+        } else {
+            //creo la vista
+            def nombreVista = "vista_asg_${session.usuario.id}"
 //            def sqlView = "CREATE or replace  VIEW ${nombreVista} as (SELECT c.crng__id as crono,c.mrlg__id as mrlg,c.fnte__id as fuente,c.anio__id as anio,c.prsp__id as prsp,c.messvlor as valor from crng c,mrlg m where c.mrlg__id=m.mrlg__id and m.proy__id=${proyecto.id} and m.tpel__id=3 and m.mrlgetdo=0 and c.anio__id = ${anio.id})union(SELECT c.crng__id as crono,c.mrlg__id as mrlg,c.fnte2_id as fuente,c.anio__id as anio,c.prsp2_id as prsp,c.mesvlor2 as valor from crng c,mrlg m where c.mrlg__id=m.mrlg__id and m.proy__id=${proyecto.id} and m.tpel__id=3 and m.mrlgetdo=0 and c.anio__id = ${anio.id} and prsp2_id is not null);"
-//            //println "sql "+sqlView
-//            cn.execute(sqlView.toString())
-//            /*fin del cambio*/
-//            def sql = "select c.mrlg, c.fuente,c.prsp,sum(c.valor) from ${nombreVista} c,mrlg m where c.mrlg=m.mrlg__id and m.proy__id=${proyecto.id} and m.tpel__id=3 and m.mrlgetdo=0 and c.anio = ${anio.id} group by c.mrlg,c.fuente,c.prsp order by 1"
-//            //println "sql "+sql
-//            cn.eachRow(sql.toString()) { row ->
-//                //println "row "+row
-//                def asg = new Asignacion()
-//                def marco = MarcoLogico.get(row.mrlg)
-//                asg.marcoLogico = marco
-//                asg.anio = anio
-//                asg.presupuesto = Presupuesto.get(row.prsp)
-//                asg.fuente = Fuente.get(row.fuente)
-//                asg.planificado = row.sum
-//                asg.unidad = marco.responsable
-//                asg.save(flush: true)
-//                def maxNum = 1
-//                def band = true
-//                def prsp1 = false
-//                Cronograma.findAll("from Cronograma where marcoLogico=${row.mrlg} " +
-//                        "and fuente=${row.fuente} " +
-//                        "and anio=${anio.id} " +
-//                        "and presupuesto=${row.prsp}").each { crg ->
-//                    // println crg.valor+"  mes "+crg.mes.descripcion+" mrlg "+crg.marcoLogico.id
-//
-//                    maxNum = crg.mes.numero
+            def sqlView = "CREATE or replace  VIEW ${nombreVista} as (SELECT c.crng__id as crono,c.mrlg__id as mrlg,c.fnte__id as fuente,c.anio__id as anio,c.prsp__id as prsp,c.crngvlor as valor from crng c,mrlg m where c.mrlg__id=m.mrlg__id and m.proy__id=${proyecto.id} and m.tpel__id=3 and m.mrlgetdo=0 and c.anio__id = ${anio.id})union(SELECT c.crng__id as crono,c.mrlg__id as mrlg,c.fnte2_id as fuente,c.anio__id as anio,c.prsp2_id as prsp,c.crngvl02 as valor from crng c,mrlg m where c.mrlg__id=m.mrlg__id and m.proy__id=${proyecto.id} and m.tpel__id=3 and m.mrlgetdo=0 and c.anio__id = ${anio.id} and prsp2_id is not null);"
+            //println "sql "+sqlView
+            cn.execute(sqlView.toString())
+            /*fin del cambio*/
+            def sql = "select c.mrlg, c.fuente,c.prsp,sum(c.valor) from ${nombreVista} c,mrlg m where c.mrlg=m.mrlg__id and m.proy__id=${proyecto.id} and m.tpel__id=3 and m.mrlgetdo=0 and c.anio = ${anio.id} group by c.mrlg,c.fuente,c.prsp order by 1"
+            //println "sql "+sql
+            cn.eachRow(sql.toString()) { row ->
+                //println "row "+row
+                def asg = new Asignacion()
+                def marco = MarcoLogico.get(row.mrlg)
+                asg.marcoLogico = marco
+                asg.anio = anio
+                asg.presupuesto = Presupuesto.get(row.prsp)
+                asg.fuente = Fuente.get(row.fuente)
+                asg.planificado = row.sum
+                asg.save(flush: true)
+                def maxNum = 1
+                def band = true
+                def prsp1 = false
+                Cronograma.findAll("from Cronograma where marcoLogico=${row.mrlg} " +
+                        "and fuente=${row.fuente} " +
+                        "and anio=${anio.id} " +
+                        "and presupuesto=${row.prsp}").each { crg ->
+                    // println crg.valor+"  mes "+crg.mes.descripcion+" mrlg "+crg.marcoLogico.id
+
+                    maxNum = crg.mes.numero
 //                    def progra = new ProgramacionAsignacion()
 //                    progra.mes = crg.mes
 //                    progra.asignacion = asg
@@ -282,13 +282,13 @@ class CronogramaController {
 //                    if (!progra.save(flush: true)) {
 //                        println "Error save progra1: " + progra.errors
 //                    }
-//                }
-//                Cronograma.findAll("from Cronograma where marcoLogico=${row.mrlg} " +
-//                        "and fuente=${row.fuente} " +
-//                        "and anio=${anio.id} " +
-//                        "and presupuesto2=${row.prsp}").each { crg ->
-//                    //println crg.valor+"  mes "+crg.mes.descripcion+" mrlg "+crg.marcoLogico.id
-//                    maxNum = crg.mes.numero
+                }
+                Cronograma.findAll("from Cronograma where marcoLogico=${row.mrlg} " +
+                        "and fuente=${row.fuente} " +
+                        "and anio=${anio.id} " +
+                        "and presupuesto2=${row.prsp}").each { crg ->
+                    //println crg.valor+"  mes "+crg.mes.descripcion+" mrlg "+crg.marcoLogico.id
+                    maxNum = crg.mes.numero
 //                    def progra = new ProgramacionAsignacion()
 //                    progra.mes = crg.mes
 //                    progra.asignacion = asg
@@ -297,14 +297,14 @@ class CronogramaController {
 //                    if (!progra.save(flush: true)) {
 //                        println "Error save progra2: " + progra.errors
 //                    }
-//                }
-//            }
-//            sqlView = "drop VIEW vista_asg_${session.usuario.id};"
-//            //println "sql "+sqlView
-//            cn.execute(sqlView.toString())
-//            cn.close()
-//            render "SUCCESS*Asignaciones generadas exitosamente"
-//        }
+                }
+            }
+            sqlView = "drop VIEW vista_asg_${session.usuario.id};"
+            //println "sql "+sqlView
+            cn.execute(sqlView.toString())
+            cn.close()
+            render "SUCCESS*Asignaciones generadas exitosamente"
+        }
     }
 
     boolean verificarHijas(asgn) {
