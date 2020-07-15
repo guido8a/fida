@@ -282,8 +282,12 @@ class CronogramaController {
 
 */
                 def ml = MarcoLogico.get(row.mrlg)
-                Cronograma.findAll("from Cronograma where marcoLogico = ${ml} and fuente = 3 " +
-                        "and anio = 1 and presupuesto = 416").each { crg ->
+                def ftn= Fuente.get(row.fuente)
+                def pres = Presupuesto.get(row.prsp)
+                def an = Anio.get(anio.id)
+
+                Cronograma.findAll("from Cronograma where marcoLogico = ${ml} and fuente = ${ftn} " +
+                        "and anio = ${anio} and presupuesto = ${pres}").each { crg ->
 
                      println "---> " + crg.valor + "  mes "+crg.mes.descripcion+" mrlg "+crg.marcoLogico.id
 
@@ -299,9 +303,6 @@ class CronogramaController {
                     }
                 }
 
-                def ftn= Fuente.get(row.fuente)
-                def pres = Presupuesto.get(row.prsp)
-                def an = Anio.get(anio.id)
                 Cronograma.findAll("from Cronograma where marcoLogico=${ml} " +
                         "and fuente=${ftn} " +
                         "and anio=${an} " +
