@@ -274,7 +274,7 @@ class CronogramaController {
                 def maxNum = 1
                 def band = true
                 def prsp1 = false
-                println "${row.mrlg} -- ${row.fuente} -- ${anio.id} -- ${row.prsp}"
+//                println "${row.mrlg} -- ${row.fuente} -- ${anio.id} -- ${row.prsp}"
 /*
                 Cronograma.findAll("from Cronograma where marcoLogico = ${row.mrlg} and fuente = ${row.fuente} " +
                         "and anio = ${anio.id} and presupuesto = ${row.prsp}").each { crg ->
@@ -297,10 +297,14 @@ class CronogramaController {
 //                        println "Error save progra1: " + progra.errors
 //                    }
                 }
-                Cronograma.findAll("from Cronograma where marcoLogico=${row.mrlg} " +
-                        "and fuente=${row.fuente} " +
-                        "and anio=${anio.id} " +
-                        "and presupuesto2=${row.prsp}").each { crg ->
+
+                def ftn= Fuente.get(row.fuente)
+                def pres = Presupuesto.get(row.prsp)
+                def an = Anio.get(anio.id)
+                Cronograma.findAll("from Cronograma where marcoLogico=${ml} " +
+                        "and fuente=${ftn} " +
+                        "and anio=${an} " +
+                        "and presupuesto2=${pres}").each { crg ->
                     //println crg.valor+"  mes "+crg.mes.descripcion+" mrlg "+crg.marcoLogico.id
                     maxNum = crg.mes.numero
 //                    def progra = new ProgramacionAsignacion()

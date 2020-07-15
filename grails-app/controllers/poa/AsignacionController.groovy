@@ -221,7 +221,7 @@ class AsignacionController {
     }
 
     def asignacionProyectov2() {
-//        println "params asignacionProyectov2: " + params
+        println "params asignacionProyectov2: " + params
         def proyecto = Proyecto.get(params.id)
         def asignaciones = []
         def actual
@@ -251,7 +251,7 @@ class AsignacionController {
 
                 MarcoLogico.withCriteria {
                     eq("proyecto", proyecto)
-                    eq("tipoElemento", TipoElemento.get(3))
+                    eq("tipoElemento", TipoElemento.get(4))
                     eq("estado", 0)
                     eq("responsable", unidadE)
                     marcoLogico {
@@ -302,7 +302,7 @@ class AsignacionController {
 
                 MarcoLogico.withCriteria {
                     eq("proyecto", proyecto)
-                    eq("tipoElemento", TipoElemento.get(3))
+                    eq("tipoElemento", TipoElemento.get(4))
                     eq("estado", 0)
                     eq("marcoLogico", compon)
                     order("numero", "asc")
@@ -346,7 +346,7 @@ class AsignacionController {
 
             MarcoLogico.withCriteria {
                 eq("proyecto", proyecto)
-                eq("tipoElemento", TipoElemento.get(3))
+                eq("tipoElemento", TipoElemento.get(4))
                 eq("estado", 0)
                 marcoLogico {
                     order("numero", "asc")

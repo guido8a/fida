@@ -57,8 +57,13 @@
     </div>
 </div>
 
+<div class="panel panel-primary " style="text-align: center; font-size: 14px;">
+    <strong>PROYECTO: </strong> <strong style="color: #5596ff; "> ${proyecto?.toStringCompleto()}, para el año ${actual}</strong>
+</div>
 
-<elm:container tipo="horizontal" titulo="Asignaciones del proyecto: ${proyecto?.toStringLargo()}, para el año ${actual}" color="black">
+
+%{--<elm:container tipo="vertical" titulo="Asignaciones del proyecto: ${proyecto?.toStringLargo()}, para el año ${actual}" color="black">--}%
+<elm:container tipo="vertical" titulo="Asignaciones del proyecto" color="black">
 
     <table style="font-size: 11px" class="table table-condensed table-bordered table-striped" id="tblAsignaciones">
         <thead>
@@ -110,8 +115,8 @@
                     ${asg.marcoLogico}
                 </td>
                 <td>
-                    <b>Inicio:</b>${asg.marcoLogico.fechaInicio?.format("dd-MM-yyyy")}<br/>
-                    <b>Fin:</b>${asg.marcoLogico.fechaFin?.format("dd-MM-yyyy")}
+%{--                    <b>Inicio:</b>${asg.marcoLogico.fechaInicio?.format("dd-MM-yyyy")}<br/>--}%
+%{--                    <b>Fin:</b>${asg.marcoLogico.fechaFin?.format("dd-MM-yyyy")}--}%
                 </td>
                 <td>
                     ${asg.unidad}
@@ -120,7 +125,7 @@
                     ${asg.presupuesto.numero}
                 </td>
                 <td class="valor" style="text-align: right">
-                    <g:formatNumber number="${asg.getValorReal().toDouble()}" type="currency" currencySymbol=""/>
+%{--                    <g:formatNumber number="${asg.getValorReal().toDouble()}" type="currency" currencySymbol=""/>--}%
                 </td>
                 <g:if test="${actual.estado == 1}">
                     <g:if test="${proyecto.aprobadoPoa != 'S'}">
