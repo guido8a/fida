@@ -126,7 +126,7 @@
                     </g:else>
                 </g:each>
                 <td class="total" id="total_cor_${asg.id}" style="width: 80px;text-align: right;${(totalFila.toDouble().round(2)!=asg.planificado.toDouble().round(2))?'color:red;':''}padding-top:0px;padding-bottom: 0px;line-height: 30px">
-                    <g:formatNumber number="${totalFila}" type="currency" currencySymbol=""/>
+                    <util:formatNumber number="${totalFila}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" />
                     %{--${totalFila.toDouble().round(2)} -- ${asg.planificado.toDouble().round(2)}--}%
                 </td>
                 <g:if test="${actual.estado==0}">
@@ -158,10 +158,10 @@
             <td style="text-align: center"><util:formatNumber number="${ene.toDouble()+feb.toDouble()+mar.toDouble()+abr.toDouble()+may.toDouble()+jun.toDouble()+jul.toDouble()+ago.toDouble()+sep.toDouble()+oct.toDouble()+nov.toDouble()+dic.toDouble()}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
 --}%
 
-            <td style="text-align: center"><"${ene}"/></td>
-            <td style="text-align: center"><"${feb}"/></td>
-            <td style="text-align: center"><"${mar}"/></td>
-            <td style="text-align: center"><"${abr}"/></td>
+            <td style="text-align: center"><util:formatNumber number="${ene}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${feb}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${mar}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${abr}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
             <td style="text-align: center"><util:formatNumber number="${may}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
             <td style="text-align: center"><util:formatNumber number="${jun}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
             <td style="text-align: center"><util:formatNumber number="${jul}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>

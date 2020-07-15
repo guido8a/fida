@@ -312,8 +312,10 @@ class UtilitariosTagLib {
         DecimalFormatSymbols dcfs = DecimalFormatSymbols.getInstance();
 //        decimalSymbols.setDecimalSeparator('.');
         Character a = '.'
+        Character m = ','
 //        String mask = '#,###.##'
         dcfs.setDecimalSeparator(a)
+        dcfs.setGroupingSeparator(m)
 
         DecimalFormat decimalFormat
 
