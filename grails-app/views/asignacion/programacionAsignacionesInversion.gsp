@@ -140,21 +140,6 @@
             <td colspan="15"><b>TOTALES</b></td>
         </tr>
         <tr>
-%{--
-            <td style="text-align: center"><g:formatNumber number="${ene}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><g:formatNumber number="${feb}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><g:formatNumber number="${mar}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><g:formatNumber number="${abr}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><g:formatNumber number="${may}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><g:formatNumber number="${jun}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><g:formatNumber number="${jul}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><g:formatNumber number="${ago}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><g:formatNumber number="${sep}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><g:formatNumber number="${oct}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><g:formatNumber number="${nov}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><g:formatNumber number="${dic}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><g:formatNumber number="${ene.toDouble()+feb.toDouble()+mar.toDouble()+abr.toDouble()+may.toDouble()+jun.toDouble()+jul.toDouble()+ago.toDouble()+sep.toDouble()+oct.toDouble()+nov.toDouble()+dic.toDouble()}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
---}%
             <td style="text-align: center"><util:formatNumber number="${ene}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
             <td style="text-align: center"><util:formatNumber number="${feb}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
             <td style="text-align: center"><util:formatNumber number="${mar}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
@@ -186,16 +171,22 @@
         var max = $(this).attr("max")*1
         var datos =""
         $.each($("."+$(this).attr("clase")),function(){
-            var val = $(this).val()
-            val = str_replace(".","",val)
-            val=val*1
-            total+= val
-            datos+=$(this).attr("mes")+":"+val+";"
+            var txto = $(this).val()
+            var val = ""
+            var vl = 0.0
+            var lastIndex = txto.lastIndexOf('.');
+            val = txto.substr(0,lastIndex)
+            val = val.replace(".", "")
+            vl = val + txto.substr(lastIndex, txto.length)
+            vl=vl*1
+            // console.log('val', vl, 'ent:', txto.substr(0,lastIndex), 'frac:', txto.substr(lastIndex, txto.length))
+            total+= vl
+            datos+=$(this).attr("mes")+":"+vl+";"
         });
         total =parseFloat(total).toFixed(2);
         if(total!=max){
             bootbox.alert({
-                    message: "El total programado ( " +number_format(total,2,",",".")+" ) es diferente al monto priorizado: "+number_format(max,2,",","."),
+                    message: "El total programado ( " + total + " ) es diferente al monto priorizado: " + max,
                     title :"Error",
                     class : "modal-error"
                 }

@@ -761,6 +761,7 @@ class AsignacionController {
         def asgProy = []
         def proyecto
 
+        println "..... ${params.id}"
 
         if(params.id){
             proyecto = Proyecto.get(params.id)
@@ -896,7 +897,7 @@ class AsignacionController {
 
             try{
                 prog.save(flush:true)
-                println("--> " + prog.error)
+//                println("--> " + prog.error)
 //                render "ok"
             }catch(e){
                 println("error al guardar la programacion " + prog.errors + e)

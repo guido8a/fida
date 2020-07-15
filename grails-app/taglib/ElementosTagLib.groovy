@@ -5,6 +5,8 @@ import org.springframework.web.servlet.support.RequestContextUtils
 import seguridad.UnidadEjecutora
 import seguridad.Persona
 
+import java.text.DecimalFormatSymbols
+
 class ElementosTagLib {
 
     static namespace = "elm"
@@ -443,7 +445,8 @@ class ElementosTagLib {
             html += "                </div>"
             html += "            </div>"
             html += "        </div>"
-        } else {DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
+        } else {
+            DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
         decimalSymbols.setDecimalSeparator('.');
             //tipo documento
             if (tramite?.tipoDocumento?.codigo != 'OFI') {

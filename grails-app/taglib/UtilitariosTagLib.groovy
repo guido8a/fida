@@ -394,7 +394,7 @@ class UtilitariosTagLib {
             // if roundingMode is UNNECESSARY and ArithemeticException raises, just return original number formatted with default number formatting
             formatted = NumberFormat.getNumberInstance(locale).format(number)
         }
-        println "--> $number --> $formatted"
+//        println "--> $number --> $formatted"
         out << formatted
 //        return formatted
     }

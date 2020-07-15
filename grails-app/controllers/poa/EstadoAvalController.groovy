@@ -16,7 +16,7 @@ class EstadoAvalController {
      * @return lista de los elementos encontrados
      */
     def getList(params, all) {
-        println "--> $params"
+        println "e--> $params"
         params = params.clone()
         params.max = params.max ? Math.min(params.max.toInteger(), 100) : 20
         params.offset = params.offset ?: 0
@@ -84,7 +84,7 @@ class EstadoAvalController {
      * @render ERROR*[mensaje] cuando no se pudo grabar correctamente, SUCCESS*[mensaje] cuando se grabó correctamente
      */
     def save_ajax() {
-        println "---> $params"
+        println "sa---> $params"
         withForm {
             def estadoAvalInstance = new EstadoAval()
             if (params.id) {
