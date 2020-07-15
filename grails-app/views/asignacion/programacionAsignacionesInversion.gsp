@@ -77,7 +77,7 @@
                     %{--                        <g:set var="progra" value="${ProgramacionAsignacion?.findAll('from ProgramacionAsignacion where asignacion = '+asg.id+' and mes = '+mes.id+' ')?.pop()}"></g:set>--}%
                         <g:set var="progra" value="${poa.ProgramacionAsignacion.findAllByAsignacionAndMes(poa.Asignacion.get(asg.id),parametros.Mes.get(mes.id))?.pop()}"/>
                         <td class="${mes}" style="width: 70px;padding: 0px;height: 30px">
-                            <input type="text" class="${j} valor asg_cor_${asg.id} form-control input-sm number money"  mes="${mes.id}"   value="${g.formatNumber(number:progra?.valor, format:'###,##0', minFractionDigits:'2',maxFractionDigits:'2')}" style="width: 100%;margin: 0px">
+                            <input type="text" class="${j} valor asg_cor_${asg.id} form-control input-sm number money"  mes="${mes.id}"   value="${util.formatNumber(number:progra?.valor, format:'###,##0', minFractionDigits:'2',maxFractionDigits:'2')}" style="width: 100%;margin: 0px">
                             <g:set var="totalFila" value="${totalFila+=progra.valor}"/>
                             <g:if test="${j==0}">
                                 <g:set var="ene" value="${ene.toDouble()+progra?.valor}"/>
@@ -140,6 +140,7 @@
             <td colspan="15"><b>TOTALES</b></td>
         </tr>
         <tr>
+%{--
             <td style="text-align: center"><g:formatNumber number="${ene}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
             <td style="text-align: center"><g:formatNumber number="${feb}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
             <td style="text-align: center"><g:formatNumber number="${mar}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
@@ -153,6 +154,20 @@
             <td style="text-align: center"><g:formatNumber number="${nov}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
             <td style="text-align: center"><g:formatNumber number="${dic}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
             <td style="text-align: center"><g:formatNumber number="${ene.toDouble()+feb.toDouble()+mar.toDouble()+abr.toDouble()+may.toDouble()+jun.toDouble()+jul.toDouble()+ago.toDouble()+sep.toDouble()+oct.toDouble()+nov.toDouble()+dic.toDouble()}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+--}%
+            <td style="text-align: center"><util:formatNumber number="${ene}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${feb}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${mar}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${abr}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${may}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${jun}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${jul}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${ago}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${sep}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${oct}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${nov}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${dic}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            <td style="text-align: center"><util:formatNumber number="${ene.toDouble()+feb.toDouble()+mar.toDouble()+abr.toDouble()+may.toDouble()+jun.toDouble()+jul.toDouble()+ago.toDouble()+sep.toDouble()+oct.toDouble()+nov.toDouble()+dic.toDouble()}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
         </tr>
         </tbody>
     </table>
@@ -172,7 +187,7 @@
         var datos =""
         $.each($("."+$(this).attr("clase")),function(){
             var val = $(this).val()
-            val = str_replace(",","",val)
+            val = str_replace(".","",val)
             val=val*1
             total+= val
             datos+=$(this).attr("mes")+":"+val+";"
@@ -180,7 +195,7 @@
         total =parseFloat(total).toFixed(2);
         if(total!=max){
             bootbox.alert({
-                    message: "El total programado ( "+number_format(total,2,".",",")+" ) es diferente al monto priorizado: "+number_format(max,2,".",","),
+                    message: "El total programado ( " +number_format(total,2,",",".")+" ) es diferente al monto priorizado: "+number_format(max,2,",","."),
                     title :"Error",
                     class : "modal-error"
                 }

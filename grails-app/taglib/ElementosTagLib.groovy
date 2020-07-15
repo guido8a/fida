@@ -443,7 +443,8 @@ class ElementosTagLib {
             html += "                </div>"
             html += "            </div>"
             html += "        </div>"
-        } else {
+        } else {DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
+        decimalSymbols.setDecimalSeparator('.');
             //tipo documento
             if (tramite?.tipoDocumento?.codigo != 'OFI') {
 
