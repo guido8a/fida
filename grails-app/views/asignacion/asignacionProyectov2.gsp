@@ -245,7 +245,8 @@
                 </label>
 
                 <div class="col-md-7">
-                    <g:select from="${['Seleccione...', 'Todos', 'Componente', 'Responsable']}" name="filtro" class="form-control input-sm" id="filtro"/>
+%{--                    <g:select from="${['Seleccione...', 'Todos', 'Componente', 'Responsable']}" name="filtro" class="form-control input-sm" id="filtro"/>--}%
+                    <g:select from="${['Seleccione...', 'Todos', 'Componente']}" name="filtro" class="form-control input-sm" id="filtro"/>
                 </div>
             </div>
         </div>
@@ -360,18 +361,40 @@
         location.href = "${createLink(controller:'asignacion',action:'asignacionProyectov2')}?id=${proyecto.id}&anio=" + $(this).val()
     });
     $(".btn_agregar").click(function () {
-        //alert ("id:" +$(this).attr("asgn"))1
-
         $.ajax({
-            type    : "POST", url : "${createLink(action:'agregaAsignacion', controller: 'asignacion')}",
+            type    : "POST",
+             url : "${createLink(controller: 'asignacion', action:'agregaAsignacion')}",
             data    : "id=" + $(this).attr("asgn") + "&proy=" + $(this).attr("proy") + "&anio=" + $(this).attr("anio"),
             success : function (msg) {
-                $("#body-dividir").html(msg)
+                var b = bootbox.dialog({
+                    id    : "dlgDividir",
+                    title : "Dividir en dos partidas",
+                    class : "modal-lg",
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        guardar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-save'></i> Guardar",
+                            className : "btn-success",
+                            callback  : function () {
+                                guardarDivisionPartida()
+                                return false;
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+                // $("#body-dividir").html(msg)
             }
         });
-        $('#modal-dividir').modal("show")
-
+        // $('#modal-dividir').modal("show")
     });
+
     $(".btn_agregar_prio").click(function () {
         $.ajax({
             type    : "POST", url : "${createLink(action:'agregaAsignacionPrio', controller: 'asignacion')}",
@@ -454,36 +477,37 @@
         );
     });
 
-    $("#btn-dividir").click(function () {
-        if ($(".frmAsignacion").valid()) {
-            var asgn = $('#padre').val();
-            var mxmo = parseFloat($('#maximo').val());
-            var valor = str_replace(",", "", $('#vlor').val());
-            valor = parseFloat(valor);
-            if (valor > mxmo) {
-                bootbox.alert({
-                        message : "La nueva asignación debe ser menor a " + number_format(mxmo, 2, ".", ","),
-                        title   : "Error",
-                        class   : "modal-error"
-                    }
-                );
-            } else {
-                var partida = $('#prsp').val();
-                var fuente = $('#fuente').val();
-                openLoader();
-                $.ajax({
-                    type    : "POST", url : "${createLink(action:'creaHijo', controller: 'asignacion')}",
-                    data    : "id=" + asgn + "&fuente=" + fuente + "&partida=" + partida + "&valor=" + valor,
-                    success : function (msg) {
-                        closeLoader()
-                        location.reload(true);
-
-                    }
-                });
+    // $("#btn-dividir").click(function () {
+        function guardarDivisionPartida() {
+            if ($(".frmAsignacion").valid()) {
+                var asgn = $('#padre').val();
+                var mxmo = parseFloat($('#maximo').val());
+                var valor = str_replace(",", "", $('#vlor').val());
+                valor = parseFloat(valor);
+                if (valor > mxmo) {
+                    bootbox.alert({
+                            message: "La nueva asignación debe ser menor a " + number_format(mxmo, 2, ".", ","),
+                            title: "Error",
+                            class: "modal-error"
+                        }
+                    );
+                } else {
+                    // var partida = $('#prsp').val();
+                    var partida = $('#partida1').val();
+                    var fuente = $('#fuente').val();
+                    $.ajax({
+                        type: "POST",
+                        url: "${createLink(controller: 'asignacion', action:'creaHijo')}",
+                        data: "id=" + asgn + "&fuente=" + fuente + "&partida=" + partida + "&valor=" + valor,
+                        success: function (msg) {
+                            location.reload(true);
+                        }
+                    });
+                }
             }
         }
+    // });
 
-    });
     $("#btn-dividir-prio").click(function () {
         if ($(".frmAsignacionPrio").valid()) {
             var asgn = $('#padre').val();

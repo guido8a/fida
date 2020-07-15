@@ -268,7 +268,7 @@ class AsignacionController {
                         asignaciones += asig
                         asig.each { asg ->
 //                            totalR = totalR + asg.getValorReal()
-                            totalR = totalR
+                            totalR = totalR + asg?.planificado
                         }
                     }
                 }
@@ -286,7 +286,7 @@ class AsignacionController {
 
             } else {
                 compon = MarcoLogico.findByProyectoAndObjeto(Proyecto.get(params.id), params.comp)
-//                println "--- marcolo lógico: $compon.id"
+                println "--- marcolo lógico: $compon.id"
                 if (params.anio) {
                     actual = Anio.get(params.anio)
                 } else {
@@ -300,13 +300,15 @@ class AsignacionController {
                 def totalUnidad = 0
                 def maxInv = 0
 
-                MarcoLogico.withCriteria {
-                    eq("proyecto", proyecto)
-                    eq("tipoElemento", TipoElemento.get(4))
-                    eq("estado", 0)
-                    eq("marcoLogico", compon)
-                    order("numero", "asc")
-                }.each { ml ->
+//                MarcoLogico.withCriteria {
+//                    eq("proyecto", proyecto)
+//                    eq("tipoElemento", TipoElemento.get(4))
+//                    eq("estado", 0)
+//                    eq("marcoLogico", compon)
+//                    order("numero", "asc")
+//                }.each { ml ->
+                MarcoLogico.get(compon.id).each {ml->
+//                }.each { ml ->
                     def asig = Asignacion.withCriteria {
                         eq("marcoLogico", ml)
                         eq("anio", actual)
@@ -316,6 +318,7 @@ class AsignacionController {
                         asignaciones += asig
                         asig.each { asg ->
 //                            total += asg.getValorReal()
+                            total += asg.planificado
                         }
                     }
                 }
@@ -362,6 +365,7 @@ class AsignacionController {
                     asignaciones += asig
                     asig.each { asg ->
 //                        total = total + asg.getValorReal()
+                        total = total + asg?.planificado
                     }
                 }
             }
@@ -388,13 +392,13 @@ class AsignacionController {
 
     def agregaAsignacion() {
         def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
-        def listaFuentes = Financiamiento.findAllByProyectoAndAnio(Proyecto.get(params.proy), Anio.get(params.anio)).fuente
+        def listaFuentes = Financiamiento.findAllByProyectoAndAnio(Proyecto.get(params.proy), Anio.get(params.anio)).sort{it.fuente.codigo}
         def asgnInstance = Asignacion.get(params.id)
         def dist = null
-        if (params.dist && params.dist != "" && params.dist != "undefined") {
+//        if (params.dist && params.dist != "" && params.dist != "undefined") {
 //            dist = DistribucionAsignacion.get(params.dist)
-        }
-        ['asignacionInstance': asgnInstance, 'fuentes': listaFuentes, 'dist': dist, campos: campos]
+//        }
+        ['asignacionInstance': asgnInstance, 'fuentes': listaFuentes.fuente, 'dist': dist, campos: campos]
     }
 
     def buscarPresupuesto() {
@@ -468,7 +472,7 @@ class AsignacionController {
      * Acción
      */
     def creaHijo = {
-        println "parametros creaHijo:" + params
+//        println "parametros creaHijo:" + params
         if (params.id) {
             def nueva = new Asignacion()
             def valor = params.valor.toFloat()
@@ -476,10 +480,6 @@ class AsignacionController {
             def fnte = Fuente.get(params.fuente)
             def prsp = Presupuesto.get(params.partida)
             def resultado = 0
-            // debe borrar el registro actual de pras y crear uno nuevo con los nuevos valores
-//            ProgramacionAsignacion.findAllByAsignacion(Asignacion.get(params.id)).each {
-//                it.delete(flush: true)
-//            }
             asgn.planificado -= valor
             asgn.save(flush: true)
             if (asgn.errors.getErrorCount() == 0) {
@@ -496,11 +496,9 @@ class AsignacionController {
                 nueva.presupuesto = prsp
                 nueva.planificado = valor
                 nueva.unidad = asgn.unidad
-
-//            println "pone padre: ${nueva.padre}  ${nueva.unidad}"
                 nueva.save(flush: true)
                 if (nueva.errors.getErrorCount() == 0) {
-                    println "crea la progrmaación de " + nueva.id
+//                    println "crea la progrmaación de " + nueva.id
                     resultado += guardarPras(nueva)
                 } else {
                     resultado = 0
@@ -566,9 +564,9 @@ class AsignacionController {
         def pdre = Asignacion.get(asgn.padre.id)
         def p = [:]
         // debe borrar el registro actual de pras y crear uno nuevo con los nuevos valores
-//        ProgramacionAsignacion.findAllByAsignacion(asgn).each {
-//            it.delete(flush: true)
-//        }
+        ProgramacionAsignacion.findAllByAsignacion(asgn).each {
+            it.delete(flush: true)
+        }
         def del = true
         try {
             asgn.delete(flush: true)
@@ -578,9 +576,9 @@ class AsignacionController {
         if (del) {
             pdre.planificado += asgn.planificado
             pdre.save(flush: true)
-//            ProgramacionAsignacion.findAllByAsignacion(pdre).each {
-//                it.delete(flush: true)
-//            }
+            ProgramacionAsignacion.findAllByAsignacion(pdre).each {
+                it.delete(flush: true)
+            }
             if (pdre.errors.getErrorCount() == 0) {
                 guardarPras(pdre)
             }
@@ -619,33 +617,34 @@ class AsignacionController {
         }
     }
 
-//    def guardarPras(asg) {
-//        if (asg) {
+    def guardarPras(asg) {
+        if (asg) {
 //            def total = (asg.redistribucion == 0) ? (asg.planificado) : (asg.redistribucion)
-//            def valor = (total / 12).toFloat().round(2)
-//            def residuo = 0
-//            if (valor * 12 != total) {
-//                residuo = (total.toDouble() - valor.toDouble() * 12).toFloat().round(2)
-//            }
-//
-//            12.times {
-//                def mes = Mes.get(it + 1)
-//                ProgramacionAsignacion.findByAsignacionAndMes(asg, mes)?.delete(flush: true)
-//                def programacion = new ProgramacionAsignacion()
-//                programacion.asignacion = asg
-//                programacion.mes = mes
-//                if (it < 11) {
-//                    programacion.valor = valor
-//                } else {
-//                    programacion.valor = valor + residuo
-//                }
-//                programacion.save(flush: true)
-//            }
-//            return asg.id
-//        } else {
-//            return 0
-//        }
-//    }
+            def total = asg.planificado
+            def valor = (total / 12).toFloat().round(2)
+            def residuo = 0
+            if (valor * 12 != total) {
+                residuo = (total.toDouble() - valor.toDouble() * 12).toFloat().round(2)
+            }
+
+            12.times {
+                def mes = Mes.get(it + 1)
+                ProgramacionAsignacion.findByAsignacionAndMes(asg, mes)?.delete(flush: true)
+                def programacion = new ProgramacionAsignacion()
+                programacion.asignacion = asg
+                programacion.mes = mes
+                if (it < 11) {
+                    programacion.valor = valor
+                } else {
+                    programacion.valor = valor + residuo
+                }
+                programacion.save(flush: true)
+            }
+            return asg.id
+        } else {
+            return 0
+        }
+    }
 
 //    def guardarPrasPrio(asg) {
 //        if (asg) {
@@ -695,12 +694,14 @@ class AsignacionController {
         def total = 0
         def totalUnidad = 0
         def maxInv = 0
-        MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento=3 and estado=0").each {
-            def asig = Asignacion.findAll("from Asignacion where marcoLogico=${it.id} and anio=${actual.id}   order by id")
+//        MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento=3 and estado=0").each {
+        MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto} and tipoElemento=4 and estado=0").each {
+            def asig = Asignacion.findAll("from Asignacion where marcoLogico=${it} and anio=${actual}   order by id")
             if (asig) {
                 asignaciones += asig
                 asig.each { asg ->
-                    total = total + asg.getValorReal()
+//                    total = total + asg.getValorReal()
+                    total = total + asg.planificado
                 }
             }
         }
