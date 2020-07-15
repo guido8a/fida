@@ -122,7 +122,6 @@
 
 
 
-
     var validator = $(".frmAsignacion").validate({
         errorClass     : "help-block",
         errorPlacement : function (error, element) {

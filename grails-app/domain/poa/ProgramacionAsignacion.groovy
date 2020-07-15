@@ -34,7 +34,7 @@ class ProgramacionAsignacion {
             id column: 'pras__id'
             asignacion column: 'asgn__id'
             mes column: 'mess__id'
-            valor column: 'messvlor'
+            valor column: 'prasvlor'
             estado column: 'prasetdo'
             cronograma column: 'crng__id'
         }
