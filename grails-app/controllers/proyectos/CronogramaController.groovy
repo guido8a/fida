@@ -203,7 +203,7 @@ class CronogramaController {
         def errores = ""
 
         MarcoLogico.withCriteria {
-            eq("tipoElemento", TipoElemento.get(3))
+            eq("tipoElemento", TipoElemento.get(4))
             eq("proyecto", proyecto)
             eq("estado", 0)
         }.each { comp ->
@@ -328,76 +328,88 @@ class CronogramaController {
     }
 
     boolean verificarHijas(asgn) {
-//        def hijas = Asignacion.findAllByPadre(asgn)
-//        def res = true
-//        println "verificando " + asgn.id
-//        hijas.each {
-//            println "verificando hija " + it.id
-//            res = verificarHijas(it)
-//            if (!res) {
-//                return false
-//            }
-//            if (DistribucionAsignacion.findAllByAsignacion(it).size() > 0) {
-//                return false
-//            }
-//            if (ModificacionAsignacion.findAllByDesdeOrRecibe(it, it).size() > 0) {
-//                return false
-//            }
-//            if (Certificacion.findAllByAsignacion(it).size() > 0) {
-//                return false
-//            }
-//        }
-//        if (DistribucionAsignacion.findAllByAsignacion(asgn).size() > 0) {
-//            return false
-//        }
-//        if (ModificacionAsignacion.findAllByDesdeOrRecibe(asgn, asgn).size() > 0) {
-//            return false
-//        }
-//        if (Certificacion.findAllByAsignacion(asgn).size() > 0) {
-//            return false
-//        }
-//
-//        println "paso... true"
-//        return true
+        def hijas = Asignacion.findAllByPadre(asgn)
+        def res = true
+        println "verificando " + asgn.id
+        hijas.each {
+            println "verificando hija " + it.id
+            res = verificarHijas(it)
+            if (!res) {
+                return false
+            }
+/*
+            if (DistribucionAsignacion.findAllByAsignacion(it).size() > 0) {
+                return false
+            }
+            if (ModificacionAsignacion.findAllByDesdeOrRecibe(it, it).size() > 0) {
+                return false
+            }
+            if (Certificacion.findAllByAsignacion(it).size() > 0) {
+                return false
+            }
+*/
+        }
+/*
+        if (DistribucionAsignacion.findAllByAsignacion(asgn).size() > 0) {
+            return false
+        }
+*/
+/*
+        if (ModificacionAsignacion.findAllByDesdeOrRecibe(asgn, asgn).size() > 0) {
+            return false
+        }
+*/
+/*
+        if (Certificacion.findAllByAsignacion(asgn).size() > 0) {
+            return false
+        }
+*/
+
+        println "paso... true"
+        return true
     }
 
     def eliminaHijas(asgn) {
-//        def hijas = Asignacion.findAllByPadre(asgn)
-//        def masHijas = []
-//        def res = true
-//        hijas.each {
-//            if (res) {
-//                res = eliminaHijas(it)
-//                println " ---------------- borra programaciones"
-//                ProgramacionAsignacion.findAllByAsignacion(it).each { prg ->
-//                    prg.delete(flush: true)
-//                }
-//                Obra.findAllByAsignacion(it).each { ob ->
-//                    ob.delete(flush: true)
-//                }
-//                println "borradas PAC----------------"
-//                try {
-//                    println "Asignacion a borrar: ${it.id}"
-//                    it.delete(flush: true)
-//                } catch (e) {
-//                    res = false
-//                }
-//            }
-//        }
-//        if (res) {
-//            try {
-//                ProgramacionAsignacion.findAllByAsignacion(asgn).each { prg ->
-//                    prg.delete(flush: true)
-//                }
-//                Obra.findAllByAsignacion(asgn).each { ob ->
-//                    ob.delete(flush: true)
-//                }
-//            } catch (e) {
-//                println "no pudo  borrar 2 "
-//                res = false
-//            }
-//        }
-//        return res
+        def hijas = Asignacion.findAllByPadre(asgn)
+        def masHijas = []
+        def res = true
+        hijas.each {
+            if (res) {
+                res = eliminaHijas(it)
+                println " ---------------- borra programaciones"
+                ProgramacionAsignacion.findAllByAsignacion(it).each { prg ->
+                    prg.delete(flush: true)
+                }
+/*
+                Obra.findAllByAsignacion(it).each { ob ->
+                    ob.delete(flush: true)
+                }
+*/
+                println "borradas PAC----------------"
+                try {
+                    println "Asignacion a borrar: ${it.id}"
+                    it.delete(flush: true)
+                } catch (e) {
+                    res = false
+                }
+            }
+        }
+        if (res) {
+            try {
+                ProgramacionAsignacion.findAllByAsignacion(asgn).each { prg ->
+                    prg.delete(flush: true)
+                }
+/*
+                Obra.findAllByAsignacion(asgn).each { ob ->
+                    ob.delete(flush: true)
+                }
+*/
+            } catch (e) {
+                println "no pudo  borrar 2 "
+                res = false
+            }
+        }
+        return res
     }
 
     def buscarPresupuesto() {
