@@ -765,7 +765,7 @@ class AsignacionController {
         if(params.id){
             proyecto = Proyecto.get(params.id)
 
-            MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto.id} and tipoElemento=3 and estado=0").each {
+            MarcoLogico.findAll("from MarcoLogico where proyecto = ${proyecto} and tipoElemento=4 and estado=0").each {
                 def asig = Asignacion.findAllByMarcoLogicoAndAnio(it, actual, [sort: "id"])
                 if (asig) {
                     asgProy += asig
@@ -861,34 +861,50 @@ class AsignacionController {
     /**
      * Acción
      */
-//    def guardarProgramacion() {
-//        println "guardarProgramacion params " + params
-//        def asig = Asignacion.get(params.asignacion)
-//        def datos = params.datos.split(";")
-//        datos.each {
-//            def partes = it.split(":")
-//            println "partes: $partes"
-////            def prog = ProgramacionAsignacion.findByAsignacionAndMes(asig, Mes.get(partes[0]))
-//            def prog = ProgramacionAsignacion.findByAsignacionAndMes(asig, Mes.findByNumero(partes[0]))
-//            println "prog: $prog"
-//            if ((!prog) && (partes[1]?:0 > 0)) {
-//                prog = new ProgramacionAsignacion()
-//                prog.asignacion = asig
-//                prog.mes = Mes.get(partes[0])
-//                println "crea pras: ${prog.mes}"
+    def guardarProgramacion() {
+        println "guardarProgramacion params " + params
+        def asig = Asignacion.get(params.asignacion)
+        def datos = params.datos.split(";")
+        datos.each {
+            def partes = it.split(":")
+            println "partes: $partes"
+            def prog = ProgramacionAsignacion.findByAsignacionAndMes(asig, Mes.findByNumero(partes[0]))
+            println "prog: $prog"
+            if ((!prog) && (partes[1]?:0 > 0)) {
+                prog = new ProgramacionAsignacion()
+                prog.asignacion = asig
+                prog.mes = Mes.get(partes[0])
+                prog.valor = partes[1]?.toDouble()
+                println "crea pras: ${prog.mes}"
 //                if (!prog.save(flush: true)) {
 //                    println "errors " + prog.errors
 //                }
-//            } else {
-//                prog.valor = partes[1]?.toDouble()
-//                println "actualiza prog a ${partes[1]}"
+            } else {
+                prog.valor = partes[1]?.toDouble()
+                println "actualiza prog a ${partes[1]}"
 //                if (!prog.save(flush: true)) {
 //                    println "errors " + prog.errors
 //                }
+            }
+
+//            if(!prog.save(flush:true)){
+//                println("error al guardar la programacion " + prog.errors)
+//            }else{
+//
 //            }
-//        }
-//        render "ok"
-//    }
+//
+
+            try{
+                prog.save(flush:true)
+                println("--> " + prog.error)
+//                render "ok"
+            }catch(e){
+                println("error al guardar la programacion " + prog.errors + e)
+//                render "no"
+            }
+        }
+        render "ok"
+    }
 
     /**
      * Acción

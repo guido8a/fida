@@ -15,7 +15,7 @@
 
 <div class="btn-toolbar toolbar">
     <div class="btn-group">
-        <g:link class="btn btn-default btn-sm " controller="asignacion" action="programacionAsignacionesInversion" params="[id: proyecto.id, anio: actual.id]">
+        <g:link class="btn btn-info btn-sm " controller="asignacion" action="programacionAsignacionesInversion" params="[id: proyecto.id, anio: actual.id]">
             <i class="fa fa-calendar"></i> Programación
         </g:link>
     %{--
@@ -72,8 +72,7 @@
             <th style="">Componente</th>
             <th>#</th>
             <th style="">Actividad</th>
-            <th>Fechas</th>
-            <th style="">Reponsable</th>
+            <th style="">Unidad Ejecutora</th>
             <th style="width: 60px;">Partida</th>
             <th>Planificado</th>
             <g:if test="${actual?.estado == 1}">
@@ -92,11 +91,11 @@
             <g:if test="${asg.planificado > 0}">
                 <g:if test="${actual?.estado == 0}">
                 %{--                        <g:set var="total" value="${total.toDouble() + asg.getValorReal()}"/>--}%
-                    <g:set var="total" value="${total.toDouble()}"/>
+                    <g:set var="total" value="${total.toDouble() + (asg?.planificado ?: 0)}"/>
                 </g:if>
                 <g:else>
                 %{--                        <g:set var="total" value="${total.toDouble() + asg.getValorReal()}"/>--}%
-                    <g:set var="total" value="${total.toDouble()}"/>
+                    <g:set var="total" value="${total.toDouble() + (asg?.planificado ?: 0)}"/>
                     <g:set var="totalP" value="${totalP.toDouble() + asg.priorizado}"/>
                     <g:set var="totalO" value="${totalO.toDouble() + asg.priorizadoOriginal}"/>
                 </g:else>
@@ -115,22 +114,17 @@
                     ${asg.marcoLogico}
                 </td>
                 <td>
-%{--                    <b>Inicio:</b>${asg.marcoLogico.fechaInicio?.format("dd-MM-yyyy")}<br/>--}%
-%{--                    <b>Fin:</b>${asg.marcoLogico.fechaFin?.format("dd-MM-yyyy")}--}%
-                </td>
-                <td>
                     ${asg.unidad}
                 </td>
                 <td title="${asg.presupuesto.descripcion}">
                     ${asg.presupuesto.numero}
                 </td>
                 <td class="valor" style="text-align: right">
-%{--                    <g:formatNumber number="${asg.getValorReal().toDouble()}" type="currency" currencySymbol=""/>--}%
+                    <g:formatNumber number="${asg?.planificado?.toDouble()}" type="currency" currencySymbol=""/>
                 </td>
                 <g:if test="${actual.estado == 1}">
                     <g:if test="${proyecto.aprobadoPoa != 'S'}">
                         <td class="valor">
-
                             <div class="input-group input-group-sm" style="width: 160px">
                                 <input type="text" name="prio_${asg.id}" class="form-control txt-prio  number money" style="text-align: right;" id="prio_${asg.id}" value="${asg.priorizado}">
                                 <span class="input-group-btn">
@@ -139,7 +133,6 @@
                                     </a>
                                 </span>
                             </div><!-- /input-group -->
-
                         </td>
                     </g:if><g:else>
                     <td class="valor" style="text-align: right">
@@ -170,15 +163,10 @@
         </g:each>
         </tbody>
         <tfoot>
-
         <tr>
+            <td colspan="5"></td>
             <td><b>TOTAL</b></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+
             <td class="valor" style="text-align: right; font-weight: bold;">
                 <g:formatNumber number="${total.toDouble()}" type="currency" currencySymbol=""/>
             </td>
