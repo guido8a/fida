@@ -64,7 +64,7 @@
             <div class="col-md-7">
                 <g:textField class="form-control input-sm required money number" name="valor"
                              title="Planificado" id="vlor" style="text-align:right;padding-right: 10px;"
-                             value='${formatNumber(number:asignacionInstance.planificado,format:"###,##0",minFractionDigits:2,maxFractionDigits:2)}'/>
+                             value='${asignacionInstance.planificado}'/>
             </div>
 
         </span>
