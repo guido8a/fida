@@ -6,6 +6,7 @@ import parametros.proyectos.Fuente
 import parametros.proyectos.TipoElemento
 import poa.Asignacion
 import poa.Presupuesto
+import poa.ProgramacionAsignacion
 
 
 /**
@@ -287,15 +288,15 @@ class CronogramaController {
                      println "---> " + crg.valor + "  mes "+crg.mes.descripcion+" mrlg "+crg.marcoLogico.id
 
                     maxNum = crg.mes.numero
-//                    def progra = new ProgramacionAsignacion()
-//                    progra.mes = crg.mes
-//                    progra.asignacion = asg
-//                    progra.cronograma = crg
-//                    progra.valor = crg.valor
-//                    progra.cronograma = crg
-//                    if (!progra.save(flush: true)) {
-//                        println "Error save progra1: " + progra.errors
-//                    }
+                    def progra = new ProgramacionAsignacion()
+                    progra.mes = crg.mes
+                    progra.asignacion = asg
+                    progra.cronograma = crg
+                    progra.valor = crg.valor
+                    progra.cronograma = crg
+                    if (!progra.save(flush: true)) {
+                        println "Error save progra1: " + progra.errors
+                    }
                 }
 
                 def ftn= Fuente.get(row.fuente)
@@ -307,14 +308,14 @@ class CronogramaController {
                         "and presupuesto2=${pres}").each { crg ->
                     //println crg.valor+"  mes "+crg.mes.descripcion+" mrlg "+crg.marcoLogico.id
                     maxNum = crg.mes.numero
-//                    def progra = new ProgramacionAsignacion()
-//                    progra.mes = crg.mes
-//                    progra.asignacion = asg
-//                    progra.cronograma = crg
-//                    progra.valor = crg.valor2
-//                    if (!progra.save(flush: true)) {
-//                        println "Error save progra2: " + progra.errors
-//                    }
+                    def progra = new ProgramacionAsignacion()
+                    progra.mes = crg.mes
+                    progra.asignacion = asg
+                    progra.cronograma = crg
+                    progra.valor = crg.valor2
+                    if (!progra.save(flush: true)) {
+                        println "Error save progra2: " + progra.errors
+                    }
                 }
             }
             sqlView = "drop VIEW vista_asg_${session.usuario.id};"
