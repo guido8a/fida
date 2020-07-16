@@ -17,9 +17,10 @@
 
 <body>
 
-<div style="text-align: center; margin-top: 22px; height: ${(flash.message) ? '700' : '630'}px;" class="well">
+<div style="text-align: center; margin-top: 22px; height: ${(flash.message) ? '680' : '610'}px;" class="well">
 
-    <h1 class="titl" style="font-size: 24px; color: #06a">Ingreso al Sistema</h1>
+    <h1 class="titl" style="font-size: 24px; color: #06a">SISTEMA DE PLANIFICACIÓN, SEGUIMIENTO Y EVALUACIÓN PARA EL</h1>
+    <h1 class="titl" style="font-size: 16px; color: #06a">PROYECTO FORTALECIMIENTO DE LOS ACTORES RURALES DE LA ECONOMÍA POPULAR Y SOLIDARIA (FAREPS)</h1>
     <elm:flashMessage tipo="${flash.tipo}" icon="${flash.icon}"
                       clase="${flash.clase}">${flash.message}</elm:flashMessage>
 
@@ -34,15 +35,17 @@
                 <i class="icon-off"></i>Ingresar</a>
         </div>
 
+%{--
         <div>
             Para mayor información puede consultar el
             <a href="${createLink(uri: '/descriptivo.pdf')}">
             <asset:image src="apli/pdf_pq.png" style="padding: 10px;"/> descriptivo del sistema</a>
         </div>
+--}%
 
 
         <p class="text-info pull-right" style="font-size: 10px; margin-top: 20px">
-            Desarrollado por: TEDEIN S.A. Versión ${message(code: 'version', default: '1.1.0x')}
+            Desarrollado por: Guido Ochoa Moreno. Versión ${message(code: 'version', default: '1.1.0x')}
         </p>
     </div>
 </div>
@@ -54,7 +57,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Ingreso a Adquisiciones</h4>
+                <h4 class="modal-title">Ingreso al Sistema</h4>
             </div>
 
             <div class="modal-body" style="width: 280px; margin: auto">
@@ -82,7 +85,7 @@
                     <div class="divBtn" style="width: 100%">
                         <a href="#" class="btn btn-primary btn-lg btn-block" id="btn-login"
                            style="width: 140px; margin: auto">
-                            <i class="fa fa-lock"></i> Ingresar
+                            <i class="fa fa-lock"></i> Validar
                         </a>
                     </div>
 
