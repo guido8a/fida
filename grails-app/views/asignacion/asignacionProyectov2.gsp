@@ -57,8 +57,42 @@
     </div>
 </div>
 
-<div class="panel panel-primary " style="text-align: center; font-size: 14px;">
-    <strong>PROYECTO: </strong> <strong style="color: #5596ff; "> ${proyecto?.toStringCompleto()}, para el año ${actual}</strong>
+<div style="position: absolute;top:60px;right:10px;font-size: 11px;" class="text-info">
+    <div style="top:5px;right:10px;font-size: 11px;">
+        <b>Total invertido proyecto actual:</b>
+        <span id="spTotInv">
+            <g:if test="${actual?.estado == 0}">
+                <util:formatNumber number="${proyecto?.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" />
+            </g:if>
+            <g:else>
+                <util:formatNumber number="${totalP}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" />
+            </g:else>
+        </span>
+    </div>
+    <div style="top:20px;right:10px;font-size: 11px;">
+        <b>Máximo Inversiones:</b>
+        <span id="spMaxInv">
+            <util:formatNumber number="${maxInv}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" />
+        </span>
+    </div>
+
+    <div style="top:35px;right:10px;font-size: 11px;">
+        <b>Total priorizado:</b>
+        <span id="spTotPrio">
+            <util:formatNumber number="${priorizado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" />
+        </span>
+    </div>
+    <div style="top:50px;right:10px;font-size: 11px;">
+        <b>Restante:</b>
+        <span id="spRestante">
+            <util:formatNumber number="${maxInv - priorizado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" />
+        </span>
+    </div>
+</div>
+
+
+<div class="panel-primary " style="font-size: 14px; margin-bottom: 5px">
+    <strong style="color: #5596ff; "> ${proyecto?.toStringCompleto()}, para el año ${actual}</strong>
 </div>
 
 
@@ -187,6 +221,7 @@
 
 <div id="ajx_asgn_prio" style="width:520px;"></div>
 
+%{--
 <div style="margin-left: 30px">
     <div style="top:5px;right:10px;font-size: 11px;">
         <b>Total invertido proyecto actual:</b>
@@ -219,6 +254,7 @@
         </span>
     </div>
 </div>
+--}%
 
 
 <elm:modal titulo="Dividir asignación" id="modal-dividir">
