@@ -187,39 +187,40 @@
 
 <div id="ajx_asgn_prio" style="width:520px;"></div>
 
-<div style="position: absolute;top:5px;right:10px;font-size: 11px;">
-    <b>Total invertido proyecto actual:</b>
-    <span id="spTotInv">
-        <g:if test="${actual?.estado == 0}">
-        %{--<g:formatNumber number="${total?.toFloat()}" type="currency" currencySymbol=""/>--}%
-            <g:formatNumber number="${proyecto?.monto?.toFloat()}" type="currency" currencySymbol=""/>
-        </g:if>
-        <g:else>
-            <g:formatNumber number="${totalP?.toFloat()}" type="currency" currencySymbol=""/>
-        </g:else>
-    </span>
+<div style="margin-left: 30px">
+    <div style="top:5px;right:10px;font-size: 11px;">
+        <b>Total invertido proyecto actual:</b>
+        <span id="spTotInv">
+            <g:if test="${actual?.estado == 0}">
+                <util:formatNumber number="${proyecto?.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" />
+            </g:if>
+            <g:else>
+                <util:formatNumber number="${totalP}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" />
+            </g:else>
+        </span>
+    </div>
+    <div style="top:20px;right:10px;font-size: 11px;">
+        <b>Máximo Inversiones:</b>
+        <span id="spMaxInv">
+            <util:formatNumber number="${maxInv}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" />
+        </span>
+    </div>
+
+    <div style="top:35px;right:10px;font-size: 11px;">
+        <b>Total priorizado:</b>
+        <span id="spTotPrio">
+            <util:formatNumber number="${priorizado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" />
+        </span>
+    </div>
+    <div style="top:50px;right:10px;font-size: 11px;">
+        <b>Restante:</b>
+        <span id="spRestante">
+            <util:formatNumber number="${maxInv - priorizado}" format="###,##0" minFractionDigits="2" maxFractionDigits="2" />
+        </span>
+    </div>
 </div>
 
-<div style="position: absolute;top:20px;right:10px;font-size: 11px;">
-    <b>Máximo Inversiones:</b>
-    <span id="spMaxInv">
-        <g:formatNumber number="${maxInv}" type="currency" currencySymbol=""/>
-    </span>
-</div>
 
-<div style="position: absolute;top:35px;right:10px;font-size: 11px;">
-    <b>Total priorizado:</b>
-    <span id="spTotPrio">
-        <g:formatNumber number="${priorizado}" type="currency" currencySymbol=""/>
-    </span>
-</div>
-
-<div style="position: absolute;top:50px;right:10px;font-size: 11px;">
-    <b>Restante:</b>
-    <span id="spRestante">
-        <g:formatNumber number="${maxInv - priorizado}" type="currency" currencySymbol=""/>
-    </span>
-</div>
 <elm:modal titulo="Dividir asignación" id="modal-dividir">
     <div class="modal-body" id="body-dividir"></div>
 
