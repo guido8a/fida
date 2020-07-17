@@ -21,16 +21,16 @@
     <tbody>
         <g:each in="${reformas}" var="reforma">
             <tr>
-                <td>${reforma.persona.unidad} - ${reforma.persona}</td>
+                <td>${reforma.persona.unidadEjecutora} - ${reforma.persona}</td>
                 <td>${reforma.fecha.format("dd-MM-yyyy")}</td>
                 <td>${reforma.concepto}</td>
                 <td>
-                    <elm:tipoReforma reforma="${reforma}"/>
+%{--                    <elm:tipoReforma reforma="${reforma}"/>--}%
                 </td>
                 <td class="${reforma.estado.codigo}">${reforma.estado.descripcion}</td>
                 <td>
                     <div class="btn-group-xs" role="group">
-                        <elm:linkPdfReforma reforma="${reforma}"/>
+%{--                        <elm:linkPdfReforma reforma="${reforma}"/>--}%
                     </div>
                 </td>
             </tr>

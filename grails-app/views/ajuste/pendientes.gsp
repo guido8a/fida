@@ -61,11 +61,14 @@
                                             <div class="btn-group btn-group-xs" role="group" style="width: 100px">
 %{--                                                <elm:linkPdfReforma reforma="${reforma}"/>--}%
 %{--                                                <elm:linkEditarReforma reforma="${reforma}" perfil="${session.perfil}"/>--}%
-                                                <g:if test="${session.perfil.codigo == 'ASPL' && !modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">
+%{--                                                <g:if test="${session.perfil.codigo == 'ASPL' && !modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">--}%
+                                                <a href="#"  class="btn btn-info borrar"  ajuste="${reforma?.id}" title="Eliminar ajuste">
+                                                    <i class="fa fa-close"></i>
+                                                </a>
                                                     <a href="#"  class="btn btn-danger borrar"  ajuste="${reforma?.id}" title="Eliminar ajuste">
                                                         <i class="fa fa-close"></i>
                                                     </a>
-                                                </g:if>
+%{--                                                </g:if>--}%
                                             </div>
                                         </td>
                                     </tr>
