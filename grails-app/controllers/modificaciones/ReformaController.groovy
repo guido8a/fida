@@ -2643,8 +2643,8 @@ class ReformaController  {
             detalleReforma.valorOrigenInicial = asignacion.priorizado
             detalleReforma.valorDestinoInicial = 0
             detalleReforma.fuente = fuente
-//            detalleReforma.responsable = asignacion.unidad
-//            detalleReforma.anio = asignacion.anio
+            detalleReforma.responsable = asignacion.unidad
+            detalleReforma.anio = asignacion.anio
 //            if(params.adicional){
 //                println("entro")
 //                detalleReforma.solicitado = params.adicional
@@ -2668,8 +2668,8 @@ class ReformaController  {
             detalleReforma.valorOrigenInicial = asignacion.priorizado
             detalleReforma.valorDestinoInicial = 0
             detalleReforma.fuente = fuente
-//            detalleReforma.responsable = asignacion.unidad
-//            detalleReforma.anio = asignacion.anio
+            detalleReforma.responsable = asignacion.unidad
+            detalleReforma.anio = asignacion.anio
 
             if(!detalleReforma.save(flush: true)){
                 println("error al guardar detalle de reforma A " + detalleReforma.errors);
@@ -2704,8 +2704,8 @@ class ReformaController  {
             detalleReforma.valorOrigenInicial = 0
             detalleReforma.valorDestinoInicial = asignacion.priorizado
             detalleReforma.fuente = fuente
-//            detalleReforma.responsable = asignacion.unidad
-//            detalleReforma.anio = asignacion.anio
+            detalleReforma.responsable = asignacion.unidad
+            detalleReforma.anio = asignacion.anio
 
             if(!detalleReforma.save(flush: true)){
                 println("error al guardar detalle de reforma B " + errors);
@@ -2725,8 +2725,8 @@ class ReformaController  {
             detalleReforma.valorOrigenInicial = 0
             detalleReforma.valorDestinoInicial = asignacion.priorizado
             detalleReforma.fuente = fuente
-//            detalleReforma.responsable = asignacion.unidad
-//            detalleReforma.anio = asignacion.anio
+            detalleReforma.responsable = asignacion.unidad
+            detalleReforma.anio = asignacion.anio
 
             if(!detalleReforma.save(flush: true)){
                 println("error al guardar detalle de reforma B " + errors);
@@ -2773,8 +2773,8 @@ class ReformaController  {
             detalleReforma.presupuesto = partida
 //            detalleReforma.responsable = actividad.responsable
 
-//            detalleReforma.responsable = responsable
-//            detalleReforma.anio = anio
+            detalleReforma.responsable = responsable
+            detalleReforma.anio = anio
 
             if(!detalleReforma.save(flush: true)){
                 println("error al guardar detalle de reforma C  " + detalleReforma.errors);
@@ -2797,7 +2797,7 @@ class ReformaController  {
             detalleReforma.fuente = fuente
             detalleReforma.presupuesto = partida
 //            detalleReforma.responsable = actividad.responsable
-//            detalleReforma.responsable = responsable
+            detalleReforma.responsable = responsable
 
             if(!detalleReforma.save(flush: true)){
                 println("error al guardar detalle de reforma C  " + detalleReforma.errors);

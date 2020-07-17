@@ -1,9 +1,11 @@
 package modificaciones
 
+import parametros.Anio
 import parametros.proyectos.Fuente
 import poa.Asignacion
 import poa.Presupuesto
 import proyectos.MarcoLogico
+import seguridad.UnidadEjecutora
 
 class DetalleReforma {
 
@@ -60,6 +62,10 @@ class DetalleReforma {
      */
     Double valorDestinoInicial
 
+    Anio anio
+
+    UnidadEjecutora responsable
+
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
@@ -88,6 +94,8 @@ class DetalleReforma {
             valorDestinoInicial column: 'dtrfvldi'
             tipoReforma column: 'tprf__id'
             fuente column: 'fnte__id'
+            anio column: 'anio__id'
+            responsable column: 'unej__id'
         }
     }
 
@@ -103,5 +111,7 @@ class DetalleReforma {
         detalleOriginal nullable: true
         tipoReforma nullable: true
         fuente nullable: true
+        anio nullable: false
+        responsable nullable: true
     }
 }
