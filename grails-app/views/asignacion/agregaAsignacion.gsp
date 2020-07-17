@@ -27,7 +27,7 @@
             <label for="fuente" class="col-md-2 control-label">
                 Fuente
             </label>
-            <div class="col-md-7">
+            <div class="col-md-10">
                 <g:select class="form-control input-sm required" name="fuente"
                           title="Fuente de financiamiento" from="${fuentes}" optionKey="id"
                           value="${asignacionInstance?.fuente?.id}" />
@@ -40,12 +40,12 @@
             <label for="fuente" class="col-md-2 control-label">
                 Partida
             </label>
-            <div class="col-md-7">
+            <div class="col-md-10">
                 %{--                <bsc:buscador name="partida" id="prsp" controlador="asignacion" accion="buscarPresupuesto" tipo="search" titulo="Busque una partida" campos="${campos}"  clase="required" />--}%
 
                 <g:hiddenField name="partida1" value="${asignacionInstance?.presupuesto?.id}"/>
                 <span class="grupo">
-                    <div class="input-group input-group-sm" style="width:294px;">
+                    <div class="input-group input-group-sm">
                         <input type="text" class="form-control buscarPartida" name="partidaName" id="partida1Texto" data-tipo="1" value="${asignacionInstance?.presupuesto}">
                         <span class="input-group-btn">
                             <a href="#" id="btn-abrir-1" class="btn btn-info buscarPartida" data-tipo="1" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -61,7 +61,7 @@
             <label for="valor" class="col-md-2 control-label">
                 Valor
             </label>
-            <div class="col-md-7">
+            <div class="col-md-4">
                 <g:textField class="form-control input-sm required money number" name="valor"
                              title="Planificado" id="vlor" style="text-align:right;padding-right: 10px;"
                              value='${asignacionInstance.planificado}'/>

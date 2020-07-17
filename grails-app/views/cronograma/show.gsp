@@ -73,8 +73,8 @@
     </div>
 </g:if>
 
-<div class="panel panel-primary " style="text-align: center; font-size: 14px;">
-    <strong>PROYECTO: </strong> <strong style="color: #5596ff; "> ${proyecto?.nombre}</strong>
+<div class="panel-primary " style="text-align: center; font-size: 14px;">
+    <strong>Cronograma de: </strong> <strong style="color: #5596ff; "> ${proyecto?.nombre}</strong>
 </div>
 
 %{--        <elm:container tipo="vertical" titulo="Cronograma del proyecto ${proyecto?.toStringMedio()}, para el año ${anio}" color="black">--}%

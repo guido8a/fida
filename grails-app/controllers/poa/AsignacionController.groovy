@@ -229,7 +229,7 @@ class AsignacionController {
         def proyectosUnidad
 
         if (params.resp || params.comp) {
-//            println("con filtro!"  + params.resp + " " + params.comp)
+            println("con filtro!"  + params.resp + " " + params.comp)
 
             def unidadE
             def compon
@@ -253,7 +253,7 @@ class AsignacionController {
                     eq("proyecto", proyecto)
                     eq("tipoElemento", TipoElemento.get(4))
                     eq("estado", 0)
-                    eq("responsable", unidadE)
+//                    eq("responsable", unidadE)
                     marcoLogico {
                         order("numeroComp", "asc")
                     }
@@ -300,15 +300,14 @@ class AsignacionController {
                 def totalUnidad = 0
                 def maxInv = 0
 
-//                MarcoLogico.withCriteria {
-//                    eq("proyecto", proyecto)
-//                    eq("tipoElemento", TipoElemento.get(4))
-//                    eq("estado", 0)
-//                    eq("marcoLogico", compon)
-//                    order("numero", "asc")
-//                }.each { ml ->
-                MarcoLogico.get(compon.id).each {ml->
-//                }.each { ml ->
+                MarcoLogico.withCriteria {
+                    eq("proyecto", proyecto)
+                    eq("tipoElemento", TipoElemento.get(4))
+                    eq("estado", 0)
+                    eq("marcoLogico", compon)
+                    order("numero", "asc")
+                }.each { ml ->
+//                MarcoLogico.get(compon.id).each {ml->
                     def asig = Asignacion.withCriteria {
                         eq("marcoLogico", ml)
                         eq("anio", actual)
@@ -680,7 +679,6 @@ class AsignacionController {
         def asignaciones = []
         def actual
         def componentes = []
-        def responsables = []
         params.anio = params.anio.toDouble();
         if (params.anio) {
             actual = Anio.get(params.anio)
@@ -707,16 +705,14 @@ class AsignacionController {
         }
 
         asignaciones.each {
-            componentes += it.marcoLogico
+            componentes += it.marcoLogico.marcoLogico
         }
 
         componentes = componentes.unique()
-        responsables = responsables.unique()
 
 //        println("componentes " + componentes)
-//        println("responsables " + responsables)
 
-        return [asignaciones: asignaciones, camp: params.camp, componentes: componentes, responsables: responsables, proyecto: proyecto, anio: params.anio]
+        return [asignaciones: asignaciones, camp: params.camp, componentes: componentes, proyecto: proyecto, anio: params.anio]
     }
 
     /**

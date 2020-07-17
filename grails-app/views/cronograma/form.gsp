@@ -81,11 +81,12 @@
     </div>
 </g:if>
 
-<div class="panel panel-primary " style="text-align: center; font-size: 14px;">
-    <strong>PROYECTO: </strong> <strong style="color: #5596ff; "> ${proyecto?.nombre}</strong>
+<div class="panel-primary " style="text-align: center; font-size: 14px; margin-bottom: 10px">
+    <strong>Editar Conograma de: </strong> <strong style="color: #5596ff; "> ${proyecto?.nombre}</strong>
 </div>
 
 <elm:container tipo="vertical" titulo="Cronograma" color="black">
+%{--
     <g:if test="${!params.act}">
         <div class="divIndice ">
             <g:each in="${componentes}" var="comp">
@@ -96,6 +97,7 @@
             </g:each>
         </div>
     </g:if>
+--}%
 
     <div class="divTabla">
         <g:render template="/templates/tablaCrono"
@@ -619,7 +621,7 @@
                                 var b = bootbox.dialog({
                                     id    : "dlgCreateEditCrono",
                                     title : "Editar Cronograma",
-                                    class : "modal-lg",
+                                    class : "modal-md",
                                     message : msg,
                                     buttons : {
                                         cancelar : {

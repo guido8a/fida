@@ -615,7 +615,7 @@ class ProyectoController {
     }
 
     def proy() {
-        def proy = Proyecto.get(params.id)
+        def proy = Proyecto.get(1)
 
         def list = []
         def dir = new File("/var/proyecto/${proy?.id}")

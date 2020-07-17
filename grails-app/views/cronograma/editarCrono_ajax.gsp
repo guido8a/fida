@@ -26,16 +26,19 @@
             <div id="divActividad">
                 <h4> Actividad: ${actividad} </h4>
             </div>
-            <div id="divInfo" class="text-warning" style="font-size: 14px">
-                <div class="col-md-12">
+            <div id="divInfo" class="text-info" style="font-size: 13px">
+                <div>
                     <div class="col-md-4">
-                        <strong style="color: #5596ff">Monto total:</strong> $  <g:formatNumber number="${total}" format="#,##0" maxFractionDigits="2"/>
+                        <strong style="color: #5596ff">Monto total:</strong> $
+                    <g:formatNumber number="${total}" format="#,##0" maxFractionDigits="2"/>
                     </div>
                     <div class="col-md-4">
-                        <strong style="color: #5596ff">Asignado:</strong> $  <g:formatNumber number="${asignado}" format="#,##0" maxFractionDigits="2"/>
+                        <strong style="color: #5596ff">Asignado:</strong> $
+                    <g:formatNumber number="${asignado}" format="#,##0" maxFractionDigits="2"/>
                     </div>
                     <div class="col-md-4">
-                        <strong style="color: #5596ff">Por asignar:</strong> $  <g:formatNumber number="${sinAsignar}" format="#,##0" maxFractionDigits="2"/>
+                        <strong style="color: #5596ff">Por asignar:</strong> $
+                    <g:formatNumber number="${sinAsignar}" format="#,##0" maxFractionDigits="2"/>
                     </div>
                 </div>
             </div>
@@ -48,10 +51,10 @@
                     <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </elm:fieldRapido>
-            <elm:fieldRapido label="Partida (1)" claseLabel="col-md-3" claseField="col-md-4">
+            <elm:fieldRapido label="Partida (1)" claseLabel="col-md-3" claseField="col-md-9">
                 <g:hiddenField name="partida1" value="${cronograma?.presupuesto?.id}"/>
                 <span class="grupo">
-                    <div class="input-group input-group-sm" style="width:294px;">
+                    <div class="input-group input-group-sm">
                         <input type="text" class="form-control buscarPartida" name="partidaName" id="partida1Texto" data-tipo="1" value="${cronograma?.presupuesto}">
                         <span class="input-group-btn">
                             <a href="#" id="btn-abrir-1" class="btn btn-info buscarPartida" data-tipo="1" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -60,11 +63,11 @@
                     </div>
                 </span>
             </elm:fieldRapido>
-            <elm:fieldRapido label="Fuente (1)" claseLabel="col-md-3" claseField="col-md-7">
+            <elm:fieldRapido label="Fuente (1)" claseLabel="col-md-3" claseField="col-md-9">
                 <elm:select name="fuente1" from="${fuentes}" id="fuente1"
                             optionKey="${{ it.fuente.id }}"
                             optionValue="${{
-                                it.fuente.descripcion + ' (' + g.formatNumber(number: it.monto, type: 'currency') + ')'
+                                it.fuente.descripcion + ' ($' + it.monto + ')'
                             }}"
                             optionClass="${{
                                 g.formatNumber(number: it.monto, minFractionDigits: 2, maxFractionDigits: 8)
@@ -78,11 +81,12 @@
                     <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </elm:fieldRapido>
-            <elm:fieldRapido label="Partida (2)" claseLabel="col-md-3" claseField="col-md-4">
+            <elm:fieldRapido label="Partida (2)" claseLabel="col-md-3" claseField="col-md-9">
                 <g:hiddenField name="partida2" value="${cronograma?.presupuesto2?.id}"/>
                 <span class="grupo">
-                    <div class="input-group input-group-sm" style="width:294px;">
-                        <input type="text" class="form-control buscarPartida2" name="partidaName2" id="partida2Texto" data-tipo="2" value="${cronograma?.presupuesto2}">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control buscarPartida2" name="partidaName2" id="partida2Texto"
+                               data-tipo="2" value="${cronograma?.presupuesto2}">
                         <span class="input-group-btn">
                             <a href="#" id="btn-abrir-2" class="btn btn-info buscarPartida2" data-tipo="2" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             </a>
@@ -90,11 +94,11 @@
                     </div>
                 </span>
             </elm:fieldRapido>
-            <elm:fieldRapido label="Fuente (2)" claseLabel="col-md-3" claseField="col-md-7">
+            <elm:fieldRapido label="Fuente (2)" claseLabel="col-md-3" claseField="col-md-9">
                 <elm:select name="fuente2" from="${fuentes}" id="fuente2"
                             optionKey="${{ it.fuente.id }}"
                             optionValue="${{
-                                it.fuente.descripcion + ' (' + g.formatNumber(number: it.monto, type: 'currency') + ')'
+                                it.fuente.descripcion + ' ($' + it.monto + ')'
                             }}"
                             optionClass="${{
                                 g.formatNumber(number: it.monto, minFractionDigits: 2, maxFractionDigits: 8)

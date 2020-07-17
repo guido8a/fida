@@ -195,6 +195,7 @@ class CronogramaController {
     def calcularAsignaciones_ajax() {
         println "calc asg "+params
         def proyecto = Proyecto.get(params.proyecto)
+        def unidad = seguridad.UnidadEjecutora.get(1)
         def anio = Anio.get(params.anio)
         def cn = dbConnectionService.getConnection()
         def res = true
@@ -267,6 +268,7 @@ class CronogramaController {
                 def asg = new Asignacion()
                 def marco = MarcoLogico.get(row.mrlg)
                 asg.marcoLogico = marco
+                asg.unidad = unidad
                 asg.anio = anio
                 asg.presupuesto = Presupuesto.get(row.prsp)
                 asg.fuente = Fuente.get(row.fuente)

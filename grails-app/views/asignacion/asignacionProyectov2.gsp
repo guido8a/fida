@@ -406,7 +406,7 @@
                 var b = bootbox.dialog({
                     id    : "dlgDividir",
                     title : "Dividir en dos partidas",
-                    class : "modal-lg",
+                    class : "modal-md",
                     message : msg,
                     buttons : {
                         cancelar : {
