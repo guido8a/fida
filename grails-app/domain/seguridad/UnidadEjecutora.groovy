@@ -68,4 +68,27 @@ class UnidadEjecutora implements Auditable{
     String toString() {
         return this.nombre
     }
+
+//    def getUnidadesPorPerfil(String perfilCodigo) {
+//        def perfilesAll = ["GAF", "ASPL", "GP", "DP", "OBS"]
+//        //gerencia administrativa financiera, Analista de Planificación, Gerencia de Planificación
+//        def unidades = []
+//        if (perfilesAll.contains(perfilCodigo)) {
+//            unidades = UnidadEjecutora.list()
+//        } else {
+//            def padre = this.padre
+//            unidades = [this]
+////            def codigosNo = ['343', 'GG', 'GT'] // yachay, Gerencia general, Gerencia tecnica
+////            if (!codigosNo.contains(padre.codigo)) {
+//                unidades += padre
+//                unidades += UnidadEjecutora.findAllByPadre(padre)
+////            } else {
+////                unidades += UnidadEjecutora.findAllByPadre(this)
+////            }
+//        }
+//
+//        println("unidades " + unidades)
+//
+//        return unidades.unique().sort { it.nombre }
+//    }
 }

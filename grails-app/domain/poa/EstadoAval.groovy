@@ -18,7 +18,7 @@ class EstadoAval {
      */
     static mapping = {
 //        table 'edav'
-        table 'c_edav'
+        table 'edav'
         cache usage: 'read-write', include: 'non-lazy'
         id column: 'edav__id'
         id generator: 'identity'
