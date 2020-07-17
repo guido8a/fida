@@ -274,13 +274,13 @@ class AvalesController{
 //        def acts = proyectosService.getActividadesUnidadComponente(session.asignaciones, comp)
         def anio = Anio.get(params.anio)
 //        def acts = proyectosService.getActividadesUnidadComponente(UnidadEjecutora.get(session.unidad.id), anio, comp, session.perfil.codigo.toString())
-        def acts = UnidadEjecutora.get(session.unidad.id).getActividadesUnidadComponente(anio, comp, session.perfil.codigo.toString())
+        def acts = UnidadEjecutora.get(1).getActividadesUnidadComponente(anio, comp, session.perfil.codigo.toString())
 
 
 
         acts.each { ac ->
             def prsp = Asignacion.findByMarcoLogico(ac)
-            priorizado << [id: ac.id, numero: ac.numero, objeto: ac.objeto, prio: "${prsp.presupuesto.numero}: ${prsp.priorizado}"]
+            priorizado << [id: ac.id, numero: ac.numero, objeto: ac.objeto, prio: "${prsp.presupuesto.numero}: ${prsp.planificado}"]
         }
 
         return [acts: acts, div: params.div, priorizado: priorizado, anio: anio]
