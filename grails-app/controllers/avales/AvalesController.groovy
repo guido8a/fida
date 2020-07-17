@@ -360,7 +360,8 @@ class AvalesController{
     def getMaximoAsg = {
         println "params Maximo " + params
         def asg = Asignacion.get(params.id)
-        def monto = asg?.priorizado?:0
+//        def monto = asg?.priorizado?:0
+        def monto = asg?.planificado ?: 0
         def usado = 0;
         def estadoPendiente = EstadoAval.findByCodigo("P01")
         def estadoPorRevisar = EstadoAval.findByCodigo("R01")

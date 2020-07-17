@@ -1879,7 +1879,8 @@ class AjusteController {
             actual = Anio.findByAnio(new Date().format("yyyy"))
         }
 
-        def  proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
+//        def  proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
+        def  proyectos3 = UnidadEjecutora.get(1).getProyectosUnidad(actual, session.perfil.codigo.toString())
 
         def detalle = null
 
