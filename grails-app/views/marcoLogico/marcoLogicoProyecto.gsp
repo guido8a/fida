@@ -56,8 +56,8 @@
 %{--    <strong><h3 class="text-info" style="margin-bottom: 15px">Proyecto: ${proyecto?.nombre}</h3></strong>--}%
 %{--</div>--}%
 
-<div class="panel panel-primary col-md-12" style="text-align: left; font-size: 14px;">
-    <strong>PROYECTO: </strong> <strong style="color: #5596ff; "> ${proyecto?.nombre}</strong>
+<div class="panel-primary col-md-12" style="text-align: left; font-size: 14px;">
+    <strong>Marco Lógico: </strong> <strong style="color: #5596ff; "> ${proyecto?.nombre}</strong>
 </div>
 
 <g:if test="${componentes.size() > 0}">
