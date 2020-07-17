@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main">
-    <title>Búsqueda en la Base</title>
+    <title>Base de Conocimiento</title>
 
     <style type="text/css">
 
@@ -31,8 +31,9 @@
 </head>
 
 <body>
+<h3 style="text-align: center; margin-top: 0px">Base de Conocimiento</h3>
 <div style="margin-top: 0px; min-height: 60px" class="vertical-container">
-    <p class="css-vertical-text"></p>
+    <p class="css-vertical-text">Buscar</p>
 
     <div class="linea"></div>
 
@@ -60,7 +61,7 @@
     </div>
 </div>
 
-<div style="margin-top: 30px; min-height: 650px" class="vertical-container">
+<div style="margin-top: 30px; min-height: 450px" class="vertical-container">
     <p class="css-vertical-text">Resultado - Buscar en la Base de Conocimiento</p>
 
     <div class="linea"></div>
@@ -79,7 +80,7 @@
     </div>
 </div>
 
-<div><strong>Nota</strong>: Si existen muchos registros que coinciden con el criterio de búsqueda, se retorna como máximo 20 <span
+<div style="width: 100%"><strong>Nota</strong>: Si existen muchos registros que coinciden con el criterio de búsqueda, se retorna como máximo 20 <span
         class="text-info" style="margin-left: 40px">Se ordena por grado de relevancia</span>
 </div>
 

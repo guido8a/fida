@@ -322,7 +322,7 @@
 
 
     CKEDITOR.replace( 'algoritmo', {
-        height: "240px",
+        height: "160px",
         customConfig: 'config.js',
         filebrowserBrowseUrl    : '${createLink(controller: "baseImagenes", action: "browser")}',
         filebrowserUploadUrl    : '${createLink(controller: "baseImagenes", action: "uploader")}'
