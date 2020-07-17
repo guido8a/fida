@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="modificaciones.Reforma; modificaciones.DetalleReforma" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta name="layout" content="main">
@@ -54,14 +54,14 @@
                                         <td>${reforma.fecha.format("dd-MM-yyyy")}</td>
                                         <td>${reforma.concepto}</td>
                                         <td>
-                                            <elm:tipoReforma reforma="${reforma}"/>
+%{--                                            <elm:tipoReforma reforma="${reforma}"/>--}%
                                         </td>
                                         <td class="${reforma.estado.codigo}">${reforma.estado.descripcion}</td>
                                         <td>
                                             <div class="btn-group btn-group-xs" role="group" style="width: 100px">
-                                                <elm:linkPdfReforma reforma="${reforma}"/>
-                                                <elm:linkEditarReforma reforma="${reforma}" perfil="${session.perfil}"/>
-                                                <g:if test="${session.perfil.codigo == 'ASPL' && !vesta.modificaciones.DetalleReforma.findAllByReforma(vesta.modificaciones.Reforma.get(reforma?.id))}">
+%{--                                                <elm:linkPdfReforma reforma="${reforma}"/>--}%
+%{--                                                <elm:linkEditarReforma reforma="${reforma}" perfil="${session.perfil}"/>--}%
+                                                <g:if test="${session.perfil.codigo == 'ASPL' && !modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">
                                                     <a href="#"  class="btn btn-danger borrar"  ajuste="${reforma?.id}" title="Eliminar ajuste">
                                                         <i class="fa fa-close"></i>
                                                     </a>
@@ -79,13 +79,11 @@
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="historial" style="margin-top: 20px">
-
                     <div id="detalle">
 
                     </div>
                 </div>
             </div>
-
         </div>
 
         <script type="text/javascript">

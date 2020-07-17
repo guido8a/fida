@@ -1753,8 +1753,6 @@ class AjusteController {
         def unidad = UnidadEjecutora.get(1)
         def proyectos = unidad.getProyectosUnidad(actual, session.perfil.codigo.toString())
 
-        println("proyectos " + proyectos)
-
         sql = "select distinct asgn.anio__id, anioanio from asgn, mrlg, anio " +
                 "where mrlg.mrlg__id = asgn.mrlg__id and proy__id in (${proyectos.id.join(',')}) and " +
                 "anio.anio__id = asgn.anio__id and cast(anioanio as integer) >= ${actual.anio} " +
