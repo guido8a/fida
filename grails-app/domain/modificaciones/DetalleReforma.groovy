@@ -1,5 +1,6 @@
 package modificaciones
 
+import parametros.proyectos.Fuente
 import poa.Asignacion
 import poa.Presupuesto
 import proyectos.MarcoLogico
@@ -45,7 +46,7 @@ class DetalleReforma {
     /**
      * Fuente para la nueva partida
      */
-//    Fuente fuente
+    Fuente fuente
     /**
      * Detalle original (para las modificaciones de incremento cuando ya se les asigna un origen)
      */
@@ -86,6 +87,7 @@ class DetalleReforma {
             valorOrigenInicial column: 'dtrfvloi'
             valorDestinoInicial column: 'dtrfvldi'
             tipoReforma column: 'tprf__id'
+            fuente column: 'fnte__id'
         }
     }
 
@@ -100,5 +102,6 @@ class DetalleReforma {
         descripcionNuevaActividad nullable: true
         detalleOriginal nullable: true
         tipoReforma nullable: true
+        fuente nullable: true
     }
 }

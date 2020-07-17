@@ -5,15 +5,6 @@
   Time: 10:56 AM
 --%>
 
-<%@ page import="vesta.poa.Asignacion" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: gato
-  Date: 03/12/15
-  Time: 11:47 AM
---%>
-
-%{--//origen--}%
 <form id="frmAsignacion">
     <div class="row">
         <div class="col-md-2">
@@ -61,7 +52,7 @@
         <div  class="col-md-5">
             <div class="input-group">
                 <g:textField type="text" name="monto" style="float: right" class="form-control required input-sm number money" value="${detalle?.valor}"/>
-                <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
             </div>
         </div>
 

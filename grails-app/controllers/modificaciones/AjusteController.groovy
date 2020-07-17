@@ -138,12 +138,13 @@ class AjusteController {
         def reformas
         def perfil = session.perfil.codigo.toString()
         def unidades
-        unidades = UnidadEjecutora.get(session.unidad.id).getUnidadesPorPerfil(perfil)
+//        unidades = UnidadEjecutora.get(session.unidad.id).getUnidadesPorPerfil(perfil)
+        unidades = UnidadEjecutora.get(session.unidad.id)
         reformas = Reforma.withCriteria {
             eq("tipo", tipo)
             inList("estado", estados)
             persona {
-                inList("unidad", unidades)
+                inList("unidadEjecutora", unidades)
             }
             order("fecha", "desc")
         }
@@ -1752,6 +1753,8 @@ class AjusteController {
         def unidad = UnidadEjecutora.get(session.unidad.id)
         def proyectos = unidad.getProyectosUnidad(actual, session.perfil.codigo.toString())
 
+        println("proyectos " + proyectos)
+
         def anios__id = cn.rows("select distinct asgn.anio__id, anioanio from asgn, mrlg, anio " +
                 "where mrlg.mrlg__id = asgn.mrlg__id and proy__id in (${proyectos.id.join(',')}) and " +
                 "anio.anio__id = asgn.anio__id and cast(anioanio as integer) >= ${actual.anio} " +
@@ -1760,8 +1763,8 @@ class AjusteController {
 
 //        println "anños: ... ${anios}, actual: ${actual}"
 
-        def personasFirma = firmasService.listaDirectoresUnidad(unidad)
-        def firmas = firmasService.listaFirmasCombos()
+//        def personasFirma = firmasService.listaDirectoresUnidad(unidad)
+//        def firmas = firmasService.listaFirmasCombos()
 
         def reforma
         def detalle
@@ -1772,8 +1775,12 @@ class AjusteController {
 
         def fuentes= []
         def suma = 0
-        cn.rows("select distinct dtrf.fnte__id, fntedscr from dtrf, c_fnte " +
-            "where rfrm__id = ${params.id} and c_fnte.fnte__id = dtrf.fnte__id order by 1".toString()).each {
+//        cn.rows("select distinct dtrf.fnte__id, fntedscr from dtrf, c_fnte " +
+//            "where rfrm__id = ${params.id} and c_fnte.fnte__id = dtrf.fnte__id order by 1".toString()).each {
+
+            cn.rows("select distinct dtrf.fnte__id, fntedscr from dtrf, fnte " +
+                    "where rfrm__id = ${params.id} and fnte.fnte__id = dtrf.fnte__id order by 1".toString()).each {
+
             suma = 0
 //            println "fnte__id = ${it.fnte__id}"
             sql = "select sum(dtrfvlor) suma from dtrf, asgn where rfrm__id = ${params.id} and " +
@@ -1800,15 +1807,12 @@ class AjusteController {
             }
         }
 
-//        println "fuentes: $fuentes, flash: ${flash.message}"
 
-
-//        def fnte = cn.rows("select sum(dtrfvlor) from dtrf, asgn where rfrm__id = ${params.id} and " +
-//                "asgn.fnte__id = 9 and asgn.asgn__id = dtrf.asgn__id and tprf__id in (1,3);
-
+//        return [actual: actual, proyectos: proyectos, reforma: reforma, detalle: detalle,
+//                anios: anios, gerentes : firmas.gerentes, personas: firmas.directores]
 
         return [actual: actual, proyectos: proyectos, reforma: reforma, detalle: detalle,
-                anios: anios, gerentes : firmas.gerentes, personas: firmas.directores]
+                anios: anios]
 
     }
 
@@ -1866,7 +1870,6 @@ class AjusteController {
 
     def asignacionOrigenAjuste_ajax () {
 
-
         println("params a ajuste " + params)
 
         def actual
@@ -1885,8 +1888,6 @@ class AjusteController {
         }
 
         return [proyectos:  proyectos3, detalle: detalle]
-
-
     }
 
     def incrementoAjuste_ajax () {

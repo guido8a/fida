@@ -9,6 +9,13 @@
 
     <body>
 
+
+        <div class="btn-group">
+                <g:link controller="ajuste" action="nuevoAjuste" class="btn btn-success btnCrear">
+                    <i class="fa fa-file"></i> Solicitar ajuste
+                </g:link>
+        </div>
+
         <div role="tabpanel" style="margin-top: 15px;">
 
             <!-- Nav tabs -->

@@ -2,6 +2,11 @@ package seguridad
 
 import audita.Auditable
 import geografia.Provincia
+import parametros.Anio
+import parametros.proyectos.TipoElemento
+import poa.Asignacion
+import proyectos.MarcoLogico
+import proyectos.Proyecto
 
 class UnidadEjecutora implements Auditable{
 
@@ -91,4 +96,93 @@ class UnidadEjecutora implements Auditable{
 //
 //        return unidades.unique().sort { it.nombre }
 //    }
+
+    def getAsignacionesUnidad(Anio anio, String perfilCodigo) {
+//        def unidades = this.getUnidadesPorPerfil(perfilCodigo)
+        def unidades = UnidadEjecutora.list()
+//        println "unidades: ${unidades.nombre} ${unidades.id}"
+        def asignaciones = Asignacion.withCriteria {
+            eq("anio", anio)
+            inList("unidad", unidades)
+            isNotNull("marcoLogico")
+        }
+
+        return asignaciones.unique()
+    }
+
+    List<Proyecto> getProyectosUnidad(Anio anio, String perfilCodigo) {
+//        println "anio " + anio + " perf " + perfilCodigo
+        def asignaciones = this.getAsignacionesUnidad(anio, perfilCodigo)
+        def proyectos = []
+        def proyectos2 = []
+        def i
+
+        asignaciones.each { e ->
+            i = e.marcoLogico?.proyecto?.id
+            if (!proyectos2.contains(i)) {
+                proyectos2.add(i)
+            }
+        }
+        proyectos2.each {
+            proyectos += Proyecto.get(it)
+        }
+
+        return proyectos.unique().sort { it.nombre }
+    }
+
+    def getComponentesUnidadProyecto(Anio anio, Proyecto proyecto, String perfilCodigo) {
+//        println "anio: $anio, proyecto: ${proyecto.id}, perfil: $perfilCodigo"
+        def asignaciones = this.getAsignacionesUnidad(anio, perfilCodigo)
+        def componentes = []
+        def componentes2 = []
+
+        println("asigna " + asignaciones)
+
+//        println "getComponentesUnidadProyecto asignaciones: ${asignaciones.marcoLogico.objeto}"
+        asignaciones.each { f ->
+            def p2 = f.marcoLogico.proyecto
+            def c2 = f.marcoLogico.marcoLogico.id
+            if (p2.id == proyecto.id && !componentes2.contains(c2)) {
+                componentes2.add(c2)
+            }
+        }
+
+        componentes2.each {
+            componentes += MarcoLogico.get(it)
+        }
+
+        return componentes.unique().sort { it.objeto }
+    }
+
+    def getActividadesUnidadComponente(Anio anio, MarcoLogico componente, String perfilCodigo) {
+        def asignaciones = this.getAsignacionesUnidad(anio, perfilCodigo)
+        def actividades = []
+        def actividades2 = []
+//        println "asignaciones: ${asignaciones.id}"
+        asignaciones.each { b ->
+            def c3 = b.marcoLogico.marcoLogico
+            def act2 = b.marcoLogico.id
+            if (c3.id == componente.id && !actividades2.contains(act2)) {
+                actividades2.add(act2)
+            }
+        }
+        actividades2.each {
+            actividades += MarcoLogico.get(it)
+        }
+        return actividades.unique().sort { it.numero }
+    }
+
+    def getAsignacionesUnidadActividad(Anio anio, MarcoLogico actividad, String perfilCodigo) {
+        def asignaciones = this.getAsignacionesUnidad(anio, perfilCodigo)
+        def asg = []
+        asignaciones.each { a ->
+            def act = a.marcoLogico
+            if (act.id == actividad.id && !asg.contains(act)) {
+                asg.add(a)
+            }
+        }
+        return asg.unique()
+    }
+
+
 }

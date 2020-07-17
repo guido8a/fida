@@ -1,4 +1,3 @@
-<%@ page import="vesta.proyectos.MarcoLogico; vesta.poa.Asignacion; vesta.seguridad.Persona; vesta.parametros.poaPac.Anio" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main">
@@ -10,39 +9,30 @@
         border    : none;
         font-size : 18px;
     }
-
     td {
         vertical-align : middle;
     }
-
     .botonC {
         background-color: #dd8404;
         color: seashell;
     }
-
     .rowC {
         background-color: #dd8404;
     }
-
     .botonD {
         background-color: #a47680;
         color: seashell;
     }
-
     .rowD {
         background-color: #a47680;
     }
-
     .botonE {
         background-color: #9f9edf;
         color: seashell;
     }
-
-
     .rowE {
         background-color: #9f9edf;
     }
-
     </style>
 </head>
 
@@ -328,9 +318,9 @@
                 ${reforma.firma1.usuario}
             </g:if>
             <g:else>
-                <g:select from="${personas}" optionKey="id" optionValue="${{it.nombre + ' ' + it.apellido}}"
-                          noSelection="['': '- Seleccione -']" name="firma1" class="form-control required input-sm"
-                          value="${reforma ? reforma.firma1?.usuarioId : ''}"/>
+%{--                <g:select from="${personas}" optionKey="id" optionValue="${{it.nombre + ' ' + it.apellido}}"--}%
+%{--                          noSelection="['': '- Seleccione -']" name="firma1" class="form-control required input-sm"--}%
+%{--                          value="${reforma ? reforma.firma1?.usuarioId : ''}"/>--}%
             </g:else>
         </div>
 
@@ -339,15 +329,15 @@
                 ${reforma.firma2.usuario}
             </g:if>
             <g:else>
-                <g:select from="${gerentes}" optionKey="id" optionValue="${{it.nombre + ' ' + it.apellido}}"
-                          noSelection="['': '- Seleccione -']" name="firma2" class="form-control required input-sm"
-                          value="${reforma ? reforma.firma2?.usuarioId : ''}"/>
+%{--                <g:select from="${gerentes}" optionKey="id" optionValue="${{it.nombre + ' ' + it.apellido}}"--}%
+%{--                          noSelection="['': '- Seleccione -']" name="firma2" class="form-control required input-sm"--}%
+%{--                          value="${reforma ? reforma.firma2?.usuarioId : ''}"/>--}%
             </g:else>
         </div>
 
         <div class="col-md-5">
             <div class="btn-group pull-right" role="group">
-                <elm:linkPdfReforma reforma="${reforma}" class="btn-default" title="Previsualizar" label="true" disabledIfNull="true"/>
+%{--                <elm:linkPdfReforma reforma="${reforma}" class="btn-default" title="Previsualizar" label="true" disabledIfNull="true"/>--}%
 
                 <a href="#" id="btnEnviar" class="btn btn-success ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}" title="Guardar y enviar">
                     <i class="fa fa-save"></i> Guardar y Enviar <i class="fa fa-paper-plane-o"></i>
