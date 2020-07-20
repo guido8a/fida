@@ -104,7 +104,7 @@
     </div>
 </div>
 
-<elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>
+<elm:message tipo="${flash.tipo}" clase="${flash.clase}"><elm:poneHtml textoHtml="${flash.message}"/></elm:message>
 
 <form id="frmReforma">
     <table class="table table-bordered table-hover table-condensed" style="margin-top: 5px;">
@@ -218,14 +218,14 @@
                         <td style=width:12%>${det?.componente?.objeto}</td>
                         <td style=width:15%>${det?.descripcionNuevaActividad}</td>
                         <td style='width:6%' class='text-center'>${det?.presupuesto?.numero}</td>
-                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>
+%{--                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>--}%
                         <td style='width:8%' class='text-center'>${' --- '}</td>
                         <td style='width:9%' class='text-center'>${' --- '}</td>
                         <td style='width:9%' class='text-right'><g:formatNumber number="${det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
-                        <td style=width:4%>
-                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash-o'></i></a>
-                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-pencil'></i></a>
+                        <td style=width:3%>
+                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash'></i></a>
+                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-edit'></i></a>
                         </td>
                     </tr>
                     <g:set var="incremento" value="${incremento += det?.valor}"/>
@@ -616,7 +616,8 @@
                                         // dataDestino.partida_id = $("#prsp_hide").val();
                                         dataDestino.partida_id = $("#partida1").val();
                                         dataDestino.asignacion_id = $("#asignacion").val();
-                                        dataDestino.responsable = $("#responsable").val()
+                                        dataDestino.responsable = $("#responsable").val();
+                                        dataDestino.fuente = $("#fuente").val();
                                         resetForm();
 
                                         $.ajax({
@@ -631,7 +632,8 @@
                                                 reforma: '${reforma?.id}',
                                                 partida: dataDestino.partida_id,
                                                 id: detalleId,
-                                                responsable: dataDestino.responsable
+                                                responsable: dataDestino.responsable,
+                                                fuente: dataDestino.fuente
                                             },
                                             success: function (msg){
                                                 if(msg == 'ok'){
@@ -1083,19 +1085,24 @@
                                     var dataOrigen = {};
                                     dataOrigen.monto = str_replace(",", "", $("#monto").val());
                                     var dataDestino = {};
-                                    dataDestino.proyecto_nombre = $("#proyectoDest").find("option:selected").text();
-                                    dataDestino.componente_nombre = $("#compDest").find("option:selected").text();
-                                    dataDestino.componente_id = $("#compDest").val();
+                                    // dataDestino.proyecto_nombre = $("#proyectoDest").find("option:selected").text();
+                                    // dataDestino.componente_nombre = $("#compDest").find("option:selected").text();
+                                    // dataDestino.componente_id = $("#compDest").val();
+                                    dataDestino.proyecto_nombre = $("#proyecto").find("option:selected").text();
+                                    dataDestino.componente_nombre = $("#comp").find("option:selected").text();
+                                    dataDestino.componente_id = $("#comp").val();
                                     dataDestino.actividad_nombre = $("#actividad_dest").val();
-                                    var nume = $("#prsp_id").val().split("-");
+                                    // var nume = $("#prsp_id").val().split("-");
+                                    var nume = $("#partida1Texto").val().split("-");
                                     dataDestino.partida = nume[0];
-                                    dataDestino.partida_id = $("#prsp_hide").val();
+                                    // dataDestino.partida_id = $("#prsp_hide").val();
+                                    dataDestino.partida_id = $("#partida1").val();
                                     dataDestino.responsable = $("#responsable").find("option:selected").text()
                                     dataDestino.responsable_id = $("#responsable").val()
                                     dataDestino.categoria = $("#categoria").val();
                                     dataDestino.fuente = $("#fuente").val()
-                                    dataDestino.fi = $("#inicio").val()
-                                    dataDestino.ff = $("#fin").val()
+                                    // dataDestino.fi = $("#inicio").val()
+                                    // dataDestino.ff = $("#fin").val()
                                     addActividad(dataOrigen, dataDestino);
                                     resetForm();
 
@@ -1111,8 +1118,8 @@
                                             partida: dataDestino.partida_id,
                                             categoria: dataDestino.categoria,
                                             fuente: dataDestino.fuente,
-                                            inicio: dataDestino.fi,
-                                            fin: dataDestino.ff,
+                                            // inicio: dataDestino.fi,
+                                            // fin: dataDestino.ff,
                                             responsable: dataDestino.responsable_id,
                                             anio: $("#anio").val()
                                         },

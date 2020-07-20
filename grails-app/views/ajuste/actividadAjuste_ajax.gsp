@@ -1,26 +1,47 @@
 
 <form id="frmNuevaActividad">
+%{--    <div class="row">--}%
+%{--        <div class="col-md-2">--}%
+%{--            <label>Proyecto</label>--}%
+%{--        </div>--}%
+
+%{--        <div class="col-md-8 grupo">--}%
+%{--            <g:select from="${proyectos}" optionKey="id" optionValue="nombre" name="proyecto_dest" id="proyectoDest" style="width:100%"--}%
+%{--                      class="form-control required requiredCombo input-sm" noSelection="['-1': 'Seleccione...']"/>--}%
+%{--        </div>--}%
+%{--    </div>--}%
+
     <div class="row">
         <div class="col-md-2">
-            <label>Proyecto</label>
+            <label>Proyecto:</label>
         </div>
-
-        <div class="col-md-8 grupo">
-            <g:select from="${proyectos}" optionKey="id" optionValue="nombre" name="proyecto_dest" id="proyectoDest" style="width:100%"
-                      class="form-control required requiredCombo input-sm" noSelection="['-1': 'Seleccione...']"/>
+        <div  class="col-md-8">
+            <g:select from="${proyectos}" optionKey="id" optionValue="nombre" name="proyecto" class="form-control input-sm required requiredCombo"
+                      noSelection="['-1': 'Seleccione...']"/>
         </div>
     </div>
 
+%{--    <div class="row">--}%
+
+%{--        <div class="col-md-2">--}%
+%{--            <label>Componente</label>--}%
+%{--        </div>--}%
+
+%{--        <div class="col-md-8 grupo" id="divComp_dest">--}%
+
+%{--        </div>--}%
+%{--    </div>--}%
+
+
     <div class="row">
-
         <div class="col-md-2">
-            <label>Componente</label>
+            <label>Componente:</label>
         </div>
-
-        <div class="col-md-8 grupo" id="divComp_dest">
+        <div  class="col-md-8" id="divComp">
 
         </div>
     </div>
+
 
     <div class="row">
         <div class="col-md-2">
@@ -31,15 +52,6 @@
             <g:textField name="actividad_dest" class="form-control input-sm required" value="${detalle?.descripcionNuevaActividad}"/>
         </div>
     </div>
-
-%{--    <div class="row">--}%
-%{--        <div class="col-md-2">--}%
-%{--            <label>Actividad:</label>--}%
-%{--        </div>--}%
-%{--        <div  class="col-md-8" id="divAct_dest">--}%
-
-%{--        </div>--}%
-%{--    </div>--}%
 
 
     <div class="row">
@@ -98,38 +110,32 @@
     %{--    </div>--}%
 
     <div class="row">
+%{--        <div class="col-md-2">--}%
+%{--            <label>Fecha Incio</label>--}%
+%{--        </div>--}%
+
+%{--        <div class="col-md-2 grupo">--}%
+%{--            <input name="fechaInicio" id='inicio' type='text' class="form-control"--}%
+%{--                   value="${detalle?.fechaInicioNuevaActividad?.format("dd-MM-yyyy")}"/>--}%
+%{--        </div>--}%
+
+%{--        <div class="col-md-1">--}%
+%{--            <label>Fecha Fin</label>--}%
+%{--        </div>--}%
+
+%{--        <div class="col-md-2 grupo">--}%
+%{--            <input name="fechaFin" id='fin' type='text' class="form-control"--}%
+%{--                   value="${detalle?.fechaFinNuevaActividad?.format("dd-MM-yyyy")}"/>--}%
+%{--        </div>--}%
+
         <div class="col-md-2">
-            <label>Fecha Incio</label>
-        </div>
-
-        <div class="col-md-2 grupo">
-            <elm:datepicker class="form-control input-sm fechaInicio required"
-                            name="fechaInicio"
-                            title="Fecha de inicio de la actividad"
-                            id="inicio" value="${detalle?.fechaInicioNuevaActividad?.format("dd-MM-yyyy")}"/>
-
-        </div>
-
-        <div class="col-md-1">
-            <label>Fecha Fin</label>
-        </div>
-
-        <div class="col-md-2 grupo">
-            <elm:datepicker class="form-control input-sm fechaFin required"
-                            name="fechaFin"
-                            title="Fecha fin de la actividad"
-                            id="fin"
-                            format="dd-MM-yyyy" value="${detalle?.fechaFinNuevaActividad?.format("dd-MM-yyyy")}"/>
-        </div>
-
-        <div class="col-md-1">
             <label>Monto</label>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="input-group">
                 <g:textField type="text" name="monto" class="form-control required input-sm number money" value="${detalle?.valor}"/>
-                <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
             </div>
         </div>
 
@@ -151,6 +157,22 @@
 </form>
 
 <script type="text/javascript">
+
+    // $('#inicio').datetimepicker({
+    //     locale: 'es',
+    //     format: 'DD-MM-YYYY',
+    //     daysOfWeekDisabled: [0, 6],
+    //     sideBySide: true,
+    //     showClose: true,
+    // });
+    //
+    // $('#fin').datetimepicker({
+    //     locale: 'es',
+    //     format: 'DD-MM-YYYY',
+    //     daysOfWeekDisabled: [0, 6],
+    //     sideBySide: true,
+    //     showClose: true,
+    // });
 
     %{--$("#prsp_id").click(function(){--}%
 
@@ -243,30 +265,56 @@
     }
 
 
-    $("#proyectoDest").change(function () {
-        $("#divComp_dest").html(spinner);
+    %{--$("#proyectoDest").change(function () {--}%
+    %{--    $("#divComp_dest").html(spinner);--}%
+    %{--    $.ajax({--}%
+    %{--        type    : "POST",--}%
+    %{--        url     : "${createLink(controller: 'modificacionesPoa', action:'componentesProyectoAjuste2_ajax')}",--}%
+    %{--        data    : {--}%
+    %{--            id      : $("#proyectoDest").val(),--}%
+    %{--            anio    : $("#anio").val(),--}%
+    %{--            idCombo : "compDest",--}%
+    %{--            div     : "divAct_dest"--}%
+    %{--        },--}%
+    %{--        success : function (msg) {--}%
+    %{--            $("#divComp_dest").html(msg);--}%
+    %{--            $("#divAct_dest").html("");--}%
+    %{--            $("#divAsg_dest").html("");--}%
+    %{--        }--}%
+    %{--    });--}%
+    %{--});--}%
+
+
+    %{--<g:if test="${detalle}">--}%
+    %{--$("#proyectoDest").val("${detalle?.componente?.proyecto?.id}").change();--}%
+    %{--setTimeout(function () {--}%
+    %{--    $("#compDest").val("${detalle?.componente?.id}").change();--}%
+    %{--}, 500);--}%
+    %{--</g:if>--}%
+
+    $("#proyecto").change(function () {
+        $("#divComp").html(spinner);
         $.ajax({
             type    : "POST",
-            url     : "${createLink(controller: 'modificacionesPoa', action:'componentesProyectoAjuste2_ajax')}",
+            url     : "${createLink(controller: 'modificacionesPoa', action:'componentesProyectoAjuste_ajax')}",
             data    : {
-                id      : $("#proyectoDest").val(),
-                anio    : $("#anio").val(),
-                idCombo : "compDest",
-                div     : "divAct_dest"
+                id   : $("#proyecto").val(),
+                anio : $("#anio").val()
             },
             success : function (msg) {
-                $("#divComp_dest").html(msg);
-                $("#divAct_dest").html("");
-                $("#divAsg_dest").html("");
+                $("#divComp").html(msg);
+                $("#divAct").html("");
             }
         });
     });
 
-
     <g:if test="${detalle}">
-    $("#proyectoDest").val("${detalle?.componente?.proyecto?.id}").change();
+    $("#proyecto").val("${detalle?.componente?.proyecto?.id}").change();
     setTimeout(function () {
-        $("#compDest").val("${detalle?.componente?.id}").change();
+        $("#comp").val("${detalle?.componente?.marcoLogico?.id}").change();
+        setTimeout(function () {
+            $("#actividadRf").val("${ detalle?.componente?.id}").change();
+        }, 500);
     }, 500);
     </g:if>
 

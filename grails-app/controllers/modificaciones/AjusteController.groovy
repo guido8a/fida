@@ -1799,21 +1799,19 @@ class AjusteController {
             fuentes.add([fuente: it.fntedscr, suma: suma])
             if(Math.abs(suma) > 0.001) {
                 if(flash.message) {
-                    flash.message += "<br/> La fuente ${it.fntedscr} tiene un descuadre de ${suma}"
+                    flash.message += "<br/> <b style='font-size: 14px; text-align:center'> La fuente <strong>${it.fntedscr}</strong> tiene un descuadre de <strong>${suma}</strong> </b>"
                 } else {
-                    flash.message = "La fuente ${it.fntedscr} tiene un descuadre de ${suma}"
+                    flash.message = "<b style='font-size: 14px; text-align:center'> La fuente <strong>${it.fntedscr}</strong> tiene un descuadre de <strong>${suma}</strong> </b>"
                 }
                 flash.tipo = "error"
             }
         }
-
 
 //        return [actual: actual, proyectos: proyectos, reforma: reforma, detalle: detalle,
 //                anios: anios, gerentes : firmas.gerentes, personas: firmas.directores]
 
         return [actual: actual, proyectos: proyectos, reforma: reforma, detalle: detalle,
                 anios: anios]
-
     }
 
 

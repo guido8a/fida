@@ -2740,7 +2740,7 @@ class ReformaController  {
 
     def grabarDetalleC () {
 
-//        println("params C " + params)
+        println("params C " + params)
 
         def reforma = Reforma.get(params.reforma)
         def tipoReforma = TipoReforma.findByCodigo(params.tipoReforma)
@@ -2785,76 +2785,52 @@ class ReformaController  {
 
     def grabarDetalleD () {
 
-//        println("params D " + params)
-//        def reforma = Reforma.get(params.reforma)
-//        def tipoReforma = TipoReforma.findByCodigo(params.tipoReforma)
-//        def componente = MarcoLogico.get(params.componente)
-//        def fuente = Fuente.get(params.fuente)
-//        def partida = Presupuesto.get(params.partida)
+        println("params D " + params)
+        def reforma = Reforma.get(params.reforma)
+        def tipoReforma = TipoReforma.findByCodigo(params.tipoReforma)
+        def componente = MarcoLogico.get(params.componente)
+        def fuente = Fuente.get(params.fuente)
+        def partida = Presupuesto.get(params.partida)
 //        def categoria = Categoria.get(params.categoria)
 //        def inicio = new Date().parse("dd-MM-yyyy", params.inicio)
 //        def fin = new Date().parse("dd-MM-yyyy", params.fin)
-//        def responsable = UnidadEjecutora.get(params.responsable)
-//        def detalleReforma
-//        def anio
-//
-//        if(params.anio){
-//            anio = Anio.get(params.anio)
-//        }
-//
-//        if(!params.id){
-//            //crear
-//
-//            detalleReforma = new DetalleReforma()
-//            detalleReforma.reforma = reforma
-//            detalleReforma.componente = componente
-//            detalleReforma.tipoReforma = tipoReforma
-//            detalleReforma.valor = params.monto.toDouble()
-//            detalleReforma.valorOrigenInicial = 0
-//            detalleReforma.valorDestinoInicial = 0
-//            detalleReforma.fuente = fuente
-//            detalleReforma.presupuesto = partida
-//            detalleReforma.categoria = categoria
-//            detalleReforma.fechaInicioNuevaActividad = inicio
-//            detalleReforma.fechaFinNuevaActividad = fin
-//            detalleReforma.descripcionNuevaActividad = params.actividad
-//            detalleReforma.responsable = responsable
-//            detalleReforma.anio = anio
-//
-//            if(!detalleReforma.save(flush: true)){
-//                println("error al guardar detalle de reforma D  " + errors);
-//                render "no"
-//            }else{
-//                render "ok"
-//            }
-//
-//
-//        }else{
-//            //editar
-//
-//
-//            detalleReforma = DetalleReforma.get(params.id)
-//            detalleReforma.reforma = reforma
-//            detalleReforma.componente = componente
-//            detalleReforma.tipoReforma = tipoReforma
-//            detalleReforma.valor = params.monto.toDouble()
-//            detalleReforma.valorOrigenInicial = 0
-//            detalleReforma.valorDestinoInicial = 0
-//            detalleReforma.fuente = fuente
-//            detalleReforma.presupuesto = partida
-//            detalleReforma.categoria = categoria
-//            detalleReforma.fechaInicioNuevaActividad = inicio
-//            detalleReforma.fechaFinNuevaActividad = fin
-//            detalleReforma.descripcionNuevaActividad = params.actividad
-//            detalleReforma.responsable = responsable
-//
-//            if(!detalleReforma.save(flush: true)){
-//                println("error al guardar detalle de reforma D  " + errors);
-//                render "no"
-//            }else{
-//                render "ok"
-//            }
-//        }
+        def responsable = UnidadEjecutora.get(params.responsable)
+        def detalleReforma
+        def anio
+
+        if(params.anio){
+            anio = Anio.get(params.anio)
+        }
+
+        if(!params.id){
+            //crear
+            detalleReforma = new DetalleReforma()
+            detalleReforma.anio = anio
+        }else{
+            //editar
+            detalleReforma = DetalleReforma.get(params.id)
+        }
+
+        detalleReforma.reforma = reforma
+        detalleReforma.componente = componente
+        detalleReforma.tipoReforma = tipoReforma
+        detalleReforma.valor = params.monto.toDouble()
+        detalleReforma.valorOrigenInicial = 0
+        detalleReforma.valorDestinoInicial = 0
+        detalleReforma.fuente = fuente
+        detalleReforma.presupuesto = partida
+//        detalleReforma.fechaInicioNuevaActividad = inicio
+//        detalleReforma.fechaFinNuevaActividad = fin
+        detalleReforma.descripcionNuevaActividad = params.actividad
+        detalleReforma.responsable = responsable
+
+
+        if(!detalleReforma.save(flush: true)){
+            println("error al guardar detalle de reforma D  " + errors);
+            render "no"
+        }else{
+            render "ok"
+        }
     }
 
 
