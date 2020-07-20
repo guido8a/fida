@@ -202,9 +202,9 @@
                         <td style='width:9%' class='text-center'>${' --- '}</td>
                         <td style='width:9%' class='text-right'><g:formatNumber number="${det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valorDestinoInicial + det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
-                        <td style=width:4%>
-                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash-o'></i></a>
-                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-pencil'></i></a>
+                        <td style=width:3%>
+                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash'></i></a>
+                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-edit'></i></a>
                         </td>
                     </tr>
                     <g:set var="incremento" value="${incremento += det?.valor}"/>
@@ -610,9 +610,11 @@
                                         dataDestino.componente_id = $("#comp").val();
                                         dataDestino.actividad_nombre = $("#actividadRf").find("option:selected").text();
                                         dataDestino.actividad_id = $("#actividadRf").val();
-                                        var nume = $("#prsp_id").val().split("-");
+                                        // var nume = $("#prsp_id").val().split("-");
+                                        var nume = $("#partida1Texto").val().split("-");
                                         dataDestino.partida = nume[0];
-                                        dataDestino.partida_id = $("#prsp_hide").val();
+                                        // dataDestino.partida_id = $("#prsp_hide").val();
+                                        dataDestino.partida_id = $("#partida1").val();
                                         dataDestino.asignacion_id = $("#asignacion").val();
                                         dataDestino.responsable = $("#responsable").val()
                                         resetForm();
@@ -624,7 +626,7 @@
                                                 monto: dataOrigen.monto,
                                                 componente: dataDestino.componente_id,
                                                 actividad: dataDestino.actividad_id,
-//                                                asignacion: dataDestino.asignacion_id,
+                                                asignacion: dataDestino.asignacion_id,
                                                 tipoReforma: "P",
                                                 reforma: '${reforma?.id}',
                                                 partida: dataDestino.partida_id,
@@ -1005,9 +1007,11 @@
                                     dataDestino.componente_id = $("#comp").val();
                                     dataDestino.actividad_nombre = $("#actividadRf").find("option:selected").text();
                                     dataDestino.actividad_id = $("#actividadRf").val();
-                                    var nume = $("#prsp_id").val().split("-");
+                                    // var nume = $("#prsp_id").val().split("-");
+                                    var nume = $("#partida1Texto").val().split("-");
                                     dataDestino.partida = nume[0];
-                                    dataDestino.partida_id = $("#prsp_hide").val();
+                                    // dataDestino.partida_id = $("#prsp_hide").val();
+                                    dataDestino.partida_id = $("#partida1").val();
                                     dataDestino.fuente = $("#fuente").val();
                                     dataDestino.responsable = $("#responsable").val()
                                     resetForm();

@@ -10,7 +10,7 @@
         <g:each in="${partidas}" var="partida">
             <tr style="width: 100%">
                 <td style="width: 10%; text-align: center">
-                    <a href="#" class="btn btn-xs btn-success btnSelePartida"  title="Seleccionar partida" data-id="${partida.prsp__id}" data-nombre="${partida.prspdscr}">
+                    <a href="#" class="btn btn-xs btn-success btnSelePartida"  title="Seleccionar partida" data-id="${partida.prsp__id}" data-nombre="${partida.prspdscr}" data-nume="${partida.prspnmro}">
                         <i class="fa fa-check"></i>
                     </a>
                 </td>
@@ -30,8 +30,9 @@
     $(".btnSelePartida").click(function () {
         var id = $(this).data("id");
         var nombre = $(this).data("nombre");
+        var numero = $(this).data("nume");
         if(${tipo == '1'}){
-            $("#partida1Texto").val(nombre);
+            $("#partida1Texto").val(numero + " - " + nombre);
             $("#partida1").val(id);
             cerrarDialogo();
         }else{

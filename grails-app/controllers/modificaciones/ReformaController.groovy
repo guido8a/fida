@@ -2740,7 +2740,7 @@ class ReformaController  {
 
     def grabarDetalleC () {
 
-        println("params C " + params)
+//        println("params C " + params)
 
         def reforma = Reforma.get(params.reforma)
         def tipoReforma = TipoReforma.findByCodigo(params.tipoReforma)
@@ -2758,54 +2758,29 @@ class ReformaController  {
         def detalleReforma
 
         if(!params.id){
-            //crear
-
             detalleReforma = new DetalleReforma()
-            detalleReforma.reforma = reforma
-            detalleReforma.componente = actividad
-//            detalleReforma.asignacionOrigen = asignacion
-            detalleReforma.tipoReforma = tipoReforma
-            detalleReforma.valor = params.monto.toDouble()
-            detalleReforma.valorOrigenInicial = 0
-//            detalleReforma.valorDestinoInicial = asignacion.priorizado
-            detalleReforma.valorDestinoInicial = 0
-            detalleReforma.fuente = fuente
-            detalleReforma.presupuesto = partida
-//            detalleReforma.responsable = actividad.responsable
-
-            detalleReforma.responsable = responsable
             detalleReforma.anio = anio
-
-            if(!detalleReforma.save(flush: true)){
-                println("error al guardar detalle de reforma C  " + detalleReforma.errors);
-                render "no"
-            }else{
-                render "ok"
-            }
         }else{
-            //editar
-
             detalleReforma = DetalleReforma.get(params.id)
-            detalleReforma.reforma = reforma
-            detalleReforma.componente = actividad
-//            detalleReforma.asignacionOrigen = asignacion
-            detalleReforma.tipoReforma = tipoReforma
-            detalleReforma.valor = params.monto.toDouble()
-            detalleReforma.valorOrigenInicial = 0
-//            detalleReforma.valorDestinoInicial = asignacion.priorizado
-            detalleReforma.valorDestinoInicial = 0
-            detalleReforma.fuente = fuente
-            detalleReforma.presupuesto = partida
-//            detalleReforma.responsable = actividad.responsable
-            detalleReforma.responsable = responsable
-
-            if(!detalleReforma.save(flush: true)){
-                println("error al guardar detalle de reforma C  " + detalleReforma.errors);
-                render "no"
-            }else{
-                render "ok"
-            }
         }
+
+        detalleReforma.reforma = reforma
+        detalleReforma.componente = actividad
+        detalleReforma.tipoReforma = tipoReforma
+        detalleReforma.valor = params.monto.toDouble()
+        detalleReforma.valorOrigenInicial = 0
+        detalleReforma.valorDestinoInicial = 0
+        detalleReforma.fuente = fuente
+        detalleReforma.presupuesto = partida
+        detalleReforma.responsable = responsable
+
+        if(!detalleReforma.save(flush: true)){
+            println("error al guardar detalle de reforma C  " + detalleReforma.errors);
+            render "no"
+        }else{
+            render "ok"
+        }
+
     }
 
     def grabarDetalleD () {
