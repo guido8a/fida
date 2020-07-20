@@ -98,38 +98,31 @@
     var bp
 
     $(document).ready(function() {
-
         $(".buscarPartida").click(function () {
             var tipo = $(this).data("tipo");
-            if($("#presupuesto1").val() != ''){
-                $.ajax({
-                    type: 'POST',
-                    url: '${createLink(controller: 'cronograma', action: 'buscarPartida_ajax')}',
-                    data:{
-                        tipo: tipo
-                    },
-                    success:function (msg) {
-                        bp = bootbox.dialog({
-                            id    : "dlgBuscarPartida",
-                            title : "Buscar Partida",
-                            class : "modal-lg",
-                            message : msg,
-                            buttons : {
-                                cancelar : {
-                                    label     : "Cancelar",
-                                    className : "btn-primary",
-                                    callback  : function () {
-                                    }
+            $.ajax({
+                type: 'POST',
+                url: '${createLink(controller: 'cronograma', action: 'buscarPartida_ajax')}',
+                data:{
+                    tipo: tipo
+                },
+                success:function (msg) {
+                    bp = bootbox.dialog({
+                        id    : "dlgBuscarPartida",
+                        title : "Buscar Partida",
+                        class : "modal-lg",
+                        message : msg,
+                        buttons : {
+                            cancelar : {
+                                label     : "Cancelar",
+                                className : "btn-primary",
+                                callback  : function () {
                                 }
-                            } //buttons
-                        }); //dialog
-                    }
-                });
-            }else{
-                bootbox.alert('<i class="fa fa-exclamation-triangle text-danger fa-3x"></i> ' + '<strong style="font-size: 14px">' + "Ingrese un presupuesto (1)" + '</strong>');
-                return false;
-            }
-
+                            }
+                        } //buttons
+                    }); //dialog
+                }
+            });
         });
     });
 

@@ -1,4 +1,3 @@
-<%@ page import="vesta.parametros.UnidadEjecutora; vesta.parametros.poaPac.Fuente; vesta.proyectos.Categoria" %>
 
 <form id="frmNuevaActividad">
     <div class="row">
@@ -33,39 +32,70 @@
         </div>
     </div>
 
+%{--    <div class="row">--}%
+%{--        <div class="col-md-2">--}%
+%{--            <label>Actividad:</label>--}%
+%{--        </div>--}%
+%{--        <div  class="col-md-8" id="divAct_dest">--}%
+
+%{--        </div>--}%
+%{--    </div>--}%
+
+
     <div class="row">
         <div class="col-md-2">
             <label>Partida</label>
         </div>
 
         <div class="col-md-4">
-            <g:hiddenField name="partidaHide" id="prsp_hide" value="${detalle?.presupuesto?.id}" />
-            <g:textField name="partida" id="prsp_id" class="fuente many-to-one form-control input-sm required" value="${detalle ? (detalle?.presupuesto?.numero + " - " + detalle?.presupuesto?.descripcion) : " "}"/>
+            %{--            <g:hiddenField name="partidaHide" id="prsp_hide" value="${detalle?.presupuesto?.id}" />--}%
+            %{--            <g:textField name="partida" id="prsp_id" class="fuente many-to-one form-control input-sm required" value="${detalle ? (detalle?.presupuesto?.numero + " - " + detalle?.presupuesto?.descripcion) : " "}"/>--}%
+
+
+            <g:hiddenField name="partida1" value="${detalle?.presupuesto?.id}"/>
+            <span class="grupo">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control buscarPartida" name="partidaName" id="partida1Texto" data-tipo="1" value="${detalle ? (detalle?.presupuesto?.numero + " - " + detalle?.presupuesto?.descripcion) : " "}">
+                    <span class="input-group-btn">
+                        <a href="#" id="btn-abrir-1" class="btn btn-info buscarPartida" data-tipo="1" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </a>
+                    </span>
+                </div>
+            </span>
         </div>
-    </div>
 
-    <div class="row">
-
-        <div class="col-md-2">
+        <div class="col-md-1">
             <label>Fuente</label>
         </div>
 
         <div class="col-md-4">
-            <g:select from="${vesta.parametros.poaPac.Fuente.list()}" optionKey="id" optionValue="descripcion"
+            <g:select from="${parametros.proyectos.Fuente.list().sort{it.descripcion}}" optionKey="id" optionValue="descripcion"
                       name="fuente" class="form-control input-sm required requiredCmb" value="${detalle?.fuente?.id}"/>
         </div>
-
-
-        <div class="col-md-1">
-            <label>Categoría</label>
-        </div>
-
-        <div class="col-md-3">
-            <g:select from="${vesta.proyectos.Categoria.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" name="categoria"
-                      class="form-control required requiredCombo input-sm" noSelection="['': 'Seleccione...']" value="${detalle?.categoria?.id}"/>
-        </div>
-
     </div>
+
+    %{--    <div class="row">--}%
+
+    %{--        <div class="col-md-2">--}%
+    %{--            <label>Fuente</label>--}%
+    %{--        </div>--}%
+
+    %{--        <div class="col-md-4">--}%
+    %{--            <g:select from="${parametros.proyectos.Fuente.list().sort{it.descripcion}}" optionKey="id" optionValue="descripcion"--}%
+    %{--                      name="fuente" class="form-control input-sm required requiredCmb" value="${detalle?.fuente?.id}"/>--}%
+    %{--        </div>--}%
+
+
+    %{--        <div class="col-md-1">--}%
+    %{--            <label>Categoría</label>--}%
+    %{--        </div>--}%
+
+    %{--        <div class="col-md-3">--}%
+    %{--            <g:select from="${vesta.proyectos.Categoria.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" name="categoria"--}%
+    %{--                      class="form-control required requiredCombo input-sm" noSelection="['': 'Seleccione...']" value="${detalle?.categoria?.id}"/>--}%
+    %{--        </div>--}%
+
+    %{--    </div>--}%
 
     <div class="row">
         <div class="col-md-2">
@@ -106,49 +136,83 @@
     </div>
 
     <div class="row">
-
         <div class="col-md-2">
             <label>Reponsable</label>
         </div>
-
         <div class="col-md-8 grupo">
-            <g:select name="responsable" from="${vesta.parametros.UnidadEjecutora.list([sort: 'nombre'])}"
+            <g:select name="responsable" from="${seguridad.UnidadEjecutora.list().sort{it.nombre}}"
                       optionKey="id" value="${detalle?.responsable?.id}"
                       class="form-control required" noSelection="['': 'Seleccione...']"/>
 
             %{--<g:select from="${gerencias}" name="responsable" optionKey="id" optionValue="codigo"--}%
-                      %{--class="form-control required requiredCombo input-sm" noSelection="['': 'Seleccione...']" value="${detalle?.responsable?.id}"/>--}%
+            %{--class="form-control required requiredCombo input-sm" noSelection="['': 'Seleccione...']" value="${detalle?.responsable?.id}"/>--}%
         </div>
-
     </div>
 </form>
 
 <script type="text/javascript">
 
-    $("#prsp_id").click(function(){
+    %{--$("#prsp_id").click(function(){--}%
 
-        $.ajax({type : "POST", url : "${g.createLink(controller: 'asignacion',action:'buscadorPartidasFiltradas')}",
-            data     : {
+    %{--    $.ajax({type : "POST", url : "${g.createLink(controller: 'asignacion',action:'buscadorPartidasFiltradas')}",--}%
+    %{--        data     : {--}%
 
-            },
-            success  : function (msg) {
-                var b = bootbox.dialog({
-                    id: "dlgPartidas",
-                    title: "Buscador Partidas",
-                    class   : "modal-lg",
-                    message: msg,
-                    buttons : {
-                        cancelar : {
-                            label : "Cancelar",
-                            className : "btn-primary",
-                            callback  : function () {
+    %{--        },--}%
+    %{--        success  : function (msg) {--}%
+    %{--            var b = bootbox.dialog({--}%
+    %{--                id: "dlgPartidas",--}%
+    %{--                title: "Buscador Partidas",--}%
+    %{--                class   : "modal-lg",--}%
+    %{--                message: msg,--}%
+    %{--                buttons : {--}%
+    %{--                    cancelar : {--}%
+    %{--                        label : "Cancelar",--}%
+    %{--                        className : "btn-primary",--}%
+    %{--                        callback  : function () {--}%
+    %{--                        }--}%
+    %{--                    }--}%
+    %{--                }--}%
+    %{--            })--}%
+    %{--        }--}%
+    %{--    });--}%
+    %{--});--}%
+
+    var bp
+
+    $(document).ready(function() {
+
+        $(".buscarPartida").click(function () {
+            var tipo = $(this).data("tipo");
+            $.ajax({
+                type: 'POST',
+                url: '${createLink(controller: 'cronograma', action: 'buscarPartida_ajax')}',
+                data:{
+                    tipo: tipo
+                },
+                success:function (msg) {
+                    bp = bootbox.dialog({
+                        id    : "dlgBuscarPartida",
+                        title : "Buscar Partida",
+                        class : "modal-lg",
+                        message : msg,
+                        buttons : {
+                            cancelar : {
+                                label     : "Cancelar",
+                                className : "btn-primary",
+                                callback  : function () {
+                                }
                             }
-                        }
-                    }
-                })
-            }
+                        } //buttons
+                    }); //dialog
+                }
+            });
         });
     });
+
+    function cerrarDialogo(){
+        bp.dialog().dialog('open');
+        bp.modal("hide");
+    }
 
     function getMaximo(asg) {
         if ($("#asignacion").val() != "-1") {
@@ -171,7 +235,7 @@
                     var ok = valor - tot;
 
                     $("#max").html("$" + number_format(ok, 2, ".", ","))
-                            .attr("valor", ok);
+                        .attr("valor", ok);
                     $("#monto").attr("tdnMax", ok);
                 }
             });

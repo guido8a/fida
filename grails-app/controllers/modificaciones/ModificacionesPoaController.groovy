@@ -2,6 +2,7 @@ package modificaciones
 
 import avales.ProcesoAsignacion
 import parametros.Anio
+import parametros.proyectos.TipoElemento
 import poa.Asignacion
 import poa.ModificacionAsignacion
 import poa.ProgramacionAsignacion
@@ -183,7 +184,7 @@ class ModificacionesPoaController {
         def anio = Anio.get(params.anio)
 //        def comps = proyectosService.getComponentesUnidadProyecto(UnidadEjecutora.get(session.unidad.id), anio, proyecto, session.perfil.codigo.toString())
 //        def comps = UnidadEjecutora.get(session.unidad.id).getComponentesUnidadProyecto(anio, proyecto, session.perfil.codigo.toString())
-        def comps = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto, TipoElemento.get(2), [sort:  'numeroComp'])
+        def comps = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto,TipoElemento.get(2), [sort:  'numero'])
         [comps: comps, idCombo: params.idCombo, div: params.div]
     }
 
