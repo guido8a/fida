@@ -87,10 +87,8 @@
 
 
     $("#prsp_id").click(function(){
-
         $.ajax({type : "POST", url : "${g.createLink(controller: 'asignacion',action:'buscadorPartidasFiltradas')}",
             data     : {
-
             },
             success  : function (msg) {
                 var b = bootbox.dialog({
