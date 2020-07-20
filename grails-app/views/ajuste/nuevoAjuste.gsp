@@ -341,11 +341,14 @@
         <div class="col-md-7"></div>
         <div class="col-md-5">
             <div class="btn-group pull-right" role="group">
-                %{--                <elm:linkPdfReforma reforma="${reforma}" class="btn-default" title="Previsualizar" label="true" disabledIfNull="true"/>--}%
+                <elm:linkPdfReforma reforma="${reforma}" class="btn-default" title="Previsualizar" label="true" disabledIfNull="true"/>
 
                 <a href="#" style="float: right" id="btnEnviar" class="btn btn-success ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}" title="Guardar y enviar">
                     <i class="fa fa-save"></i> Guardar y Enviar <i class="fa fa-paper-plane"></i>
                 </a>
+                <g:link controller="ajuste" action="creaPdf" class="btn btn-sm btn-default">
+                    <i class="fa fa-arrow-left"></i> Crea pdf
+                </g:link>
             </div>
         </div>
     </div>
@@ -1476,7 +1479,6 @@
         return false;
     });
     //    });
-
 
     //VALIDACIONES DE FORMULARIOS y firma
 

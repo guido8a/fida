@@ -47,7 +47,9 @@ dependencies {
     compile "org.hibernate:hibernate-core:5.1.16.Final"
     compile "org.grails.plugins:gsp"
     compile fileTree(dir: 'lib', include: '*.jar')
-    compile files('iText-2.0.8.jar')
+//    compile files('iText-2.0.8.jar')
+//    compile files('core-renderer.jar')
+//    compile files('itextpdf-5.3.3.jar')
     runtime "org.postgresql:postgresql:42.2.5"
     console "org.grails:grails-console"
     profile "org.grails.profiles:web"

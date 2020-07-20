@@ -62,6 +62,11 @@ class DetalleReforma {
      */
     Double valorDestinoInicial
 
+    /**
+     * Solicitado
+     */
+    String solicitado
+
     Anio anio
 
     UnidadEjecutora responsable
@@ -94,6 +99,7 @@ class DetalleReforma {
             valorDestinoInicial column: 'dtrfvldi'
             tipoReforma column: 'tprf__id'
             fuente column: 'fnte__id'
+            solicitado column: 'dtrfslct'
             anio column: 'anio__id'
             responsable column: 'unej__id'
         }
@@ -113,5 +119,6 @@ class DetalleReforma {
         fuente nullable: true
         anio nullable: false
         responsable nullable: true
+        solicitado blank: true, nullable: true, size: 1..1
     }
 }

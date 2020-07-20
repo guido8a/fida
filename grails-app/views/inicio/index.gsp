@@ -82,7 +82,7 @@
     <g:set var="inst" value="${utilitarios.Parametros.get(1)}"></g:set>
 
     <div style="text-align: center;"><h2 class="titl">
-            <p class="text-warning">${inst.institucion}</p>
+%{--            <p class="text-warning">${inst.institucion}</p>--}%
             <p class="text-warning">Sistema de Administración del Proyeto FAREPS</p>
         </h2>
     </div>

@@ -21,6 +21,8 @@ class AjusteController {
     def proyectosService
     def dbConnectionService
 
+    def enviarService
+
     /**
      * Acción que muestra los diferentes tipos de reforma posibles y permite seleccionar uno para comenzar el proceso
      */
@@ -2038,4 +2040,20 @@ class AjusteController {
             render "no"
         }
     }
+
+    def creaPdf() {
+        def mensaje = "hola"
+        def baos = enviarService.crearPdf(mensaje)
+        byte[] b = baos.toByteArray();
+        println "responde"
+        response.setContentType("application/pdf")
+        response.setHeader("Content-disposition", "attachment; filename=tramite")
+        response.setContentLength(b.length)
+        response.getOutputStream().write(b)
+
+        return
+    }
 }
+
+
+
