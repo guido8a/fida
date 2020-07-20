@@ -312,20 +312,20 @@
 
 <form id="frmFirmas">
     <div class="row" style="margin-bottom: 100px; margin-top: 10px">
-%{--        <div class="col-md-1">--}%
-%{--            <label>Firmas</label>--}%
-%{--        </div>--}%
+        <div class="col-md-1">
+            <label>Firmas</label>
+        </div>
 
-%{--        <div class="col-md-3 grupo">--}%
+        <div class="col-md-3 grupo">
 %{--            <g:if test="${reforma && reforma.estado.codigo == 'D03'}">--}%
 %{--                ${reforma.firma1.usuario}--}%
 %{--            </g:if>--}%
 %{--            <g:else>--}%
-            %{--                <g:select from="${personas}" optionKey="id" optionValue="${{it.nombre + ' ' + it.apellido}}"--}%
-            %{--                          noSelection="['': '- Seleccione -']" name="firma1" class="form-control required input-sm"--}%
-            %{--                          value="${reforma ? reforma.firma1?.usuarioId : ''}"/>--}%
+                            <g:select from="${personas}" optionKey="id" optionValue="${{it.nombre + ' ' + it.apellido}}"
+                                      noSelection="['': '- Seleccione -']" name="firma1" class="form-control required input-sm"
+                                      value="${reforma ? reforma.firma1?.usuarioId : ''}"/>
 %{--            </g:else>--}%
-%{--        </div>--}%
+        </div>
 
 %{--        <div class="col-md-3 grupo">--}%
 %{--            <g:if test="${reforma && reforma.estado.codigo == 'D03'}">--}%
@@ -338,13 +338,13 @@
 %{--            </g:else>--}%
 %{--        </div>--}%
 
-        <div class="col-md-7"></div>
+        <div class="col-md-3"></div>
         <div class="col-md-5">
             <div class="btn-group pull-right" role="group">
                 <elm:linkPdfReforma reforma="${reforma}" class="btn-default" title="Previsualizar" label="true" disabledIfNull="true"/>
 
                 <a href="#" style="float: right" id="btnEnviar" class="btn btn-success ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}" title="Guardar y enviar">
-                    <i class="fa fa-save"></i> Guardar y Enviar <i class="fa fa-paper-plane"></i>
+                 Enviar <i class="fa fa-paper-plane"></i>
                 </a>
                 <g:link controller="ajuste" action="creaPdf" class="btn btn-sm btn-default">
                     <i class="fa fa-arrow-left"></i> Crea pdf
@@ -1445,7 +1445,7 @@
                             var data = {};
                             var c = 0;
                             data.firma1 = $("#firma1").val();
-                            data.firma2 = $("#firma2").val();
+                            // data.firma2 = $("#firma2").val();
                             data.anio = $("#anio").val();
                             data.concepto = $("#concepto").val();
                             data.id = "${reforma?.id}";

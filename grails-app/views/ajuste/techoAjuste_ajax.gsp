@@ -74,7 +74,7 @@
             <div class="input-group">
                 <g:textField type="text" name="monto"
                              class="form-control required input-sm number money" value="${detalle?.valor}"/>
-                <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
             </div>
         </div>
     </div>

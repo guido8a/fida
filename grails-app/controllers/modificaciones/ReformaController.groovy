@@ -2635,48 +2635,27 @@ class ReformaController  {
             //crear
 
             detalleReforma = new DetalleReforma()
-            detalleReforma.reforma = reforma
-            detalleReforma.componente = componente
-            detalleReforma.asignacionOrigen = asignacion
-            detalleReforma.tipoReforma = tipoReforma
-            detalleReforma.valor = params.monto.toDouble()
-            detalleReforma.valorOrigenInicial = asignacion.priorizado
-            detalleReforma.valorDestinoInicial = 0
-            detalleReforma.fuente = fuente
-            detalleReforma.responsable = asignacion.unidad
             detalleReforma.anio = asignacion.anio
-//            if(params.adicional){
-//                println("entro")
-//                detalleReforma.solicitado = params.adicional
-//            }
-
-            if(!detalleReforma.save(flush: true)){
-                println("error al guardar detalle de reforma A " + detalleReforma.errors);
-                render "no"
-            }else{
-                render "ok"
-            }
         }else{
             //editar
-
             detalleReforma = DetalleReforma.get(params.id)
-            detalleReforma.reforma = reforma
-            detalleReforma.componente = componente
-            detalleReforma.asignacionOrigen = asignacion
-            detalleReforma.tipoReforma = tipoReforma
-            detalleReforma.valor = params.monto.toDouble()
-            detalleReforma.valorOrigenInicial = asignacion.priorizado
-            detalleReforma.valorDestinoInicial = 0
-            detalleReforma.fuente = fuente
-            detalleReforma.responsable = asignacion.unidad
-            detalleReforma.anio = asignacion.anio
+        }
 
-            if(!detalleReforma.save(flush: true)){
-                println("error al guardar detalle de reforma A " + detalleReforma.errors);
-                render "no"
-            }else{
-                render "ok"
-            }
+        detalleReforma.reforma = reforma
+        detalleReforma.componente = componente
+        detalleReforma.asignacionOrigen = asignacion
+        detalleReforma.tipoReforma = tipoReforma
+        detalleReforma.valor = params.monto.toDouble()
+        detalleReforma.valorOrigenInicial = asignacion.planificado
+        detalleReforma.valorDestinoInicial = 0
+        detalleReforma.fuente = fuente
+        detalleReforma.responsable = asignacion.unidad
+
+        if(!detalleReforma.save(flush: true)){
+            println("error al guardar detalle de reforma A " + detalleReforma.errors);
+            render "no"
+        }else{
+            render "ok"
         }
 
     }
@@ -2696,44 +2675,27 @@ class ReformaController  {
             //crear
 
             detalleReforma = new DetalleReforma()
-            detalleReforma.reforma = reforma
-            detalleReforma.componente = componente
-            detalleReforma.asignacionOrigen = asignacion
-            detalleReforma.tipoReforma = tipoReforma
-            detalleReforma.valor = params.monto.toDouble()
-            detalleReforma.valorOrigenInicial = 0
-            detalleReforma.valorDestinoInicial = asignacion.priorizado
-            detalleReforma.fuente = fuente
-            detalleReforma.responsable = asignacion.unidad
             detalleReforma.anio = asignacion.anio
-
-            if(!detalleReforma.save(flush: true)){
-                println("error al guardar detalle de reforma B " + errors);
-                render "no"
-            }else{
-                render "ok"
-            }
         }else{
             //editar
-
             detalleReforma = DetalleReforma.get(params.id)
-            detalleReforma.reforma = reforma
-            detalleReforma.componente = componente
-            detalleReforma.asignacionOrigen = asignacion
-            detalleReforma.tipoReforma = tipoReforma
-            detalleReforma.valor = params.monto.toDouble()
-            detalleReforma.valorOrigenInicial = 0
-            detalleReforma.valorDestinoInicial = asignacion.priorizado
-            detalleReforma.fuente = fuente
-            detalleReforma.responsable = asignacion.unidad
-            detalleReforma.anio = asignacion.anio
+        }
 
-            if(!detalleReforma.save(flush: true)){
-                println("error al guardar detalle de reforma B " + errors);
-                render "no"
-            }else{
-                render "ok"
-            }
+        detalleReforma.reforma = reforma
+        detalleReforma.componente = componente
+        detalleReforma.asignacionOrigen = asignacion
+        detalleReforma.tipoReforma = tipoReforma
+        detalleReforma.valor = params.monto.toDouble()
+        detalleReforma.valorOrigenInicial = 0
+        detalleReforma.valorDestinoInicial = asignacion.planificado
+        detalleReforma.fuente = fuente
+        detalleReforma.responsable = asignacion.unidad
+
+        if(!detalleReforma.save(flush: true)){
+            println("error al guardar detalle de reforma B " + errors);
+            render "no"
+        }else{
+            render "ok"
         }
     }
 

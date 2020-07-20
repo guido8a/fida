@@ -1812,8 +1812,10 @@ class AjusteController {
 //        return [actual: actual, proyectos: proyectos, reforma: reforma, detalle: detalle,
 //                anios: anios, gerentes : firmas.gerentes, personas: firmas.directores]
 
+        def personas = Persona.findAllByUnidadEjecutora(UnidadEjecutora.get(1))
+
         return [actual: actual, proyectos: proyectos, reforma: reforma, detalle: detalle,
-                anios: anios]
+                anios: anios, personas: personas]
     }
 
 
