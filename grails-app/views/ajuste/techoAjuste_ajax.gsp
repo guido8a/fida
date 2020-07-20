@@ -5,22 +5,7 @@
   Time: 11:56 AM
 --%>
 
-<%--
-  Created by IntelliJ IDEA.
-  User: gato
-  Date: 28/12/15
-  Time: 11:04 AM
---%>
-
-<%--
-  Created by IntelliJ IDEA.
-  User: gato
-  Date: 04/12/15
-  Time: 10:12 AM
---%>
-
 <form id="frmPartida">
-
 
     <div class="row">
         <div class="col-md-2">
@@ -56,8 +41,18 @@
         </div>
 
         <div class="col-md-4">
-            <g:hiddenField name="partidaHide" id="prsp_hide" value="${detalle?.presupuesto?.id}"/>
-            <g:textField name="partida" id="prsp_id" class="fuente many-to-one form-control input-sm required" value="${detalle ? (detalle?.presupuesto?.numero + " - " + detalle?.presupuesto?.descripcion) : " "}"/>
+            %{--            <g:hiddenField name="partidaHide" id="prsp_hide" value="${detalle?.presupuesto?.id}"/>--}%
+            %{--            <g:textField name="partida" id="prsp_id" class="fuente many-to-one form-control input-sm required" value="${detalle ? (detalle?.presupuesto?.numero + " - " + detalle?.presupuesto?.descripcion) : " "}"/>--}%
+            <g:hiddenField name="partida1" value="${detalle?.presupuesto?.id}"/>
+            <span class="grupo">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control buscarPartida" name="partidaName" id="partida1Texto" data-tipo="1" value="${detalle ? (detalle?.presupuesto?.numero + " - " + detalle?.presupuesto?.descripcion) : " "}">
+                    <span class="input-group-btn">
+                        <a href="#" id="btn-abrir-1" class="btn btn-info buscarPartida" data-tipo="1" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </a>
+                    </span>
+                </div>
+            </span>
         </div>
 
         <div class="col-md-1">
@@ -65,7 +60,7 @@
         </div>
 
         <div class="col-md-4">
-            <g:select from="${vesta.parametros.poaPac.Fuente.list()}" optionKey="id" optionValue="descripcion"
+            <g:select from="${parametros.proyectos.Fuente.list().sort{it.descripcion}}" optionKey="id" optionValue="descripcion"
                       name="fuente" class="form-control input-sm required requiredCmb" value="${detalle?.fuente?.id}"/>
         </div>
     </div>
@@ -88,9 +83,44 @@
 
 <script type="text/javascript">
 
+    var bp
+
+    $(document).ready(function() {
+        $(".buscarPartida").click(function () {
+            var tipo = $(this).data("tipo");
+            $.ajax({
+                type: 'POST',
+                url: '${createLink(controller: 'cronograma', action: 'buscarPartida_ajax')}',
+                data:{
+                    tipo: tipo
+                },
+                success:function (msg) {
+                    bp = bootbox.dialog({
+                        id    : "dlgBuscarPartida",
+                        title : "Buscar Partida",
+                        class : "modal-lg",
+                        message : msg,
+                        buttons : {
+                            cancelar : {
+                                label     : "Cancelar",
+                                className : "btn-primary",
+                                callback  : function () {
+                                }
+                            }
+                        } //buttons
+                    }); //dialog
+                }
+            });
+        });
+    });
+
+    function cerrarDialogo(){
+        bp.dialog().dialog('open');
+        bp.modal("hide");
+    }
+
 
     $("#prsp_id").click(function(){
-
         $.ajax({type : "POST", url : "${g.createLink(controller: 'asignacion',action:'buscadorPartidasFiltradas')}",
             data     : {
 

@@ -62,7 +62,7 @@
 %{--                                                <elm:linkPdfReforma reforma="${reforma}"/>--}%
 %{--                                                <elm:linkEditarReforma reforma="${reforma}" perfil="${session.perfil}"/>--}%
 %{--                                                <g:if test="${session.perfil.codigo == 'ASPL' && !modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">--}%
-                                                <a href="#"  class="btn btn-info editarAjuste"  ajuste="${reforma?.id}" title="Editar ajuste">
+                                                <a href="#"  class="btn btn-info editarAjuste"  ajuste="${reforma?.id}" data-id="${reforma?.id}" title="Editar ajuste">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                     <a href="#"  class="btn btn-danger borrar"  ajuste="${reforma?.id}" title="Eliminar ajuste">
@@ -92,8 +92,9 @@
         <script type="text/javascript">
 
             $(".editarAjuste").click(function () {
-                %{--location.href="${cr}"--}%
-            })
+                var id = $(this).data("id");
+                location.href="${createLink(controller: 'ajuste', action: 'nuevoAjuste')}/" + id
+            });
 
             function buscar() {
                 $.ajax({

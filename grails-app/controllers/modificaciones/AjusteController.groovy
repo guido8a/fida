@@ -576,136 +576,136 @@ class AjusteController {
 
         println("save nuevo ajuste " + params)
 
-        def anio = Anio.get(params.anio.toLong())
-        def personaFirma1, personaFirma2
-
-        def estado = EstadoAval.findByCodigo("P01") //pendiente
-        if (params.send == "S") {
-            estado = EstadoAval.findByCodigo("EF1") //aprobado sin firma
-        }
-
-        def now = new Date()
-        def usu = Persona.get(session.usuario.id)
-        def reforma
-
-        if (params.id) {
-            reforma = Reforma.get(params.id)
-            personaFirma1 = reforma.firma1?.usuario
-            personaFirma2 = reforma.firma2?.usuario
-
-            if(!personaFirma1){
-                personaFirma1 = Persona.get(params.firma1.toLong())
-            }
-            if(!personaFirma2){
-                personaFirma2 = Persona.get(params.firma2.toLong())
-            }
-        }
-
-        reforma.anio = anio
-        reforma.persona = usu
-        reforma.analista = usu
-        reforma.estado = estado
-        reforma.concepto = params.concepto.trim()
-        reforma.fecha = now
-        reforma.tipo = "A"
-        reforma.tipoSolicitud = "Z"
-        if (!reforma.save(flush: true)) {
-            println "error al guardar el ajuste: " + reforma.errors
-            render "ERROR*" + renderErrors(bean: reforma)
-            return
-        }
-
-        def tipoStr = elm.tipoReformaStr(tipo: 'Ajuste', tipoSolicitud: reforma.tipoSolicitud)
-
-        if (params.send == "S") {
-            println "nuevo ajuste: se hace la alerta y se manda mail, se crean las firmas"
-            if (params.id && reforma.firma1 && reforma.firma2) {
-                def firma1 = reforma.firma1
-                firma1.estado = "S"
-                firma1.save(flush: true)
-                def firma2 = reforma.firma2
-                firma2.estado = "S"
-                firma2.save(flush: true)
-            } else {
-                def firma1 = new Firma()
-                firma1.usuario = personaFirma1
-                firma1.fecha = now
-                firma1.accion = "firmarAprobarNuevoAjuste"
-                firma1.controlador = "ajuste"
-                firma1.idAccion = reforma.id
-                firma1.accionVer = "verNuevoAjuste"
-                firma1.controladorVer = "reportesReforma"
-                firma1.idAccionVer = reforma.id
-                firma1.accionNegar = "devolverAprobarAjuste"
-                firma1.controladorNegar = "ajuste"
-                firma1.idAccionNegar = reforma.id
-                firma1.concepto = "${tipoStr} (${now.format('dd-MM-yyyy')}): " + reforma.concepto
-                firma1.tipoFirma = "AJST"
-                if (!firma1.save(flush: true)) {
-                    println "error al crear firma1: " + firma1.errors
-                    render "ERROR*" + renderErrors(bean: firma1)
-                    return
-                }
-                def firma2 = new Firma()
-                firma2.usuario = personaFirma2
-                firma2.fecha = now
-                firma2.accion = "firmarAprobarNuevoAjuste"
-                firma2.controlador = "ajuste"
-                firma2.idAccion = reforma.id
-                firma2.accionVer = "verNuevoAjuste"
-                firma2.controladorVer = "reportesReforma"
-                firma2.idAccionVer = reforma.id
-                firma2.accionNegar = "devolverAprobarAjuste"
-                firma2.controladorNegar = "ajuste"
-                firma2.idAccionNegar = reforma.id
-                firma2.concepto = "${tipoStr} (${now.format('dd-MM-yyyy')}): " + reforma.concepto
-                firma2.tipoFirma = "AJST"
-                if (!firma2.save(flush: true)) {
-                    println "error al crear firma2: " + firma2.errors
-                    render "ERROR*" + renderErrors(bean: firma2)
-                    return
-                }
-                reforma.firma1 = firma1
-                reforma.firma2 = firma2
-                reforma.save(flush: true)
-            }
-            def alerta1 = new Alerta()
-            alerta1.from = usu
-            alerta1.persona = personaFirma1
-            alerta1.fechaEnvio = now
-            alerta1.mensaje = "${tipoStr} (${now.format('dd-MM-yyyy')}): " + reforma.concepto
-            alerta1.controlador = "firma"
-            alerta1.accion = "firmasPendientes"
-            alerta1.id_remoto = reforma.id
-            if (!alerta1.save(flush: true)) {
-                println "error alerta: " + alerta1.errors
-            }
-            def alerta2 = new Alerta()
-            alerta2.from = usu
-            alerta2.persona = personaFirma2
-            alerta2.fechaEnvio = now
-            alerta2.mensaje = "${tipoStr} (${now.format('dd-MM-yyyy')}): " + reforma.concepto
-            alerta2.controlador = "firma"
-            alerta2.accion = "firmasPendientes"
-            alerta2.id_remoto = reforma.id
-            if (!alerta2.save(flush: true)) {
-                println "error alerta: " + alerta2.errors
-            }
-        } else {
-            println "no se manda: no se hace alerta ni se manda mail ni se hacen firmas"
-        }
-
-        def errores = ""
-
-        if (errores == "") {
-            if (params.send == "S") {
-                render "SUCCESS*Ajuste solicitado exitosamente"
-            } else {
-                render "SUCCESS*Ajuste guardado exitosamente*" + reforma.id
-            }
-        } else {
-            render "ERROR*" + errores
-        }
+//        def anio = Anio.get(params.anio.toLong())
+//        def personaFirma1, personaFirma2
+//
+//        def estado = EstadoAval.findByCodigo("P01") //pendiente
+//        if (params.send == "S") {
+//            estado = EstadoAval.findByCodigo("EF1") //aprobado sin firma
+//        }
+//
+//        def now = new Date()
+//        def usu = Persona.get(session.usuario.id)
+//        def reforma
+//
+//        if (params.id) {
+//            reforma = Reforma.get(params.id)
+//            personaFirma1 = reforma.firma1?.usuario
+//            personaFirma2 = reforma.firma2?.usuario
+//
+//            if(!personaFirma1){
+//                personaFirma1 = Persona.get(params.firma1.toLong())
+//            }
+//            if(!personaFirma2){
+//                personaFirma2 = Persona.get(params.firma2.toLong())
+//            }
+//        }
+//
+//        reforma.anio = anio
+//        reforma.persona = usu
+//        reforma.analista = usu
+//        reforma.estado = estado
+//        reforma.concepto = params.concepto.trim()
+//        reforma.fecha = now
+//        reforma.tipo = "A"
+//        reforma.tipoSolicitud = "Z"
+//        if (!reforma.save(flush: true)) {
+//            println "error al guardar el ajuste: " + reforma.errors
+//            render "ERROR*" + renderErrors(bean: reforma)
+//            return
+//        }
+//
+//        def tipoStr = elm.tipoReformaStr(tipo: 'Ajuste', tipoSolicitud: reforma.tipoSolicitud)
+//
+//        if (params.send == "S") {
+//            println "nuevo ajuste: se hace la alerta y se manda mail, se crean las firmas"
+//            if (params.id && reforma.firma1 && reforma.firma2) {
+//                def firma1 = reforma.firma1
+//                firma1.estado = "S"
+//                firma1.save(flush: true)
+//                def firma2 = reforma.firma2
+//                firma2.estado = "S"
+//                firma2.save(flush: true)
+//            } else {
+//                def firma1 = new Firma()
+//                firma1.usuario = personaFirma1
+//                firma1.fecha = now
+//                firma1.accion = "firmarAprobarNuevoAjuste"
+//                firma1.controlador = "ajuste"
+//                firma1.idAccion = reforma.id
+//                firma1.accionVer = "verNuevoAjuste"
+//                firma1.controladorVer = "reportesReforma"
+//                firma1.idAccionVer = reforma.id
+//                firma1.accionNegar = "devolverAprobarAjuste"
+//                firma1.controladorNegar = "ajuste"
+//                firma1.idAccionNegar = reforma.id
+//                firma1.concepto = "${tipoStr} (${now.format('dd-MM-yyyy')}): " + reforma.concepto
+//                firma1.tipoFirma = "AJST"
+//                if (!firma1.save(flush: true)) {
+//                    println "error al crear firma1: " + firma1.errors
+//                    render "ERROR*" + renderErrors(bean: firma1)
+//                    return
+//                }
+//                def firma2 = new Firma()
+//                firma2.usuario = personaFirma2
+//                firma2.fecha = now
+//                firma2.accion = "firmarAprobarNuevoAjuste"
+//                firma2.controlador = "ajuste"
+//                firma2.idAccion = reforma.id
+//                firma2.accionVer = "verNuevoAjuste"
+//                firma2.controladorVer = "reportesReforma"
+//                firma2.idAccionVer = reforma.id
+//                firma2.accionNegar = "devolverAprobarAjuste"
+//                firma2.controladorNegar = "ajuste"
+//                firma2.idAccionNegar = reforma.id
+//                firma2.concepto = "${tipoStr} (${now.format('dd-MM-yyyy')}): " + reforma.concepto
+//                firma2.tipoFirma = "AJST"
+//                if (!firma2.save(flush: true)) {
+//                    println "error al crear firma2: " + firma2.errors
+//                    render "ERROR*" + renderErrors(bean: firma2)
+//                    return
+//                }
+//                reforma.firma1 = firma1
+//                reforma.firma2 = firma2
+//                reforma.save(flush: true)
+//            }
+//            def alerta1 = new Alerta()
+//            alerta1.from = usu
+//            alerta1.persona = personaFirma1
+//            alerta1.fechaEnvio = now
+//            alerta1.mensaje = "${tipoStr} (${now.format('dd-MM-yyyy')}): " + reforma.concepto
+//            alerta1.controlador = "firma"
+//            alerta1.accion = "firmasPendientes"
+//            alerta1.id_remoto = reforma.id
+//            if (!alerta1.save(flush: true)) {
+//                println "error alerta: " + alerta1.errors
+//            }
+//            def alerta2 = new Alerta()
+//            alerta2.from = usu
+//            alerta2.persona = personaFirma2
+//            alerta2.fechaEnvio = now
+//            alerta2.mensaje = "${tipoStr} (${now.format('dd-MM-yyyy')}): " + reforma.concepto
+//            alerta2.controlador = "firma"
+//            alerta2.accion = "firmasPendientes"
+//            alerta2.id_remoto = reforma.id
+//            if (!alerta2.save(flush: true)) {
+//                println "error alerta: " + alerta2.errors
+//            }
+//        } else {
+//            println "no se manda: no se hace alerta ni se manda mail ni se hacen firmas"
+//        }
+//
+//        def errores = ""
+//
+//        if (errores == "") {
+//            if (params.send == "S") {
+//                render "SUCCESS*Ajuste solicitado exitosamente"
+//            } else {
+//                render "SUCCESS*Ajuste guardado exitosamente*" + reforma.id
+//            }
+//        } else {
+//            render "ERROR*" + errores
+//        }
     }
 
 
@@ -1799,9 +1799,9 @@ class AjusteController {
             fuentes.add([fuente: it.fntedscr, suma: suma])
             if(Math.abs(suma) > 0.001) {
                 if(flash.message) {
-                    flash.message += "<br/> <b style='font-size: 14px; text-align:center'> La fuente <strong>${it.fntedscr}</strong> tiene un descuadre de <strong>${suma}</strong> </b>"
+                    flash.message += "<br/> <div style='font-size: 12px; text-align:center'> La fuente <strong>${it.fntedscr}</strong> tiene un descuadre de <strong>${suma}</strong> </div>"
                 } else {
-                    flash.message = "<b style='font-size: 14px; text-align:center'> La fuente <strong>${it.fntedscr}</strong> tiene un descuadre de <strong>${suma}</strong> </b>"
+                    flash.message = "<div style='font-size: 12px; text-align:center'> La fuente <strong>${it.fntedscr}</strong> tiene un descuadre de <strong>${suma}</strong> </div>"
                 }
                 flash.tipo = "error"
             }
@@ -1993,6 +1993,7 @@ class AjusteController {
         def fuente = Fuente.get(params.fuente)
         def partida = Presupuesto.get(params.partida)
         def anio
+        def unidad = UnidadEjecutora.get(1)
 
         if(params.anio){
             anio = Anio.get(params.anio)
@@ -2002,46 +2003,28 @@ class AjusteController {
 
         if(!params.id){
             //crear
-
             detalleReforma = new DetalleReforma()
-            detalleReforma.reforma = reforma
-            detalleReforma.componente = actividad
-            detalleReforma.tipoReforma = tipoReforma
-            detalleReforma.valor = params.monto.toDouble()
-            detalleReforma.valorOrigenInicial = 0
-            detalleReforma.valorDestinoInicial = 0
-            detalleReforma.fuente = fuente
-            detalleReforma.presupuesto = partida
-            detalleReforma.responsable = session.usuario.unidad
             detalleReforma.anio = anio
-
-            if(!detalleReforma.save(flush: true)){
-                println("error al guardar detalle de reforma E  " + detalleReforma.errors);
-                render "no"
-            }else{
-                render "ok"
-            }
         }else{
             //editar
-
             detalleReforma = DetalleReforma.get(params.id)
-            detalleReforma.reforma = reforma
-            detalleReforma.componente = actividad
-            detalleReforma.tipoReforma = tipoReforma
-            detalleReforma.valor = params.monto.toDouble()
-            detalleReforma.valorOrigenInicial = 0
-            detalleReforma.valorDestinoInicial = 0
-            detalleReforma.fuente = fuente
-            detalleReforma.presupuesto = partida
-            detalleReforma.responsable = session.usuario.unidad
+        }
 
+        detalleReforma.reforma = reforma
+        detalleReforma.componente = actividad
+        detalleReforma.tipoReforma = tipoReforma
+        detalleReforma.valor = params.monto.toDouble()
+        detalleReforma.valorOrigenInicial = 0
+        detalleReforma.valorDestinoInicial = 0
+        detalleReforma.fuente = fuente
+        detalleReforma.presupuesto = partida
+        detalleReforma.responsable = unidad
 
-            if(!detalleReforma.save(flush: true)){
-                println("error al guardar detalle de reforma E  " + detalleReforma.errors);
-                render "no"
-            }else{
-                render "ok"
-            }
+        if(!detalleReforma.save(flush: true)){
+            println("error al guardar detalle de reforma E  " + detalleReforma.errors);
+            render "no"
+        }else{
+            render "ok"
         }
     }
 

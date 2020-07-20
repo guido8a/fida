@@ -40,10 +40,16 @@
 
 
 <div class="row" style="margin-bottom: 30px;">
+
+    <div class="col-md-2 btn-group">
+        <g:link controller="ajuste" action="pendientes" class="btn btn-sm btn-default">
+            <i class="fa fa-arrow-left"></i> Lista de ajustes
+        </g:link>
+    </div>
     <div class="col-md-1">
         <label>Justificación del ajuste</label>
     </div>
-    <div class="col-md-9 grupo">
+    <div class="col-md-7 grupo">
         <g:textArea name="concepto" class="form-control required" style="height: 60px; resize: none"
                     value="${reforma?.concepto}" maxlength="255" />
     </div>
@@ -244,9 +250,9 @@
                         <td style='width:9%' class='text-center'>${' --- '}</td>
                         <td style='width:9%' class='text-right'><g:formatNumber number="${det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valorDestinoInicial + det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
-                        <td style=width:4%>
-                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash-o'></i></a>
-                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-pencil'></i></a>
+                        <td style=width:3%>
+                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash'></i></a>
+                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-edit'></i></a>
                         </td>
                     </tr>
                     <g:set var="incremento" value="${incremento += det?.valor}"/>
@@ -306,37 +312,38 @@
 
 <form id="frmFirmas">
     <div class="row" style="margin-bottom: 100px; margin-top: 10px">
-        <div class="col-md-1">
-            <label>Firmas</label>
-        </div>
+%{--        <div class="col-md-1">--}%
+%{--            <label>Firmas</label>--}%
+%{--        </div>--}%
 
-        <div class="col-md-3 grupo">
-            <g:if test="${reforma && reforma.estado.codigo == 'D03'}">
-                ${reforma.firma1.usuario}
-            </g:if>
-            <g:else>
+%{--        <div class="col-md-3 grupo">--}%
+%{--            <g:if test="${reforma && reforma.estado.codigo == 'D03'}">--}%
+%{--                ${reforma.firma1.usuario}--}%
+%{--            </g:if>--}%
+%{--            <g:else>--}%
             %{--                <g:select from="${personas}" optionKey="id" optionValue="${{it.nombre + ' ' + it.apellido}}"--}%
             %{--                          noSelection="['': '- Seleccione -']" name="firma1" class="form-control required input-sm"--}%
             %{--                          value="${reforma ? reforma.firma1?.usuarioId : ''}"/>--}%
-            </g:else>
-        </div>
+%{--            </g:else>--}%
+%{--        </div>--}%
 
-        <div class="col-md-3 grupo">
-            <g:if test="${reforma && reforma.estado.codigo == 'D03'}">
-                ${reforma.firma2.usuario}
-            </g:if>
-            <g:else>
+%{--        <div class="col-md-3 grupo">--}%
+%{--            <g:if test="${reforma && reforma.estado.codigo == 'D03'}">--}%
+%{--                ${reforma.firma2.usuario}--}%
+%{--            </g:if>--}%
+%{--            <g:else>--}%
             %{--                <g:select from="${gerentes}" optionKey="id" optionValue="${{it.nombre + ' ' + it.apellido}}"--}%
             %{--                          noSelection="['': '- Seleccione -']" name="firma2" class="form-control required input-sm"--}%
             %{--                          value="${reforma ? reforma.firma2?.usuarioId : ''}"/>--}%
-            </g:else>
-        </div>
+%{--            </g:else>--}%
+%{--        </div>--}%
 
+        <div class="col-md-7"></div>
         <div class="col-md-5">
             <div class="btn-group pull-right" role="group">
                 %{--                <elm:linkPdfReforma reforma="${reforma}" class="btn-default" title="Previsualizar" label="true" disabledIfNull="true"/>--}%
 
-                <a href="#" id="btnEnviar" class="btn btn-success ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}" title="Guardar y enviar">
+                <a href="#" style="float: right" id="btnEnviar" class="btn btn-success ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}" title="Guardar y enviar">
                     <i class="fa fa-save"></i> Guardar y Enviar <i class="fa fa-paper-plane"></i>
                 </a>
             </div>
@@ -1180,9 +1187,11 @@
                                     dataDestino.componente_id = $("#comp").val();
                                     dataDestino.actividad_nombre = $("#actividadRf").find("option:selected").text();
                                     dataDestino.actividad_id = $("#actividadRf").val();
-                                    var nume = $("#prsp_id").val().split("-");
+                                    // var nume = $("#prsp_id").val().split("-");
+                                    var nume = $("#partida1Texto").val().split("-");
                                     dataDestino.partida = nume[0];
-                                    dataDestino.partida_id = $("#prsp_hide").val();
+                                    dataDestino.partida_id = $("#partida1").val();
+                                    // dataDestino.partida_id = $("#prsp_hide").val();
                                     dataDestino.fuente = $("#fuente").val();
                                     resetForm();
 
@@ -1429,7 +1438,7 @@
                 bootbox.confirm("¿Está seguro de querer enviar esta solicitud de ajuste?<br/>Ya no podrá modificar su contenido.",
                     function (res) {
                         if (res) {
-                            openLoader();
+                            var dialog = cargarLoader("Guardando...");
                             var data = {};
                             var c = 0;
                             data.firma1 = $("#firma1").val();
@@ -1443,6 +1452,7 @@
                                 url     : "${createLink(action:'saveNuevoAjuste_ajax')}",
                                 data    : data,
                                 success : function (msg) {
+                                    dialog.modal("hide")
                                     var parts = msg.split("*");
                                     log(parts[1], parts[0]);
                                     if (parts[0] == "SUCCESS") {
@@ -1450,7 +1460,7 @@
                                             location.href = "${createLink(action:'lista')}";
                                         }, 2000);
                                     } else {
-                                        closeLoader();
+
                                     }
                                 },
                                 error   : function () {
