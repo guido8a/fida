@@ -61,6 +61,7 @@ class ReportesController {
         def prmsNum = [border: Color.WHITE, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_MIDDLE]
         def fondo = new Color(240, 248, 250);
         def frmtHd = [border: Color.LIGHT_GRAY, bwb: 0.1, bcb: Color.BLACK, bg: fondo, align: Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
+        def frmtDato = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
 
 //        Paragraph headersTitulo = new Paragraph();
 //        addEmptyLine(headersTitulo, 1);
@@ -147,32 +148,90 @@ class ReportesController {
 //        tablaTitulo3.setWidthPercentage(100)
 //        tablaTitulo3.setWidths(arregloEnteros([90, 10]))
 
-        PdfPTable tablaDetalle = new PdfPTable(9)
-        tablaDetalle.setWidthPercentage(100)
-        tablaDetalle.setWidths(arregloEnteros([10, 10, 15, 15, 10, 10, 10, 10,10]))
+        PdfPTable tablaDetalleOrigen = new PdfPTable(9)
+        tablaDetalleOrigen.setWidthPercentage(100)
+        tablaDetalleOrigen.setWidths(arregloEnteros([10, 10, 15, 15, 10, 10, 10, 10,10]))
 
-//        PdfPTable tablaTotalesEquipos = new PdfPTable(2)
-//        tablaTotalesEquipos.setWidthPercentage(100)
-//        tablaTotalesEquipos.setWidths(arregloEnteros([70, 30]))
+        PdfPTable tablaDetalleIncremento = new PdfPTable(9)
+        tablaDetalleIncremento.setWidthPercentage(100)
+        tablaDetalleIncremento.setWidths(arregloEnteros([10, 10, 15, 15, 10, 10, 10, 10,10]))
 
+        PdfPTable tablaDetallePartida = new PdfPTable(9)
+        tablaDetallePartida.setWidthPercentage(100)
+        tablaDetallePartida.setWidths(arregloEnteros([10, 10, 15, 15, 10, 10, 10, 10,10]))
 
-//        addCellTabla(tablaTitulo3, new Paragraph("Equipos ", times14bold), prmsCellIzquierda)
-//        addCellTabla(tablaTitulo3, new Paragraph(" ", times10bold), prmsCellIzquierda)
-//        printHeaderDetalle()
+        PdfPTable tablaDetalleActividad = new PdfPTable(9)
+        tablaDetalleActividad.setWidthPercentage(100)
+        tablaDetalleActividad.setWidths(arregloEnteros([10, 10, 15, 15, 10, 10, 10, 10,10]))
+
+        PdfPTable tablaDetalleTecho = new PdfPTable(9)
+        tablaDetalleTecho.setWidthPercentage(100)
+        tablaDetalleTecho.setWidths(arregloEnteros([10, 10, 15, 15, 10, 10, 10, 10,10]))
+
+        def tablaTipo
+        def componenteTabla = ''
+        def actividadTabla = ''
+        def partidaTabla = ''
+        def valorInicialTabla = 0
 
 
         detalles.each{detalle->
-            addCellTabla(tablaDetalle, new Paragraph(detalle?.anio?.toString(), times8normal), prmsCellIzquierda)
-            addCellTabla(tablaDetalle, new Paragraph(detalle?.fuente?.codigo, times8normal), prmsCellIzquierda)
-            addCellTabla(tablaDetalle, new Paragraph(detalle?.componente?.marcoLogico?.objeto, times8normal), prmsCellIzquierda)
-//            addCellTabla(tablaDetalle, new Paragraph(detalle?.asignacionOrigen?.marcoLogico?.numero?.toString()  + detalle?.componente?.objeto?.toString(), times8normal), prmsCellIzquierda)
-            addCellTabla(tablaDetalle, new Paragraph(detalle?.presupuesto?.numero, times8normal), prmsCellIzquierda)
-//            addCellTabla(tablaDetalle, new Paragraph(g.formatNumber(number: detalle?.valorDestinoInicial, minFractionDigits:2, maxFractionDigits: 2, format: "##,##0", locale: "ec"), times8normal), prmsNum)
-            addCellTabla(tablaDetalle, new Paragraph('', times8normal), prmsCellIzquierda)
-            addCellTabla(tablaDetalle, new Paragraph('', times8normal), prmsCellIzquierda)
-            addCellTabla(tablaDetalle, new Paragraph('', times8normal), prmsCellIzquierda)
-            addCellTabla(tablaDetalle, new Paragraph('', times8normal), prmsCellIzquierda)
-            addCellTabla(tablaDetalle, new Paragraph('', times8normal), prmsCellIzquierda)
+
+            def disminucionTabla = " --- "
+            def incrementoTabla = g.formatNumber(number: detalle?.valor, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+            def finalTabla = g.formatNumber(number: (detalle?.valorDestinoInicial + detalle?.valor), format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+
+            switch (detalle?.tipoReforma?.codigo) {
+                case "O":
+                    tablaTipo = tablaDetalleOrigen
+                    componenteTabla = detalle?.componente?.objeto
+                    actividadTabla = detalle?.asignacionOrigen?.marcoLogico?.numero + " - " + detalle?.asignacionOrigen?.marcoLogico?.objeto
+                    partidaTabla = detalle?.asignacionOrigen?.presupuesto?.numero
+                    valorInicialTabla =  g.formatNumber(number: detalle?.valorOrigenInicial, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+                    disminucionTabla =  g.formatNumber(number: detalle?.valor, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+                    incrementoTabla = " --- "
+                    finalTabla = g.formatNumber(number: (detalle?.valorOrigenInicial - detalle?.valor), format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+                    break
+                case "E":
+                    tablaTipo = tablaDetalleIncremento
+                    componenteTabla = detalle?.componente?.objeto
+                    actividadTabla = detalle?.asignacionOrigen?.marcoLogico?.numero + " - " + detalle?.asignacionOrigen?.marcoLogico?.objeto
+                    partidaTabla = detalle?.asignacionOrigen?.presupuesto?.numero
+                    valorInicialTabla =  g.formatNumber(number: detalle?.valorDestinoInicial, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+                    break
+                case "P":
+                    tablaTipo = tablaDetallePartida
+                    componenteTabla = detalle?.componente?.marcoLogico?.objeto
+                    actividadTabla = detalle?.componente?.numero + " - " + detalle?.componente?.objeto
+                    partidaTabla = detalle?.presupuesto?.numero
+                    valorInicialTabla =  g.formatNumber(number: detalle?.valorDestinoInicial, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+                    break
+                case "A":
+                    tablaTipo = tablaDetalleActividad
+                    componenteTabla = detalle?.componente?.objeto
+                    actividadTabla = detalle?.descripcionNuevaActividad
+                    partidaTabla = detalle?.presupuesto?.numero
+                    valorInicialTabla =  " --- "
+                    finalTabla = g.formatNumber(number: detalle?.valor, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+                    break
+                case "N":
+                    tablaTipo = tablaDetalleTecho
+                    componenteTabla = detalle?.componente?.marcoLogico?.objeto
+                    actividadTabla = detalle?.componente?.numero + " - " + detalle?.componente?.objeto
+                    partidaTabla = detalle?.presupuesto?.numero
+                    valorInicialTabla =  g.formatNumber(number: detalle?.valorDestinoInicial, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+                    break
+            }
+
+            addCellTabla(tablaTipo, new Paragraph(detalle?.anio?.toString(), times8normal), frmtDato)
+            addCellTabla(tablaTipo, new Paragraph(detalle?.fuente?.codigo, times8normal), frmtDato)
+            addCellTabla(tablaTipo, new Paragraph(componenteTabla?.toString(), times8normal), frmtDato)
+            addCellTabla(tablaTipo, new Paragraph(actividadTabla?.toString(), times8normal), frmtDato)
+            addCellTabla(tablaTipo, new Paragraph(partidaTabla?.toString(), times8normal), frmtDato)
+            addCellTabla(tablaTipo, new Paragraph(valorInicialTabla?.toString(), times8normal), frmtDato)
+            addCellTabla(tablaTipo, new Paragraph(disminucionTabla?.toString(), times8normal), frmtDato)
+            addCellTabla(tablaTipo, new Paragraph(incrementoTabla?.toString(), times8normal), frmtDato)
+            addCellTabla(tablaTipo, new Paragraph(finalTabla?.toString(), times8normal), frmtDato)
         }
 
 //        res.each { k ->
@@ -203,9 +262,11 @@ class ReportesController {
 
 //        document.add(tablaTitulo3)
         document.add(tablaHeader);
-        document.add(tablaDetalle)
-//        document.add(tablaComposicion3);
-//        document.add(tablaTotalesEquipos)
+        document.add(tablaDetalleOrigen)
+        document.add(tablaDetalleIncremento)
+        document.add(tablaDetallePartida)
+        document.add(tablaDetalleActividad)
+        document.add(tablaDetalleTecho)
 
         document.close();
         pdfw.close()

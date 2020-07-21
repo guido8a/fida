@@ -243,7 +243,7 @@
                         <td style=width:4%>${det?.fuente?.codigo}</td>
                         <td style=width:20%>${det?.componente?.proyecto?.nombre}</td>
                         <td style=width:12%>${det?.componente?.marcoLogico?.objeto}</td>
-                        <td style=width:15%>${det?.asignacionOrigen?.marcoLogico?.numero} - ${det?.componente?.objeto}</td>
+                        <td style=width:15%>${det?.componente?.numero} - ${det?.componente?.objeto}</td>
                         <td style='width:6%' class='text-center'>${det?.presupuesto?.numero}</td>
                         %{--                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>--}%
                         <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valorDestinoInicial}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
