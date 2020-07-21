@@ -341,14 +341,10 @@
         <div class="col-md-3"></div>
         <div class="col-md-5">
             <div class="btn-group pull-right" role="group">
-                <elm:linkPdfReforma reforma="${reforma}" class="btn-default" title="Previsualizar" label="true" disabledIfNull="true"/>
-
+                <a href="#" class="btn btn-info" id="btnReporteAjustes"><i class="fa fa-print"></i> PDF </a>
                 <a href="#" style="float: right" id="btnEnviar" class="btn btn-success ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}" title="Guardar y enviar">
                  Enviar <i class="fa fa-paper-plane"></i>
                 </a>
-                <g:link controller="ajuste" action="creaPdf" class="btn btn-sm btn-default">
-                    <i class="fa fa-arrow-left"></i> Crea pdf
-                </g:link>
             </div>
         </div>
     </div>
@@ -356,6 +352,12 @@
 
 
 <script type="text/javascript">
+
+
+    $("#btnReporteAjustes").click(function () {
+        location.href="${createLink(controller: 'reportes', action: 'reporteAjustes')}?id=" + '${reforma?.id}'
+    });
+
 
     //guardar reforma
 

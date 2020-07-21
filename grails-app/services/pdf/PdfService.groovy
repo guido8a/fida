@@ -2,7 +2,9 @@ package pdf
 
 import com.itextpdf.text.Document
 import com.itextpdf.text.html.simpleparser.HTMLWorker
+import com.itextpdf.text.pdf.PdfReader
 import com.itextpdf.text.pdf.PdfWriter
+import com.itextpdf.tool.xml.XMLWorkerHelper
 import com.lowagie.text.FontFactory
 import com.lowagie.text.pdf.BaseFont
 import org.xhtmlrenderer.pdf.ITextFontResolver
@@ -100,7 +102,6 @@ class PdfService {
         {
             e.printStackTrace();
         }
-
 
     }
 
