@@ -47,6 +47,7 @@ dependencies {
     compile "org.hibernate:hibernate-core:5.1.16.Final"
     compile "org.grails.plugins:gsp"
     compile fileTree(dir: 'lib', include: '*.jar')
+    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13'
 //    compile files('iText-2.0.8.jar')
 //    compile files('core-renderer.jar')
 //    compile files('itextpdf-5.3.3.jar')

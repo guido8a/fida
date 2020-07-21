@@ -1,5 +1,8 @@
 package pdf
 
+import com.itextpdf.text.Document
+import com.itextpdf.text.html.simpleparser.HTMLWorker
+import com.itextpdf.text.pdf.PdfWriter
 import com.lowagie.text.FontFactory
 import com.lowagie.text.pdf.BaseFont
 import org.xhtmlrenderer.pdf.ITextFontResolver
@@ -59,22 +62,47 @@ class PdfService {
 //        fontResolver.addFontDirectory(pf_bold, true);
 //        fontResolver.addFont(font_bold, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 //
-        println "url: $url"
-        println "renderer ${renderer}"
-        try {
-            def texto = url.toURL().text
-            println "texto: $texto"
-            renderer.setDocument(url)
-            renderer.layout();
-            renderer.createPDF(baos);
-            renderer.finishPDF();
-            byte[] b = baos.toByteArray();
-            return b
+//        println "url: $url"
+//        println "renderer ${renderer}"
+//        try {
+//            def texto = url.toURL().text
+//            println "texto: $texto"
+//            renderer.setDocument(url)
+//            renderer.layout();
+//            renderer.createPDF(baos);
+//            renderer.finishPDF();
+//            byte[] b = baos.toByteArray();
+//            return b
+//        }
+//        catch (Throwable e) {
+//            e.printStackTrace()
+//            log.error e
+//        }
+
+
+        try
+        {
+            OutputStream file = new FileOutputStream(new File("HTMLtoPDF.pdf"));
+            Document document = new Document();
+            PdfWriter writer = PdfWriter.getInstance(document, file);
+            StringBuilder htmlString = new StringBuilder();
+            htmlString.append(new String("<html><body> This is HMTL to PDF conversion Example<table border='2' align='center'> "));
+            htmlString.append(new String("<tr><td>JavaCodeGeeks</td><td><a href='examples.javacodegeeks.com'>JavaCodeGeeks</a> </td></tr>"));
+            htmlString.append(new String("<tr> <td> Google Here </td> <td><a href='www.google.com'>Google</a> </td> </tr></table></body></html>"));
+
+            document.open();
+            InputStream is = new ByteArrayInputStream(htmlString.toString().getBytes());
+            OutputStream os = new ByteArrayOutputStream(htmlString.toString().getBytes())
+            XMLWorkerHelper.getInstance().parseXHtml(writer, document, is);
+            document.close();
+            file.close();
         }
-        catch (Throwable e) {
-            e.printStackTrace()
-            log.error e
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
+
+
     }
 
 /*
