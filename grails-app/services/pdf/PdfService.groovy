@@ -92,7 +92,6 @@ class PdfService {
 
             document.open();
             InputStream is = new ByteArrayInputStream(htmlString.toString().getBytes());
-            OutputStream os = new ByteArrayOutputStream(htmlString.toString().getBytes())
             XMLWorkerHelper.getInstance().parseXHtml(writer, document, is);
             document.close();
             file.close();
