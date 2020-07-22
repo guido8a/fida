@@ -1,4 +1,4 @@
-<%@ page import="parametros.Anio" %>
+<%@ page import="avales.SolicitudAval; parametros.Anio" %>
 %{--<%--}%
 %{--    def firmasService = grailsApplication.classLoader.loadClass('seguridad.FirmasService').newInstance()--}%
 %{--%>--}%
@@ -22,6 +22,10 @@
                 </div>
             </div>
         </g:if>
+
+
+%{--    <g:set var="serv" bean=""--}%
+
 
     %{--<qrcode:text>Hello QRCode Plugin for Grails</qrcode:text>--}%
     %{--<qrcode:text logoLink="http://upload.wikimedia.org/wikipedia/commons/5/51/Google.png">--}%
@@ -65,10 +69,10 @@
                             </thead>
                             <tbody>
                                 <g:each in="${firmasAvales}" var="f">
-                                    <g:set var="slav" value="${vesta.avales.SolicitudAval.get(f.idAccionVer)}"/>
+                                    <g:set var="slav" value="${avales.SolicitudAval.get(f.idAccionVer)}"/>
                                     <tr data-firma="${f}" esPdf="${f.esPdf}" accVer="${f.accionVer}">
                                         %{--<td>${f.concepto}</td>--}%
-                                        <td>${slav.fecha?.format("yyyy")}-${firmasService.requirentes(slav.usuario.unidad)?.codigo} No.<elm:imprimeNumero solicitud="${slav.id}"/></td>
+%{--                                        <td>${slav.fecha?.format("yyyy")}-${firmasService.requirentes(slav.usuario.unidad)?.codigo} No.<elm:imprimeNumero solicitud="${slav.id}"/></td>--}%
                                         %{--<td>${slav?.numero} </td>--}%
                                         <td>${slav.fecha?.format("dd-MM-yyyy")}</td>
                                         <td>${vesta.avales.SolicitudAval.get(f.idAccionVer)?.proceso?.nombre} </td>
@@ -76,7 +80,7 @@
                                             <g:formatNumber number="${slav.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>
                                         </td>
                                         %{--<td>${vesta.avales.SolicitudAval.findById(f.idAccionVer)?.usuario?.unidad?.nombre}</td>--}%
-                                        <td>${firmasService.requirentes(vesta.avales.SolicitudAval.findById(f.idAccionVer)?.usuario?.unidad)}</td>
+%{--                                        <td>${firmasService.requirentes(vesta.avales.SolicitudAval.findById(f.idAccionVer)?.usuario?.unidad)}</td>--}%
                                         <td style="text-align: center">
                                             <div class="btn-group btn-group-sm" role="group">
                                                 <g:if test="${f.accionVer}">
@@ -209,7 +213,7 @@
                                                     </g:else>
                                                 </g:if>
                                                 <a href="#" iden="${f.id}" class="aprobar btn btn-success" title="Firmar">
-                                                    ${imgFirma}
+                                                  <i class="fa fa-edit"></i>  ${imgFirma}
                                                 </a>
                                                 <g:if test="${f.tipoFirma && f.tipoFirma != ''}">
                                                     <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">

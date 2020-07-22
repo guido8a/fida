@@ -1459,13 +1459,14 @@
                                 success : function (msg) {
                                     dialog.modal("hide")
                                     var parts = msg.split("*");
-                                    log(parts[1], parts[0]);
+
                                     if (parts[0] == "SUCCESS") {
+                                        log(parts[1], "success");
                                         setTimeout(function () {
-                                            location.href = "${createLink(action:'lista')}";
+                                            location.href = "${createLink(controller: 'ajuste',  action:'pendientes')}";
                                         }, 2000);
                                     } else {
-
+                                        log(parts[1], "error");
                                     }
                                 },
                                 error   : function () {

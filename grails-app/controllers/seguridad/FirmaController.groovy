@@ -46,7 +46,7 @@ class FirmaController {
             actual = Anio.findByAnio(new Date().format("yyyy"))
         }
 
-        def imgFirma = "<i class='fa fa-pencil'></i>";
+        def imgFirma = "";
 //        def imgFirma = "<img src='${resource(dir: 'images/ico', file: 'feather.png')}' alt='Firmar'/>"
 
         println("-->" + firmasAvales)

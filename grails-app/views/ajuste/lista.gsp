@@ -35,12 +35,12 @@
             <tbody>
                 <g:each in="${reformas}" var="reforma">
                     <tr>
-                        <td>${reforma.persona.unidad} - ${reforma.persona}</td>
-                        <td><elm:numeroRef numero="${reforma.numero}"/></td>
+                        <td>${reforma.persona.unidadEjecutora} - ${reforma.persona}</td>
+%{--                        <td><elm:numeroRef numero="${reforma.numero}"/></td>--}%
                         <td>${reforma.fecha.format("dd-MM-yyyy")}</td>
                         <td>${reforma.concepto}</td>
                         <td>
-                            <elm:tipoReforma reforma="${reforma}"/>
+%{--                            <elm:tipoReforma reforma="${reforma}"/>--}%
                             %{--${reforma.tipo == 'R' ? 'Reforma' : reforma.tipo == 'A' ? 'Ajuste' : '??'}--}%
                             %{--${reforma.tipoSolicitud == 'E' ? ' a asignaciones existentes' :--}%
                             %{--reforma.tipoSolicitud == 'A' ? ' a nueva actividad' :--}%
@@ -51,7 +51,7 @@
                         <td style="text-align: center; width: 90px">
                             %{--<div class="btn-group" role="group">--}%
                             <div class="btn-group btn-group-xs" role="group">
-                            <elm:linkPdfReforma reforma="${reforma}"/>
+%{--                            <elm:linkPdfReforma reforma="${reforma}"/>--}%
                             </div>
 
                                 %{--<g:if test="${reforma.estado.codigo == 'E02'}">--}%
