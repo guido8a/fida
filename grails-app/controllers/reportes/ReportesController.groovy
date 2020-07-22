@@ -73,7 +73,7 @@ class ReportesController {
         addEmptyLine(preface, 1);
         preface.setAlignment(Element.ALIGN_CENTER);
 //        preface.add(new Paragraph("MATRIZ DE REFORMA", fontTitulo));
-        preface.add(new Paragraph("MATRIZ DEL AJUSTE", fontTitulo));
+        preface.add(new Paragraph("SOLICITUD DE REFORMA", fontTitulo));
         addEmptyLine(preface, 1);
         document.add(preface);
 
@@ -100,8 +100,8 @@ class ReportesController {
 
         addCellTabla(tablaCabecera, new Paragraph("Justificación del ajuste:", times10bold), prmsCellHead3)
         addCellTabla(tablaCabecera, new Paragraph(reforma?.concepto, times10normal), prmsCellHead3)
-//        addCellTabla(tablaCabecera, new Paragraph("2. Matriz del ajuste:", times10bold), prmsCellHead3)
-//        addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
+        addCellTabla(tablaCabecera, new Paragraph("Matriz del ajuste", times10bold), prmsCellHead3)
+        addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
         addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
         addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
         addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
