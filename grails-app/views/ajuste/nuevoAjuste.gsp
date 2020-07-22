@@ -341,7 +341,7 @@
         <div class="col-md-3"></div>
         <div class="col-md-5">
             <div class="btn-group pull-right" role="group">
-                <a href="#" class="btn btn-info" id="btnReporteAjustes"><i class="fa fa-print"></i> PDF </a>
+                <a href="#" class="btn btn-info" id="btnReporteAjustes"><i class="fa fa-print"></i> Previsualizar</a>
                 <a href="#" style="float: right" id="btnEnviar" class="btn btn-success ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}" title="Guardar y enviar">
                  Enviar <i class="fa fa-paper-plane"></i>
                 </a>

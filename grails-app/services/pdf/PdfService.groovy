@@ -66,22 +66,26 @@ class PdfService {
 //
 //        println "url: $url"
 //        println "renderer ${renderer}"
-//        try {
+        try {
 //            def texto = url.toURL().text
-//            println "texto: $texto"
-//            renderer.setDocument(url)
-//            renderer.layout();
-//            renderer.createPDF(baos);
-//            renderer.finishPDF();
-//            byte[] b = baos.toByteArray();
-//            return b
-//        }
-//        catch (Throwable e) {
-//            e.printStackTrace()
-//            log.error e
-//        }
+            def texto = render(contentType: "text/xml") {
+                '/reportesReforma/verNuevoAjuste/1'
+            }
+            println "texto: $texto"
+            renderer.setDocument(url)
+            renderer.layout();
+            renderer.createPDF(baos);
+            renderer.finishPDF();
+            byte[] b = baos.toByteArray();
+            return b
+        }
+        catch (Throwable e) {
+            e.printStackTrace()
+            log.error e
+        }
 
 
+/*
         try
         {
             OutputStream file = new FileOutputStream(new File("HTMLtoPDF.pdf"));
@@ -102,6 +106,7 @@ class PdfService {
         {
             e.printStackTrace();
         }
+*/
 
     }
 

@@ -3,6 +3,7 @@ package reportes
 import com.lowagie.text.Document
 import com.lowagie.text.Element
 import com.lowagie.text.Font
+import com.lowagie.text.Image
 import com.lowagie.text.PageSize
 import com.lowagie.text.Paragraph
 import com.lowagie.text.pdf.PdfPCell
@@ -21,6 +22,10 @@ class ReportesController {
 
         def reforma = Reforma.get(params.id)
         def detalles = DetalleReforma.findAllByReforma(reforma)
+        Image logo = Image.getInstance('/var/fida/logo.png')
+        logo.scaleToFit(46, 46)
+        logo.setAlignment(Image.RIGHT | Image.TEXTWRAP)
+//        logo.setAlignment(Image.RIGHT)
 
         def baos = new ByteArrayOutputStream()
         def name = "ajustes_" + new Date().format("ddMMyyyy_hhmm") + ".pdf";
@@ -34,7 +39,7 @@ class ReportesController {
         Font times10boldWhite = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font times8boldWhite = new Font(Font.TIMES_ROMAN, 8, Font.BOLD)
         def titulo = new Color(40, 140, 180)
-        Font fontTitulo = new Font(Font.TIMES_ROMAN, 12, Font.BOLD, titulo);
+        Font fontTitulo = new Font(Font.TIMES_ROMAN, 18, Font.BOLD, titulo);
 
         Document document
         document = new Document(PageSize.A4);
@@ -51,7 +56,7 @@ class ReportesController {
         def prmsRight = [border: Color.WHITE, colspan: 7, align : Element.ALIGN_RIGHT, valign: Element.ALIGN_RIGHT]
         def prmsHeader2 = [border: Color.WHITE, colspan: 3, align : Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
         def prmsCellHead = [border: Color.WHITE, align : Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
-        def prmsCellHead3 = [border: Color.WHITE, align : Element.ALIGN_LEFT, valign: Element.ALIGN_LEFT]
+        def prmsCellHead3 = [border: Color.WHITE, align : Element.ALIGN_JUSTIFIED, valign: Element.ALIGN_TOP]
         def prmsCellHeadCentro = [border: Color.WHITE, align : Element.ALIGN_CENTER, valign: Element.ALIGN_LEFT]
         def prmsCellHead4 = [align : Element.ALIGN_LEFT, valign: Element.ALIGN_LEFT]
         def prmsCellHead2 = [border: Color.WHITE, align : Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE, bordeTop: "1", bordeBot: "1"]
@@ -76,6 +81,7 @@ class ReportesController {
 //        preface.add(new Paragraph("MATRIZ DE REFORMA", fontTitulo));
         preface.add(new Paragraph("SOLICITUD DE REFORMA", fontTitulo));
         addEmptyLine(preface, 1);
+        document.add(logo)
         document.add(preface);
 
         PdfPTable tablaCabecera = new PdfPTable(2)
@@ -84,7 +90,7 @@ class ReportesController {
 
         PdfPTable tablaHeader = new PdfPTable(9)
         tablaHeader.setWidthPercentage(100)
-        tablaHeader.setWidths(arregloEnteros([6, 8, 15, 19, 8, 10, 12, 12,10]))
+        tablaHeader.setWidths(arregloEnteros([5, 8, 15, 19, 8, 10, 12, 12,10]))
 
         PdfPTable tablaTitulo = new PdfPTable(2)
         tablaTitulo.setWidthPercentage(100)
@@ -92,7 +98,7 @@ class ReportesController {
 
         PdfPTable tablaTotales = new PdfPTable(5)
         tablaTotales.setWidthPercentage(100)
-        tablaTotales.setWidths(arregloEnteros([56,10,12,12,10]))
+        tablaTotales.setWidths(arregloEnteros([55,10,12,12,10]))
 
         PdfPTable tablaPie = new PdfPTable(2)
         tablaPie.setWidthPercentage(100)
@@ -102,10 +108,12 @@ class ReportesController {
         tablaCabecera2.setWidthPercentage(100)
         tablaCabecera2.setWidths(arregloEnteros([100]))
 
-        addCellTabla(tablaCabecera2, new Paragraph("Justificación del ajuste:", times10bold), prmsCellHead3)
+        addCellTabla(tablaCabecera2, new Paragraph("Justificación del ajuste:", times12bold), prmsCellHead3)
         addCellTabla(tablaCabecera2, new Paragraph(reforma?.concepto, times10normal), prmsCellHead3)
+        addCellTabla(tablaCabecera2, new Paragraph("", times10normal), prmsCellHead3)
+        addCellTabla(tablaCabecera2, new Paragraph("", times10normal), prmsCellHead3)
 
-        addCellTabla(tablaCabecera2, new Paragraph("Matriz del ajuste", times10bold), prmsCellHeadCentro)
+        addCellTabla(tablaCabecera2, new Paragraph("Matriz del ajuste", times12bold), prmsCellHeadCentro)
         addCellTabla(tablaCabecera2, new Paragraph("", times10bold), prmsCellHeadCentro)
         addCellTabla(tablaCabecera2, new Paragraph("", times10bold), prmsCellHeadCentro)
 
@@ -129,23 +137,23 @@ class ReportesController {
 
         PdfPTable tablaDetalleOrigen = new PdfPTable(9)
         tablaDetalleOrigen.setWidthPercentage(100)
-        tablaDetalleOrigen.setWidths(arregloEnteros([6, 8, 15, 19, 8, 10, 12, 12,10]))
+        tablaDetalleOrigen.setWidths(arregloEnteros([5, 8, 15, 19, 8, 10, 12, 12,10]))
 
         PdfPTable tablaDetalleIncremento = new PdfPTable(9)
         tablaDetalleIncremento.setWidthPercentage(100)
-        tablaDetalleIncremento.setWidths(arregloEnteros([6, 8, 15, 19, 8, 10, 12, 12,10]))
+        tablaDetalleIncremento.setWidths(arregloEnteros([5, 8, 15, 19, 8, 10, 12, 12,10]))
 
         PdfPTable tablaDetallePartida = new PdfPTable(9)
         tablaDetallePartida.setWidthPercentage(100)
-        tablaDetallePartida.setWidths(arregloEnteros([6, 8, 15, 19, 8, 10, 12, 12,10]))
+        tablaDetallePartida.setWidths(arregloEnteros([5, 8, 15, 19, 8, 10, 12, 12,10]))
 
         PdfPTable tablaDetalleActividad = new PdfPTable(9)
         tablaDetalleActividad.setWidthPercentage(100)
-        tablaDetalleActividad.setWidths(arregloEnteros([6, 8, 15, 19, 8, 10, 12, 12,10]))
+        tablaDetalleActividad.setWidths(arregloEnteros([5, 8, 15, 19, 8, 10, 12, 12,10]))
 
         PdfPTable tablaDetalleTecho = new PdfPTable(9)
         tablaDetalleTecho.setWidthPercentage(100)
-        tablaDetalleTecho.setWidths(arregloEnteros([6, 8, 15, 19, 8, 10, 12, 12,10]))
+        tablaDetalleTecho.setWidths(arregloEnteros([5, 8, 15, 19, 8, 10, 12, 12,10]))
 
         def tablaTipo
         def componenteTabla = ''

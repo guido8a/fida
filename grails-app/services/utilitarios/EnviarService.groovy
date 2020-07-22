@@ -113,10 +113,14 @@ class EnviarService {
         content += "</html>"
 
 
+        def texto = renderTemplateWithModel()
+        println "texto: $texto"
+
         ITextRenderer renderer = new ITextRenderer();
 //        renderer.setDocument(doc, null);
 //        println "------------ pasa renderer"
-        renderer.setDocumentFromString(content);
+//        renderer.setDocumentFromString(content);
+        renderer.setDocumentFromString(texto);
 //        println "-----setDoc..."
         renderer.layout();
 //        println "crea layout pdf"
@@ -126,6 +130,13 @@ class EnviarService {
 
         return baos
     }
+
+
+    def renderTemplateWithModel(model = [:]) {
+//        render(uri: 'http://192.168.0.100:8080/reportesReforma/verNuevoAjuste', model: [id: 1])
+        render(uri: '/reportesReforma/verNuevoAjuste', model: [id: 1])
+    }
+
 
 
 }
