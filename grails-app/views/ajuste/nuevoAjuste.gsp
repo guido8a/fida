@@ -39,7 +39,7 @@
 <body>
 
 
-<div class="row" style="margin-bottom: 30px;">
+<div class="row" style="margin-bottom: 10px;">
 
     <div class="col-md-2 btn-group">
         <g:link controller="ajuste" action="pendientes" class="btn btn-sm btn-default">
@@ -50,7 +50,7 @@
         <label>Justificación del ajuste</label>
     </div>
     <div class="col-md-7 grupo">
-        <g:textArea name="concepto" class="form-control required" style="height: 60px; resize: none"
+        <g:textArea name="concepto" class="form-control required" style="height: 80px; resize: none"
                     value="${reforma?.concepto}" maxlength="255" />
     </div>
     <div class="col-md-2">
@@ -62,7 +62,7 @@
     </div>
 </div>
 
-<div class="row" style="padding: 10px; background: #DDD; border-radius: 8px; margin-bottom: 10px">
+<div class="row" style="padding: 8px; background: #DDD; border-radius: 8px; margin-bottom: 10px; height: 50px">
 
     <div class="col-md-1">
         <label for="anio">

@@ -45,25 +45,25 @@
            class="btn btn-sm btn-info" title="Buscar convenio">
             <i class="fas fa-list-alt"></i> Lista de convenios
         </a>
-        <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"
-           class="btn btn-sm btn-success" title="Consultar artículo">
-            <i class="fas fa-plus"></i> Nuevo convenio
-        </a>
         <g:if test="${convenio?.id}">
+            <a href="${createLink(controller: 'documento', action: 'listConvenio')}" id="btnNuevoConvenio"
+               class="btn btn-sm btn-info" title="Consultar artículo">
+                <i class="fas fa-book-reader"></i> Biblioteca
+            </a>
             <a href="#" id="btnAdministradorCon" class="btn btn-sm btn-info" title="Administrador del convenio">
                 <i class="fa fa-user"></i> Administrador
             </a>
             <a href="#" id="btnEstado" class="btn btn-sm btn-info" title="Indicadores">
                 <i class="fa fa-scroll"></i> Indicadores
             </a>
-            <a href="${createLink(controller: 'documento', action: 'listConvenio')}" id="btnNuevoConvenio"
-               class="btn btn-sm btn-info" title="Consultar artículo">
-                <i class="fas fa-book-reader"></i> Biblioteca
-            </a>
             <a href="#" id="editMrlg" class="btn btn-sm btn-info" title="Ver registro">
                 <i class="fa fa-clipboard"></i> Plan de negocio solidario
             </a>
         </g:if>
+        <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"
+           class="btn btn-sm btn-success" title="Consultar artículo">
+            <i class="fas fa-plus"></i> Nuevo convenio
+        </a>
         <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
         </a>

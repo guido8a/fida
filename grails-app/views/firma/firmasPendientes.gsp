@@ -200,7 +200,8 @@
                                                 <g:if test="${f.accionVer}">
                                                 %{--<g:if test="${f.esPdf != 'N'}">--}%
                                                     <g:if test="${f.esPdf == 'S'}">
-                                                        <a href="${g.createLink(controller: 'pdf', action: 'pdfLink')}?url=${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"
+%{--                                                        <a href="${g.createLink(controller: 'pdf', action: 'pdfLink')}?url=${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"--}%
+                                                        <a href="${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"
                                                            target="_blank" class="btn btn-info" title="Ver">
                                                             <i class="fa fa-search"></i>
                                                         </a>

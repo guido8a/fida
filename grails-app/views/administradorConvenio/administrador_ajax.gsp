@@ -11,13 +11,13 @@
         <div class="col-md-2">
             <label>Administrador:</label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-5">
             <g:select name="buscarA" from="${administradores}" class="form-control" optionValue="${{it.nombre + " " + it.apellido}}" optionKey="id" noSelection="${[0: 'Seleccione...']}"/>
         </div>
         <div class="col-md-2">
             <label>Fecha de Inicio:</label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2" style="margin-left: -30px">
             <input name="fechaInicioBA" id='fechaInicioBA' type='text' class="form-control"
                    value="${new Date().format("dd-MM-yyyy")}"/>
         </div>
