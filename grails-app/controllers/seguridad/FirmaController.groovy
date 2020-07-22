@@ -47,13 +47,9 @@ class FirmaController {
         }
 
         def imgFirma = "";
-//        def imgFirma = "<img src='${resource(dir: 'images/ico', file: 'feather.png')}' alt='Firmar'/>"
-
-        println("-->" + firmasAvales)
 
         return [firmasReformas: firmasReformas, firmasAjustes: firmasAjustes,
                 firmasAvales  : firmasAvales, actual: actual, imgFirma: imgFirma, params: params]
-
     }
 /**
  * Acción que muestra una lista con el hisotrial del firmas

@@ -61,7 +61,7 @@
                                 <div class="btn-group btn-group-xs" role="group" style="width: 100px">
                                 %{--                                                <elm:linkPdfReforma reforma="${reforma}"/>--}%
                                 %{--                                                <elm:linkEditarReforma reforma="${reforma}" perfil="${session.perfil}"/>--}%
-%{--                                    <g:if test="${session.perfil.codigo == 'ASPL' && !modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">--}%
+                                %{--                                    <g:if test="${session.perfil.codigo == 'ASPL' && !modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">--}%
                                     <g:if test="${!modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">
                                         <a href="#"  class="btn btn-info editarAjuste"  ajuste="${reforma?.id}" data-id="${reforma?.id}" title="Editar ajuste">
                                             <i class="fa fa-edit"></i>
@@ -70,6 +70,11 @@
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </g:if>
+                                    <g:else>
+                                        <a href="#"  class="btn btn-info btnVerReforma"  data-id="${reforma?.id}" title="Ver">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </g:else>
                                 </div>
                             </td>
                         </tr>
@@ -91,6 +96,11 @@
 </div>
 
 <script type="text/javascript">
+
+    $(".btnVerReforma").click(function () {
+        var id = $(this).data("id");
+        location.href="${createLink(controller: 'reportes', action: 'reporteAjustes')}?id=" + id
+    });
 
     $(".editarAjuste").click(function () {
         var id = $(this).data("id");
