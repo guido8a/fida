@@ -52,6 +52,7 @@ class ReportesController {
         def prmsHeader2 = [border: Color.WHITE, colspan: 3, align : Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
         def prmsCellHead = [border: Color.WHITE, align : Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
         def prmsCellHead3 = [border: Color.WHITE, align : Element.ALIGN_LEFT, valign: Element.ALIGN_LEFT]
+        def prmsCellHeadCentro = [border: Color.WHITE, align : Element.ALIGN_CENTER, valign: Element.ALIGN_LEFT]
         def prmsCellHead4 = [align : Element.ALIGN_LEFT, valign: Element.ALIGN_LEFT]
         def prmsCellHead2 = [border: Color.WHITE, align : Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE, bordeTop: "1", bordeBot: "1"]
         def prmsCellIzquierda = [border: Color.WHITE, align : Element.ALIGN_LEFT, valign: Element.ALIGN_LEFT]
@@ -97,15 +98,16 @@ class ReportesController {
         tablaPie.setWidthPercentage(100)
         tablaPie.setWidths(arregloEnteros([15, 85]))
 
+        PdfPTable tablaCabecera2 = new PdfPTable(1)
+        tablaCabecera2.setWidthPercentage(100)
+        tablaCabecera2.setWidths(arregloEnteros([100]))
 
-        addCellTabla(tablaCabecera, new Paragraph("Justificación del ajuste:", times10bold), prmsCellHead3)
-        addCellTabla(tablaCabecera, new Paragraph(reforma?.concepto, times10normal), prmsCellHead3)
-        addCellTabla(tablaCabecera, new Paragraph("Matriz del ajuste", times10bold), prmsCellHead3)
-        addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
-        addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
-        addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
-        addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
-        addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
+        addCellTabla(tablaCabecera2, new Paragraph("Justificación del ajuste:", times10bold), prmsCellHead3)
+        addCellTabla(tablaCabecera2, new Paragraph(reforma?.concepto, times10normal), prmsCellHead3)
+
+        addCellTabla(tablaCabecera2, new Paragraph("Matriz del ajuste", times10bold), prmsCellHeadCentro)
+        addCellTabla(tablaCabecera2, new Paragraph("", times10bold), prmsCellHeadCentro)
+        addCellTabla(tablaCabecera2, new Paragraph("", times10bold), prmsCellHeadCentro)
 
         addCellTabla(tablaPie, new Paragraph("", times10normal), frmtDato2)
 //        addCellTabla(tablaPie, new Paragraph("", times10normal), prmsCellHead3)
@@ -233,6 +235,7 @@ class ReportesController {
         addCellTabla(tablaTotales, new Paragraph(g.formatNumber(number: montoFinal, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)?.toString(), times8bold), frmtHdDerecha)
 
         document.add(tablaCabecera);
+        document.add(tablaCabecera2);
         document.add(tablaHeader);
         document.add(tablaDetalleOrigen)
         document.add(tablaDetalleIncremento)
