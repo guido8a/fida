@@ -73,7 +73,7 @@ class ReportesController {
         addEmptyLine(preface, 1);
         preface.setAlignment(Element.ALIGN_CENTER);
 //        preface.add(new Paragraph("MATRIZ DE REFORMA", fontTitulo));
-        preface.add(new Paragraph("SOLICITUD DE REFORMA", fontTitulo));
+        preface.add(new Paragraph("MATRIZ DEL AJUSTE", fontTitulo));
         addEmptyLine(preface, 1);
         document.add(preface);
 
@@ -98,10 +98,10 @@ class ReportesController {
         tablaPie.setWidths(arregloEnteros([15, 85]))
 
 
-        addCellTabla(tablaCabecera, new Paragraph("1. Justificación del ajuste:", times10bold), prmsCellHead3)
+        addCellTabla(tablaCabecera, new Paragraph("Justificación del ajuste:", times10bold), prmsCellHead3)
         addCellTabla(tablaCabecera, new Paragraph(reforma?.concepto, times10normal), prmsCellHead3)
-        addCellTabla(tablaCabecera, new Paragraph("2. Matriz del ajuste:", times10bold), prmsCellHead3)
-        addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
+//        addCellTabla(tablaCabecera, new Paragraph("2. Matriz del ajuste:", times10bold), prmsCellHead3)
+//        addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
         addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
         addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
         addCellTabla(tablaCabecera, new Paragraph("", times10normal), prmsCellHead3)
@@ -110,7 +110,7 @@ class ReportesController {
         addCellTabla(tablaPie, new Paragraph("", times10normal), frmtDato2)
 //        addCellTabla(tablaPie, new Paragraph("", times10normal), prmsCellHead3)
         addCellTabla(tablaPie, new Paragraph("Elaborado por:", times10bold), prmsCellHead3)
-        addCellTabla(tablaPie, new Paragraph("", times10normal), prmsCellHead3)
+        addCellTabla(tablaPie, new Paragraph('', times10normal), prmsCellHead3)
         addCellTabla(tablaPie, new Paragraph("Fecha:", times10bold), prmsCellHead3)
         addCellTabla(tablaPie, new Paragraph(reforma?.fecha?.format("dd-MM-yyyy"), times10normal), prmsCellHead3)
 
