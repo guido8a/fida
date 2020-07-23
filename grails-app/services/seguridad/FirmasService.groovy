@@ -241,7 +241,7 @@ class FirmasService {
 //                def texto = baseUri + g.createLink(controller: "firma", action: "verDocumento") + "?ky="
                 def texto = baseUri
 //                def pathQr = servletContext.getRealPath("/") + path
-                def pathQr = '/var/fida/'
+                def pathQr = '/var/fida/firmas/'
                 def nombre = "" + user.login + "_" + now.format("dd_MM_yyyy_mm_ss") + ".png"
                 new File(pathQr).mkdirs()
                 println " "+now.format("ddMMyyyyhhmmss.SSS")+" "+" nombre "+nombre+"  "+user.login.encodeAsMD5()+"   "+(user.autorizacion.substring(10,20))
