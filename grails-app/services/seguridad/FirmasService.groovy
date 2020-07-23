@@ -273,10 +273,6 @@ class FirmasService {
                 println "FIRMA ${firma.id} creado archivo: $nombre"
                 firma.save(flush: true)
 
-//                def reforma = modificaciones.Reforma.get(firma.idAccionVer)
-//                reforma.estado = EstadoAval.findByCodigo("E02")
-//                reforma.save(fluh:true)
-
                 return firma
             } catch (e) {
                 println "error al generar la firma \n " + e.printStackTrace()
