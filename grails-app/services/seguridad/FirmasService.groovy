@@ -2,6 +2,7 @@ package seguridad
 
 import com.itextpdf.text.pdf.qrcode.QRCode
 import com.lowagie.text.Image
+import poa.EstadoAval
 
 /**
  * Servicio para el firmar electronicamente documentos
@@ -271,6 +272,11 @@ class FirmasService {
                 firma.estado = "F"
                 println "FIRMA ${firma.id} creado archivo: $nombre"
                 firma.save(flush: true)
+
+                def reforma = modificaciones.Reforma.get(firma.idAccionVer)
+                reforma.estado = EstadoAval.findByCodigo("E02")
+                reforma.save(fluh:true)
+
                 return firma
             } catch (e) {
                 println "error al generar la firma \n " + e.printStackTrace()
