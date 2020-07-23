@@ -1473,7 +1473,8 @@ class AjusteController {
             response.sendError(403)
         } else {
             def reforma = Reforma.findByFirma1OrFirma2(firma, firma)
-            if (reforma.firma1.estado == "F" && reforma.firma2.estado == "F") {
+//            if (reforma.firma1.estado == "F" && reforma.firma2.estado == "F") {
+            if (reforma.firma1.estado == "F") {
                 //busco el ultimo numero asignado para signar el siguiente
                 def ultimoNum = Reforma.withCriteria {
                     eq("tipo", "A")
@@ -1568,12 +1569,12 @@ class AjusteController {
                            nuevaActividad.objeto = d?.descripcionNuevaActividad
                            nuevaActividad.monto = d?.valor
                            nuevaActividad.estado = 0
-                           nuevaActividad.categoria = d?.categoria
-                           nuevaActividad.fechaInicio = d?.fechaInicioNuevaActividad
-                           nuevaActividad.fechaFin = d?.fechaFinNuevaActividad
-                           nuevaActividad.responsable = d.responsable
+//                           nuevaActividad.categoria = d?.categoria
+//                           nuevaActividad.fechaInicio = d?.fechaInicioNuevaActividad
+//                           nuevaActividad.fechaFin = d?.fechaFinNuevaActividad
+//                           nuevaActividad.responsable = d.responsable
                            nuevaActividad.numero = numAct
-                           nuevaActividad.reforma = reforma
+//                           nuevaActividad.reforma = reforma
 
                            println "pone responsable de actividad a: ${d.responsable}"
 
@@ -1589,7 +1590,7 @@ class AjusteController {
                                destinoActividad.marcoLogico = nuevaActividad
                                destinoActividad.presupuesto = d?.presupuesto
                                destinoActividad.planificado = 0
-                               destinoActividad.unidad = nuevaActividad.responsable
+//                               destinoActividad.unidad = nuevaActividad.responsable
                                destinoActividad.priorizado = d?.valor
                                if (!destinoActividad.save(flush: true)) {
                                    println "error al guardar la asignacion A " + destinoActividad.errors
