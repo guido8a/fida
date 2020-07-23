@@ -640,8 +640,8 @@ class AjusteController {
                 firma1.accion = "firmarAprobarNuevoAjuste"
                 firma1.controlador = "ajuste"
                 firma1.idAccion = reforma.id
-                firma1.accionVer = "verNuevoAjuste"
-                firma1.controladorVer = "reportesReforma"
+                firma1.accionVer = "reporteAjustes"
+                firma1.controladorVer = "reportes"
                 firma1.idAccionVer = reforma.id
                 firma1.accionNegar = "devolverAprobarAjuste"
                 firma1.controladorNegar = "ajuste"
