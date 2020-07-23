@@ -194,6 +194,11 @@ class FirmaController {
      * @params pass es la constraseña de autorización
      */
     def firmar = {
+
+        println("params fir " + params )
+
+        println("--> " + session.usuario.autorizacion)
+
         if (params.pass.toString().encodeAsMD5() == session.usuario.autorizacion) {
             def firma = Firma.get(params.id)
             //  def baseUri = request.scheme + "://" + "10.0.0.3" + ":" + request.serverPort
