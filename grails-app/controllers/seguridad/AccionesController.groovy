@@ -34,7 +34,7 @@ class AccionesController {
         } else {
             titulos[0] = ['Permisos'] + ['Acción'] + ['Proceso'] + ['Controlador']
         }
-        println "sql: $tx"
+        println "accn sql: $tx"
         cn.eachRow(tx) { d ->
             resultado.add([d.accn__id] + [d.accnnmbr] + [d.accndscr] + [d.ctrlnmbr] + [d.mdlo__id])
         }
@@ -42,6 +42,7 @@ class AccionesController {
             resultado[0] = ['0'] + ['no hay acciones'] + [''] + [''] + ['']
         }
         cn.close()
+        println "--> $resultado"
         return [datos: resultado, mdlo__id: mdlo, tpac__id: tipo, titulos: titulos]
     }
 

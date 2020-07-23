@@ -14,51 +14,51 @@
 
 <body>
 
-%{--<div class="panel panel-info">--}%
-%{--    <div class="panel-heading" role="tab" id="headingOne">--}%
-%{--        <h4 class="panel-title">--}%
-%{--            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">--}%
-%{--                Cambiar clave de autorización--}%
-%{--            </a>--}%
-%{--        </h4>--}%
-%{--    </div>--}%
+<div class="panel panel-info">
+    <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Cambiar clave de autorización
+            </a>
+        </h4>
+    </div>
 
-%{--    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">--}%
-%{--        <div class="panel-body">--}%
-%{--            <g:form class="form-inline" name="frmAuth" action="updateAuth">--}%
-%{--                <div class="form-group">--}%
-%{--                    <label for="input1">Clave actual</label>--}%
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+            <g:form class="form-inline" name="frmAuth" action="updateAuth">
+                <div class="form-group">
+                    <label for="input1">Clave actual</label>
 
-%{--                    <div class="input-group">--}%
-%{--                        <g:passwordField name="input1" class="form-control auth"/>--}%
-%{--                        <span class="input-group-addon"><i class="fa fa-unlock"></i></span>--}%
-%{--                    </div>--}%
-%{--                </div>--}%
+                    <div class="input-group">
+                        <g:passwordField name="input1" class="form-control auth"/>
+                        <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
+                    </div>
+                </div>
 
-%{--                <div class="form-group" style="margin-left: 40px;">--}%
-%{--                    <label for="authNueva">Nueva clave</label>--}%
+                <div class="form-group" style="margin-left: 40px;">
+                    <label for="authNueva">Nueva clave</label>
 
-%{--                    <div class="input-group">--}%
-%{--                        <g:passwordField name="authNueva" class="form-control required auth"/>--}%
-%{--                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>--}%
-%{--                    </div>--}%
-%{--                </div>--}%
+                    <div class="input-group">
+                        <g:passwordField name="authNueva" class="form-control required auth"/>
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    </div>
+                </div>
 
-%{--                <div class="form-group" style="margin-left: 40px;">--}%
-%{--                    <label for="authConfirm">Confirme la clave nueva</label>--}%
+                <div class="form-group" style="margin-left: 40px;">
+                    <label for="authConfirm">Confirme la clave nueva</label>
 
-%{--                    <div class="input-group">--}%
-%{--                        <g:passwordField name="authConfirm" class="form-control required auth"/>--}%
-%{--                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>--}%
-%{--                    </div>--}%
-%{--                </div>--}%
-%{--                <a href="#" id="btnSaveAuth" class="btn btn-primary" style="margin-left: 40px;">--}%
-%{--                    <i class="fa fa-save"></i> Guardar--}%
-%{--                </a>--}%
-%{--            </g:form>--}%
-%{--        </div>--}%
-%{--    </div>--}%
-%{--</div>--}%
+                    <div class="input-group">
+                        <g:passwordField name="authConfirm" class="form-control required auth"/>
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    </div>
+                </div>
+                <a href="#" id="btnSaveAuth" class="btn btn-primary" style="margin-left: 40px;">
+                    <i class="fa fa-save"></i> Guardar
+                </a>
+            </g:form>
+        </div>
+    </div>
+</div>
 
 %{--//password--}%
 

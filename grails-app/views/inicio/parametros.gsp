@@ -42,7 +42,7 @@
                                 <i class="fa-li fas fa-certificate text-info"></i>
                                 <g:link data-info="categoria" class="over" controller="tipoInstitucion" action="list">
                                     Tipos de institución
-                                </g:link> para difenciar entre la Unidad Ejecutora de Poryecto y otras organizaciones
+                                </g:link> para diferenciar entre la Unidad Ejecutora de Proyecto y otras organizaciones
 
                                 <div class="descripcion hidden">
                                     <h4>Tipos de institución</h4>
