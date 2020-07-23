@@ -202,7 +202,8 @@ class FirmaController {
         if (params.pass.toString().encodeAsMD5() == session.usuario.autorizacion) {
             def firma = Firma.get(params.id)
             //  def baseUri = request.scheme + "://" + "10.0.0.3" + ":" + request.serverPort
-            def baseUri = request.scheme + "://" + request.serverName + ":" + request.serverPort
+//            def baseUri = request.scheme + "://" + request.serverName + ":" + request.serverPort
+            def baseUri = g.createLink(controller: 'firma', action: 'verDocumento') + "?ky="
             firma = firmasService.firmarDocumento(session.usuario.id, params.pass, firma, baseUri)
             println "firma- " + firma + "  " + baseUri
 

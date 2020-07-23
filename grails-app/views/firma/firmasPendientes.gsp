@@ -318,7 +318,7 @@
 
                                     $.ajax({
                                         type    : "POST",
-                                        url     : '${createLink(controller: 'firma', action:'firm ar')}',
+                                        url     : '${createLink(controller: 'firma', action:'firmar')}',
                                         data    : {
                                             id   : id,
                                             pass : $txt.val()
@@ -347,8 +347,6 @@
                                         },
                                         error   : function () {
                                             log("Ha ocurrido un error interno", "error");
-
-                                            closeLoader();
                                         }
                                     });
                                 }

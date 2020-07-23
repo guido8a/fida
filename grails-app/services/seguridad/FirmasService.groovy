@@ -1,4 +1,8 @@
 package seguridad
+
+import com.itextpdf.text.pdf.qrcode.QRCode
+import com.lowagie.text.Image
+
 /**
  * Servicio para el firmar electronicamente documentos
  */
@@ -9,7 +13,8 @@ class FirmasService {
     */
     String path = "firmas/"
 //    def qrCodeService
-    def QRCodeService
+//    def QRCodeService
+    def qrCodeService
     def proyectosService
 
     def servletContext
@@ -233,8 +238,10 @@ class FirmasService {
             try {
                 def now = new Date()
                 def key = ""
-                def texto = baseUri + g.createLink(controller: "firma", action: "verDocumento") + "?ky="
-                def pathQr = servletContext.getRealPath("/") + path
+//                def texto = baseUri + g.createLink(controller: "firma", action: "verDocumento") + "?ky="
+                def texto = baseUri
+//                def pathQr = servletContext.getRealPath("/") + path
+                def pathQr = '/var/fida/'
                 def nombre = "" + user.login + "_" + now.format("dd_MM_yyyy_mm_ss") + ".png"
                 new File(pathQr).mkdirs()
                 println " "+now.format("ddMMyyyyhhmmss.SSS")+" "+" nombre "+nombre+"  "+user.login.encodeAsMD5()+"   "+(user.autorizacion.substring(10,20))
@@ -242,19 +249,21 @@ class FirmasService {
                 // println "key "+key
                 texto += key
                 //plugin antiguo de QR
-//                def fos = new FileOutputStream(pathQr + nombre)
-//                qrCodeService.renderPng(texto, 100, fos)
-//                fos.close()
+                def fos = new FileOutputStream(pathQr + nombre)
+                qrCodeService.renderPng(texto, 100, fos)
+                fos.close()
 
                 //plugin nuevo de QR
 //                def texto = request.scheme + "://" + "10.0.0.3" + ":" + request.serverPort + g.createLink(controller: "firma", action: "verDocumento") + "?ky="
 //                def pathQr = servletContext.getRealPath("/") + "firmas/"
 //                def nombre = "" + session.usuario.login + "_" + new Date().format("dd_MM_yyyy_MM_ss") + ".png"
-                def logo = servletContext.getRealPath("/") + "images/logo_yachay_qr.png"
+//                def logo = servletContext.getRealPath("/") + "images/logo_yachay_qr.png"
+
+                Image logo = Image.getInstance('/var/fida/logo.png')
                 Map information = [chl: texto]
                 information.chs = "200x200"
-                println "invoca a createQRCode con: $information, $logo, $pathQr, $nombre"
-                QRCodeService.createQRCode(information, logo, pathQr, nombre)
+//                println "invoca a createQRCode con: $information, $logo, $pathQr, $nombre"
+//                QRCodeService.createQRCode(information, logo, pathQr, nombre)
                 println "firma creada"
                 firma.fecha = now
                 firma.key = key
