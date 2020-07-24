@@ -142,6 +142,8 @@ class AjusteController {
     def historial_ajax() {
         def tipo = 'A'
         def estados = EstadoAval.list()
+        def estadoPendiente = EstadoAval.findByCodigo("P01")
+        estados = estados - [estadoPendiente]
         def reformas
         def perfil = session.perfil.codigo.toString()
         def unidades
