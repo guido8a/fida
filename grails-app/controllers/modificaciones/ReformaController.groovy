@@ -266,7 +266,8 @@ class ReformaController  {
         }
         def reformas
         def perfil = session.perfil.codigo
-        def unidades = UnidadEjecutora.findAllById(session.unidad.id)
+//        def unidades = UnidadEjecutora.findAllById(session.unidad.id)
+        def unidades = UnidadEjecutora.findAllById(1)
 
         def cn = dbConnectionService.getConnection()
         def totales = [:]
@@ -2419,7 +2420,8 @@ class ReformaController  {
             actual = Anio.findByAnio(new Date().format("yyyy"))
         }
 
-        def unidad = UnidadEjecutora.get(session.unidad.id)
+//        def unidad = UnidadEjecutora.get(session.unidad.id)
+        def unidad = UnidadEjecutora.get(1)
         def proyectos = unidad.getProyectosUnidad(actual, session.perfil.codigo.toString())
 
         def anios__id = 0
@@ -2438,7 +2440,7 @@ class ReformaController  {
         def anios = Anio.findAllByIdInList(anios__id, [sort: 'anio'])
 //        println "anios: $anios"
 
-        def personasFirma = firmasService.listaDirectoresUnidad(unidad)
+//        def personasFirma = firmasService.listaDirectoresUnidad(unidad)
 
         def reforma
         def detalle
@@ -2447,7 +2449,9 @@ class ReformaController  {
             detalle = DetalleReforma.findAllByReforma(reforma, [sort: 'tipoReforma.id', order: 'desc'])
         }
 
-        return [personas: personasFirma, actual: actual, proyectos: proyectos, reforma: reforma, detalle: detalle,
+        def personas = Persona.findAllByUnidadEjecutora(UnidadEjecutora.get(1))
+
+        return [personas: personas, actual: actual, proyectos: proyectos, reforma: reforma, detalle: detalle,
                 anios: anios]
     }
 
@@ -2566,7 +2570,7 @@ class ReformaController  {
 
     def guardarNuevaReforma () {
 
-//        println("params nr " + params)
+        println("params nr " + params)
 
         def anio = Anio.get(params.anio)
         def estadoAval = EstadoAval.findByCodigo("P01")
@@ -2576,46 +2580,28 @@ class ReformaController  {
 
         if(!params.id){
             //crear!!!!!!!!!!
-//            println("entro a")
             reforma = new Reforma()
-            reforma.anio = anio
-            reforma.concepto = params.texto
-            reforma.estado = estadoAval
-            reforma.persona = usuario
-            reforma.tipo = 'R'
-            reforma.tipoSolicitud = 'X'
-            reforma.numero = 0
-            reforma.numeroReforma = 0
             reforma.fecha = new Date()
-
-            if(!reforma.save(flush: true)){
-                println("error al guardar nueva reforma " + errors)
-                render "no"
-            }else{
-                render "ok_${reforma.id}"
-            }
-
         }else{
             //editar
-//            println("entro b")
-
             reforma = Reforma.get(params.id)
-            reforma.anio = anio
-            reforma.concepto = params.texto
-            reforma.estado = estadoAval
-            reforma.persona = usuario
-            reforma.tipo = 'R'
-            reforma.tipoSolicitud = 'X'
-            reforma.numero = 0
-            reforma.numeroReforma = 0
-            reforma.fecha = new Date()
+        }
 
-            if(!reforma.save(flush: true)){
-                println("error al actualizar nueva reforma " + errors)
-                render "no"
-            }else{
-                render "ok_${reforma.id}"
-            }
+        reforma.anio = anio
+        reforma.concepto = params.texto
+        reforma.estado = estadoAval
+        reforma.persona = usuario
+        reforma.tipo = 'R'
+        reforma.tipoSolicitud = 'X'
+        reforma.numero = 0
+        reforma.numeroReforma = 0
+        reforma.fecha = new Date()
+
+        if(!reforma.save(flush: true)){
+            println("error al guardar la reforma " + errors)
+            render "no"
+        }else{
+            render "ok_${reforma.id}"
         }
     }
 
