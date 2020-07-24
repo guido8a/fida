@@ -59,7 +59,7 @@
                             <td class="${reforma.estado.codigo}">${reforma.estado.descripcion}</td>
                             <td>
                                 <div class="btn-group btn-group-xs" role="group" style="width: 100px">
-                                %{--                                    <g:if test="${session.perfil.codigo == 'ASPL' && !modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">--}%
+                                %{-- <g:if test="${session.perfil.codigo == 'ASPL' && !modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">--}%
                                     <g:if test="${!modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">
                                         <a href="#"  class="btn btn-info editarAjuste"  ajuste="${reforma?.id}" data-id="${reforma?.id}" title="Editar ajuste">
                                             <i class="fa fa-edit"></i>

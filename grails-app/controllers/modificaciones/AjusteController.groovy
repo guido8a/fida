@@ -84,11 +84,15 @@ class AjusteController {
         def filtroDirector = null,
             filtroPersona = null
 
+/*
         switch (perfil) {
             case "ASPL":
                 estados = [estadoPendiente, estadoDevueltoAnPlan]
                 break;
         }
+*/
+
+        estados = [estadoPendiente, estadoDevueltoAnPlan]
 
         def reformas = Reforma.withCriteria {
             eq("tipo", "A")

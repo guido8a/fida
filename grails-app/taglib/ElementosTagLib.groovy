@@ -1851,7 +1851,7 @@ class ElementosTagLib {
         } else {
             def preview = attrs.preview ?: false
             def label = attrs.label && (attrs.label == "true" || attrs.label == true)
-            def accion = "", accion2 = "", controlador = "reportesReforma"
+            def accion = "", accion2 = "", controlador = "reportes"
             def fileName = "", fileName2 = ""
             if (reforma) {
                 switch (reforma.tipoSolicitud) {
@@ -1884,8 +1884,8 @@ class ElementosTagLib {
                         fileName = "nuevaReforma"
                         break;
                     case "Z":
-                        accion = "verNuevoAjuste"
-                        fileName = "verNuevoAjuste"
+                        accion = "reporteAjustes"
+                        fileName = "reporteAjustes"
                         break;
                     case "Q":
                         accion = "reformaGp"
@@ -1967,19 +1967,21 @@ class ElementosTagLib {
 //                controlador = "reportesReforma"
 //            }
 
-            def str = "<a href=\"${g.createLink(controller: 'pdf', action: 'pdfLink')}?url=${g.createLink(controller: controlador, action: accion, id: reforma?.id)}&filename=${fileName}\""
+            def str = "<a href=\"${g.createLink(controller: controlador, action: accion, id: reforma?.id)}\""
             str += "class='btn ${clase} btnVer' title='${title}'>"
-            str += "<i class='fa fa-search'></i> ${label ? title : ''}"
+            str += "<i class='fa fa-print'></i> ${label ? title : ''}"
             str += "</a>"
 
 //            println "primer parte: $str"
 
+/*
             if (accion2 != "") {
-                str += "<a href=\"${g.createLink(controller: 'pdf', action: 'pdfLink')}?url=${g.createLink(controller: controlador, action: accion2, id: reforma?.id)}&filename=${fileName2}\""
+                str += "<a href=\"${g.createLink(controller: controlador, action: accion2, id: reforma?.id)}\""
                 str += "class='btn ${clase2} btnVer' title='${title2}'>"
                 str += "<i class='fa fa-search'></i> ${label ? title2 : ''}"
                 str += "</a>"
             }
+*/
 
 //            println "<<<< $str"
             out << str
