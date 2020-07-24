@@ -271,10 +271,10 @@
 
     $(function () {
 
-        // $(".btn-success, .btn-danger").addClass("disabled");
-        // $(".btn-info").click(function () {
-        //     $(this).siblings().removeClass("disabled");
-        // });
+        $(".btn-success, .btn-danger").addClass("disabled");
+        $(".btn-info").click(function () {
+            $(this).siblings().removeClass("disabled");
+        });
 
         cargarHistorial();
         $("#anio, #tipo").change(function () {
@@ -362,9 +362,8 @@
 
         $(".devolver").click(function () {
             id = $(this).attr("iden");
-            bootbox.confirm("¿Está seguro de querer devolver este documento? Esta acción no puede revertirse", function (res) {
+            bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> ¿Está seguro de querer devolver este documento? Esta acción no puede revertirse", function (res) {
                 if (res) {
-
                     var msg = $("<div>Ingrese su clave de autorización</div>");
                     var $txt = $("<input type='password' class='form-control input-sm'/>");
 
@@ -392,9 +391,8 @@
                                 label     : "<i class='fa fa-thumbs-down'></i> Devolver",
                                 className : "btn-danger",
                                 callback  : function () {
-//                                            console.log("???? ", $txt, $txt.val(), $ta, $ta.val());
                                     if ($.trim($txt.val()) != "" && $.trim($ta.val()) != "") {
-                                        openLoader("Devolviendo");
+                                        var dialog = cargarLoader("Guardando...");
                                         $.ajax({
                                             type    : "POST",
                                             url     : '${createLink(controller: 'firma', action:'devolverFirma')}',
@@ -404,7 +402,7 @@
                                                 obs  : $ta.val()
                                             },
                                             success : function (msg) {
-                                                closeLoader();
+                                                dialog.modal('hide');
                                                 if (msg == "error") {
                                                     closeLoader();
                                                     bootbox.alert({

@@ -48,6 +48,9 @@ class FirmaController {
 
         def imgFirma = "";
 
+
+        println("firmas a " + firmasAjustes)
+
         return [firmasReformas: firmasReformas, firmasAjustes: firmasAjustes,
                 firmasAvales  : firmasAvales, actual: actual, imgFirma: imgFirma, params: params]
     }

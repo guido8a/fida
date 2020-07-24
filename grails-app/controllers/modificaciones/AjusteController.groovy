@@ -143,7 +143,8 @@ class AjusteController {
         def tipo = 'A'
         def estados = EstadoAval.list()
         def estadoPendiente = EstadoAval.findByCodigo("P01")
-        estados = estados - [estadoPendiente]
+        def estadoDevuelto = EstadoAval.findByCodigo("D03")
+        estados = estados - [estadoPendiente, estadoDevuelto]
         def reformas
         def perfil = session.perfil.codigo.toString()
         def unidades
@@ -1503,197 +1504,197 @@ class AjusteController {
                 def errores = ""
                 def detalles = DetalleReforma.findAllByReforma(reforma)
 
-               detalles.each { d->
-                   println "..procesa id: ${d.id}, tipo: ${d?.tipoReforma?.codigo}"
-                   switch (d?.tipoReforma?.codigo){
-                       case "O":  //asignacion origen
+                detalles.each { d->
+                    println "..procesa id: ${d.id}, tipo: ${d?.tipoReforma?.codigo}"
+                    switch (d?.tipoReforma?.codigo){
+                        case "O":  //asignacion origen
 //                           println("entro origen")
-                           def modificacionOrigen = new ModificacionAsignacion()
-                           modificacionOrigen.usuario = usu
-                           modificacionOrigen.desde = d?.asignacionOrigen
-                           modificacionOrigen.fecha = now
-                           modificacionOrigen.valor = d?.valor
-                           modificacionOrigen.estado = 'A'
-                           modificacionOrigen.detalleReforma = d
-                           modificacionOrigen.originalOrigen = d?.asignacionOrigen?.priorizado
+                            def modificacionOrigen = new ModificacionAsignacion()
+                            modificacionOrigen.usuario = usu
+                            modificacionOrigen.desde = d?.asignacionOrigen
+                            modificacionOrigen.fecha = now
+                            modificacionOrigen.valor = d?.valor
+                            modificacionOrigen.estado = 'A'
+                            modificacionOrigen.detalleReforma = d
+                            modificacionOrigen.originalOrigen = d?.asignacionOrigen?.priorizado
 
-                           if (!modificacionOrigen.save(flush: true)) {
-                               println "error al guardar modificacion tipo O: " + modificacionOrigen.errors
-                               errores += renderErrors(bean: modificacionOrigen)
-                           } else {
+                            if (!modificacionOrigen.save(flush: true)) {
+                                println "error al guardar modificacion tipo O: " + modificacionOrigen.errors
+                                errores += renderErrors(bean: modificacionOrigen)
+                            } else {
 
-                               def asig = Asignacion.get(d?.asignacionOrigen?.id)
-                               asig?.priorizado -= d?.valor
-                               if (!asig.save(flush: true)) {
-                                   println "error al guardar origen O: " + asig.errors
-                                   errores += renderErrors(bean: asig)
-                               }
-                           }
-                           break;
+                                def asig = Asignacion.get(d?.asignacionOrigen?.id)
+                                asig?.priorizado -= d?.valor
+                                if (!asig.save(flush: true)) {
+                                    println "error al guardar origen O: " + asig.errors
+                                    errores += renderErrors(bean: asig)
+                                }
+                            }
+                            break;
 
-                       case "E":  //incremento
+                        case "E":  //incremento
 //                           println("entro incremento")
-                           def modificacionIncremento = new ModificacionAsignacion()
-                           modificacionIncremento.usuario = usu
-                           modificacionIncremento.recibe = d?.asignacionOrigen
-                           modificacionIncremento.fecha = now
-                           modificacionIncremento.valor = d?.valor
-                           modificacionIncremento.estado = 'A'
-                           modificacionIncremento.detalleReforma = d
-                           modificacionIncremento.originalDestino = d?.asignacionOrigen?.priorizado
+                            def modificacionIncremento = new ModificacionAsignacion()
+                            modificacionIncremento.usuario = usu
+                            modificacionIncremento.recibe = d?.asignacionOrigen
+                            modificacionIncremento.fecha = now
+                            modificacionIncremento.valor = d?.valor
+                            modificacionIncremento.estado = 'A'
+                            modificacionIncremento.detalleReforma = d
+                            modificacionIncremento.originalDestino = d?.asignacionOrigen?.priorizado
 
-                           if (!modificacionIncremento.save(flush: true)) {
-                               println "error al guardar modificacion tipo E: " + modificacionIncremento.errors
-                               errores += renderErrors(bean: modificacionIncremento)
-                           } else {
-                               def asigDestino = Asignacion.get(d?.asignacionOrigen?.id)
-                               asigDestino?.priorizado += d?.valor
-                               if (!asigDestino.save(flush: true)) {
-                                   println "error al guardar origen E: " + asigDestino.errors
-                                   errores += renderErrors(bean: asigDestino)
-                               }
-                           }
-                           break;
+                            if (!modificacionIncremento.save(flush: true)) {
+                                println "error al guardar modificacion tipo E: " + modificacionIncremento.errors
+                                errores += renderErrors(bean: modificacionIncremento)
+                            } else {
+                                def asigDestino = Asignacion.get(d?.asignacionOrigen?.id)
+                                asigDestino?.priorizado += d?.valor
+                                if (!asigDestino.save(flush: true)) {
+                                    println "error al guardar origen E: " + asigDestino.errors
+                                    errores += renderErrors(bean: asigDestino)
+                                }
+                            }
+                            break;
 
-                       case "A": //creacion actividad
+                        case "A": //creacion actividad
 //                           println("entro actividad")
-                           def ultimoNumAct = MarcoLogico.withCriteria {
-                               projections {
-                                   max "numero"
-                               }
-                           }
+                            def ultimoNumAct = MarcoLogico.withCriteria {
+                                projections {
+                                    max "numero"
+                                }
+                            }
 
-                           def numAct = 1
-                           if (ultimoNumAct && ultimoNumAct.size() == 1) {
-                               numAct = ultimoNumAct.first() + 1
-                           }
+                            def numAct = 1
+                            if (ultimoNumAct && ultimoNumAct.size() == 1) {
+                                numAct = ultimoNumAct.first() + 1
+                            }
 
-                           def nuevaActividad = new MarcoLogico()
-                           nuevaActividad.proyecto = d?.componente?.proyecto
-                           nuevaActividad.tipoElemento = TipoElemento.get(3)
-                           nuevaActividad.marcoLogico = d?.componente
-                           nuevaActividad.objeto = d?.descripcionNuevaActividad
-                           nuevaActividad.monto = d?.valor
-                           nuevaActividad.estado = 0
+                            def nuevaActividad = new MarcoLogico()
+                            nuevaActividad.proyecto = d?.componente?.proyecto
+                            nuevaActividad.tipoElemento = TipoElemento.get(3)
+                            nuevaActividad.marcoLogico = d?.componente
+                            nuevaActividad.objeto = d?.descripcionNuevaActividad
+                            nuevaActividad.monto = d?.valor
+                            nuevaActividad.estado = 0
 //                           nuevaActividad.categoria = d?.categoria
 //                           nuevaActividad.fechaInicio = d?.fechaInicioNuevaActividad
 //                           nuevaActividad.fechaFin = d?.fechaFinNuevaActividad
 //                           nuevaActividad.responsable = d.responsable
-                           nuevaActividad.numero = numAct
+                            nuevaActividad.numero = numAct
 //                           nuevaActividad.reforma = reforma
 
-                           println "pone responsable de actividad a: ${d.responsable}"
+                            println "pone responsable de actividad a: ${d.responsable}"
 
-                           if (!nuevaActividad.save(flush: true)) {
-                               println "error al guardar la actividad A " + nuevaActividad.errors
-                               errores += renderErrors(bean: nuevaActividad)
-                           } else {
+                            if (!nuevaActividad.save(flush: true)) {
+                                println "error al guardar la actividad A " + nuevaActividad.errors
+                                errores += renderErrors(bean: nuevaActividad)
+                            } else {
 
-                               def destinoActividad = new Asignacion()
+                                def destinoActividad = new Asignacion()
 //                               destinoActividad.anio = reforma.anio
-                               destinoActividad.anio = d?.anio
-                               destinoActividad.fuente = d?.fuente
-                               destinoActividad.marcoLogico = nuevaActividad
-                               destinoActividad.presupuesto = d?.presupuesto
-                               destinoActividad.planificado = 0
+                                destinoActividad.anio = d?.anio
+                                destinoActividad.fuente = d?.fuente
+                                destinoActividad.marcoLogico = nuevaActividad
+                                destinoActividad.presupuesto = d?.presupuesto
+                                destinoActividad.planificado = 0
 //                               destinoActividad.unidad = nuevaActividad.responsable
-                               destinoActividad.priorizado = d?.valor
-                               if (!destinoActividad.save(flush: true)) {
-                                   println "error al guardar la asignacion A " + destinoActividad.errors
-                                   errores += renderErrors(bean: destinoActividad)
-                                   destinoActividad = null
-                               }else{
-                                   def modificacionActividad = new ModificacionAsignacion()
-                                   modificacionActividad.usuario = usu
-                                   modificacionActividad.recibe = destinoActividad
-                                   modificacionActividad.fecha = now
-                                   modificacionActividad.valor = d?.valor
-                                   modificacionActividad.estado = 'A'
-                                   modificacionActividad.detalleReforma = d
-                                   modificacionActividad.originalDestino = destinoActividad?.priorizado
+                                destinoActividad.priorizado = d?.valor
+                                if (!destinoActividad.save(flush: true)) {
+                                    println "error al guardar la asignacion A " + destinoActividad.errors
+                                    errores += renderErrors(bean: destinoActividad)
+                                    destinoActividad = null
+                                }else{
+                                    def modificacionActividad = new ModificacionAsignacion()
+                                    modificacionActividad.usuario = usu
+                                    modificacionActividad.recibe = destinoActividad
+                                    modificacionActividad.fecha = now
+                                    modificacionActividad.valor = d?.valor
+                                    modificacionActividad.estado = 'A'
+                                    modificacionActividad.detalleReforma = d
+                                    modificacionActividad.originalDestino = destinoActividad?.priorizado
 
-                                   if (!modificacionActividad.save(flush: true)) {
-                                       println "error al guardar modificacion tipo A: " + modificacionActividad.errors
-                                       errores += renderErrors(bean: modificacionActividad)
-                                   } else {
+                                    if (!modificacionActividad.save(flush: true)) {
+                                        println "error al guardar modificacion tipo A: " + modificacionActividad.errors
+                                        errores += renderErrors(bean: modificacionActividad)
+                                    } else {
 //                                        render "ok"
-                                   }
-                               }
-                           }
-                           break;
+                                    }
+                                }
+                            }
+                            break;
 
-                       case "P": //partida - priorizado original en 0, valor ingresado en priorizado, no tiene padre
+                        case "P": //partida - priorizado original en 0, valor ingresado en priorizado, no tiene padre
 //                           println("entro partida")
-                           def nuevaPartida = new Asignacion()
+                            def nuevaPartida = new Asignacion()
 //                           nuevaPartida.anio = reforma.anio
-                           nuevaPartida.anio = d?.anio
-                           nuevaPartida.fuente = d?.fuente
-                           nuevaPartida.marcoLogico = d?.componente
-                           nuevaPartida.presupuesto = d?.presupuesto
-                           nuevaPartida.planificado = 0
-                           nuevaPartida.priorizadoOriginal = 0
-                           nuevaPartida.unidad = d?.responsable
-                           nuevaPartida.priorizado = d?.valor
-                           if (!nuevaPartida.save(flush: true)) {
-                               println "error al guardar la nueva partida   " + nuevaPartida.errors
-                               errores += renderErrors(bean: nuevaPartida)
-                               nuevaPartida = null
-                           }else{
+                            nuevaPartida.anio = d?.anio
+                            nuevaPartida.fuente = d?.fuente
+                            nuevaPartida.marcoLogico = d?.componente
+                            nuevaPartida.presupuesto = d?.presupuesto
+                            nuevaPartida.planificado = 0
+                            nuevaPartida.priorizadoOriginal = 0
+                            nuevaPartida.unidad = d?.responsable
+                            nuevaPartida.priorizado = d?.valor
+                            if (!nuevaPartida.save(flush: true)) {
+                                println "error al guardar la nueva partida   " + nuevaPartida.errors
+                                errores += renderErrors(bean: nuevaPartida)
+                                nuevaPartida = null
+                            }else{
 
-                               def modificacionPartida = new ModificacionAsignacion()
-                               modificacionPartida.usuario = usu
-                               modificacionPartida.recibe = nuevaPartida
-                               modificacionPartida.fecha = now
-                               modificacionPartida.valor = d?.valor
-                               modificacionPartida.estado = 'A'
-                               modificacionPartida.detalleReforma = d
-                               modificacionPartida.originalDestino = nuevaPartida?.priorizado
+                                def modificacionPartida = new ModificacionAsignacion()
+                                modificacionPartida.usuario = usu
+                                modificacionPartida.recibe = nuevaPartida
+                                modificacionPartida.fecha = now
+                                modificacionPartida.valor = d?.valor
+                                modificacionPartida.estado = 'A'
+                                modificacionPartida.detalleReforma = d
+                                modificacionPartida.originalDestino = nuevaPartida?.priorizado
 
-                               if (!modificacionPartida.save(flush: true)) {
-                                   println "error al guardar modificacion tipo P: " + modificacionPartida.errors
-                                   errores += renderErrors(bean: modificacionPartida)
-                               } else {
+                                if (!modificacionPartida.save(flush: true)) {
+                                    println "error al guardar modificacion tipo P: " + modificacionPartida.errors
+                                    errores += renderErrors(bean: modificacionPartida)
+                                } else {
 //                                    render "ok"
-                               }
-                           }
-                           break;
+                                }
+                            }
+                            break;
 
-                       case "N": //partida - priorizado original en 0, valor ingresado en priorizado, no tiene padre
+                        case "N": //partida - priorizado original en 0, valor ingresado en priorizado, no tiene padre
 //                           println("entro techo")
-                           def nuevaPartida = new Asignacion()
+                            def nuevaPartida = new Asignacion()
 //                           nuevaPartida.anio = reforma.anio
-                           nuevaPartida.anio = d?.anio
-                           nuevaPartida.fuente = d?.fuente
-                           nuevaPartida.marcoLogico = d?.componente
-                           nuevaPartida.presupuesto = d?.presupuesto
-                           nuevaPartida.planificado = 0
-                           nuevaPartida.priorizadoOriginal = 0
-                           nuevaPartida.unidad = d?.responsable
-                           nuevaPartida.priorizado = d?.valor
-                           if (!nuevaPartida.save(flush: true)) {
-                               println "error al guardar la nueva partida   " + nuevaPartida.errors
-                               errores += renderErrors(bean: nuevaPartida)
-                               nuevaPartida = null
-                           } else {
-                               def modificacionPartida = new ModificacionAsignacion()
-                               modificacionPartida.usuario = usu
-                               modificacionPartida.recibe = nuevaPartida
-                               modificacionPartida.fecha = now
-                               modificacionPartida.valor = d?.valor
-                               modificacionPartida.estado = 'A'
-                               modificacionPartida.detalleReforma = d
-                               modificacionPartida.originalDestino = nuevaPartida?.priorizado
+                            nuevaPartida.anio = d?.anio
+                            nuevaPartida.fuente = d?.fuente
+                            nuevaPartida.marcoLogico = d?.componente
+                            nuevaPartida.presupuesto = d?.presupuesto
+                            nuevaPartida.planificado = 0
+                            nuevaPartida.priorizadoOriginal = 0
+                            nuevaPartida.unidad = d?.responsable
+                            nuevaPartida.priorizado = d?.valor
+                            if (!nuevaPartida.save(flush: true)) {
+                                println "error al guardar la nueva partida   " + nuevaPartida.errors
+                                errores += renderErrors(bean: nuevaPartida)
+                                nuevaPartida = null
+                            } else {
+                                def modificacionPartida = new ModificacionAsignacion()
+                                modificacionPartida.usuario = usu
+                                modificacionPartida.recibe = nuevaPartida
+                                modificacionPartida.fecha = now
+                                modificacionPartida.valor = d?.valor
+                                modificacionPartida.estado = 'A'
+                                modificacionPartida.detalleReforma = d
+                                modificacionPartida.originalDestino = nuevaPartida?.priorizado
 
-                               if (!modificacionPartida.save(flush: true)) {
-                                   println "error al guardar modificacion tipo N: " + modificacionPartida.errors
-                                   errores += renderErrors(bean: modificacionPartida)
-                               } else {
+                                if (!modificacionPartida.save(flush: true)) {
+                                    println "error al guardar modificacion tipo N: " + modificacionPartida.errors
+                                    errores += renderErrors(bean: modificacionPartida)
+                                } else {
 //                                    render "ok"
-                               }
-                           }
-                           break;
-                   }
-               }
+                                }
+                            }
+                            break;
+                    }
+                }
             }
             render "ok"
         }
@@ -1712,9 +1713,9 @@ class AjusteController {
         reforma.save(flush: true)
 
         reforma.firma1.estado = "N"
-        reforma.firma2.estado = "N"
+//        reforma.firma2.estado = "N"
         reforma.firma1.save(flush: true)
-        reforma.firma2.save(flush: true)
+//        reforma.firma2.save(flush: true)
 
         def tipoStr = elm.tipoReformaStr(tipo: 'Ajuste', tipoSolicitud: reforma.tipoSolicitud)
         def accion
@@ -1742,13 +1743,14 @@ class AjusteController {
         }
 
         def alerta = new Alerta()
-        alerta.from = usu
+//        alerta.from = usu
         alerta.persona = reforma.persona
-        alerta.fechaEnvio = now
+//        alerta.fechaEnvio = now
+        alerta.fechaCreacion = now
         alerta.mensaje = mensaje + reforma.concepto
-        alerta.controlador = "ajuste"
+//        alerta.controlador = "ajuste"
         alerta.accion = accion
-        alerta.id_remoto = reforma.id
+//        alerta.id_remoto = reforma.id
         if (!alerta.save(flush: true)) {
             println "error alerta: " + alerta.errors
         }
@@ -1795,8 +1797,8 @@ class AjusteController {
 //        cn.rows("select distinct dtrf.fnte__id, fntedscr from dtrf, c_fnte " +
 //            "where rfrm__id = ${params.id} and c_fnte.fnte__id = dtrf.fnte__id order by 1".toString()).each {
 
-            cn.rows("select distinct dtrf.fnte__id, fntedscr from dtrf, fnte " +
-                    "where rfrm__id = ${params.id} and fnte.fnte__id = dtrf.fnte__id order by 1".toString()).each {
+        cn.rows("select distinct dtrf.fnte__id, fntedscr from dtrf, fnte " +
+                "where rfrm__id = ${params.id} and fnte.fnte__id = dtrf.fnte__id order by 1".toString()).each {
 
             suma = 0
 //            println "fnte__id = ${it.fnte__id}"
@@ -2048,13 +2050,24 @@ class AjusteController {
     }
 
     def borrarAjuste_ajax() {
+
+//        println("params borra ajuste " + params)
         def reforma = Reforma.get(params.id)
-        def detalleReforma = DetalleReforma.findAllByReforma(reforma)
-        if(!detalleReforma){
-            reforma.delete(flush: true)
-            render "ok"
+
+        if(reforma.estado.codigo == 'P01'){
+            if(reforma.firma1 == null){
+                def detalleReforma = DetalleReforma.findAllByReforma(reforma)
+                if(!detalleReforma){
+                    reforma.delete(flush: true)
+                    render "ok"
+                }else{
+                    render "no"
+                }
+            }else{
+                render "er_No se puede borrar el ajuste, ya contiene firmas"
+            }
         }else{
-            render "no"
+            render "er_No se puede borrar el ajuste, su estado es diferente a pendiente"
         }
     }
 

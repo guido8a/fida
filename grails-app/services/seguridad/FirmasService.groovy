@@ -194,8 +194,6 @@ class FirmasService {
         return null
     }
 
-
-
     /** busca unej dentro de la generencia **/
     def dependientes(gr) {
         if(gr.codigo == 'GG') { return gr }
@@ -216,7 +214,6 @@ class FirmasService {
             return unej
         }
     }
-
 
     /**
      * Firma digitalmente un documento

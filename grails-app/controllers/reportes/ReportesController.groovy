@@ -32,6 +32,7 @@ class ReportesController {
         if(firma_path) {
             titulo_rep = "AJUSTE AL POA"
             firma_img = Image.getInstance('/var/fida/firmas/' + firma_path)
+            firma_img.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP)
         } else {
             titulo_rep = "SOLICITUD DE AJUSTE"
         }
@@ -268,14 +269,15 @@ class ReportesController {
         document.add(tablaTotales)
         document.add(tablaPie)
 
-        firma_img.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP)
+        if(firma_path) {
 //        preface.add(new Paragraph("MATRIZ DE REFORMA", fontTitulo));
         pr_firma.setAlignment(Element.ALIGN_CENTER)
         pr_firma.add(new Paragraph("Firmado por: ${firma.usuario.nombreCompleto}", times12bold));
 //        addEmptyLine(pr_firma, 1)
         document.add(pr_firma)
-        document.add(firma_img)
 
+        document.add(firma_img)
+        }
 
         document.close();
         pdfw.close()
