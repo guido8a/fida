@@ -171,7 +171,7 @@ class UnidadEjecutoraController {
                             }else{
                                 tree += "<li id='usu_" + h.id + "' class='" + clase3 + "' data-jstree='{\"type\":\"${"persona"}\" ${iconoInactivo}}'>"
                             }
-                            tree += "<a href='#' class='label_arbol'>" + h.nombre + "</a>"
+                            tree += "<a href='#' class='label_arbol'>" + h.nombreCompleto + "</a>"
                             tree += "</li>"
                         }
                     }

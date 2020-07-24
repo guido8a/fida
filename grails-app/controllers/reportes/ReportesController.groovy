@@ -20,9 +20,23 @@ class ReportesController {
 
         println("params ra " + params)
 
+        def titulo_rep
         def reforma = Reforma.get(params.id)
+        def firma = seguridad.Firma.findByTipoFirmaAndIdAccionAndEstado('AJST', reforma.id, 'F')
+        def firma_path = firma?.path
+//        def firma_path = seguridad.Firma.findByTipoFirmaAndIdAccion('AJST', 5)?.path
         def detalles = DetalleReforma.findAllByReforma(reforma)
         Image logo = Image.getInstance('/var/fida/logo.png')
+        Image firma_img
+        println "firma_path: $firma_path"
+        if(firma_path) {
+            titulo_rep = "AJUSTE AL POA"
+            firma_img = Image.getInstance('/var/fida/firmas/' + firma_path)
+        } else {
+            titulo_rep = "SOLICITUD DE AJUSTE"
+        }
+        println "firma: ${firma_img}"
+
         logo.scaleToFit(46, 46)
         logo.setAlignment(Image.RIGHT | Image.TEXTWRAP)
 //        logo.setAlignment(Image.RIGHT)
@@ -76,10 +90,11 @@ class ReportesController {
 
 
         Paragraph preface = new Paragraph();
+        Paragraph pr_firma = new Paragraph();
         addEmptyLine(preface, 1);
         preface.setAlignment(Element.ALIGN_CENTER);
 //        preface.add(new Paragraph("MATRIZ DE REFORMA", fontTitulo));
-        preface.add(new Paragraph("SOLICITUD DE REFORMA", fontTitulo));
+        preface.add(new Paragraph(titulo_rep, fontTitulo));
         addEmptyLine(preface, 1);
         document.add(logo)
         document.add(preface);
@@ -252,6 +267,15 @@ class ReportesController {
         document.add(tablaDetalleTecho)
         document.add(tablaTotales)
         document.add(tablaPie)
+
+        firma_img.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP)
+//        preface.add(new Paragraph("MATRIZ DE REFORMA", fontTitulo));
+        pr_firma.setAlignment(Element.ALIGN_CENTER)
+        pr_firma.add(new Paragraph("Firmado por: ${firma.usuario.nombreCompleto}", times12bold));
+//        addEmptyLine(pr_firma, 1)
+        document.add(pr_firma)
+        document.add(firma_img)
+
 
         document.close();
         pdfw.close()

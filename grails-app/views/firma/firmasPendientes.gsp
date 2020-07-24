@@ -243,8 +243,8 @@
                     <label>Tipo:</label>
                 </div>
                 <div class="col-md-2">
-                    <g:select name="tipo" from="${['': 'Todos', 'AVAL': 'Avales', 'RFRM': 'Reformas', 'AJST': 'Ajustes']}" optionKey="key" optionValue="value"
-                              class="form-control input-sm"/>
+                    <g:select name="tipo" from="${['': 'Todos', 'AVAL': 'Avales', 'RFRM': 'Reformas', 'AJST': 'Ajustes']}"
+                              optionKey="key" optionValue="value" class="form-control input-sm"/>
                 </div>
             </div>
             <div id="detalle" style="width: 100%;height: 500px;overflow: auto;margin-top: 20px;"></div>

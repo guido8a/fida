@@ -3,78 +3,80 @@ package utilitarios
 class DescargasController {
 
     def manualAdmn() {
-        def filePath = "manual del usuario - administracion.pdf"
-        def path = servletContext.getRealPath("/") + File.separatorChar + filePath
+        def nombre = 'manual_administracion.pdf'
+        def path = '/var/fida/manual administracion.pdf'
         def file = new File(path)
         def b = file.getBytes()
         response.setContentType('pdf')
-        response.setHeader("Content-disposition", "attachment; filename=" + filePath)
+        response.setHeader("Content-disposition", "attachment; filename=" + nombre)
         response.setContentLength(b.length)
         response.getOutputStream().write(b)
     }
 
     def manualAvales() {
-        def filePath = "manual de usuario - avales.pdf"
-        def path = servletContext.getRealPath("/") + File.separatorChar + filePath
+        def nombre = 'manual_avales.pdf'
+        def path = '/var/fida/manual avales.pdf'
         def file = new File(path)
         def b = file.getBytes()
         response.setContentType('pdf')
-        response.setHeader("Content-disposition", "attachment; filename=" + filePath)
+        response.setHeader("Content-disposition", "attachment; filename=" + nombre)
         response.setContentLength(b.length)
         response.getOutputStream().write(b)
     }
 
+/*
     def manualReformas() {
-        def filePath = "manual del usuario - reformas.pdf"
-        def path = servletContext.getRealPath("/") + File.separatorChar + filePath
+        def nombre = 'manual_reformas.pdf'
+        def path = '/var/fida/manual reformas.pdf'
         def file = new File(path)
         def b = file.getBytes()
         response.setContentType('pdf')
-        response.setHeader("Content-disposition", "attachment; filename=" + filePath)
+        response.setHeader("Content-disposition", "attachment; filename=" + nombre)
         response.setContentLength(b.length)
         response.getOutputStream().write(b)
     }
+*/
 
     def manualAjustes() {
-        def filePath = "manual del usuario - ajustes.pdf"
-        def path = servletContext.getRealPath("/") + File.separatorChar + filePath
+        def nombre = 'manual_reformas.pdf'
+        def path = '/var/fida/manual reformas.pdf'
         def file = new File(path)
         def b = file.getBytes()
         response.setContentType('pdf')
-        response.setHeader("Content-disposition", "attachment; filename=" + filePath)
+        response.setHeader("Content-disposition", "attachment; filename=" + nombre)
         response.setContentLength(b.length)
         response.getOutputStream().write(b)
     }
 
     def manualProy() {
-        def filePath = "manual del usuario - proyectos.pdf"
-        def path = servletContext.getRealPath("/") + File.separatorChar + filePath
+        def nombre = 'manual_proyecto.pdf'
+        def path = '/var/fida/manual proyecto.pdf'
         def file = new File(path)
         def b = file.getBytes()
         response.setContentType('pdf')
-        response.setHeader("Content-disposition", "attachment; filename=" + filePath)
+        response.setHeader("Content-disposition", "attachment; filename=" + nombre)
         response.setContentLength(b.length)
         response.getOutputStream().write(b)
     }
 
     def manualReportes() {
-        def filePath = "manual del usuario - reportes.pdf"
-        def path = servletContext.getRealPath("/") + File.separatorChar + filePath
+        def nombre = "manual_reportes.pdf"
+        def path = '/var/fida/manual reportes.pdf'
         def file = new File(path)
         def b = file.getBytes()
         response.setContentType('pdf')
-        response.setHeader("Content-disposition", "attachment; filename=" + filePath)
+        response.setHeader("Content-disposition", "attachment; filename=" + nombre)
         response.setContentLength(b.length)
         response.getOutputStream().write(b)
     }
 
     def manualPOApermanente() {
-        def filePath = "manual del usuario poa permanente.pdf"
-        def path = servletContext.getRealPath("/") + File.separatorChar + filePath
+        def nombre = "manual del usuario poa permanente.pdf"
+        def path = '/var/fida/manual reportes.pdf'
         def file = new File(path)
         def b = file.getBytes()
         response.setContentType('pdf')
-        response.setHeader("Content-disposition", "attachment; filename=" + filePath)
+        response.setHeader("Content-disposition", "attachment; filename=" + nombre)
         response.setContentLength(b.length)
         response.getOutputStream().write(b)
     }

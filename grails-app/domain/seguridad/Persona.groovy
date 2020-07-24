@@ -1,6 +1,8 @@
 package seguridad
 
 import audita.Auditable
+import parametros.Anio
+import poa.Asignacion
 
 class Persona implements Auditable{
 
@@ -108,4 +110,14 @@ class Persona implements Auditable{
     def vaciarPermisos() {
         this.permisos = []
     }
+
+    def getNombreCompleto() {
+        if(this.titulo) {
+            return "${this?.titulo} ${this.nombre} ${this.apellido}"
+        } else {
+            return "${this.nombre} ${this.apellido}"
+        }
+
+    }
+
 }

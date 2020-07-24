@@ -213,7 +213,7 @@ class PrflController {
             try {
                 def prms = Prms.get(d.prms__id)
                 println "borrando ${prms.id}"
-                prms.delete()
+                prms.delete(flush: true)
             }
             catch (Exception ex) {
                 println "borrar permiso: " + ex.getMessage()

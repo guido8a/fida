@@ -166,9 +166,18 @@ class FirmaController {
  */
     def ver = {
         def firma = Firma.get(params.id)
+/*
         if (firma) {
             if (firma.esPdf == "S") {
                 redirect(controller: "pdf", action: "pdfLink", params: [url: g.createLink(controller: firma.controladorVer, action: firma.accionVer, id: firma.idAccionVer)])
+            }
+        } else {
+            render "No se encontro ninguna firma"
+        }
+*/
+        if (firma) {
+            if (firma.esPdf == "S") {
+                redirect(controller: "reportes", action: "reporteAjustes", params: [id: firma.idAccionVer])
             }
         } else {
             render "No se encontro ninguna firma"

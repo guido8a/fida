@@ -139,4 +139,5 @@ class Firma {
         controladorNegar(blank: true, nullable: true)
         idAccionNegar(blank: true, nullable: true)
     }
+
 }

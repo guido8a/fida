@@ -62,7 +62,7 @@
 </table>
 <script>
     $(".imprimir").button({icons : {primary : "ui-icon-print"}, text : false}).click(function () {
-        location.href = "${createLink(controller:'firma',action:'ver')}/" + $(this).attr("iden")
+        location.href = "${createLink(controller:'firma', action:'ver')}/" + $(this).attr("iden")
     })
 
 
