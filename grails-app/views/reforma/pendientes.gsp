@@ -91,6 +91,17 @@
                                         </a>
                                     </g:if>
                                 </div>
+
+                                <div class="btn-group btn-group-xs" role="group">
+                                    <elm:linkPdfReforma reforma="${reforma}"/>
+                                    <elm:linkEditarReforma reforma="${reforma}" perfil="${session.perfil}"/>
+                                    <g:if test="${session.perfil.codigo == 'RQ' && !vesta.modificaciones.DetalleReforma.findAllByReforma(vesta.modificaciones.Reforma.get(reforma?.id))}">
+                                        <a href="#"  class="btn btn-danger borrar"  reforma="${reforma?.id}" title="Eliminar reforma">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                    </g:if>
+                                </div>
+
                             </td>
                         </tr>
                     </g:each>

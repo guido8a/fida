@@ -311,7 +311,8 @@
 
                 <a href="#" class="btn btn-info ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}"
                    id="btnReporteReformas"><i class="fa fa-print"></i> Previsualizar</a>
-                <a href="#" style="float: right" id="btnEnviar" class="btn btn-success ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}" title="Guardar y solicitar revisión">
+                <a href="#" style="float: right" id="btnEnviar" class="btn btn-success ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}"
+                   title="Guardar y solicitar revisión">
                     Solicitar la Firma <i class="fa fa-paper-plane"></i>
                 </a>
             </div>

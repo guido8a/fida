@@ -363,7 +363,7 @@ class ReformaController  {
 //        }
 
 //        estados = [estadoPendiente, estadoDevueltoAnPlan, estadoPorRevisar]
-        estados = [estadoPendiente, estadoDevueltoAnPlan]
+        estados = [estadoPendiente, estadoDevueltoAnPlan, estadoSolicitado]
 
         def reformas = Reforma.withCriteria {
             eq("tipo", "R")
@@ -884,7 +884,7 @@ class ReformaController  {
         def personaRevisa
         def estado = EstadoAval.findByCodigo("P01") //pendiente
         if (params.send == "S") {
-            estado = EstadoAval.findByCodigo("R01") //por revisar
+            estado = EstadoAval.findByCodigo("E01") //solicitado
         }
         def now = new Date()
         def usu = Persona.get(session.usuario.id)
