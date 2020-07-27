@@ -352,8 +352,8 @@
             <div class="btn-group pull-right" role="group">
                 <a href="#" class="btn btn-info ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}"
                    id="btnReporteAjustes"><i class="fa fa-print"></i> Previsualizar</a>
-                <a href="#" style="float: right" id="btnEnviar" class="btn btn-success ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}" title="Guardar y enviar">
-                 Enviar <i class="fa fa-paper-plane"></i>
+                <a href="#" style="float: right" id="btnEnviar" class="btn btn-success ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}"
+                   title="Guardar y enviar"> Solicitar la Firma <i class="fa fa-paper-plane"></i>
                 </a>
             </div>
         </div>

@@ -296,7 +296,8 @@ class FirmaController {
         if (firma) {
             //println "firma "+firma+" "+firma.esPdf+" "+firma.controladorVer+"/"+firma.accionVer+"/"+firma.idAccion
             if (firma.esPdf == "S") {
-                redirect(controller: "pdf", action: "pdfLink", params: [url: g.createLink(controller: firma.controladorVer, action: firma.accionVer, id: firma.idAccionVer)])
+                redirect(controller: "pdf", action: "pdfLink", params: [url: g.createLink(controller: firma.controladorVer,
+                        action: firma.accionVer, id: firma.idAccionVer)])
             } else {
                 redirect(controller: firma.controladorVer, action: firma.accionVer, id: firma.idAccionVer)
             }

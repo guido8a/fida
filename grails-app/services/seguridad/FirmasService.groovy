@@ -236,16 +236,17 @@ class FirmasService {
             try {
                 def now = new Date()
                 def key = ""
-//                def texto = baseUri + g.createLink(controller: "firma", action: "verDocumento") + "?ky="
-                def texto = baseUri
+//                def texto = baseUri  /* quitar esto apra que no se grabe la acción */
+                def texto = ""
 //                def pathQr = servletContext.getRealPath("/") + path
                 def pathQr = '/var/fida/firmas/'
                 def nombre = "" + user.login + "_" + now.format("dd_MM_yyyy_mm_ss") + ".png"
                 new File(pathQr).mkdirs()
-                println " "+now.format("ddMMyyyyhhmmss.SSS")+" "+" nombre "+nombre+"  "+user.login.encodeAsMD5()+"   "+(user.autorizacion.substring(10,20))
-                key = now.format("ddMMyyyyhhmmss.SSS").encodeAsMD5() + (user.login.encodeAsMD5().substring(0, 10)) + (user.autorizacion.substring(10, 20))
+//                println " "+now.format("ddMMyyyyhhmmss.SSS")+" "+" nombre "+nombre+"  "+user.login.encodeAsMD5()+"   "+(user.autorizacion.substring(10,20))
+//                key = now.format("ddMMyyyyhhmmss.SSS").encodeAsMD5() + (user.login.encodeAsMD5().substring(0, 10)) + (user.autorizacion.substring(10, 20))
                 // println "key "+key
-                texto += key
+                texto += "${user.nombreCompleto} CI:${user?.cedula} ${nombre} ${user.autorizacion.substring(10,20)}"
+//                texto += key
                 //plugin antiguo de QR
                 def fos = new FileOutputStream(pathQr + nombre)
                 qrCodeService.renderPng(texto, 100, fos)
