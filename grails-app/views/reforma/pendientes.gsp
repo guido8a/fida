@@ -130,7 +130,7 @@
 
     $(".btnVerReforma").click(function () {
         var id = $(this).data("id");
-        location.href="${createLink(controller: 'reportes', action: 'reporteReforma')}?id=" + id
+        location.href="${createLink(controller: 'reportes', action: 'reporteAjustes')}?id=" + id
     });
 
     $(".editarReforma").click(function () {
