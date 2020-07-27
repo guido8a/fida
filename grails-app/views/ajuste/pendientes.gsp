@@ -60,7 +60,6 @@
                             <td style="width: 10%; text-align: center">
                                 <div class="btn-group btn-group-xs" role="group">
                                     %{-- <g:if test="${session.perfil.codigo == 'ASPL' && !modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">--}%
-
                                     <a href="#"  class="btn btn-success editarAjuste"  ajuste="${reforma?.id}" data-id="${reforma?.id}" title="Editar ajuste">
                                         <i class="fa fa-edit"></i>
                                     </a>
@@ -68,8 +67,6 @@
                                         <a href="#"  class="btn btn-danger borrar"  ajuste="${reforma?.id}" title="Eliminar ajuste">
                                             <i class="fa fa-trash"></i>
                                         </a>
-                                    </g:if>
-                                    <g:if test="${modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">
                                         <a href="#"  class="btn btn-info btnVerReforma"  data-id="${reforma?.id}" title="Ver">
                                             <i class="fa fa-search"></i>
                                         </a>

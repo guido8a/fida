@@ -98,11 +98,11 @@
             </a>
         </div>
 
-        <div class="btn-group">
-            <a href="#" id="btnAddD" class="btn botonD pull-right ${reforma?.id ?: 'disabled'} botones">
-                <i class="fa fa-plus"></i> Actividad
-            </a>
-        </div>
+        %{--        <div class="btn-group">--}%
+        %{--            <a href="#" id="btnAddD" class="btn botonD pull-right ${reforma?.id ?: 'disabled'} botones">--}%
+        %{--                <i class="fa fa-plus"></i> Actividad--}%
+        %{--            </a>--}%
+        %{--        </div>--}%
     </div>
 </div>
 
@@ -113,13 +113,12 @@
         <tr>
             <th style="width:4%;">Año</th>
             <th style="width:4%;">Fuente</th>
-            <th style="width:13%;">Proyecto</th>
+            <th style="width:20%;">Proyecto</th>
             <th style="width:12%;">Componente</th>
             <th style="width:15%;">Actividad</th>
             <th style="width:6%;">Partida</th>
-            <th style="width:8%;">Responsable</th>
             <th style="width:8%;">Valor Inicial</th>
-            <th style="width:8%;">Disminución</th>
+            <th style="width:9%;">Disminución</th>
             <th style="width:9%;">Incremento</th>
             <th style="width:8%;">Monto Final</th>
             <th style="width:3%;"></th>
@@ -143,23 +142,22 @@
                 <thead>
                 </thead>
                 <tbody>
-
                 <g:if test="${det?.tipoReforma?.codigo == 'O'}">
                     <tr class="info" data-id="${det?.id}" id="detr" data-cod="${det?.tipoReforma?.codigo}" data-par="${det?.asignacionOrigen?.id}" data-val="${det?.valor}" data-anio="${det?.anio?.id}">
                         <td style=width:4%>${det?.anio}</td>
                         <td style=width:4%>${det?.fuente?.codigo}</td>
-                        <td style=width:13%>${det?.componente?.proyecto?.nombre}</td>
+                        <td style=width:20%>${det?.componente?.proyecto?.nombre}</td>
                         <td style=width:12%>${det?.componente?.objeto}</td>
                         <td style=width:15%>${det?.asignacionOrigen?.marcoLogico?.objeto}</td>
                         <td style='width:6%' class='text-center'>${det?.asignacionOrigen?.presupuesto?.numero}</td>
-                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>
+                        %{--                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>--}%
                         <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valorOrigenInicial}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:9%' class='text-right'><g:formatNumber number="${det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:9%' class='text-center'>${' --- '}</td>
                         <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valorOrigenInicial - det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:3%'>
-                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash-o'></i></a>
-                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-pencil'></i></a>
+                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash'></i></a>
+                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-edit'></i></a>
                         </td>
                     </tr>
                     <g:set var="disminucion" value="${disminucion += det?.valor}"/>
@@ -169,7 +167,7 @@
                     <tr class="success" data-id="${det?.id}" id="detr" data-cod="${det?.tipoReforma?.codigo}" data-par="${det?.asignacionOrigen?.presupuesto?.id}" data-anio="${det?.anio?.id}">
                         <td style=width:4%>${det?.anio}</td>
                         <td style=width:4%>${det?.fuente?.codigo}</td>
-                        <td style=width:13%>${det?.componente?.proyecto?.nombre}</td>
+                        <td style=width:20%>${det?.componente?.proyecto?.nombre}</td>
                         <td style=width:12%>${det?.componente?.objeto}</td>
                         <td style=width:15%>${det?.asignacionOrigen?.marcoLogico?.objeto}</td>
                         <g:if test="${det?.tipoReforma?.codigo == 'P'}">
@@ -178,14 +176,14 @@
                         <g:else>
                             <td style='width:6%' class='text-center'>${det?.asignacionOrigen?.presupuesto?.numero}</td>
                         </g:else>
-                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>
+                    %{--                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>--}%
                         <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valorDestinoInicial}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:9%' class='text-center'>${' --- '}</td>
                         <td style='width:9%' class='text-right'><g:formatNumber number="${det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valorDestinoInicial + det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:3%'>
-                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash-o'></i></a>
-                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-pencil'></i></a>
+                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash'></i></a>
+                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-edit'></i></a>
                         </td>
                     </tr>
                     <g:set var="incremento" value="${incremento += det?.valor}"/>
@@ -195,25 +193,25 @@
                     <tr class="rowC" data-id="${det?.id}" id="detr" data-cod="${det?.tipoReforma?.codigo}" data-par="${det?.asignacionOrigen?.presupuesto?.id}" data-anio="${det?.anio?.id}">
                         <td style=width:4%>${det?.anio}</td>
                         <td style=width:4%>${det?.fuente?.codigo}</td>
-                        <td style=width:13%>${det?.componente?.proyecto?.nombre}</td>
+                        <td style=width:20%>${det?.componente?.proyecto?.nombre}</td>
                         <td style=width:12%>${det?.componente?.marcoLogico?.objeto}</td>
                         <td style=width:15%>${det?.componente?.objeto}</td>
                         <td style='width:6%' class='text-center'>${det?.presupuesto?.numero}</td>
-                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>
+                        %{--                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>--}%
                         <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valorDestinoInicial}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:9%' class='text-center'>${' --- '}</td>
                         <td style='width:9%' class='text-right'><g:formatNumber number="${det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valorDestinoInicial + det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:3%'>
-                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash-o'></i></a>
-                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-pencil'></i></a>
+                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash'></i></a>
+                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-edit'></i></a>
                         </td>
                     </tr>
                     <g:set var="incremento" value="${incremento += det?.valor}"/>
                     <g:set var="montoFinal" value="${montoFinal += (det?.valorDestinoInicial + det?.valor)}"/>
                 </g:if>
                 <g:if test="${det?.tipoReforma?.codigo == 'A'}" >
-                    <g:set var="nuevaActv" value="${vesta.proyectos.MarcoLogico.findByObjeto(detallesNuevos?.descripcionNuevaActividad)?.numero}"/>
+                    <g:set var="nuevaActv" value="${ proyectos.MarcoLogico?.findByObjeto(detallesNuevos?.descripcionNuevaActividad)?.numero}"/>
                     <g:if test="${nuevaActv}">
                         <g:set var="nuevaActvStr" value="${nuevaActv} - "/>
                     </g:if>
@@ -224,18 +222,18 @@
                     <tr class="rowD" data-id="${det?.id}" id="detr" data-cod="${det?.tipoReforma?.codigo}" data-par="${det?.asignacionOrigen?.presupuesto?.id}" data-anio="${det?.anio?.id}">
                         <td style=width:4%>${det?.anio}</td>
                         <td style=width:4%>${det?.fuente?.codigo}</td>
-                        <td style=width:13%>${det?.componente?.proyecto?.nombre}</td>
+                        <td style=width:20%>${det?.componente?.proyecto?.nombre}</td>
                         <td style=width:12%>${det?.componente?.objeto}</td>
                         <td style=width:15%>${det?.descripcionNuevaActividad}</td>
                         <td style='width:6%' class='text-center'>${det?.presupuesto?.numero}</td>
-                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>
+                        %{--                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>--}%
                         <td style='width:8%' class='text-center'>${' --- '}</td>
                         <td style='width:9%' class='text-center'>${' --- '}</td>
                         <td style='width:9%' class='text-right'><g:formatNumber number="${det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:3%'>
-                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash-o'></i></a>
-                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-pencil'></i></a>
+                            <a href='#' class='btn btn-danger btn-xs pull-right borrarTr' title="Borrar"><i class='fa fa-trash'></i></a>
+                            <a href='#' class='btn btn-success btn-xs pull-right editarTr' title="Editar"><i class='fa fa-edit'></i></a>
                         </td>
                     </tr>
                     <g:set var="incremento" value="${incremento += det?.valor}"/>
@@ -310,12 +308,11 @@
 
         <div class="col-md-4 col-md-offset-4">
             <div class="btn-group pull-right" role="group">
-%{--                <elm:linkPdfReforma reforma="${reforma}" class="btn-default" title="Previsualizar" label="true" disabledIfNull="true"/>--}%
 
                 <a href="#" class="btn btn-info ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}"
                    id="btnReporteReformas"><i class="fa fa-print"></i> Previsualizar</a>
                 <a href="#" style="float: right" id="btnEnviar" class="btn btn-success ${(detalle?.size() == 0 || detalle == null ) ? 'disabled' : ''}" title="Guardar y solicitar revisión">
-                    Enviar <i class="fa fa-paper-plane"></i>
+                    Solicitar la Firma <i class="fa fa-paper-plane"></i>
                 </a>
             </div>
         </div>
@@ -474,7 +471,6 @@
 
         }
         if(codigoDt == 'E'){
-            console.log("AQUI")
             $.ajax({
                 type: 'POST',
                 url     : "${createLink(controller: 'reforma', action: 'incremento_ajax')}",
@@ -589,9 +585,11 @@
                                         dataDestino.componente_id = $("#comp").val();
                                         dataDestino.actividad_nombre = $("#actividadRf").find("option:selected").text();
                                         dataDestino.actividad_id = $("#actividadRf").val();
-                                        var nume = $("#prsp_id").val().split("-");
+                                        // var nume = $("#prsp_id").val().split("-");
+                                        var nume = $("#partida1Texto").val().split("-");
                                         dataDestino.partida = nume[0];
-                                        dataDestino.partida_id = $("#prsp_hide").val();
+                                        // dataDestino.partida_id = $("#prsp_hide").val();
+                                        dataDestino.partida_id = $("#partida1").val();
                                         dataDestino.asignacion_id = $("#asignacion").val();
                                         dataDestino.fuente = $("#fuente").val();
                                         dataDestino.responsable = $("#responsable").find("option:selected").text()
@@ -665,13 +663,20 @@
                                         var dataOrigen = {};
                                         dataOrigen.monto = str_replace(",", "", $("#monto").val());
                                         var dataDestino = {};
-                                        dataDestino.proyecto_nombre = $("#proyectoDest").find("option:selected").text();
-                                        dataDestino.componente_nombre = $("#compDest").find("option:selected").text();
-                                        dataDestino.componente_id = $("#compDest").val();
+                                        // dataDestino.proyecto_nombre = $("#proyectoDest").find("option:selected").text();
+                                        // dataDestino.componente_nombre = $("#compDest").find("option:selected").text();
+                                        // dataDestino.componente_id = $("#compDest").val();
+                                        dataDestino.proyecto_nombre = $("#proyecto").find("option:selected").text();
+                                        dataDestino.componente_nombre = $("#comp").find("option:selected").text();
+                                        dataDestino.componente_id = $("#comp").val();
+
+
                                         dataDestino.actividad_nombre = $("#actividad_dest").val();
-                                        var nume = $("#prsp_id").val().split("-");
+                                        // var nume = $("#prsp_id").val().split("-");
+                                        var nume = $("#partida1Texto").val().split("-");
                                         dataDestino.partida = nume[0];
-                                        dataDestino.partida_id = $("#prsp_hide").val();
+                                        // dataDestino.partida_id = $("#prsp_hide").val();
+                                        dataDestino.partida_id = $("#partida1").val();
                                         dataDestino.responsable = $("#responsable").find("option:selected").text()
                                         dataDestino.responsable_id = $("#responsable").val()
                                         dataDestino.categoria = $("#categoria").val();
@@ -922,9 +927,11 @@
                                     dataDestino.componente_id = $("#comp").val();
                                     dataDestino.actividad_nombre = $("#actividadRf").find("option:selected").text();
                                     dataDestino.actividad_id = $("#actividadRf").val();
-                                    var nume = $("#prsp_id").val().split("-");
+                                    // var nume = $("#prsp_id").val().split("-");
+                                    var nume = $("#partida1Texto").val().split("-");
                                     dataDestino.partida = nume[0];
-                                    dataDestino.partida_id = $("#prsp_hide").val();
+                                    // dataDestino.partida_id = $("#prsp_hide").val();
+                                    dataDestino.partida_id = $("#partida1").val();
                                     dataDestino.fuente = $("#fuente").val();
                                     dataDestino.responsable = $("#responsable").find("option:selected").text()
                                     dataDestino.responsable_id = $("#responsable").val()
@@ -998,19 +1005,24 @@
                                     var dataOrigen = {};
                                     dataOrigen.monto = str_replace(",", "", $("#monto").val());
                                     var dataDestino = {};
-                                    dataDestino.proyecto_nombre = $("#proyectoDest").find("option:selected").text();
-                                    dataDestino.componente_nombre = $("#compDest").find("option:selected").text();
-                                    dataDestino.componente_id = $("#compDest").val();
+                                    // dataDestino.proyecto_nombre = $("#proyectoDest").find("option:selected").text();
+                                    // dataDestino.componente_nombre = $("#compDest").find("option:selected").text();
+                                    // dataDestino.componente_id = $("#compDest").val();
+                                    dataDestino.proyecto_nombre = $("#proyecto").find("option:selected").text();
+                                    dataDestino.componente_nombre = $("#comp").find("option:selected").text();
+                                    dataDestino.componente_id = $("#comp").val();
                                     dataDestino.actividad_nombre = $("#actividad_dest").val();
-                                    var nume = $("#prsp_id").val().split("-");
+                                    // var nume = $("#prsp_id").val().split("-");
+                                    var nume = $("#partida1Texto").val().split("-");
                                     dataDestino.partida = nume[0];
-                                    dataDestino.partida_id = $("#prsp_hide").val();
+                                    // dataDestino.partida_id = $("#prsp_hide").val();
+                                    dataDestino.partida_id = $("#partida1").val();
                                     dataDestino.responsable = $("#responsable").find("option:selected").text()
                                     dataDestino.responsable_id = $("#responsable").val()
                                     dataDestino.categoria = $("#categoria").val();
                                     dataDestino.fuente = $("#fuente").val()
-                                    dataDestino.fi = $("#inicio").val()
-                                    dataDestino.ff = $("#fin").val()
+                                    // dataDestino.fi = $("#inicio").val()
+                                    // dataDestino.ff = $("#fin").val()
                                     addActividad(dataOrigen, dataDestino);
                                     resetForm();
 
@@ -1251,48 +1263,51 @@
 
     $("#btnEnviar").click(function () {
         if ($(this).hasClass("disabled")) {
-            bootbox.alert("Debe agregar detalles antes de enviar la solicitud!")
+            bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> Debe agregar detalles antes de enviar la solicitud!")
         } else {
+            <g:if test="${Math.round(totalOrigen.toDouble()*100)/100 != Math.round(montoFinal.toDouble()*100)/100}">
+            bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> La suma del valor inicial de las asignaciones es diferente al valor del monto final!");
+            </g:if>
+            <g:else>
             if ($("#frmFirma").valid()) {
                 bootbox.confirm("¿Está seguro de querer enviar esta solicitud de reforma?<br/>Ya no podrá modificar su contenido.",
-                        function (res) {
-                            if (res) {
-                                openLoader();
-                                var data = {};
-                                var c = 0;
-                                data.firma = $("#firma").val();
-                                data.anio = $("#anio").val();
-                                data.concepto = $("#concepto").val();
-                                data.id = "${reforma?.id}";
-                                data.send = "S";
-                                $.ajax({
-                                    type    : "POST",
-                                    url     : "${createLink(action:'saveNuevaReforma_ajax')}",
-                                    data    : data,
-                                    success : function (msg) {
-                                        var parts = msg.split("*");
-                                        log(parts[1], parts[0]);
-                                        if (parts[0] == "SUCCESS") {
-                                            setTimeout(function () {
-                                                location.href = "${createLink(action:'lista')}";
-                                            }, 2000);
-                                        } else {
-                                            closeLoader();
-                                        }
-                                    },
-                                    error   : function () {
-                                        log("Ha ocurrido un error interno", "error");
-                                        closeLoader();
+                    function (res) {
+                        if (res) {
+                            var dialog = cargarLoader("Guardando...");
+                            var data = {};
+                            var c = 0;
+                            data.firma = $("#firma").val();
+                            data.anio = $("#anio").val();
+                            data.concepto = $("#concepto").val();
+                            data.id = "${reforma?.id}";
+                            data.send = "S";
+                            $.ajax({
+                                type    : "POST",
+                                url     : "${createLink(action:'saveNuevaReforma_ajax')}",
+                                data    : data,
+                                success : function (msg) {
+                                    dialog.modal("hide")
+                                    var parts = msg.split("*");
+                                    log(parts[1], parts[0]);
+                                    if (parts[0] == "SUCCESS") {
+                                        setTimeout(function () {
+                                            location.href = "${createLink(action:'lista')}";
+                                        }, 2000);
+                                    } else {
                                     }
-                                });
-                            }
-                        });
+                                },
+                                error   : function () {
+                                    log("Ha ocurrido un error interno", "error");
+                                    closeLoader();
+                                }
+                            });
+                        }
+                    });
             }
+            </g:else>
         }
         return false;
     });
-    //    });
-
 
     //VALIDACIONES DE FORMULARIOS y firma
 

@@ -344,23 +344,26 @@ class ReformaController  {
         def perfil = session.perfil.codigo.toString()
         def unidades
 //        unidades = UnidadEjecutora.get(session.unidad.id).getUnidadesPorPerfil(perfil)
-        unidades = UnidadEjecutora.findAllById(session.unidad.id)
+        unidades = UnidadEjecutora.findAllById(1)
         def filtroDirector = null,
             filtroPersona = null
 
-        switch (perfil) {
-            case "RQ":
-                estados = [estadoPendiente, estadoDevueltoReq]
-                filtroPersona = Persona.get(session.usuario.id)
-                break;
-            case "DRRQ":
-                estados = [estadoPorRevisar, estadoDevueltoDirReq]
-                filtroDirector = Persona.get(session.usuario.id)
-                break;
-            case "ASPL":    // analista de planificacion
-                estados = [estadoSolicitado, estadoDevueltoAnPlan]
-                break;
-        }
+//        switch (perfil) {
+//            case "RQ":
+//                estados = [estadoPendiente, estadoDevueltoReq]
+//                filtroPersona = Persona.get(session.usuario.id)
+//                break;
+//            case "DRRQ":
+//                estados = [estadoPorRevisar, estadoDevueltoDirReq]
+//                filtroDirector = Persona.get(session.usuario.id)
+//                break;
+//            case "ASPL":    // analista de planificacion
+//                estados = [estadoSolicitado, estadoDevueltoAnPlan]
+//                break;
+//        }
+
+//        estados = [estadoPendiente, estadoDevueltoAnPlan, estadoPorRevisar]
+        estados = [estadoPendiente, estadoDevueltoAnPlan]
 
         def reformas = Reforma.withCriteria {
             eq("tipo", "R")
@@ -408,9 +411,9 @@ class ReformaController  {
         }
         cn.close()
 
-        reformas.each {
+//        reformas.each {
 //            gerencias += firmasService.requirentes(it.persona.unidad)
-        }
+//        }
 
 //        println("reformas " + reformas)
 //        println("gerencias " + gerencias)
@@ -425,12 +428,14 @@ class ReformaController  {
 
         def tipo = 'R'
         def estados = EstadoAval.list()
+        def estadoPendiente = EstadoAval.findByCodigo("P01")
+        def estadoDevuelto = EstadoAval.findByCodigo("D03")
+        estados = estados - [estadoPendiente, estadoDevuelto]
         def reformas
         def perfil = session.perfil.codigo.toString()
         def unidades
-
 //        unidades = UnidadEjecutora.get(session.unidad.id).getUnidadesPorPerfil(perfil)
-        unidades = UnidadEjecutora.findAllById(session.unidad.id)
+        unidades = UnidadEjecutora.findAllById(1)
         reformas = Reforma.withCriteria {
             eq("tipo", tipo)
             inList("estado", estados)
@@ -908,16 +913,17 @@ class ReformaController  {
         if (params.send == "S") {
             println "nueva reforma : se hace la alerta y se manda mail"
             def alerta = new Alerta()
-            alerta.from = usu
+//            alerta.from = usu
             alerta.persona = personaRevisa
-            alerta.fechaEnvio = now
+//            alerta.fechaEnvio = now
+            alerta.fechaCreacion = now
             alerta.mensaje = "Solicitud de ${tipoStr} (${now.format('dd-MM-yyyy')}): " + reforma.concepto
-            alerta.controlador = "reforma"
-            alerta.accion = "pendientes"
-            alerta.id_remoto = reforma.id
+//            alerta.controlador = "reforma"
+            alerta.accion = "firmasPendientes"
+//            alerta.id_remoto = reforma.id
             if (!alerta.save(flush: true)) {
                 println "error alerta: " + alerta.errors
-                render "ERROR*" + renderErrors(bean: reforma)
+                render "ERROR*Error al guardar la reforma"
             }
             try {
                 def mail = personaRevisa.mail
@@ -933,6 +939,7 @@ class ReformaController  {
                 render "SUCCESS*Reforma solicitada exitosamente"
             } catch (e) {
                 println "error email " + e.printStackTrace()
+                render "ERROR*Error al enviar el correo de revisión de la reforma"
             }
         } else {
             println "no se manda: no se hace alerta ni se manda mail"
@@ -2461,7 +2468,7 @@ class ReformaController  {
 
         def actual = params.anio ? Anio.get(params.anio) : Anio.findByAnio(new Date().format("yyyy"))
 
-        def  proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
+        def  proyectos3 = UnidadEjecutora.get(1).getProyectosUnidad(actual, session.perfil.codigo.toString())
         println "proyectos3: $proyectos3"
 
         def detalle = null
@@ -2504,7 +2511,7 @@ class ReformaController  {
 
     def incremento_ajax () {
 
-        println("incremento params " + params)
+//        println("incremento params " + params)
 
         def actual
         if (params.anio) {
@@ -2513,7 +2520,7 @@ class ReformaController  {
             actual = Anio.findByAnio(new Date().format("yyyy"))
         }
 
-        def proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
+        def proyectos3 = UnidadEjecutora.get(1).getProyectosUnidad(actual, session.perfil.codigo.toString())
         def detalle = null
 
         if(params.id){
@@ -2531,16 +2538,16 @@ class ReformaController  {
             actual = Anio.findByAnio(new Date().format("yyyy"))
         }
 
-        def proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
-        def unidad = UnidadEjecutora.get(session.usuario.unidad.id)
-        def gerencias = firmasService.requirentes(unidad)
+        def proyectos3 = UnidadEjecutora.get(1).getProyectosUnidad(actual, session.perfil.codigo.toString())
+//        def unidad = UnidadEjecutora.get(1)
+//        def gerencias = firmasService.requirentes(unidad)
         def detalle = null
 
         if(params.id){
             detalle = DetalleReforma.get(params.id)
         }
 
-        return [proyectos:  proyectos3, gerencias: gerencias, detalle: detalle, anio: actual]
+        return [proyectos:  proyectos3, detalle: detalle, anio: actual]
     }
 
 
@@ -2553,10 +2560,10 @@ class ReformaController  {
             actual = Anio.findByAnio(new Date().format("yyyy"))
         }
 
-        def proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
+        def proyectos3 = UnidadEjecutora.get(1).getProyectosUnidad(actual, session.perfil.codigo.toString())
 
-        def unidad = UnidadEjecutora.get(session.usuario.unidad.id)
-        def gerencias = firmasService.requirentes(unidad)
+//        def unidad = UnidadEjecutora.get(session.usuario.unidad.id)
+//        def gerencias = firmasService.requirentes(unidad)
 
         def detalle = null
 
@@ -2564,7 +2571,7 @@ class ReformaController  {
             detalle = DetalleReforma.get(params.id)
         }
 
-        return [proyectos: proyectos3, gerencias: gerencias, detalle: detalle, anio: actual]
+        return [proyectos: proyectos3, detalle: detalle, anio: actual]
     }
 
 
@@ -2619,7 +2626,6 @@ class ReformaController  {
 
         if(!params.id){
             //crear
-
             detalleReforma = new DetalleReforma()
             detalleReforma.anio = asignacion.anio
         }else{
@@ -2659,7 +2665,6 @@ class ReformaController  {
 
         if(!params.id){
             //crear
-
             detalleReforma = new DetalleReforma()
             detalleReforma.anio = asignacion.anio
         }else{
@@ -2678,7 +2683,7 @@ class ReformaController  {
         detalleReforma.responsable = asignacion.unidad
 
         if(!detalleReforma.save(flush: true)){
-            println("error al guardar detalle de reforma B " + errors);
+            println("error al guardar detalle de reforma B - incremento " + errors);
             render "no"
         }else{
             render "ok"

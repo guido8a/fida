@@ -116,7 +116,6 @@
     <table class="table table-bordered table-hover table-condensed" style="margin-top: 5px;">
         <thead>
         <tr>
-
             <th style="width:4%;">Año</th>
             <th style="width:4%;">Fuente</th>
             <th style="width:20%;">Proyecto</th>
@@ -711,9 +710,11 @@
                                         dataDestino.componente_nombre = $("#compDest").find("option:selected").text();
                                         dataDestino.componente_id = $("#compDest").val();
                                         dataDestino.actividad_nombre = $("#actividad_dest").val();
-                                        var nume = $("#prsp_id").val().split("-");
+                                        // var nume = $("#prsp_id").val().split("-");
+                                        var nume = $("#partida1Texto").val().split("-");
                                         dataDestino.partida = nume[0];
-                                        dataDestino.partida_id = $("#prsp_hide").val();
+                                        // dataDestino.partida_id = $("#prsp_hide").val();
+                                        dataDestino.partida_id = $("#partida1").val();
                                         dataDestino.responsable = $("#responsable").find("option:selected").text()
                                         dataDestino.responsable_id = $("#responsable").val()
                                         dataDestino.categoria = $("#categoria").val();
@@ -793,9 +794,11 @@
                                         dataDestino.componente_id = $("#comp").val();
                                         dataDestino.actividad_nombre = $("#actividadRf").find("option:selected").text();
                                         dataDestino.actividad_id = $("#actividadRf").val();
-                                        var nume = $("#prsp_id").val().split("-");
+                                        // var nume = $("#prsp_id").val().split("-");
+                                        var nume = $("#partida1Texto").val().split("-");
                                         dataDestino.partida = nume[0];
-                                        dataDestino.partida_id = $("#prsp_hide").val();
+                                        // dataDestino.partida_id = $("#prsp_hide").val();
+                                        dataDestino.partida_id = $("#partida1").val();
                                         dataDestino.asignacion_id = $("#asignacion").val();
                                         resetForm();
 
@@ -1443,10 +1446,10 @@
 
     $("#btnEnviar").click(function () {
         if ($(this).hasClass("disabled")) {
-            bootbox.alert("Debe agregar detalles antes de enviar la solicitud!")
+            bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> Debe agregar detalles antes de enviar la solicitud!")
         } else {
             <g:if test="${Math.round(totalOrigen.toDouble()*100)/100 != Math.round(montoFinal.toDouble()*100)/100}">
-            bootbox.alert("La suma del valor inicial de las asignaciones es diferente al valor del monto final!");
+            bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> La suma del valor inicial de las asignaciones es diferente al valor del monto final!");
             </g:if>
             <g:else>
             if ($("#frmFirmas").valid()) {
@@ -1467,7 +1470,7 @@
                                 url     : "${createLink(action:'saveNuevoAjuste_ajax')}",
                                 data    : data,
                                 success : function (msg) {
-                                    dialog.modal("hide")
+                                    dialog.modal("hide");
                                     var parts = msg.split("*");
 
                                     if (parts[0] == "SUCCESS") {
@@ -1481,7 +1484,6 @@
                                 },
                                 error   : function () {
                                     log("Ha ocurrido un error interno", "error");
-                                    closeLoader();
                                 }
                             });
                         }

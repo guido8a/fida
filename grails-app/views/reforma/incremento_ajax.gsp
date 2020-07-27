@@ -50,7 +50,7 @@
     <div  class="col-md-3">
         <div class="input-group">
         <g:textField type="text" name="monto" style="float: right" class="form-control required input-sm number money" value="${detalle?.valor}"/>
-        <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+        <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
         </div>
     </div>
 </div>
@@ -66,7 +66,6 @@
             url     : "${createLink(controller: 'modificacionesPoa', action:'componentesProyectoAjuste_ajax')}",
             data    : {
                 id   : $("#proyecto").val(),
-//                anio : $("#anio").val()
                 anio : ${anio?.id}
             },
             success : function (msg) {
@@ -76,33 +75,6 @@
             }
         });
     });
-
-    /*function getMaximo(asg) {
-        if ($("#asignacion").val() != "-1") {
-            $.ajax({
-                type    : "POST",
-                url     : "${createLink(action:'getMaximoAsg',controller: 'avales')}",
-                data    : {
-                    id : asg
-                },
-                success : function (msg) {
-                    var valor = parseFloat(msg);
-                    var tot = 0;
-                    $(".tableReformaNueva").each(function () {
-                        var d = $(this).data();
-                        if ("" + d.origen.asignacion_id == "" + asg) {
-                            tot += parseFloat(d.origen.monto);
-                        }
-                    });
-                    var ok = valor - tot;
-                    $("#max").html("$" + number_format(ok, 2, ".", ","))
-                            .attr("valor", ok);
-                    $("#monto").attr("tdnMax", ok);
-                }
-            });
-        }
-    }
-*/
 
     <g:if test="${detalle}">
     $("#proyecto").val("${detalle?.componente?.proyecto?.id}").change();

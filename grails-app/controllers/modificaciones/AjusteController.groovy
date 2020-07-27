@@ -77,9 +77,9 @@ class AjusteController {
         println("perfil " + perfil)
         def unidades
 //        unidades = UnidadEjecutora.get(session.unidad.id).getUnidadesPorPerfil(perfil)
-        unidades = UnidadEjecutora.findAllById(session.unidad.id)
+        unidades = UnidadEjecutora.findAllById(1)
 
-        println("unidades " + unidades)
+//        println("unidades " + unidades)
 
         def filtroDirector = null,
             filtroPersona = null

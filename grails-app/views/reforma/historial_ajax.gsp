@@ -5,7 +5,7 @@
   Time: 02:41 PM
 --%>
 
-<script src="${resource(dir: 'js', file: 'ui.js')}"></script>
+%{--<script src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
 
 <table class="table table-bordered table-hover table-condensed">
     <thead>
@@ -21,7 +21,7 @@
     <tbody>
         <g:each in="${reformas}" var="reforma">
             <tr>
-                <td>${reforma.persona.unidad} - ${reforma.persona}</td>
+                <td>${reforma.persona.unidadEjecutora} - ${reforma.persona}</td>
                 <td>${reforma.fecha.format("dd-MM-yyyy")}</td>
                 <td>${reforma.concepto}</td>
                 <td>
@@ -30,7 +30,7 @@
                 <td class="${reforma.estado.codigo}">${reforma.estado.descripcion}</td>
                 <td>
                     <div class="btn-group btn-group-xs" role="group">
-                        <elm:linkPdfReforma reforma="${reforma}"/>
+%{--                        <elm:linkPdfReforma reforma="${reforma}"/>--}%
                     </div>
                 </td>
             </tr>
