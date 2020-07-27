@@ -38,7 +38,7 @@
 
 <div class="row" style="margin-bottom: 30px;">
     <div class="col-md-2 btn-group">
-        <g:link controller="reforma" action="lista" class="btn btn-sm btn-default">
+        <g:link controller="reforma" action="pendientes" class="btn btn-sm btn-default">
             <i class="fa fa-arrow-left"></i> Lista de reformas
         </g:link>
     </div>

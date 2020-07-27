@@ -1,3 +1,4 @@
+<%@ page import="modificaciones.DetalleReforma" %>
 <%--
   Created by IntelliJ IDEA.
   User: luz
@@ -5,8 +6,6 @@
   Time: 12:26 PM
 --%>
 
-
-<%@ page import="vesta.modificaciones.Reforma" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta name="layout" content="main">
@@ -20,8 +19,11 @@
 
     <div class="btn-toolbar toolbar">
         <div class="btn-group">
-            <g:link action="pendientes" class="btn btn-success">
-                <i class="fa fa-refresh"></i> Actualizar
+            <g:link action="nuevaReforma" class="btn btn-success btnCrear">
+                <i class="fa fa-file"></i> Solicitar reforma
+            </g:link>
+            <g:link action="pendientes" class="btn btn-info">
+                <i class="fa fa-sync-alt"></i> Actualizar
             </g:link>
         </div>
     </div>
@@ -76,9 +78,10 @@
                                         <td class="${reforma.estado.codigo}">${reforma.estado.descripcion}</td>
                                         <td>
                                             <div class="btn-group btn-group-xs" role="group">
-                                                <elm:linkPdfReforma reforma="${reforma}"/>
-                                                <elm:linkEditarReforma reforma="${reforma}" perfil="${session.perfil}"/>
-                                                <g:if test="${session.perfil.codigo == 'RQ' && !vesta.modificaciones.DetalleReforma.findAllByReforma(vesta.modificaciones.Reforma.get(reforma?.id))}">
+%{--                                                <elm:linkPdfReforma reforma="${reforma}"/>--}%
+%{--                                                <elm:linkEditarReforma reforma="${reforma}" perfil="${session.perfil}"/>--}%
+%{--                                                <g:if test="${session.perfil.codigo == 'RQ' && !vesta.modificaciones.DetalleReforma.findAllByReforma(vesta.modificaciones.Reforma.get(reforma?.id))}">--}%
+                                                <g:if test="${!modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">
                                                     <a href="#"  class="btn btn-danger borrar"  reforma="${reforma?.id}" title="Eliminar reforma">
                                                         <i class="fa fa-close"></i>
                                                     </a>

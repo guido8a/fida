@@ -409,7 +409,7 @@ class ReformaController  {
         cn.close()
 
         reformas.each {
-            gerencias += firmasService.requirentes(it.persona.unidad)
+//            gerencias += firmasService.requirentes(it.persona.unidad)
         }
 
 //        println("reformas " + reformas)
