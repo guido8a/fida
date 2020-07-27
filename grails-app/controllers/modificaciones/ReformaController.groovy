@@ -466,7 +466,7 @@ class ReformaController  {
      */
     def procesar() {
         def reforma = Reforma.get(params.id)
-//        println "init: reforma=${reforma.id} estado reforma id=${reforma.estado.id} cod=${reforma.estado.codigo}"
+        println "init: reforma=${reforma.id} estado reforma id=${reforma.estado.id} cod=${reforma.estado.codigo}"
         if (reforma.estado.codigo == "E01" || reforma.estado.codigo == "D03") {
             def d
 
@@ -509,9 +509,10 @@ class ReformaController  {
             }
 //            println "........ totalSaldo: $totalSaldo"
 
-            def firmas = firmasService.listaFirmasCombos()
-            return [reforma : reforma, det: det, det2: det2, detallado: detallado, total: total, personas: firmas.directores,
-                    gerentes: firmas.gerentes, tipo: reforma.tipoSolicitud, totalSaldo: totalSaldo, detallesX: detallesX]
+//            def firmas = firmasService.listaFirmasCombos()
+//            return [reforma : reforma, det: det, det2: det2, detallado: detallado, total: total, personas: firmas.directores,
+//                    gerentes: firmas.gerentes, tipo: reforma.tipoSolicitud, totalSaldo: totalSaldo, detallesX: detallesX]
+            return [reforma : reforma, det: det, det2: det2, detallado: detallado, total: total,tipo: reforma.tipoSolicitud, totalSaldo: totalSaldo, detallesX: detallesX]
         } else {
 //            println "redireccionando: reforma=${reforma.id} estado reforma=${reforma.estado.codigo}"
             redirect(action: "pendientes")

@@ -78,30 +78,28 @@
                             <td class="${reforma.estado.codigo}">${reforma.estado.descripcion}</td>
                             <td style="width: 10%; text-align: center">
                                 <div class="btn-group btn-group-xs" role="group">
-                                    %{--                                                <g:if test="${session.perfil.codigo == 'RQ' && !vesta.modificaciones.DetalleReforma.findAllByReforma(vesta.modificaciones.Reforma.get(reforma?.id))}">--}%
-                                    <a href="#"  class="btn btn-success editarReforma" data-id="${reforma?.id}" title="Editar reforma">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
+                                %{--                                                <g:if test="${session.perfil.codigo == 'RQ' && !vesta.modificaciones.DetalleReforma.findAllByReforma(vesta.modificaciones.Reforma.get(reforma?.id))}">--}%
+                                    <g:if test="${reforma?.estado?.codigo == 'E01'}">
+                                        <a href="#"  class="btn btn-warning procesarReforma" data-id="${reforma?.id}" title="Procesar reforma">
+                                            <i class="fa fa-cog"></i>
+                                        </a>
+                                    </g:if>
+                                    <g:else>
+                                        <a href="#"  class="btn btn-success editarReforma" data-id="${reforma?.id}" title="Editar reforma">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </g:else>
                                     <g:if test="${!modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">
                                         <a href="#"  class="btn btn-danger borrarReforma"  reforma="${reforma?.id}" title="Eliminar reforma">
                                             <i class="fa fa-trash"></i>
                                         </a>
+                                    </g:if>
+                                    <g:else>
                                         <a href="#"  class="btn btn-info btnVerReforma"  data-id="${reforma?.id}" title="Ver">
                                             <i class="fa fa-search"></i>
                                         </a>
-                                    </g:if>
+                                    </g:else>
                                 </div>
-
-                                <div class="btn-group btn-group-xs" role="group">
-                                    <elm:linkPdfReforma reforma="${reforma}"/>
-                                    <elm:linkEditarReforma reforma="${reforma}" perfil="${session.perfil}"/>
-                                    <g:if test="${session.perfil.codigo == 'RQ' && !vesta.modificaciones.DetalleReforma.findAllByReforma(vesta.modificaciones.Reforma.get(reforma?.id))}">
-                                        <a href="#"  class="btn btn-danger borrar"  reforma="${reforma?.id}" title="Eliminar reforma">
-                                            <i class="fa fa-close"></i>
-                                        </a>
-                                    </g:if>
-                                </div>
-
                             </td>
                         </tr>
                     </g:each>
@@ -125,6 +123,10 @@
 
 <script type="text/javascript">
 
+    $(".procesarReforma").click(function () {
+        var id = $(this).data("id");
+        location.href="${createLink(controller: 'reforma', action: 'procesar')}/" + id
+    });
 
     $(".btnVerReforma").click(function () {
         var id = $(this).data("id");
@@ -135,8 +137,6 @@
         var id = $(this).data("id");
         location.href="${createLink(controller: 'reforma', action: 'nuevaReforma')}/" + id
     });
-
-
 
     function buscar() {
         $.ajax({

@@ -1,11 +1,12 @@
-<%@ page import="vesta.parametros.poaPac.Anio" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta name="layout" content="main">
         <title>Procesar solicitud de reforma</title>
 
-        <script type="text/javascript" src="${resource(dir: 'js/plugins/ckeditor-4.4.6', file: 'ckeditor.js')}"></script>
-        <script type="text/javascript" src="${resource(dir: 'js/plugins/ckeditor-4.4.6', file: 'adapters/jquery.js')}"></script>
+%{--        <script type="text/javascript" src="${resource(dir: 'js/plugins/ckeditor-4.4.6', file: 'ckeditor.js')}"></script>--}%
+%{--        <script type="text/javascript" src="${resource(dir: 'js/plugins/ckeditor-4.4.6', file: 'adapters/jquery.js')}"></script>--}%
+
+        <asset:javascript src="/ckeditor/ckeditor.js"/>
 
         <style type="text/css">
         .horizontal-container {
@@ -34,7 +35,7 @@
         <div class="btn-toolbar toolbar">
             <div class="btn-group">
                 <g:link action="pendientes" class="btn btn-default">
-                    <i class="fa fa-chevron-left"></i> Regresar
+                    <i class="fa fa-arrow-left"></i> Reformas pendientes
                 </g:link>
             </div>
         </div>
@@ -52,7 +53,7 @@
             </div>
         </g:if>
 
-        <elm:container tipo="horizontal" titulo="Solicitud de reforma a procesar:  ${elm.tipoReforma(reforma: reforma)}">
+        <elm:container tipo="vertical" titulo="Solicitud de reforma a procesar:  ${elm.tipoReforma(reforma: reforma)}">
             <div class="row">
                 <div class="col-md-1 show-label">
                     POA Año
@@ -248,7 +249,7 @@
         </elm:container>
 
         <form id="frmFirmas">
-            <elm:container tipo="horizontal" titulo="Datos para la generación del documento">
+            <elm:container tipo="vertical" titulo="Observaciones">
                 <div class="row">
                     <div class="col-md-1 show-label">Observaciones</div>
 
@@ -270,7 +271,7 @@
                 </div>
             </elm:container>
 
-            <elm:container tipo="horizontal" titulo="Autorizaciones electrónicas">
+            <elm:container tipo="vertical" titulo="Firmas">
                 <div class="row">
                     <div class="col-md-3 grupo">
                         <g:if test="${reforma.estado.codigo == "D02"}">
