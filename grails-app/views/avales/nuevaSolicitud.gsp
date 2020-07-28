@@ -1,0 +1,317 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="proyectos.MarcoLogico; parametros.Anio; parametros.proyectos.TipoElemento" contentType="text/html;charset=UTF-8" %>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="layout" content="main"/>
+        <title>Nueva solicitud de aval: 1-Proceso de aval</title>
+
+        <asset:stylesheet src="/apli/wizard.css"/>
+
+    </head>
+
+    <body>
+        <g:set var="monto" value="${proceso?.getMonto() ?: 0}"/>
+
+        <elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>
+
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group" role="group">
+                <g:link controller="avales" action="listaProcesos" class="btn btn-default">
+                    <i class="fa fa-bars"></i> Regresar a lista de procesos de avales
+                </g:link>
+                <g:if test="${proceso}">
+                    <g:link controller="avales" action="avalesProceso" id="${proceso?.id}" class="btn btn-default">
+                        <i class="fa fa-bars"></i> Solicitudes y avales del proceso
+                    </g:link>
+                </g:if>
+            </div>
+        </div>
+
+        <g:if test="${solicitud && solicitud?.estado?.codigo == 'D01' && solicitud?.observaciones}">
+            <div class="row">
+                <div class="col-md-12">
+                    <elm:message tipo="warning" close="false">${solicitud?.observaciones}</elm:message>
+                </div>
+            </div>
+        </g:if>
+
+    %{--****************************************************************************************************************************************--}%
+        <elm:wizardAvales paso="1" proceso="${proceso}"/>
+    %{--****************************************************************************************************************************************--}%
+
+    %{--<div class="wizard-container row">--}%
+    %{--<div class="col-md-4 wizard-step wizard-next-step corner-left wizard-current">--}%
+    %{--<span class="badge wizard-badge">1</span> Proceso de aval--}%
+    %{--</div>--}%
+
+    %{--<g:if test="${proceso?.id}">--}%
+    %{--<div class="col-md-4 wizard-step wizard-next-step wizard-available">--}%
+    %{--<span class="badge wizard-badge">2</span>--}%
+    %{--<g:link action="solicitudAsignaciones" id="${proceso.id}" title="Continuar sin guardar cambios">--}%
+    %{--Asignaciones--}%
+    %{--</g:link>--}%
+    %{--</div>--}%
+    %{--</g:if>--}%
+    %{--<g:else>--}%
+    %{--<div class="col-md-4 wizard-step wizard-next-step wizard-not-completed">--}%
+    %{--<span class="badge wizard-badge">2</span> Asignaciones--}%
+    %{--</div>--}%
+    %{--</g:else>--}%
+
+    %{--<g:if test="${monto > 0}">--}%
+    %{--<div class="col-md-4 wizard-step corner-right wizard-available">--}%
+    %{--<span class="badge wizard-badge">3</span>--}%
+    %{--<g:link action="solicitudProceso" id="${proceso.id}" title="Continuar sin guardar cambios">--}%
+    %{--Solicitud--}%
+    %{--</g:link>--}%
+    %{--</div>--}%
+    %{--</g:if>--}%
+    %{--<g:else>--}%
+    %{--<div class="col-md-4 wizard-step corner-right wizard-not-completed">--}%
+    %{--<span class="badge wizard-badge">3</span> Solicitud--}%
+    %{--</div>--}%
+    %{--</g:else>--}%
+    %{--</div>--}%
+
+        <g:form action="saveProcesoWizard" class="form-horizontal wizard-form corner-bottom"
+                name="frmProceso" role="form" method="POST">
+            <input type="hidden" name="id" value="${proceso?.id}">
+
+            <input type="hidden" name="id2" value="${proceso?.proyecto?.id}">
+
+            <div class="row">
+                <span class="grupo">
+                    <label class="col-md-2 control-label">
+                        Proyecto
+                    </label>
+
+                    <div class="col-md-9">
+                        <g:if test="${!readOnly}">
+                            <g:select name="proyecto.id" from="${proyectos}" class="form-control input-sm required"
+                                      optionKey="id" optionValue="${{
+                                it.codigo + " - " + it.nombre
+                            }}" id="proyecto" value="${proceso?.proyecto?.id}"/>
+                        </g:if>
+                        <g:else>
+                            <p class="form-control-static">
+                                ${proceso?.proyecto?.toStringCompleto()}
+                            </p>
+                        </g:else>
+                    </div>
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="grupo">
+                    <label for="nombre" class="col-md-2 control-label">
+                        Nombre del proceso precontractual
+                    </label>
+
+                    <div class="col-md-9">
+                        <g:if test="${!readOnly}">
+                            <g:textArea class="form-control input-sm required"
+                                        name="nombre" value="${proceso?.nombre}" id="nombre" title="Nombre del Proceso" maxlength="255"/>
+                        </g:if>
+                        <g:else>
+                            <p class="form-control-static">
+                                ${proceso?.nombre}
+                            </p>
+                        </g:else>
+                    </div>
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="grupo">
+                    <label for="fechaInicio" class="col-md-2 control-label">
+                        Fecha Inicio (requerimiento de aval)
+                    </label>
+
+                    <div class="col-md-3">
+                        <g:if test="${!readOnly}">
+%{--
+                            <elm:datepicker name="fechaInicio" class="datepicker form-control input-sm required"
+                                            value="${proceso?.fechaInicio}" onChangeDate="validarFechaIni" minDate="${new Date()}"/>
+--}%
+                            <input name="fechaInicio" id='fechaInicio' type='text' class="form-control required" value="${administracionInstance?.fechaInicio?.format("dd-MM-yyyy")}"/>
+                            <p class="help-block ui-helper-hidden"></p>
+
+                        </g:if>
+                        <g:else>
+                            <p class="form-control-static">
+                                ${proceso?.fechaInicio?.format("dd-MM-yyyy")}
+                            </p>
+                        </g:else>
+                    </div>
+                </span>
+                %{--</div>--}%
+
+
+                %{--<div class="row">--}%
+                <span class="grupo">
+                    <label for="fechaFin" class="col-md-2 control-label">
+                        Fecha fin de la actividad
+                    </label>
+
+                    <div class="col-md-3">
+                        <g:if test="${!readOnly}">
+%{--
+                            <elm:datepicker name="fechaFin" class="datepicker form-control input-sm required" value="${proceso?.fechaFin}"
+                                            onChangeDate="validarFechaFin" minDate="${new Date()}"/>
+--}%
+                            <input name="fechaFin" id='fechaFin' type='text' class="form-control required" value="${administracionInstance?.fechaInicio?.format("dd-MM-yyyy")}"/>
+                            <p class="help-block ui-helper-hidden"></p>
+
+                        </g:if>
+                        <g:else>
+                            <p class="form-control-static">
+                                ${proceso?.fechaFin?.format("dd-MM-yyyy")}
+                            </p>
+                        </g:else>
+                    </div>
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="grupo">
+                    <label for="informar" class="col-md-2 control-label">
+                        Informar cada
+                    </label>
+
+                    <div class="col-md-2">
+                        <g:if test="${!readOnly}">
+                            <div class="input-group" style="width: 60px">
+                                <g:textField class="form-control input-sm required digits"
+                                             name="informar" value="${proceso?.informar}" id="informar" style="width: 60px" title="Cantidad de días"/>
+                                <span class="input-group-addon" id="basic-addon2">Días</span>
+                            </div>
+                        </g:if>
+                        <g:else>
+                            <p class="form-control-static">
+                                ${proceso?.informar} días
+                            </p>
+                        </g:else>
+                    </div>
+
+                </span>
+            </div>
+
+
+            <g:if test="${!readOnly}">
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-8 text-right">
+                        <a href="#" class="btn btn-success" id="btnOk" title="Guardar y pasar a asignaciones">
+                            <i class="fa fa-save"></i> Guardar y Continuar <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </g:if>
+        </g:form>
+
+        <script type="text/javascript">
+
+            $('#fechaInicio').datetimepicker({
+                locale: 'es',
+                format: 'DD-MM-YYYY',
+                daysOfWeekDisabled: [0, 6],
+                // inline: true,
+                sideBySide: true,
+                showClose: true,
+                icons: {
+                    // close: 'closeText'
+                }
+            });
+
+            $('#fechaFin').datetimepicker({
+                locale: 'es',
+                format: 'DD-MM-YYYY',
+                daysOfWeekDisabled: [0, 6],
+                // inline: true,
+                sideBySide: true,
+                showClose: true,
+                icons: {
+                    // close: 'closeText'
+                }
+            });
+
+
+
+            function validarFechaIni($elm, e) {
+                $("#fechaFin_input").data("DateTimePicker").setMinDate(e.date);
+            }
+            function validarFechaFin($elm, e) {
+                $('#fechaInicio_input').data("DateTimePicker").setMaxDate(e.date);
+            }
+
+            $(function () {
+
+//                $("#fechaFin_input").focus(function () {
+//                    var d = $(this).val();
+//
+//                    console.log($(this).data("DateTimePicker").date(), $("#fechaInicio_input").val());
+//                });
+
+                var validator = $("#frmProceso").validate({
+                    errorClass : "help-block",
+                    errorPlacement : function (error, element) {
+                        if (element.parent().hasClass("input-group")) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            error.insertAfter(element);
+                        }
+                        element.parents(".grupo").addClass('has-error');
+                    },
+                    success : function (label) {
+                        label.parents(".grupo").removeClass('has-error');
+                        label.remove();
+                    }
+                });
+
+                $("#btnOk").click(function () {
+                    $("#frmProceso").submit();
+                });
+
+            });
+
+
+            $("#proyecto").change(function () {
+
+                if('${proceso?.id}') {
+
+                    if( '${proceso?.proyecto?.id}' != $("#proyecto").val() ){
+//                        console.log("cambio " + $("#proyecto").val())
+
+                        bootbox.confirm("Al cambiar el proyecto actual se borraran las asignaciones del paso 2", function (result) {
+                                    if(result){
+
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: "${createLink(controller: 'avales', action: 'borrarAsignaciones_ajax')}",
+                                            data: {
+                                                    proceso: '${proceso?.id}'
+                                            },
+                                            success: function (msg){
+                                                    if(msg == "no"){
+                                                        log("Error al borrar las asignaciones")
+                                                    }
+                                            }
+
+                                        })
+
+                                    }else{
+                                        $("#proyecto").val(${proceso?.proyecto?.id})
+                                    }
+                        })
+                    }
+
+
+
+                }
+
+            });
+
+        </script>
+
+    </body>
+</html>

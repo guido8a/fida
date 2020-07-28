@@ -444,14 +444,8 @@ class AvalesController{
         def band = true
         def proyectos = []
         def readOnly = false
-        def unidad = session.usuario.unidad
-//        Asignacion.findAllByUnidad(unidad).each {
-//            def p = it.marcoLogico.proyecto
-//            if (!proyectos.contains(p)) {
-//                proyectos.add(p)
-//            }
-//        }
-//        proyectos.sort { it.nombre }
+        def unidad = session.usuario.unidadEjecutora
+
         if (params.anio) {
             actual = Anio.get(params.anio)
         } else {
@@ -485,17 +479,19 @@ class AvalesController{
             }
         }
 
-//        proyectos = proyectosService.getProyectosUnidad(UnidadEjecutora.get(session.unidad.id), actual, session.perfil.codigo.toString())
-        proyectos = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
+//        proyectos = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
+        proyectos = Proyecto.list()
 
-        return [proyectos: proyectos, proceso: proceso, actual: actual, band: band, unidad: unidad, readOnly: readOnly, solicitud: solicitud]
+        println "--> nuevaSolicitud"
+        return [proyectos: proyectos, proceso: proceso, actual: actual, band: band, unidad: unidad, readOnly: readOnly,
+                solicitud: solicitud]
     }
 
     /**
      * Acción que guarda el proceso y redirecciona a la acción solicitudAsignaciones una vez completado.
      */
     def saveProcesoWizard = {
-//        println "save proceso " + params
+        println "save proceso " + params
 
         def usuario = Persona.get(session.usuario.id)
         def proceso
@@ -506,6 +502,10 @@ class AvalesController{
         }
 
 //        println("personsa " + usuario)
+
+        params.fechaInicio = params.fechaInicio ? new Date().parse("dd-MM-yyyy", params.fechaInicio) : null
+        params.fechaFin = params.fechaFin ? new Date().parse("dd-MM-yyyy", params.fechaFin) : null
+
         proceso.properties = params
         proceso.usuario = usuario
         println("persona desp " + proceso.usuario)
@@ -535,7 +535,7 @@ class AvalesController{
     def solicitudAsignaciones() {
         if (params.id) {
             def proceso = ProcesoAval.get(params.id)
-            def unidad = session.usuario.unidad
+            def unidad = UnidadEjecutora.get(1)
 
             def band = true
             def aval = Aval.findAllByProceso(proceso)

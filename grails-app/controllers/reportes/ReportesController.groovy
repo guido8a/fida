@@ -28,13 +28,16 @@ class ReportesController {
         def detalles = DetalleReforma.findAllByReforma(reforma)
         Image logo = Image.getInstance('/var/fida/logo.png')
         Image firma_img
+        def tipoRfrm = reforma?.tipo == "R" ? "REFORMA" : "AJUSTE"
+        def tipotxto = reforma?.tipo == "R" ? "de la reforma" : "del ajuste"
+        println "tipo: ${reforma.tipo} tipoSolicitud: ${reforma.tipoSolicitud}"
         println "firma_path: $firma_path"
         if(firma_path) {
-            titulo_rep = "AJUSTE AL POA"
+            titulo_rep = "${tipoRfrm} AL POA"
             firma_img = Image.getInstance('/var/fida/firmas/' + firma_path)
             firma_img.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP)
         } else {
-            titulo_rep = "SOLICITUD DE AJUSTE"
+            titulo_rep = "SOLICITUD DE ${tipoRfrm}"
         }
         println "firma: ${firma_img}"
 
@@ -43,7 +46,7 @@ class ReportesController {
 //        logo.setAlignment(Image.RIGHT)
 
         def baos = new ByteArrayOutputStream()
-        def name = "ajustes_" + new Date().format("ddMMyyyy_hhmm") + ".pdf";
+        def name = "${tipoRfrm.toLowerCase()}_" + new Date().format("ddMMyyyy_hhmm") + ".pdf";
         Font times12bold = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
         Font times10bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font times10normal = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);
@@ -124,12 +127,12 @@ class ReportesController {
         tablaCabecera2.setWidthPercentage(100)
         tablaCabecera2.setWidths(arregloEnteros([100]))
 
-        addCellTabla(tablaCabecera2, new Paragraph("Justificación del ajuste:", times12bold), prmsCellHead3)
+        addCellTabla(tablaCabecera2, new Paragraph("Justificación ${tipotxto}:", times12bold), prmsCellHead3)
         addCellTabla(tablaCabecera2, new Paragraph(reforma?.concepto, times10normal), prmsCellHead3)
         addCellTabla(tablaCabecera2, new Paragraph("", times10normal), prmsCellHead3)
         addCellTabla(tablaCabecera2, new Paragraph("", times10normal), prmsCellHead3)
 
-        addCellTabla(tablaCabecera2, new Paragraph("Matriz del ajuste", times12bold), prmsCellHeadCentro)
+        addCellTabla(tablaCabecera2, new Paragraph("Matriz ${tipotxto}", times12bold), prmsCellHeadCentro)
         addCellTabla(tablaCabecera2, new Paragraph("", times10bold), prmsCellHeadCentro)
         addCellTabla(tablaCabecera2, new Paragraph("", times10bold), prmsCellHeadCentro)
 
