@@ -222,7 +222,11 @@ option[selected]{
                         </label>
 
                         <div class="col-md-6">
-                            <g:textField name="autorizacion" maxlength="63" class="form-control input-sm" value="${personaInstance?.autorizacion}"/>
+%{--                            <g:textField name="autorizacion" maxlength="63" class="form-control input-sm" value="${personaInstance?.autorizacion}"/>--}%
+
+                            <div class="input-group input-group-sm"><span class="input-group-addon"><i class="fa fa-key"></i>
+                            </span><g:field type="password" name="autorizacion"  maxlength="63" class="form-control input-sm noEspacios required" value="${personaInstance?.autorizacion ?: ''}"/>
+                            </div>
                         </div>
                     </span>
                 </div>

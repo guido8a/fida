@@ -1356,11 +1356,13 @@ class PersonaController {
                 params.password = params.password.encodeAsMD5()
                 params.fecha = new Date()
             }
+            params.autorizacion = params.autorizacion.encodeAsMD5()
             params.unidadEjecutora = persona.unidadEjecutora
             texto = "Usuario actualizado correctamente"
         }else{
             persona = new Persona()
             params.password = params.password.encodeAsMD5()
+            params.autorizacion = params.autorizacion.encodeAsMD5()
             params.fechaInicio = new Date()
             params.fecha = new Date()
             texto = "Usuario creado correctamente"
