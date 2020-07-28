@@ -1271,7 +1271,7 @@
             </g:if>
             <g:else>
             if ($("#frmFirma").valid()) {
-                bootbox.confirm("¿Está seguro de querer enviar esta solicitud de reforma?<br/>Ya no podrá modificar su contenido.",
+                bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> ¿Está seguro de querer enviar esta solicitud de reforma?<br/>Ya no podrá modificar su contenido.",
                     function (res) {
                         if (res) {
                             var dialog = cargarLoader("Guardando...");
@@ -1287,19 +1287,19 @@
                                 url     : "${createLink(action:'saveNuevaReforma_ajax')}",
                                 data    : data,
                                 success : function (msg) {
-                                    dialog.modal("hide")
+                                    dialog.modal("hide");
                                     var parts = msg.split("*");
-                                    log(parts[1], parts[0]);
                                     if (parts[0] == "SUCCESS") {
+                                        log(parts[1], "success");
                                         setTimeout(function () {
-                                            location.href = "${createLink(action:'lista')}";
+                                            location.href = "${createLink(action:'pendientes')}";
                                         }, 2000);
                                     } else {
+                                        log("Error al guardar la reforma", "error");
                                     }
                                 },
                                 error   : function () {
                                     log("Ha ocurrido un error interno", "error");
-                                    closeLoader();
                                 }
                             });
                         }

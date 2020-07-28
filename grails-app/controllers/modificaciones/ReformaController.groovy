@@ -507,12 +507,14 @@ class ReformaController  {
                 detallesX = DetalleReforma.findAllByReforma(reforma)
 
             }
+
+            def personas = Persona.findAllByUnidadEjecutora(UnidadEjecutora.get(1))
 //            println "........ totalSaldo: $totalSaldo"
 
 //            def firmas = firmasService.listaFirmasCombos()
 //            return [reforma : reforma, det: det, det2: det2, detallado: detallado, total: total, personas: firmas.directores,
 //                    gerentes: firmas.gerentes, tipo: reforma.tipoSolicitud, totalSaldo: totalSaldo, detallesX: detallesX]
-            return [reforma : reforma, det: det, det2: det2, detallado: detallado, total: total,tipo: reforma.tipoSolicitud, totalSaldo: totalSaldo, detallesX: detallesX]
+            return [reforma : reforma, det: det, det2: det2, detallado: detallado, total: total,tipo: reforma.tipoSolicitud, totalSaldo: totalSaldo, detallesX: detallesX, personas: personas]
         } else {
 //            println "redireccionando: reforma=${reforma.id} estado reforma=${reforma.estado.codigo}"
             redirect(action: "pendientes")
@@ -623,6 +625,7 @@ class ReformaController  {
     }
 
     def guardar() {
+        println("-- " + params)
         def usu = Persona.get(session.usuario.id)
         def reforma = Reforma.get(params.id)
         reforma.analista = usu
@@ -635,6 +638,7 @@ class ReformaController  {
      * Acción que marca una solicitud como aprobada y a la espera de las firmas de aprobación
      */
     def aprobar() {
+        println("params aprobar " + params)
         def usu = Persona.get(session.usuario.id)
 //        def ok = params.auth.toString().trim().encodeAsMD5() == usu.autorizacion
         def ok = true
@@ -706,24 +710,24 @@ class ReformaController  {
 
             if (edit) {
                 def firma1 = reforma.firma1
-                def firma2 = reforma.firma2
+//                def firma2 = reforma.firma2
 
                 personaFirma1 = firma1.usuario
-                personaFirma2 = firma2.usuario
+//                personaFirma2 = firma2.usuario
 
                 firma1.estado = "S"
                 firma1.concepto = "${mensaje} (${reforma.fecha.format('dd-MM-yyyy')}): " + reforma.concepto
                 firma1.accionVer = accion
-                firma2.estado = "S"
-                firma2.concepto = "${mensaje} (${reforma.fecha.format('dd-MM-yyyy')}): " + reforma.concepto
-                firma2.accionVer = accion
+//                firma2.estado = "S"
+//                firma2.concepto = "${mensaje} (${reforma.fecha.format('dd-MM-yyyy')}): " + reforma.concepto
+//                firma2.accionVer = accion
 
                 firma1.save(flush: true)
-                firma2.save(flush: true)
+//                firma2.save(flush: true)
 
             } else {
                 personaFirma1 = Persona.get(params.firma1.toLong())
-                personaFirma2 = Persona.get(params.firma2.toLong())
+//                personaFirma2 = Persona.get(params.firma2.toLong())
 
                 def firma1 = new Firma()
                 firma1.usuario = personaFirma1
@@ -750,58 +754,61 @@ class ReformaController  {
                 }
                 reforma.firma1 = firma1
 
-                def firma2 = new Firma()
-                firma2.usuario = personaFirma2
-                firma2.fecha = now
-                if(reforma.tipoSolicitud == 'X'){
-                    firma2.accion = "firmarAprobarNuevaReforma"
-                }else{
-                    firma2.accion = "firmarAprobarReforma"
-                }
-                firma2.controlador = "reforma"
-                firma2.idAccion = reforma.id
-                firma2.accionVer = accion
-                firma2.controladorVer = "reportesReforma"
-                firma2.idAccionVer = reforma.id
-                firma2.accionNegar = "devolverAprobarReforma"
-                firma2.controladorNegar = "reforma"
-                firma2.idAccionNegar = reforma.id
-                firma2.concepto = "${mensaje} (${reforma.fecha.format('dd-MM-yyyy')}): " + reforma.concepto
-                firma2.tipoFirma = "RFRM"
-                if (!firma2.save(flush: true)) {
-                    println "error al crear firma: " + firma2.errors
-                    render "ERROR*" + renderErrors(bean: firma2)
-                    return
-                }
-                reforma.firma2 = firma2
+//                def firma2 = new Firma()
+//                firma2.usuario = personaFirma2
+//                firma2.fecha = now
+//                if(reforma.tipoSolicitud == 'X'){
+//                    firma2.accion = "firmarAprobarNuevaReforma"
+//                }else{
+//                    firma2.accion = "firmarAprobarReforma"
+//                }
+//                firma2.controlador = "reforma"
+//                firma2.idAccion = reforma.id
+//                firma2.accionVer = accion
+//                firma2.controladorVer = "reportesReforma"
+//                firma2.idAccionVer = reforma.id
+//                firma2.accionNegar = "devolverAprobarReforma"
+//                firma2.controladorNegar = "reforma"
+//                firma2.idAccionNegar = reforma.id
+//                firma2.concepto = "${mensaje} (${reforma.fecha.format('dd-MM-yyyy')}): " + reforma.concepto
+//                firma2.tipoFirma = "RFRM"
+//                if (!firma2.save(flush: true)) {
+//                    println "error al crear firma: " + firma2.errors
+//                    render "ERROR*" + renderErrors(bean: firma2)
+//                    return
+//                }
+//                reforma.firma2 = firma2
             }
 
             def alerta = new Alerta()
-            alerta.from = usu
+//            alerta.from = usu
             alerta.persona = personaFirma1
-            alerta.fechaEnvio = now
+//            alerta.fechaEnvio = now
+            alerta.fechaCreacion = now
             alerta.mensaje = "${mensaje} (${reforma.fecha.format('dd-MM-yyyy')}): " + reforma.concepto
-            alerta.controlador = "firma"
+//            alerta.controlador = "firma"
             alerta.accion = "firmasPendientes"
-            alerta.id_remoto = reforma.id /*agregado*/
+//            alerta.id_remoto = reforma.id /*agregado*/
             if (!alerta.save(flush: true)) {
                 println "error alerta: " + alerta.errors
             }
-            def alerta2 = new Alerta()
-            alerta2.from = usu
-            alerta2.persona = personaFirma2
-            alerta2.fechaEnvio = now
-            alerta2.mensaje = "${mensaje} (${reforma.fecha.format('dd-MM-yyyy')}): " + reforma.concepto
-            alerta2.controlador = "firma"
-            alerta2.accion = "firmasPendientes"
-            alerta2.id_remoto = alerta.id_remoto
-            if (!alerta2.save(flush: true)) {
-                println "error alerta: " + alerta2.errors
+//            def alerta2 = new Alerta()
+//            alerta2.from = usu
+//            alerta2.persona = personaFirma2
+//            alerta2.fechaEnvio = now
+//            alerta2.mensaje = "${mensaje} (${reforma.fecha.format('dd-MM-yyyy')}): " + reforma.concepto
+//            alerta2.controlador = "firma"
+//            alerta2.accion = "firmasPendientes"
+//            alerta2.id_remoto = alerta.id_remoto
+//            if (!alerta2.save(flush: true)) {
+//                println "error alerta: " + alerta2.errors
+//            }
+
+            if(!reforma.save(flush: true)){
+                render "ERROR*Error al solicitar la firma"
+            }else{
+                render "SUCCESS*Firma solicitada exitosamente"
             }
-
-            reforma.save(flush: true)
-
-            render "SUCCESS*Firmas solicitadas exitosamente"
         } else {
             render "ERROR*Clave de autorización incorrecta"
         }
@@ -2482,10 +2489,10 @@ class ReformaController  {
 
 
     def asignacionOrigenProcesar_ajax () {
-        println("params a " + params)
+        println("params aop " + params)
 
         def actual = params.anio ? Anio.get(params.anio) : Anio.findByAnio(new Date().format("yyyy"))
-        def  proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
+        def  proyectos3 = UnidadEjecutora.get(1).getProyectosUnidad(actual, session.perfil.codigo.toString())
         println "proyectos3: $proyectos3"
 
         def detalle
@@ -2867,10 +2874,9 @@ class ReformaController  {
 
     def anio_ajax() {
 
-        println("params anio a" + params)
+//        println("params anio " + params)
 
         def cn = dbConnectionService.getConnection()
-
         def actual
 
         if (params.anio) {
@@ -2879,7 +2885,7 @@ class ReformaController  {
             actual = Anio.findByAnio(new Date().format("yyyy"))
         }
 
-        def unidad = UnidadEjecutora.get(session.unidad.id)
+        def unidad = UnidadEjecutora.get(1)
         def proyectos = unidad.getProyectosUnidad(actual, session.perfil.codigo.toString())
 
         def anios__id = 0
@@ -2900,10 +2906,6 @@ class ReformaController  {
         if(params.id){
             detalle = DetalleReforma.get(params.id)
         }
-
-        println("detalle " + detalle)
-        println("detalle " + actual)
-        println("detalle " + anios)
 
         return [detalle: detalle, actual: actual, anios: anios]
     }

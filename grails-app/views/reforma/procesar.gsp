@@ -3,9 +3,6 @@
     <meta name="layout" content="main">
     <title>Procesar solicitud de reforma</title>
 
-    %{--        <script type="text/javascript" src="${resource(dir: 'js/plugins/ckeditor-4.4.6', file: 'ckeditor.js')}"></script>--}%
-    %{--        <script type="text/javascript" src="${resource(dir: 'js/plugins/ckeditor-4.4.6', file: 'adapters/jquery.js')}"></script>--}%
-
     <asset:javascript src="/ckeditor/ckeditor.js"/>
 
     <style type="text/css">
@@ -46,10 +43,10 @@
             <h4>Devuelto por ${reforma.firma1.usuario}</h4>
             ${reforma.firma1.observaciones}
         </g:if>
-        <g:if test="${reforma.firma2.observaciones && reforma.firma2.observaciones != '' && reforma.firma2.observaciones != 'S'}">
-            <h4>Devuelto por ${reforma.firma2.usuario}</h4>
-            ${reforma.firma2.observaciones}
-        </g:if>
+%{--        <g:if test="${reforma.firma2.observaciones && reforma.firma2.observaciones != '' && reforma.firma2.observaciones != 'S'}">--}%
+%{--            <h4>Devuelto por ${reforma.firma2.usuario}</h4>--}%
+%{--            ${reforma.firma2.observaciones}--}%
+%{--        </g:if>--}%
     </div>
 </g:if>
 
@@ -125,11 +122,11 @@
             <thead>
             <tr>
                 <th style="width:4%;">Año</th>
-%{--                <th style="width:15%;">Proyecto</th>--}%
+                %{--                <th style="width:15%;">Proyecto</th>--}%
                 <th style="width:15%;">Componente</th>
                 <th style="width:14%;">Actividad</th>
                 <th style="width:8%;">Partida</th>
-%{--                <th style="width:8%;">Responsable</th>--}%
+                %{--                <th style="width:8%;">Responsable</th>--}%
                 <th style="width:8%;">Valor inicial<br/>USD</th>
                 <th style="width:8%;">Disminución<br/>USD</th>
                 <th style="width:9%;">Aumento<br/>USD</th>
@@ -143,11 +140,11 @@
                 <g:if test="${det?.tipoReforma?.codigo == 'O'}">
                     <tr class="info" data-id="${det?.id}" id="detr" data-cod="${det?.tipoReforma?.codigo}" data-par="${det?.asignacionOrigen?.id}" data-val="${det?.valor}" data-anio="${det?.anio?.id}">
                         <td style=width:4%>${det?.anio}</td>
-%{--                        <td style=width:15%>${det?.componente?.proyecto?.nombre}</td>--}%
+                        %{--                        <td style=width:15%>${det?.componente?.proyecto?.nombre}</td>--}%
                         <td style=width:16%>${det?.componente?.objeto}</td>
                         <td style=width:15%>${det?.asignacionOrigen?.marcoLogico?.objeto}</td>
                         <td style='width:7%' class='text-center'>${det?.asignacionOrigen?.presupuesto?.numero}</td>
-%{--                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>--}%
+                        %{--                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>--}%
                         <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valorOrigenInicial}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:9%' class='text-right'><g:formatNumber number="${det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                         <td style='width:9%' class='text-center'>${' --- '}</td>
@@ -168,7 +165,7 @@
                         <tr class="rowC" data-id="${det?.id}" id="detr" data-cod="${det?.tipoReforma?.codigo}" data-par="${det?.asignacionOrigen?.presupuesto?.id}" data-anio="${det?.anio?.id}">
                     </g:else>
                     <td style=width:4%>${det?.anio}</td>
-%{--                    <td style=width:15%>${det?.componente?.proyecto?.nombre}</td>--}%
+                %{--                    <td style=width:15%>${det?.componente?.proyecto?.nombre}</td>--}%
                     <g:if test="${det?.tipoReforma?.codigo == 'P'}">
                         <td style=width:16%>${det?.componente?.marcoLogico?.objeto}</td>
                         <td style=width:15%>${det?.componente?.objeto}</td>
@@ -183,7 +180,7 @@
                     <g:else>
                         <td style='width:8%' class='text-center'>${det?.asignacionOrigen?.presupuesto?.numero}</td>
                     </g:else>
-%{--                    <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>--}%
+                %{--                    <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>--}%
                     <td style='width:8%' class='text-right'><g:formatNumber number="${det?.valorDestinoInicial}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
                     <td style='width:9%' class='text-center'>${' --- '}</td>
                     <td style='width:9%' class='text-right'><g:formatNumber number="${det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
@@ -196,11 +193,11 @@
                 <g:if test="${det?.tipoReforma?.codigo == 'A'}" >
                     <tr class="rowD" data-id="${det?.id}" id="detr" data-cod="${det?.tipoReforma?.codigo}" data-par="${det?.asignacionOrigen?.presupuesto?.id}" data-anio="${det?.anio?.id}">
                         <td style=width:4%>${det?.anio}</td>
-%{--                        <td style=width:15%>${det?.componente?.proyecto?.nombre}</td>--}%
+                        %{--                        <td style=width:15%>${det?.componente?.proyecto?.nombre}</td>--}%
                         <td style=width:16%>${det?.componente?.objeto}</td>
                         <td style=width:15%>${det?.descripcionNuevaActividad}</td>
                         <td style='width:8%' class='text-center'>${det?.presupuesto?.numero}</td>
-%{--                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>--}%
+                        %{--                        <td style='width:8%' class='text-center'>${det?.responsable?.codigo}</td>--}%
                         <td style='width:8%' class='text-center'>${' --- '}</td>
                         <td style='width:9%' class='text-center'>${' --- '}</td>
                         <td style='width:9%' class='text-right'><g:formatNumber number="${det?.valor}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></td>
@@ -219,7 +216,7 @@
         <table class="table table-bordered table-hover table-condensed" style="margin-top: 10px;">
             <thead>
             <tr>
-                <th style="width: 64%;">TOTAL: </th>
+                <th style="width: 42%;">TOTAL: </th>
                 <th style="width: 8%;"><g:formatNumber number="${totalOrigen}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></th>
                 <th style="width: 9%;"><g:formatNumber number="${disminucion}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></th>
                 <th style="width: 8%;"><g:formatNumber number="${incremento}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></th>
@@ -234,25 +231,25 @@
                 <g:else>
                     <th style="width: 8%;"><g:formatNumber number="${montoFinal}" maxFractionDigits="2" minFractionDigits="2" format="##,###"/></th>
                 </g:else>
-                <th th style="width: 4%"></th>
+                <th th style="width: 6%"></th>
             </tr>
             </thead>
         </table>
 
     </g:if>
     <g:else>
-        <g:if test="${btnSelect}">
-            <g:render template="/reportesReformaTemplates/tablaSolicitud"
-                      model="[det: det2, tipo: tipo, btnSelect: btnSelect, btnDelete: false, editable: editable]"/>
-            <g:if test="${detallado.size() > 0}">
-                <g:render template="/reportesReformaTemplates/tablaSolicitud"
-                          model="[det: detallado, tipo: tipo, btnSelect: false, btnDelete: btnSelect, editable: editable]"/>
-            </g:if>
-        </g:if>
-        <g:else>
-            <g:render template="/reportesReformaTemplates/tablaSolicitud"
-                      model="[det: det, tipo: tipo, btnSelect: false, btnDelete: false, editable: editable]"/>
-        </g:else>
+%{--        <g:if test="${btnSelect}">--}%
+%{--            <g:render template="/reportesReformaTemplates/tablaSolicitud"--}%
+%{--                      model="[det: det2, tipo: tipo, btnSelect: btnSelect, btnDelete: false, editable: editable]"/>--}%
+%{--            <g:if test="${detallado.size() > 0}">--}%
+%{--                <g:render template="/reportesReformaTemplates/tablaSolicitud"--}%
+%{--                          model="[det: detallado, tipo: tipo, btnSelect: false, btnDelete: btnSelect, editable: editable]"/>--}%
+%{--            </g:if>--}%
+%{--        </g:if>--}%
+%{--        <g:else>--}%
+%{--            <g:render template="/reportesReformaTemplates/tablaSolicitud"--}%
+%{--                      model="[det: det, tipo: tipo, btnSelect: false, btnDelete: false, editable: editable]"/>--}%
+%{--        </g:else>--}%
     </g:else>
 
 </elm:container>
@@ -294,20 +291,20 @@
             </div>
 
             <div class="col-md-3 grupo">
-                <g:if test="${reforma.estado.codigo == "D02"}">
-                    ${reforma.firma2.usuario}
-                </g:if>
-                <g:else>
-                    <g:select from="${gerentes}" optionKey="id" optionValue="${{
-                        it.nombre + ' ' + it.apellido
-                    }}" noSelection="['': '- Seleccione -']" name="firma2" class="form-control required input-sm"/>
-                </g:else>
+                %{--                <g:if test="${reforma.estado.codigo == "D02"}">--}%
+                %{--                    ${reforma.firma2.usuario}--}%
+                %{--                </g:if>--}%
+                %{--                <g:else>--}%
+                %{--                    <g:select from="${gerentes}" optionKey="id" optionValue="${{--}%
+                %{--                        it.nombre + ' ' + it.apellido--}%
+                %{--                    }}" noSelection="['': '- Seleccione -']" name="firma2" class="form-control required input-sm"/>--}%
+                %{--                </g:else>--}%
             </div>
             <div class="col-md-6" >
                 <div class="btn-group" role="group" aria-label="..." style="float: right">
                     <elm:linkPdfReforma reforma="${reforma}" preview="${true}" class="btn-default" title="Previsualizar" label="true"/>
                     <a href="#" id="btnAprobar" class="btn btn-success ${btnSelect && totalSaldo > 0 ? 'disabled' : ''}" title="Aprobar y solicitar firmas">
-                        <i class="fa fa-pencil"></i> Solicitar firmas
+                        <i class="fa fa-paper-plane"></i> Solicitar firmas
                     </a>
                     <a href="#" id="btnNegar" class="btn btn-danger" title="Negar definitivamente la solicitud de reforma">
                         <i class="fa fa-thumbs-down"></i> Negar
@@ -321,7 +318,7 @@
 <script type="text/javascript">
 
     CKEDITOR.replace( 'editor1', {
-        height                  : 200,
+        height                  : 150,
         width                   : 1000,
         resize_enabled          : false,
         language: 'es',
@@ -338,7 +335,7 @@
 
         var detalleId = $(this).parent().parent().data("id");
 
-        bootbox.confirm("Está seguro de borrar este detalle?", function (res) {
+        bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> Está seguro de borrar este detalle?", function (res) {
             if(res){
                 $.ajax({
                     type: 'POST',
@@ -455,8 +452,10 @@
         $.ajax({
             type: 'POST',
             url     : "${createLink(controller: 'reforma', action: 'anio_ajax')}",
+            data:{
+                anio: ' ${reforma.anio.id}'
+            },
             success : function (msg) {
-
                 var b = bootbox.dialog({
                     id    : "dlgOrigen",
                     title : '<h3 class="text-info">Asignación de Origen</h3>',
@@ -521,7 +520,6 @@
                                 else{
                                     return false;
                                 }
-
                             }
                         }
                     } //buttons
@@ -566,8 +564,8 @@
                 ico = "thumbs-save";
             }
             data.firma1 = $("#firma1").val();
-            data.firma2 = $("#firma2").val();
-            data.observaciones = $("#richText").val();
+            // data.firma2 = $("#firma2").val();
+            data.observaciones = CKEDITOR.instances['nota'].getData();
         }
 
         var $msg = $("<div>");
@@ -610,21 +608,22 @@
                 data    : data,
                 success : function (msg) {
                     var parts = msg.split("*");
-                    log(parts[1], parts[0]);
+                    // log(parts[1], parts[0]);
                     if (parts[0] == "SUCCESS") {
+                        log("Guardado correctamente","success");
                         if (mandar) {
                             location.href = "${createLink(action:'pendientes')}";
                         } else {
                             location.reload(true);
                         }
                     } else {
-                        closeLoader();
+                        log("Error al guardar","error")
                     }
                 }
             });
         };
         if (mandar) {
-            bootbox.confirm("¿Está seguro de querer <strong class='text-" + clase + "'>" + str2 + "</strong> esta solicitud de reforma?<br/>Esta acción no puede revertirse.",
+            bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> ¿Está seguro de querer <strong class='text-" + clase + "'>" + str2 + "</strong> esta solicitud de reforma?<br/>Esta acción no puede revertirse.",
                 function (res) {
                     if (res) {
                         dlg();
@@ -636,11 +635,11 @@
     }
 
     $(function () {
-        $('#richText').ckeditor(function () { /* callback code */
-            },
-            {
-                customConfig : '${resource(dir: 'js/plugins/ckeditor-4.4.6', file: 'config_bullets_only.js')}'
-            });
+        %{--$('#richText').ckeditor(function () { /* callback code */--}%
+        %{--    },--}%
+        %{--    {--}%
+        %{--        customConfig : '${resource(dir: 'js/plugins/ckeditor-4.4.6', file: 'config_bullets_only.js')}'--}%
+        %{--    });--}%
         $("#frmFirmas").validate({
             errorClass     : "help-block",
             onfocusout     : false,
@@ -658,23 +657,17 @@
             }
         });
         $("#btnAprobar").click(function () {
-//                    var ok = true;
-            %{--<g:if test="${reforma.tipoSolicitud == 'I'}">--}%
-            %{--var ti = parseFloat(number_format($("#totalInicial").data("valor"), 2, ".", ""));--}%
-            %{--var tf = parseFloat(number_format($("#totalFinal").data("valor"), 2, ".", ""));--}%
-            %{--if (ti != tf) {--}%
-            %{--bootbox.alert("Debe seleccionar las asignaciones de origen de tal manera que el total inicial sea igual al total final");--}%
-            %{--ok = false;--}%
-            %{--}--}%
-            %{--</g:if>--}%
-//                    if (ok) {
-            if ($("#frmFirmas").valid() && (${Math.round(disminucion*100)/100} == ${Math.round(incremento*100)/100})) {
-                %{--if ($("#frmFirmas").valid() && (${Math.abs(disminucion - incremento)} > 0.001)) {--}%
-                procesar(true, true);
-            } else {
-                alert("No cuadran los valores: \n Disminución: ${disminucion} \n Incremento: ${incremento}")
+
+            if($("#frmFirmas").valid()){
+                if(${Math.round(disminucion*100)/100} == ${Math.round(incremento*100)/100}){
+                    procesar(true, true)
+                }else{
+                    bootbox.alert("Los valores ingresados no cuadran :" + '</br>' + "Disminución: ${disminucion}" + '</br>' + "Incremento: ${incremento}")
+                }
+            }else{
+                bootbox.alert("Seleccione una persona para firmar")
             }
-//                    }
+
             return false;
         });
         $("#btnGuardar").click(function () {
@@ -762,16 +755,10 @@
                                 b2 = d.asd == dataOrigen.asignacion_id
                             }
                         }
-
-
-
-//                                console.log($(this), d.aso, "==", dataOrigen.asignacion_id, "&&", d.asd, "==", dataDestino.asignacion_id, (d.aso == dataOrigen.asignacion_id && d.asd == dataDestino.asignacion_id), "b1:", b1);
                         if (b1) {
                             ok = false;
                             bootbox.alert("No puede seleccionar un par de asignaciones ya ingresados");
                         } else {
-//                                    console.log(d.aso, dataDestino.asignacion_id, d.asd, dataOrigen.asignacion_id, d.aso == dataDestino.asignacion_id, d.asd == dataOrigen.asignacion_id, d.aso == dataDestino.asignacion_id || d.asd == dataOrigen.asignacion_id)
-//                                    console.log(d.aso, "==", dataDestino.asignacion_id, "||", d.asd, "==", dataOrigen.asignacion_id, (d.aso == dataDestino.asignacion_id || d.asd == dataOrigen.asignacion_id), "b2: ", b2);
                             if (b2) {
                                 ok = false;
                                 bootbox.alert("No puede seleccionar una asignación de origen que está listada como destino");
@@ -796,14 +783,13 @@
                         },
                         success : function (msg) {
                             var parts = msg.split("*");
-                            log(parts[1], parts[0]);
                             if (parts[0] == "SUCCESS") {
+                                log("Detalle borrado correctamente","success")
                                 setTimeout(function () {
                                     location.reload(true);
                                 }, 1000);
                             } else {
-                                closeLoader()
-                            }
+                                log("Error al borrar el detalle","error")                            }
                         }
                     });
                 }
@@ -876,13 +862,13 @@
                                                 },
                                                 success : function (msg) {
                                                     var parts = msg.split("*");
-                                                    log(parts[1], parts[0]);
                                                     if (parts[0] == "SUCCESS") {
+                                                        log("Origen asignado correctamente","success")
                                                         setTimeout(function () {
                                                             location.reload(true);
                                                         }, 1000);
                                                     } else {
-                                                        closeLoader()
+                                                        log("Errro al asignar el origen","error")
                                                     }
                                                 }
                                             });

@@ -74,15 +74,16 @@
 
 <script type="text/javascript">
 
+    cargarAnio($("#anioPro").val());
 
-    $("#anioPro").change(function () {
-        $("#divProy").html(spinner);
+    function cargarAnio(anio) {
         $.ajax({
             type    : "POST",
             url     : "${createLink(controller: 'reforma', action:'asignacionOrigenProcesar_ajax')}",
             data    : {
                 id: '${detalle?.id}',
-                anio   : $("#anioPro").val()
+                // anio   : $("#anioPro").val()
+                anio   : anio
             },
             success : function (msg) {
                 $("#divProy").html(msg);
@@ -91,6 +92,12 @@
                 $("#divAsg").html("");
             }
         });
+    }
+
+
+    $("#anioPro").change(function () {
+        $("#divProy").html(spinner);
+        cargarAnio($(this).val());
     });
 
 
