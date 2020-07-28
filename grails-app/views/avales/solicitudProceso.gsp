@@ -5,7 +5,7 @@
     <meta name="layout" content="main"/>
     <title>Nueva solicitud de aval: 3-Solicitud</title>
 
-    <link href="${resource(dir: 'css/custom', file: 'wizard.css')}" rel="stylesheet"/>
+    <asset:stylesheet src="/apli/wizard.css"/>
 
 </head>
 
@@ -70,7 +70,7 @@
 
             <div class="col-md-2">
                 <p class="form-control-static">
-                    <strong><g:formatNumber number="${disponible}" type="currency"/></strong>
+                    <strong>$<g:formatNumber number="${disponible}" type="number"/></strong>
                 </p>
             </div>
         </span>

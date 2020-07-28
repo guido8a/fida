@@ -53,17 +53,11 @@ class FirmasService {
     }
 
     def listaDirectoresUnidad(UnidadEjecutora unidad) {
-        //quitado el 03-06-2015, cambiado por lo de mas abajo....
-//        def directores = Persona.withCriteria {
-//            eq("unidad", unidad)
-//            cargoPersonal {
-//                ilike("descripcion", "%director%")
-//            }
-//        }
-//        return directores
-        def unidades = unidad.unidades
+//        def unidades = unidad.unidades
+        def unidades = [UnidadEjecutora.get(1)]
         println "unidades: $unidades, ${unidades[0].codigo}"
         def directores
+/*
         if(unidades[0].codigo == 'GG') {
             directores = Persona.withCriteria {
                 inList("unidad", unidades)
@@ -77,6 +71,8 @@ class FirmasService {
                 eq("estaActivo", 1)
             }
         }
+*/
+        directores = Persona.list()
         return directores
     }
 

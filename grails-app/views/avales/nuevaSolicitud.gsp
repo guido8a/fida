@@ -89,13 +89,56 @@
                     <div class="col-md-9">
                         <g:if test="${!readOnly}">
                             <g:select name="proyecto.id" from="${proyectos}" class="form-control input-sm required"
-                                      optionKey="id" optionValue="${{
-                                it.codigo + " - " + it.nombre
-                            }}" id="proyecto" value="${proceso?.proyecto?.id}"/>
+                                      optionKey="id" optionValue="${{it.nombre}}" id="proyecto" value="${proceso?.proyecto?.id}"/>
                         </g:if>
                         <g:else>
                             <p class="form-control-static">
                                 ${proceso?.proyecto?.toStringCompleto()}
+                            </p>
+                        </g:else>
+                    </div>
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="grupo">
+                    <label for="fechaInicio" class="col-md-2 control-label">
+                        Fecha Inicio (requerimiento de aval)
+                    </label>
+
+                    <div class="col-md-2">
+                        <g:if test="${!readOnly}">
+                            <input name="fechaInicio" id='fechaInicio' type='text' class="form-control required"
+                                   value="${proceso?.fechaInicio?.format("dd-MM-yyyy")}"/>
+                            <p class="help-block ui-helper-hidden"></p>
+
+                        </g:if>
+                        <g:else>
+                            <p class="form-control-static">
+                                ${proceso?.fechaInicio?.format("dd-MM-yyyy")}
+                            </p>
+                        </g:else>
+                    </div>
+                </span>
+                %{--</div>--}%
+
+
+                %{--<div class="row">--}%
+                <span class="grupo">
+                    <label for="fechaFin" class="col-md-2 control-label">
+                        Fecha fin de la actividad
+                    </label>
+
+                    <div class="col-md-2">
+                        <g:if test="${!readOnly}">
+                            <input name="fechaFin" id='fechaFin' type='text' class="form-control required"
+                                   value="${proceso?.fechaInicio?.format("dd-MM-yyyy")}"/>
+                            <p class="help-block ui-helper-hidden"></p>
+
+                        </g:if>
+                        <g:else>
+                            <p class="form-control-static">
+                                ${proceso?.fechaFin?.format("dd-MM-yyyy")}
                             </p>
                         </g:else>
                     </div>
@@ -122,56 +165,7 @@
                 </span>
             </div>
 
-            <div class="row">
-                <span class="grupo">
-                    <label for="fechaInicio" class="col-md-2 control-label">
-                        Fecha Inicio (requerimiento de aval)
-                    </label>
 
-                    <div class="col-md-3">
-                        <g:if test="${!readOnly}">
-%{--
-                            <elm:datepicker name="fechaInicio" class="datepicker form-control input-sm required"
-                                            value="${proceso?.fechaInicio}" onChangeDate="validarFechaIni" minDate="${new Date()}"/>
---}%
-                            <input name="fechaInicio" id='fechaInicio' type='text' class="form-control required" value="${administracionInstance?.fechaInicio?.format("dd-MM-yyyy")}"/>
-                            <p class="help-block ui-helper-hidden"></p>
-
-                        </g:if>
-                        <g:else>
-                            <p class="form-control-static">
-                                ${proceso?.fechaInicio?.format("dd-MM-yyyy")}
-                            </p>
-                        </g:else>
-                    </div>
-                </span>
-                %{--</div>--}%
-
-
-                %{--<div class="row">--}%
-                <span class="grupo">
-                    <label for="fechaFin" class="col-md-2 control-label">
-                        Fecha fin de la actividad
-                    </label>
-
-                    <div class="col-md-3">
-                        <g:if test="${!readOnly}">
-%{--
-                            <elm:datepicker name="fechaFin" class="datepicker form-control input-sm required" value="${proceso?.fechaFin}"
-                                            onChangeDate="validarFechaFin" minDate="${new Date()}"/>
---}%
-                            <input name="fechaFin" id='fechaFin' type='text' class="form-control required" value="${administracionInstance?.fechaInicio?.format("dd-MM-yyyy")}"/>
-                            <p class="help-block ui-helper-hidden"></p>
-
-                        </g:if>
-                        <g:else>
-                            <p class="form-control-static">
-                                ${proceso?.fechaFin?.format("dd-MM-yyyy")}
-                            </p>
-                        </g:else>
-                    </div>
-                </span>
-            </div>
 
             <div class="row">
                 <span class="grupo">
@@ -199,7 +193,7 @@
 
 
             <g:if test="${!readOnly}">
-                <div class="row">
+                <div class="row" style="height: 80px">
                     <div class="col-md-3 col-md-offset-8 text-right">
                         <a href="#" class="btn btn-success" id="btnOk" title="Guardar y pasar a asignaciones">
                             <i class="fa fa-save"></i> Guardar y Continuar <i class="fa fa-chevron-right"></i>

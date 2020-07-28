@@ -189,7 +189,8 @@ class AvalesController{
             }
         }
         if (band) {
-            detalle.delete()
+            println "borra el detalle ${detalle.id}"
+            detalle.delete(flush: true)
             render "ok"
         } else {
             render "no"
@@ -326,14 +327,10 @@ class AvalesController{
      * @param anio el id del año
      */
     def cargarAsignaciones3_ajax = {
-//        println "cargar asg " + params
         def act = MarcoLogico.get(params.id)
         def anio = Anio.get(params.anio)
-//        println "asgs "+ Asignacion.findAllByMarcoLogicoAndAnio(act, anio)
-//        def asg = Asignacion.findAllByMarcoLogicoAndAnio(act, anio)
-//        def asg = proyectosService.getAsignacionesUnidadActividad(session.asignaciones, act)
-//        def asg = proyectosService.getAsignacionesUnidadActividad(UnidadEjecutora.get(session.unidad.id), anio, act, session.perfil.codigo.toString())
-        def asg = UnidadEjecutora.get(session.unidad.id).getAsignacionesUnidadActividad(anio, act, session.perfil.codigo.toString())
+        def asg = UnidadEjecutora.get(1).getAsignacionesUnidadActividad(anio, act, session.perfil.codigo.toString())
+        println "asg: $asg"
         [asgs: asg]
     }
 
@@ -597,18 +594,23 @@ class AvalesController{
         if (params.id) {
             def proceso = ProcesoAval.get(params.id)
 
-            def unidad = UnidadEjecutora.get(session.unidad.id)
+            def unidad = UnidadEjecutora.get(1)
 //            def personasFirma = Persona.findAllByUnidad(unidad)
-            def personasFirma = firmasService.listaDirectoresUnidad(unidad)
+//            def personasFirma = firmasService.listaDirectoresUnidad(unidad)
+            def personasFirma = Persona.findAllByUnidadEjecutora(unidad)
 //            println "Personas Firma: " + personasFirma
-            def aux = Auxiliar.list()
+
             def referencial = 7000
+/*
+            def aux = Auxiliar.list()
+
             if (aux.size() > 0) {
                 aux = aux.pop()
                 referencial = aux.presupuesto * (2 * Math.pow(10, -7))
                 referencial = referencial.round(2)
                 println "referencial " + referencial
             }
+*/
 
             def estadoDevuelto = EstadoAval.findByCodigo("D01")
             def estadoSolicitadoSinFirma = EstadoAval.findByCodigo("EF4")

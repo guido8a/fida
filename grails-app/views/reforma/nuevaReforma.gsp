@@ -322,6 +322,13 @@
 
 <script type="text/javascript">
 
+
+    $("#btnReporteReformas").click(function () {
+        location.href="${createLink(controller: 'reportes', action: 'reporteAjustes')}?id=" + '${reforma?.id}'
+    });
+
+
+
     //guardar reforma
 
     $("#btnGuardar").click(function () {

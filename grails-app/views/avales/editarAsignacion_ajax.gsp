@@ -19,7 +19,7 @@
             <div class="col-md-3">
                 <div class="input-group">
                     <g:textField class="form-control input-sm number money" name="montoName" style="text-align: right; margin-right: 10px" id="dlgMonto" value="${asg?.monto}"/>
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                 </div>
             </div>
 

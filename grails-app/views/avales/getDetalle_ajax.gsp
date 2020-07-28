@@ -1,13 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: fabricio
-  Date: 20/01/15
-  Time: 03:46 PM
---%>
-<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
 
-<script src="${resource(dir: 'js/plugins/fixed-header-table-1.3', file: 'jquery.fixedheadertable.js')}"></script>
-<link rel="stylesheet" type="text/css" href="${resource(dir: 'js/plugins/fixed-header-table-1.3/css', file: 'defaultTheme.css')}"/>
+%{--<script src="${resource(dir: 'js/plugins/fixed-header-table-1.3', file: 'jquery.fixedheadertable.js')}"></script>--}%
+%{--<link rel="stylesheet" type="text/css" href="${resource(dir: 'js/plugins/fixed-header-table-1.3/css', file: 'defaultTheme.css')}"/>--}%
 
 <table class="table table-condensed table-bordered table-striped table-hover" id="tblDetalle">
     <thead>
@@ -96,11 +90,13 @@
     ////        $("#dlgMax").text(number_format(max, 2, '.', ','));
     //    });
 
+/*
     $("#tblDetalle").fixedHeaderTable({
         height     : 200,
         autoResize : true,
         footer     : true
     });
+*/
 
     $(".borrar").click(function () {
         var idTr = $(this).attr("iden");
