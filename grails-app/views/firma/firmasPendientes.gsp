@@ -133,7 +133,7 @@
                     <g:each in="${firmasReformas}" var="f">
                         <tr data-firma="${f}" esPdf="${f.esPdf}" accVer="${f.accionVer}">
                             <td>${f.concepto}</td>
-                            <td>${modificaciones.Reforma.get(f.idAccionVer)?.persona?.unidad?.nombre}</td>
+                            <td>${modificaciones.Reforma?.get(f.idAccionVer)?.persona?.unidadEjecutora?.nombre}</td>
                             <td style="text-align: center">
                                 <div class="btn-group btn-group-sm" role="group">
                                     <g:if test="${f.accionVer}">
@@ -151,7 +151,7 @@
                                         </g:else>
                                     </g:if>
                                     <a href="#" iden="${f.id}" class="aprobar btn btn-success" title="Firmar">
-                                        ${imgFirma}
+                                        <i class="fa fa-edit"></i>  ${imgFirma}
                                     </a>
                                     <g:if test="${f.tipoFirma && f.tipoFirma != ''}">
                                         <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">
