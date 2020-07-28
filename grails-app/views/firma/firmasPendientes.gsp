@@ -137,21 +137,21 @@
                             <td style="text-align: center">
                                 <div class="btn-group btn-group-sm" role="group">
                                     <g:if test="${f.accionVer}">
-                                        <g:if test="${f.esPdf == 'S'}">
-                                            <a href="${g.createLink(controller: 'pdf', action: 'pdfLink')}?url=${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"
-                                               target="_blank" class="btn btn-info" title="Ver">
-                                                <i class="fa fa-search"></i>
-                                            </a>
-                                        </g:if>
-                                        <g:else>
+%{--                                        <g:if test="${f.esPdf == 'S'}">--}%
+%{--                                            <a href="${g.createLink(controller: 'pdf', action: 'pdfLink')}?url=${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"--}%
+%{--                                               target="_blank" class="btn btn-info" title="Ver">--}%
+%{--                                                <i class="fa fa-search"></i>--}%
+%{--                                            </a>--}%
+%{--                                        </g:if>--}%
+%{--                                        <g:else>--}%
                                             <a href="${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"
                                                class="btn btn-info" title="Ver">
                                                 <i class="fa fa-search"></i>
                                             </a>
-                                        </g:else>
+%{--                                        </g:else>--}%
                                     </g:if>
                                     <a href="#" iden="${f.id}" class="aprobar btn btn-success" title="Firmar">
-                                        <i class="fa fa-edit"></i>  ${imgFirma}
+                                        <i class="fa fa-check-circle"></i>  ${imgFirma}
                                     </a>
                                     <g:if test="${f.tipoFirma && f.tipoFirma != ''}">
                                         <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">
@@ -206,7 +206,7 @@
 %{--                                        </g:else>--}%
                                     </g:if>
                                     <a href="#" iden="${f.id}" class="aprobar btn btn-success" title="Firmar">
-                                        <i class="fa fa-edit"></i>  ${imgFirma}
+                                        <i class="fa fa-check-circle"></i>  ${imgFirma}
                                     </a>
                                     <g:if test="${f.tipoFirma && f.tipoFirma != ''}">
                                         <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">

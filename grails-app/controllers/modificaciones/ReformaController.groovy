@@ -3,6 +3,7 @@ package modificaciones
 import fida.Alerta
 import parametros.Anio
 import parametros.proyectos.Fuente
+import parametros.proyectos.TipoElemento
 import poa.Asignacion
 import poa.EstadoAval
 import poa.ModificacionAsignacion
@@ -700,7 +701,8 @@ class ReformaController  {
                     }
                     break;
                 case "X":
-                    accion = "nuevaReformaPreviewReforma"
+//                    accion = "nuevaReformaPreviewReforma"
+                    accion = "reporteAjustes"
                     break;
 
                 default:
@@ -740,7 +742,8 @@ class ReformaController  {
                 firma1.controlador = "reforma"
                 firma1.idAccion = reforma.id
                 firma1.accionVer = accion
-                firma1.controladorVer = "reportesReforma"
+//                firma1.controladorVer = "reportesReforma"
+                firma1.controladorVer = "reportes"
                 firma1.idAccionVer = reforma.id
                 firma1.accionNegar = "devolverAprobarReforma"
                 firma1.controladorNegar = "reforma"
@@ -1907,20 +1910,25 @@ class ReformaController  {
     }
 
 
+//    def firmarAprobarNuevaReforma () {
+//        println("params aprobar " + params)
+//    }
+
     def firmarAprobarNuevaReforma () {
 
         println("params aprobar " + params)
         def errores = ""
 
-        def firma = Firma.findByKey(params.key)
+//        def firma = Firma.findByKey(params.key)
+        def firma = Firma.get(params.firma)
         if (!firma) {
             response.sendError(403)
         } else {
-            def reforma = Reforma.findByFirma1OrFirma2(firma, firma)
+//            def reforma = Reforma.findByFirma1OrFirma2(firma, firma)
+            def reforma = Reforma.findByFirma1(firma)
 
-            if (reforma.firma1.estado == "F" && reforma.firma2.estado == "F") {
-//                println "Estan las 2 firmas, entra a hacer la modificacion"
-                //busco el ultimo numero asignado para signar el siguiente
+//            if (reforma.firma1.estado == "F" && reforma.firma2.estado == "F") {
+            if (reforma.firma1.estado == "F") {
                 def ultimoNum = Reforma.withCriteria {
                     eq("tipo", "R")
                     projections {
@@ -2026,12 +2034,12 @@ class ReformaController  {
                             nuevaActividad.objeto = d?.descripcionNuevaActividad
                             nuevaActividad.monto = d?.valor
                             nuevaActividad.estado = 0
-                            nuevaActividad.categoria = d?.categoria
-                            nuevaActividad.fechaInicio = d?.fechaInicioNuevaActividad
-                            nuevaActividad.fechaFin = d?.fechaFinNuevaActividad
-                            nuevaActividad.responsable = reforma.persona.unidad
+//                            nuevaActividad.categoria = d?.categoria
+//                            nuevaActividad.fechaInicio = d?.fechaInicioNuevaActividad
+//                            nuevaActividad.fechaFin = d?.fechaFinNuevaActividad
+//                            nuevaActividad.responsable = reforma.persona.unidad
                             nuevaActividad.numero = numAct
-                            nuevaActividad.reforma = reforma
+//                            nuevaActividad.reforma = reforma
 
                             if (!nuevaActividad.save(flush: true)) {
                                 println "error al guardar la actividad A " + nuevaActividad.errors
@@ -2045,7 +2053,7 @@ class ReformaController  {
                                 destinoActividad.marcoLogico = nuevaActividad
                                 destinoActividad.presupuesto = d?.presupuesto
                                 destinoActividad.planificado = 0
-                                destinoActividad.unidad = nuevaActividad.responsable
+                                destinoActividad.unidad = UnidadEjecutora.get(1)
                                 destinoActividad.priorizado = d?.valor
                                 if (!destinoActividad.save(flush: true)) {
                                     println "error al guardar la asignacion A " + destinoActividad.errors
@@ -2115,32 +2123,35 @@ class ReformaController  {
 
                 //mail
 
-                def analista =  reforma.persona.mail
-                def director = reforma.director.mail
-                println("mail1 " + director )
-                println("mail2 " + analista )
-
-                println "mail: Se ha aprobado la Reforma 2016 – GPE Nro. ${reforma.numeroReforma}, puede ingresar la(s) " +
-                        "solicitud(es) de Aval POA para el o los procesos correspondientes."
-
-                if (director || analista) {
-                    mailService.sendMail {
-                        to director, analista
-                        subject "Notificación de aprobación de reforma"
-                        body "Se ha aprobado la Reforma 2016 – GPE Nro. ${reforma.numeroReforma}, puede ingresar la(s) " +
-                                "solicitud(es) de Aval POA para el o los procesos correspondientes."
-                        println "mail ok: Se ha aprobado la Reforma 2016 – GPE Nro. ${reforma.numeroReforma}, puede ingresar la(s) " +
-                                "solicitud(es) de Aval POA para el o los procesos correspondientes."
-                    }
-                } else {
-                    println "no tienen mail el director o el analista!!"
-
-                }
+//                def analista =  reforma.persona.mail
+//                def director = reforma.director.mail
+//                println("mail1 " + director )
+//                println("mail2 " + analista )
+//
+//                println "mail: Se ha aprobado la Reforma 2016 – GPE Nro. ${reforma.numeroReforma}, puede ingresar la(s) " +
+//                        "solicitud(es) de Aval POA para el o los procesos correspondientes."
+//
+//                if (director || analista) {
+//                    mailService.sendMail {
+//                        to director, analista
+//                        subject "Notificación de aprobación de reforma"
+//                        body "Se ha aprobado la Reforma 2016 – GPE Nro. ${reforma.numeroReforma}, puede ingresar la(s) " +
+//                                "solicitud(es) de Aval POA para el o los procesos correspondientes."
+//                        println "mail ok: Se ha aprobado la Reforma 2016 – GPE Nro. ${reforma.numeroReforma}, puede ingresar la(s) " +
+//                                "solicitud(es) de Aval POA para el o los procesos correspondientes."
+//                    }
+//                } else {
+//                    println "no tienen mail el director o el analista!!"
+//
+//                }
             }
             println("errores "  + errores)
             if(errores != ""){
-
+                render "no"
             }else{
+                def estadoAprobado = EstadoAval.findByCodigo("E02")
+                reforma.estado = estadoAprobado
+                reforma.save(flush:true)
                 render "ok"
             }
         }
@@ -2163,19 +2174,20 @@ class ReformaController  {
         def mensaje = "Devolución de solicitud de ${tipoStr}"
 
         reforma.firma1.estado = "N"
-        reforma.firma2.estado = "N"
+//        reforma.firma2.estado = "N"
         reforma.firma1.save(flush: true)
-        reforma.firma2.save(flush: true)
+//        reforma.firma2.save(flush: true)
 
         analistas.each { a ->
             def alerta = new Alerta()
-            alerta.from = usu
+//            alerta.from = usu
             alerta.persona = a
-            alerta.fechaEnvio = now
+//            alerta.fechaEnvio = now
+            alerta.fechaCreacion = now
             alerta.mensaje = mensaje + reforma.concepto
-            alerta.controlador = "reforma"
+//            alerta.controlador = "reforma"
             alerta.accion = "pendientes"
-            alerta.id_remoto = reforma.id
+//            alerta.id_remoto = reforma.id
             if (!alerta.save(flush: true)) {
                 println "error alerta: " + alerta.errors
             }
