@@ -14,6 +14,7 @@ import modificaciones.Reforma
 
 import java.awt.Color
 
+
 class ReportesController {
 
     def reporteAjustes() {
@@ -139,9 +140,15 @@ class ReportesController {
         addCellTabla(tablaPie, new Paragraph("", times10normal), frmtDato2)
 //        addCellTabla(tablaPie, new Paragraph("", times10normal), prmsCellHead3)
         addCellTabla(tablaPie, new Paragraph("Elaborado por:", times10bold), prmsCellHead3)
-        addCellTabla(tablaPie, new Paragraph('', times10normal), prmsCellHead3)
+        addCellTabla(tablaPie, new Paragraph(reforma.persona.nombreCompleto, times10normal), prmsCellHead3)
         addCellTabla(tablaPie, new Paragraph("Fecha:", times10bold), prmsCellHead3)
         addCellTabla(tablaPie, new Paragraph(reforma?.fecha?.format("dd-MM-yyyy"), times10normal), prmsCellHead3)
+
+        if(reforma?.nota) {
+            addCellTabla(tablaPie, new Paragraph("Nota:", times10bold), prmsCellHead3)
+            addCellTabla(tablaPie, new Paragraph(reforma.nota, times10normal), prmsCellHead3)
+//            addCellTabla(tablaPie, new Paragraph("", times10normal), frmtDato2)
+        }
 
         addCellTabla(tablaHeader, new Paragraph("AÑO", times8bold), frmtHd)
         addCellTabla(tablaHeader, new Paragraph("FUENTE", times8bold), frmtHd)
