@@ -1880,8 +1880,8 @@ class ElementosTagLib {
                         fileName = "techo"
                         break;
                     case "X":
-                        accion = "nuevaReforma"
-                        fileName = "nuevaReforma"
+                        accion = "reporteAjustes"
+                        fileName = "reporteAjustes"
                         break;
                     case "Z":
                         accion = "reporteAjustes"
@@ -1899,8 +1899,8 @@ class ElementosTagLib {
             }
             def title, clase, title2 = "", clase2 = ""
             if (preview) {
-                accion += "PreviewReforma"
-                fileName += "_previsualizacion"
+                accion = "reporteAjustes"
+                fileName = "reporteAjustes"
                 title = "Previsualizar"
                 clase = "btn-info"
             } else {
@@ -1983,7 +1983,7 @@ class ElementosTagLib {
             }
 */
 
-//            println "<<<< $str"
+            println "<<<< $str ,, fileName: $fileName"
             out << str
         }
     }

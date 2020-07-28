@@ -239,7 +239,7 @@ class FirmasService {
                 def nombre = "" + user.login + "_" + now.format("dd_MM_yyyy_mm_ss") + ".png"
                 new File(pathQr).mkdirs()
 //                println " "+now.format("ddMMyyyyhhmmss.SSS")+" "+" nombre "+nombre+"  "+user.login.encodeAsMD5()+"   "+(user.autorizacion.substring(10,20))
-//                key = now.format("ddMMyyyyhhmmss.SSS").encodeAsMD5() + (user.login.encodeAsMD5().substring(0, 10)) + (user.autorizacion.substring(10, 20))
+                key = now.format("ddMMyyyyhhmmss.SSS").encodeAsMD5() + (user.login.encodeAsMD5().substring(0, 10)) + (user.autorizacion.substring(10, 20))
                 // println "key "+key
                 texto += "${user.nombreCompleto} CI:${user?.cedula} ${nombre} ${user.autorizacion.substring(10,20)}"
 //                texto += key

@@ -623,7 +623,9 @@
             });
         };
         if (mandar) {
-            bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> ¿Está seguro de querer <strong class='text-" + clase + "'>" + str2 + "</strong> esta solicitud de reforma?<br/>Esta acción no puede revertirse.",
+            bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i>" +
+                " ¿Está seguro de querer <strong class='text-" + clase + "'>" + str2 + "</strong> " +
+                "esta solicitud de reforma?<br/>Esta acción no puede revertirse.",
                 function (res) {
                     if (res) {
                         dlg();
@@ -662,7 +664,8 @@
                 if(${Math.round(disminucion*100)/100} == ${Math.round(incremento*100)/100}){
                     procesar(true, true)
                 }else{
-                    bootbox.alert("Los valores ingresados no cuadran :" + '</br>' + "Disminución: ${disminucion}" + '</br>' + "Incremento: ${incremento}")
+                    bootbox.alert("Los valores ingresados no cuadran :" + '</br>' + "Disminución: ${disminucion}" +
+                        '</br>' + "Incremento: ${incremento}")
                 }
             }else{
                 bootbox.alert("Seleccione una persona para firmar")

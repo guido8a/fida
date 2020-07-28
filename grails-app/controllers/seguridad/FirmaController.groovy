@@ -222,7 +222,8 @@ class FirmaController {
 
             if (firma.class == Firma) {
                 println "redirect " + firma.controlador + "  " + firma.accion + "  " + firma.idAccion + "  " + firma.key
-                redirect(controller: firma.controlador, action: firma.accion, params: [id: firma.idAccion, key: firma.key, firma: firma.id])
+                redirect(controller: firma.controlador, action: firma.accion, params: [id: firma.idAccion,
+                    key: firma.key, firma: firma.id])
             } else {
                 render "error"
             }
