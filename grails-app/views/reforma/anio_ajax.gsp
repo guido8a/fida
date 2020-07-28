@@ -1,5 +1,4 @@
 
-<%@ page import="vesta.poa.Asignacion" %>
 
 
 %{--//origen--}%
@@ -59,7 +58,7 @@
         <div  class="col-md-5">
             <div class="input-group">
                 <g:textField type="text" name="monto" style="float: right" class="form-control required input-sm number money" value="${detalle?.valor}"/>
-                <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
             </div>
         </div>
 
@@ -95,7 +94,6 @@
     });
 
 
-
     <g:if test="${detalle}">
     $("#anioPro").val(${detalle?.anio?.id}).change();
     setTimeout(function () {
@@ -125,15 +123,9 @@
 //                    console.log("valor " + valor)
                     var tot = 0;
                     $(".tableReformaNueva").each(function () {
-
                         var d = $(this).children().children().data("cod")
                         var parId = $(this).children().children().data("par")
                         var valorP = $(this).children().children().data("val")
-//                        if(d == 'O'){
-//                            if(parId == asg){
-//                            tot += parseFloat(valorP)
-//                            }
-//                        }
                     });
 //                    console.log("total " + tot)
                     var ok = valor - tot;
@@ -144,7 +136,6 @@
             });
         }
     }
-
 
     $("#frmAsignacion").validate({
         errorClass: "help-block",
