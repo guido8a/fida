@@ -52,7 +52,7 @@
                 </td>
                 <td style="text-align: center">
                     <g:if test="${firma.estado == 'F'}">
-                        <a href="#" class="imprimir btn btn-info btn-sm" iden="${firma.id}"><i class="fa fa-print"></i>
+                        <a href="#" class="imprimir btn btn-info btn-xs" iden="${firma.id}"><i class="fa fa-print"></i>
                         </a>
                     </g:if>
                 </td>
