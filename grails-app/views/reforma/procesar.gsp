@@ -258,22 +258,32 @@
     <elm:container tipo="vertical" titulo="Observaciones">
         <div class="row">
             <div class="col-md-1 show-label">Observaciones</div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-11">
-                <textarea name='editor1' id="nota" class="editor" rows="100" cols="80">${reforma?.nota}</textarea>
+            <div class="col-md-5">
+                <g:textArea name='editor1' id="nota" class="form-class" style="resize: none; width: 100%; height: 150px">${reforma?.nota}</g:textArea>
+            </div>
+        <div class="col-md-2">
+            <div class="btn-group">
+                <a href="#" class="btn btn-success" id="btnGuardar">
+                    <i class="fa fa-save"></i> Guardar texto
+                </a>
             </div>
         </div>
 
-        <div class="row">
-            <div class="btn-toolbar toolbar" style="margin-top: 5px; margin-left: 10px">
-                <div class="btn-group">
-                    <a href="#" class="btn btn-success" id="btnGuardar">
-                        <i class="fa fa-save"></i> Guardar texto
-                    </a>
-                </div>
-            </div>
+
+%{--        <div class="row">--}%
+%{--            <div class="col-md-11">--}%
+%{--                <textarea name='editor1' id="nota" class="editor">${reforma?.nota}</textarea>--}%
+%{--            </div>--}%
+%{--        </div>--}%
+
+%{--        <div class="row">--}%
+%{--            <div class="btn-toolbar toolbar" style="margin-top: 5px; margin-left: 10px">--}%
+%{--                <div class="btn-group">--}%
+%{--                    <a href="#" class="btn btn-success" id="btnGuardar">--}%
+%{--                        <i class="fa fa-save"></i> Guardar texto--}%
+%{--                    </a>--}%
+%{--                </div>--}%
+%{--            </div>--}%
         </div>
     </elm:container>
 
@@ -317,19 +327,19 @@
 
 <script type="text/javascript">
 
-    CKEDITOR.replace( 'editor1', {
-        height                  : 150,
-        width                   : 1000,
-        resize_enabled          : false,
-        language: 'es',
-        uiColor: '#9AB8F3',
-        extraPlugins: 'entities',
-        toolbar                 : [
-            ['FontSize', 'Scayt', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
-            ['Bold', 'Italic', 'Underline','Subscript', 'Superscript'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-']
-        ]
-    });
+    // CKEDITOR.replace( 'editor1', {
+    //     height                  : 150,
+    //     width                   : 1000,
+    //     resize_enabled          : false,
+    //     language: 'es',
+    //     uiColor: '#9AB8F3',
+    //     extraPlugins: 'entities',
+    //     toolbar                 : [
+    //         ['FontSize', 'Scayt', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+    //         ['Bold', 'Italic', 'Underline','Subscript', 'Superscript'],
+    //         ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-']
+    //     ]
+    // });
 
     $(".borrarTr").click(function () {
 
@@ -565,7 +575,8 @@
             }
             data.firma1 = $("#firma1").val();
             // data.firma2 = $("#firma2").val();
-            data.observaciones = CKEDITOR.instances['nota'].getData();
+            // data.observaciones = CKEDITOR.instances['nota'].getData();
+            data.observaciones = $("#nota").val()
         }
 
         var $msg = $("<div>");
