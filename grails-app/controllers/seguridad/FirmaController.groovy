@@ -50,6 +50,7 @@ class FirmaController {
 
 
         println("firmas a " + firmasAjustes)
+        println("firmas r " + firmasReformas)
 
         return [firmasReformas: firmasReformas, firmasAjustes: firmasAjustes,
                 firmasAvales  : firmasAvales, actual: actual, imgFirma: imgFirma, params: params]
