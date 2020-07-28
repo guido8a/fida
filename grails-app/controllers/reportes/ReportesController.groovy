@@ -22,7 +22,7 @@ class ReportesController {
 
         def titulo_rep
         def reforma = Reforma.get(params.id)
-        def firma = seguridad.Firma.findByTipoFirmaAndIdAccionAndEstado('AJST', reforma.id, 'F')
+        def firma = seguridad.Firma.findByIdAccionAndEstado(reforma.id, 'F')
         def firma_path = firma?.path
 //        def firma_path = seguridad.Firma.findByTipoFirmaAndIdAccion('AJST', 5)?.path
         def detalles = DetalleReforma.findAllByReforma(reforma)
