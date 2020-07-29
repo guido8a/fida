@@ -14,7 +14,6 @@ import modificaciones.Reforma
 
 import java.awt.Color
 
-
 class ReportesController {
 
     def reporteAjustes() {
@@ -147,6 +146,11 @@ class ReportesController {
         if(reforma?.nota) {
             addCellTabla(tablaPie, new Paragraph("Nota:", times10bold), prmsCellHead3)
             addCellTabla(tablaPie, new Paragraph(reforma.nota, times10normal), prmsCellHead3)
+//            document.add(new Paragraph(reforma.nota))
+//            document.add(new Paragraph("<b>hola</b> reforma.nota"))
+//                    ITextRenderer render = new ITextRenderer()
+//            document.add(render.setText("<b>hola</b> reforma.nota")))
+//            document.add(new Paragraph("http://lineadecodigo.com"));
 //            addCellTabla(tablaPie, new Paragraph("", times10normal), frmtDato2)
         }
 

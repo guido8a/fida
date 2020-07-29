@@ -113,14 +113,14 @@ class EnviarService {
         content += "</html>"
 
 
-        def texto = renderTemplateWithModel()
-        println "texto: $texto"
+//        def texto = renderTemplateWithModel()
+//        println "texto: $texto"
 
         ITextRenderer renderer = new ITextRenderer();
 //        renderer.setDocument(doc, null);
 //        println "------------ pasa renderer"
-//        renderer.setDocumentFromString(content);
-        renderer.setDocumentFromString(texto);
+        renderer.setDocumentFromString(content);
+//        renderer.setDocumentFromString(texto);
 //        println "-----setDoc..."
         renderer.layout();
 //        println "crea layout pdf"

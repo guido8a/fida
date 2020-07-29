@@ -2072,7 +2072,7 @@ class AjusteController {
     }
 
     def creaPdf() {
-        def mensaje = render(view: '/reportesReforma/verNuevoAjuste', model: [id: 1])
+        def mensaje = "hola"
         def baos = enviarService.crearPdf(mensaje)
         byte[] b = baos.toByteArray();
         println "responde"

@@ -1464,11 +1464,12 @@ class AvalesController{
      */
     def descargaSolicitud = {
         def sol = SolicitudAval.get(params.id)
-//        println "path solicitud "+cer.pathSolicitud
+        println "path solicitud " + sol.path
 //        def path = servletContext.getRealPath("/") + "pdf/solicitudAval/" + sol.path
         def path = "/var/fida/solicitud/" + sol.path
 
         def src = new File(path)
+        println "--- archivo: ${src.size()}"
         if (src.exists()) {
             response.setContentType("application/octet-stream")
             response.setHeader("Content-disposition", "attachment;filename=${src.getName()}")
