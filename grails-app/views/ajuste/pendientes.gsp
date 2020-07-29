@@ -9,83 +9,87 @@
 
 <body>
 
+<div class="panel panel-primary col-md-12" role="tabpanel" style="margin-top: 50px;">
 
-<div class="btn-group">
-    <g:link controller="ajuste" action="nuevoAjuste" class="btn btn-success btnCrear">
-        <i class="fa fa-file"></i> Solicitar ajuste
-    </g:link>
-</div>
+    <h3>Solicitudes pendientes</h3>
 
-<div role="tabpanel" style="margin-top: 15px;">
+    <div class="btn-group">
+        <g:link controller="ajuste" action="nuevoAjuste" class="btn btn-success btnCrear">
+            <i class="fa fa-file"></i> Solicitar ajuste
+        </g:link>
+    </div>
 
-    <!-- Nav tabs -->
-    <ul class="nav nav-pills" role="tablist">
-        <li role="presentation" class="active">
-            <a href="#pendientes" aria-controls="home" role="tab" data-toggle="pill">
-                Solicitudes pendientes
-            </a>
-        </li>
-        <li role="presentation">
-            <a href="#historial" aria-controls="profile" role="tab" data-toggle="pill">
-                Historial solicitudes
-            </a>
-        </li>
-    </ul>
+    <div role="tabpanel" style="margin-top: 15px;">
 
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="pendientes" style="margin-top: 20px;">
-            <g:if test="${reformas.size() > 0}">
-                <table class="table table-bordered table-hover table-condensed">
-                    <thead>
-                    <tr style="width: 100%">
-                        <th style="width: 10%;">Solicita</th>
-                        <th style="width: 10%;">Fecha</th>
-                        <th style="width: 40%;">Concepto</th>
-                        <th style="width: 10%;">Tipo</th>
-                        <th style="width: 10%;">Estado</th>
-                        <th style="width: 10%;">Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${reformas}" var="reforma">
+        <!-- Nav tabs -->
+        <ul class="nav nav-pills" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#pendientes" aria-controls="home" role="tab" data-toggle="pill">
+                    Solicitudes pendientes
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#historial" aria-controls="profile" role="tab" data-toggle="pill">
+                    Historial solicitudes
+                </a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="pendientes" style="margin-top: 20px;">
+                <g:if test="${reformas.size() > 0}">
+                    <table class="table table-bordered table-hover table-condensed">
+                        <thead>
                         <tr style="width: 100%">
-                            <td style="width: 10%">${reforma.persona}</td>
-                            <td style="width: 10%">${reforma.fecha.format("dd-MM-yyyy")}</td>
-                            <td style="width: 40%">${reforma.concepto}</td>
-                            <td style="width: 10%">
-                                <elm:tipoReforma reforma="${reforma}"/>
-                            </td>
-                            <td class="${reforma.estado.codigo}" style="width: 10%">${reforma.estado.descripcion}</td>
-                            <td style="width: 10%; text-align: center">
-                                <div class="btn-group btn-group-xs" role="group">
-                                    %{-- <g:if test="${session.perfil.codigo == 'ASPL' && !modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">--}%
-                                    <a href="#"  class="btn btn-success editarAjuste"  ajuste="${reforma?.id}" data-id="${reforma?.id}" title="Editar ajuste">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <g:if test="${!modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">
-                                        <a href="#"  class="btn btn-danger borrar"  ajuste="${reforma?.id}" title="Eliminar ajuste">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                        <a href="#"  class="btn btn-info btnVerReforma"  data-id="${reforma?.id}" title="Ver">
-                                            <i class="fa fa-search"></i>
-                                        </a>
-                                    </g:if>
-                                </div>
-                            </td>
+                            <th style="width: 10%;">Solicita</th>
+                            <th style="width: 10%;">Fecha</th>
+                            <th style="width: 40%;">Concepto</th>
+                            <th style="width: 10%;">Tipo</th>
+                            <th style="width: 10%;">Estado</th>
+                            <th style="width: 10%;">Acciones</th>
                         </tr>
-                    </g:each>
-                    </tbody>
-                </table>
-            </g:if>
-            <g:else>
-                <div class="alert alert-info" style="width: 550px;margin-top: 20px">No existen solicitudes pendientes</div>
-            </g:else>
-        </div>
+                        </thead>
+                        <tbody>
+                        <g:each in="${reformas}" var="reforma">
+                            <tr style="width: 100%">
+                                <td style="width: 10%">${reforma.persona}</td>
+                                <td style="width: 10%">${reforma.fecha.format("dd-MM-yyyy")}</td>
+                                <td style="width: 40%">${reforma.concepto}</td>
+                                <td style="width: 10%">
+                                    <elm:tipoReforma reforma="${reforma}"/>
+                                </td>
+                                <td class="${reforma.estado.codigo}" style="width: 10%">${reforma.estado.descripcion}</td>
+                                <td style="width: 10%; text-align: center">
+                                    <div class="btn-group btn-group-xs" role="group">
+                                        %{-- <g:if test="${session.perfil.codigo == 'ASPL' && !modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">--}%
+                                        <a href="#"  class="btn btn-success editarAjuste"  ajuste="${reforma?.id}" data-id="${reforma?.id}" title="Editar ajuste">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <g:if test="${!modificaciones.DetalleReforma.findAllByReforma(modificaciones.Reforma.get(reforma?.id))}">
+                                            <a href="#"  class="btn btn-danger borrar"  ajuste="${reforma?.id}" title="Eliminar ajuste">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                            <a href="#"  class="btn btn-info btnVerReforma"  data-id="${reforma?.id}" title="Ver">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                        </g:if>
+                                    </div>
+                                </td>
+                            </tr>
+                        </g:each>
+                        </tbody>
+                    </table>
+                </g:if>
+                <g:else>
+                    <div class="alert alert-info" style="width: 550px;margin-top: 20px">No existen solicitudes pendientes</div>
+                </g:else>
+            </div>
 
-        <div role="tabpanel" class="tab-pane" id="historial" style="margin-top: 20px">
-            <div id="detalle">
+            <div role="tabpanel" class="tab-pane" id="historial" style="margin-top: 20px">
+                <div id="detalle">
 
+                </div>
             </div>
         </div>
     </div>

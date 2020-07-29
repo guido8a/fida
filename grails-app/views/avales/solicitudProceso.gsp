@@ -118,7 +118,7 @@
                         <input type="hidden" name="path" id="path" value="${solicitud?.path}" readonly
                                style="margin-left: -10px"/>
                         Archivo subido:
-                        <a href="${resource(dir: 'pdf/solicitudAval', file: solicitud?.path)}" target="_blank">
+                        <a href="#" class="alert-link" id="btnDescargarArchivo" data-id="${solicitud?.id}">
                             <i class="fa fa-download"></i> ${solicitud?.path}
                         </a>
                     </g:if>
@@ -127,8 +127,7 @@
                 <g:else>
                     <p class="form-control-static">
                         <g:if test="${solicitud?.path}">
-                            <a href="${resource(dir: '/var/fida/solicitud/', file: solicitud?.path)}" target="_blank"
-                               style="margin-left: -10px">
+                            <a href="#" class="alert-link" id="btnDescargarArchivo" data-id="${solicitud?.id}">
                                 <i class="fa fa-download"></i> ${solicitud?.path}
                             </a>
                         </g:if>
@@ -231,6 +230,12 @@
 
 <script type="text/javascript">
     $(function () {
+
+        $("#btnDescargarArchivo").click(function () {
+            location.href = "${createLink(controller:'avales',action:'descargaSolicitud')}/" + $(this).data("id")
+        });
+
+
         $(".frmAval").validate({
             errorClass: "help-block",
             errorPlacement: function (error, element) {
