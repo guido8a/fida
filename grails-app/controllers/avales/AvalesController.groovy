@@ -479,7 +479,7 @@ class AvalesController{
 //        proyectos = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
         proyectos = Proyecto.list()
 
-        println "--> nuevaSolicitud"
+//        println "--> nuevaSolicitud"
         return [proyectos: proyectos, proceso: proceso, actual: actual, band: band, unidad: unidad, readOnly: readOnly,
                 solicitud: solicitud]
     }
@@ -654,7 +654,7 @@ class AvalesController{
                     refencial: referencial, readOnly: readOnly, solicitud: solicitud, params: params]
         } else {
             redirect(action: "nuevaSolicitud")
-            return
+//            return
         }
     }
 
@@ -767,18 +767,16 @@ class AvalesController{
      * @param id el id del proceso
      */
     def avalesProceso = {
-//        def perfil = session.perfil.codigo
-//        def proceso = ProcesoAval.get(params.id)
-//        def avales = Aval.findAllByProceso(proceso)
-//        def solicitudes = SolicitudAval.findAllByProceso(proceso, [sort: "fecha"])
-//        [avales: avales, proceso: proceso, solicitudes: solicitudes, perfil: perfil]
+        def perfil = session.perfil.codigo
+        def proceso = ProcesoAval.get(params.id)
+        def avales = Aval.findAllByProceso(proceso)
+        def solicitudes = SolicitudAval.findAllByProceso(proceso, [sort: "fecha"])
+        [avales: avales, proceso: proceso, solicitudes: solicitudes, perfil: perfil]
 
-//        def perfil = session.perfil.codigo
-//        def proceso = ProcesoAval.get(params.id)
-//        def avales = Aval.findAllByProceso(proceso)
-        def estado = EstadoAval.findByCodigo("R01")
-        def solicitudes = SolicitudAval.findAllByEstado(estado, [sort: "fecha"])
-        [solicitudes: solicitudes, avales: null]
+
+//        def estado = EstadoAval.findByCodigo("R01")
+//        def solicitudes = SolicitudAval.findAllByEstado(estado, [sort: "fecha"])
+//        [solicitudes: solicitudes, avales: null]
     }
 
     /**

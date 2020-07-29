@@ -24,12 +24,13 @@
 
 <elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>
 
-%{--        <h3 class="text-info">Proceso: ${proceso.nombre}</h3>--}%
+<g:link controller="avales" action="listaProcesos" class="btn btn-default">
+    <i class="fa fa-arrow-left"></i> Lista de procesos
+</g:link>
 
+<div class="panel panel-primary col-md-12" role="tabpanel" style="margin-top: 20px;">
 
-<div class="panel panel-primary col-md-12" role="tabpanel" style="margin-top: 50px;">
-
-    <h3>Avales y Solicitudes de Aval</h3>
+    <h3>Avales y Solicitudes de Aval - Proceso: ${proceso.nombre}</h3>
 
     <div role="tabpanel">
         <!-- Nav tabs -->
@@ -45,54 +46,54 @@
         <!-- Tab panes -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="avales">
-                                    <g:if test="${avales?.size() > 0}">
-                %{--                        <table class="table table-condensed table-bordered table-striped table-hover" style="margin-top: 20px">--}%
-                %{--                            <thead>--}%
-                %{--                                <tr>--}%
-                %{--                                    <th>Proceso</th>--}%
-                %{--                                    <th>Justificación</th>--}%
-                %{--                                    <th>Fecha</th>--}%
-                %{--                                    <th>Número</th>--}%
-                %{--                                    <th>Monto</th>--}%
-                %{--                                    <th>Estado</th>--}%
-                %{--                                    <th>Aval</th>--}%
-                %{--                                    <th>Anulación</th>--}%
-                %{--                                </tr>--}%
-                %{--                            </thead>--}%
-                %{--                            <tbody>--}%
-                %{--                                <g:each in="${avales}" var="p">--}%
-                %{--                                    <tr>--}%
-                %{--                                        <td>${p.proceso.nombre}</td>--}%
-                %{--                                        <td>${p.concepto}</td>--}%
-                %{--                                        <td style="text-align: center">${p.fechaAprobacion?.format("dd-MM-yyyy")}</td>--}%
-                %{--                                        <td style="text-align: center">${p.numeroAval}</td>--}%
-                %{--                                        <td style="text-align: right">--}%
-                %{--                                            <g:formatNumber number="${p.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>--}%
-                %{--                                        </td>--}%
-                %{--                                        <g:set var="avalEstado" value="${p?.estado?.codigo}"/>--}%
-                %{--                                        <td style="text-align: center;font-weight: bold" class="${avalEstado == 'E05' ? 'amarillo' : avalEstado == 'E04' ? 'rojo' : avalEstado == 'E02' ? 'verde' : 'rojo'}">--}%
-                %{--                                            ${p.estado?.descripcion}--}%
-                %{--                                        </td>--}%
-                %{--                                        <td style="text-align: center">--}%
-                %{--                                            <a href="#" class="imprimiAval btn btn-info btn-sm" title="Imprimir" iden="${SolicitudAval.findByAval(p)?.id}">--}%
-                %{--                                                <i class="fa fa-print "></i>--}%
-                %{--                                            </a>--}%
-                %{--                                        </td>--}%
-                %{--                                        <td style="text-align: center">--}%
-                %{--                                            <g:if test="${p.estado.codigo == 'E02' && perfil != 'OBS'}">--}%
-                %{--                                                <a href="#" class="solAnulacion btn btn-danger btn-sm" iden="${p.id}" title="Solicitar anulación">--}%
-                %{--                                                    <i class="fa fa-times"></i>--}%
-                %{--                                                </a>--}%
-                %{--                                            </g:if>--}%
-                %{--                                        </td>--}%
-                %{--                                    </tr>--}%
-                %{--                                </g:each>--}%
-                %{--                            </tbody>--}%
-                %{--                        </table>--}%
+                <g:if test="${avales?.size() > 0}">
+                    <table class="table table-condensed table-bordered table-striped table-hover" style="margin-top: 20px">
+                        <thead>
+                        <tr>
+                            <th>Proceso</th>
+                            <th>Justificación</th>
+                            <th>Fecha</th>
+                            <th>Número</th>
+                            <th>Monto</th>
+                            <th>Estado</th>
+                            <th>Aval</th>
+                            <th>Anulación</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <g:each in="${avales}" var="p">
+                            <tr>
+                                <td>${p.proceso.nombre}</td>
+                                <td>${p.concepto}</td>
+                                <td style="text-align: center">${p.fechaAprobacion?.format("dd-MM-yyyy")}</td>
+                                <td style="text-align: center">${p.numeroAval}</td>
+                                <td style="text-align: right">
+                                    <g:formatNumber number="${p.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>
+                                </td>
+                                <g:set var="avalEstado" value="${p?.estado?.codigo}"/>
+                                <td style="text-align: center;font-weight: bold" class="${avalEstado == 'E05' ? 'amarillo' : avalEstado == 'E04' ? 'rojo' : avalEstado == 'E02' ? 'verde' : 'rojo'}">
+                                    ${p.estado?.descripcion}
+                                </td>
+                                <td style="text-align: center">
+                                    <a href="#" class="imprimiAval btn btn-info btn-sm" title="Imprimir" iden="${SolicitudAval.findByAval(p)?.id}">
+                                        <i class="fa fa-print "></i>
+                                    </a>
+                                </td>
+                                <td style="text-align: center">
+                                    <g:if test="${p.estado.codigo == 'E02' && perfil != 'OBS'}">
+                                        <a href="#" class="solAnulacion btn btn-danger btn-sm" iden="${p.id}" title="Solicitar anulación">
+                                            <i class="fa fa-times"></i>
+                                        </a>
                                     </g:if>
-                                    <g:else>
-                                        <div class="alert alert-info" style="width: 450px;margin-top: 20px">No existen avales</div>
-                                    </g:else>
+                                </td>
+                            </tr>
+                        </g:each>
+                        </tbody>
+                    </table>
+                </g:if>
+                <g:else>
+                    <div class="alert alert-info" style="width: 450px;margin-top: 20px">No existen avales</div>
+                </g:else>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="solicitudes">

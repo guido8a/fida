@@ -11,20 +11,20 @@
 
     <body>
         <g:set var="monto" value="${proceso?.getMonto() ?: 0}"/>
-        <elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>
+        <elm:message tipo="${flash.tipo}" clase="${flash.clase}"><elm:poneHtml textoHtml="${flash.message}"/></elm:message>
 
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group" role="group">
-                <g:link controller="avales" action="listaProcesos" class="btn btn-default">
-                    <i class="fa fa-bars"></i>Regresar a lista de procesos de avales
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group" role="group">
+            <g:link controller="avales" action="listaProcesos" class="btn btn-default">
+                <i class="fa fa-arrow-left"></i> Lista de procesos
+            </g:link>
+            <g:if test="${proceso}">
+                <g:link controller="avales" action="avalesProceso" id="${proceso?.id}" class="btn btn-info">
+                    <i class="fa fa-share-alt"></i> Avales y solicitudes de avales
                 </g:link>
-                <g:if test="${proceso}">
-                    <g:link controller="avales" action="avalesProceso" id="${proceso?.id}" class="btn btn-default">
-                        <i class="fa fa-bars"></i> Solicitudes y avales del proceso
-                    </g:link>
-                </g:if>
-            </div>
+            </g:if>
         </div>
+    </div>
 
         <g:if test="${solicitud && solicitud.estado.codigo == 'D01' && solicitud.observaciones}">
             <div class="row">

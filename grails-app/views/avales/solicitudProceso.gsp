@@ -10,8 +10,8 @@
 </head>
 
 <body>
-<elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>
-<elm:message tipo="error" clase="error">${params.error}</elm:message>
+<elm:message tipo="${flash.tipo}" clase="${flash.clase}"><elm:poneHtml textoHtml="${flash.message}"/></elm:message>
+<elm:message tipo="error" clase="error"><elm:poneHtml textoHtml="${params.error}"/></elm:message>
 
 
 <input type="hidden" name="id" value="${proceso?.id}">
@@ -19,11 +19,11 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group" role="group">
         <g:link controller="avales" action="listaProcesos" class="btn btn-default">
-            <i class="fa fa-bars"></i> Regresar a lista de procesos de avales
+            <i class="fa fa-arrow-left"></i> Lista de procesos
         </g:link>
         <g:if test="${proceso}">
-            <g:link controller="avales" action="avalesProceso" id="${proceso?.id}" class="btn btn-default">
-                <i class="fa fa-bars"></i> Solicitudes y avales del proceso
+            <g:link controller="avales" action="avalesProceso" id="${proceso?.id}" class="btn btn-info">
+                <i class="fa fa-share-alt"></i> Avales y solicitudes de avales
             </g:link>
         </g:if>
     </div>
