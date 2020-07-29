@@ -18,7 +18,7 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group" role="group">
-        <g:link controller="avales" action="listaProcesos" class="btn btn-default">
+        <g:link controller="revisionAval" action="pendientes" class="btn btn-default">
             <i class="fa fa-arrow-left"></i> Lista de procesos
         </g:link>
         <g:if test="${proceso}">

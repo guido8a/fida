@@ -2,6 +2,7 @@ package avales
 
 import fida.Alerta
 import poa.EstadoAval
+import proyectos.Proyecto
 import seguridad.UnidadEjecutora
 import parametros.Anio
 import poa.Asignacion
@@ -1498,6 +1499,15 @@ class RevisionAvalController {
                 break;
         }
 */
+
+        def proyecto = Proyecto.findAllById(1)
+        def procesosSinSolicitud = ProcesoAval.findAllByProyectoInList(proyecto, [sort: "id"])
+        procesosSinSolicitud.each { pss ->
+            if(!SolicitudAval.findAllByProceso(pss)){
+                p +=pss
+            }
+        }
+
 
         def solicitudes = SolicitudAval.withCriteria {
             if (estados.size() > 0) {
