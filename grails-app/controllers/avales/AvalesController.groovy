@@ -1137,13 +1137,14 @@ class AvalesController{
     }
 
     def guardarSolicitud() {
-        println "guardar solicitud aval params:" + params
+        println "params gsaval :" + params
 
         def preview = params.preview == "S"
 
         def strSolicitud = params.tipo == "A" ? "solicitud de anulación enviada" : "Solicitud de Aval POA enviada para revisión y aprobación"
 
-        def path = servletContext.getRealPath("/") + "pdf/solicitudAval/"
+//        def path = servletContext.getRealPath("/") + "pdf/solicitudAval/"
+        def path = "/var/fida/solicitud/"
         new File(path).mkdirs()
         def f = request.getFile('file')
         def okContents = [
@@ -1157,7 +1158,6 @@ class AvalesController{
             fileName = f.getOriginalFilename() //nombre original del archivo
             def ext
 
-//            println okContents.containsKey(f.getContentType())
             if (!okContents.containsKey(f.getContentType())) {
                 redirect(action: 'solicitudProceso', params: [id: params.proceso, error: "Error: Seleccione un archivo de tipo PDF"])
                 return
@@ -1201,20 +1201,18 @@ class AvalesController{
 
         def proceso = ProcesoAval.get(params.proceso)
 
-        def monto = params.monto
-        monto = monto.toDouble()
+        def monto = params.monto.toDouble()
+//        monto = monto.toDouble()
         def concepto = params.concepto
         def memorando = params.memorando
         def sol = new SolicitudAval()
         if (params.solicitud) {  // no se crea otra solicitud se ya existe
             sol = SolicitudAval.get(params.solicitud)
         }
-        def usuFirma = Persona.get(params.firma1)
-//        println "usuFirma: " + usuFirma
-        sol.director = usuFirma
-//        println "director: " + sol.director
+//        def usuFirma = Persona.get(params.firma1)
+//        sol.director = usuFirma
         sol.estado = EstadoAval.findByCodigo("P01")
-
+//
         sol.proceso = proceso
         if (params.aval) {
             sol.aval = Aval.get(params.aval)
@@ -1225,7 +1223,8 @@ class AvalesController{
         sol.concepto = concepto
         sol.memo = memorando
         sol.notaTecnica = params.notaTecnica
-        sol.unidad = session.usuario.unidad
+//        sol.unidad = session.usuario.unidad
+        sol.unidad = UnidadEjecutora.get(1)
         if (nombre) {
             sol.path = nombre
         } else if (params.path) {
@@ -1236,7 +1235,8 @@ class AvalesController{
         }
         sol.fecha = new Date();
 
-        if (!sol.save(flush: true)) {              // ******** guarda solicitud
+        // ******** guarda solicitud
+        if (!sol.save(flush: true)) {
             println "error save solicitud aval" + sol.errors
         } else {
             if (!preview) {
@@ -1247,33 +1247,34 @@ class AvalesController{
                 }
 
                 def alerta = new Alerta()
-                alerta.from = session.usuario
-                alerta.persona = usuFirma
-                alerta.fechaEnvio = new Date()
-//                alerta.mensaje = "Nueva solicitud de aval: " + sol.concepto
+//                alerta.from = session.usuario
+//                alerta.persona = usuFirma
+                alerta.persona = session.usuario.id
+//                alerta.fechaEnvio = new Date()
+                alerta.fechaCreacion = new Date()
                 alerta.mensaje = "Nueva ${strSolicitud} de aval: " + sol.proceso.nombre
-                alerta.controlador = "revisionAval"
+//                alerta.controlador = "revisionAval"
                 alerta.accion = "pendientes"
-                alerta.id_remoto = sol.id
+//                alerta.id_remoto = sol.id
                 if (!alerta.save(flush: true)) {
                     println "error alerta: " + alerta.errors
                 }
-                try {
-                    def mail = usuFirma.mail
-                    if (mail) {
-
-                        mailService.sendMail {
-                            to mail
-                            subject "Nueva ${strSolicitud} de aval"
-                            body "Tiene una ${strSolicitud} de aval pendiente que requiere su revisión para aprobación "
-                        }
-
-                    } else {
-                        println "El usuario ${sol.firma.usuario.login} no tiene email"
-                    }
-                } catch (e) {
-                    println "error email " + e.printStackTrace()
-                }
+//                try {
+//                    def mail = usuFirma.mail
+//                    if (mail) {
+//
+//                        mailService.sendMail {
+//                            to mail
+//                            subject "Nueva ${strSolicitud} de aval"
+//                            body "Tiene una ${strSolicitud} de aval pendiente que requiere su revisión para aprobación "
+//                        }
+//
+//                    } else {
+//                        println "El usuario ${sol.firma.usuario.login} no tiene email"
+//                    }
+//                } catch (e) {
+//                    println "error email " + e.printStackTrace()
+//                }
             } else {
                 println "Es preview: no hace ni firma ni alerta"
             }
@@ -1281,11 +1282,11 @@ class AvalesController{
         if (preview) {
             flash.message = "${strSolicitud.capitalize()} guardada"
             redirect(action: 'solicitudProceso', params: [id: params.proceso])
-            return
+//            return
         } else {
             flash.message = "${strSolicitud.capitalize()}"
             redirect(action: 'avalesProceso', params: [id: params.proceso])
-            return
+//            return
         }
     }
 

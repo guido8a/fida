@@ -162,37 +162,29 @@
         </span>
     </div>
 
-    <div class="row">
-        <span class="grupo">
-            <label for="firma1" class="col-md-2 control-label">
-                Pedir revisión de
-            </label>
+%{--    <div class="row">--}%
+%{--        <span class="grupo">--}%
+%{--            <label for="firma1" class="col-md-2 control-label">--}%
+%{--                Pedir revisión de--}%
+%{--            </label>--}%
 
-            <div class="col-md-4">
-                <g:if test="${!readOnly}">
-                %{--
-                                            <g:if test="${solicitud?.estado?.codigo == 'D01'}">
-                                                <p class="form-control-static">
-                                                    ${solicitud?.director}
-                                                </p>
-                                            </g:if>
-                                            <g:else>
-                --}%
-                    <g:select from="${personas}" optionKey="id" class="form-control input-sm required"
-                              optionValue="${{
-                                  it.nombre + ' ' + it.apellido
-                              }}" name="firma1" value="${solicitud?.directorId}"
-                              noSelection="['': '.. Seleccione ..']"/>
-                %{--</g:else>--}%
-                </g:if>
-                <g:else>
-                    <p class="form-control-static">
-                        ${solicitud?.director}
-                    </p>
-                </g:else>
-            </div>
-        </span>
-    </div>
+%{--            <div class="col-md-4">--}%
+%{--                <g:if test="${!readOnly}">--}%
+
+%{--                    <g:select from="${personas}" optionKey="id" class="form-control input-sm required"--}%
+%{--                              optionValue="${{--}%
+%{--                                  it.nombre + ' ' + it.apellido--}%
+%{--                              }}" name="firma1" value="${solicitud?.directorId}"--}%
+%{--                              noSelection="['': '.. Seleccione ..']"/>--}%
+%{--                </g:if>--}%
+%{--                <g:else>--}%
+%{--                    <p class="form-control-static">--}%
+%{--                        ${solicitud?.director}--}%
+%{--                    </p>--}%
+%{--                </g:else>--}%
+%{--            </div>--}%
+%{--        </span>--}%
+%{--    </div>--}%
 
     <div class="row">
         <span class="grupo">
