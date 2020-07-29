@@ -1249,7 +1249,7 @@ class AvalesController{
                 def alerta = new Alerta()
 //                alerta.from = session.usuario
 //                alerta.persona = usuFirma
-                alerta.persona = session.usuario.id
+                alerta.persona = session.usuario
 //                alerta.fechaEnvio = new Date()
                 alerta.fechaCreacion = new Date()
                 alerta.mensaje = "Nueva ${strSolicitud} de aval: " + sol.proceso.nombre
