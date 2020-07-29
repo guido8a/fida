@@ -127,7 +127,7 @@
                 <g:else>
                     <p class="form-control-static">
                         <g:if test="${solicitud?.path}">
-                            <a href="${resource(dir: 'pdf/solicitudAval', file: solicitud?.path)}" target="_blank"
+                            <a href="${resource(dir: '/var/fida/solicitud/', file: solicitud?.path)}" target="_blank"
                                style="margin-left: -10px">
                                 <i class="fa fa-download"></i> ${solicitud?.path}
                             </a>

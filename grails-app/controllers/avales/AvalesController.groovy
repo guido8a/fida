@@ -1460,7 +1460,8 @@ class AvalesController{
     def descargaSolicitud = {
         def sol = SolicitudAval.get(params.id)
 //        println "path solicitud "+cer.pathSolicitud
-        def path = servletContext.getRealPath("/") + "pdf/solicitudAval/" + sol.path
+//        def path = servletContext.getRealPath("/") + "pdf/solicitudAval/" + sol.path
+        def path = "/var/fida/solicitud/" + sol.path
 
         def src = new File(path)
         if (src.exists()) {
