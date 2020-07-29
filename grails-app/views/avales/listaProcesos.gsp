@@ -14,7 +14,7 @@
 
 <div class="panel panel-primary col-md-12" role="tabpanel" style="margin-top: 20px; min-height: 300px">
 
-    <h3>Lista de procesos de Avales Emitidos</h3>
+    <h3>Seguimiento a los procesos de Avales Emitidos</h3>
 
     <div class="fila">
     %{--<a href="#" class="btn btn-default btnCrear">--}%
