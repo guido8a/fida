@@ -490,15 +490,18 @@ class ReporteSolicitudController {
 
         def id
         if(params.id) {
-            id = params.id
-        } else {
-            id = params.id.split('&')[0]
+            if(!params.id.contains('&')){
+                id = params.id
+            } else {
+                id = params.id.split('&')[0]
+            }
         }
 
 //        def arch = params.id.split('&')[1]
+        println "--> id: $id"
         def titulo_rep
         def slav = SolicitudAval.get(id)
-        def poas = ProcesoAsignacion.findByProceso(slav.proceso)
+        def poas = ProcesoAsignacion.findByProceso(slav?.proceso)
         def anio = poas.asignacion.anio.anio
         def firma = seguridad.Firma.findByIdAccionAndTipoFirmaAndEstado(slav.id, 'AVAL', 'F')
         def firma_path = firma?.path
