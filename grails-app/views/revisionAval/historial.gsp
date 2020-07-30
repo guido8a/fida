@@ -87,6 +87,6 @@
     });
     $(".imprimirSolicitud").click(function () {
         var url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/?id=" + $(this).attr("iden");
-        location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitud.pdf";
+        location.href = url + "&filename=solicitud.pdf";
     });
 </script>

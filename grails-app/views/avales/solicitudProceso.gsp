@@ -280,7 +280,7 @@
 
         $("#btnPreview").click(function () {
             var url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/?id=${solicitud?.id}";
-            location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=solicitud.pdf"
+            location.href = url + "&filename=solicitud.pdf"
         });
     });
 </script>
