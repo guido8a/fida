@@ -220,7 +220,7 @@
                         <i class="fa fa-save"></i> Guardar
                     </a>
                     <a href="#" id="btnEnviar" class="btn btn-success" title="Guardar y solicitar revisión">
-                        <i class="fa fa-save"></i> Guardar y Enviar <i class="fa fa-paper-plane-o"></i>
+                        Guardar y Enviar <i class="fa fa-paper-plane"></i>
                     </a>
                 </div>
             </g:if>

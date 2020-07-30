@@ -304,7 +304,7 @@
             var $form = $("<form class='form-horizontal'>");
             var $r1 = $("<div class='form-group'\"'>");
             $r1.append("<label class='col-sm-2 control-label' for='obs'>Observaciones</label>");
-            var $obs = $("<textarea name='obs' id='obs' class='form-control required'/>");
+            var $obs = $("<textarea name='obs' id='obs' style='resize: none' class='form-control required'/>");
             var obs = $("<div class='col-sm-10 grupo'>");
             obs.append($obs);
             $r1.append(obs);
