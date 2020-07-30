@@ -287,6 +287,9 @@ class RevisionAvalController {
     }
 
 
+    def historial() {
+
+    }
 
     /**
      * Acción que muestra la pantalla con el historial de solicitudes de avales
@@ -294,7 +297,7 @@ class RevisionAvalController {
      * @param proceso
      * @param numero
      */
-    def historial = {
+    def historial2 = {
         println "historial solicitudes " + params
 //        params.requirente = params.requirente?:123
 //
@@ -325,17 +328,13 @@ class RevisionAvalController {
 //        }
 //        unidades = proyectosService.getUnidadesUnidad(UnidadEjecutora.get(session.unidad.id), perfil)
 
-        def unidad
+        def unidad = UnidadEjecutora.get(1)
 
-        if(params.requirente) {
-//            println "si hay params.requirente: ${params.requirente}"
-            unidad = UnidadEjecutora.get(params.requirente)
-//            unidades = [UnidadEjecutora.get(params.requirente)]
-        } else {
-//            unidades = UnidadEjecutora.get(session.unidad.id).getUnidadesPorPerfil(perfil)
-            unidad = UnidadEjecutora.get(session.unidad.id)
-//            println "no hay params.requirente, unidad: ${unidad}"
-        }
+//        if(params.requirente) {
+//            unidad = UnidadEjecutora.get(params.requirente)
+//        } else {
+//            unidad = UnidadEjecutora.get(session.unidad.id)
+//        }
         unidades = firmasService.gerencias(unidad)
 
 //        println "sesion: ${session.unidad} unidad: $unidad, unidades: $unidades"

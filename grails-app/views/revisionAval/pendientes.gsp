@@ -337,7 +337,7 @@
 
     $(".borrarSolicitud").click(function (){
         var id = $(this).attr("sol")
-        bootbox.confirm("¿Está seguro de querer eliminar esta solicitud?", function (res) {
+        bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> ¿Está seguro de querer eliminar esta solicitud?", function (res) {
             if(res){
                 openLoader('Eliminando solicitud');
                 $.ajax({

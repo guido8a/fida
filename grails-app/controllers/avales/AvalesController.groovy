@@ -10,6 +10,8 @@ import proyectos.MarcoLogico
 import proyectos.Proyecto
 import seguridad.Firma
 import seguridad.Persona
+import seguridad.Prfl
+import seguridad.Sesn
 import seguridad.UnidadEjecutora
 
 
@@ -1365,34 +1367,36 @@ class AvalesController{
 
             def numero = 0
 //            def gerencia = firmasService.requirentes(session.usuario.unidad)
-            def gerencia = UnidadEjecutora.get(firmasService.requirentes(session.usuario.unidad).id)
+//            def gerencia = UnidadEjecutora.get(firmasService.requirentes(session.usuario.unidad).id)
+            def gerencia = UnidadEjecutora.get(1)
 
 //            numero = SolicitudAval.findAllByUnidad(session.usuario.unidad, [sort: "numero", order: "desc", max: 1])
-            numero = gerencia.numeroSolicitudAval
+//            numero = gerencia.numeroSolicitudAval
+            numero = gerencia.numero
             if (numero == 0) {
                 numero = 1
             } else {
                 numero++
             }
 
-            println "solicitd a firmar para gerencia: $gerencia, numero actual : ${gerencia.numeroSolicitudAval}, nuevo: $numero"
+//            println "solicitd a firmar para gerencia: $gerencia, numero actual : ${gerencia.numeroSolicitudAval}, nuevo: $numero"
+            println "solicitd a firmar para gerencia: $gerencia, numero actual : ${gerencia.numero}, nuevo: $numero"
 
             sol.numero = numero
             sol.save(flush: true)
 
             def unej = UnidadEjecutora.get(gerencia.id)
-            unej.numeroSolicitudAval = numero
+//            unej.numeroSolicitudAval = numero
+            unej.numero = numero
             unej.save(flush: true)
 
-//            def perfilDireccionPlanificacion = Prfl.findByCodigo("ASPL") //igual q en reformas
-            def perfilDireccionPlanificacion = Prfl.findByCodigo("DP")
-//            def perfilDireccionComprasPublicas = Prfl.findByCodigo("GJ")
+            def perfilDireccionPlanificacion = Prfl.findByCodigo("PLAN")
             def perfiles = [perfilDireccionPlanificacion]
             def sesiones = Sesn.findAllByPerfilInList(perfiles)
 
 //            println "sesiones: " + sesiones
 //            println "personas: " + sesiones.usuario
-            println "usuarios: " + sesiones.usuario.login
+//            println "usuarios: " + sesiones.usuario.login
 
             if (sesiones.size() > 0) {
                 def persona = Persona.get(session.usuario.id)
@@ -1404,33 +1408,31 @@ class AvalesController{
                     def mail = usro.mail
 
                     def alerta = new Alerta()
-                    alerta.from = persona
+//                    alerta.from = persona
                     alerta.persona = usro
-                    alerta.fechaEnvio = now
-//                    alerta.mensaje = "Solicitud de aval: " + sol.concepto
+//                    alerta.fechaEnvio = now
+                    alerta.fechaCreacion = now
                     alerta.mensaje = "${strSolicitud.capitalize()} de aval: " + sol.proceso.nombre
-                    alerta.controlador = "revisionAval"
+//                    alerta.controlador = "revisionAval"
                     alerta.accion = "pendientes"
-                    alerta.id_remoto = sol.id
+//                    alerta.id_remoto = sol.id
                     if (!alerta.save(flush: true)) {
                         println "error alerta: " + alerta.errors
-                    }/* else {
-                        println "alerta a ${usro}"
-                    }*/
-                    if (mail) {
-                        try {
-                            println "Envía mail de Solicitud Aval para: ${usro.login} a $mail"
-                            mailService.sendMail {
-                                to mail
-                                subject "Nueva ${strSolicitud} de aval"
-                                body "Ha recibido una nueva ${strSolicitud} de aval de la unidad " + sol.unidad
-                            }
-                        } catch (e) {
-                            println "Error al enviar mail: ${e.printStackTrace()}"
-                        }
-                    } else {
-                        println "El usuario ${usro.login} no tiene email"
                     }
+//                    if (mail) {
+//                        try {
+//                            println "Envía mail de Solicitud Aval para: ${usro.login} a $mail"
+//                            mailService.sendMail {
+//                                to mail
+//                                subject "Nueva ${strSolicitud} de aval"
+//                                body "Ha recibido una nueva ${strSolicitud} de aval de la unidad " + sol.unidad
+//                            }
+//                        } catch (e) {
+//                            println "Error al enviar mail: ${e.printStackTrace()}"
+//                        }
+//                    } else {
+//                        println "El usuario ${usro.login} no tiene email"
+//                    }
                 }
             } else {
                 println "No hay nadie registrado con perfil de direccion de planificacion: no se mandan mails"
