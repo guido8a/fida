@@ -26,8 +26,9 @@ class FirmasService {
     def g = new org.grails.plugins.web.taglib.ApplicationTagLib()
 
     def listaFirmasCombos() {
-        def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
+        def unidad = UnidadEjecutora.findByCodigo("FRPS") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
 
+/*
         def directores = Persona.withCriteria {
             eq("unidad", unidad)
             ilike("cargo", "%director%")
@@ -38,8 +39,10 @@ class FirmasService {
             ilike("cargo", "%gerente%")
             eq("estaActivo", 1)
         }
+*/
 
-        return [directores: directores + gerentes, gerentes: gerentes]
+//        return [directores: directores + gerentes, gerentes: gerentes]
+        return [directores: [], gerentes: []]
     }
 
     def listaFirmasCorrientes() {

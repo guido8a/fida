@@ -11,8 +11,8 @@
         <meta name="layout" content="main"/>
         <title>Procesar aval</title>
 
-        <script type="text/javascript" src="${resource(dir: 'js/plugins/ckeditor-4.4.6', file: 'ckeditor.js')}"></script>
-        <script type="text/javascript" src="${resource(dir: 'js/plugins/ckeditor-4.4.6', file: 'adapters/jquery.js')}"></script>
+%{--        <script type="text/javascript" src="${resource(dir: 'js/plugins/ckeditor-4.4.6', file: 'ckeditor.js')}"></script>--}%
+%{--        <script type="text/javascript" src="${resource(dir: 'js/plugins/ckeditor-4.4.6', file: 'adapters/jquery.js')}"></script>--}%
 
         <style type="text/css">
         .horizontal-container {
@@ -117,7 +117,7 @@
                     <div class="col-md-1 show-label">Observaciones:</div>
 
                     <div class="col-md-11">
-                        <g:textArea name="richText" value="${val}"/>
+                        <g:textArea name="richText" style="width: 900px; height: 130px;" value="${val}"/>
                     </div>
                 </div>
 

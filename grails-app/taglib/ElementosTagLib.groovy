@@ -1,5 +1,7 @@
 //import org.codehaus.groovy.grails.commons.DomainClassArtefactHandler
 
+
+import avales.SolicitudAval
 import modificaciones.Reforma
 import org.springframework.beans.SimpleTypeConverter
 import org.springframework.context.MessageSourceResolvable
@@ -2068,6 +2070,39 @@ class ElementosTagLib {
         out << html
     }
 
+    /**
+     * Imprime el número del aval o de la solicidud con el formato '003'
+     * @param aval (opcional) el id del aval
+     * @param solicitud (opcional) el id de la solicitud
+     */
+    def imprimeNumero = { attrs ->
+//        println("imprimeNumero " + attrs)
+        def aval = null
+        def sol = null
+        if (attrs.aval) {
+            aval = Aval.get(attrs.aval)
+        }
+        if (attrs.solicitud) {
+            sol = SolicitudAval.get(attrs.solicitud)
+        }
+        def num = null
+        def uno = 1
+        def output = ""
+        if (aval) {
+            num = aval.numeroAval.toString()
+        }
+        if (sol) {
+            num = sol.numero.toString()
+        }
+
+        num = num.toString().padLeft(3, '0')
+//        println("num1 " + num)
+        if (!num || num == "null") {
+            num = "000"
+        }
+        output += num
+        out << output
+    }
 
 
 
