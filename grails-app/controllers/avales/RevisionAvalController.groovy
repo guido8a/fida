@@ -287,9 +287,9 @@ class RevisionAvalController {
     }
 
 
-    def historial() {
-
-    }
+//    def historial() {
+//
+//    }
 
     /**
      * Acción que muestra la pantalla con el historial de solicitudes de avales
@@ -297,7 +297,7 @@ class RevisionAvalController {
      * @param proceso
      * @param numero
      */
-    def historial2 = {
+    def historial = {
         println "historial solicitudes " + params
 //        params.requirente = params.requirente?:123
 //
@@ -328,14 +328,15 @@ class RevisionAvalController {
 //        }
 //        unidades = proyectosService.getUnidadesUnidad(UnidadEjecutora.get(session.unidad.id), perfil)
 
-        def unidad = UnidadEjecutora.get(1)
+//        def unidad = UnidadEjecutora.get(1)
+        unidades = UnidadEjecutora.findAllById(1)
 
 //        if(params.requirente) {
 //            unidad = UnidadEjecutora.get(params.requirente)
 //        } else {
 //            unidad = UnidadEjecutora.get(session.unidad.id)
 //        }
-        unidades = firmasService.gerencias(unidad)
+//        unidades = firmasService.gerencias(unidad)
 
 //        println "sesion: ${session.unidad} unidad: $unidad, unidades: $unidades"
 

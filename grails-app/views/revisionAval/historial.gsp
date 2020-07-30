@@ -1,4 +1,4 @@
-<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
+%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
 
 <table class="table table-bordered table-condensed table-hover table-striped">
     <thead>
@@ -21,7 +21,7 @@
 </table>
 
 
-<div class="row-fluid"  style="width: 99.7%;height: 600px;overflow-y: auto;float: right; margin-top: -20px">
+<div class="row-fluid"  style="width: 99.7%;height: 300px;overflow-y: auto;float: right; margin-top: -20px">
     <div class="span12">
         <div style="width: 1130px; height: 600px;">
             <table class="table table-bordered table-condensed table-hover table-striped">
@@ -33,7 +33,7 @@
                         <td style="text-align: center; width: 50px" title="${sol.proceso.proyecto.toStringCompleto()}">${sol.proceso.proyecto}</td>
                         <td style="width: 60px">${sol.proceso.nombre}</td>
                         <td style="text-align: center; width: 50px" class="${(sol.tipo == 'A') ? 'E03' : 'E02'}">${(sol.tipo == "A") ? 'Anulación' : 'Aprobación'}</td>
-                        <td style="width: 60px">${sol.unidad.getGerencia()}</td>
+%{--                        <td style="width: 60px">${sol.unidad.getGerencia()}</td>--}%
                         <td style="width: 60px">${sol.concepto}</td>
                         <td style="text-align: right; width: 44px">
                             <g:formatNumber number="${sol.monto}" type="currency" currencySymbol=""/>
@@ -75,9 +75,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 <script>
     $(".imprimirAval").click(function () {
