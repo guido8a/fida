@@ -486,10 +486,16 @@ class ReporteSolicitudController {
      */
     def imprimirSolicitudAval() {
 
-        println("params ra " + params)
+        println("params ra " + params.id)
 
-        def id = params.id.split('&')[0]
-        def arch = params.id.split('&')[1]
+        def id
+        if(params.id) {
+            id = params.id
+        } else {
+            id = params.id.split('&')[0]
+        }
+
+//        def arch = params.id.split('&')[1]
         def titulo_rep
         def slav = SolicitudAval.get(id)
         def poas = ProcesoAsignacion.findByProceso(slav.proceso)
