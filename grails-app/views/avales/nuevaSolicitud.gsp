@@ -31,7 +31,7 @@
         <g:if test="${solicitud && solicitud?.estado?.codigo == 'D01' && solicitud?.observaciones}">
             <div class="row">
                 <div class="col-md-12">
-                    <elm:message tipo="warning" close="false">${solicitud?.observaciones}</elm:message>
+                    <elm:message tipo="warning" close="false"><elm:poneHtml textoHtml="${solicitud?.observaciones}"/></elm:message>
                 </div>
             </div>
         </g:if>

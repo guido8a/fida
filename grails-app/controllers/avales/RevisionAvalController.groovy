@@ -1634,34 +1634,35 @@ class RevisionAvalController {
 
         if (solicitud.save(flush: true)) {
             def alerta1 = new Alerta()
-            alerta1.from = usu
+//            alerta1.from = usu
             alerta1.persona = solicitud.director
-            alerta1.fechaEnvio = new Date()
+//            alerta1.fechaEnvio = new Date()
+            alerta1.fechaCreacion = new Date()
 //            alerta1.mensaje = "Devolución de solicitud de aval: " + solicitud.concepto
             alerta1.mensaje = "Devolución de ${strSolicitud} de aval: " + solicitud.proceso.nombre
-            alerta1.controlador = "revisionAval"
+//            alerta1.controlador = "revisionAval"
             alerta1.accion = "pendientes"
-            alerta1.id_remoto = solicitud.id
-            alerta1.tipo = 'slct'
+//            alerta1.id_remoto = solicitud.id
+//            alerta1.tipo = 'slct'
             if (!alerta1.save(flush: true)) {
                 println "error alerta1: " + alerta1.errors
             }
             def mail = solicitud.director.mail
-            if (mail) {
-                try {
-                    mailService.sendMail {
-                        to mail
-                        subject "Devolución de ${strSolicitud} de aval"
-//                        body "Su solicitud de aval: " + solicitud.concepto + " ha sido devuelta por " + usu
-                        body "Su solicitud de ${strSolicitud} de aval: " + solicitud.proceso.nombre + " ha sido devuelta por " + usu
-                    }
-                } catch (e) {
-                    println "error al mandar mail"
-                    e.printStackTrace()
-                }
-            } else {
-                println "no tiene mail..."
-            }
+//            if (mail) {
+//                try {
+//                    mailService.sendMail {
+//                        to mail
+//                        subject "Devolución de ${strSolicitud} de aval"
+////                        body "Su solicitud de aval: " + solicitud.concepto + " ha sido devuelta por " + usu
+//                        body "Su solicitud de ${strSolicitud} de aval: " + solicitud.proceso.nombre + " ha sido devuelta por " + usu
+//                    }
+//                } catch (e) {
+//                    println "error al mandar mail"
+//                    e.printStackTrace()
+//                }
+//            } else {
+//                println "no tiene mail..."
+//            }
             render "SUCCESS*Devolución exitosa"
         } else {
             render "ERROR*" + renderErrors(bean: solicitud)

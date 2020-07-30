@@ -1581,7 +1581,7 @@ class ElementosTagLib {
                         clase += " alert-info"
                         break;
                     case "warning":
-                        icono = "fa fa-warning"
+                        icono = "fa fa-exclamation-triangle"
                         clase += " alert-warning"
                         break;
                     case "info":

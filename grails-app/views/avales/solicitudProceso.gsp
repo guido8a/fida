@@ -32,7 +32,7 @@
 <g:if test="${solicitud && solicitud.estado.codigo == 'D01' && solicitud.observaciones}">
     <div class="row">
         <div class="col-md-12">
-            <elm:message tipo="warning" close="false">${solicitud?.observaciones}</elm:message>
+            <elm:message tipo="warning" close="false"><elm:poneHtml textoHtml="${solicitud?.observaciones}"/></elm:message>
         </div>
     </div>
 </g:if>
@@ -256,7 +256,7 @@
             $("#preview").val("");
             if (parseFloat("${disponible}") > 0) {
                 if ($(".frmAval").valid()) {
-                    bootbox.confirm("<strong>¿Está seguro de querer enviar la solicitud?</strong><br/><br/>" +
+                    bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> <strong>¿Está seguro de querer enviar la solicitud?</strong><br/><br/>" +
                     "Una vez enviada ya no se podrá modificar los datos de la Solicitud", function (res) {
                         if (res) {
                             openLoader("Por favor espere");
