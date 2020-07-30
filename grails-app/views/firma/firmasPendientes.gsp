@@ -59,7 +59,7 @@
                         <th>Fecha Solicitud</th>
                         <th>Proceso</th>
                         <th>Monto</th>
-                        <th>Área gestión solicitante</th>
+%{--                        <th>Área gestión solicitante</th>--}%
                         <th style="width: 250px;">Acciones</th>
                     </tr>
                     </thead>
@@ -69,7 +69,7 @@
                         <tr data-firma="${f}" esPdf="${f.esPdf}" accVer="${f.accionVer}">
                             %{--<td>${f.concepto}</td>--}%
                             %{--                                        <td>${slav.fecha?.format("yyyy")}-${firmasService.requirentes(slav.usuario.unidad)?.codigo} No.<elm:imprimeNumero solicitud="${slav.id}"/></td>--}%
-                            %{--<td>${slav?.numero} </td>--}%
+                            <td>${slav?.numero} </td>
                             <td>${slav.fecha?.format("dd-MM-yyyy")}</td>
                             <td>${SolicitudAval.get(f.idAccionVer)?.proceso?.nombre} </td>
                             <td style="text-align: right">
@@ -95,18 +95,18 @@
                                         </g:else>
                                     </g:if>
                                     <a href="#" iden="${f.id}" class="aprobar btn btn-success" title="Firmar">
-                                        ${imgFirma}
+                                        <i class="fa fa-check-circle"></i>  ${imgFirma}
                                     </a>
-                                    <g:if test="${f.tipoFirma && f.tipoFirma != ''}">
+%{--                                    <g:if test="${f.tipoFirma && f.tipoFirma != ''}">--}%
                                         <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">
                                             <i class="fa fa-thumbs-down"></i>
                                         </a>
-                                    </g:if>
-                                    <g:else>
-                                        <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">
-                                            <i class="fa fa-thumbs-down"></i>
-                                        </a>
-                                    </g:else>
+%{--                                    </g:if>--}%
+%{--                                    <g:else>--}%
+%{--                                        <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">--}%
+%{--                                            <i class="fa fa-thumbs-down"></i>--}%
+%{--                                        </a>--}%
+%{--                                    </g:else>--}%
                                 </div>
                             </td>
                         </tr>

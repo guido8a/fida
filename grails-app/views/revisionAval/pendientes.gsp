@@ -128,48 +128,46 @@
 %{--                                </td>--}%
                                 <td class="text-center">
                                     <div class="btn-group btn-group-xs" role="group">
+                                        <a href="${g.createLink(controller: 'avales', action: 'nuevaSolicitud', id: p.proceso.id)}" class="aprobar btn btn-success" title="Editar">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
                                         <g:if test="${p.estado.codigo == 'P01' || p.estado.codigo == 'D01'}">
                                             <g:if test="${session.usuario.id == p.usuarioId}">
-                                                <g:if test="${p.tipo == 'A'}">
-                                                    <a href="${g.createLink(controller: 'avales', action: 'solicitarAnulacion', params: [sol: p.id])}" class="aprobar btn btn-success" title="Editar">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                </g:if>
-                                                <g:else>
-                                                    <a href="${g.createLink(controller: 'avales', action: 'nuevaSolicitud', id: p.proceso.id)}" class="aprobar btn btn-success" title="Editar">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
+%{--                                                <g:if test="${p.tipo == 'A'}">--}%
+%{--                                                    <a href="${g.createLink(controller: 'avales', action: 'solicitarAnulacion', params: [sol: p.id])}" class="aprobar btn btn-danger" title="Anular">--}%
+%{--                                                        <i class="fa fa-edit"></i>--}%
+%{--                                                    </a>--}%
+%{--                                                </g:if>--}%
+%{--                                                <g:else>--}%
+%{--                                                    <a href="${g.createLink(controller: 'avales', action: 'nuevaSolicitud', id: p.proceso.id)}" class="aprobar btn btn-success" title="Editar">--}%
+%{--                                                        <i class="fa fa-edit"></i>--}%
+%{--                                                    </a>--}%
                                                     <a href="#" class="borrarSolicitud btn btn-danger" title="Eliminar solicitud" sol="${p.proceso.id}">
                                                         <i class="fa fa-close"></i>
                                                     </a>
-                                                </g:else>
+%{--                                                </g:else>--}%
                                             </g:if>
                                         </g:if>
                                         <g:elseif test="${p.estado.codigo == 'R01' || p.estado.codigo == 'D02'}">
-                                            <a href="${g.createLink(action: 'revisionSolicitud', id: p.id)}" class="aprobar btn btn-warning" title="Revisar">
+                                            <a href="${g.createLink(action: 'revisionSolicitud', id: p.id)}" class="aprobar btn btn-warning" title="Revisar solicitud">
                                                 <i class="fa fa-cog"></i>
                                             </a>
                                         </g:elseif>
-                                        <g:elseif test="${p.estado.codigo == 'E01' || p.estado.codigo == 'D03'}">
+%{--                                        <g:elseif test="${p.estado.codigo == 'E01' || p.estado.codigo == 'D03'}">--}%
 %{--                                            <g:if test="${session.perfil.codigo == 'ASPL'}">--}%
-                                                <g:if test="${p.tipo != 'A'}">
-                                                    <a href="${g.createLink(action: 'aprobarAval', id: p.id)}" class="aprobar btn btn-warning" title="Revisar">
-                                                        <i class="fa fa-cog"></i>
-                                                    </a>
-                                                </g:if>
-                                                <g:else>
-                                                    <a href="${g.createLink(action: 'aprobarAnulacion', id: p.id)}" class="aprobar btn btn-warning" title="Revisar">
-                                                        <i class="fa fa-cog"></i>
-                                                    </a>
-                                                %{--<a href="${g.createLink(action: 'aprobarAnulacion', id: p.id)}" class="aprobarAnulacion btn btn-success" title="Aprobar">--}%
-                                                %{--<i class="fa fa-check"></i>--}%
-                                                %{--</a>--}%
-                                                %{--<a href="#" class="negar btn btn-warning " iden="${p.id}" title="Negar">--}%
-                                                %{--<i class="fa fa-times-circle"></i>--}%
-                                                %{--</a>--}%
-                                                </g:else>
+%{--                                                <g:if test="${p.tipo != 'A'}">--}%
+%{--                                                    <a href="${g.createLink(action: 'aprobarAval', id: p.id)}" class="aprobar btn btn-warning" title="Aprobar Aval">--}%
+%{--                                                        <i class="fa fa-cog"></i>--}%
+%{--                                                    </a>--}%
+%{--                                                </g:if>--}%
+%{--                                                <g:else>--}%
+%{--                                                    <a href="${g.createLink(action: 'aprobarAnulacion', id: p.id)}" class="aprobar btn btn-warning" title="Revisar">--}%
+%{--                                                        <i class="fa fa-cog"></i>--}%
+%{--                                                    </a>--}%
+
+%{--                                                </g:else>--}%
 %{--                                            </g:if>--}%
-                                        </g:elseif>
+%{--                                        </g:elseif>--}%
                                         <a href="#" class="btn btn-info btn-xs imprimirSolicitud" iden="${p.id}" data-tipo="${p.tipo}" title="Ver">
                                             <i class="fa fa-search"></i>
                                         </a>

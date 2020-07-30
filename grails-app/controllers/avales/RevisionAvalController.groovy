@@ -1729,34 +1729,35 @@ class RevisionAvalController {
                 solicitud.save(flush: true)
 
                 def alerta1 = new Alerta()
-                alerta1.from = usu
+//                alerta1.from = usu
                 alerta1.persona = personaFirma
-                alerta1.fechaEnvio = new Date()
+//                alerta1.fechaEnvio = new Date()
+                alerta1.fechaCreacion = new Date()
 //                alerta1.mensaje = "Solicitud de aval: " + solicitud.concepto
                 alerta1.mensaje = "${strSolicitud.capitalize()} de aval: " + solicitud.proceso.nombre
-                alerta1.controlador = "firma"
+//                alerta1.controlador = "firma"
                 alerta1.accion = "firmasPendientes"
-                alerta1.parametros = "tab=AVAL"
-                alerta1.tipo = 'slct'
-                alerta1.id_remoto = solicitud.id
+//                alerta1.parametros = "tab=AVAL"
+//                alerta1.tipo = 'slct'
+//                alerta1.id_remoto = solicitud.id
                 println alerta1
                 if (!alerta1.save(flush: true)) {
                     println "error alerta1: " + alerta1.errors
                 }
-                if (mail) {
-                    try {
-                        mailService.sendMail {
-                            to mail
-                            subject "Una nueva ${strSolicitud} de aval requiere aprobación"
-                            body "Tiene una ${strSolicitud} de aval pendiente que requiere su firma para aprobación "
-                        }
-                    } catch (e) {
-                        println "error al mandar mail"
-                        e.printStackTrace()
-                    }
-                } else {
-                    println "no tiene mail..."
-                }
+//                if (mail) {
+//                    try {
+//                        mailService.sendMail {
+//                            to mail
+//                            subject "Una nueva ${strSolicitud} de aval requiere aprobación"
+//                            body "Tiene una ${strSolicitud} de aval pendiente que requiere su firma para aprobación "
+//                        }
+//                    } catch (e) {
+//                        println "error al mandar mail"
+//                        e.printStackTrace()
+//                    }
+//                } else {
+//                    println "no tiene mail..."
+//                }
                 render "SUCCESS*Firma solicitada exitosamente"
             } else {
                 render("ERROR*No se encontró la persona a la cual desea enviar la solicitud")
@@ -1820,11 +1821,12 @@ class RevisionAvalController {
         }
 
 //        def gerentes = firmasService.listaGerentesUnidad(solicitud.usuario.unidadEjecutora)
-        def gerentes = []
 
-        return [solicitud: solicitud, anios: anios, arr: arr, devengado: dosDevengado, anio: anio, gerentes: gerentes]
+        def unidad = UnidadEjecutora.get(1)
+        def personas = Persona.findAllByUnidadEjecutora(unidad)
+
+        return [solicitud: solicitud, anios: anios, arr: arr, devengado: dosDevengado, anio: anio, gerentes: personas]
     }
-
 
     def borrarSolicitud_ajax() {
         println("params " + params)
