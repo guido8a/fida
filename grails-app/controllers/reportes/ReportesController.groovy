@@ -22,7 +22,7 @@ class ReportesController {
 
         def titulo_rep
         def reforma = Reforma.get(params.id)
-        def firma = seguridad.Firma.findByIdAccionAndEstado(reforma.id, 'F')
+        def firma = seguridad.Firma.findByIdAccionAndTipoFirmaInListAndEstado(reforma.id,['AJST', 'RFRM'] ,'F')
         def firma_path = firma?.path
 //        def firma_path = seguridad.Firma.findByTipoFirmaAndIdAccion('AJST', 5)?.path
         def detalles = DetalleReforma.findAllByReforma(reforma)
@@ -57,7 +57,8 @@ class ReportesController {
         Font times10boldWhite = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font times8boldWhite = new Font(Font.TIMES_ROMAN, 8, Font.BOLD)
         def titulo = new Color(40, 140, 180)
-        Font fontTitulo = new Font(Font.TIMES_ROMAN, 18, Font.BOLD, titulo);
+        Font fontProyecto = new Font(Font.HELVETICA, 18, Font.NORMAL, titulo);
+        Font fontTitulo = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, titulo);
 
         Document document
         document = new Document(PageSize.A4);
@@ -97,7 +98,8 @@ class ReportesController {
         Paragraph pr_firma = new Paragraph();
         addEmptyLine(preface, 1);
         preface.setAlignment(Element.ALIGN_CENTER);
-//        preface.add(new Paragraph("MATRIZ DE REFORMA", fontTitulo));
+        preface.add(new Paragraph("PROYECTO FAREPS", fontProyecto));
+//        addEmptyLine(preface, 1);
         preface.add(new Paragraph(titulo_rep, fontTitulo));
         addEmptyLine(preface, 1);
         document.add(logo)

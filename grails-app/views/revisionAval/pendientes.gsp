@@ -263,7 +263,8 @@
                 url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/" + $(this).attr("iden");
                 fn = "solicitud_aval.pdf";
             }
-            location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=" + fn;
+            %{--location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=" + fn;--}%
+            location.href = url + "&filename=" + fn;
         });
 
         $("#buscar").click(function () {

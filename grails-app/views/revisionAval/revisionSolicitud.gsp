@@ -208,7 +208,7 @@
 
         $("#btnPreview").click(function () {
             var url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/${solicitud.id}";
-            location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=Solicitud.pdf"
+            location.href = url + "&filename=Solicitud.pdf"
             return false;
         });
 
