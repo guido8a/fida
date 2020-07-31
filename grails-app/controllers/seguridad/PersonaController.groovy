@@ -2,19 +2,10 @@ package seguridad
 
 import fida.Alerta
 
-//import bitacora.Actividad
-//import compras.Alerta
-//import bitacora.Base
 import groovy.json.JsonBuilder
 import org.apache.commons.lang.WordUtils
-
 import javax.imageio.ImageIO
-
-//import happy.utilitarios.Parametros
-
 import java.awt.image.BufferedImage
-import java.lang.reflect.Array
-
 import static java.awt.RenderingHints.KEY_INTERPOLATION
 import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC
 

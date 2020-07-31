@@ -1,6 +1,4 @@
 
-%{--<%@ page import="compras.Parroquia" %>--}%
-
 <style type="text/css">
 .tama {
     font-size: 14px;

@@ -1,6 +1,4 @@
 
-%{--<%@ page import="compras.Provincia" %>--}%
-
 %{--<div id="create-provinciaInstance" class="span" role="main">--}%
 <g:form class="form-horizontal" name="frmSave-provinciaInstance" action="save">
     <g:hiddenField name="id" value="${provinciaInstance?.id}"/>
