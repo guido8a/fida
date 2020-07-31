@@ -1,4 +1,4 @@
-<%@ page import="vesta.parametros.UnidadEjecutora; vesta.proyectos.Categoria; vesta.proyectos.MarcoLogico" %>
+<%@ page import="seguridad.UnidadEjecutora; proyectos.MarcoLogico" %>
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
 <g:if test="${!marcoLogicoInstance}">

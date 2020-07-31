@@ -1,4 +1,4 @@
-<%@ page import="vesta.proyectos.MarcoLogico" %>
+<%@ page import="proyectos.MarcoLogico" %>
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
 <g:if test="${!marcoLogicoInstance}">
@@ -18,7 +18,7 @@
                     </label>
 
                     <div class="col-md-7">
-                        <g:select id="proyecto" name="proyecto.id" from="${vesta.proyectos.Proyecto.list()}" optionKey="id" value="${marcoLogicoInstance?.proyecto?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                        <g:select id="proyecto" name="proyecto.id" from="${proyectos.Proyecto.list()}" optionKey="id" value="${marcoLogicoInstance?.proyecto?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                     </div>
 
                 </span>
@@ -31,7 +31,7 @@
                     </label>
 
                     <div class="col-md-7">
-                        <g:select id="tipoElemento" name="tipoElemento.id" from="${vesta.parametros.TipoElemento.list()}" optionKey="id" value="${marcoLogicoInstance?.tipoElemento?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                        <g:select id="tipoElemento" name="tipoElemento.id" from="${parametros.proyectos.TipoElemento.list()}" optionKey="id" value="${marcoLogicoInstance?.tipoElemento?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                     </div>
 
                 </span>
@@ -44,12 +44,13 @@
                     </label>
 
                     <div class="col-md-7">
-                        <g:select id="marcoLogico" name="marcoLogico.id" from="${vesta.proyectos.MarcoLogico.list()}" optionKey="id" value="${marcoLogicoInstance?.marcoLogico?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                        <g:select id="marcoLogico" name="marcoLogico.id" from="${proyectos.MarcoLogico.list()}" optionKey="id" value="${marcoLogicoInstance?.marcoLogico?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                     </div>
 
                 </span>
             </div>
 
+%{--
             <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'modificacionProyecto', 'error')} ">
                 <span class="grupo">
                     <label for="modificacionProyecto" class="col-md-2 control-label">
@@ -57,11 +58,12 @@
                     </label>
 
                     <div class="col-md-7">
-                        <g:select id="modificacionProyecto" name="modificacionProyecto.id" from="${vesta.proyectos.ModificacionProyecto.list()}" optionKey="id" value="${marcoLogicoInstance?.modificacionProyecto?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                        <g:select id="modificacionProyecto" name="modificacionProyecto.id" from="${proyectos.ModificacionProyecto.list()}" optionKey="id" value="${marcoLogicoInstance?.modificacionProyecto?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                     </div>
 
                 </span>
             </div>
+--}%
 
             <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'objeto', 'error')} ">
                 <span class="grupo">
@@ -109,12 +111,13 @@
                     </label>
 
                     <div class="col-md-7">
-                        <g:select id="padreMod" name="padreMod.id" from="${vesta.proyectos.MarcoLogico.list()}" optionKey="id" value="${marcoLogicoInstance?.padreMod?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                        <g:select id="padreMod" name="padreMod.id" from="${proyectos.MarcoLogico.list()}" optionKey="id" value="${marcoLogicoInstance?.padreMod?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                     </div>
 
                 </span>
             </div>
 
+%{--
             <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'categoria', 'error')} ">
                 <span class="grupo">
                     <label for="categoria" class="col-md-2 control-label">
@@ -127,6 +130,7 @@
 
                 </span>
             </div>
+--}%
 
             <div class="form-group keeptogether ${hasErrors(bean: marcoLogicoInstance, field: 'responsable', 'error')} ">
                 <span class="grupo">
@@ -135,7 +139,7 @@
                     </label>
 
                     <div class="col-md-7">
-                        <g:select id="responsable" name="responsable.id" from="${vesta.parametros.UnidadEjecutora.list()}" optionKey="id" value="${marcoLogicoInstance?.responsable?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                        <g:select id="responsable" name="responsable.id" from="${seguridad.UnidadEjecutora.list()}" optionKey="id" value="${marcoLogicoInstance?.responsable?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                     </div>
 
                 </span>

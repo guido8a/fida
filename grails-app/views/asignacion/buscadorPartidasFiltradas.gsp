@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="vesta.utilitarios.BuscadorService" %>
+<%@ page import="utilitarios.BuscadorService" %>
 
 <%
-    def buscadorServ = grailsApplication.classLoader.loadClass('vesta.utilitarios.BuscadorService').newInstance()
+    def buscadorServ = grailsApplication.classLoader.loadClass('utilitarios.BuscadorService').newInstance()
 %>
 
 

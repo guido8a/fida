@@ -1,5 +1,5 @@
 
-<%@ page import="vesta.poa.Asignacion" %>
+<%@ page import="poa.Asignacion" %>
 <!DOCTYPE html>
 <html>
     <head>

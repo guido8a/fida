@@ -1,4 +1,4 @@
-<%@ page import="vesta.poa.Asignacion" %>
+<%@ page import="poa.Asignacion" %>
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
 <g:if test="${!asignacionInstance}">
@@ -41,7 +41,7 @@
                     Marco Logico
                 </label>
                 <div class="col-md-7">
-                    <g:select id="marcoLogico" name="marcoLogico.id" from="${vesta.proyectos.MarcoLogico.list()}" optionKey="id" value="${asignacionInstance?.marcoLogico?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                    <g:select id="marcoLogico" name="marcoLogico.id" from="${proyectos.MarcoLogico.list()}" optionKey="id" value="${asignacionInstance?.marcoLogico?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                 </div>
                 
             </span>
@@ -71,18 +71,21 @@
             </span>
         </div>
         
+%{--
         <div class="form-group keeptogether ${hasErrors(bean: asignacionInstance, field: 'tipoGasto', 'error')} ">
             <span class="grupo">
                 <label for="tipoGasto" class="col-md-2 control-label">
                     Tipo Gasto
                 </label>
                 <div class="col-md-7">
-                    <g:select id="tipoGasto" name="tipoGasto.id" from="${vesta.parametros.TipoGasto.list()}" optionKey="id" value="${asignacionInstance?.tipoGasto?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                    <g:select id="tipoGasto" name="tipoGasto.id" from="${parametros.TipoGasto.list()}" optionKey="id" value="${asignacionInstance?.tipoGasto?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                 </div>
                 
             </span>
         </div>
-        
+--}%
+
+%{--
         <div class="form-group keeptogether ${hasErrors(bean: asignacionInstance, field: 'componente', 'error')} ">
             <span class="grupo">
                 <label for="componente" class="col-md-2 control-label">
@@ -94,7 +97,8 @@
                 
             </span>
         </div>
-        
+--}%
+
         <div class="form-group keeptogether ${hasErrors(bean: asignacionInstance, field: 'planificado', 'error')} required">
             <span class="grupo">
                 <label for="planificado" class="col-md-2 control-label">
@@ -125,7 +129,7 @@
                     Unidad
                 </label>
                 <div class="col-md-7">
-                    <g:select id="unidad" name="unidad.id" from="${vesta.parametros.UnidadEjecutora.list()}" optionKey="id" value="${asignacionInstance?.unidad?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                    <g:select id="unidad" name="unidad.id" from="${seguridad.UnidadEjecutora.list()}" optionKey="id" value="${asignacionInstance?.unidad?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                 </div>
                 
             </span>

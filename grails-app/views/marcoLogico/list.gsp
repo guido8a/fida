@@ -1,4 +1,4 @@
-<%@ page import="vesta.proyectos.MarcoLogico" %>
+<%@ page import="proyectos.MarcoLogico" %>
 <!DOCTYPE html>
 <html>
     <head>

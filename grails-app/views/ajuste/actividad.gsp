@@ -5,7 +5,7 @@
   Time: 09:37 AM
 --%>
 
-<%@ page import="vesta.proyectos.Categoria; parametros.proyectos.Fuente; vesta.seguridad.Persona; parametros.Anio" contentType="text/html;charset=UTF-8" %>
+<%@ page import="parametros.proyectos.Fuente; seguridad.Persona; parametros.Anio" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta name="layout" content="main">

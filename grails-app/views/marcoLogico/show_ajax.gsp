@@ -1,4 +1,4 @@
-<%@ page import="vesta.proyectos.MarcoLogico" %>
+<%@ page import="proyectos.MarcoLogico" %>
 
 <g:if test="${!marcoLogicoInstance}">
     <elm:notFound elem="MarcoLogico" genero="o"/>

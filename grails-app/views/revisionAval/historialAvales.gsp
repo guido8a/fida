@@ -1,7 +1,7 @@
-<%@ page import="vesta.avales.SolicitudAval; vesta.avales.Aval" %>
-<%@ page import="vesta.seguridad.FirmasService" %>
+<%@ page import="avales.SolicitudAval; avales.Aval" %>
+<%@ page import="seguridad.FirmasService" %>
 <%
-    def firmasService = grailsApplication.classLoader.loadClass('vesta.seguridad.FirmasService').newInstance()
+    def firmasService = grailsApplication.classLoader.loadClass('seguridad.FirmasService').newInstance()
 %>
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>

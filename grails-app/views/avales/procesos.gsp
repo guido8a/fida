@@ -23,7 +23,7 @@
 </div>
 <div style="width: 100%;height: 35px">
     <b>Proyecto: </b>
-    <g:select from="${vesta.proyectos.Proyecto.list([sort:'nombre'])}" optionKey="id" optionValue="nombre" name="proyecto" id="proyecto" style="width:450px;" class="form-control input-sm"/>
+    <g:select from="${proyectos.Proyecto.list([sort:'nombre'])}" optionKey="id" optionValue="nombre" name="proyecto" id="proyecto" style="width:450px;" class="form-control input-sm"/>
 </div>
 </body>
 </html>

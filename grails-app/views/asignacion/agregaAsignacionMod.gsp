@@ -6,7 +6,7 @@
 --%>
 
 
-<%@ page import="vesta.poa.Asignacion" %>
+<%@ page import="poa.Asignacion" %>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
 
 <elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>

@@ -5,7 +5,7 @@
   Time: 03:24 PM
 --%>
 
-<%@ page import="vesta.parametros.TipoElemento" contentType="text/html;charset=UTF-8" %>
+<%@ page import="parametros.proyectos.TipoElemento" contentType="text/html;charset=UTF-8" %>
 
 <elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>
 

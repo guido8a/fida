@@ -5,7 +5,7 @@
   Time: 04:24 PM
 --%>
 
-<%@ page import="vesta.proyectos.MarcoLogicoRespaldo; vesta.parametros.TipoElemento; vesta.proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="parametros.proyectos.TipoElemento; proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main">

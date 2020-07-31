@@ -1,5 +1,5 @@
 
-<%@ page import="vesta.poa.Asignacion" %>
+<%@ page import="poa.Asignacion" %>
 
 <g:if test="${!asignacionInstance}">
     <elm:notFound elem="Asignacion" genero="o" />
