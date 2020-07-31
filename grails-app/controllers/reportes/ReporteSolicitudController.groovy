@@ -508,7 +508,7 @@ class ReporteSolicitudController {
         Image logo = Image.getInstance('/var/fida/logo.png')
         def tipoAval = firma?.accion == "firmarAval" ? "aval" : "solicitud"
 
-//            Image firma_img
+        Image firma_img
 //            println "firma_path: $firma_path"
         if (firma_path) {
             titulo_rep = "AVAL DE POA"
