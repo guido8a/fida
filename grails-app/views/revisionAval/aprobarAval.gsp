@@ -222,8 +222,8 @@
             %{--    });--}%
 
             $("#btnPreview").click(function () {
-                var url = "${createLink(controller: 'reportes', action: 'certificacion')}/?id=${solicitud.id}Wusu=${session.usuario.id}";
-                location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=aval_" + $("#numero").val() + ".pdf"
+                var url = "${createLink(controller: 'reportesSolicitud', action: 'imprimirSolicitudAval')}/?id=${solicitud.id}Wusu=${session.usuario.id}";
+                location.href = url + "&filename=aval_" + $("#numero").val() + ".pdf"
                 return false;
             });
 
