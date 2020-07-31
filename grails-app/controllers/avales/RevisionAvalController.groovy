@@ -1486,7 +1486,6 @@ class RevisionAvalController {
             filtroPersona = null
 
 //        println "perfil: $perfil"
-/*
         switch (perfil) {
             case "RQ":
                 estados = [estadoPendiente, estadoDevueltoReq]
@@ -1511,7 +1510,6 @@ class RevisionAvalController {
                 estados = [estadoSolicitado, estadoDevueltoAnPlan]
                 break;
         }
-*/
 
         def proyecto = Proyecto.findAllById(1)
         def procesosSinSolicitud = ProcesoAval.findAllByProyectoInList(proyecto, [sort: "id"])

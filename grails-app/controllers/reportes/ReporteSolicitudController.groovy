@@ -504,17 +504,20 @@ class ReporteSolicitudController {
         def poas = ProcesoAsignacion.findByProceso(slav?.proceso)
         def anio = poas.asignacion.anio.anio
         def firma = seguridad.Firma.findByIdAccionAndTipoFirmaAndEstado(slav.id, 'AVAL', 'F')
+        def firmaAval = seguridad.Firma.findByIdAccionAndTipoFirmaAndEstadoAndAccionAndPathIsNotNull(slav.id, 'AVAL', 'F', 'firmarAval')
         def firma_path = firma?.path
         Image logo = Image.getInstance('/var/fida/logo.png')
-        def tipoAval = firma?.accion == "firmarAval" ? "aval" : "solicitud"
+        def tipoAval = firmaAval? "aval" : "solicitud"
 
         Image firma_img
-//            println "firma_path: $firma_path"
-        if (firma_path) {
+        println "firma_path: $firma_path   firmaaval: ${firmaAval}"
+        if (firmaAval) {
             titulo_rep = "AVAL DE POA"
             firma_img = Image.getInstance('/var/fida/firmas/' + firma_path)
             firma_img.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP)
         } else {
+            firma_img = Image.getInstance('/var/fida/firmas/' + firma_path)
+            firma_img.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP)
             titulo_rep = "SOLICITUD DE AVAL DE POA"
         }
 //            println "firma: ${firma_img}"
