@@ -5,7 +5,7 @@
   Time: 01:09 PM
 --%>
 
-<%@ page import="vesta.parametros.poaPac.Anio; vesta.poa.ProgramacionAsignacion; vesta.proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
+<%@ page import="parametros.Anio; poa.ProgramacionAsignacion; proyectos.MarcoLogico" contentType="text/html;charset=UTF-8" %>
 
 <html>
 <head>
@@ -116,7 +116,7 @@
                             <g:each in="${meses}" var="cont">
 
 
-                                <g:set var="mesReal" value="${vesta.parametros.poaPac.Mes.findByNumero(cont)}"/>
+                                <g:set var="mesReal" value="${parametros.Mes.findByNumero(cont)}"/>
 
                                 <g:set var="progTotal" value="${ProgramacionAsignacion.findAll('from ProgramacionAsignacion where asignacion = ' + asg.id + ' and mes = ' + mesReal?.id + ' and padre is null')}"/>
 
@@ -136,7 +136,7 @@
 
                                 <g:each in="${meses}" var="mes" status="j">
 
-                                    <g:set var="mesReal2" value="${vesta.parametros.poaPac.Mes.findByNumero(mes)}"/>
+                                    <g:set var="mesReal2" value="${parametros.Mes.findByNumero(mes)}"/>
 
                                     <g:set var="progra" value="${ProgramacionAsignacion.findAll('from ProgramacionAsignacion where asignacion = ' + asg.id + ' and mes = ' + mesReal2?.id + ' and padre is null')}"/>
 
@@ -205,7 +205,7 @@
 
                                 <g:each in="${meses}" var="mes" status="j">
 
-                                    <g:set var="mesReal3" value="${vesta.parametros.poaPac.Mes.findByNumero(mes)}"/>
+                                    <g:set var="mesReal3" value="${parametros.Mes.findByNumero(mes)}"/>
 
                                     <g:set var="progra" value="${ProgramacionAsignacion.findAll('from ProgramacionAsignacion where asignacion = ' + asg.id + ' and mes = ' + mesReal3?.id + ' and padre is null')}"/>
 

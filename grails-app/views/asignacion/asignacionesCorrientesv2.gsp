@@ -35,7 +35,7 @@
                 </thead>
 
                 <tr>
-                    <td style="width: 120px"><g:select from="${vesta.parametros.poaPac.Anio.list([sort: 'anio'])}" name="anio" optionKey="id" optionValue="anio" class="many-to-one form-control input-sm" value="${actual.id}"/></td>
+                    <td style="width: 120px"><g:select from="${parametros.Anio.list([sort: 'anio'])}" name="anio" optionKey="id" optionValue="anio" class="many-to-one form-control input-sm" value="${actual.id}"/></td>
                     <td style="width: 380px"><g:select from="${objetivos}" id="objetivo" name="objetivo_name" optionKey="id"
                                                        optionValue="descripcion" class="many-to-one form-control input-sm selectpicker "
                                                        noSelection="['-1': 'Seleccione...']" value=""/></td>

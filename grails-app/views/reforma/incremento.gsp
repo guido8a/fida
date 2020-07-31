@@ -5,7 +5,7 @@
   Time: 02:38 PM
 --%>
 
-<%@ page import="vesta.seguridad.Persona; vesta.parametros.poaPac.Anio" contentType="text/html;charset=UTF-8" %>
+<%@ page import="seguridad.Persona; parametros.Anio" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta name="layout" content="main">

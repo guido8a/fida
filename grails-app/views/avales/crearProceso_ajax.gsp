@@ -5,7 +5,7 @@
   Time: 02:29 PM
 --%>
 
-<%@ page import="vesta.proyectos.MarcoLogico; vesta.parametros.poaPac.Anio; vesta.parametros.TipoElemento" contentType="text/html;charset=UTF-8" %>
+<%@ page import="proyectos.MarcoLogico; parametros.Anio; parametros.proyectos.TipoElemento" contentType="text/html;charset=UTF-8" %>
 
 <elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>
 

@@ -4,7 +4,7 @@
   Date: 14/01/15
   Time: 04:03 PM
 --%>
-<%@ page import="vesta.proyectos.MarcoLogico; vesta.proyectos.Cronograma; vesta.parametros.poaPac.Mes; vesta.parametros.poaPac.Anio" contentType="text/html;charset=UTF-8" %>
+<%@ page import="proyectos.MarcoLogico; proyectos.Cronograma; parametros.Mes; parametros.Anio" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta name="layout" content="main">

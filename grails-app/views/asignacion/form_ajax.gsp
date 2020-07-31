@@ -17,7 +17,7 @@
                     Anio
                 </label>
                 <div class="col-md-7">
-                    <g:select id="anio" name="anio.id" from="${vesta.parametros.poaPac.Anio.list()}" optionKey="id" value="${asignacionInstance?.anio?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                    <g:select id="anio" name="anio.id" from="${parametros.Anio.list()}" optionKey="id" value="${asignacionInstance?.anio?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                 </div>
                 
             </span>
@@ -29,7 +29,7 @@
                     Fuente
                 </label>
                 <div class="col-md-7">
-                    <g:select id="fuente" name="fuente.id" from="${vesta.parametros.poaPac.Fuente.list()}" optionKey="id" value="${asignacionInstance?.fuente?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                    <g:select id="fuente" name="fuente.id" from="${parametros.proyectos.Fuente.list()}" optionKey="id" value="${asignacionInstance?.fuente?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                 </div>
                 
             </span>
@@ -65,7 +65,7 @@
                     Presupuesto
                 </label>
                 <div class="col-md-7">
-                    <g:select id="presupuesto" name="presupuesto.id" from="${vesta.parametros.poaPac.Presupuesto.list()}" optionKey="id" value="${asignacionInstance?.presupuesto?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                    <g:select id="presupuesto" name="presupuesto.id" from="${poa.Presupuesto.list()}" optionKey="id" value="${asignacionInstance?.presupuesto?.id}" class="many-to-one form-control input-sm" noSelection="['null': '']"/>
                 </div>
                 
             </span>
@@ -143,6 +143,7 @@
             </span>
         </div>
         
+%{--
         <div class="form-group keeptogether ${hasErrors(bean: asignacionInstance, field: 'programa', 'error')} ">
             <span class="grupo">
                 <label for="programa" class="col-md-2 control-label">
@@ -154,7 +155,8 @@
                 
             </span>
         </div>
-        
+--}%
+
         <div class="form-group keeptogether ${hasErrors(bean: asignacionInstance, field: 'meta', 'error')} ">
             <span class="grupo">
                 <label for="meta" class="col-md-2 control-label">

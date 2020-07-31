@@ -5,7 +5,7 @@
   Time: 09:06 AM
 --%>
 
-<%@ page import="vesta.modificaciones.DetalleReforma; vesta.parametros.poaPac.Fuente; vesta.seguridad.Persona; vesta.parametros.poaPac.Anio" contentType="text/html;charset=UTF-8" %>
+<%@ page import="modificaciones.DetalleReforma; parametros.proyectos.Fuente; seguridad.Persona; parametros.Anio" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta name="layout" content="main">
