@@ -10,11 +10,6 @@ import seguridad.Persona
  * Clase para conectar con la tabla 'aval' de la base de datos
  */
 class Aval {
-    Proyecto proyecto
-    Persona persona
-    Persona analista
-    Persona director
-    Firma firma
     /**
      * Estado del aval
      */
@@ -27,7 +22,6 @@ class Aval {
      * Número de contrato para la liberación
      */
     String contrato
-    Date fecha
     /**
      * Monto del aval
      */
@@ -40,47 +34,46 @@ class Aval {
      * Número de memo de la petición del aval
      */
     String memo
-
-    String observaciones
     /**
      * Número del aval
      */
     int numero=0
-
-    Date fechaRevision
-
-
     /**
-     * Fecha de aprobación del aval
+     * Fecha de anulación del aval
      */
-    Date fechaAprobacion
+    Date fechaAnulacion
+    /**
+     * Firma del gerente para la anulacion
+     */
+    Firma firmaAnulacion2
     /**
      * Fecha de liberación del aval
      */
     Date fechaLiberacion
     /**
-     * Fecha de anulación del aval
+     * Fecha de aprobación del aval
      */
-    Date fechaAnulacion
-
+    Date fechaAprobacion
+    /**
+     * Firma del director
+     */
+    Firma firma1
+    /**
+     * Firma del director para la anulacion
+     */
+    Firma firmaAnulacion1
     /**
      * Monto de liberación del aval
      */
     double liberacion = 0
-
-
-
     /**
-     * Path del documento de respaldo de liberación del aval
+     * Firma del gerente
      */
-    String pathLiberacion
+    Firma firma2
     /**
      * Path del documento de respaldo de anulación del aval
      */
     String pathAnulacion
-
-
-
     /**
      * Número de la certificación para el aval
      */
@@ -90,22 +83,9 @@ class Aval {
      */
     ProcesoAval proceso
     /**
-     * Firma del director
+     * Path del documento de respaldo de liberación del aval
      */
-    Firma firma1
-    /**
-     * Firma del gerente
-     */
-    Firma firma2
-    /**
-     * Firma del director para la anulacion
-     */
-    Firma firmaAnulacion1
-    /**
-     * Firma del gerente para la anulacion
-     */
-    Firma firmaAnulacion2
-
+    String pathLiberacion
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
@@ -159,6 +139,8 @@ class Aval {
         firma2(blank: true, nullable: true)
         firmaAnulacion1(blank: true, nullable: true)
         firmaAnulacion2(blank: true, nullable: true)
+        monto(blank:true, nullable:true)
+        liberacion(blank:true, nullable:true)
     }
 
     def getColorSemaforo() {

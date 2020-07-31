@@ -1,6 +1,7 @@
 //import org.codehaus.groovy.grails.commons.DomainClassArtefactHandler
 
 
+import avales.Aval
 import avales.SolicitudAval
 import modificaciones.Reforma
 import org.springframework.beans.SimpleTypeConverter

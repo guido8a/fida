@@ -1449,10 +1449,9 @@ class AvalesController{
      */
     def validarSolicitud_ajax() {
         def sol = SolicitudAval.get(params.id)
-//        println "path solicitud "+cer.pathSolicitud
-        def path = servletContext.getRealPath("/") + "pdf/solicitudAval/" + sol.path
+        def ruta = "/var/fida/solicitud/" + sol.path
+        def src = new File(ruta)
 
-        def src = new File(path)
         if (src.exists()) {
             render "SUCCESS"
         } else {

@@ -15,7 +15,7 @@
         <th style="width: 8%">Solicitud</th>
         <th style="width: 8%"># Aval</th>
         <th style="width: 8%">F. Emisión</th>
-        <th style="width: 8%">Aval</th>
+        <th style="width: 9%">Aval</th>
     </tr>
     </thead>
 </table>
@@ -49,10 +49,12 @@
                         <td style="width: 8%">
                             <g:if test="${sol.aval}">
                                 <g:if test="${sol.aval.fechaAprobacion}">
-                                    ${sol.aval.fechaAprobacion?.format("yyyy")}-GP No.<elm:imprimeNumero aval="${sol.aval.id}"/>
+%{--                                    ${sol.aval.fechaAprobacion?.format("yyyy")}-GP No.<elm:imprimeNumero aval="${sol.aval.id}"/>--}%
+                                    ${sol.aval.fechaAprobacion?.format("yyyy")}-GP No. ${sol.aval.numero}
                                 </g:if>
                                 <g:else>
-                                    ${sol.fecha.format("yyyy")}-GP No.<elm:imprimeNumero aval="${sol.aval.id}"/>
+%{--                                    ${sol.fecha.format("yyyy")}-GP No.<elm:imprimeNumero aval="${sol.aval.id}"/>--}%
+                                    ${sol.fecha.format("yyyy")}-GP No.${sol.aval.numero}
                                 </g:else>
                             </g:if>
                         </td>

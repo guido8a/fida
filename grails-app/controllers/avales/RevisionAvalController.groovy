@@ -424,7 +424,12 @@ class RevisionAvalController {
         if (!band) {
             response.sendError(403)
         }
-        return [solicitud: solicitud, personas: firmas.directores, personasGerente: firmas.gerentes, numero: numero]
+
+        def unidad = UnidadEjecutora.get(1)
+        def personas = Persona.findAllByUnidadEjecutora(unidad)
+
+
+        return [solicitud: solicitud, personas: personas, numero: numero]
     }
 
 
@@ -475,36 +480,39 @@ class RevisionAvalController {
      * @Renders "ok"
      */
     def guarDatosDoc = {
+
+        println "guardar datos doc " + params
+
         def msg = ""
         def errores = ""
-//        println "guardar datos doc " + params
-        def sol = SolicitudAval.get(params.id)
 
+        def sol = SolicitudAval.get(params.id)
+        def usuario = Persona.get(session.usuario.id)
         def strSolicitud = sol.tipo == "A" ? "solicitud de anulación" : "solicitud"
 
-        def obs = params.obs
-        def usuario = Persona.get(session.usuario.id)
-        if (obs) {
-            obs = obs.replaceAll("&nbsp", " ")
-            obs = obs.replaceAll("&Oacute;", "Ó")
-            obs = obs.replaceAll("&oacute;", "ó")
-            obs = obs.replaceAll("&Aacute;", "Á")
-            obs = obs.replaceAll("&aacute;", "á")
-            obs = obs.replaceAll("&Eacute;", "É")
-            obs = obs.replaceAll("&eacute;", "é")
-            obs = obs.replaceAll("&Iacute;", "Í")
-            obs = obs.replaceAll("&iacute;", "í")
-            obs = obs.replaceAll("&Uacute;", "Ú")
-            obs = obs.replaceAll("&uacute;", "ú")
-            obs = obs.replaceAll("&ntilde;", "ñ")
-            obs = obs.replaceAll("&Ntilde;", "Ñ")
-            obs = obs.replaceAll("&ldquo;", '"')
-            obs = obs.replaceAll("&rdquo;", '"')
-            obs = obs.replaceAll("&lquo;", "'")
-            obs = obs.replaceAll("&rquo;", "'")
-
-        }
-        sol.observacionesPdf = obs
+//        def obs = params.obs
+//
+//        if (obs) {
+//            obs = obs.replaceAll("&nbsp", " ")
+//            obs = obs.replaceAll("&Oacute;", "Ó")
+//            obs = obs.replaceAll("&oacute;", "ó")
+//            obs = obs.replaceAll("&Aacute;", "Á")
+//            obs = obs.replaceAll("&aacute;", "á")
+//            obs = obs.replaceAll("&Eacute;", "É")
+//            obs = obs.replaceAll("&eacute;", "é")
+//            obs = obs.replaceAll("&Iacute;", "Í")
+//            obs = obs.replaceAll("&iacute;", "í")
+//            obs = obs.replaceAll("&Uacute;", "Ú")
+//            obs = obs.replaceAll("&uacute;", "ú")
+//            obs = obs.replaceAll("&ntilde;", "ñ")
+//            obs = obs.replaceAll("&Ntilde;", "Ñ")
+//            obs = obs.replaceAll("&ldquo;", '"')
+//            obs = obs.replaceAll("&rdquo;", '"')
+//            obs = obs.replaceAll("&lquo;", "'")
+//            obs = obs.replaceAll("&rquo;", "'")
+//
+//        }
+//        sol.observacionesPdf = obs
         sol.analista = Persona.get(session.usuario.id)
 //        println "ANALISTA: " + sol.analista
 //        sol.firma2 = Usro.get(params.firma2)
@@ -553,55 +561,51 @@ class RevisionAvalController {
 
                             firma1.tipoFirma = "AVAL"
 
-//                            firma1.documento = "aval_" + aval.numero + "_" + sol.proceso.nombre
-//                        firma1.concepto = "Aprobación del aval ${aval.numero}"
                             firma1.concepto = "Aprobación del aval ${aval.concepto}"
                             firma1.esPdf = "S"
                             if (!firma1.save(flush: true)) {
                                 println "error firma1 " + firma1.errors
                                 errores += renderErrors(bean: firma1)
                             }
-                            firma2 = new Firma()
-                            firma2.usuario = Persona.get(params.firma3)
-
-                            firma2.controladorVer = "reportes"
-                            firma2.accionVer = "certificacion"
-                            firma2.idAccionVer = sol.id
-
-                            firma2.controlador = "revisionAval"
-                            firma2.accion = "firmarAval"
-
-                            firma2.controladorNegar = "revisionAval"
-                            firma2.accionNegar = "devolverAvalAPlanificacion"
-                            firma2.idAccionNegar = sol.id
-
-                            firma2.tipoFirma = "AVAL"
-
-//                            firma2.documento = "aval_" + aval.numero + "_" + sol.proceso.nombre
-//                        firma2.concepto = "Aprobación del aval ${aval.numero}"
-                            firma2.concepto = "Aprobación del aval ${aval.concepto}"
-                            firma2.esPdf = "S"
-                            if (!firma2.save(flush: true)) {
-                                println "error firma2 " + firma2.errors
-                                errores += renderErrors(bean: firma2)
-                            }
+//                            firma2 = new Firma()
+//                            firma2.usuario = Persona.get(params.firma3)
+//
+//                            firma2.controladorVer = "reportes"
+//                            firma2.accionVer = "certificacion"
+//                            firma2.idAccionVer = sol.id
+//
+//                            firma2.controlador = "revisionAval"
+//                            firma2.accion = "firmarAval"
+//
+//                            firma2.controladorNegar = "revisionAval"
+//                            firma2.accionNegar = "devolverAvalAPlanificacion"
+//                            firma2.idAccionNegar = sol.id
+//
+//                            firma2.tipoFirma = "AVAL"
+//
+//                            firma2.concepto = "Aprobación del aval ${aval.concepto}"
+//                            firma2.esPdf = "S"
+//                            if (!firma2.save(flush: true)) {
+//                                println "error firma2 " + firma2.errors
+//                                errores += renderErrors(bean: firma2)
+//                            }
                             aval.firma1 = firma1
-                            aval.firma2 = firma2
+//                            aval.firma2 = firma2
                         } else {
                             aval = sol.aval
                             firma1 = aval.firma1
-                            firma2 = aval.firma2
+//                            firma2 = aval.firma2
 
                             firma1.estado = "S"
-                            firma2.estado = "S"
+//                            firma2.estado = "S"
                         }
                         if (!aval.save(flush: true)) {
                             println "error save aval 2"
                         }
                         firma1.idAccion = aval.id
-                        firma2.idAccion = aval.id
+//                        firma2.idAccion = aval.id
                         firma1.save()
-                        firma2.save()
+//                        firma2.save()
                         sol.aval = aval;
                         sol.estado = aval.estado
                         if (!aval.save(flush: true)) {
@@ -610,60 +614,60 @@ class RevisionAvalController {
                         sol.save(flush: true)
 
                         def alerta1 = new Alerta()
-                        alerta1.from = usuario
+//                        alerta1.from = usuario
                         alerta1.persona = firma1.usuario
-                        alerta1.fechaEnvio = new Date()
+//                        alerta1.fechaEnvio = new Date()
+                        alerta1.fechaCreacion= new Date()
                         alerta1.mensaje = "Aval pendiente de firma para aprobación: " + aval.concepto
-                        alerta1.controlador = "firma"
+//                        alerta1.controlador = "firma"
                         alerta1.accion = "firmasPendientes"
-                        alerta1.parametros = "tab=AVAL"
-                        alerta1.id_remoto = aval.id
-                        alerta1.tipo = 'aval'
+//                        alerta1.parametros = "tab=AVAL"
+//                        alerta1.id_remoto = aval.id
+//                        alerta1.tipo = 'aval'
                         if (!alerta1.save(flush: true)) {
                             println "error alerta1: " + alerta1.errors
                         }
-                        def alerta2 = new Alerta()
-                        alerta2.from = usuario
-                        alerta2.persona = firma2.usuario
-                        alerta2.fechaEnvio = new Date()
-                        alerta2.mensaje = "Aval pendiente de firma para aprobación: " + aval.concepto
-                        alerta2.controlador = "firma"
-                        alerta2.accion = "firmasPendientes"
-                        alerta2.parametros = "tab=AVAL"
-                        alerta2.id_remoto = aval.id
-                        alerta2.tipo = 'aval'
-                        if (!alerta2.save(flush: true)) {
-                            println "error alerta2: " + alerta2.errors
-                        }
+//                        def alerta2 = new Alerta()
+//                        alerta2.from = usuario
+//                        alerta2.persona = firma2.usuario
+//                        alerta2.fechaEnvio = new Date()
+//                        alerta2.mensaje = "Aval pendiente de firma para aprobación: " + aval.concepto
+//                        alerta2.controlador = "firma"
+//                        alerta2.accion = "firmasPendientes"
+//                        alerta2.parametros = "tab=AVAL"
+//                        alerta2.id_remoto = aval.id
+//                        alerta2.tipo = 'aval'
+//                        if (!alerta2.save(flush: true)) {
+//                            println "error alerta2: " + alerta2.errors
+//                        }
 
-                        try {
-                            def mail = aval.firma1.usuario.mail
-                            if (mail) {
-                                mailService.sendMail {
-                                    to mail
-                                    subject "Un nuevo aval requiere aprobación"
-                                    body "Tiene un aval pendiente que requiere su firma para aprobación "
-                                }
-                            } else {
-                                println "El usuario ${aval.firma1.usuario.login} no tiene email"
-                                msg += "<li>El usuario ${aval.firma1.usuario.login} no tiene email</li>"
-                            }
-                            mail = aval.firma2.usuario.mail
-                            if (mail) {
-                                mailService.sendMail {
-                                    to mail
-                                    subject "Un nuevo aval requiere aprobación"
-                                    body "Tiene un aval pendiente que requiere su firma para aprobación "
-                                }
-                            } else {
-                                println "El usuario ${aval.firma2.usuario.login} no tiene email"
-                                msg += "<li>El usuario ${aval.firma2.usuario.login} no tiene email</li>"
-                            }
-                        } catch (e) {
-                            println "error email " + e.printStackTrace()
-                            msg += "Ha ocurrido un error al enviar los emails."
-                        }
-                        //flash.message = "Solciitud de firmas enviada para aprobación"
+//                        try {
+//                            def mail = aval.firma1.usuario.mail
+//                            if (mail) {
+//                                mailService.sendMail {
+//                                    to mail
+//                                    subject "Un nuevo aval requiere aprobación"
+//                                    body "Tiene un aval pendiente que requiere su firma para aprobación "
+//                                }
+//                            } else {
+//                                println "El usuario ${aval.firma1.usuario.login} no tiene email"
+//                                msg += "<li>El usuario ${aval.firma1.usuario.login} no tiene email</li>"
+//                            }
+//                            mail = aval.firma2.usuario.mail
+//                            if (mail) {
+//                                mailService.sendMail {
+//                                    to mail
+//                                    subject "Un nuevo aval requiere aprobación"
+//                                    body "Tiene un aval pendiente que requiere su firma para aprobación "
+//                                }
+//                            } else {
+//                                println "El usuario ${aval.firma2.usuario.login} no tiene email"
+//                                msg += "<li>El usuario ${aval.firma2.usuario.login} no tiene email</li>"
+//                            }
+//                        } catch (e) {
+//                            println "error email " + e.printStackTrace()
+//                            msg += "Ha ocurrido un error al enviar los emails."
+//                        }
                     } else {
                         def msn = "Usted no tiene permisos para aprobar esta solicitud"
                         if (params.tipo) {
@@ -696,6 +700,21 @@ class RevisionAvalController {
                 rend = "Datos guardados. " + rend
             }
             render "SUCCESS*" + rend
+        }
+    }
+
+    def guardarTextoObservaciones(){
+
+//        println("params gt " + params)
+
+        def solicitud = SolicitudAval.get(params.id)
+        solicitud.observacionesPdf = params.obs
+
+        if(!solicitud.save(flush:true)){
+            println("error al guardar la observacion de slav " + solicitud.errors)
+            render "no"
+        }else{
+            render "ok"
         }
     }
 
@@ -896,6 +915,8 @@ class RevisionAvalController {
         def sol = SolicitudAval.get(params.id)
         sol.estado = EstadoAval.findByCodigo("D03") //devuelto al analista
 
+        sol.save(flush:true)
+
 /*
         if (sol.firma1) {
             sol.firma1.estado = "N"
@@ -918,34 +939,35 @@ class RevisionAvalController {
 
         analistas.each { a ->
             def alerta = new Alerta()
-            alerta.from = usu
+//            alerta.from = usu
             alerta.persona = a
-            alerta.fechaEnvio = now
+//            alerta.fechaEnvio = now
+            alerta.fechaCreacion = now
 //            alerta.mensaje = "Devolución de aval: " + sol.concepto
             alerta.mensaje = "Devolución de ${strAnulacion}aval: " + sol.proceso.nombre
-            alerta.controlador = "revisionAval"
+//            alerta.controlador = "revisionAval"
             alerta.accion = "pendientes"
-            alerta.id_remoto = sol.id
-            alerta.tipo = 'slct'
+//            alerta.id_remoto = sol.id
+//            alerta.tipo = 'slct'
             if (!alerta.save(flush: true)) {
                 println "error alerta: " + alerta.errors
             }
-            def mail = a.mail
-            if (mail) {
-                try {
-                    mailService.sendMail {
-                        to mail
-                        subject "Devolución de ${strAnulacion}aval"
-//                        body "Su solicitud de aval: " + sol.concepto + " ha sido devuelta por " + usu
-                        body "Su solicitud de ${strAnulacion}aval: " + sol.proceso.nombre + " ha sido devuelta por " + usu
-                    }
-                } catch (e) {
-                    println "error al mandar mail"
-                    e.printStackTrace()
-                }
-            } else {
-                println "no tiene mail..."
-            }
+//            def mail = a.mail
+//            if (mail) {
+//                try {
+//                    mailService.sendMail {
+//                        to mail
+//                        subject "Devolución de ${strAnulacion}aval"
+////                        body "Su solicitud de aval: " + sol.concepto + " ha sido devuelta por " + usu
+//                        body "Su solicitud de ${strAnulacion}aval: " + sol.proceso.nombre + " ha sido devuelta por " + usu
+//                    }
+//                } catch (e) {
+//                    println "error al mandar mail"
+//                    e.printStackTrace()
+//                }
+//            } else {
+//                println "no tiene mail..."
+//            }
         }
         render "OK"
     }
@@ -958,80 +980,71 @@ class RevisionAvalController {
         println "FIRMAR AVAL: " + params
         def firma = Firma.findByKey(params.key)
         def numero = 0
-        def unej = UnidadEjecutora.findByCodigo('GPE')
+//        def unej = UnidadEjecutora.findByCodigo('GPE')
+        def unej = UnidadEjecutora.get(1)
         if (!firma) {
             response.sendError(403)
         } else {
             def aval = Aval.findByFirma1OrFirma2(firma, firma)
             println "firmarAval AVAL ID: " + aval.id
-            if (aval.firma1.estado == "F" && aval.firma2.estado == "F") {
+//            if (aval.firma1.estado == "F" && aval.firma2.estado == "F") {
+            if (aval.firma1.estado == "F") {
                 println "AMBAS FIRMAS OK: PONE NUMERO"
                 aval.fechaAprobacion = new Date()
 
-                if(aval.proceso.proyecto.codigo == "P.19") {
-                    numero = aval.proceso.proyecto.siguienteNumeroAval
-                } else {
-                    unej.refresh()
-                    numero = unej.numeroAval   //numeración única para GPE para todos los avales excepto proy: P.19
-                    if (numero == 0) {
-                        numero = 1
-                    } else {
-                        numero = numero + 1
-                    }
-                }
+//                if(aval.proceso.proyecto.codigo == "P.19") {
+//                    numero = aval.proceso.proyecto.siguienteNumeroAval
+//                } else {
+//                    unej.refresh()
+//                    numero = unej.numeroAval   //numeración única para GPE para todos los avales excepto proy: P.19
+//                    if (numero == 0) {
+//                        numero = 1
+//                    } else {
+//                        numero = numero + 1
+//                    }
+//                }
 
-                println "NUMERO: " + numero
-                aval.numero = numero
+                numero = Aval.list().numero.max()
+
+                println "NUMERO: " + numero + 1
+                aval.numero = numero +1
                 aval.estado = EstadoAval.findByCodigo("E02")
                 aval.save(flush: true)
 
-                unej.numeroAval = numero
-                unej.save(flush: true)
+//                unej.numeroAval = numero
+//                unej.save(flush: true)
 
                 def sol = SolicitudAval.findByAval(aval)
                 if(sol.tipo != 'A') {
                     sol.estado = aval.estado
                     sol.save(flush: true)
-                    try {
-                        def personaMail = sol.firma.usuario
-//                    def perDir = Prfl.findByCodigo("DRRQ")
-//                    def sesiones = []
-//                    /*drrq*/
-//                    Persona.findAllByUnidad(sol.unidad).each {
-//                        def ses = Sesn.findAllByPerfilAndUsuario(perDir, it)
-//                        if (ses.size() > 0) {
-//                            sesiones += ses
+//                    try {
+//                        def personaMail = sol.firma.usuario
+//                        println "mail: Se ha emitido el aval No.${aval.numeroAval} para el proceso: ${aval.proceso.nombre}, " +
+//                                "por el monto de USD. ${formatNumber(number: aval.monto, type: 'currency' , currencySymbol:'')}"
+//                        if (personaMail) {
+////                        println "Se enviaran ${sesiones.size()} mails"
+//                            def mail = personaMail.mail
+//                            def analista = sol.analista.mail
+//                            if (mail || analista) {
+//                                println "Envía mail de Aval firmado para: ${sol.firma.usuario.login} a $mail"
+//                                mailService.sendMail {
+//                                    to mail, analista
+//                                    subject "Nuevo aval emitido"
+//                                    body "Se ha emitido el aval No.${aval.numeroAval} para el proceso: ${aval.proceso.nombre}, " +
+//                                            "por el monto de USD. ${formatNumber(number: aval.monto, type: 'currency' , currencySymbol:'')}"
+//                                    println "mail ok: Se ha emitido el aval No.${aval.numeroAval} para el proceso: ${aval.proceso.nombre}, " +
+//                                            "por el monto de USD. ${formatNumber(number: aval.monto, type: 'currency' , currencySymbol:'')}"
+//                                }
+//                            } else {
+//                                println "El usuario ${sol.firma.usuario.login} no tiene email"
+//                            }
+//                        } else {
+//                            println "No hay nadie registrado con perfil de direccion de planificacion: no se mandan mails"
 //                        }
+//                    } catch (e) {
+//                        println "Error al enviar mail: ${e.printStackTrace()}"
 //                    }
-                        println "mail: Se ha emitido el aval No.${aval.numeroAval} para el proceso: ${aval.proceso.nombre}, " +
-                                "por el monto de USD. ${formatNumber(number: aval.monto, type: 'currency' , currencySymbol:'')}"
-
-                        if (personaMail) {
-//                        println "Se enviaran ${sesiones.size()} mails"
-//                        sesiones.each { sesn ->
-//                            Persona usro = sesn.usuario
-                            def mail = personaMail.mail
-                            def analista = sol.analista.mail
-                            if (mail || analista) {
-                                println "Envía mail de Aval firmado para: ${sol.firma.usuario.login} a $mail"
-                                mailService.sendMail {
-                                    to mail, analista
-                                    subject "Nuevo aval emitido"
-                                    body "Se ha emitido el aval No.${aval.numeroAval} para el proceso: ${aval.proceso.nombre}, " +
-                                            "por el monto de USD. ${formatNumber(number: aval.monto, type: 'currency' , currencySymbol:'')}"
-                                    println "mail ok: Se ha emitido el aval No.${aval.numeroAval} para el proceso: ${aval.proceso.nombre}, " +
-                                            "por el monto de USD. ${formatNumber(number: aval.monto, type: 'currency' , currencySymbol:'')}"
-                                }
-                            } else {
-                                println "El usuario ${sol.firma.usuario.login} no tiene email"
-                            }
-//                        }
-                        } else {
-                            println "No hay nadie registrado con perfil de direccion de planificacion: no se mandan mails"
-                        }
-                    } catch (e) {
-                        println "Error al enviar mail: ${e.printStackTrace()}"
-                    }
 //            redirect(controller: "pdf",action: "pdfLink",params: [url:g.createLink(controller: firma.controladorVer,action: firma.accionVer,id: firma.idAccionVer)])
                 }
             }
