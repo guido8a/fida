@@ -1,4 +1,4 @@
-<%@ page import="parametros.Anio; parametrosproyectos.TipoElemento" contentType="text/html;charset=UTF-8" %>
+<%@ page import="parametros.Anio; parametros.proyectos.TipoElemento" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
