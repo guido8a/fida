@@ -153,7 +153,7 @@ environments:
     production:
         dataSource:
             dbCreate: none
-            url: jdbc:postgresql://192.168.100.9:5432/fida
+            url: jdbc:postgresql://127.0.0.1:5432/fida
             username: postgres
             password: 'steinsgate'
             properties:
