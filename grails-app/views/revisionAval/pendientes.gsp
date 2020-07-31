@@ -15,7 +15,7 @@
 
 <div class="panel panel-primary col-md-12" role="tabpanel" style="margin-top: 20px; min-height: 300px">
 
-    <h3>Solicitudes de aval</h3>
+    <h3>Solicitudes y Avales</h3>
 
     <div class="btn-toolbar toolbar">
         <div class="btn-group">
@@ -31,6 +31,11 @@
             <li role="presentation" class="active">
                 <a href="#pendientes" aria-controls="home" role="tab" data-toggle="pill">
                     Solicitudes pendientes
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#avales" aria-controls="home" role="tab" data-toggle="pill">
+                    Avales pendientes
                 </a>
             </li>
             <li role="presentation">
@@ -55,7 +60,7 @@
                             <th style="width: 10%;">Monto</th>
                             <th style="width: 10%;">Estado</th>
                             <th style="width: 10%;">Doc. Respaldo</th>
-%{--                            <th style="width: 60px;">Solicitud</th>--}%
+                            %{--                            <th style="width: 60px;">Solicitud</th>--}%
                             <th style="width: 10%;">Acciones</th>
                         </tr>
                         </thead>
@@ -71,7 +76,7 @@
                                     <td></td>
                                     <td>Solicitud pendiente </td>
                                     <td></td>
-%{--                                    <td></td>--}%
+                                    %{--                                    <td></td>--}%
                                     <td class="text-center">
                                         <div class="btn-group btn-group-xs" role="group">
                                             <a href="${g.createLink(controller: 'avales', action: 'nuevaSolicitud', id: p.id)}" class="aprobar btn btn-success" title="Editar">
@@ -123,9 +128,9 @@
                                         </a>
                                     </g:if>
                                 </td>
-%{--                                <td class="text-center">--}%
+                                %{--                                <td class="text-center">--}%
 
-%{--                                </td>--}%
+                                %{--                                </td>--}%
                                 <td class="text-center">
                                     <div class="btn-group btn-group-xs" role="group">
                                         <a href="${g.createLink(controller: 'avales', action: 'nuevaSolicitud', id: p.proceso.id)}" class="aprobar btn btn-success" title="Editar">
@@ -133,19 +138,19 @@
                                         </a>
                                         <g:if test="${p.estado.codigo == 'P01' || p.estado.codigo == 'D01'}">
                                             <g:if test="${session.usuario.id == p.usuarioId}">
-%{--                                                <g:if test="${p.tipo == 'A'}">--}%
-%{--                                                    <a href="${g.createLink(controller: 'avales', action: 'solicitarAnulacion', params: [sol: p.id])}" class="aprobar btn btn-danger" title="Anular">--}%
-%{--                                                        <i class="fa fa-edit"></i>--}%
-%{--                                                    </a>--}%
-%{--                                                </g:if>--}%
-%{--                                                <g:else>--}%
-%{--                                                    <a href="${g.createLink(controller: 'avales', action: 'nuevaSolicitud', id: p.proceso.id)}" class="aprobar btn btn-success" title="Editar">--}%
-%{--                                                        <i class="fa fa-edit"></i>--}%
-%{--                                                    </a>--}%
-                                                    <a href="#" class="borrarSolicitud btn btn-danger" title="Eliminar solicitud" sol="${p.proceso.id}">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-%{--                                                </g:else>--}%
+                                            %{--                                                <g:if test="${p.tipo == 'A'}">--}%
+                                            %{--                                                    <a href="${g.createLink(controller: 'avales', action: 'solicitarAnulacion', params: [sol: p.id])}" class="aprobar btn btn-danger" title="Anular">--}%
+                                            %{--                                                        <i class="fa fa-edit"></i>--}%
+                                            %{--                                                    </a>--}%
+                                            %{--                                                </g:if>--}%
+                                            %{--                                                <g:else>--}%
+                                            %{--                                                    <a href="${g.createLink(controller: 'avales', action: 'nuevaSolicitud', id: p.proceso.id)}" class="aprobar btn btn-success" title="Editar">--}%
+                                            %{--                                                        <i class="fa fa-edit"></i>--}%
+                                            %{--                                                    </a>--}%
+                                                <a href="#" class="borrarSolicitud btn btn-danger" title="Eliminar solicitud" sol="${p.proceso.id}">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            %{--                                                </g:else>--}%
                                             </g:if>
                                         </g:if>
                                         <g:elseif test="${p.estado.codigo == 'R01' || p.estado.codigo == 'D02'}">
@@ -185,6 +190,126 @@
                     <div class="alert alert-info" style="width: 450px;margin-top: 20px">No existen solicitudes pendientes</div>
                 </g:else>
             </div>
+
+
+        <div role="tabpanel" class="tab-pane" id="avales">
+            <g:if test="${(avales.size() > 0)}">
+                <table class="table table-condensed table-striped table-hover table-bordered" style="margin-top: 20px;">
+                    <thead>
+                    <tr style="width: 100%">
+                        <th style="width: 10%;">Solicitud</th>
+                        <th style="width: 10%;">Requirente</th>
+                        <th style="width: 10%;">Proceso</th>
+                        <th style="width: 10%;">Tipo</th>
+                        <th style="width: 10%;">Justificación</th>
+                        <th style="width: 10%;">Monto</th>
+                        <th style="width: 10%;">Estado</th>
+                        <th style="width: 10%;">Doc. Respaldo</th>
+                        %{--                            <th style="width: 60px;">Solicitud</th>--}%
+                        <th style="width: 10%;">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <g:each in="${avales}" var="p">
+                        <g:set var="title"/>
+                        <g:if test="${p.estado.codigo == 'D01'}">
+                            <g:set var="title" value="${p.observaciones}"/>
+                        </g:if>
+                        <g:if test="${p.estado.codigo == 'D02'}">
+                            <g:set var="title" value="Devuelto por ${p.firma.usuario}${p.firma.observaciones && p.firma.observaciones != 'S' ? ': ' + p.firma.observaciones : ''}"/>
+                        </g:if>
+                    %{--<g:if test="${session.usuario.unidad.codigo == p?.unidad?.codigo}">--}%
+                        <tr>
+                            <td>
+                                ${p.unidad?.codigo}-${p.numero}
+                            </td>
+                            <td>
+                                ${p.unidad}
+                            </td>
+                            <td>
+                                ${p.proceso.nombre} ${session.usuario.unidadEjecutora.codigo} ${p?.unidad?.codigo}
+                            </td>
+                            <td class="${(p.tipo == 'A') ? 'E03' : 'E02'}" style="text-align: center">
+                                ${(p.tipo == "A") ? 'Anulación' : 'Aprobación'}
+                            </td>
+                            <td>
+                                ${p.concepto}
+                            </td>
+                            <td class="text-right">
+                                <g:formatNumber number="${p.monto}" type="currency" currencySymbol=""/>
+                            </td>
+                            <td style="text-align: center" class="text-center ${p.estado?.codigo}" title="${title}">
+                                ${p.estado?.descripcion}
+                            </td>
+                            <td class="text-center">
+                                <g:if test="${p.path}">
+                                    <a href="#" class="btn btn-info btn-xs descRespaldo" iden="${p.id}" title="Ver">
+                                        <i class="fa fa-print"></i>
+                                    </a>
+                                </g:if>
+                            </td>
+                            %{--                                <td class="text-center">--}%
+
+                            %{--                                </td>--}%
+                            <td class="text-center">
+                                <div class="btn-group btn-group-xs" role="group">
+                                    <a href="${g.createLink(controller: 'avales', action: 'nuevaSolicitud', id: p.proceso.id)}" class="aprobar btn btn-success" title="Editar">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <g:if test="${p.estado.codigo == 'P01' || p.estado.codigo == 'D01'}">
+                                        <g:if test="${session.usuario.id == p.usuarioId}">
+                                        %{--                                                <g:if test="${p.tipo == 'A'}">--}%
+                                        %{--                                                    <a href="${g.createLink(controller: 'avales', action: 'solicitarAnulacion', params: [sol: p.id])}" class="aprobar btn btn-danger" title="Anular">--}%
+                                        %{--                                                        <i class="fa fa-edit"></i>--}%
+                                        %{--                                                    </a>--}%
+                                        %{--                                                </g:if>--}%
+                                        %{--                                                <g:else>--}%
+                                        %{--                                                    <a href="${g.createLink(controller: 'avales', action: 'nuevaSolicitud', id: p.proceso.id)}" class="aprobar btn btn-success" title="Editar">--}%
+                                        %{--                                                        <i class="fa fa-edit"></i>--}%
+                                        %{--                                                    </a>--}%
+                                            <a href="#" class="borrarSolicitud btn btn-danger" title="Eliminar solicitud" sol="${p.proceso.id}">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        %{--                                                </g:else>--}%
+                                        </g:if>
+                                    </g:if>
+                                    <g:elseif test="${p.estado.codigo == 'R01' || p.estado.codigo == 'D02'}">
+                                        <a href="${g.createLink(action: 'revisionSolicitud', id: p.id)}" class="aprobar btn btn-warning" title="Revisar solicitud">
+                                            <i class="fa fa-cog"></i>
+                                        </a>
+                                    </g:elseif>
+                                    <g:elseif test="${p.estado.codigo == 'E01' || p.estado.codigo == 'D03'}">
+                                        <g:if test="${session.perfil.codigo == 'ASPL'}">
+                                            <g:if test="${p.tipo != 'A'}">
+                                                <a href="${g.createLink(action: 'aprobarAval', id: p.id)}" class="aprobar btn btn-warning" title="Aprobar Aval">
+                                                    <i class="fa fa-cog"></i>
+                                                </a>
+                                            </g:if>
+                                            <g:else>
+                                                <a href="${g.createLink(action: 'aprobarAnulacion', id: p.id)}" class="aprobar btn btn-warning" title="Revisar">
+                                                    <i class="fa fa-cog"></i>
+                                                </a>
+
+                                            </g:else>
+                                        </g:if>
+                                    </g:elseif>
+                                    <a href="#" class="btn btn-info btn-xs imprimirSolicitud" iden="${p.id}" data-tipo="${p.tipo}" title="Ver">
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                </div>
+                            </td>
+
+                        </tr>
+                    %{--</g:if>--}%
+                    </g:each>
+
+                    </tbody>
+                </table>
+            </g:if>
+            <g:else>
+                <div class="alert alert-info" style="width: 450px;margin-top: 20px">No existen solicitudes pendientes</div>
+            </g:else>
+        </div>
 
             <div role="tabpanel" class="tab-pane" id="historial">
                 <div class="well" style="margin-top: 20px">

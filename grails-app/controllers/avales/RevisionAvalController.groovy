@@ -1472,6 +1472,9 @@ class RevisionAvalController {
         def estadoDevueltoDirReq = EstadoAval.findByCodigo("D02")
         def estadoDevueltoAnPlan = EstadoAval.findByCodigo("D03")
         def estadoSolicitadoSinFirma = EstadoAval.findByCodigo("EF4")
+        def estadoAprobadoSinFirma = EstadoAval.findByCodigo("EF1")
+        def estadoAprobado = EstadoAval.findByCodigo("E02")
+        def estadoNegado = EstadoAval.findByCodigo("E03")
 
         def estados = []
         def perfil = session.perfil.codigo.toString()
@@ -1520,24 +1523,34 @@ class RevisionAvalController {
         }
 
 
-        def solicitudes = SolicitudAval.withCriteria {
-            if (estados.size() > 0) {
-                inList("estado", estados)
-            }
-/*
-            if (unidades.size() > 0) {
-                inList("unidad", unidades)
-            }
-*/
-/*
-            if (filtroPersona) {
-                eq("usuario", filtroPersona)
-            }
-            if (filtroDirector) {
-                eq("director", filtroDirector)
-            }
-*/
-        }
+//        def solicitudes = SolicitudAval.withCriteria {
+//            if (estados.size() > 0) {
+//                inList("estado", estados)
+//            }
+///*
+//            if (unidades.size() > 0) {
+//                inList("unidad", unidades)
+//            }
+//*/
+///*
+//            if (filtroPersona) {
+//                eq("usuario", filtroPersona)
+//            }
+//            if (filtroDirector) {
+//                eq("director", filtroDirector)
+//            }
+//*/
+//        }
+
+        def estadosSolicitud = [estadoSolicitado, estadoSolicitadoSinFirma, estadoAprobadoSinFirma,
+                                estadoNegado, estadoPendiente, estadoPorRevisar, estadoDevueltoReq, estadoDevueltoDirReq]
+        def solicitudes = SolicitudAval.findAllByEstadoInListAndAvalIsNull(estadosSolicitud)
+
+        def estadosAvales = [estadoAprobado, estadoDevueltoAnPlan, estadoAprobadoSinFirma]
+        def avales = SolicitudAval.findAllByEstadoInListAndAvalIsNotNull(estadosAvales)
+
+
+
         def actual
         if (params.anio) {
             actual = Anio.get(params.anio)
@@ -1574,7 +1587,7 @@ class RevisionAvalController {
         unidadesList = unidadesList.sort { it.nombre }
 //        println "solicitudes: $solicitudes, actual: $actual, unidades: $unidadesList, procesosSinSolicitud: $p"
 
-        return [solicitudes: solicitudes, actual: actual, unidades: unidadesList, procesosSinSolicitud: p]
+        return [solicitudes: solicitudes, actual: actual, unidades: unidadesList, procesosSinSolicitud: p, avales: avales]
     }
 
     def devolverARequirente_ajax() {
@@ -1658,7 +1671,7 @@ class RevisionAvalController {
             if (!alerta1.save(flush: true)) {
                 println "error alerta1: " + alerta1.errors
             }
-            def mail = solicitud.director.mail
+//            def mail = solicitud.director.mail
 //            if (mail) {
 //                try {
 //                    mailService.sendMail {
