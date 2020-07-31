@@ -24,7 +24,7 @@
                 </g:if>
                 <g:else>
                     <g:select class="field ui-widget-content ui-corner-all" name="canton.id"
-                              from="${janus.Canton.list([sort:'nombre'])}" optionKey="id" value="${parroquiaInstance?.canton?.id}"
+                              from="${geografia.Canton.list([sort:'nombre'])}" optionKey="id" value="${parroquiaInstance?.canton?.id}"
                               noSelection="['null': '']"/>
                 </g:else>
             </td>

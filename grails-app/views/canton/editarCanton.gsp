@@ -21,7 +21,7 @@
                     <g:hiddenField name="provincia.id" value="${cantonInstance?.provincia?.id}"/>
                 </g:if>
                 <g:else>
-                    <g:select class="field ui-widget-content ui-corner-all" name="provincia.id" from="${janus.Provincia.list()}" optionKey="id" optionValue="nombre"
+                    <g:select class="field ui-widget-content ui-corner-all" name="provincia.id" from="${geografia.Provincia.list()}" optionKey="id" optionValue="nombre"
                               value="${cantonInstance?.provincia?.id}" noSelection="['null': '']"/>
                 </g:else>
             </td>
