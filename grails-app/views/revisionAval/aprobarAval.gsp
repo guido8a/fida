@@ -222,7 +222,7 @@
             %{--    });--}%
 
             $("#btnPreview").click(function () {
-                var url = "${createLink(controller: 'reporteSolicitud', action: 'imprimirSolicitudAval')}/?id=${solicitud.id}Wusu=${session.usuario.id}";
+                var url = "${createLink(controller: 'reporteSolicitud', action: 'imprimirSolicitudAval')}/?id=${solicitud.id}&usu=${session.usuario.id}";
                 location.href = url + "&filename=aval_" + $("#numero").val() + ".pdf"
                 return false;
             });
