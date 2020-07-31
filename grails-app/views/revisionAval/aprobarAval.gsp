@@ -47,10 +47,10 @@
                 <h4>Devuelto por ${solicitud.aval.firma1.usuario}</h4>
                 ${solicitud.aval.firma1.observaciones}
             </g:if>
-            <g:if test="${solicitud.aval.firma2.observaciones && solicitud.aval.firma2.observaciones != '' && solicitud.aval.firma2.observaciones != 'S'}">
-                <h4>Devuelto por ${solicitud.aval.firma2.usuario}</h4>
-                ${solicitud.aval.firma2.observaciones}
-            </g:if>
+%{--            <g:if test="${solicitud.aval.firma2.observaciones && solicitud.aval.firma2.observaciones != '' && solicitud.aval.firma2.observaciones != 'S'}">--}%
+%{--                <h4>Devuelto por ${solicitud.aval.firma2.usuario}</h4>--}%
+%{--                ${solicitud.aval.firma2.observaciones}--}%
+%{--            </g:if>--}%
         </div>
     </g:if>
 
