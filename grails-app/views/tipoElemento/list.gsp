@@ -1,5 +1,5 @@
 
-<%@ page import="parametros.TipoElemento" %>
+<%@ page import="parametros.proyectos.TipoElemento" %>
 <!DOCTYPE html>
 <html>
     <head>
