@@ -485,7 +485,6 @@ class ReporteSolicitudController {
      * Acción que genera un archivo PDF de la solicitud de aval
      */
     def imprimirSolicitudAval() {
-
         println("params ra " + params.id)
 
         def id
@@ -497,29 +496,41 @@ class ReporteSolicitudController {
             }
         }
 
-//        def arch = params.id.split('&')[1]
+        /* hay que determinar en base a slav.id si existe o no el aval con estado aprobado E02 id:2*/
         println "--> id: $id"
         def titulo_rep
         def slav = SolicitudAval.get(id)
         def poas = ProcesoAsignacion.findByProceso(slav?.proceso)
-        def anio = poas.asignacion.anio.anio
-        def firma = seguridad.Firma.findByIdAccionAndTipoFirmaAndEstado(slav.id, 'AVAL', 'F')
-        def firmaAval = seguridad.Firma.findByIdAccionAndTipoFirmaAndEstadoAndAccionAndPathIsNotNull(slav.id, 'AVAL', 'F', 'firmarAval')
-        def firma_path = firma?.path
-        Image logo = Image.getInstance('/var/fida/logo.png')
-        def tipoAval = firmaAval? "aval" : "solicitud"
 
+        def hayAval = false, firma_path
+        def firma
+
+        if(slav?.aval?.estado?.codigo == 'E02') { //aval aprobado
+            firma = seguridad.Firma.findByIdAccionAndTipoFirmaAndEstadoAndAccionAndPathIsNotNull(slav.aval.id, 'AVAL', 'F', 'firmarAval')
+            firma_path = firma? firma.path : null
+            hayAval = true
+        } else { //solicitudes
+            firma = seguridad.Firma.findByIdAccionAndTipoFirmaAndEstadoAndAccionAndPathIsNotNull(slav.id, 'AVAL', 'F', 'firmarSolicitud')
+            firma_path = firma? firma.path : null
+            hayAval = false
+        }
+
+        Image logo = Image.getInstance('/var/fida/logo.png')
         Image firma_img
-        println "firma_path: $firma_path   firmaaval: ${firmaAval}"
-        if (firmaAval) {
+
+        def tipoAval = hayAval? "aval" : "solicitud"
+        if (hayAval) {
             titulo_rep = "AVAL DE POA"
-            firma_img = Image.getInstance('/var/fida/firmas/' + firma_path)
-            firma_img.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP)
         } else {
-            firma_img = Image.getInstance('/var/fida/firmas/' + firma_path)
-            firma_img.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP)
             titulo_rep = "SOLICITUD DE AVAL DE POA"
         }
+
+        if(firma_path) {
+            firma_img = Image.getInstance('/var/fida/firmas/' + firma_path)
+            firma_img.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP)
+        }
+
+        println "firma_path: $firma_path"
 //            println "firma: ${firma_img}"
 
         logo.scaleToFit(46, 46)
@@ -527,96 +538,72 @@ class ReporteSolicitudController {
 //        logo.setAlignment(Image.RIGHT)
 
         def baos = new ByteArrayOutputStream()
-        def name = "${tipoAval.toLowerCase()}_" + new Date().format("ddMMyyyy_hhmm") + ".pdf";
-        Font times12bold = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
-        Font times12normal = new Font(Font.TIMES_ROMAN, 12, Font.NORMAL);
-        Font times10bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font times10normal = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);
-        Font times14bold = new Font(Font.TIMES_ROMAN, 14, Font.BOLD);
-        Font times18bold = new Font(Font.TIMES_ROMAN, 18, Font.BOLD);
-        Font times8bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD)
-        Font times8normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL)
-        Font times10boldWhite = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font times8boldWhite = new Font(Font.TIMES_ROMAN, 8, Font.BOLD)
+        def name = "${tipoAval.toLowerCase()}_" + new Date().format("ddMMyyyy_hhmm") + ".pdf"
+
         def titulo = new Color(40, 140, 180)
+
+        Font times12bold = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
         Font fontProyecto = new Font(Font.HELVETICA, 18, Font.NORMAL, titulo);
         Font fontTitulo = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, titulo);
 
+
         Document document
         document = new Document(PageSize.A4);
-        def pdfw = PdfWriter.getInstance(document, baos);
-        document.open();
-        document.addTitle("Composicion " + new Date().format("dd_MM_yyyy"));
-        document.addSubject("Generado por el sistema FIDA");
-        document.addKeywords("reporte, fida, composicion");
-        document.addAuthor("FIDA");
-        document.addCreator("Tedein SA");
+        def pdfw = PdfWriter.getInstance(document, baos)
+        document.open()
+        document.addTitle("Composicion " + new Date().format("dd_MM_yyyy"))
+        document.addSubject("Generado por el sistema FIDA")
+        document.addKeywords("reporte, fida, composicion")
+        document.addAuthor("FIDA")
+        document.addCreator("Tedein SA")
 
-        def prmsHeaderHoja = [border: Color.WHITE]
-        def prmsHeader = [border: Color.WHITE, align: Element.ALIGN_JUSTIFIED, valign: Element.ALIGN_MIDDLE]
-        def prmsRight = [border: Color.WHITE, colspan: 7, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_RIGHT]
-        def prmsHeader2 = [border: Color.WHITE, colspan: 3, align: Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
-        def prmsCellHead = [border: Color.WHITE, align: Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
-        def prmsCellHead3 = [border: Color.WHITE, align: Element.ALIGN_JUSTIFIED, valign: Element.ALIGN_TOP]
-        def prmsCellHeadCentro = [border: Color.WHITE, align: Element.ALIGN_CENTER, valign: Element.ALIGN_LEFT]
-        def prmsCellHead4 = [align: Element.ALIGN_LEFT, valign: Element.ALIGN_LEFT]
-        def prmsCellHead2 = [border: Color.WHITE, align: Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE, bordeTop: "1", bordeBot: "1"]
-        def prmsCellIzquierda = [border: Color.WHITE, align: Element.ALIGN_LEFT, valign: Element.ALIGN_LEFT]
-        def prmsCellDerecha = [border: Color.WHITE, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_RIGHT]
-        def prmsCellDerecha2 = [border: Color.WHITE, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_RIGHT, bordeTop: "1", bordeBot: "1"]
-        def prmsCellCenter = [border: Color.WHITE, align: Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
-        def prmsCellLeft = [border: Color.WHITE, valign: Element.ALIGN_MIDDLE]
-        def prmsSubtotal = [border: Color.WHITE, colspan: 6, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_MIDDLE]
-        def prmsNum = [border: Color.WHITE, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_MIDDLE]
-        def fondo = new Color(240, 248, 250);
-        def frmtHd = [border: Color.LIGHT_GRAY, bwb: 0.1, bcb: Color.BLACK, bg: fondo, align: Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
-        def frmtBorde = [border: Color.LIGHT_GRAY, bwb: 0.1, bcb: Color.BLACK, bg: Color.WHITE, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
-        def frmtHdDerecha = [border: Color.LIGHT_GRAY, bwb: 0.1, bcb: Color.BLACK, bg: fondo, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_MIDDLE]
-        def frmtDato = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
-        def frmtDato2 = [colspan: 9, bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
-        def frmtDatoDerecha = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_MIDDLE]
 
 
         Paragraph preface = new Paragraph();
         Paragraph pr_firma = new Paragraph();
         addEmptyLine(preface, 1);
         preface.setAlignment(Element.ALIGN_CENTER);
-        preface.add(new Paragraph("PROYECTO FAREPS", fontProyecto));
+        preface.add(new Paragraph("PROYECTO FAREPS", fontProyecto))
 //        addEmptyLine(preface, 1);
         preface.add(new Paragraph(titulo_rep, fontTitulo));
         addEmptyLine(preface, 1);
         document.add(logo)
         document.add(preface);
 
-/*
-        PdfCanvas canvas = new PdfCanvas(pdfPage)
-        canvas.moveTo(100, 300)
-        canvas.lineTo(500, 300)
-*/
-
-        PdfPTable tablaCabecera = new PdfPTable(1)
-        tablaCabecera.setWidthPercentage(100)
-        tablaCabecera.setWidths(arregloEnteros([100]))
-
-        addCellTabla(tablaCabecera, new Paragraph("Con el propósito de ejecutar las actividades programadas en la " +
-                "planificación operativa institucional ${anio}, la Unidad Adminisrtativa: ${slav.usuario.unidadEjecutora.nombre} " +
-                "solicita emitir el Aval de POA correspondiente al proceso que se detalla a continuación:\n\r", times10normal), prmsHeader)
-
-        PdfPTable tablaHeader = new PdfPTable(9)
-        tablaHeader.setWidthPercentage(100)
-        tablaHeader.setWidths(arregloEnteros([5, 8, 15, 19, 8, 10, 12, 12, 10]))
-
         PdfPTable tablaTitulo = new PdfPTable(2)
         tablaTitulo.setWidthPercentage(100)
         tablaTitulo.setWidths(arregloEnteros([90, 10]))
 
-        PdfPTable tablaTotales = new PdfPTable(5)
-        tablaTotales.setWidthPercentage(100)
-        tablaTotales.setWidths(arregloEnteros([55, 10, 12, 12, 10]))
+        def tbcabecera = cabecera(slav, hayAval)
+        def tabla = tablaSolicitud(slav, poas)
+        def tbPie = tablaPie(slav)
+        document.add(tbcabecera)
+        document.add(tabla)
+        document.add(tbPie)
 
-        PdfPTable tablaPie = new PdfPTable(2)
-        tablaPie.setWidthPercentage(100)
-        tablaPie.setWidths(arregloEnteros([15, 85]))
+        if (firma_path) {
+//        preface.add(new Paragraph("MATRIZ DE REFORMA", fontTitulo));
+            pr_firma.setAlignment(Element.ALIGN_CENTER)
+            pr_firma.add(new Paragraph("Firmado por: ${firma.usuario.nombreCompleto}", times12bold));
+//        addEmptyLine(pr_firma, 1)
+            document.add(pr_firma)
+
+            document.add(firma_img)
+        }
+
+        document.close();
+        pdfw.close()
+        byte[] b = baos.toByteArray();
+        response.setContentType("application/pdf")
+        response.setHeader("Content-disposition", "attachment; filename=" + name)
+        response.setContentLength(b.length)
+        response.getOutputStream().write(b)
+    }
+
+    def tablaSolicitud(slav, poas) {
+        Font times10bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font times10normal = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);
+        def frmtBorde = [border: Color.LIGHT_GRAY, bwb: 0.1, bcb: Color.BLACK, bg: Color.WHITE, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
 
         PdfPTable tablaCabecera2 = new PdfPTable(2)
         tablaCabecera2.setWidthPercentage(100)
@@ -648,7 +635,21 @@ class ReporteSolicitudController {
         addCellTabla(tablaCabecera2, new Paragraph(poas?.asignacion?.fuente?.toString(), times10normal), frmtBorde)
         addCellTabla(tablaCabecera2, new Paragraph("Partida", times10bold), frmtBorde)
         addCellTabla(tablaCabecera2, new Paragraph(poas?.asignacion?.presupuesto?.toString(), times10normal), frmtBorde)
+        tablaCabecera2
+    }
 
+    def tablaPie(slav) {
+        Font times10bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font times10normal = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);
+        def titulo = new Color(40, 140, 180)
+
+        def prmsCellHead3 = [border: Color.WHITE, align: Element.ALIGN_JUSTIFIED, valign: Element.ALIGN_TOP]
+        def fondo = new Color(240, 248, 250);
+        def frmtDato2 = [colspan: 9, bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
+
+        PdfPTable tablaPie = new PdfPTable(2)
+        tablaPie.setWidthPercentage(100)
+        tablaPie.setWidths(arregloEnteros([15, 85]))
 
         addCellTabla(tablaPie, new Paragraph("", times10normal), frmtDato2)
 //        addCellTabla(tablaPie, new Paragraph("", times10normal), prmsCellHead3)
@@ -657,29 +658,46 @@ class ReporteSolicitudController {
         addCellTabla(tablaPie, new Paragraph("Fecha:", times10bold), prmsCellHead3)
         addCellTabla(tablaPie, new Paragraph(slav?.fecha?.format("dd-MM-yyyy"), times10normal), prmsCellHead3)
 
-        document.add(tablaCabecera);
-        document.add(tablaCabecera2);
-        document.add(tablaHeader);
-        document.add(tablaPie)
+        tablaPie
+    }
 
-        if (firma_path) {
-//        preface.add(new Paragraph("MATRIZ DE REFORMA", fontTitulo));
-            pr_firma.setAlignment(Element.ALIGN_CENTER)
-            pr_firma.add(new Paragraph("Firmado por: ${firma.usuario.nombreCompleto}", times12bold));
-//        addEmptyLine(pr_firma, 1)
-            document.add(pr_firma)
+    def cabecera(slav, hayAval) {
 
-            document.add(firma_img)
+        def poas = ProcesoAsignacion.findByProceso(slav?.proceso)
+        def anio = poas.asignacion.anio.anio
+
+        Font times10normal = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);
+        Font times12bold = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+        def prmsHeader = [border: Color.WHITE, align: Element.ALIGN_JUSTIFIED, valign: Element.ALIGN_MIDDLE]
+        def prmsNumero = [border: Color.WHITE, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_MIDDLE]
+
+        PdfPTable tablaCabecera = new PdfPTable(1)
+        tablaCabecera.setWidthPercentage(100)
+        tablaCabecera.setWidths(arregloEnteros([100]))
+
+        if(hayAval) {
+            addCellTabla(tablaCabecera, new Paragraph("AVAL No. ${slav.aval.numero}", times12bold), prmsNumero)
+            addCellTabla(tablaCabecera, new Paragraph("", times12bold), prmsNumero)
+            addCellTabla(tablaCabecera, new Paragraph("Con el propósito de ejecutar las actividades programadas en la " +
+                    "planificación operativa institucional ${anio}, la Unidad Adminisrtativa: ${slav.usuario.unidadEjecutora.nombre} " +
+                    "se emite el Aval de POA correspondiente al proceso que se detalla a continuación:\n\r", times10normal), prmsHeader)
+        } else {
+            addCellTabla(tablaCabecera, new Paragraph("Con el propósito de ejecutar las actividades programadas en la " +
+                    "planificación operativa institucional ${anio}, la Unidad Adminisrtativa: ${slav.usuario.unidadEjecutora.nombre} " +
+                    "solicita emitir el Aval de POA correspondiente al proceso que se detalla a continuación:\n\r", times10normal), prmsHeader)
         }
 
-        document.close();
-        pdfw.close()
-        byte[] b = baos.toByteArray();
-        response.setContentType("application/pdf")
-        response.setHeader("Content-disposition", "attachment; filename=" + name)
-        response.setContentLength(b.length)
-        response.getOutputStream().write(b)
+        tablaCabecera
     }
+
+    def existeAval(slav) {
+        if(slav.aval) {
+            return true
+        }
+    }
+
+
+
 
     /**
      * Acción que genera un archivo PDF de la negacion de la solicitud de aval
