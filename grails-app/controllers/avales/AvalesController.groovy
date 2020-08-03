@@ -845,6 +845,7 @@ class AvalesController{
      */
     def solicitarAnulacion = {
         def aval = null, solicitud = null
+        def unidad = UnidadEjecutora.get(1)
         if (params.id) {
             aval = Aval.get(params.id)
         }
@@ -860,7 +861,7 @@ class AvalesController{
         }
         def numero = null
         def band = true
-        numero = SolicitudAval.findAllByUnidad(session.usuario.unidad, [sort: "numero", order: "desc", max: 1])
+        numero = SolicitudAval.findAllByUnidad(unidad, [sort: "numero", order: "desc", max: 1])
         if (numero.size() > 0) {
             numero = numero?.pop()?.numero
         }
@@ -869,9 +870,9 @@ class AvalesController{
         } else {
             numero = numero + 1
         }
-        def unidad = UnidadEjecutora.get(session.unidad.id)
-        def personasFirma = firmasService.listaDirectoresUnidad(unidad)
-        return [aval: aval, sol: solicitud, numero: numero, personas: personasFirma]
+//        def personasFirma = firmasService.listaDirectoresUnidad(unidad)
+        def personas = Persona.findAllByUnidadEjecutora(unidad)
+        return [aval: aval, sol: solicitud, numero: numero, personas: personas]
     }
 
     /**

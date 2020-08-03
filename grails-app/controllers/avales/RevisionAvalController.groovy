@@ -467,7 +467,9 @@ class RevisionAvalController {
         }
 
         def firmas = firmasService.listaFirmasCombos()
-        return [solicitud: solicitud, personas: firmas.directores, personasGerente: firmas.gerentes]
+        def unidad = UnidadEjecutora.get(1)
+        def personas = Persona.findAllByUnidadEjecutora(unidad)
+        return [solicitud: solicitud, personas: personas]
     }
 
     /**

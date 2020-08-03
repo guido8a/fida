@@ -138,15 +138,15 @@
                                         </a>
                                         <g:if test="${p.estado.codigo == 'P01' || p.estado.codigo == 'D01'}">
                                             <g:if test="${session.usuario.id == p.usuarioId}">
-                                            %{--                                                <g:if test="${p.tipo == 'A'}">--}%
-                                            %{--                                                    <a href="${g.createLink(controller: 'avales', action: 'solicitarAnulacion', params: [sol: p.id])}" class="aprobar btn btn-danger" title="Anular">--}%
-                                            %{--                                                        <i class="fa fa-edit"></i>--}%
-                                            %{--                                                    </a>--}%
-                                            %{--                                                </g:if>--}%
-                                            %{--                                                <g:else>--}%
-                                            %{--                                                    <a href="${g.createLink(controller: 'avales', action: 'nuevaSolicitud', id: p.proceso.id)}" class="aprobar btn btn-success" title="Editar">--}%
-                                            %{--                                                        <i class="fa fa-edit"></i>--}%
-                                            %{--                                                    </a>--}%
+%{--                                                                                            <g:if test="${p.tipo == 'A'}">--}%
+%{--                                                                                                <a href="${g.createLink(controller: 'avales', action: 'solicitarAnulacion', params: [sol: p.id])}" class="aprobar btn btn-danger" title="Anular">--}%
+%{--                                                                                                    <i class="fa fa-edit"></i>--}%
+%{--                                                                                                </a>--}%
+%{--                                                                                            </g:if>--}%
+%{--                                                                                            <g:else>--}%
+%{--                                                                                                <a href="${g.createLink(controller: 'avales', action: 'nuevaSolicitud', id: p.proceso.id)}" class="aprobar btn btn-success" title="Editar">--}%
+%{--                                                                                                    <i class="fa fa-edit"></i>--}%
+%{--                                                                                                </a>--}%
                                                 <a href="#" class="borrarSolicitud btn btn-danger" title="Eliminar solicitud" sol="${p.proceso.id}">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
@@ -165,12 +165,11 @@
                                                         <i class="fa fa-cog"></i>
                                                     </a>
                                                 </g:if>
-                                                <g:else>
-                                                    <a href="${g.createLink(action: 'aprobarAnulacion', id: p.id)}" class="aprobar btn btn-warning" title="Revisar">
-                                                        <i class="fa fa-cog"></i>
-                                                    </a>
-
-                                                </g:else>
+%{--                                                <g:else>--}%
+%{--                                                    <a href="${g.createLink(action: 'aprobarAnulacion', id: p.id)}" class="aprobar btn btn-danger" title="Revisar">--}%
+%{--                                                        <i class="fa fa-times"></i>--}%
+%{--                                                    </a>--}%
+%{--                                                </g:else>--}%
                                             </g:if>
                                         </g:elseif>
                                         <a href="#" class="btn btn-info btn-xs imprimirSolicitud" iden="${p.id}" data-tipo="${p.tipo}" title="Ver">
@@ -289,10 +288,14 @@
                                                 <a href="${g.createLink(action: 'aprobarAnulacion', id: p.id)}" class="aprobar btn btn-warning" title="Revisar">
                                                     <i class="fa fa-cog"></i>
                                                 </a>
-
                                             </g:else>
                                         </g:if>
                                     </g:elseif>
+                                    <g:if test="${p.estado.codigo == 'E02'}">
+                                        <a href="#" class="solAnulacion btn btn-danger btn-sm" iden="${p.id}" title="Solicitar anulación">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </g:if>
                                     <a href="#" class="btn btn-info btn-xs imprimirSolicitud" iden="${p.id}" data-tipo="${p.tipo}" title="Ver">
                                         <i class="fa fa-search"></i>
                                     </a>
@@ -350,6 +353,10 @@
 </div>
 
 <script type="text/javascript">
+
+    $(".solAnulacion").click(function () {
+        location.href = '${g.createLink(controller: 'avales', action: "solicitarAnulacion")}/' + $(this).attr("iden")
+    });
 
     $(".descRespaldo").click(function () {
         location.href = "${createLink(controller:'avales',action:'descargaSolicitud')}/" + $(this).attr("iden")
