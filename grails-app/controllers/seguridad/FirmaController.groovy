@@ -39,6 +39,13 @@ class FirmaController {
             order("fecha", "desc")
         }
 
+        def anulaciones = Firma.withCriteria {
+            eq("usuario", session.usuario)
+            eq("estado", "A")
+            eq("tipoFirma", "AVAL")
+            order("fecha", "desc")
+        }
+
         def actual
         if (params.anio) {
             actual = Anio.get(params.anio)
@@ -53,7 +60,7 @@ class FirmaController {
         println("firmas r " + firmasReformas)
 
         return [firmasReformas: firmasReformas, firmasAjustes: firmasAjustes,
-                firmasAvales  : firmasAvales, actual: actual, imgFirma: imgFirma, params: params]
+                firmasAvales  : firmasAvales, actual: actual, imgFirma: imgFirma, params: params, anulaciones: anulaciones]
     }
 /**
  * Acción que muestra una lista con el hisotrial del firmas
@@ -227,6 +234,25 @@ class FirmaController {
             } else {
                 render "error"
             }
+        } else {
+            println "error"
+            render "error"
+        }
+
+    }
+
+    def anular() {
+        println("params anular " + params )
+
+
+        if (params.pass.toString().encodeAsMD5() == session.usuario.autorizacion) {
+
+            def firma = Firma.get(params.id)
+            def solicitud = SolicitudAval.get(firma.idAccion)
+
+
+
+
         } else {
             println "error"
             render "error"

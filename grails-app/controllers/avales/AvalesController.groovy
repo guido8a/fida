@@ -1152,7 +1152,14 @@ class AvalesController{
         def strSolicitud = params.tipo == "A" ? "solicitud de anulación enviada" : "Solicitud de Aval POA enviada para revisión y aprobación"
 
 //        def path = servletContext.getRealPath("/") + "pdf/solicitudAval/"
-        def path = "/var/fida/solicitud/"
+        def path
+
+        if(params.tipo == 'A'){
+            path = "/var/fida/anulacion/"
+        }else{
+            path = "/var/fida/solicitud/"
+        }
+
         new File(path).mkdirs()
         def f = request.getFile('file')
         def okContents = [
@@ -1167,8 +1174,13 @@ class AvalesController{
             def ext
 
             if (!okContents.containsKey(f.getContentType())) {
-                redirect(action: 'solicitudProceso', params: [id: params.proceso, error: "Error: Seleccione un archivo de tipo PDF"])
-                return
+                if(params.tipo == 'A'){
+                    redirect(action: 'solicitarAnulacion', params: [id: params.proceso, error: "Error: Seleccione un archivo de tipo PDF"])
+                    return
+                }else{
+                    redirect(action: 'solicitudProceso', params: [id: params.proceso, error: "Error: Seleccione un archivo de tipo PDF"])
+                    return
+                }
             }
 
             def parts = fileName.split("\\.")
@@ -1287,15 +1299,14 @@ class AvalesController{
                 println "Es preview: no hace ni firma ni alerta"
             }
         }
-        if (preview) {
+//        if (preview) {
             flash.message = "${strSolicitud.capitalize()} guardada"
-            redirect(action: 'solicitudProceso', params: [id: params.proceso])
-//            return
-        } else {
-            flash.message = "${strSolicitud.capitalize()}"
-            redirect(action: 'avalesProceso', params: [id: params.proceso])
-//            return
-        }
+//            redirect(action: 'solicitudProceso', params: [id: params.proceso])
+            redirect(controller: 'revisionAval', action: 'pendientes', params: [id: params.proceso])
+//        } else {
+//            flash.message = "${strSolicitud.capitalize()}"
+//            redirect(action: 'avalesProceso', params: [id: params.proceso])
+//        }
     }
 
     /**

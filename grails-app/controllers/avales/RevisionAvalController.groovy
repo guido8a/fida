@@ -1546,7 +1546,8 @@ class RevisionAvalController {
 
         def estadosSolicitud = [estadoSolicitado, estadoSolicitadoSinFirma, estadoAprobadoSinFirma,
                                 estadoNegado, estadoPendiente, estadoPorRevisar, estadoDevueltoReq, estadoDevueltoDirReq]
-        def solicitudes = SolicitudAval.findAllByEstadoInListAndAvalIsNull(estadosSolicitud)
+//        def solicitudes = SolicitudAval.findAllByEstadoInListAndAvalIsNull(estadosSolicitud)
+        def solicitudes = SolicitudAval.findAllByEstadoInList(estadosSolicitud)
 
         def estadosAvales = [estadoAprobado, estadoDevueltoAnPlan, estadoAprobadoSinFirma]
         def avales = SolicitudAval.findAllByEstadoInListAndAvalIsNotNull(estadosAvales)
@@ -1728,24 +1729,34 @@ class RevisionAvalController {
                     firma.idAccionNegar = solicitud.id
 
                     firma.controladorVer = "reporteSolicitud"
-                    if (solicitud.tipo == 'A') {
-                        firma.accionVer = "imprimirSolicitudAnulacionAval"
-                    } else {
-                        firma.accionVer = "imprimirSolicitudAval"
-                    }
+//                    if (solicitud.tipo == 'A') {
+//                        firma.accionVer = "imprimirSolicitudAnulacionAval"
+//                    } else {
+                    firma.accionVer = "imprimirSolicitudAval"
+//                    }
                     firma.idAccionVer = solicitud.id
 
                     firma.tipoFirma = "AVAL"
 //                    firma.documento = "SolicitudDeAval_" + solicitud.proceso.nombre
                     firma.concepto = "${strSolicitud.capitalize()} de aval: " + solicitud.proceso.nombre
 //                    firma.concepto = "Solicitud de aval: " + solicitud.concepto
+
+                    if(solicitud.tipo == 'A'){
+                        firma.estado = 'A'
+                    }
+//
+
                     if (!firma.save(flush: true)) {
                         println "error al guardar firma: " + firma.errors
                     } else {
                         solicitud.firma = firma
                     }
                 } else {
-                    firma.estado = "S"
+                    if(solicitud.tipo == 'A'){
+                        firma.estado = 'A'
+                    }else{
+                        firma.estado = "S"
+                    }
 //                    firma.documento = "SolicitudDeAval_" + solicitud.proceso.nombre
                     firma.concepto = "Solicitud de aval: " + solicitud.proceso.nombre
 //                    firma.concepto = "Solicitud de aval: " + solicitud.concepto
@@ -1795,6 +1806,9 @@ class RevisionAvalController {
     }
 
     def revisionSolicitud() {
+
+        println("params rs " + params)
+
         def solicitud = SolicitudAval.get(params.id)
 
         def estadosOK = ["R01", "D02"]

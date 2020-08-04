@@ -14,6 +14,14 @@
 
 <body>
 
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group" role="group">
+        <g:link class="btn btn-default" controller="revisionAval" action="pendientes">
+            <i class="fa fa-arrow-left"></i> Avales
+        </g:link>
+    </div>
+</div>
+
 <div class="panel panel-primary col-md-12" role="tabpanel" style="margin-top: 20px; min-height: 300px">
 
     <h2>Revisar solicitud de${solicitud.tipo == "A" ? " anulación de" : ""}  aval</h2>
@@ -174,17 +182,16 @@
                     <i class="fa fa-search"></i> Previsualizar
                 </a>
                 <a href="#" class="btn btn-success" id="btnSolicitar" title="Solicitar firma del gerente">
-                    <i class="fa fa-paper-plane"></i> Solicitar firma
+                    <i class="fa fa-paper-plane"></i> ${solicitud?.tipo == 'A' ? 'Solicitar anulación' : 'Solicitar firma'}
                 </a>
-                <a href="#" class="btn btn-danger" id="btnDevolver" title="Devolver al requirente con observaciones">
-                    <i class="fa fa-thumbs-down"></i> Devolver al requirente
-                </a>
+                <g:if test="${solicitud.tipo != 'A'}">
+                    <a href="#" class="btn btn-danger" id="btnDevolver" title="Devolver al requirente con observaciones">
+                        <i class="fa fa-thumbs-down"></i> Devolver al requirente
+                    </a>
+                </g:if>
             </div>
         </div>
-
-
     </div>
-
 </div>
 
 <script type="text/javascript">

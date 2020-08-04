@@ -45,6 +45,9 @@
             <a href="#AJST" class="" role="tab" data-toggle="tab">Firmas Ajustes</a>
         </li>
         <li role="presentation">
+            <a href="#ANLC" class="" role="tab" data-toggle="tab">Anulaciones</a>
+        </li>
+        <li role="presentation">
             <a href="#HIST" class="" role="tab" data-toggle="tab">Historial</a>
         </li>
     </ul>
@@ -59,7 +62,7 @@
                         <th>Fecha Solicitud</th>
                         <th>Proceso</th>
                         <th>Monto</th>
-%{--                        <th>Área gestión solicitante</th>--}%
+                        %{--                        <th>Área gestión solicitante</th>--}%
                         <th style="width: 250px;">Acciones</th>
                     </tr>
                     </thead>
@@ -97,16 +100,9 @@
                                     <a href="#" iden="${f.id}" class="aprobar btn btn-success" title="Firmar">
                                         <i class="fa fa-check-circle"></i>  ${imgFirma}
                                     </a>
-%{--                                    <g:if test="${f.tipoFirma && f.tipoFirma != ''}">--}%
-                                        <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">
-                                            <i class="fa fa-thumbs-down"></i>
-                                        </a>
-%{--                                    </g:if>--}%
-%{--                                    <g:else>--}%
-%{--                                        <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">--}%
-%{--                                            <i class="fa fa-thumbs-down"></i>--}%
-%{--                                        </a>--}%
-%{--                                    </g:else>--}%
+                                    <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">
+                                        <i class="fa fa-thumbs-down"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -137,18 +133,18 @@
                             <td style="text-align: center">
                                 <div class="btn-group btn-group-sm" role="group">
                                     <g:if test="${f.accionVer}">
-%{--                                        <g:if test="${f.esPdf == 'S'}">--}%
-%{--                                            <a href="${g.createLink(controller: 'pdf', action: 'pdfLink')}?url=${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"--}%
-%{--                                               target="_blank" class="btn btn-info" title="Ver">--}%
-%{--                                                <i class="fa fa-search"></i>--}%
-%{--                                            </a>--}%
-%{--                                        </g:if>--}%
-%{--                                        <g:else>--}%
-                                            <a href="${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"
-                                               class="btn btn-info" title="Ver">
-                                                <i class="fa fa-search"></i>
-                                            </a>
-%{--                                        </g:else>--}%
+                                    %{--                                        <g:if test="${f.esPdf == 'S'}">--}%
+                                    %{--                                            <a href="${g.createLink(controller: 'pdf', action: 'pdfLink')}?url=${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"--}%
+                                    %{--                                               target="_blank" class="btn btn-info" title="Ver">--}%
+                                    %{--                                                <i class="fa fa-search"></i>--}%
+                                    %{--                                            </a>--}%
+                                    %{--                                        </g:if>--}%
+                                    %{--                                        <g:else>--}%
+                                        <a href="${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"
+                                           class="btn btn-info" title="Ver">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    %{--                                        </g:else>--}%
                                     </g:if>
                                     <a href="#" iden="${f.id}" class="aprobar btn btn-success" title="Firmar">
                                         <i class="fa fa-check-circle"></i>  ${imgFirma}
@@ -192,18 +188,18 @@
                             <td style="text-align: center">
                                 <div class="btn-group btn-group-sm" role="group">
                                     <g:if test="${f.accionVer}">
-%{--                                        <g:if test="${f.esPdf == 'S'}">--}%
-                                            <a href="${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"
-                                               target="_blank" class="btn btn-info" title="Ver">
-                                                <i class="fa fa-search"></i>
-                                            </a>
-%{--                                        </g:if>--}%
-%{--                                        <g:else>--}%
-%{--                                            <a href="${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"--}%
-%{--                                               class="btn btn-info" title="Ver">--}%
-%{--                                                <i class="fa fa-search"></i>--}%
-%{--                                            </a>--}%
-%{--                                        </g:else>--}%
+                                    %{--                                        <g:if test="${f.esPdf == 'S'}">--}%
+                                        <a href="${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"
+                                           target="_blank" class="btn btn-info" title="Ver">
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    %{--                                        </g:if>--}%
+                                    %{--                                        <g:else>--}%
+                                    %{--                                            <a href="${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"--}%
+                                    %{--                                               class="btn btn-info" title="Ver">--}%
+                                    %{--                                                <i class="fa fa-search"></i>--}%
+                                    %{--                                            </a>--}%
+                                    %{--                                        </g:else>--}%
                                     </g:if>
                                     <a href="#" iden="${f.id}" class="aprobar btn btn-success" title="Firmar">
                                         <i class="fa fa-check-circle"></i>  ${imgFirma}
@@ -227,6 +223,68 @@
             </g:if>
             <g:else>
                 <div class="alert alert-info" style="width: 450px;margin-top: 20px">No existen firmas de ajustes pendientes</div>
+            </g:else>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="ANLC">
+            <g:if test="${anulaciones?.size() > 0}">
+                <table class="table table-condensed table-bordered table-striped table-hover" style="margin-top: 20px">
+                    <thead>
+                    <tr>
+                        <th>No. Solicitud</th>
+                        <th>Fecha Solicitud</th>
+                        <th>Proceso</th>
+                        <th>Monto</th>
+                        %{--                        <th>Área gestión solicitante</th>--}%
+                        <th style="width: 250px;">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <g:each in="${anulaciones}" var="f">
+                        <g:set var="slav" value="${avales.SolicitudAval.get(f.idAccionVer)}"/>
+                        <tr data-firma="${f}" esPdf="${f.esPdf}" accVer="${f.accionVer}">
+                            %{--<td>${f.concepto}</td>--}%
+                            %{--                                        <td>${slav.fecha?.format("yyyy")}-${firmasService.requirentes(slav.usuario.unidad)?.codigo} No.<elm:imprimeNumero solicitud="${slav.id}"/></td>--}%
+                            <td>${slav?.numero} </td>
+                            <td>${slav.fecha?.format("dd-MM-yyyy")}</td>
+                            <td>${SolicitudAval.get(f.idAccionVer)?.proceso?.nombre} </td>
+                            <td style="text-align: right">
+                                <g:formatNumber number="${slav.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>
+                            </td>
+                            %{--<td>${vesta.avales.SolicitudAval.findById(f.idAccionVer)?.usuario?.unidad?.nombre}</td>--}%
+                            %{--                                        <td>${firmasService.requirentes(vesta.avales.SolicitudAval.findById(f.idAccionVer)?.usuario?.unidad)}</td>--}%
+                            <td style="text-align: center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <g:if test="${f.accionVer}">
+                                    %{--<g:if test="${f.esPdf != 'N'}">--}%
+                                        <g:if test="${f.esPdf == 'S'}">
+                                            <a href="${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"
+                                               target="_blank" class="btn btn-info" title="Ver">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                        </g:if>
+                                        <g:else>
+                                            <a href="${g.createLink(action: f.accionVer, controller: f.controladorVer, id: f.idAccionVer)}"
+                                               class="btn btn-info" title="Ver">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                        </g:else>
+                                    </g:if>
+                                    <a href="#" iden="${f.id}" class="anular btn btn-success" title="Anular">
+                                        <i class="fa fa-times"></i>  ${imgFirma}
+                                    </a>
+                                    <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">
+                                        <i class="fa fa-thumbs-down"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </g:each>
+                    </tbody>
+                </table>
+            </g:if>
+            <g:else>
+                <div class="alert alert-info" style="width: 450px;margin-top: 20px">No existen firmas de avales pendientes</div>
             </g:else>
         </div>
 
@@ -359,6 +417,8 @@
                 }
             });
         });
+
+
 
         $(".devolver").click(function () {
             id = $(this).attr("iden");
@@ -540,6 +600,76 @@
                 });
             }
         });
+
+        $(".anular").click(function () {
+            id = $(this).attr("iden");
+            bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> ¿Está seguro de anular este documento? Esta acción no puede revertirse", function (res) {
+                if (res) {
+
+                    var msg = $("<div>Ingrese su clave de autorización</div>");
+                    var $txt = $("<input type='password' class='form-control input-sm'/>");
+                    var $group = $('<div class="input-group">');
+                    var $span = $('<span class="input-group-addon"><i class="fa fa-lock"></i> </span>');
+                    $group.append($txt).append($span);
+                    msg.append($group);
+
+                    var bAuth = bootbox.dialog({
+                        title   : "Autorización electrónica",
+                        message : msg,
+                        class   : "modal-sm",
+                        buttons : {
+                            cancelar : {
+                                label     : "Cancelar",
+                                className : "btn-primary",
+                                callback  : function () {
+                                }
+                            },
+                            firmar : {
+                                label     : "${imgFirma} Firmar",
+                                className : "btn-success",
+                                callback  : function () {
+                                    openLoader("Firmando aprobación");
+
+                                    $.ajax({
+                                        type    : "POST",
+                                        url     : '${createLink(controller: 'firma', action:'anular')}',
+                                        data    : {
+                                            id   : id,
+                                            pass : $txt.val()
+                                        },
+                                        success : function (msg) {
+//                                                closeLoader();
+                                            if (msg == "error") {
+                                                closeLoader();
+                                                bootbox.alert({
+                                                        message : "Clave incorrecta",
+                                                        title   : "Error",
+                                                        class   : "modal-error"
+                                                    }
+                                                );
+                                            } else {
+                                                log("Documento anulado correctamente", "success");
+                                                setTimeout(function () {
+                                                    location.reload(true)
+                                                }, 1000);
+                                            }
+                                        },
+                                        error   : function () {
+                                            log("Ha ocurrido un error interno", "error");
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    });
+                    setTimeout(function () {
+                        bAuth.find(".form-control").first().focus();
+                    }, 500);
+                }
+            });
+        });
+
+
     });
 </script>
 </body>
