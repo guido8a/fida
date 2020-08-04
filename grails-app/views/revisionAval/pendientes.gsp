@@ -400,13 +400,13 @@
         $(".imprimirSolicitud").click(function () {
             var url, fn;
             var tipo = $(this).data("tipo");
-            if (tipo == "A") {
-                url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAnulacionAval')}/" + $(this).attr("iden");
-                fn = "solicitud_anulacion_aval.pdf";
-            } else {
+            // if (tipo == "A") {
+            %{--    url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAnulacionAval')}/" + $(this).attr("iden");--}%
+            //     fn = "solicitud_anulacion_aval.pdf";
+            // } else {
                 url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/" + $(this).attr("iden");
                 fn = "solicitud_aval.pdf";
-            }
+            // }
             %{--location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=" + fn;--}%
             location.href = url + "&filename=" + fn;
         });

@@ -273,9 +273,9 @@
                                     <a href="#" iden="${f.id}" class="anular btn btn-success" title="Anular">
                                         <i class="fa fa-times"></i>  ${imgFirma}
                                     </a>
-                                    <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">
-                                        <i class="fa fa-thumbs-down"></i>
-                                    </a>
+%{--                                    <a href="#" iden="${f.id}" class="devolver btn btn-danger" title="Devolver">--}%
+%{--                                        <i class="fa fa-thumbs-down"></i>--}%
+%{--                                    </a>--}%
                                 </div>
                             </td>
                         </tr>
