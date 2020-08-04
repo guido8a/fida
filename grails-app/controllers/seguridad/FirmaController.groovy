@@ -1,5 +1,6 @@
 package seguridad
 
+import avales.Aval
 import avales.SolicitudAval
 import parametros.Anio
 import poa.EstadoAval
@@ -244,20 +245,36 @@ class FirmaController {
     def anular() {
         println("params anular " + params )
 
-
         if (params.pass.toString().encodeAsMD5() == session.usuario.autorizacion) {
 
             def firma = Firma.get(params.id)
             def solicitud = SolicitudAval.get(firma.idAccion)
+            def aval = Aval.get(solicitud.aval.id)
+            def estadoAnulado = EstadoAval.findByCodigo('E04')
 
+            firma.estado = 'F'
+            firma.save(flush:true)
 
+            solicitud.estado = estadoAnulado
 
+            if(!solicitud.save(flush:true)){
+                println("error al guardar el estado de la solicitud " + solicitud.errors)
+                render "no"
+            }else{
+                aval.estado = estadoAnulado
+                aval.fechaAnulacion = new Date();
+                if(!aval.save(flush:true)){
+                    println("error al guardar el estado del aval" + solicitud.errors)
+                    render "no"
+                }else{
+                    render "ok"
+                }
+            }
 
         } else {
-            println "error"
+            println "error de codigo ingresado"
             render "error"
         }
-
     }
 
     /**

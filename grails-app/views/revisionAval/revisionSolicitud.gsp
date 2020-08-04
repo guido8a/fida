@@ -184,17 +184,47 @@
                 <a href="#" class="btn btn-success" id="btnSolicitar" title="Solicitar firma del gerente">
                     <i class="fa fa-paper-plane"></i> ${solicitud?.tipo == 'A' ? 'Solicitar anulación' : 'Solicitar firma'}
                 </a>
-%{--                <g:if test="${solicitud.tipo != 'A'}">--}%
+                <g:if test="${solicitud.tipo != 'A'}">
                     <a href="#" class="btn btn-danger" id="btnDevolver" title="Devolver al requirente con observaciones">
                         <i class="fa fa-thumbs-down"></i> Devolver al requirente
                     </a>
-%{--                </g:if>--}%
+                </g:if>
+                <g:else>
+                    <a href="#" class="btn btn-danger" id="btnCancelarAnulacion" title="Cancelar anulación">
+                        <i class="fa fa-thumbs-down"></i> Cancelar anulación
+                    </a>
+                </g:else>
             </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
+
+    $("#btnCancelarAnulacion").click(function () {
+        bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> ¿Está seguro de cancelar la anulación del aval?", function (res) {
+            if(res){
+                $.ajax({
+                    type: 'POST',
+                    url: '${createLink(controller: 'revisionAval', action: 'cancelarAnulacion_ajax')}',
+                    data:{
+                        id: '${solicitud?.id}'
+                    },
+                    success: function (msg) {
+                        if(msg == 'ok'){
+                            log("Anulación cancelada","success");
+                            setTimeout(function () {
+                                location.href = "${createLink(action: 'pendientes')}";
+                            }, 1000);
+                        }else{
+                            log("Error al cancelar la anulación", "error")
+                        }
+                    }
+                })
+            }
+        });
+    });
+
     $(function () {
         $("#frmFirmas").validate({
             errorClass     : "help-block",

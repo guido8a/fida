@@ -1922,5 +1922,21 @@ class RevisionAvalController {
             }
         }
     }
+
+    def cancelarAnulacion_ajax () {
+        println("params ca " + params)
+
+        def solicitud = SolicitudAval.get(params.id)
+        def estadoAprobado = EstadoAval.findByCodigo('E02')
+
+        solicitud.estado = estadoAprobado
+        solicitud.tipo = ''
+
+        if(!solicitud.save(flush: true)){
+            render "no"
+        }else{
+            render "ok"
+        }
+    }
 }
 

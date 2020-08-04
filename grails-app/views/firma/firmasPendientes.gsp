@@ -636,24 +636,27 @@
                                             pass : $txt.val()
                                         },
                                         success : function (msg) {
-//                                                closeLoader();
                                             if (msg == "error") {
-                                                closeLoader();
                                                 bootbox.alert({
-                                                        message : "Clave incorrecta",
+                                                        message : "Clave ingresada incorrecta",
                                                         title   : "Error",
                                                         class   : "modal-error"
                                                     }
                                                 );
                                             } else {
-                                                log("Documento anulado correctamente", "success");
-                                                setTimeout(function () {
-                                                    location.reload(true)
-                                                }, 1000);
+                                                if(msg == 'ok'){
+                                                    log("Documento anulado correctamente", "success");
+                                                    setTimeout(function () {
+                                                        location.reload(true)
+                                                    }, 1000);
+                                                }else{
+                                                    log("Error al anular el documento","error")
+                                                }
+
                                             }
                                         },
                                         error   : function () {
-                                            log("Ha ocurrido un error interno", "error");
+                                            log("Ha ocurrido un error", "error");
                                         }
                                     });
                                 }
