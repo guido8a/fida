@@ -628,8 +628,6 @@
                                 label     : "${imgFirma} Firmar",
                                 className : "btn-success",
                                 callback  : function () {
-                                    openLoader("Firmando aprobación");
-
                                     $.ajax({
                                         type    : "POST",
                                         url     : '${createLink(controller: 'firma', action:'anular')}',

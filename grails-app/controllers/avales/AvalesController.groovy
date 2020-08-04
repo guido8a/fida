@@ -844,6 +844,7 @@ class AvalesController{
      * Acción que muestra una pantalla que permite solicitar la anulación de un aval
      */
     def solicitarAnulacion = {
+        println("params sa " + params)
         def aval = null, solicitud = null
         def unidad = UnidadEjecutora.get(1)
         if (params.id) {

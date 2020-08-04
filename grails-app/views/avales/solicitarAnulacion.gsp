@@ -17,10 +17,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
-    <title>Solicitud de anulación del aval ${aval?.fechaAprobacion?.format("yyyy")}-GP No.${aval.numeroAval}</title>
-
-    %{--        <script type="text/javascript" src="${resource(dir: 'js/plugins/jquery-validation-1.13.1/dist', file: 'additional-methods.min.js')}"></script>--}%
-
+    <title>Solicitud de anulación del aval ${aval?.fechaAprobacion?.format("yyyy")}-GP No.${aval?.numero}</title>
 </head>
 
 <body>
@@ -35,20 +32,17 @@
     </div>
 </div>
 
-
-
 <div class="panel panel-primary col-md-12" role="tabpanel" style="margin-top: 20px;">
 
     <h3 style="margin-left: 35px">Solicitud de Anulación de Aval</h3>
 
-
-%{--<g:if test="${sol && sol.estado.codigo == 'D01' && sol.observaciones}">--}%
-%{--    <div class="row">--}%
-%{--        <div class="col-md-12">--}%
-%{--            <elm:message tipo="warning" close="false">${sol?.observaciones}</elm:message>--}%
-%{--        </div>--}%
-%{--    </div>--}%
-%{--</g:if>--}%
+<g:if test="${sol && sol.estado.codigo == 'D01' && sol.observaciones}">
+    <div class="row">
+        <div class="col-md-12">
+            <elm:message tipo="warning" close="false"><elm:poneHtml textoHtml="${sol?.observaciones}"/></elm:message>
+        </div>
+    </div>
+</g:if>
 
     <elm:container tipo="vertical" titulo="Solicitud de anulación de aval" style="margin-bottom: 10px">
         <g:uploadForm class="form-horizontal frmUpload" action="guardarSolicitud" controller="avales">
