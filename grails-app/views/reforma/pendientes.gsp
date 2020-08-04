@@ -16,6 +16,7 @@
 
 <body>
 
+<h3>Reformas al POA</h3>
 
 <div class="btn-toolbar toolbar">
     <div class="btn-group">
@@ -35,7 +36,7 @@
         <ul class="nav nav-pills" role="tablist">
             <li role="presentation" class="active">
                 <a href="#pendientes" aria-controls="home" role="tab" data-toggle="pill">
-                    Reformas pendientes
+                    Solicitudes pendientes
                 </a>
             </li>
             <li role="presentation">

@@ -116,6 +116,7 @@
                         </div>
                     </span>
 
+%{--
                     <span class="grupo" id="spanDevengado">
                         <label class="col-md-1 control-label text-success">
                             Devengado
@@ -128,6 +129,9 @@
                                 <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
                             </div>
                         </div>
+                    </span>
+--}%
+                    <span class="col-md-3">
                     </span>
 
                     <div class="col-md-2 text-right">
@@ -257,8 +261,9 @@
                     var id = $("#idAgregar").val();
                     var monto = $("#monto").val();
                     monto = monto.replace(new RegExp(",", 'g'), "");
-                    var devengado = $("#devengado").val();
-                    devengado = devengado.replace(new RegExp(",", 'g'), "");
+                    // var devengado = $("#devengado").val();
+                    var devengado = 0
+                    // devengado = devengado.replace(new RegExp(",", 'g'), "");
                     var max = $("#max").html();
                     max = max.replace(new RegExp(",", 'g'), "");
                     var asg = $("#asignacion").val();

@@ -13,7 +13,7 @@
             <th>Partida</th>
             <th>Presupuesto</th>
             <th>Monto Aval</th>
-            <th>Devengado</th>
+%{--            <th>Devengado</th>--}%
             <g:if test="${!readOnly}">
                 <th></th>
             </g:if>
@@ -40,10 +40,13 @@
                     valor="${asg.monto}">
                     <g:formatNumber number="${asg.monto}" type="currency" currencySymbol=""/>
                 </td>
+%{--
                 <td style="text-align: right" id="devengado_${asg.id}"
                     valor="${asg.devengado}">
                     <g:formatNumber number="${asg.devengado}" type="currency" currencySymbol=""/>
                 </td>
+--}%
+--}%
                 <g:if test="${!readOnly}">
                     <td style="text-align: center">
                         <div class="btn-group" role="group">

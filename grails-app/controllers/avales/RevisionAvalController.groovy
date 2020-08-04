@@ -301,7 +301,7 @@ class RevisionAvalController {
         println "historial solicitudes " + params
 //        params.requirente = params.requirente?:123
 //
-        def unej = firmasService.gerencias(UnidadEjecutora.get(params.requirente))
+        def unej = UnidadEjecutora.get(params.requirente)
 //        println "retorna: ${unej.codigo}"
         def anio = Anio.get(params.anio).anio
         def numero = params.numero ? params.numero.toInteger() : ""
@@ -1496,11 +1496,11 @@ class RevisionAvalController {
                 estados = [estadoPendiente, estadoDevueltoReq]
                 Persona pers = Persona.get(session.usuario.id)
                 filtroPersona = pers
-                def proyectos = pers.unidad.getProyectosUnidad(Anio.findByAnio(new Date().format("yyyy")), session.perfil.codigo)
+                def proyectos = pers.unidadEjecutora.getProyectosUnidad(Anio.findByAnio(new Date().format("yyyy")), session.perfil.codigo)
 
                 def procesosSinSolicitud = ProcesoAval.findAllByProyectoInList(proyectos, [sort: "id"])
                 procesosSinSolicitud.each { pss ->
-                    if (SolicitudAval.countByProcesoAndUnidadInList(pss, unidades) == 0) {
+                    if (SolicitudAval.countByProcesoAndUnidadInList(pss, [unidades]) == 0) {
                         p += pss
                     }
                 }
