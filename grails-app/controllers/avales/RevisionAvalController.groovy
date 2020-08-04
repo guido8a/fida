@@ -1544,8 +1544,12 @@ class RevisionAvalController {
 //*/
 //        }
 
+/*
         def estadosSolicitud = [estadoSolicitado, estadoSolicitadoSinFirma, estadoAprobadoSinFirma,
                                 estadoNegado, estadoPendiente, estadoPorRevisar, estadoDevueltoReq, estadoDevueltoDirReq]
+*/
+        def estadosSolicitud = [estadoSolicitado, estadoSolicitadoSinFirma, estadoNegado, estadoPendiente,
+                                estadoPorRevisar, estadoDevueltoReq, estadoDevueltoDirReq]
 //        def solicitudes = SolicitudAval.findAllByEstadoInListAndAvalIsNull(estadosSolicitud)
         def solicitudes = SolicitudAval.findAllByEstadoInList(estadosSolicitud)
 
