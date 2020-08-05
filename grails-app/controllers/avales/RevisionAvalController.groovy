@@ -105,7 +105,7 @@ class RevisionAvalController {
 //            }
 //        }
 //        def uns = proyectosService.getUnidadesUnidad(UnidadEjecutora.get(session.unidad.id), perfil)
-        def uns = UnidadEjecutora.get(session.unidad.id).getUnidadesPorPerfil(perfil)
+        def uns = UnidadEjecutora.findAllById(1)
         unidades = Asignacion.withCriteria {
             inList("unidad", uns)
             projections {
@@ -174,9 +174,10 @@ class RevisionAvalController {
 
         def unidades
 
-        unidades = UnidadEjecutora.get(session.unidad.id).getUnidadesPorPerfil(perfil)
+//        unidades = UnidadEjecutora.get(session.unidad.id).getUnidadesPorPerfil(perfil)
+        unidades = UnidadEjecutora.findAllById(1)
 
-        def personasLista = Persona.findAllByUnidadInList(unidades)
+        def personasLista = Persona.findAllByUnidadEjecutoraInList(unidades)
 
         if (params.numero && params.numero != "") {
             numero = " and numero like ('%${numero}%')"
@@ -226,14 +227,14 @@ class RevisionAvalController {
 
             if (params.requirente != '' && params.requirente != null) {
                 unidadComun = UnidadEjecutora.get(params.requirente)
-                requirente = firmasService.requirentes(unidadComun)
+//                requirente = firmasService.requirentes(unidadComun)
 
                 def solicitudes = SolicitudAval.findAllByAvalInList(avales)
 
                 solicitudes.each {
-                    if (firmasService.requirentes(it.unidad) == requirente) {
+//                    if (firmasService.requirentes(it.unidad) == requirente) {
                         filtroSol.add(it.aval)
-                    }
+//                    }
                 }
                 datos = filtroSol.sort{ it.numero.toInteger() }
             } else {

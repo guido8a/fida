@@ -11,8 +11,8 @@
     <table class="table table-condensed table-bordered table-striped table-hover">
         <thead>
         <div>
-            <tr>
-                <th sort="requiriente" class="" style="width: 120px">Requirente</th>
+            <tr style="width: 100%">
+                <th sort="requiriente" class="" style="width: 10%">Requirente</th>
                 <th class="" style="width: 60px">Solicitud No.</th>
                 <th sort="numero" class="sort ${(sort == 'numero') ? order : ''}" style="width: 60px">Aval No.</th>
                 <th sort="fechaAprobacion" class="sort ${(sort == 'fechaAprobacion') ? order : ''}" style="width: 60px">F. Emisión</th>
@@ -33,9 +33,12 @@
                     <g:each in="${datos}" var="aval" status="j">
                         <g:set var="sol" value="${SolicitudAval.findByAval(aval)}"/>
                         <tr estadoTr="${aval?.estado?.codigo}" data-sol="${sol.id}" data-id="${aval?.id}" usu="${perfil}">
-                            <td style="width: 150px">${unidades[j]}</td>
-                            <td style="width: 50px">${sol.fecha?.format("yyyy")}-${firmasService.requirentes(sol.usuario.unidad)?.codigo} No.<elm:imprimeNumero solicitud="${sol.id}"/></td>
-                            <td style="width: 50px">${aval.fechaAprobacion?.format("yyyy")}-GPE No.<elm:imprimeNumero aval="${aval.id}"/></td>
+%{--                            <td style="width: 150px">${unidades[j]}</td>--}%
+                            <td style="width: 150px">${sol?.unidad?.nombre}</td>
+%{--                            <td style="width: 50px">${sol.fecha?.format("yyyy")}-${firmasService.requirentes(sol.usuario.unidadEjecutora)?.codigo} No.<elm:imprimeNumero solicitud="${sol.id}"/></td>--}%
+                            <td style="width: 50px">${sol.fecha?.format("yyyy")}-${firmasService.requirentes(sol.usuario.unidadEjecutora)?.codigo} No. ${sol?.numero}</td>
+%{--                            <td style="width: 50px">${aval.fechaAprobacion?.format("yyyy")}-GPE No.<elm:imprimeNumero aval="${aval.id}"/></td>--}%
+                            <td style="width: 50px">${aval.fechaAprobacion?.format("yyyy")}-GPE No.${aval?.numero}</td>
                             <td style="width: 60px">${aval.fechaAprobacion?.format("dd-MM-yyyy")}</td>
                             %{--<td style="text-align: center" title="${aval.proceso.proyecto.toStringCompleto()}">${aval.proceso.proyecto}</td>--}%
                             <td style="width: 370px">${aval.proceso.nombre}</td>
@@ -264,7 +267,7 @@
                 if ($tr.attr("usu") == 'ASPL') {
                     items.numero = {
                         label  : "Cambiar número",
-                        icon   : "fa fa-exchange",
+                        icon   : "fa fa-list-ol",
                         action : function ($element) {
                             var id = $element.data("id");
                             cambiarNumero(id);
