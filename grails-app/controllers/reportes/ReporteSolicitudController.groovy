@@ -485,7 +485,7 @@ class ReporteSolicitudController {
      * Acción que genera un archivo PDF de la solicitud de aval
      */
     def imprimirSolicitudAval() {
-        println("params ra " + params.id)
+//        println("params ra " + params)
 
         def id
         if(params.id) {
@@ -497,7 +497,7 @@ class ReporteSolicitudController {
         }
 
         /* hay que determinar en base a slav.id si existe o no el aval con estado aprobado E02 id:2*/
-        println "--> id: $id"
+//        println "--> id: $id"
         def titulo_rep
         def slav = SolicitudAval.get(id)
         def poas = ProcesoAsignacion.findByProceso(slav?.proceso)
@@ -505,7 +505,7 @@ class ReporteSolicitudController {
         def hayAval = false, firma_path
         def firma
 
-        if(slav?.aval?.estado?.codigo == 'E02') { //aval aprobado
+        if(slav?.aval?.estado?.codigo == 'E02' || slav?.aval?.estado?.codigo == 'E05' ) { //aval aprobado - liberado
             firma = seguridad.Firma.findByIdAccionAndTipoFirmaAndEstadoAndAccionAndPathIsNotNull(slav.aval.id, 'AVAL', 'F', 'firmarAval')
             firma_path = firma? firma.path : null
             hayAval = true
@@ -530,7 +530,7 @@ class ReporteSolicitudController {
             firma_img.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP)
         }
 
-        println "firma_path: $firma_path"
+//        println "firma_path: $firma_path"
 //            println "firma: ${firma_img}"
 
         logo.scaleToFit(46, 46)
@@ -546,7 +546,6 @@ class ReporteSolicitudController {
         Font fontProyecto = new Font(Font.HELVETICA, 18, Font.NORMAL, titulo);
         Font fontTitulo = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, titulo);
 
-
         Document document
         document = new Document(PageSize.A4);
         def pdfw = PdfWriter.getInstance(document, baos)
@@ -556,8 +555,6 @@ class ReporteSolicitudController {
         document.addKeywords("reporte, fida, composicion")
         document.addAuthor("FIDA")
         document.addCreator("Tedein SA")
-
-
 
         Paragraph preface = new Paragraph();
         Paragraph pr_firma = new Paragraph();

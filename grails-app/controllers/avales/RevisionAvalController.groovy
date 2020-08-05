@@ -1157,14 +1157,15 @@ class RevisionAvalController {
      * @params los parámetros enviados por el submit del formulario
      */
     def guardarLiberacion = {
-//        println "liberacion " + params
+        println "liberacion " + params
 
         if (params.monto) {
             params.monto = params.monto.replaceAll("\\.", "")
             params.monto = params.monto.replaceAll(",", ".")
         }
 
-        def path = servletContext.getRealPath("/") + "avales/"
+//        def path = servletContext.getRealPath("/") + "avales/"
+        def path = "/var/fida/liberacion/"
         new File(path).mkdirs()
         def f = request.getFile('archivo')
         if (f && !f.empty) {
@@ -1215,11 +1216,8 @@ class RevisionAvalController {
             def msn
 
             if (src.exists()) {
-
                 flash.message = "Ya existe un archivo con ese nombre. Por favor cámbielo."
                 redirect(action: 'listaAvales')
-
-
             } else {
                 def band = false
                 def usuario = Persona.get(session.usuario.id)
@@ -1237,12 +1235,6 @@ class RevisionAvalController {
                         }
                     }
                 }
-
-
-//                def montoTotal = 0
-//                params.montoAvalado.each{
-//                    montoTotal = (montoTotal + it.toDouble())
-//                }
 
                 if (band) {
                     f.transferTo(new File(pathFile))

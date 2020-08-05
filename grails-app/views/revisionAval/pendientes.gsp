@@ -4,14 +4,32 @@
     <meta name="layout" content="main"/>
     <title>Solicitudes de aval</title>
 
-    <link rel="stylesheet" href="${resource(dir: 'css/custom', file: 'avales.css')}" type="text/css"/>
+    %{--    <link rel="stylesheet" href="${resource(dir: 'css/custom', file: 'avales.css')}" type="text/css"/>--}%
+
+    <style>
+
+    .amarillo{
+        background-color: #e1a628;
+        color: #fdfbff;
+    }
+
+    .rojo{
+        background-color: #c42623;
+        color: #fdfbff;
+    }
+
+    .verde{
+        background-color:#78b665;
+        color: #fdfbff;
+    }
+    </style>
+
+
 </head>
 
 <body>
 
 <!-- botones -->
-
-
 
 <div class="panel panel-primary col-md-12" role="tabpanel" style="margin-top: 20px; min-height: 300px">
 
@@ -244,8 +262,8 @@
                                 <td class="text-right">
                                     <g:formatNumber number="${p.monto}" type="currency" currencySymbol=""/>
                                 </td>
-                                <td style="text-align: center" class="text-center ${p.estado?.codigo}" title="${title}">
-                                    ${p.estado?.descripcion}
+                                <td style="text-align: center" class="text-center ${p.estado?.codigo} ${p?.aval?.estado?.codigo == 'E05' ? 'amarillo' : p?.aval?.estado?.codigo == 'E04' ? 'rojo' : p?.aval?.estado?.codigo == 'E02' ? 'verde' : ''}" title="${title}">
+                                    ${p?.aval?.estado?.descripcion}
                                 </td>
                                 <td class="text-center">
                                     <g:if test="${p.path}">
@@ -300,7 +318,7 @@
 
                                         </g:elseif>
                                         <g:if test="${session.perfil.codigo == 'ASPL'}">
-                                            <g:if test="${p.estado.codigo == 'E02'}">
+                                            <g:if test="${p.aval.estado.codigo == 'E02'}">
                                                 <a href="#" class="solAnulacion btn btn-danger btn-sm" iden="${p.id}" data-aval="${p?.aval?.id}" title="Solicitar anulación">
                                                     <i class="fa fa-times"></i>
                                                 </a>
@@ -404,8 +422,8 @@
             %{--    url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAnulacionAval')}/" + $(this).attr("iden");--}%
             //     fn = "solicitud_anulacion_aval.pdf";
             // } else {
-                url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/" + $(this).attr("iden");
-                fn = "solicitud_aval.pdf";
+            url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/" + $(this).attr("iden");
+            fn = "solicitud_aval.pdf";
             // }
             %{--location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename=" + fn;--}%
             location.href = url + "&filename=" + fn;
