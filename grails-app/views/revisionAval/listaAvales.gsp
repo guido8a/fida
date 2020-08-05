@@ -47,10 +47,10 @@
                 ${actual.anio}-GP No.<input type="text" id="numero" class="form-control input-sm"/>
             </div>
 
-            <div class="form-group">
-                <label for="descProceso">Requirente:</label>
-                <g:select name="requirente" from="${unidades}" class="form-control input-sm" style="width: 200px;" optionKey="id" id="requirenteId"/>
-            </div>
+%{--            <div class="form-group">--}%
+%{--                <label for="descProceso">Requirente:</label>--}%
+%{--                <g:select name="requirente" from="${unidades}" class="form-control input-sm" style="width: 200px;" optionKey="id" id="requirenteId"/>--}%
+%{--            </div>--}%
 
             <div class="form-group">
                 <label for="descProceso">Proceso:</label>
@@ -108,7 +108,8 @@
     }
     $("#buscar").button().click(function () {
         openLoader("Cargando avales..");
-        cargarHistorialSort($("#anio").val(), $("#numero").val(), $("#descProceso").val(), $("#requirenteId").val())
+        // cargarHistorialSort($("#anio").val(), $("#numero").val(), $("#descProceso").val(), $("#requirenteId").val())
+        cargarHistorialSort($("#anio").val(), $("#numero").val(), $("#descProceso").val())
     })
 </script>
 </body>

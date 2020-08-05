@@ -31,19 +31,34 @@
             <table class="table table-condensed table-bordered table-striped table-hover">
                 <tbody>
                 <g:each in="${datos}" var="aval" status="j">
-                    <g:set var="sol" value="${SolicitudAval.findByAval(aval)}"/>
-                    <g:set var="avalEstado" value="${aval.estado?.codigo}"/>
-                    <tr estadoTr="${aval?.estado?.codigo}" data-sol="${sol.id}" data-id="${aval?.id}" usu="${perfil}" style="width: 100%">
-                        <td style="width: 10%">${sol?.unidad?.nombre}</td>
-                        <td style="width: 10%">${sol.fecha?.format("yyyy")}-${firmasService.requirentes(sol.usuario.unidadEjecutora)?.codigo} No. ${sol?.numero}</td>
-                        <td style="width: 10%">${aval.fechaAprobacion?.format("yyyy")}-GPE No.${aval?.numero}</td>
-                        <td style="width: 10%">${aval.fechaAprobacion?.format("dd-MM-yyyy")}</td>
-                        <td style="width: 39%">${aval.proceso.nombre}</td>
+%{--                    <g:set var="sol" value="${SolicitudAval.findByAval(aval)}"/>--}%
+%{--                    <g:set var="avalEstado" value="${aval.estado?.codigo}"/>--}%
+%{--                    <tr estadoTr="${aval?.estado?.codigo}" data-sol="${sol.id}" data-id="${aval?.id}" usu="${perfil}" style="width: 100%">--}%
+%{--                        <td style="width: 10%">${sol?.unidad?.nombre}</td>--}%
+%{--                        <td style="width: 10%">${sol.fecha?.format("yyyy")}-${firmasService.requirentes(sol.usuario.unidadEjecutora)?.codigo} No. ${sol?.numero}</td>--}%
+%{--                        <td style="width: 10%">${aval.fechaAprobacion?.format("yyyy")}-GPE No.${aval?.numero}</td>--}%
+%{--                        <td style="width: 10%">${aval.fechaAprobacion?.format("dd-MM-yyyy")}</td>--}%
+%{--                        <td style="width: 39%">${aval.proceso.nombre}</td>--}%
+%{--                        <td style="text-align: right; width: 10%">--}%
+%{--                            <g:formatNumber number="${aval.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>--}%
+%{--                        </td>--}%
+%{--                        <td style="text-align: center; width: 11%" class="${avalEstado == 'E05' ? 'amarillo' : avalEstado == 'E04' ? 'rojo' : 'verde'}">--}%
+%{--                            ${aval.estado?.descripcion}--}%
+%{--                        </td>--}%
+%{--                    </tr>--}%
+                    <g:set var="sol" value="${SolicitudAval.findByAval(Aval.get(aval.aval__id))}"/>
+                    <g:set var="avalEstado" value="${aval.edavcdgo}"/>
+                    <tr estadoTr="${aval.edavcdgo}" data-sol="${sol.id}" data-id="${aval.aval__id}" usu="${perfil}" style="width: 100%">
+                        <td style="width: 10%">${unidad?.nombre}</td>
+                        <td style="width: 10%">${sol.fecha?.format("yyyy")}-${firmasService.requirentes(unidad)?.codigo} No. ${sol?.numero}</td>
+                        <td style="width: 10%">${aval.avalfcap.format("yyyy")}-GPE No.${aval.avalnmro}</td>
+                        <td style="width: 10%">${aval.avalfcap.format("dd-MM-yyyy")}</td>
+                        <td style="width: 39%">${aval.prconmbr}</td>
                         <td style="text-align: right; width: 10%">
-                            <g:formatNumber number="${aval.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>
+                            <g:formatNumber number="${aval.avalmnto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>
                         </td>
                         <td style="text-align: center; width: 11%" class="${avalEstado == 'E05' ? 'amarillo' : avalEstado == 'E04' ? 'rojo' : 'verde'}">
-                            ${aval.estado?.descripcion}
+                            ${aval.edavdscr}
                         </td>
                     </tr>
                 </g:each>

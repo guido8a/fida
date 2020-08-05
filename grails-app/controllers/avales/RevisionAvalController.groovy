@@ -150,21 +150,28 @@ class RevisionAvalController {
 
         println("params ha " + params)
 
+        def perfil = session.perfil.codigo.toString()
+        def unidad = UnidadEjecutora.get(1)
         def anio = Anio.get(params.anio).anio
+
         def fechaInicio = new Date().parse("yyyy-MM-dd HH:mm:ss", anio + "-01-01 00:01:01")
         def fechaFin = new Date().parse("yyyy-MM-dd HH:mm:ss", anio + "-12-31 23:59:59")
 
-        println("fe " + fechaInicio)
-        println("fe " + fechaFin.format("dd-MM-yyyy HH:mm:ss"))
+        def numero = ''
 
-        def sql = "select * from aval where avalfcap between '${fechaInicio.format("yyyy-MM-dd HH:mm:ss")}' and " +
-                "'${fechaFin.format("yyyy-MM-dd HH:mm:ss")}' "
-        println "sal: $sql"
+        if(params.numero){
+            numero = "and avalnmro = ${params.numero}"
+        }
+
+        def sql = "select * from aval, edav, prco where aval.prco__id = prco.prco__id and aval.edav__id = edav.edav__id and avalfcap between '${fechaInicio.format("yyyy-MM-dd HH:mm:ss")}' and " +
+                "'${fechaFin.format("yyyy-MM-dd HH:mm:ss")}' and prconmbr ilike '%${params.proceso}%' " + numero
+
+        println "sql: $sql"
+
         def cn = dbConnectionService.getConnection()
-        def res = cn.rows(sql)
+        def res = cn.rows(sql.toString())
 
-        return [datos: res]
-
+        return [datos: res, perfil:perfil, unidad: unidad]
     }
 
 
@@ -176,7 +183,7 @@ class RevisionAvalController {
      * @param sort
      * @param order
      */
-    def historialAvales = {
+    def historialAvales1 = {
         println "historial aval " + params
 
         def now = new Date()
