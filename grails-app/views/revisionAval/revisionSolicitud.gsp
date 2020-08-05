@@ -182,7 +182,7 @@
                     <i class="fa fa-search"></i> Previsualizar
                 </a>
                 <a href="#" class="btn btn-success" id="btnSolicitar" title="Solicitar firma del gerente">
-                    <i class="fa fa-paper-plane"></i> ${solicitud?.tipo == 'A' ? 'Solicitar anulación' : 'Solicitar firma'}
+                    <i class="fa fa-paper-plane"></i> ${solicitud?.tipo == 'A' ? 'Solicitar firma de Anulación' : 'Solicitar firma'}
                 </a>
                 <g:if test="${solicitud.tipo != 'A'}">
                     <a href="#" class="btn btn-danger" id="btnDevolver" title="Devolver al requirente con observaciones">

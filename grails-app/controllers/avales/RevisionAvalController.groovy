@@ -151,17 +151,17 @@ class RevisionAvalController {
         println("params ha " + params)
 
         def anio = Anio.get(params.anio).anio
-        def fechaInicio = new Date().parse("dd-MM-yyyy HH:mm:ss", "01-01-" + anio + " 00:01:01")
-        def fechaFin = new Date().parse("dd-MM-yyyy HH:mm:ss", "31-12-" + anio + " 23:59:59")
+        def fechaInicio = new Date().parse("yyyy-MM-dd HH:mm:ss", anio + "-01-01 00:01:01")
+        def fechaFin = new Date().parse("yyyy-MM-dd HH:mm:ss", anio + "-12-31 23:59:59")
 
         println("fe " + fechaInicio)
         println("fe " + fechaFin.format("dd-MM-yyyy HH:mm:ss"))
 
-        def sql = "select * from aval where avalfcap between ${fechaInicio.format("yyyy-MM-dd HH:mm:ss")} and ${fechaFin.format("yyyy-MM-dd HH:mm:ss")}"
+        def sql = "select * from aval where avalfcap between '${fechaInicio.format("yyyy-MM-dd HH:mm:ss")}' and " +
+                "'${fechaFin.format("yyyy-MM-dd HH:mm:ss")}' "
+        println "sal: $sql"
         def cn = dbConnectionService.getConnection()
         def res = cn.rows(sql)
-
-        println("sql " + sql)
 
         return [datos: res]
 
@@ -1571,8 +1571,6 @@ class RevisionAvalController {
 
         def estadosAvales = [estadoAprobado, estadoDevueltoAnPlan, estadoAprobadoSinFirma]
         def avales = SolicitudAval.findAllByEstadoInListAndAvalIsNotNull(estadosAvales)
-
-
 
 
         def actual

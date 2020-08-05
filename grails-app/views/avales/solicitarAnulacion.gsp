@@ -96,7 +96,7 @@
                         Doc. de respaldo
                     </label>
 
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <input type="file" name="file" id="file" class="form-control input-sm"/>
                         <g:if test="${sol?.path}">
                             <g:link controller="avales" action="descargaSolicitud" id="${sol.id}">
@@ -113,7 +113,7 @@
                         Justificación
                     </label>
 
-                    <div class="col-md-7">
+                    <div class="col-md-8">
                         <g:textArea name="concepto" maxlength="1024" style="height: 80px;" class="form-control required"
                                     required="" value="${sol?.concepto}"/>
                     </div>
@@ -121,6 +121,7 @@
             </div>
 
             <div class="form-group keeptogether required row">
+%{--
                 <label for="firma1" class="col-md-2 control-label">
                     Pedir revisión de
                 </label>
@@ -138,12 +139,13 @@
                                   }}" name="firma1" value="${sol?.directorId}" noSelection="['': '.. Seleccione ..']"/>
                     </g:else>
                 </div>
-                <div class="col-md-3 text-right">
+--}%
+                <div class="col-md-4 text-right">
                     <g:link controller="revisionAval" action="pendientes" class="btn btn-default">
                         <i class="fa fa-times"></i> Cancelar
                     </g:link>
                     <a href="#" class="btn btn-success" id="enviar">
-                        <i class="fa fa-save"></i> Guardar y enviar
+                        <i class="fa fa-save"></i> Guardar y Solicitar Anulación
                     </a>
                 </div>
             </div>

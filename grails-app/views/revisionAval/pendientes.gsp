@@ -138,6 +138,7 @@
                                 </td>
                                 <td style="text-align: center" class="text-center ${p.estado?.codigo}" title="${title}">
                                     ${p.estado?.descripcion}
+                                    ${p.tipo == "A" ? 'Anulación' : ''}
                                 </td>
                                 <td class="text-center">
                                     <g:if test="${p.path}">
@@ -171,7 +172,7 @@
                                             %{--                                                </g:else>--}%
                                             </g:if>
                                         </g:if>
-                                        <g:elseif test="${p.estado.codigo == 'R01' || p.estado.codigo == 'D02'}">
+                                        <g:elseif test="${(p.estado.codigo == 'R01' || p.estado.codigo == 'D02') && session.perfil.codigo == 'ASPL'}">
                                             <g:if test="${p?.tipo == 'A'}">
                                                 <a href="${g.createLink(action: 'revisionSolicitud', id: p.id)}" class="aprobar btn btn-danger" title="Revisar solicitud de anulación">
                                                     <i class="fa fa-cog"></i>
@@ -317,7 +318,7 @@
                                             </g:if>
 
                                         </g:elseif>
-                                        <g:if test="${session.perfil.codigo == 'ASPL'}">
+                                        <g:if test="${session.perfil.codigo in ['ASPL', 'RQ']}">
                                             <g:if test="${p.aval.estado.codigo == 'E02'}">
                                                 <a href="#" class="solAnulacion btn btn-danger btn-sm" iden="${p.id}" data-aval="${p?.aval?.id}" title="Solicitar anulación">
                                                     <i class="fa fa-times"></i>
