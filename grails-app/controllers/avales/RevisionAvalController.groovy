@@ -16,6 +16,7 @@ class RevisionAvalController {
     def mailService
     def firmasService
     def proyectosService
+    def dbConnectionService
 
     /**
      * Acción que muestra la lista de solicitudes de aval pendientes (estadoAval código E01)
@@ -145,6 +146,28 @@ class RevisionAvalController {
     }
 
 
+    def historialAvales() {
+
+        println("params ha " + params)
+
+        def anio = Anio.get(params.anio).anio
+        def fechaInicio = new Date().parse("dd-MM-yyyy HH:mm:ss", "01-01-" + anio + " 00:01:01")
+        def fechaFin = new Date().parse("dd-MM-yyyy HH:mm:ss", "31-12-" + anio + " 23:59:59")
+
+        println("fe " + fechaInicio)
+        println("fe " + fechaFin.format("dd-MM-yyyy HH:mm:ss"))
+
+        def sql = "select * from aval where avalfcap between ${fechaInicio.format("yyyy-MM-dd HH:mm:ss")} and ${fechaFin.format("yyyy-MM-dd HH:mm:ss")}"
+        def cn = dbConnectionService.getConnection()
+        def res = cn.rows(sql)
+
+        println("sql " + sql)
+
+        return [datos: res]
+
+    }
+
+
     /**
      * Acción que muestra la pantalla con el historial de avales de un año
      * @param anio el año para el cual se van a mostrar los avales
@@ -154,7 +177,7 @@ class RevisionAvalController {
      * @param order
      */
     def historialAvales = {
-//        println "historial aval " + params
+        println "historial aval " + params
 
         def now = new Date()
         def anio = Anio.get(params.anio).anio
@@ -233,7 +256,7 @@ class RevisionAvalController {
 
                 solicitudes.each {
 //                    if (firmasService.requirentes(it.unidad) == requirente) {
-                        filtroSol.add(it.aval)
+                    filtroSol.add(it.aval)
 //                    }
                 }
                 datos = filtroSol.sort{ it.numero.toInteger() }
