@@ -76,8 +76,7 @@
     }
 
     body {
-        /*background : #e5e4e7;*/
-        background-image:  url('<asset:image src="apli/proyecto.png" width="100%" height="100%"/>')
+        background : #e5e4e7;
     }
 
     .color1 {
@@ -88,15 +87,64 @@
         background : #FFF;
     }
 
-    .btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+    section {
+        padding-top: 4rem;
+        padding-bottom: 5rem;
+        background-color: #f1f4fa;
+    }
+    .wrap {
+        display: flex;
+        background: white;
+        padding: 1rem 1rem 1rem 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 7px 7px 30px -5px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
     }
 
-    .services_panel .panel{min-height: 277px;border: 1px solid #eea236;border-top:3px solid #eea236 !important;background: #fbfbfb;margin-top:10%;}
-    .services_panel .panel img{width:115px;}
-    .services_panel .panel .btn{width: 235px;margin-top: 25px;background: #f2f2f2;color: #333;border-bottom: 3px solid #e6e6e6;}
-    .services_panel .panel .btn:hover{border-bottom: 2px solid #e6e6e6;}
+    .wrap:hover {
+        background: linear-gradient(135deg,#6394ff 0%,#0a193b 100%);
+        color: white;
+    }
+
+    .ico-wrap {
+        margin: auto;
+    }
+
+    .mbr-iconfont {
+        font-size: 4.5rem !important;
+        color: #313131;
+        margin: 1rem;
+        padding-right: 1rem;
+    }
+    .vcenter {
+        margin: auto;
+    }
+
+    .mbr-section-title3 {
+        text-align: left;
+    }
+    h2 {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .display-5 {
+        font-family: 'Source Sans Pro',sans-serif;
+        font-size: 1.4rem;
+    }
+    .mbr-bold {
+        font-weight: 700;
+    }
+
+    p {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        line-height: 25px;
+    }
+    .display-6 {
+        font-family: 'Source Sans Pro',sans-serif;
+        font-size: 1re
+    }
 
     </style>
 </head>
@@ -112,60 +160,101 @@
     </div>
 
 
-    <div class="container services_panel" style="width: 100% !important;">
-        <div class="row">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="panel text-center">
-                        <h3>Proyecto</h3>
-                        <p>Fortalecimiento de los Actores Rurales de la Economía Popular y Solidaria</p>
-                        %{--                        <img src="https://d0.awsstatic.com/Image_Thumbs/graph_icon.png" class="center-block img-responsive">--}%
-                        <asset:image src="apli/proyecto.png" title="Marco lógico de Proyecto" width="100%" height="100%"/>
-                        %{--                        <button class="btn center-block">Clic</button>--}%
-                        <a href="${createLink(controller:'proyecto', action: 'proy', id:1)}" class="btn btn-default center-block">
-                            <i class="fa fa-hand-point-up"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="panel text-center">
-                        <h3>Talleres</h3>
-                        <p>Fortalecimiento de las capacidades de las familias y sus organizaciones</p>
-                        %{--                        <img src="https://d0.awsstatic.com/Image_Thumbs/graph_icon.png" class="center-block img-responsive">--}%
-                        <asset:image src="apli/taller.png" title="Talleres" width="100%" height="100%"/>
-                        %{--                        <button class="btn center-block">Clic</button>--}%
-                        <a href="${createLink(controller:'taller', action: 'listTaller', id:1)}" class="btn btn-default center-block">
-                            <i class="fa fa-hand-point-up"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="panel text-center">
-                        <h3>Convenios</h3>
-                        <p>Fortalecimiento de los Actores Rurales de la Economía Popular y Solidaria</p>
-                        %{--                        <img src="https://d0.awsstatic.com/Image_Thumbs/graph_icon.png" class="center-block img-responsive">--}%
-                        <asset:image src="apli/convenio.png" title="Convenios" width="100%" height="100%"/>
-                        %{--                        <button class="btn center-block">Clic</button>--}%
-                        <a href="${createLink(controller:'proyecto', action: 'proy', id:1)}" class="btn btn-default center-block">
-                            <i class="fa fa-hand-point-up"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="panel text-center">
-                        <h3>Proyecto</h3>
-                        <p>Fortalecimiento de los Actores Rurales de la Economía Popular y Solidaria</p>
-                        %{--                        <img src="https://d0.awsstatic.com/Image_Thumbs/graph_icon.png" class="center-block img-responsive">--}%
-                        <asset:image src="apli/proyecto.png" title="Marco lógico de Proyecto" width="100%" height="100%"/>
-                        %{--                        <button class="btn center-block">Clic</button>--}%
-                        <a href="${createLink(controller:'proyecto', action: 'proy', id:1)}" class="btn btn-default center-block">
-                            <i class="fa fa-hand-point-up"></i>
-                        </a>
-                    </div>
-                </div>
 
+
+    %{--    <section>--}%
+    %{--        <div class="container">--}%
+
+    <div class="row mbr-justify-content-center">
+
+    <a href= "${createLink(controller:'proyecto', action: 'proy', id:1)}" style="text-decoration: none">
+        <div class="col-lg-6 mbr-col-md-10">
+            <div class="wrap">
+                <div class="ico-wrap">
+                    %{--                            <span class="mbr-iconfont fa-volume-up fa"></span>--}%
+                    <asset:image src="apli/proyecto.png" title="Marco lógico de Proyecto"  width="80%" height="80%"/>
+                </div>
+                <div class="text-wrap vcenter">
+                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Proyecto</span></h2>
+                    <p class="mbr-fonts-style text1 mbr-text display-6">Fortalecimiento de los Actores Rurales de la Economía Popular y Solidaria</p>
+                </div>
             </div>
         </div>
+    </a>
+    <a href= "${createLink(controller:'taller', action: 'listTaller')}" style="text-decoration: none">
+        <div class="col-lg-6 mbr-col-md-10">
+            <div class="wrap">
+                <div class="ico-wrap">
+                    %{--                            <span class="mbr-iconfont fa-calendar fa"></span>--}%
+                    <asset:image src="apli/taller.png" title="Talleres" width="80%" height="80%"/>
+                </div>
+                <div class="text-wrap vcenter">
+                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
+                        <span>Talleres</span>
+                    </h2>
+                    <p class="mbr-fonts-style text1 mbr-text display-6"> Fortalecimiento de las capacidades de las familias y sus organizaciones</p>
+                </div>
+            </div>
+        </div>
+    </a>
+    <a href= "${createLink(controller:'convenio', action: 'convenio')}" style="text-decoration: none">
+        <div class="col-lg-6 mbr-col-md-10">
+            <div class="wrap">
+                <div class="ico-wrap">
+                    %{--                            <span class="mbr-iconfont fa-calendar fa"></span>--}%
+                    <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
+                </div>
+                <div class="text-wrap vcenter">
+                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
+                        <span>Convenios</span>
+                    </h2>
+                    <p class="mbr-fonts-style text1 mbr-text display-6"> Fortalecimiento de las capacidades de las familias y sus organizaciones</p>
+                </div>
+            </div>
+        </div>
+    </a>
+    <div class="col-lg-6 mbr-col-md-10">
+        <div class="wrap">
+            <div class="ico-wrap">
+                %{--                            <span class="mbr-iconfont fa-calendar fa"></span>--}%
+                <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="80%" height="80%"/>
+            </div>
+            <div class="text-wrap vcenter">
+                <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
+                    <span>Plan opetativo anual</span>
+                </h2>
+                <p class="mbr-fonts-style text1 mbr-text display-6"> Fortalecimiento de las capacidades de las familias y sus organizaciones</p>
+            </div>
+        </div>
+    </div>
+        <div class="col-lg-6 mbr-col-md-10">
+            <div class="wrap">
+                <div class="ico-wrap">
+%{--                    <span class="mbr-iconfont fa-trophy fa"></span>--}%
+                    <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="80%" height="80%"/>
+                </div>
+                <div class="text-wrap vcenter">
+                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Ajustes</span></h2>
+                    <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
+                </div>
+            </div>
+        </div>
+    <div class="col-lg-6 mbr-col-md-10">
+        <div class="wrap">
+            <div class="ico-wrap">
+                %{--                    <span class="mbr-iconfont fa-trophy fa"></span>--}%
+                <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="80%" height="80%"/>
+            </div>
+            <div class="text-wrap vcenter">
+                <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Reformas</span></h2>
+                <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
     </div>
 
     %{--        </div>--}%
