@@ -120,7 +120,7 @@
 <script>
     $(".imprimirAval").click(function () {
         %{--location.href = "${createLink(controller:'avales',action:'descargaAval')}/"+$(this).attr("iden")--}%
-        var url = "${g.createLink(controller: 'reportes',action: 'certificacion')}/?id=" + $(this).attr("iden");
+        var url = "${g.createLink(controller: 'reporteSolicitud',action: 'imprimirSolicitudAval')}/?id=" + $(this).attr("iden");
         location.href = url + "&filename=aval.pdf";
     });
     $(".imprimirSolicitud").click(function () {

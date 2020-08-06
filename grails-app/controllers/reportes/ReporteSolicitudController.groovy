@@ -485,7 +485,7 @@ class ReporteSolicitudController {
      * Acción que genera un archivo PDF de la solicitud de aval
      */
     def imprimirSolicitudAval() {
-//        println("params ra " + params)
+        println("imprimirSolicitudAval " + params)
 
         def id
         if(params.id) {
@@ -642,13 +642,27 @@ class ReporteSolicitudController {
 
         def prmsCellHead3 = [border: Color.WHITE, align: Element.ALIGN_JUSTIFIED, valign: Element.ALIGN_TOP]
         def fondo = new Color(240, 248, 250);
-        def frmtDato2 = [colspan: 9, bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
+        def frmtDato2 = [colspan: 2, bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
 
         PdfPTable tablaPie = new PdfPTable(2)
         tablaPie.setWidthPercentage(100)
         tablaPie.setWidths(arregloEnteros([15, 85]))
 
-        addCellTabla(tablaPie, new Paragraph("", times10normal), frmtDato2)
+//        addCellTabla(tablaPie, new Paragraph("", times10normal), prmsCellHead3)
+        /*nota técnica y observaciones*/
+        if(slav.notaTecnica) {
+            addCellTabla(tablaPie, new Paragraph("", times10normal), frmtDato2)
+            addCellTabla(tablaPie, new Paragraph("Nota Técnica:", times10bold), prmsCellHead3)
+            addCellTabla(tablaPie, new Paragraph(slav.notaTecnica, times10normal), prmsCellHead3)
+        }
+
+        if(slav.observacionesPdf) {
+//            addCellTabla(tablaPie, new Paragraph("", times10normal), prmsCellHead3)
+            addCellTabla(tablaPie, new Paragraph("Observaciones:", times10bold), prmsCellHead3)
+            addCellTabla(tablaPie, new Paragraph(slav.observacionesPdf, times10normal), prmsCellHead3)
+        }
+
+//        addCellTabla(tablaPie, new Paragraph("", times10normal), prmsCellHead3)
 //        addCellTabla(tablaPie, new Paragraph("", times10normal), prmsCellHead3)
         addCellTabla(tablaPie, new Paragraph("Elaborado por:", times10bold), prmsCellHead3)
         addCellTabla(tablaPie, new Paragraph(slav.usuario.nombreCompleto, times10normal), prmsCellHead3)
