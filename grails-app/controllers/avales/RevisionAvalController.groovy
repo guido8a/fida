@@ -607,8 +607,8 @@ class RevisionAvalController {
                             firma1 = new Firma()
                             firma1.usuario = Persona.get(params.firma2)
 
-                            firma1.controladorVer = "reportes"
-                            firma1.accionVer = "certificacion"
+                            firma1.controladorVer = "reporteSolicitud"
+                            firma1.accionVer = "imprimirSolicitudAval"
                             firma1.idAccionVer = sol.id
 
                             firma1.controlador = "revisionAval"
