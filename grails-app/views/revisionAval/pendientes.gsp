@@ -353,14 +353,14 @@
                                       optionKey="id" optionValue="anio" value="${actual.id}" class="form-control input-sm"/>
                         </div>
 
-                        <div class="form-group">
-                            <label for="descProceso">Requirente:</label>
-                            <g:select name="requirente" from="${unidades}" class="form-control input-sm" style="width: 200px;" optionKey="id"/>
-                        </div>
+%{--                        <div class="form-group">--}%
+%{--                            <label for="descProceso">Requirente:</label>--}%
+%{--                            <g:select name="requirente" from="${unidades}" class="form-control input-sm" style="width: 200px;" optionKey="id"/>--}%
+%{--                        </div>--}%
 
                         <div class="form-group">
                             <label for="numero">Número:</label>
-                            ${actual.anio}-GP No.<input type="text" id="numero" class="form-control input-sm"/>
+                            ${actual.anio}-No.<input type="text" id="numero" class="form-control input-sm"/>
                         </div>
 
                         <div class="form-group">
