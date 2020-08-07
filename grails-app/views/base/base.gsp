@@ -128,9 +128,9 @@
     <div class="panel-group" style="height: 730px">
         <div class="col-md-12" style="margin-top: 10px">
             <ul class="nav nav-pills">
-%{--                <li class="show active col-md-5"><a data-toggle="tab" href="#home"><h4><i class="fa fa-atlas"></i> Problema</h4></a></li>--}%
-%{--                <li class="col-md-3"><a data-toggle="tab" href="#imagenes"><h4><i class="fa fa-clipboard"></i> Imágenes (${contadorImas})</h4></a></li>--}%
-%{--                <li class="col-md-3"><a data-toggle="tab" href="#archivos"><h4><i class="fa fa-folder-open"></i> Archivos (${contadorOtros})</h4></a></li>--}%
+                %{--                <li class="show active col-md-5"><a data-toggle="tab" href="#home"><h4><i class="fa fa-atlas"></i> Problema</h4></a></li>--}%
+                %{--                <li class="col-md-3"><a data-toggle="tab" href="#imagenes"><h4><i class="fa fa-clipboard"></i> Imágenes (${contadorImas})</h4></a></li>--}%
+                %{--                <li class="col-md-3"><a data-toggle="tab" href="#archivos"><h4><i class="fa fa-folder-open"></i> Archivos (${contadorOtros})</h4></a></li>--}%
             </ul>
             <div style="height: 3px; background-color: #CEDDE6"></div>
 
@@ -141,10 +141,26 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <span class="col-md-2 label label-primary text-info mediano">Tema</span>
-                                <div class="col-md-8">
+                                <div class="col-md-4">
                                     <g:select name="tema" id="temaId" from="${base.Tema.list()}" optionKey="id"
                                               value="${base?.tema?.id}" optionValue="nombre" class="form-control"
                                               style="color: #3d658a"/>
+                                </div>
+                                <label for="fechaInicio" class="col-md-1 control-label">
+                                    Fecha Inicio
+                                </label>
+
+                                <div class="col-md-2">
+                                    <input name="fechaInicio" id='fechaInicio' type='text' class="form-control required"
+                                           value="${''}"/>
+                                </div>
+                                <label for="fechaFin" class="col-md-1 control-label">
+                                    Fecha Fin
+                                </label>
+
+                                <div class="col-md-2">
+                                    <input name="fechaFin" id='fechaFin' type='text' class="form-control required"
+                                           value="${''}"/>
                                 </div>
                             </div>
                         </div>
@@ -261,7 +277,7 @@
                                 <div class="col-md-6">
                                     <input type="file" name="archivo" id="archivo" title="Buscar pdf" class="file btn btn-info" multiple accept=".pdf, .xls">
                                 </div>
-                               <input type="submit" class="btn btn-success" value="Subir Archivo"/>
+                                <input type="submit" class="btn btn-success" value="Subir Archivo"/>
                             </div>
                         </g:uploadForm>
                     </g:if>
@@ -296,6 +312,31 @@
 
 <script type="text/javascript">
 
+    $('#fechaInicio').datetimepicker({
+        locale: 'es',
+        format: 'DD-MM-YYYY',
+        daysOfWeekDisabled: [0, 6],
+        // inline: true,
+        sideBySide: true,
+        showClose: true,
+        icons: {
+            // close: 'closeText'
+        }
+    });
+
+    $('#fechaFin').datetimepicker({
+        locale: 'es',
+        format: 'DD-MM-YYYY',
+        daysOfWeekDisabled: [0, 6],
+        // inline: true,
+        sideBySide: true,
+        showClose: true,
+        icons: {
+            // close: 'closeText'
+        }
+    });
+
+
 
     cargarArchivos('${base?.id}', '${lista}');
 
@@ -327,11 +368,11 @@
         customConfig: 'config.js',
         filebrowserBrowseUrl    : '${createLink(controller: "baseImagenes", action: "browser")}',
         filebrowserUploadUrl    : '${createLink(controller: "baseImagenes", action: "uploader")}',
-            toolbar                 : [
-                ['FontSize', 'Scayt', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
-                ['Bold', 'Italic', 'Underline','Subscript', 'Superscript'],
-                ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-']
-            ]
+        toolbar                 : [
+            ['FontSize', 'Scayt', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+            ['Bold', 'Italic', 'Underline','Subscript', 'Superscript'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-']
+        ]
     });
 
     CKEDITOR.on('instanceReady', function (ev) {
@@ -594,7 +635,7 @@
 
     $("#btnVer").click(function () {
         var id_base = ${base?.id}
-        $("#dialog-body").html(spinner);
+            $("#dialog-body").html(spinner);
         $.ajax({
             type: 'POST',
             url: '${createLink(controller: 'base', action: 'show_ajax')}',
