@@ -5,7 +5,15 @@
     <meta name="layout" content="main">
     <title>Base de conocimiento - Artículo</title>
 
-    <asset:javascript src="/ckeditor/ckeditor.js"/>
+%{--    <script type="text/javascript" src="/assets/javascripts/ckeditor/ckeditor.js"></script>--}%
+%{--    <script> window.CKEDITOR_BASEPATH = '/assets/javascripts/ckeditor/';</script>--}%
+
+   <ckeditor:resources/>
+
+%{--    <script src="ckeditor.js"></script>--}%
+
+
+%{--    <asset:javascript src="ckeditor/ckeditor.js"/>--}%
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/vendor/jquery.ui.widget.js"/>
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/load-image.min.js"/>
     <asset:javascript src="/jQuery-File-Upload-9.5.6/js/imgResize/canvas-to-blob.min.js"/>
@@ -295,6 +303,7 @@
 
 
 <script type="text/javascript">
+
 
     cargarArchivos('${base?.id}', '${lista}');
 

@@ -51,6 +51,7 @@ dependencies {
     compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13'
     compile "org.grails.plugins:qr-code:0.1.4"
     compile 'org.grails.plugins:qrcode:0.9'
+    compile 'org.grails.plugins:ckeditor:4.5.9.0'
 
     runtime "org.postgresql:postgresql:42.2.5"
     console "org.grails:grails-console"
