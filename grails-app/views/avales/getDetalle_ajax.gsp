@@ -24,7 +24,7 @@
         <g:set var="totalMonto" value="${0}"/>
         <g:set var="totalD" value="${0}"/>
         <g:each in="${detalle}" var="asg">
-            <g:set var="totalPrio" value="${asg.asignacion.priorizado}"/>
+            <g:set var="totalPrio" value="${asg.asignacion.planificado}"/>
             <g:set var="totalMonto" value="${totalMonto.toDouble() + asg.monto}"/>
             <g:set var="totalD" value="${totalD.toDouble() + asg.devengado}"/>
             <tr iden="${asg?.id}">
@@ -34,7 +34,7 @@
                 <td>${asg.asignacion.marcoLogico.numero} - ${asg.asignacion.marcoLogico}</td>
                 <td>${asg.asignacion.presupuesto.numero}</td>
                 <td style="text-align: right">
-                    <g:formatNumber number="${asg.asignacion.priorizado}" type="currency" currencySymbol=""/>
+                    <g:formatNumber number="${asg.asignacion.planificado}" type="currency" currencySymbol=""/>
                 </td>
                 <td style="text-align: right" id="monto_${asg.id}"
                     valor="${asg.monto}">

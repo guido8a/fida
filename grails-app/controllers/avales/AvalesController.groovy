@@ -346,7 +346,7 @@ class AvalesController{
         def anio = Anio.get(params.anio)
 //        println "asgs "+ Asignacion.findAllByMarcoLogicoAndAnio(act, anio)
 //        def asg = proyectosService.getAsignacionesUnidadActividad(UnidadEjecutora.get(session.unidad.id), anio, act, session.perfil.codigo.toString())
-        def asg = UnidadEjecutora.get(session.unidad.id).getAsignacionesUnidadActividad(anio, act, session.perfil.codigo.toString())
+        def asg = UnidadEjecutora.get(1).getAsignacionesUnidadActividad(anio, act, session.perfil.codigo.toString())
         [asgs: asg]
     }
 
@@ -412,7 +412,7 @@ class AvalesController{
         def procesos = ProcesoAval.list([sort: "id"])
         def perfil = session.perfil.codigo.toString()
 //        def unidades = UnidadEjecutora.get(session.unidad.id).getUnidadesPorPerfil(perfil)
-        def unidades = UnidadEjecutora.findAllById(session.unidad.id)
+        def unidades = UnidadEjecutora.findAllById(1)
         def l = []
         procesos.each { p ->
             if (SolicitudAval.countByProcesoAndUnidadInList(p, unidades) > 0) {
