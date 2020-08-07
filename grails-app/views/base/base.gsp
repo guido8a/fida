@@ -334,7 +334,12 @@
         height: "160px",
         customConfig: 'config.js',
         filebrowserBrowseUrl    : '${createLink(controller: "baseImagenes", action: "browser")}',
-        filebrowserUploadUrl    : '${createLink(controller: "baseImagenes", action: "uploader")}'
+        filebrowserUploadUrl    : '${createLink(controller: "baseImagenes", action: "uploader")}',
+            toolbar                 : [
+                ['FontSize', 'Scayt', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+                ['Bold', 'Italic', 'Underline','Subscript', 'Superscript'],
+                ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-']
+            ]
     });
 
     CKEDITOR.on('instanceReady', function (ev) {
