@@ -266,7 +266,7 @@ class BaseController {
 //        println("params carrusel " + params)
 
         def base = Base.get(params.id)
-        def listaImagenes = Imagen.findAllByBase(base)
+//        def listaImagenes = Imagen.findAllByBase(base)
 //        def directorio = '/home/fabricio/imas/' + base?.id + "/"
 //        def directorio = '/static/imagenes/' + base?.id + "/"
 
@@ -279,7 +279,7 @@ class BaseController {
 
 //        println("directorio " + directorio)
 
-        return [listaImagenes: listaImagenes, directorio: directorio, base: base]
+        return [directorio: directorio, base: base]
 
     }
 
