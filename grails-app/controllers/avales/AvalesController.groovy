@@ -249,18 +249,17 @@ class AvalesController{
     def cargarActividades2_ajax = {
         def comp = MarcoLogico.get(params.id)
         def anio = Anio.get(params.anio)
-        def priorizado = []
-//        def acts = proyectosService.getActividadesUnidadComponente(UnidadEjecutora.get(session.unidad.id), anio, comp, session.perfil.codigo.toString())
-        def acts = UnidadEjecutora.get(session.unidad.id).getActividadesUnidadComponente(anio, comp, session.perfil.codigo.toString())
+        def planificado = []
+        def acts = UnidadEjecutora.get(1).getActividadesUnidadComponente(anio, comp, session.perfil.codigo.toString())
 
         acts.each { ac ->
             def prsp = Asignacion.findByMarcoLogico(ac)
-            priorizado << [id: ac.id, numero: ac.numero, objeto: ac.objeto, prio: "${prsp.presupuesto.numero}: ${prsp.priorizado}"]
+            planificado << [id: ac.id, numero: ac.numero, objeto: ac.objeto, prio: "${prsp.presupuesto.numero}: ${prsp.planificado}"]
         }
 
         println "acts: ${acts.id}"
 
-        return [acts: acts, priorizado: priorizado]
+        return [acts: acts, planificado: planificado]
     }
 
     /**
@@ -302,7 +301,7 @@ class AvalesController{
 //        def acts = proyectosService.getActividadesUnidadComponente(session.asignaciones, comp)
         def anio = Anio.get(params.anio)
 //        def acts = proyectosService.getActividadesUnidadComponente(UnidadEjecutora.get(session.unidad.id), anio, comp, session.perfil.codigo.toString())
-        def acts = UnidadEjecutora.get(session.unidad.id).getActividadesUnidadComponente(anio, comp, session.perfil.codigo.toString())
+        def acts = UnidadEjecutora.get(1).getActividadesUnidadComponente(anio, comp, session.perfil.codigo.toString())
         return [acts: acts, div: params.div]
     }
 
@@ -580,7 +579,7 @@ class AvalesController{
             }
 
 //            def componentes = proyectosService.getComponentesUnidadProyecto(UnidadEjecutora.get(session.unidad.id), actual, proceso.proyecto, session.perfil.codigo.toString())
-            def componentes = UnidadEjecutora.get(session.unidad.id).getComponentesUnidadProyecto(actual, proceso.proyecto, session.perfil.codigo.toString())
+            def componentes = UnidadEjecutora.get(1).getComponentesUnidadProyecto(actual, proceso.proyecto, session.perfil.codigo.toString())
 
             return [proceso: proceso, unidad: unidad, band: band, readOnly: readOnly, actual: actual, componentes: componentes, solicitud: solicitud, anios: anios]
         } else {
