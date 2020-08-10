@@ -30,7 +30,6 @@
         font-size: 14px;
     }
 
-
     .nav-tabs > li > a{
         border: medium none;
 
