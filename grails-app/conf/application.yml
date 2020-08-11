@@ -155,7 +155,8 @@ environments:
             dbCreate: none
             url: jdbc:postgresql://127.0.0.1:5432/fida
             username: postgres
-            password: 'fareps_fda'
+#            password: 'fareps_fda'
+            password: 'steinsgate'
             properties:
                 jmxEnabled: true
                 initialSize: 5
