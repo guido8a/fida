@@ -77,7 +77,7 @@
                                 %{--reforma.tipoSolicitud == 'A' ? 'solicitud_actividad' :--}%
                                 %{--reforma.tipoSolicitud == 'P' ? 'solicitud_partida' :--}%
                                 %{--reforma.tipoSolicitud == 'I' ? 'solicitud_incremento' : ''}.pdf"/>--}%
-                                %{--<a href="${g.createLink(controller: 'pdf', action: 'pdfLink')}?url=${g.createLink(controller: "reportesReforma", action: accion, id: reforma.id)}&filename=${fileName}"--}%
+%{--                                <a href="${g.createLink(controller: 'pdf', action: 'pdfLink')}?url=${g.createLink(controller: "reportesReforma", action: accion, id: reforma.id)}&filename=${fileName}"--}%
                                 %{--class="btn btn-sm btn-info btnVer" title="Solicitud">--}%
                                 %{--<i class="fa fa-sign-in"></i> Solicitud--}%
                                 %{--</a>--}%
