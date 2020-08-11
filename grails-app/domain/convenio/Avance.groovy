@@ -1,11 +1,15 @@
 package convenio
 
-class Avance {
+import audita.Auditable
+
+class Avance implements Auditable {
 
     InformeAvance informeAvance
     Plan plan
     String descripcion
     double valor
+
+    static auditable = true
 
     static mapping = {
         table 'avnc'

@@ -1,12 +1,15 @@
 package convenio
 
+import audita.Auditable
 import parametros.proyectos.Fuente
 
-class FinanciamientoPlan {
+class FinanciamientoPlan implements Auditable {
 
     Plan plan
     Fuente fuente
     double valor
+
+    static auditable = true
 
     static mapping = {
         table 'fnpl'

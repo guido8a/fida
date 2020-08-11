@@ -1,10 +1,12 @@
 package modificaciones
 
+import audita.Auditable
+
 /*Tipo de reforma al POA de inversiones y de gasto permanente.*/
 /**
  *  discrimina que pantalla mostrar al registro de reformas: asignación, actividad, partida, incremento_techo.
  */
-class TipoReforma   {
+class TipoReforma  implements Auditable {
     /**
      * Código del tipo de reforma
      */
@@ -17,7 +19,7 @@ class TipoReforma   {
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
-    static auditable = [ignore: []]
+    static auditable = true
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos

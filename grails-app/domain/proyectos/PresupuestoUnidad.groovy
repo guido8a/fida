@@ -1,12 +1,13 @@
 package proyectos
 
+import audita.Auditable
 import parametros.Anio
 import seguridad.UnidadEjecutora
 
 /**
  * Clase para conectar con la tabla 'prue' de la base de datos
  */
-class PresupuestoUnidad {
+class PresupuestoUnidad implements Auditable{
     /**
      * Unidad ejecutora del presupuesto
      */
@@ -43,7 +44,7 @@ class PresupuestoUnidad {
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
-    static auditable = [ignore: []]
+    static auditable = true
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos

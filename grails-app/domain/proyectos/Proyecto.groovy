@@ -1,5 +1,6 @@
 package proyectos
 
+import audita.Auditable
 import parametros.Anio
 //import seguridad.UnidadEjecutora
 
@@ -7,7 +8,7 @@ import parametros.Anio
 /**
  * Clase para conectar con la tabla 'proy' de la base de datos
  */
-class Proyecto {
+class Proyecto implements Auditable{
     /**
      * Unidad ejecutora del proyecto
      */

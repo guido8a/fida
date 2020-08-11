@@ -1,9 +1,13 @@
 package proyectos
 
-class MedioVerificacion implements Serializable {
+import audita.Auditable
+
+class MedioVerificacion implements Auditable {
+
     Indicador indicador
     String descripcion
-    static auditable=true
+    static auditable = true
+
     static mapping = {
         table 'mdvf'
         cache usage:'read-write', include:'non-lazy'

@@ -1,15 +1,17 @@
 package convenio
 
+import audita.Auditable
 import seguridad.Persona
 
-class AdministradorConvenio {
+class AdministradorConvenio implements Auditable {
 
-    static auditable = true
     Persona persona
     Convenio convenio
     Date fechaInicio
     Date fechaFin
     String observaciones
+
+    static auditable = true
 
     static mapping = {
         table 'adcv'

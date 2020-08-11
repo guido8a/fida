@@ -1,5 +1,6 @@
 package poa
 
+import audita.Auditable
 import parametros.Anio
 import parametros.proyectos.Fuente
 import proyectos.MarcoLogico
@@ -9,7 +10,7 @@ import seguridad.UnidadEjecutora
 /**
  * Clase para conectar con la tabla 'asgn' de la base de datos
  */
-class Asignacion {
+class Asignacion implements Auditable{
     /**
      * Año de la asignación
      */
@@ -53,7 +54,7 @@ class Asignacion {
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
-    static auditable = [ignore: []]
+    static auditable = true
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */

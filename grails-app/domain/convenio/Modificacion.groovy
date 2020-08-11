@@ -1,7 +1,9 @@
 package convenio
 
+import audita.Auditable
 
-class Modificacion {
+
+class Modificacion implements Auditable {
 
     Plan plan
     Date fechaModificacion
@@ -10,6 +12,8 @@ class Modificacion {
     double costo
     Date fechaInicio
     Date fechaFin
+
+    static auditable = true
 
     static mapping = {
         table 'mdcv'

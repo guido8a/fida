@@ -1,5 +1,6 @@
 package proyectos
 
+import audita.Auditable
 import parametros.proyectos.TipoElemento
 import parametros.Anio
 //import poa.Asignacion
@@ -10,7 +11,7 @@ import parametros.Anio
  * Clase para conectar con la tabla 'mrlg' de la base de datos<br/>
  * Marco lógico con cada uno de sus componentes
  */
-class MarcoLogico {
+class MarcoLogico implements Auditable{
     /**
      * Proyecto del marco lógico
      */

@@ -1,11 +1,15 @@
 package convenio
 
-class TipoProcesoComprasPublicas {
+import audita.Auditable
+
+class TipoProcesoComprasPublicas implements Auditable {
 
     String descripcion
     Double base
     String sigla
     Double techo
+
+    static auditable = true
 
     static mapping = {
         table 'tppc'

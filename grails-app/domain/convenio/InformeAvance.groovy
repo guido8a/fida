@@ -1,13 +1,17 @@
 package convenio
 
+import audita.Auditable
 
-class InformeAvance {
+
+class InformeAvance implements Auditable {
 
     AdministradorConvenio administradorConvenio
     Date fecha
     String informeAvance
     String dificultadesAvance
     int porcentaje
+
+    static auditable = true
 
     static mapping = {
         table 'info'

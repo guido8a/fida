@@ -1,10 +1,13 @@
 package poa
+
+import audita.Auditable
+
 /*Presupuesto techo para elaborar la proforma presupuestaria.*/
 /**
  * Clase para conectar con la tabla 'prsp' de la base de datos<br/>
  * Presupuesto techo para elaborar la proforma presupuestaria
  */
-class Presupuesto {
+class Presupuesto implements Auditable {
     /**
      * Presupuesto padre del presupuesto actual
      */
@@ -29,7 +32,7 @@ class Presupuesto {
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
-    static auditable = false
+    static auditable = true
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */

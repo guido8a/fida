@@ -1,11 +1,14 @@
 package proyectos
 
-class Supuesto implements Serializable {
+import audita.Auditable
+
+class Supuesto implements Auditable {
 
     MarcoLogico marcoLogico
     String descripcion
 
     static auditable = true
+
     static mapping = {
         table 'spst'
         cache usage:'read-write', include:'non-lazy'

@@ -1,5 +1,6 @@
 package avales
 
+import audita.Auditable
 import poa.EstadoAval
 import seguridad.Firma
 import seguridad.Persona
@@ -9,7 +10,7 @@ import seguridad.UnidadEjecutora
 /**
  * Clase para conectar con la tabla 'slav' de la base de datos
  */
-class SolicitudAval {
+class SolicitudAval  implements Auditable {
     /**
      * Proceso de la solicitud de aval
      */
@@ -97,6 +98,9 @@ class SolicitudAval {
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
+
+    static auditable = true
+
     static mapping = {
         table 'slav'
         cache usage: 'read-write', include: 'non-lazy'

@@ -1,10 +1,14 @@
 package convenio
 
-class CodigoComprasPublicas {
+import audita.Auditable
+
+class CodigoComprasPublicas implements Auditable {
 
     String numero
     String descripcion
     Date fecha
+
+    static auditable = true
 
     static mapping = {
         table 'cpac'

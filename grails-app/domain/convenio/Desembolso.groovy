@@ -1,14 +1,17 @@
 package convenio
 
+import audita.Auditable
 import proyectos.Documento
 
-class Desembolso {
+class Desembolso implements Auditable {
 
     Plan plan
     Documento documento
     String descripcion
     double valor
     Date fecha
+
+    static auditable = true
 
     static mapping = {
         table 'dsmb'

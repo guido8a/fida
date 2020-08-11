@@ -1,12 +1,16 @@
 package convenio
 
-class Periodo {
+import audita.Auditable
+
+class Periodo implements Auditable {
 
     int numero
     Date fechaInicio
     Date fechaFin
     double valor
     String tipo
+
+    static auditable = true
 
     static mapping = {
         table 'prdo'

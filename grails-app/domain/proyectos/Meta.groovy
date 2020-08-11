@@ -1,5 +1,6 @@
 package proyectos
 
+import audita.Auditable
 import parametros.proyectos.IndicadorOrms
 import parametros.proyectos.Unidad
 import geografia.Parroquia
@@ -9,7 +10,7 @@ import geografia.Parroquia
  * Clase para conectar con la tabla 'meta' de la base de datos<br/>
  * Para cada componente se determinan las metas desagregadas conforme al marco lógico.
  */
-class Meta {
+class Meta implements Auditable{
     /**
      * Unidad a la cual pertenece la meta
      */
@@ -38,7 +39,7 @@ class Meta {
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
-    static auditable = [ignore: []]
+    static auditable = true
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos

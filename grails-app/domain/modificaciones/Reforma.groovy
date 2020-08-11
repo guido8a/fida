@@ -1,12 +1,13 @@
 package modificaciones
 
+import audita.Auditable
 import poa.EstadoAval
 import parametros.Anio
 import seguridad.Firma
 import seguridad.Persona
 
 
-class Reforma {
+class Reforma implements Auditable {
 
     /**
      * El año del POA
@@ -88,7 +89,7 @@ class Reforma {
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
-    static auditable = [ignore: []]
+    static auditable = true
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos

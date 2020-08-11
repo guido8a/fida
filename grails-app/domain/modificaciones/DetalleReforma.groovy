@@ -1,5 +1,6 @@
 package modificaciones
 
+import audita.Auditable
 import parametros.Anio
 import parametros.proyectos.Fuente
 import poa.Asignacion
@@ -7,7 +8,7 @@ import poa.Presupuesto
 import proyectos.MarcoLogico
 import seguridad.UnidadEjecutora
 
-class DetalleReforma {
+class DetalleReforma implements Auditable {
 
     /**
      * Reforma a la que pertenece el detalle
@@ -74,7 +75,7 @@ class DetalleReforma {
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
-    static auditable = [ignore: []]
+    static auditable = true
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos

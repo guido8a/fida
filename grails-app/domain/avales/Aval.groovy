@@ -1,5 +1,6 @@
 package avales
 
+import audita.Auditable
 import hitos.AvanceFinanciero
 import poa.EstadoAval
 import proyectos.Proyecto
@@ -9,7 +10,7 @@ import seguridad.Persona
 /**
  * Clase para conectar con la tabla 'aval' de la base de datos
  */
-class Aval {
+class Aval implements Auditable {
     /**
      * Estado del aval
      */
@@ -86,6 +87,9 @@ class Aval {
      * Path del documento de respaldo de liberación del aval
      */
     String pathLiberacion
+
+    static auditable = true
+
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */

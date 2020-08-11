@@ -1,11 +1,14 @@
 package seguridad
 
-class Permiso {
+import audita.Auditable
+
+class Permiso implements Auditable {
     static auditable = true
 
     String codigo
     String descripcion
     String texto
+
     static mapping = {
         table 'perm'
         cache usage: 'read-write', include: 'non-lazy'

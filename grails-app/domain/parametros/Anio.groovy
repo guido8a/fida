@@ -1,11 +1,14 @@
 package parametros
+
+import audita.Auditable
+
 /*Año al cual corresponde el PAPP, cada año debe iniciarse una nueva gestión de proyectos. Es similar al período contable o año fiscal.*/
 /**
  * Clase para conectar con la tabla 'anio' de la base de datos<br/>
  * Año al cual corresponde el PAPP, cada a&ntildeo debe iniciarse una nueva
  * gestión de proyectos. Es similar al periodo contable o año fiscal
  */
-class Anio {
+class Anio implements Auditable {
     /**
      * Número de año
      */
@@ -22,7 +25,7 @@ class Anio {
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
-    static auditable = [ignore: []]
+    static auditable = true
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos

@@ -1,9 +1,11 @@
 package poa
 
+import audita.Auditable
+
 /**
  * Clase para conectar con la tabla 'edav' de la base de datos
  */
-class EstadoAval {
+class EstadoAval implements Auditable {
     /**
      * Descripción del estado del aval
      */
@@ -16,6 +18,8 @@ class EstadoAval {
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
+    static auditable = true
+
     static mapping = {
 //        table 'edav'
         table 'edav'

@@ -1,5 +1,6 @@
 package proyectos
 
+import audita.Auditable
 import parametros.Anio
 import parametros.proyectos.Fuente
 
@@ -9,7 +10,7 @@ import parametros.proyectos.Fuente
  * Clase para conectar con la tabla 'fina' de la base de datos<br/>
  * Financiamiento del proyecto por fuente y año
  */
-class Financiamiento   {
+class Financiamiento implements Auditable  {
     /**
      * Año del financiamiento
      */
@@ -30,8 +31,7 @@ class Financiamiento   {
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
-    static auditable = [ignore: []]
-
+    static auditable = true
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */

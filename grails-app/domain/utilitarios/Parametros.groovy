@@ -1,6 +1,8 @@
 package utilitarios
 
-class Parametros {
+import audita.Auditable
+
+class Parametros implements Auditable {
     static auditable = true
 
     String imagenes

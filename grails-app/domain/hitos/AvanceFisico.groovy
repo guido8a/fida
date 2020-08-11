@@ -1,9 +1,10 @@
 package hitos
 
+import audita.Auditable
 import avales.Aval
 import avales.ProcesoAval
 
-class AvanceFisico {
+class AvanceFisico implements Auditable {
 
     Aval aval
     /*
@@ -38,6 +39,9 @@ class AvanceFisico {
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
      */
+
+    static auditable = true
+
     static mapping = {
         table 'avfs'
         cache usage: 'read-write', include: 'non-lazy'

@@ -5,7 +5,7 @@ import geografia.Comunidad
 import geografia.Parroquia
 import seguridad.UnidadEjecutora
 
-class PersonaTaller implements Auditable{
+class PersonaTaller implements Auditable {
 
     Parroquia parroquia
     Comunidad comunidad

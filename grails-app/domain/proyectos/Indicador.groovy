@@ -1,14 +1,15 @@
 package proyectos
 
+import audita.Auditable
 import parametros.proyectos.IndicadorOrms
 
-class Indicador implements Serializable {
+class Indicador implements Auditable {
     MarcoLogico marcoLogico
     IndicadorOrms indicadorOrms
     String descripcion
     double cantidad
 
-    static auditable=[ignore:[]]
+    static auditable = true
     static mapping = {
         table 'indi'
         cache usage:'read-write', include:'non-lazy'

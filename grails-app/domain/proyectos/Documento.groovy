@@ -1,5 +1,6 @@
 package proyectos
 
+import audita.Auditable
 import convenio.Convenio
 import parametros.proyectos.GrupoProcesos
 
@@ -11,7 +12,7 @@ Se usará preferentemente formato pdf, pero pueden incluirse otros formatos aunq
  * Esta comprende el archivo de proyecto o el archivo de casos de proyecto.
  * Se usará preferentemente formato pdf, pero pueden incluirse otros formatos aunque no puedan ser visualizados desde el sistema.
  */
-class Documento {
+class Documento implements Auditable {
     /**
      * Proyecto al cual pertenece el documento
      */

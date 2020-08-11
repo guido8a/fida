@@ -5,7 +5,7 @@ import geografia.Comunidad
 import geografia.Parroquia
 import seguridad.UnidadEjecutora
 
-class Taller implements Auditable{
+class Taller implements Auditable {
 
     Parroquia parroquia
     Comunidad comunidad

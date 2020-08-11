@@ -1,5 +1,6 @@
 package proyectos
 
+import audita.Auditable
 import parametros.Anio
 import parametros.Mes
 import parametros.proyectos.Fuente
@@ -11,7 +12,7 @@ import poa.Presupuesto
  * Clase para conectar con la tabla 'crng' de la base de datos<br/>
  * El cronograma valorado se registra por actividades del marco lógico, por año, mes y fuente de financiamiento
  */
-class Cronograma   {
+class Cronograma implements Auditable  {
     /**
      * Mes del cronograma
      */
@@ -52,7 +53,7 @@ class Cronograma   {
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
-    static auditable = [ignore: []]
+    static auditable = true
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos

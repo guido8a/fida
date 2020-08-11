@@ -1,5 +1,6 @@
 package avales
 
+import audita.Auditable
 import hitos.AvanceAvance
 import hitos.AvanceFisico
 import proyectos.Proyecto
@@ -9,7 +10,7 @@ import seguridad.Persona
 /**
  * Clase para conectar con la tabla 'alertas' de la base de datos
  */
-class ProcesoAval {
+class ProcesoAval implements Auditable {
     /**
      * Proyecto del proceso
      */
@@ -32,6 +33,8 @@ class ProcesoAval {
     int informar = 0
 
     Persona usuario
+
+    static auditable = true
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos

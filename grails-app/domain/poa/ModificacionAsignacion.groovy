@@ -1,5 +1,6 @@
 package poa
 
+import audita.Auditable
 import modificaciones.DetalleReforma
 import seguridad.Firma
 import seguridad.Persona
@@ -12,7 +13,7 @@ import seguridad.UnidadEjecutora
  * La modificación de la asignación presupuestaria se refiere a la redistribución del valor asignado
  * lo cual implica además una reprogramación
  */
-class ModificacionAsignacion {
+class ModificacionAsignacion implements Auditable {
     /**
      * Asignación que envía
      */
@@ -81,7 +82,7 @@ class ModificacionAsignacion {
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
-    static auditable = [ignore: []]
+    static auditable = true
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos

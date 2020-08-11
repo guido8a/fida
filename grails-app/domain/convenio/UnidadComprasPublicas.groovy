@@ -1,9 +1,13 @@
 package convenio
 
-class UnidadComprasPublicas {
+import audita.Auditable
+
+class UnidadComprasPublicas implements Auditable {
 
     String codigo
     String descripcion
+
+    static auditable = true
 
     static mapping = {
         table 'uncp'

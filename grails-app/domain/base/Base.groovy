@@ -1,8 +1,9 @@
 package base
 
+import audita.Auditable
 import seguridad.Persona
 
-class Base {
+class Base  implements Auditable {
     Persona persona
     Tema tema
     Date fecha
@@ -13,6 +14,7 @@ class Base {
     String referencia
     String observacion
 
+    static auditable = true
 
     static mapping = {
         table 'base'

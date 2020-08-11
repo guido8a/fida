@@ -1,11 +1,12 @@
 package avales
 
+import audita.Auditable
 import poa.EstadoAval
 import seguridad.Firma
 import seguridad.Persona
 
 
-class AvalCorriente {
+class AvalCorriente implements Auditable {
 
 
     /**
@@ -136,6 +137,9 @@ class AvalCorriente {
      * Firma del gerente para la anulacion
      */
     Firma firmaAnulacion2
+
+    static auditable = true
+
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos

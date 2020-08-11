@@ -1,8 +1,9 @@
 package convenio
 
+import audita.Auditable
 import proyectos.MarcoLogico
 
-class Plan {
+class Plan implements Auditable {
 
     Convenio convenio
     MarcoLogico marcoLogico
@@ -16,6 +17,7 @@ class Plan {
     double ejecutado
     String estado
 
+    static auditable = true
 
     static mapping = {
         table 'plan'

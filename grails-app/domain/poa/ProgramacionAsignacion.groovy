@@ -1,5 +1,6 @@
 package poa
 
+import audita.Auditable
 import parametros.Mes
 import proyectos.Cronograma
 
@@ -9,7 +10,7 @@ import proyectos.Cronograma
  * Clase para conectar con la tabla 'pras' de la base de datos<br/>
  * Programación de la asignación presupuestaria por cuatrimestres.
  */
-class ProgramacionAsignacion {
+class ProgramacionAsignacion implements Auditable {
     Asignacion asignacion
     Mes mes
     Cronograma cronograma
@@ -19,7 +20,7 @@ class ProgramacionAsignacion {
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
      */
-    static auditable = [ignore: []]
+    static auditable = true
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos

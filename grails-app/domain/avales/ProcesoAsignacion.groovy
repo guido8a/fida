@@ -1,12 +1,13 @@
 package avales
 
+import audita.Auditable
 import poa.Asignacion
 
 
 /**
  * Clase para conectar con la tabla 'poas' de la base de datos
  */
-class ProcesoAsignacion {
+class ProcesoAsignacion implements Auditable {
     /**
      * Proceso
      */
@@ -31,6 +32,8 @@ class ProcesoAsignacion {
      * Liberado
      */
     double liberado
+
+    static auditable = true
 
     /**
      * Define el mapeo entre los campos del dominio y las columnas de la base de datos
