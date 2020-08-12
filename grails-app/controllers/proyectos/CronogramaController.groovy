@@ -78,7 +78,7 @@ class CronogramaController {
         def editable = (anio.estado == 0) && (proyecto?.aprobado != 'a')
         println "anio: ${anio.id}, proyecto.aprobado ${proyecto.aprobado} --> editable: ${editable}"
 
-        if (editable) {
+//        if (editable) {
             def finan = Financiamiento.findAllByProyectoAndAnio(proyecto, anio)
             def fuentes = []
             def totAnios = [:]
@@ -89,11 +89,14 @@ class CronogramaController {
                 totAnios.put(it.fuente.id, it.monto)
             }
             def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
-            println "proyecto: $proyecto, componentes: $componentes, anio: $anio, fuentes: $fuentes, totAnios: $totAnios, actSel: $act, campos: $campos"
-            return [proyecto: proyecto, componentes: componentes, anio: anio, fuentes: fuentes, totAnios: totAnios, actSel: act, campos: campos]
-        } else {
-            redirect(action: 'show', params: params)
-        }
+//            println "proyecto: $proyecto, componentes: $componentes, anio: $anio, fuentes: $fuentes, totAnios: $totAnios, actSel: $act, campos: $campos"
+            println "perfil: ${session.perfil.codigo}, aprobado: ${proyecto.aprobado}"
+
+            return [proyecto: proyecto, componentes: componentes, anio: anio, fuentes: fuentes,
+                    totAnios: totAnios, actSel: act, campos: campos, editable: (editable && session.perfil.codigo == 'ASPL')]
+//        } else {
+//            redirect(action: 'show', params: params)
+//        }
     }
 
     /**

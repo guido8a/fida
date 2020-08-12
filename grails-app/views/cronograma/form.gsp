@@ -6,12 +6,6 @@
 
     <script type="text/javascript" src="${resource(dir: 'js/plugins/jquery-get-input-type', file: 'jquery.get-input-type.min.js')}"></script>
 
-    %{--<link rel="stylesheet" type="text/css" href="${resource(dir: 'js/plugins/DataTables-1.10.4/media/css', file: 'jquery.dataTables.min.css')}">--}%
-    %{--<script type="text/javascript" charset="utf8" src="${resource(dir: 'js/plugins/DataTables-1.10.4/media/js', file: 'jquery.dataTables.min.js')}"></script>--}%
-
-    %{--<script src="${resource(dir: 'js/plugins/fixed-header-table-1.3', file: 'jquery.fixedheadertable.js')}"></script>--}%
-    %{--<link rel="stylesheet" type="text/css" href="${resource(dir: 'js/plugins/fixed-header-table-1.3/css', file: 'defaultTheme.css')}"/>--}%
-
     <style type="text/css">
     table {
         font-size : 9pt;
@@ -58,9 +52,11 @@
     </div>
 
     <div class="btn-group">
+        <g:if test="${editable}">
         <a href="#" class="btn btn-sm btn-default" id="btnGenerar">
             <i class="fa fa-briefcase"></i> Generar asignaciones del proyecto
         </a>
+        </g:if>
         <g:link controller="asignacion" action="asignacionProyectov2" id="${proyecto.id}" class="btn btn-sm btn-default">
             <i class="fa fa-dollar-sign"></i> Asignaciones
         </g:link>
@@ -86,8 +82,8 @@
 </div>
 
 <elm:container tipo="vertical" titulo="Cronograma" color="black">
+
 %{--
-    <g:if test="${!params.act}">
         <div class="divIndice ">
             <g:each in="${componentes}" var="comp">
                 <a href="#comp${comp.id}" class="scrollComp ">
@@ -96,107 +92,12 @@
                 </a>
             </g:each>
         </div>
-    </g:if>
 --}%
 
     <div class="divTabla">
-        <g:render template="/templates/tablaCrono"
-                  model="[anio: anio, componentes: componentes, actSel: actSel]"/>
+        <g:render template="/templates/tablaCrono" model="[anio: anio, componentes: componentes, actSel: false]"/>
     </div>
 </elm:container>
-%{--<div class="modal fade" id="modalCrono">--}%
-%{--    <div class="modal-dialog">--}%
-%{--        <div class="modal-content">--}%
-%{--            <div class="modal-header">--}%
-%{--                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>--}%
-%{--                </button>--}%
-%{--                <h4 class="modal-title" id="modalTitle">Cronograma</h4>--}%
-%{--            </div>--}%
-
-%{--            <div class="modal-body">--}%
-%{--                <div id="noFuentes" class="alert alert-danger ${fuentes.size() == 0 ? '' : 'hidden'}">--}%
-%{--                    <span class="fa-stack fa-lg">--}%
-%{--                        <i class="fa fa-money text-success fa-stack-1x"></i>--}%
-%{--                        <i class="fa fa-ban fa-stack-2x"></i>--}%
-%{--                    </span> No se encontraron fuentes! Debe asignar al menos una para poder modificar el cronograma.--}%
-%{--                </div>--}%
-
-%{--                <div id="divOk" class="${fuentes.size() == 0 ? 'hidden' : ''}">--}%
-%{--                    <div class="alert alert-info">--}%
-%{--                        <div id="divActividad"></div>--}%
-
-%{--                        <div id="divInfo" class="text-warning"></div>--}%
-%{--                    </div>--}%
-
-%{--                    <g:form action="save_ajax" class="form-horizontal frmCrono" style="height: 300px; overflow:auto;">--}%
-%{--                        <elm:fieldRapido label="Presupuesto (1)" claseLabel="col-md-3" claseField="col-md-4">--}%
-%{--                            <div class="input-group input-group-sm">--}%
-%{--                                <g:textField name="presupuesto1" class="form-control required number money"/>--}%
-%{--                                <span class="input-group-addon"><i class="fa fa-usd"></i></span>--}%
-%{--                            </div>--}%
-%{--                        </elm:fieldRapido>--}%
-%{--                        <elm:fieldRapido label="Partida (1)" claseLabel="col-md-3" claseField="col-md-4">--}%
-%{--                            <bsc:buscador name="partida1" id="partida1" controlador="asignacion"--}%
-%{--                                          accion="buscarPresupuesto" tipo="search" titulo="Busque una partida"--}%
-%{--                                          campos="${campos}" clase="required"/>--}%
-%{--                        </elm:fieldRapido>--}%
-%{--                        <elm:fieldRapido label="Fuente (1)" claseLabel="col-md-3" claseField="col-md-7">--}%
-%{--                            <elm:select name="fuente1" from="${fuentes}" id="fuente1"--}%
-%{--                                        optionKey="${{ it.fuente.id }}"--}%
-%{--                                        optionValue="${{--}%
-%{--                                            it.fuente.descripcion + ' (' + g.formatNumber(number: it.monto, type: 'currency') + ')'--}%
-%{--                                        }}"--}%
-%{--                                        optionClass="${{--}%
-%{--                                            g.formatNumber(number: it.monto, minFractionDigits: 2, maxFractionDigits: 8)--}%
-%{--                                        }}"--}%
-%{--                                        class="form-control input-sm"/>--}%
-%{--                        </elm:fieldRapido>--}%
-%{--                        <hr/>--}%
-%{--                        <elm:fieldRapido label="Presupuesto (2)" claseLabel="col-md-3" claseField="col-md-4">--}%
-%{--                            <div class="input-group input-group-sm">--}%
-%{--                                <g:textField name="presupuesto2" class="form-control number money"/>--}%
-%{--                                <span class="input-group-addon"><i class="fa fa-usd"></i></span>--}%
-%{--                            </div>--}%
-%{--                        </elm:fieldRapido>--}%
-%{--                        <elm:fieldRapido label="Partida (2)" claseLabel="col-md-3" claseField="col-md-4">--}%
-%{--                        --}%%{--<bsc:buscador name="partida2" id="partida2" controlador="asignacion"--}%
-%{--                        --}%%{--accion="buscarPresupuesto" tipo="search" titulo="Busque una partida"--}%
-%{--                        --}%%{--campos="${campos}" clase=""/>--}%
-%{--                            <span class="grupo">--}%
-%{--                                <div class="input-group input-group-sm" style="width:294px;">--}%
-%{--                                    <input type="text" class="form-control bsc_desc-2 buscador-2 " id="bsc-desc-partida2" name="bsc-desc-partida2">--}%
-%{--                                    <span class="input-group-btn">--}%
-%{--                                        <a href="#" id="btn-abrir-2" class="btn btn-info buscador-2" title="Buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>--}%
-%{--                                        </a>--}%
-%{--                                    </span>--}%
-%{--                                </div>--}%
-%{--                            </span>--}%
-%{--                            <input type="hidden" id="partida2" class="bsc_id " name="partida2" value="">--}%
-%{--                        </elm:fieldRapido>--}%
-%{--                        <elm:fieldRapido label="Fuente (2)" claseLabel="col-md-3" claseField="col-md-7">--}%
-%{--                            <elm:select name="fuente2" from="${fuentes}" id="fuente2"--}%
-%{--                                        optionKey="${{ it.fuente.id }}"--}%
-%{--                                        optionValue="${{--}%
-%{--                                            it.fuente.descripcion + ' (' + g.formatNumber(number: it.monto, type: 'currency') + ')'--}%
-%{--                                        }}"--}%
-%{--                                        optionClass="${{--}%
-%{--                                            g.formatNumber(number: it.monto, minFractionDigits: 2, maxFractionDigits: 8)--}%
-%{--                                        }}"--}%
-%{--                                        class="form-control input-sm"/>--}%
-%{--                        </elm:fieldRapido>--}%
-%{--                    </g:form>--}%
-%{--                </div>--}%
-%{--            </div>--}%
-
-%{--            <div class="modal-footer">--}%
-%{--                <a href="#" class="btn btn-default" id="btnModalCancel">${fuentes.size() == 0 ? 'Cerrar' : 'Cancelar'}</a>--}%
-%{--                <g:if test="${fuentes.size() > 0}">--}%
-%{--                    <a href="#" class="btn btn-success" id="btnModalSave"><i class="fa fa-save"></i> Guardar</a>--}%
-%{--                </g:if>--}%
-%{--            </div>--}%
-%{--        </div><!-- /.modal-content -->--}%
-%{--    </div><!-- /.modal-dialog -->--}%
-%{--</div><!-- /.modal -->--}%
 
 <div class="modal fade" id="modalCronoVer">
     <div class="modal-dialog">
@@ -380,6 +281,141 @@
 
     $(function () {
 
+        var editable = {};
+        var borrable = {};
+        var poneEdit = "${editable}"
+
+        %{--console.log('editable', "${editable}", poneEdit);--}%
+        if (poneEdit === 'true') {
+            // console.log('define editable');
+            editable = {
+                label  : "Editar",
+                icon   : "fa fa-edit text-info",
+                action : function ($element) {
+                    var id = $element.data("id");
+                    var $tr = $element.parents("tr");
+                    var index = $element.index() - 1;
+
+                    var $mes = $("#trMeses").children().eq(index);
+                    var mes = $mes.attr("title");
+                    // $('#modalCrono').modal("show");
+                    // $("#modalTitle").text("Cronograma - " + mes);
+
+                    // if (!$("#divOk").hasClass("hidden")) {
+                    var $actividad = $tr.find(".actividad");
+                    var $asignado = $tr.find(".asignado");
+                    var $sinAsignar = $tr.find(".sinAsignar");
+                    var $total = $tr.find(".total");
+                    //
+                    var actividad = $actividad.attr("title");
+                    var asignado = $asignado.data("val");
+                    var sinAsignar = $sinAsignar.data("val");
+                    var total = $total.data("val");
+
+                    var actividadId = $actividad.parent().data("id");
+                    var mesesId = $mes.data("id");
+
+                    $.ajax({
+                        type    : "POST",
+                        url     : "${createLink(controller: 'cronograma', action:'editarCrono_ajax')}",
+                        data    : {
+                            proyecto: '${proyecto?.id}',
+                            anio: '${anio?.id}',
+                            total: total,
+                            asignado: asignado,
+                            sinAsignar: sinAsignar,
+                            actividad: actividad,
+                            id: id
+                        },
+                        success : function (msg) {
+                            var b = bootbox.dialog({
+                                id    : "dlgCreateEditCrono",
+                                title : "Editar Cronograma",
+                                class : "modal-md",
+                                message : msg,
+                                buttons : {
+                                    cancelar : {
+                                        label     : "Cancelar",
+                                        className : "btn-primary",
+                                        callback  : function () {
+                                        }
+                                    },
+                                    guardar  : {
+                                        id        : "btnSave",
+                                        label     : "<i class='fa fa-save'></i> Guardar",
+                                        className : "btn-success",
+                                        callback  : function () {
+                                            guardarCronograma(mesesId,actividadId);
+                                            return false;
+                                        } //callback
+                                    } //guardar
+                                } //buttons
+                            }); //dialog
+                        } //success
+                    }); //ajax
+                }
+            }
+
+            borrable = {
+                label            : "Eliminar",
+                    icon             : "fa fa-trash text-danger",
+                    separator_before : true,
+                    action           : function ($element) {
+                    var id = $element.data("id");
+
+                    bootbox.dialog({
+                        title   : "Alerta",
+                        message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
+                            "¿Está seguro que desea eliminar toda la información del registro del cronograma seleccionado?<br/>" +
+                            "Esta acción no se puede deshacer.</p>",
+                        buttons : {
+                            cancelar : {
+                                label     : "Cancelar",
+                                className : "btn-primary",
+                                callback  : function () {
+                                }
+                            },
+                            eliminar : {
+                                label     : "<i class='fa fa-trash-o'></i> Eliminar",
+                                className : "btn-danger",
+                                callback  : function () {
+                                    openLoader("Eliminando valores");
+                                    $.ajax({
+                                        type    : "POST",
+                                        url     : '${createLink(action:'deleteCrono_ajax')}',
+                                        data    : {
+                                            id : id
+                                        },
+                                        success : function (msg) {
+                                            var parts = msg.split("*");
+                                            log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
+                                            if (parts[0] == "SUCCESS") {
+                                                setTimeout(function () {
+                                                    location.reload(true);
+                                                }, 1000);
+                                            } else {
+                                                closeLoader();
+                                            }
+                                        },
+                                        error   : function () {
+                                            closeLoader();
+                                            log("Ha ocurrido un error interno", "error");
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
+        } else {
+            // console.log('anula editable');
+            editable = {}
+            borrable = {}
+        }
+
+
         $(".comp").each(function () {
             var id = $(this).attr("id");
             var actividades = $(".act." + id);
@@ -559,148 +595,9 @@
                         setDivs($element);
                     }
                 },
-                editar   : {
-                    label  : "Editar",
-                    icon   : "fa fa-edit text-info",
-                    action : function ($element) {
-                        var id = $element.data("id");
-                        var $tr = $element.parents("tr");
-                        var index = $element.index() - 1;
-
-                        var $mes = $("#trMeses").children().eq(index);
-                        var mes = $mes.attr("title");
-                        // $('#modalCrono').modal("show");
-                        // $("#modalTitle").text("Cronograma - " + mes);
-
-                        // if (!$("#divOk").hasClass("hidden")) {
-                        var $actividad = $tr.find(".actividad");
-                        var $asignado = $tr.find(".asignado");
-                        var $sinAsignar = $tr.find(".sinAsignar");
-                        var $total = $tr.find(".total");
-                        //
-                        var actividad = $actividad.attr("title");
-                        var asignado = $asignado.data("val");
-                        var sinAsignar = $sinAsignar.data("val");
-                        var total = $total.data("val");
-
-                        var actividadId = $actividad.parent().data("id");
-                        var mesesId = $mes.data("id");
-
-                          //     $("#divActividad").text(actividad);
-                        //     $("#divInfo").html("<ul>" +
-                        //         "<li><strong>Monto total:</strong> $" + number_format(total, 2, ".", ",") + "</li>" +
-                        //         "<li><strong>Asignado:</strong> $" + number_format(asignado, 2, ".", ",") + "</li>" +
-                        //         "<li><strong>Por asignar:</strong> $" + number_format(sinAsignar, 2, ".", ",") + "</li>" +
-                        //         "</ul>").data({
-                        //         total      : total,
-                        //         asignado   : asignado,
-                        //         sinAsignar : sinAsignar,
-                        //         crono      : id,
-                        //         mes        : $mes.data("id"),
-                        //         actividad  : $tr.data("id")
-                        //     });
-                        //     $(".frmCrono").removeClass("hidden");
-                        //     $("#btnModalSave").removeClass("hidden");
-                        //     $("#btnModalCancel").text("Cancelar");
-                        //     setForm($element);
-                        // }
-
-                        $.ajax({
-                            type    : "POST",
-                            url     : "${createLink(controller: 'cronograma', action:'editarCrono_ajax')}",
-                            data    : {
-                                proyecto: '${proyecto?.id}',
-                                anio: '${anio?.id}',
-                                total: total,
-                                asignado: asignado,
-                                sinAsignar: sinAsignar,
-                                actividad: actividad,
-                                id: id
-                            },
-                            success : function (msg) {
-                                var b = bootbox.dialog({
-                                    id    : "dlgCreateEditCrono",
-                                    title : "Editar Cronograma",
-                                    class : "modal-md",
-                                    message : msg,
-                                    buttons : {
-                                        cancelar : {
-                                            label     : "Cancelar",
-                                            className : "btn-primary",
-                                            callback  : function () {
-                                            }
-                                        },
-                                        guardar  : {
-                                            id        : "btnSave",
-                                            label     : "<i class='fa fa-save'></i> Guardar",
-                                            className : "btn-success",
-                                            callback  : function () {
-                                                guardarCronograma(mesesId,actividadId);
-                                                return false;
-                                            } //callback
-                                        } //guardar
-                                    } //buttons
-                                }); //dialog
-                                // setTimeout(function () {
-                                //     b.find(".form-control").first().focus()
-                                // }, 500);
-                            } //success
-                        }); //ajax
-                    }
-                },
-                eliminar : {
-                    label            : "Eliminar",
-                    icon             : "fa fa-trash text-danger",
-                    separator_before : true,
-                    action           : function ($element) {
-                        var id = $element.data("id");
-
-                        bootbox.dialog({
-                            title   : "Alerta",
-                            message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
-                                "¿Está seguro que desea eliminar toda la información del registro del cronograma seleccionado?<br/>" +
-                                "Esta acción no se puede deshacer.</p>",
-                            buttons : {
-                                cancelar : {
-                                    label     : "Cancelar",
-                                    className : "btn-primary",
-                                    callback  : function () {
-                                    }
-                                },
-                                eliminar : {
-                                    label     : "<i class='fa fa-trash-o'></i> Eliminar",
-                                    className : "btn-danger",
-                                    callback  : function () {
-                                        openLoader("Eliminando valores");
-                                        $.ajax({
-                                            type    : "POST",
-                                            url     : '${createLink(action:'deleteCrono_ajax')}',
-                                            data    : {
-                                                id : id
-                                            },
-                                            success : function (msg) {
-                                                var parts = msg.split("*");
-                                                log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                                                if (parts[0] == "SUCCESS") {
-                                                    setTimeout(function () {
-                                                        location.reload(true);
-                                                    }, 1000);
-                                                } else {
-                                                    closeLoader();
-                                                }
-                                            },
-                                            error   : function () {
-                                                closeLoader();
-                                                log("Ha ocurrido un error interno", "error");
-                                            }
-                                        });
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }
-            },
+                editar: editable,
+                eliminar: borrable
+             },
             onShow : function ($element) {
                 $element.addClass("success");
             },
