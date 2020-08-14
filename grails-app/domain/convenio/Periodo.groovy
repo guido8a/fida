@@ -33,9 +33,9 @@ class Periodo implements Auditable {
     static constraints = {
         convenio(nullable: false, blank:false)
         numero(nullable: false, blank: false)
-        fechaInicio(nullable: false, blank: false)
-        fechaFin(nullable: false, blank: false)
-        valor(nullable: false, blank: false)
-        tipo(size: 1, nullable: false, blank: false)
+        fechaInicio(nullable: true, blank: true)
+        fechaFin(nullable: true, blank: true)
+        valor(nullable: true, blank: true)
+        tipo(nullable: true, blank: true)
     }
 }

@@ -18,7 +18,7 @@ class PlanPeriodo {
             id column: 'plpr__id'
             plan column: 'plan__id'
             periodo column: 'prdo__id'
-            valor column: 'prdovlor'
+            valor column: 'plprvlor'
         }
     }
 

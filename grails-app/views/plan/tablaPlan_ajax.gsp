@@ -38,18 +38,18 @@
 %{--                ${comp.plancsto}--}%
                 <g:formatNumber number="${comp.plancsto}" type="currency" currencySymbol=""/>
             </th>
-                <th style="width: 6%; text-align: right">${comp.planms01}</th>
-                <th style="width: 6%; text-align: right">${comp.planms02}</th>
-                <th style="width: 6%; text-align: right">${comp.planms03}</th>
-                <th style="width: 6%; text-align: right">${comp.planms04}</th>
-                <th style="width: 6%; text-align: right">${comp.planms05}</th>
-                <th style="width: 6%; text-align: right">${comp.planms06}</th>
-                <th style="width: 6%; text-align: right">${comp.planms07}</th>
-                <th style="width: 6%; text-align: right">${comp.planms08}</th>
-                <th style="width: 6%; text-align: right">${comp.planms09}</th>
-                <th style="width: 6%; text-align: right">${comp.planms10}</th>
-                <th style="width: 6%; text-align: right">${comp.planms11}</th>
-                <th style="width: 6%; text-align: right">${comp.planms12}</th>
+                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${1}">${comp.planms01}</th>
+                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${2}">${comp.planms02}</th>
+                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${3}">${comp.planms03}</th>
+                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${4}">${comp.planms04}</th>
+                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${5}">${comp.planms05}</th>
+                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${6}">${comp.planms06}</th>
+                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${7}">${comp.planms07}</th>
+                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${8}">${comp.planms08}</th>
+                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${9}">${comp.planms09}</th>
+                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${10}">${comp.planms10}</th>
+                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${11}">${comp.planms11}</th>
+                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${12}">${comp.planms12}</th>
 
             <th colspan="3" class="disabled text-right total nop" data-val="${totalAct}">
                 <g:formatNumber number="${comp.plantotl}" type="currency" currencySymbol=""/>
@@ -79,7 +79,7 @@
 
     $(function () {
 
-        $("tbody>tr").contextMenu({
+        $("tbody>tr>th").contextMenu({
             items: {
                 header: {
                     label: "Acciones",
@@ -117,8 +117,40 @@
                     label: "Editar",
                     icon: "fa fa-edit",
                     action: function ($element) {
-                        var id = $element.data("id");
-                        createEditPersonaTaller(id);
+                        var id = $element.data("plan");
+                        var per = $element.data("per");
+                        $.ajax({
+                            type: "POST",
+                            url: "${createLink(controller:'plan', action:'valor_ajax')}",
+                            data: {
+                                id: id,
+                                anio: '${anio}',
+                                periodo: per
+                            },
+                            success: function (msg) {
+                                bootbox.dialog({
+                                    title: "Editar valor del período",
+                                    message: msg,
+                                    class : "modal-sm",
+                                    buttons: {
+                                        cancel:{
+                                            label: "Cancelar",
+                                            className: "btn-primary",
+                                            callback: function () {
+                                            }
+                                        },
+                                        ok: {
+                                            label: "Aceptar",
+                                            className: "btn-success",
+                                            callback: function () {
+                                                var valor = $("#valorPeriodo").val();
+                                                guardarValorPeriodo(id, per, '${anio}', valor)
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        });
                     }
                 },
                 eliminar: {
@@ -138,6 +170,33 @@
                 $(".success").removeClass("success");
             }
         });
+
+
+        function guardarValorPeriodo(id,periodo,anio, valor){
+            $.ajax({
+                type: 'POST',
+                url:'${createLink(controller: 'plan', action: 'guardarValorPeriodo_ajax')}',
+                data:{
+                    plan: id,
+                    periodo: periodo,
+                    anio: anio,
+                    valor: valor
+                },
+                success: function(msg){
+                    if(msg == 'ok'){
+                        log("Valor guardado correctamente","success");
+                        setTimeout(function () {
+                            cargarTablaComponentes(${convenio?.id}, $("#plazo option:selected").val());
+                        }, 800);
+                    }else{
+                        log("Error al guardar el valor","error")
+                    }
+                }
+            })
+
+
+
+        }
 
 
 
