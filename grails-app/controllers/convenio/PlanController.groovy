@@ -21,7 +21,7 @@ class PlanController {
         }
 
         for(int i=1; plazoEntero >= i; i++ ){
-            combo << ["${i}":"Segmento ${i}"]
+            combo << ["${i}":"Año ${i}"]
         }
 
 //        println("--> " + combo)

@@ -19,27 +19,25 @@
 </div>
 
 
-<table class="table table-condensed table-bordered table-hover table-striped" id="tblCrono">
+<table class="table table-condensed table-bordered table-hover table-striped" id="tblCrono" style="width: 100%">
     <thead>
     <tr>
-        <th>Año</th>
+        <th style="width:10%">Seleccione el Año</th>
         <th colspan="16">
             <g:select from="${combo}" optionKey="key" optionValue="value" class="form-control input-sm"
-                      style="width: 150px; display: inline" name="plazo" id="plazo"/>
+                      style="width: 90px; display: inline" name="plazo" id="plazo"/>
         </th>
     </tr>
 
     <tr id="trMeses">
-        <th colspan="2" style="width:150px;">Componentes/Actividades</th>
-        <th colspan="2" style="width:300px;">Costo</th>
+        <th style="width: 15%">Componentes/Actividades</th>
+        <th style="width: 6%">Costo</th>
         <g:each in="${lista}" var="periodo">
-            <th style="width:100px;">
-                ${periodo}.
+            <th style="width:6%">
+                ${periodo}
             </th>
         </g:each>
-%{--        <th>Total<br/>Año</th>--}%
-%{--        <th>Sin<br/>asignar</th>--}%
-        <th>Total<br/>Asignado</th>
+        <th>Total Asignado</th>
     </tr>
     </thead>
 </table>
