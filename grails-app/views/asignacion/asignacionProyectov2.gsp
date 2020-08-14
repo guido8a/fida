@@ -23,12 +23,12 @@
                 <i class="fa fa-plus"></i> Agregar Asignaciones
             </g:link>
     --}%
-        <a class="btn btn-default btn-sm" id="reporte">
-            <i class="fa fa-print"></i> Reporte Asignaciones
-        </a>
-        <a class="btn btn-default btn-sm" id="reporte2">
-            <i class="fa fa-print"></i> Reporte Asignaciones planificado
-        </a>
+%{--        <a class="btn btn-default btn-sm" id="reporte">--}%
+%{--            <i class="fa fa-print"></i> Reporte Asignaciones--}%
+%{--        </a>--}%
+%{--        <a class="btn btn-default btn-sm" id="reporte2">--}%
+%{--            <i class="fa fa-print"></i> Reporte Asignaciones planificado--}%
+%{--        </a>--}%
     %{--<g:link class="btn btn-default btn-sm" controller="asignacion" action="asignacionProyectoUnidad" id="${proyecto?.id}">Reporte Unidad</g:link>--}%
         <g:if test="${actual?.estado == 1}">
         %{--<g:if test="${proyecto.aprobadoPoa == 'S'}">--}%

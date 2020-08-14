@@ -53,12 +53,12 @@
             <a href="#" id="btnAdministradorCon" class="btn btn-sm btn-info" title="Administrador del convenio">
                 <i class="fa fa-user"></i> Administrador
             </a>
-            <a href="#" id="btnEstado" class="btn btn-sm btn-info" title="Indicadores">
-                <i class="fa fa-scroll"></i> Indicadores
-            </a>
-            <a href="#" id="editMrlg" class="btn btn-sm btn-info" title="Ver registro">
-                <i class="fa fa-clipboard"></i> Plan de negocio solidario
-            </a>
+%{--            <a href="#" id="btnEstado" class="btn btn-sm btn-info" title="Indicadores">--}%
+%{--                <i class="fa fa-scroll"></i> Indicadores--}%
+%{--            </a>--}%
+%{--            <a href="#" id="editMrlg" class="btn btn-sm btn-info" title="Ver registro">--}%
+%{--                <i class="fa fa-clipboard"></i> Plan de negocio solidario--}%
+%{--            </a>--}%
         </g:if>
         <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"
            class="btn btn-sm btn-success" title="Consultar artículo">

@@ -46,8 +46,8 @@
 <!-- botones -->
 <div class="btn-toolbar toolbar">
     <div class="btn-group">
-        <g:link controller="proyecto" action="list" params="${params}" class="btn btn-sm btn-default">
-            <i class="fa fa-list"></i> Lista de proyectos
+        <g:link controller="proyecto" action="proy" params="${params}" class="btn btn-sm btn-default">
+            <i class="fa fa-arrow-left"></i> Proyecto
         </g:link>
     </div>
 
