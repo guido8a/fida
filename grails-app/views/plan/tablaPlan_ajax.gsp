@@ -7,9 +7,23 @@
 
 <table class="table table-condensed table-bordered table-hover table-striped" style="margin-top: -20px">
     <g:set var="itera" value=""/>
+    <g:set var="anterior" value=""/>
+    <g:set var="totalFinal" value="${0}"/>
     <g:each in="${componentes}" var="comp" status="j">
 
-%{--        hacer iterativo para varios componentes--}%
+    %{--        hacer iterativo para varios componentes--}%
+
+        <g:if test="${j != 0}">
+            <g:if test="${comp.comp__id !=  anterior}">
+                <tr class="warning total">
+                    <th colspan="14">TOTAL</th>
+                    <th class="text-right nop">
+                        <g:formatNumber number="${totalFinal}" type="currency" currencySymbol=""/>
+                    </th>
+                </tr>
+                <g:set var="totalFinal" value="${0}"/>
+            </g:if>
+        </g:if>
 
         <tr id="comp${comp.comp__id}" class="comp">
             <g:if test="${j == 0}">
@@ -35,43 +49,40 @@
                 ${(comp.actvdscr.length() > 100) ? comp.actvdscr.substring(0, 100) + "..." : comp.actvdscr}
             </th>
             <th class="success actividad" title="${comp.actvdscr}" style="width:6%; text-align: right">
-%{--                ${comp.plancsto}--}%
                 <g:formatNumber number="${comp.plancsto}" type="currency" currencySymbol=""/>
             </th>
-                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${1}">${comp.planms01}</th>
-                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${2}">${comp.planms02}</th>
-                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${3}">${comp.planms03}</th>
-                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${4}">${comp.planms04}</th>
-                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${5}">${comp.planms05}</th>
-                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${6}">${comp.planms06}</th>
-                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${7}">${comp.planms07}</th>
-                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${8}">${comp.planms08}</th>
-                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${9}">${comp.planms09}</th>
-                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${10}">${comp.planms10}</th>
-                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${11}">${comp.planms11}</th>
-                <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${12}">${comp.planms12}</th>
+            <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${1}">${comp.planms01}</th>
+            <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${2}">${comp.planms02}</th>
+            <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${3}">${comp.planms03}</th>
+            <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${4}">${comp.planms04}</th>
+            <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${5}">${comp.planms05}</th>
+            <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${6}">${comp.planms06}</th>
+            <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${7}">${comp.planms07}</th>
+            <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${8}">${comp.planms08}</th>
+            <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${9}">${comp.planms09}</th>
+            <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${10}">${comp.planms10}</th>
+            <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${11}">${comp.planms11}</th>
+            <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${12}">${comp.planms12}</th>
 
-            <th colspan="3" class="disabled text-right total nop" data-val="${totalAct}">
+            <th colspan="3" class="disabled text-right total nop">
                 <g:formatNumber number="${comp.plantotl}" type="currency" currencySymbol=""/>
             </th>
+
+            <g:set var="totalFinal" value="${totalFinal += comp.plantotl}"/>
         </tr>
 
-    </g:each>
+        <g:if test="${j+1 == tam}">
+            <tr class="warning total">
+                <th colspan="14">TOTAL</th>
+                <th class="text-right nop">
+                    <g:formatNumber number="${totalFinal}" type="currency" currencySymbol=""/>
+                </th>
+            </tr>
+        </g:if>
 
-    <tr class="warning total">
-        <th colspan="14">TOTAL</th>
-%{--
-        <th class="text-right nop">
-            <g:formatNumber number="${asignadoComp}" type="currency" currencySymbol=""/>
-        </th>
-        <th class="text-right nop">
-            <g:formatNumber number="${sinAsignarComp}" type="currency" currencySymbol=""/>
-        </th>
---}%
-        <th class="text-right nop">
-            <g:formatNumber number="${totalComp}" type="currency" currencySymbol=""/>
-        </th>
-    </tr>
+        <g:set var="anterior" value="${comp.comp__id}"/>
+        <g:set var="totalFinal" value="${totalFinal}"/>
+    </g:each>
 
 </table>
 
@@ -84,34 +95,6 @@
                 header: {
                     label: "Acciones",
                     header: true
-                },
-                ver: {
-                    label: "Ver",
-                    icon: "fa fa-search",
-                    action: function ($element) {
-                        var id = $element.data("id");
-                        $.ajax({
-                            type: "POST",
-                            url: "${createLink(controller:'personaTaller', action:'show_ajax')}",
-                            data: {
-                                id: id
-                            },
-                            success: function (msg) {
-                                bootbox.dialog({
-                                    title: "Ver Persona del taller",
-                                    message: msg,
-                                    buttons: {
-                                        ok: {
-                                            label: "Aceptar",
-                                            className: "btn-primary",
-                                            callback: function () {
-                                            }
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    }
                 },
                 editar: {
                     label: "Editar",
@@ -158,8 +141,9 @@
                     icon: "fa fa-trash",
                     separator_before: true,
                     action: function ($element) {
-                        var id = $element.data("id");
-                        boorarPersonaTaller(id);
+                        var id = $element.data("plan");
+                        var per = $element.data("per");
+                        guardarValorPeriodo(id, per, '${anio}', 0)
                     }
                 }
             },

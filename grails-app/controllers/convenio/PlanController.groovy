@@ -42,9 +42,11 @@ class PlanController {
         def cn = dbConnectionService.getConnection()
         def res = cn.rows(sql.toString())
 
+        def tam = res?.size()
+
 //        println("sql " + sql)
 
-        return [componentes: res, lista: listaPeriodos, anio: params.periodo, convenio: convenio]
+        return [componentes: res, lista: listaPeriodos, anio: params.periodo, convenio: convenio, tam: tam]
     }
 
 
@@ -63,24 +65,27 @@ class PlanController {
 
     def guardarValorPeriodo_ajax () {
 
-        println("params pax " + params)
+//        println("params pax " + params)
 
         def pl = Plan.get(params.plan)
         def periodoNumero = (params.anio == '1' ? params.periodo : params.periodo.toInteger() + ((params.anio.toInteger() - 1) * 12))
         def periodoId = Periodo.findByNumero(periodoNumero)
 
-        println("pn " + periodoNumero)
+//        println("pn " + periodoNumero)
+
+        def planP = PlanPeriodo.findByPeriodoAndPlan(periodoId,pl)
 
         def planPeriodo
 
-        if(params.id){
-            planPeriodo = PlanPeriodo.get(params.id)
+        if(planP){
+            planPeriodo = planP
         }else{
             planPeriodo = new PlanPeriodo()
-            planPeriodo.valor = params.valor.toDouble()
             planPeriodo.plan = pl
             planPeriodo.periodo = periodoId
         }
+
+        planPeriodo.valor = params.valor.toDouble()
 
         if(!planPeriodo.save(flush: true)){
             render "no"
