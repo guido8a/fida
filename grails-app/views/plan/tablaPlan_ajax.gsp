@@ -45,7 +45,7 @@
         </tr>
 
         <tr data-id="${comp.actv__id}" class="act comp${comp.comp__id}">
-            <th class="success actividad" title="${comp.actvdscr}" style="width:15%">
+            <th class="success actividad" title="${comp.plandscr}" style="width:15%">
                 ${(comp.actvdscr.length() > 100) ? comp.actvdscr.substring(0, 100) + "..." : comp.actvdscr}
             </th>
             <th class="success actividad" title="${comp.actvdscr}" style="width:6%; text-align: right">

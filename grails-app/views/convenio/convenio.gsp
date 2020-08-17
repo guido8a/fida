@@ -53,6 +53,9 @@
             <a href="#" id="btnAdministradorCon" class="btn btn-sm btn-info" title="Administrador del convenio">
                 <i class="fa fa-user"></i> Administrador
             </a>
+            <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de negocio Solidario">
+                <i class="fa fa-hands-helping"></i> Plan de negocio Solidario
+            </a>
 %{--            <a href="#" id="btnEstado" class="btn btn-sm btn-info" title="Indicadores">--}%
 %{--                <i class="fa fa-scroll"></i> Indicadores--}%
 %{--            </a>--}%
@@ -206,6 +209,10 @@
 </div>
 
 <script type="text/javascript">
+
+    $("#btnPlanNegocio").click(function () {
+       location.href="${createLink(controller: 'plan', action: 'plan')}/" + '${convenio?.id}'
+    });
 
     $("#btnAdministradorCon").click(function () {
         var dialog = cargarLoader("Cargando...");

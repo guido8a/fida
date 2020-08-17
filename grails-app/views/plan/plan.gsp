@@ -14,6 +14,17 @@
 
 <body>
 
+<div class="btn-toolbar toolbar">
+    <div class="btn-group">
+        <g:link controller="convenio" action="convenio" id="${convenio?.id}" class="btn btn-sm btn-default">
+            <i class="fa fa-arrow-left"></i> Convenio
+        </g:link>
+        <a href="#" class="btn btn-success" id="btnAgregarPlan" >
+            <i class="fa fa-plus"></i> Agregar Plan
+        </a>
+    </div>
+</div>
+
 <div class="panel-primary " style="text-align: center; font-size: 14px; margin-bottom: 10px">
     <strong style="color: #5596ff; ">Planificación de Actividades</strong>
 </div>
@@ -46,8 +57,41 @@
 
 <script type="text/javascript">
 
+    $("#btnAgregarPlan").click(function () {
+        $.ajax({
+            type    : "POST",
+            url     : "${createLink(controller:'plan', action:'formPlan_ajax')}",
+            data    : {
+                convenio: '${convenio?.id}'
+            },
+            success : function (msg) {
+                var b = bootbox.dialog({
+                    id      : "dlgCreatePlan",
+                    title   : "Nuevo Plan",
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        guardar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-save'></i> Guardar",
+                            className : "btn-success",
+                            callback  : function () {
+                                return submitFormPlan();
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            } //success
+        }); //ajax
+    });
+
     $("#plazo").change(function (){
-       var p = $(this).val()
+       var p = $(this).val();
         cargarTablaComponentes(${convenio?.id}, p);
     });
 

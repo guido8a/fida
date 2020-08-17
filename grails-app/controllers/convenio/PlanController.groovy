@@ -94,4 +94,17 @@ class PlanController {
         }
     }
 
+    def formPlan_ajax (){
+        def convenio = Convenio.get(params.convenio)
+        return[convenio: convenio]
+    }
+
+    def actividad_ajax(){
+        def tipo = TipoElemento.get(4)
+        def componente = MarcoLogico.get(params.id)
+        def actividades = MarcoLogico.findAllByMarcoLogicoAndTipoElemento(componente,tipo).sort{it.objeto}
+
+        return[actividades: actividades]
+    }
+
 }
