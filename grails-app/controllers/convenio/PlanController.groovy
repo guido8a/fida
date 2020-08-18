@@ -96,15 +96,28 @@ class PlanController {
 
     def formPlan_ajax (){
         def convenio = Convenio.get(params.convenio)
-        return[convenio: convenio]
+        def plan
+
+        if(params.id){
+            plan = Plan.get(params.id)
+        }else{
+            plan = new Plan()
+        }
+        return[convenio: convenio, plan: plan]
     }
 
     def actividad_ajax(){
         def tipo = TipoElemento.get(4)
         def componente = MarcoLogico.get(params.id)
         def actividades = MarcoLogico.findAllByMarcoLogicoAndTipoElemento(componente,tipo).sort{it.objeto}
+        def plan
+        if(params.plan){
+            plan = Plan.get(params.plan)
+        }else{
+            plan = new Plan()
+        }
 
-        return[actividades: actividades]
+        return[actividades: actividades, plan: plan]
     }
 
     def planesConvenio (){
@@ -114,12 +127,12 @@ class PlanController {
     }
 
     def savePlan_ajax(){
-        println("params sp " + params)
+//        println("params sp " + params)
 
         def plan
 
-        if(params.id){
-            plan = Plan.get(params.id)
+        if(params.plan){
+            plan = Plan.get(params.plan)
         }else{
             plan = new Plan()
         }
@@ -131,6 +144,24 @@ class PlanController {
             render "no"
         }else{
             render "ok"
+        }
+    }
+
+
+    def borrarPlan_ajax(){
+        def plan = Plan.get(params.id)
+        def periodos = PlanPeriodo.findAllByPlan(plan)
+
+        if(periodos){
+            render "er"
+        }else{
+            try{
+                plan.delete(flush:true)
+                render "ok"
+            }catch(e){
+                println("error al borrar el plan " + e + plan.errors)
+                render "no"
+            }
         }
 
     }

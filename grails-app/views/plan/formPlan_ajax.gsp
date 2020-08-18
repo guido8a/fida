@@ -8,6 +8,7 @@
 
 <div class="modal-contenido row">
     <g:form class="form-horizontal" name="frmPlan" role="form" action="savePlan_ajax" method="POST">
+        <g:hiddenField name="plan" value="${plan?.id}"/>
         <div class="form-group keeptogether">
             <span class="grupo">
                 <div class="col-md-1"></div>
@@ -31,7 +32,9 @@
                     </label>
                 </div>
                 <div class="col-md-7">
-                    <g:select name="componente" class="form-control" from="${proyectos.MarcoLogico.findAllByTipoElemento(parametros.proyectos.TipoElemento.get(3))}" optionKey="id" optionValue="objeto"/>
+                    <g:select name="componente" class="form-control"
+                              from="${proyectos.MarcoLogico.findAllByTipoElemento(parametros.proyectos.TipoElemento.get(3))}"
+                              optionKey="id" optionValue="objeto" value="${plan?.marcoLogico?.marcoLogico?.id}"/>
                 </div>
             </span>
         </div>
@@ -56,7 +59,9 @@
                     </label>
                 </div>
                 <div class="col-md-7">
-                    <g:select name="unidadComprasPublicas" from="${convenio.UnidadComprasPublicas.list().sort{it.descripcion}}" optionKey="id" optionValue="descripcion" class="form-control"/>
+                    <g:select name="unidadComprasPublicas"
+                              from="${convenio.UnidadComprasPublicas.list().sort{it.descripcion}}"
+                              optionKey="id" optionValue="descripcion" class="form-control" value="${plan?.unidadComprasPublicas?.id}"/>
                 </div>
             </span>
         </div>
@@ -69,7 +74,9 @@
                     </label>
                 </div>
                 <div class="col-md-7">
-                    <g:select name="tipoProcesoComprasPublicas" from="${convenio.TipoProcesoComprasPublicas.list().sort{it.descripcion}}" optionKey="id" optionValue="descripcion" class="form-control"/>
+                    <g:select name="tipoProcesoComprasPublicas"
+                              from="${convenio.TipoProcesoComprasPublicas.list().sort{it.descripcion}}"
+                              optionKey="id" optionValue="descripcion" class="form-control" value="${plan?.tipoProcesoComprasPublicas?.id}"/>
                 </div>
             </span>
         </div>
@@ -82,8 +89,9 @@
                     </label>
                 </div>
                 <div class="col-md-5">
-                    <g:hiddenField name="codigoComprasPublicas" value="${''}"/>
-                    <g:textField name="codigoComprasPublicasNombre" readonly="" class="form-control" value="${''}"/>
+                    <g:hiddenField name="codigoComprasPublicas" value="${plan?.codigoComprasPublicas?.id}"/>
+                    <g:textField name="codigoComprasPublicasNombre" readonly=""
+                                 class="form-control" value="${plan?.codigoComprasPublicas ? (plan?.codigoComprasPublicas?.numero + " - " + plan?.codigoComprasPublicas?.descripcion) : ''}"/>
                 </div>
                 <div class="col-md-2">
                     <a href="#" class="btn btn-info btnBuscarCPC">
@@ -101,7 +109,7 @@
                     </label>
                 </div>
                 <div class="col-md-7">
-                    <g:textArea name="descripcion" value="${''}" class="form-control required" style="resize: none; height: 100px" maxlength="255"/>
+                    <g:textArea name="descripcion" value="${plan?.descripcion}" class="form-control required" style="resize: none; height: 100px" maxlength="255"/>
                 </div>
             </span>
         </div>
@@ -112,7 +120,7 @@
                     <label>
                         Cantidad
                     </label>
-                    <g:textField name="cantidad" class="form-control number required"/>
+                    <g:textField name="cantidad" class="form-control number required" value="${plan?.cantidad}"/>
                 </div>
             </span>
             <span class="grupo">
@@ -120,7 +128,7 @@
                     <label>
                         Costo
                     </label>
-                    <g:textField name="costo" class="form-control number required"/>
+                    <g:textField name="costo" class="form-control number required" value="${plan?.costo}"/>
                 </div>
             </span>
             <span class="grupo">
@@ -128,7 +136,7 @@
                     <label>
                         Ejecutado
                     </label>
-                    <g:textField name="ejecutado" class="form-control number"/>
+                    <g:textField name="ejecutado" class="form-control number" value="${plan?.ejecutado}"/>
                 </div>
             </span>
         </div>
@@ -141,7 +149,7 @@
                     </label>
                 </div>
                 <div class="col-md-4">
-                    <g:select name="estado" from="${[1:'Activo',0:'Inactivo']}" optionValue="value" optionKey="key" class="form-control"/>
+                    <g:select name="estado" from="${[1:'Activo',0:'Inactivo']}" optionValue="value" optionKey="key" class="form-control" value="${plan?.estado}"/>
                 </div>
             </span>
         </div>
@@ -162,7 +170,8 @@
             type: 'POST',
             url: '${createLink(controller: 'plan', action: 'actividad_ajax')}',
             data:{
-                id: id
+                id: id,
+                plan: '${plan?.id}'
             },
             success: function (msg) {
                 $("#divActividad").html(msg)

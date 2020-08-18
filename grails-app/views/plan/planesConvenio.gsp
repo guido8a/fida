@@ -36,15 +36,11 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-1"></div>
+<div class="row" style="text-align: center">
     <div class="panel-primary " style="font-size: 14px; margin-bottom: 5px">
         <strong style="color: #5596ff; ">Convenio: ${convenio?.nombre}</strong>
     </div>
 </div>
-
-
-<elm:container tipo="vertical" titulo="Planes" color="black">
 
     <table style="font-size: 11px" class="table table-condensed table-bordered table-striped">
         <thead>
@@ -66,7 +62,8 @@
         <g:set var="totalC" value="${0}"/>
         <g:set var="totalE" value="${0}"/>
         <g:each in="${planes}" var="plan" status="i">
-            <tr style="width: 100%">
+            <tr style="width: 100%" data-id="${plan?.id}">
+
                 <td style="width: 15%">${plan?.marcoLogico?.tipoElemento == parametros.proyectos.TipoElemento.get(4) ? plan?.marcoLogico?.marcoLogico?.objeto : ''}</td>
                 <td style="width: 15%">${plan?.marcoLogico?.tipoElemento == parametros.proyectos.TipoElemento.get(4) ? plan?.marcoLogico?.objeto : ''}</td>
                 <td style="width: 19%">${plan?.descripcion}</td>
@@ -98,16 +95,20 @@
         </tr>
         </tfoot>
     </table>
-</elm:container>
 
 <script type="text/javascript">
 
     $("#btnAgregarPlan").click(function () {
+        agregarPlan(null)
+    });
+
+    function agregarPlan(id) {
         $.ajax({
             type    : "POST",
             url     : "${createLink(controller:'plan', action:'formPlan_ajax')}",
             data    : {
-                convenio: '${convenio?.id}'
+                convenio: '${convenio?.id}',
+                id: id
             },
             success : function (msg) {
                 var b = bootbox.dialog({
@@ -133,7 +134,8 @@
                 }); //dialog
             } //success
         }); //ajax
-    });
+    }
+
 
     function submitFormPlan(){
             var $form = $("#frmPlan");
@@ -158,6 +160,67 @@
                 return false;
             } //else
     }
+
+    function borrarPlan(id) {
+        bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> ¿Está seguro de querer eliminar este plan?", function (res) {
+            if(res){
+                $.ajax({
+                    type    : "POST",
+                    url     : '${createLink(controller: 'plan', action:'borrarPlan_ajax')}',
+                    data    : {
+                        id: id
+                    },
+                    success : function (msg) {
+                        if (msg=="ok") {
+                            log("Plan borrado correctamente","success");
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 1000);
+                        } else {
+                            if(msg == 'er'){
+                                bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> " + "El plan ya posee períodos asignados, no puede ser borrado!")
+                            }else{
+                                log("Error al borrar el plan","error");
+                                return false;
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    $("tbody>tr").contextMenu({
+        items: {
+            header: {
+                label: "Acciones",
+                header: true
+            },
+            editar: {
+                label: "Editar",
+                icon: "fa fa-edit",
+                action: function ($element) {
+                    var id = $element.data("id");
+                    agregarPlan(id);
+                }
+            },
+            eliminar: {
+                label: "Eliminar",
+                icon: "fa fa-trash",
+                separator_before: true,
+                action: function ($element) {
+                    var id = $element.data("id");
+                    borrarPlan(id);
+                }
+            }
+        },
+        onShow: function ($element) {
+            $element.addClass("success");
+        },
+        onHide: function ($element) {
+            $(".success").removeClass("success");
+        }
+    });
 
 </script>
 
