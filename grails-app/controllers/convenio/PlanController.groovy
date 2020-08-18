@@ -107,4 +107,32 @@ class PlanController {
         return[actividades: actividades]
     }
 
+    def planesConvenio (){
+        def convenio = Convenio.get(params.id)
+        def planes = Plan.findAllByConvenio(convenio)
+        return[convenio: convenio, planes: planes]
+    }
+
+    def savePlan_ajax(){
+        println("params sp " + params)
+
+        def plan
+
+        if(params.id){
+            plan = Plan.get(params.id)
+        }else{
+            plan = new Plan()
+        }
+
+        params.ejecutado = params.ejecutado ? params.ejecutado : 0
+        plan.properties = params
+
+        if(!plan.save(flush:true)){
+            render "no"
+        }else{
+            render "ok"
+        }
+
+    }
+
 }

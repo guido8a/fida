@@ -73,23 +73,75 @@
                 </div>
             </span>
         </div>
-        <div class="form-group">
+        <div class="form-group keeptogether">
             <span class="grupo">
                 <div class="col-md-1"></div>
-                <label for="codigoComprasPublicas" class="col-md-3 control-label text-info">
-                    Código CPC
-                </label>
-                <div class="row">
-                    <div class="col-md-6">
-                        <g:hiddenField name="codigoComprasPublicas" value="${''}"/>
-                        <g:textField name="codigoComprasPublicasNombre" class="form-control required text-uppercase" value="${''}"/>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="#" class="btn btn-info" id="btnBuscarCPC" >
-                            Buscar CPC
-                        </a>
-                    </div>
-                    <p class="help-block ui-helper-hidden"></p>
+                <div class="col-md-3">
+                    <label for="codigoComprasPublicas" class="control-label">
+                        Código CPC
+                    </label>
+                </div>
+                <div class="col-md-5">
+                    <g:hiddenField name="codigoComprasPublicas" value="${''}"/>
+                    <g:textField name="codigoComprasPublicasNombre" readonly="" class="form-control" value="${''}"/>
+                </div>
+                <div class="col-md-2">
+                    <a href="#" class="btn btn-info btnBuscarCPC">
+                        Buscar CPC
+                    </a>
+                </div>
+            </span>
+        </div>
+        <div class="form-group keeptogether">
+            <span class="grupo">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <label>
+                        Descripción
+                    </label>
+                </div>
+                <div class="col-md-7">
+                    <g:textArea name="descripcion" value="${''}" class="form-control required" style="resize: none; height: 100px" maxlength="255"/>
+                </div>
+            </span>
+        </div>
+        <div class="form-group keeptogether">
+            <span class="grupo">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <label>
+                        Cantidad
+                    </label>
+                    <g:textField name="cantidad" class="form-control number required"/>
+                </div>
+            </span>
+            <span class="grupo">
+                <div class="col-md-4">
+                    <label>
+                        Costo
+                    </label>
+                    <g:textField name="costo" class="form-control number required"/>
+                </div>
+            </span>
+            <span class="grupo">
+                <div class="col-md-3">
+                    <label>
+                        Ejecutado
+                    </label>
+                    <g:textField name="ejecutado" class="form-control number"/>
+                </div>
+            </span>
+        </div>
+        <div class="form-group keeptogether">
+            <span class="grupo">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <label>
+                        Estado
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <g:select name="estado" from="${[1:'Activo',0:'Inactivo']}" optionValue="value" optionKey="key" class="form-control"/>
                 </div>
             </span>
         </div>
@@ -101,13 +153,13 @@
     cargarActividad($("#componente option:selected").val());
 
     $("#componente").change(function () {
-       var id = $(this).val();
-       cargarActividad(id)
+        var id = $(this).val();
+        cargarActividad(id)
     });
 
     function cargarActividad(id){
         $.ajax({
-           type: 'POST',
+            type: 'POST',
             url: '${createLink(controller: 'plan', action: 'actividad_ajax')}',
             data:{
                 id: id
@@ -119,34 +171,66 @@
         });
     }
 
-    $("#btnBuscarCPC").click(function () {
-        cargarBuscarCodigo(1)
+    var cd;
+    var dg;
+
+    $(document).ready(function() {
+
+        $(".btnBuscarCPC").click(function () {
+            dg= cargarLoader("Cargando...");
+            cargarBuscarCodigo(1)
+        });
+
+
+        function cargarBuscarCodigo(tipo) {
+            dg.modal('hide');
+            $.ajax({
+                type: "POST",
+                url: "${createLink(controller: 'codigoComprasPublicas', action:'buscarCodigo')}",
+                data: {
+                    tipo: tipo
+                },
+                success: function (msg) {
+                    cd = bootbox.dialog({
+                        id: 'dlgTablaCPC',
+                        title: "Buscar código de compras públicas",
+                        class: "modal-lg",
+                        message: msg,
+                        buttons: {
+                            cancelar: {
+                                label: "Cancelar",
+                                className: "btn-primary",
+                                callback: function () {
+                                }
+                            }
+                        } //buttons
+                    }); //dialog
+                } //success
+            }); //ajax
+        }
     });
 
-    function cargarBuscarCodigo(tipo) {
-        $.ajax({
-            type    : "POST",
-            url     : "${createLink(controller: 'codigoComprasPublicas', action:'buscarCodigo')}",
-            data    : {
-                tipo: tipo
-            },
-            success : function (msg) {
-                bootbox.dialog({
-                    id    : 'dlgTablaCPC',
-                    title : "Buscar código de compras públicas",
-                    class : "modal-lg",
-                    message : msg,
-                    buttons : {
-                        cancelar : {
-                            label     : "Cancelar",
-                            className : "btn-primary",
-                            callback  : function () {
-                            }
-                        }
-                    } //buttons
-                }); //dialog
-            } //success
-        }); //ajax
+    function cerrarDialogoBusquedaCPC(){
+        cd.dialog().dialog('open');
+        cd.modal("hide");
     }
+
+    var validator = $("#frmPlan").validate({
+        errorClass     : "help-block",
+        errorPlacement : function (error, element) {
+            if (element.parent().hasClass("input-group")) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+            element.parents(".grupo").addClass('has-error');
+        },
+        success        : function (label) {
+            label.parents(".grupo").removeClass('has-error');
+            label.remove();
+        }
+
+    });
+
 
 </script>

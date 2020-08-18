@@ -48,11 +48,12 @@ th, td {
         var codigo = $(this).data("cod");
 
         %{--if(${tipo == '1'}){--}%
-            $("#codigoComprasPublicas").val(id);
-            $("#codigoComprasPublicasNombre").val(codigo + " - " + nombre);
-            var dialog = $("#dlgTablaCPC");
-            dialog.modal('hide');
-            $(".dlgCreateEditItem").modal('hide')
+        $("#codigoComprasPublicas").val(id);
+        $("#codigoComprasPublicasNombre").val(codigo + " - " + nombre);
+        // var dialog = $("#dlgTablaCPC");
+        // dialog.modal('hide');
+        cerrarDialogoBusquedaCPC();
+        $(".dlgCreateEditItem").modal('hide')
         // }else{
         //     $("#codigoComprasPublicas").val(id);
         //     $("#categoriaCPC").val(codigo + " - " + nombre);

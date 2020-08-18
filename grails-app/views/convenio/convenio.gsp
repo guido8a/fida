@@ -211,7 +211,7 @@
 <script type="text/javascript">
 
     $("#btnPlanNegocio").click(function () {
-       location.href="${createLink(controller: 'plan', action: 'plan')}/" + '${convenio?.id}'
+       location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + '${convenio?.id}'
     });
 
     $("#btnAdministradorCon").click(function () {
@@ -355,6 +355,8 @@
             }
         });
     });
+
+    var bp
 
     $(".buscarParroquia").click(function () {
         var dialog = cargarLoader("Cargando...");
