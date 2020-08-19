@@ -137,21 +137,22 @@
         </span>
     </div>
 
-    <div class="form-group ${hasErrors(bean: unidad, field: 'numero', 'error')} ${hasErrors(bean: unidad, field: 'orden', 'error')}">
+    <div class="form-group ${hasErrors(bean: unidad, field: 'zona', 'error')} ${hasErrors(bean: unidad, field: 'orden', 'error')}">
         <span class="grupo">
             <label for="numero" class="col-md-2 control-label text-info">
-                Número estado
+                Zona
             </label>
-            <div class="col-md-3">
-                <g:textField name="numero" maxlength="10" class="form-control digits input-sm" value="${unidad?.numero ?: ''}"/>
+            <div class="col-md-2">
+                <g:textField name="numero" maxlength="10" class="form-control digits input-sm" value="${unidad?.zona ?: ''}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
+        <span class="col-md-1"></span>
         <span class="grupo">
             <label for="orden" class="col-md-2 control-label text-info">
                 Orden
             </label>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <g:textField name="orden" maxlength="3" class="form-control digits input-sm" value="${unidad?.orden ?: ''}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>

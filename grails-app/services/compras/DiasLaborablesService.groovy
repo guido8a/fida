@@ -4,7 +4,7 @@ class DiasLaborablesService {
 
     /**
      * diasLaborablesEntre()
-     *      retorna el numero de dias laborables entre 2 fechas
+     *      retorna el zona de dias laborables entre 2 fechas
      * @param fecha1 la una fecha
      * @param fecha2 la otra fecha
      * @param noLaborables true: si una de las fechas es no laborable pasa al primer dia laborable futuro.
@@ -12,7 +12,7 @@ class DiasLaborablesService {
      *                      Por default pasa true
      * @return array        en posicion 0: boolean true:  hizo el calculo correctamente
      *                                             false: hubo un error
-     *                                  1: el numero de dias cuando el calculo fue correcto
+     *                                  1: el zona de dias cuando el calculo fue correcto
      *                                     el error si hubo error
      *                                  2: si hubo algun mensaje aunque haya hecho el calculo
      *                                     si hubo error (no hay los dias laborables), el año para configurar los días laborables
@@ -89,7 +89,7 @@ class DiasLaborablesService {
      * diasLaborablesDesde
      *      retorna la fecha n dias laborables despues de una fecha
      * @param fecha la fecha
-     * @param dias el numero de dias
+     * @param dias el zona de dias
      * @param noLaborables true: si la fecha es no laborable pasa al primer dia laborable futuro.
      *                      false: si la fecha es no laborable retorna false
      *                      Por default pasa true

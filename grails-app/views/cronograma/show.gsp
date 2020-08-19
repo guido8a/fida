@@ -83,7 +83,7 @@
 %{--        <div class="divIndice ">--}%
 %{--            <g:each in="${componentes}" var="comp">--}%
 %{--                <a href="#comp${comp.id}" class="scrollComp ">--}%
-%{--                    <strong>Componente ${comp.numero}</strong>:--}%
+%{--                    <strong>Componente ${comp.zona}</strong>:--}%
 %{--                ${(comp.objeto.length() > 100) ? comp.objeto.substring(0, 100) + "..." : comp.objeto}--}%
 %{--                </a>--}%
 %{--            </g:each>--}%

@@ -88,7 +88,7 @@ class CronogramaController {
                 fuentes.add(it)
                 totAnios.put(it.fuente.id, it.monto)
             }
-            def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+            def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //            println "proyecto: $proyecto, componentes: $componentes, anio: $anio, fuentes: $fuentes, totAnios: $totAnios, actSel: $act, campos: $campos"
             println "perfil: ${session.perfil.codigo}, aprobado: ${proyecto.aprobado}"
 
@@ -495,7 +495,7 @@ class CronogramaController {
 
         def proyecto = Proyecto.get(params.proyecto)
         def anio = Anio.get(params.anio)
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
         def finan = Financiamiento.findAllByProyectoAndAnio(proyecto, anio)
         def fuentes = []
         def totAnios = [:]

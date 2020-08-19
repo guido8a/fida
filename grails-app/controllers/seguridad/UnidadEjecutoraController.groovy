@@ -1,5 +1,6 @@
 package seguridad
 
+import geografia.Provincia
 import parametros.Anio
 import proyectos.PresupuestoUnidad
 
@@ -132,11 +133,29 @@ class UnidadEjecutoraController {
             }
 
         } else if (id == "root") {
-            hijos = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre}
+//            hijos = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre}
+            hijos = geografia.Provincia.findAll().sort{it.nombre}
             def presupuesto = ""
             def data = ""
 
-            ico = ", \"icon\":\"fa fa-building text-success\""
+            ico = ", \"icon\":\"far fa-folder text-success\""
+            hijos.each { hijo ->
+//                println "procesa ${hijo.nombre}"
+//                presupuesto = UnidadEjecutora.findByCodigoAndFechaFinIsNull('FRPS') ? ' presupuesto' : ''
+                clase = "jstree-closed hasChildren"
+                clase2 = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? " hasChildren" : ''
+                tree += "<li id='prov_" + hijo.id + "' class='" + clase + clase2 + "' ${data} data-jstree='{\"type\":\"${"prov"}\" ${ico}}' >"
+                tree += "<a href='#' class='label_arbol'>" + hijo?.nombre + "</a>"
+                tree += "</li>"
+            }
+        } else if (tipo == "prov") {
+            def prov = Provincia.get(id)
+            hijos = UnidadEjecutora.findAllByProvinciaAndPadreIsNullAndFechaFinIsNull(prov).sort{it.nombre}
+            def presupuesto = ""
+            def data = ""
+
+//            ico = ", \"icon\":\"fa fa-building text-success\""
+            ico = ", \"icon\":\"fas fa-home text-success\""
             hijos.each { hijo ->
 //                println "procesa ${hijo.nombre}"
                 presupuesto = UnidadEjecutora.findByCodigoAndFechaFinIsNull('FRPS') ? ' presupuesto' : ''

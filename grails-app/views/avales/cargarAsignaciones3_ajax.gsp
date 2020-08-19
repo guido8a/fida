@@ -14,7 +14,7 @@
             }}"
             optionValue='${{
                 "Monto: " + g.formatNumber(number: it.priorizado, type: "currency", currencySymbol: " ") +
-                        ", Partida: " + it.presupuesto.numero + ", Fuente: " + it.fuente.codigo
+                        ", Partida: " + it.presupuesto.zona + ", Fuente: " + it.fuente.codigo
             }}'
             noSelection="['-1': 'Seleccione..']" class="form-control input-sm required requiredCombo"/>
 --}%

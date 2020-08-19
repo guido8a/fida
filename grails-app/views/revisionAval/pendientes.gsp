@@ -432,7 +432,7 @@
 
         $("#buscar").click(function () {
             openLoader("Cargando solicitudes...");
-            cargarHistorial($("#anio").val(), $("#numero").val(), $("#descProceso").val(), $("#requirente").val());
+            cargarHistorial($("#anio").val(), $("#zona").val(), $("#descProceso").val(), $("#requirente").val());
         });
         $(".negar").click(function () {
             var id = $(this).attr("iden");

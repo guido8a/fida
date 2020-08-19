@@ -18,7 +18,7 @@
     <style type="text/css">
     #tree {
         overflow-y : auto;
-        height     : 440px;
+        height     : 700px;
     }
 
     .jstree-search {

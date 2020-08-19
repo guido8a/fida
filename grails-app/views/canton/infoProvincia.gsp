@@ -4,11 +4,11 @@
 
      %{--<tr>--}%
         %{--<td class="label">--}%
-            %{--<g:message code="provincia.numero.label"--}%
+            %{--<g:message code="provincia.zona.label"--}%
                        %{--default="Numero"/>--}%
         %{--</td>--}%
         %{--<td class="campo">--}%
-            %{--${fieldValue(bean: provinciaInstance, field: "numero")}--}%
+            %{--${fieldValue(bean: provinciaInstance, field: "zona")}--}%
         %{--</td> <!-- campo -->--}%
     %{--</tr>--}%
 

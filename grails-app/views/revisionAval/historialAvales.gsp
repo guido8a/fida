@@ -35,8 +35,8 @@
 %{--                    <g:set var="avalEstado" value="${aval.estado?.codigo}"/>--}%
 %{--                    <tr estadoTr="${aval?.estado?.codigo}" data-sol="${sol.id}" data-id="${aval?.id}" usu="${perfil}" style="width: 100%">--}%
 %{--                        <td style="width: 10%">${sol?.unidad?.nombre}</td>--}%
-%{--                        <td style="width: 10%">${sol.fecha?.format("yyyy")}-${firmasService.requirentes(sol.usuario.unidadEjecutora)?.codigo} No. ${sol?.numero}</td>--}%
-%{--                        <td style="width: 10%">${aval.fechaAprobacion?.format("yyyy")}-GPE No.${aval?.numero}</td>--}%
+%{--                        <td style="width: 10%">${sol.fecha?.format("yyyy")}-${firmasService.requirentes(sol.usuario.unidadEjecutora)?.codigo} No. ${sol?.zona}</td>--}%
+%{--                        <td style="width: 10%">${aval.fechaAprobacion?.format("yyyy")}-GPE No.${aval?.zona}</td>--}%
 %{--                        <td style="width: 10%">${aval.fechaAprobacion?.format("dd-MM-yyyy")}</td>--}%
 %{--                        <td style="width: 39%">${aval.proceso.nombre}</td>--}%
 %{--                        <td style="text-align: right; width: 10%">--}%
@@ -224,7 +224,7 @@
         } else {
             order = "asc"
         }
-        cargarHistorialSort($("#anio").val(), $("#numero").val(), $("#descProceso").val(), sort, order)
+        cargarHistorialSort($("#anio").val(), $("#zona").val(), $("#descProceso").val(), sort, order)
     }).css({"cursor" : "pointer"});
 
     function createContextMenu(node) {

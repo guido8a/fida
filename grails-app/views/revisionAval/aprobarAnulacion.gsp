@@ -166,7 +166,7 @@
                     function (res) {
                         if (res) {
                             openLoader("Solicitando");
-                            var aval = $("#numero").val();
+                            var aval = $("#zona").val();
                             var obs = $("#richText").val();
                             $.ajax({
                                 type    : "POST",
@@ -204,7 +204,7 @@
                 function (res) {
                     if (res) {
                         openLoader("Negando");
-                        var aval = $("#numero").val();
+                        var aval = $("#zona").val();
                         var obs = $("#richText").val();
                         $.ajax({
                             type    : "POST",
@@ -232,7 +232,7 @@
         });
 
         $("#guardarDatosDoc").click(function () {
-            var aval = $("#numero").val();
+            var aval = $("#zona").val();
             var obs = $("#richText").val();
             $.ajax({
                 type    : "POST",

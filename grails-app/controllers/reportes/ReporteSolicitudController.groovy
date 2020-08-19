@@ -687,7 +687,7 @@ class ReporteSolicitudController {
         tablaCabecera.setWidths(arregloEnteros([100]))
 
         if(hayAval) {
-            addCellTabla(tablaCabecera, new Paragraph("AVAL No. ${slav.aval.numero}", times12bold), prmsNumero)
+            addCellTabla(tablaCabecera, new Paragraph("AVAL No. ${slav.aval.zona}", times12bold), prmsNumero)
             addCellTabla(tablaCabecera, new Paragraph("", times12bold), prmsNumero)
             addCellTabla(tablaCabecera, new Paragraph("Con el propósito de ejecutar las actividades programadas en la " +
                     "planificación operativa institucional ${anio}, la Unidad Adminisrtativa: ${slav.usuario.unidadEjecutora.nombre} " +

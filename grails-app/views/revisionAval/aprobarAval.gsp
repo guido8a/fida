@@ -223,7 +223,7 @@
 
             $("#btnPreview").click(function () {
                 var url = "${createLink(controller: 'reporteSolicitud', action: 'imprimirSolicitudAval')}/?id=${solicitud.id}&usu=${session.usuario.id}";
-                location.href = url + "&filename=aval_" + $("#numero").val() + ".pdf"
+                location.href = url + "&filename=aval_" + $("#zona").val() + ".pdf"
                 return false;
             });
 
@@ -267,7 +267,7 @@
                         function (res) {
                             if (res) {
                                 openLoader("Solicitando");
-                                var aval = $("#numero").val();
+                                var aval = $("#zona").val();
                                 var obs = $("#richText").val();
                                 $.ajax({
                                     type    : "POST",
@@ -313,7 +313,7 @@
                                 %{--callback  : function () {--}%
                                 %{--if ($form.valid()) {--}%
                                 %{--openLoader("Solicitando");--}%
-                                %{--var aval = $("#numero").val();--}%
+                                %{--var aval = $("#zona").val();--}%
                                 %{--var obs = $("#richText").val();--}%
                                 %{--$.ajax({--}%
                                 %{--type    : "POST",--}%
@@ -458,7 +458,7 @@
                     function (res) {
                         if (res) {
                             openLoader("Negando");
-                            var aval = $("#numero").val();
+                            var aval = $("#zona").val();
                             var obs = $("#richText").val();
                             $.ajax({
                                 type    : "POST",
@@ -492,7 +492,7 @@
                             %{--callback  : function () {--}%
                             %{--if ($form.valid()) {--}%
                             %{--openLoader("Negando");--}%
-                            %{--var aval = $("#numero").val();--}%
+                            %{--var aval = $("#zona").val();--}%
                             %{--var obs = $("#richText").val();--}%
                             %{--$.ajax({--}%
                             %{--type    : "POST",--}%
@@ -533,7 +533,7 @@
             });
 
             $("#guardarObservacion").click(function () {
-                var aval = $("#numero").val();
+                var aval = $("#zona").val();
                 var obs = $("#richText").val();
                 $.ajax({
                     type    : "POST",
@@ -568,7 +568,7 @@
             %{--function (res) {--}%
             %{--if (res) {--}%
             %{--openLoader();--}%
-            %{--var aval = $("#numero").val();--}%
+            %{--var aval = $("#zona").val();--}%
             %{--var obs = $("#richText").val();--}%
             %{--$.ajax({--}%
             %{--type    : "POST",--}%

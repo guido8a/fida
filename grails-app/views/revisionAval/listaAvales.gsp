@@ -108,8 +108,8 @@
     }
     $("#buscar").button().click(function () {
         openLoader("Cargando avales..");
-        // cargarHistorialSort($("#anio").val(), $("#numero").val(), $("#descProceso").val(), $("#requirenteId").val())
-        cargarHistorialSort($("#anio").val(), $("#numero").val(), $("#descProceso").val())
+        // cargarHistorialSort($("#anio").val(), $("#zona").val(), $("#descProceso").val(), $("#requirenteId").val())
+        cargarHistorialSort($("#anio").val(), $("#zona").val(), $("#descProceso").val())
     })
 </script>
 </body>

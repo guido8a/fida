@@ -43,7 +43,7 @@
 
         <div class="col-md-4">
             %{--            <g:hiddenField name="partidaHide" id="prsp_hide" value="${detalle?.presupuesto?.id}"/>--}%
-            %{--            <g:textField name="partida" id="prsp_id" class="fuente many-to-one form-control input-sm required" value="${detalle ? (detalle?.presupuesto?.numero + " - " + detalle?.presupuesto?.descripcion) : " "}"/>--}%
+            %{--            <g:textField name="partida" id="prsp_id" class="fuente many-to-one form-control input-sm required" value="${detalle ? (detalle?.presupuesto?.zona + " - " + detalle?.presupuesto?.descripcion) : " "}"/>--}%
 
             <g:hiddenField name="partida1" value="${detalle?.presupuesto?.id}"/>
             <span class="grupo">

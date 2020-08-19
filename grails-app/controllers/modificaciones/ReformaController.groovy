@@ -47,7 +47,7 @@ class ReformaController  {
         }
         def proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
 
         def estadoDevuelto = EstadoAval.findByCodigo("D01")
@@ -90,7 +90,7 @@ class ReformaController  {
         }
         def proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
 
         def estadoDevuelto = EstadoAval.findByCodigo("D01")
@@ -132,7 +132,7 @@ class ReformaController  {
         }
         def proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
 
         def estadoDevuelto = EstadoAval.findByCodigo("D01")
@@ -174,7 +174,7 @@ class ReformaController  {
         }
         def proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
         def estadoDevuelto = EstadoAval.findByCodigo("D01")
         def estadoPendiente = EstadoAval.findByCodigo("P01")
@@ -215,7 +215,7 @@ class ReformaController  {
         }
         def proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
 
         def estadoDevuelto = EstadoAval.findByCodigo("D01")
@@ -861,7 +861,7 @@ class ReformaController  {
 
         def proyectos2 = Proyecto.findAllByAprobadoPoa('S', [sort: 'nombre'])
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
 //        def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
 //        def personasFirmas = Persona.findAllByUnidad(unidad)
@@ -1739,7 +1739,7 @@ class ReformaController  {
 //            println "estado firma 1: ${reforma.firma1.estado}, estado firma 2: ${reforma.firma2.estado}"
             if (reforma.firma1.estado == "F" && reforma.firma2.estado == "F") {
 //                println "Estan las 2 firmas, entra a hacer la modificacion"
-                //busco el ultimo numero asignado para signar el siguiente
+                //busco el ultimo zona asignado para signar el siguiente
                 def ultimoNum = Reforma.withCriteria {
                     eq("tipo", "R")
                     projections {
@@ -1789,7 +1789,7 @@ class ReformaController  {
 
                             if (testActividad.size() == 0) {
                                 //no existe la actividad, la creo
-                                //busco el ultimo numero asignado para signar el siguiente
+                                //busco el ultimo zona asignado para signar el siguiente
                                 def ultimoNumAct = MarcoLogico.withCriteria {
                                     projections {
                                         max "numero"
@@ -1819,7 +1819,7 @@ class ReformaController  {
                                     println "error al guardar la actividad (A) " + nuevaActividad.errors
                                     errores += renderErrors(bean: nuevaActividad)
                                 } else {
-//                                    println "Creo la actividad nueva: " + nuevaActividad.objeto + " con numero " + nuevaActividad.numero + " y id " + nuevaActividad.id
+//                                    println "Creo la actividad nueva: " + nuevaActividad.objeto + " con zona " + nuevaActividad.zona + " y id " + nuevaActividad.id
                                     destino = new Asignacion()
                                     destino.anio = reforma.anio
                                     destino.fuente = origen.fuente

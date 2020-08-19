@@ -44,7 +44,7 @@ class ModificacionesPoaController {
 
         def proyectos2 = Proyecto.findAllByAprobadoPoa('S', [sort: 'nombre'])
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
 //        def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
 //        def personasFirmas = Persona.findAllByUnidad(unidad)
@@ -75,7 +75,7 @@ class ModificacionesPoaController {
             actual = Anio.findByAnio(new Date().format("yyyy"))
         }
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
         [proyectos: proyectos, actual: actual, campos: campos, proyectos2: proyectos2]
     }
@@ -91,7 +91,7 @@ class ModificacionesPoaController {
             }
         }
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
 
         def solicitud = SolicitudModPoa.get(params.id)
@@ -107,7 +107,7 @@ class ModificacionesPoaController {
         def anioOrigen = asignacionOrigen.anio
 
         def componentesOrigen = MarcoLogico.findAllByProyectoAndTipoElemento(proyectoOrigen, TipoElemento.get(2))
-//        def actividadesOrigen = MarcoLogico.findAllByMarcoLogicoAndResponsable(componenteOrigen, unidad, [sort: "numero"])
+//        def actividadesOrigen = MarcoLogico.findAllByMarcoLogicoAndResponsable(componenteOrigen, unidad, [sort: "zona"])
         def actividadesOrigen = MarcoLogico.findAllByMarcoLogico(componenteOrigen, [sort: "numero"])
         def asignacionesOrigen = Asignacion.findAllByMarcoLogicoAndAnio(actividadOrigen, anioOrigen)
 
@@ -127,7 +127,7 @@ class ModificacionesPoaController {
             anioDestino = asignacionDestino.anio
 
             componentesDestino = MarcoLogico.findAllByProyectoAndTipoElemento(proyectoDestino, TipoElemento.get(2))
-//            actividadesDestino = MarcoLogico.findAllByMarcoLogicoAndResponsable(componenteDestino, unidad, [sort: "numero"])
+//            actividadesDestino = MarcoLogico.findAllByMarcoLogicoAndResponsable(componenteDestino, unidad, [sort: "zona"])
             actividadesDestino = MarcoLogico.findAllByMarcoLogico(componenteDestino, [sort: "numero"])
             asignacionesDestino = Asignacion.findAllByMarcoLogicoAndAnio(actividadDestino, anioDestino)
         }
@@ -200,7 +200,7 @@ class ModificacionesPoaController {
     def cargarActividades = {
         def comp = MarcoLogico.get(params.id)
         def unidad = session.usuario.unidad
-//        [acts: MarcoLogico.findAllByMarcoLogicoAndResponsable(comp, unidad, [sort: "numero"]), div: params.div, comboId: params.comboId]
+//        [acts: MarcoLogico.findAllByMarcoLogicoAndResponsable(comp, unidad, [sort: "zona"]), div: params.div, comboId: params.comboId]
         [acts: MarcoLogico.findAllByMarcoLogico(comp, [sort: "numero"]), div: params.div, comboId: params.comboId]
     }
 
@@ -802,13 +802,13 @@ class ModificacionesPoaController {
 //                nueva.fechaFin = solicitud.fin
 //                nueva.proyecto = origen.marcoLogico.proyecto
 //                nueva.categoria = origen.marcoLogico.categoria
-//                def maxNum = MarcoLogico.list([sort: "numero", order: "desc", max: 1])?.pop()?.numero
+//                def maxNum = MarcoLogico.list([sort: "zona", order: "desc", max: 1])?.pop()?.zona
 //                if (maxNum) {
 //                    maxNum = maxNum + 1
 //                } else {
 //                    maxNum = 1
 //                }
-//                nueva.numero = maxNum
+//                nueva.zona = maxNum
 //                if (!nueva.save(flush: true)) {
 //                    println "error save actividad " + nueva.errors
 //                    msg = "Error al crear la actividad"

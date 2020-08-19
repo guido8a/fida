@@ -3,7 +3,6 @@ package seguridad
 import audita.Auditable
 import geografia.Provincia
 import parametros.Anio
-import parametros.proyectos.TipoElemento
 import poa.Asignacion
 import proyectos.MarcoLogico
 import proyectos.Proyecto
@@ -23,7 +22,7 @@ class UnidadEjecutora implements Auditable{
     String telefono
     String mail
     String observaciones
-    int numero = 0
+    int zona = 0
     int orden = 0
 
     static auditable = true
@@ -49,19 +48,19 @@ class UnidadEjecutora implements Auditable{
             telefono column: 'unejtelf'
             mail column: 'unejmail'
             observaciones column: 'unejobsr'
-            numero column: 'unejnmsr'
+            zona column: 'unejnmsr'
             orden column: 'unejordn'
         }
     }
     static constraints = {
         nombre(size: 1..63, blank: false, nullable: false, attributes: [title: 'nombre'])
-        codigo(size: 1..4, blank: false, nullable: false, attributes: [title: 'codigo'])
+        codigo(size: 1..4, blank: true, nullable: true, attributes: [title: 'codigo'])
         direccion(size: 1..127, blank: true, nullable: true, attributes: [title: 'direccion'])
         sigla(size: 0..7, blank: true, nullable: true, attributes: [title: 'sigla'])
         objetivo(size: 0..63, blank: true, nullable: true, attributes: [title: 'objetivo'])
         telefono(size: 0..63, blank: true, nullable: true, attributes: [title: 'telefono'])
         observaciones(size: 0..127, blank: true, nullable: true, attributes: [title: 'observaciones'])
-        numero(blank: true, nullable: true, attributes: [title: 'numero'])
+        zona(blank: true, nullable: true, attributes: [title: 'numero'])
         orden(blank: true, nullable: true, attributes: [title: 'orden'])
         padre(blank: true, nullable: true)
         mail(blank: true, nullable: true)

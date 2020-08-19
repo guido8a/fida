@@ -56,11 +56,11 @@ class ParroquiaController {
         }
         list.each { parr ->
 
-            parr.codigo = parr.codigo.replaceAll(parr.canton.numero.padLeft(2, '0'), '')
+            parr.codigo = parr.codigo.replaceAll(parr.canton.zona.padLeft(2, '0'), '')
             if (parr.codigo == '') {
-                parr.codigo = parr.canton.numero.padLeft(2, '0')
+                parr.codigo = parr.canton.zona.padLeft(2, '0')
             }
-            def nc = parr.canton.numero.padLeft(2, '0') + parr.codigo.padLeft(2, '0')
+            def nc = parr.canton.zona.padLeft(2, '0') + parr.codigo.padLeft(2, '0')
 
             def ok = false
             if (Parroquia.countByCodigoAndIdNotEqual(nc, parr.id) > 0) {
@@ -79,7 +79,7 @@ class ParroquiaController {
             html += "<tr class='${ok ? 'ok' : 'no'}'>"
             html += "<td>${parr.nombre}</td>"
             html += "<td>${parr.canton.nombre}</td>"
-            html += "<td>${parr.canton.numero}</td>"
+            html += "<td>${parr.canton.zona}</td>"
             html += "<td>${parr.codigo}</td>"
             html += "<td>${nc}</td>"
             html += "</tr>"

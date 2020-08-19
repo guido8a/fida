@@ -58,7 +58,7 @@ class PlanController {
         def periodoNumero = (params.anio == '1' ? params.periodo : params.periodo.toInteger() + ((params.anio.toInteger() - 1) * 12))
         def periodo = Periodo.findByNumero(periodoNumero)
 
-        def planP = PlanPeriodo.findByPeriodoAndPlan(periodo,pl)
+        def planP = PlanPeriodo.findByPeriodoAndPlan(periodo, pl)
 
         return [periodo: planP]
     }

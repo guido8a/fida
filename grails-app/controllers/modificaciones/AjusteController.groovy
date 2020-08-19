@@ -189,7 +189,7 @@ class AjusteController {
 //        def proyectos3 = proyectosService.getProyectosUnidad(UnidadEjecutora.get(session.unidad.id), actual, session.perfil.codigo.toString())
         def proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
 //        def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
 //        def personasFirmas = Persona.findAllByUnidad(unidad)
@@ -250,7 +250,7 @@ class AjusteController {
 //        def proyectos3 = proyectosService.getProyectosUnidad(UnidadEjecutora.get(session.unidad.id), actual, session.perfil.codigo.toString())
         def proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
 //        def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
 //        def personasFirmas = Persona.findAllByUnidad(unidad)
@@ -308,7 +308,7 @@ class AjusteController {
 //        def proyectos3 = proyectosService.getProyectosUnidad(UnidadEjecutora.get(session.unidad.id), actual, session.perfil.codigo.toString())
         def proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
 //        def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
 //        def personasFirmas = Persona.findAllByUnidad(unidad)
@@ -376,7 +376,7 @@ class AjusteController {
 //        def proyectos3 = proyectosService.getProyectosUnidad(UnidadEjecutora.get(session.unidad.id), actual, session.perfil.codigo.toString())
         def proyectos3 = UnidadEjecutora.get(session.unidad.id).getProyectosUnidad(actual, session.perfil.codigo.toString())
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //        println "pro "+proyectos
 //        def unidad = UnidadEjecutora.findByCodigo("DPI") // DIRECCIÓN DE PLANIFICACIÓN E INVERSIÓN
 //        def personasFirmas = Persona.findAllByUnidad(unidad)
@@ -1316,7 +1316,7 @@ class AjusteController {
         } else {
             def reforma = Reforma.findByFirma1OrFirma2(firma, firma)
             if (reforma.firma1.estado == "F" && reforma.firma2.estado == "F") {
-                //busco el ultimo numero asignado para signar el siguiente
+                //busco el ultimo zona asignado para signar el siguiente
                 def ultimoNum = Reforma.withCriteria {
                     eq("tipo", "A")
                     projections {
@@ -1346,7 +1346,7 @@ class AjusteController {
                             destino = detalle.asignacionDestino
                             break;
                         case "A":
-                            //busco el ultimo numero asignado para signar el siguiente
+                            //busco el ultimo zona asignado para signar el siguiente
                             def ultimoNumAct = MarcoLogico.withCriteria {
                                 projections {
                                     max "numero"
@@ -1482,7 +1482,7 @@ class AjusteController {
             def reforma = Reforma.findByFirma1OrFirma2(firma, firma)
 //            if (reforma.firma1.estado == "F" && reforma.firma2.estado == "F") {
             if (reforma.firma1.estado == "F") {
-                //busco el ultimo numero asignado para signar el siguiente
+                //busco el ultimo zona asignado para signar el siguiente
                 def ultimoNum = Reforma.withCriteria {
                     eq("tipo", "A")
                     projections {

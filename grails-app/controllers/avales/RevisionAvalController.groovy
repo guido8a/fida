@@ -210,7 +210,7 @@ class RevisionAvalController {
         def personasLista = Persona.findAllByUnidadEjecutoraInList(unidades)
 
         if (params.numero && params.numero != "") {
-            numero = " and numero like ('%${numero}%')"
+            numero = " and zona like ('%${numero}%')"
         }
         if (params.sort && params.sort != "") {
             if (!externos.contains(params.sort)) {
@@ -424,18 +424,18 @@ class RevisionAvalController {
             }
 //            println "datos fecha "+datos
         }
-//        if (numero && numero != "") {
-////            println "buscando por numero ==> "+numero
+//        if (zona && zona != "") {
+////            println "buscando por zona ==> "+zona
 //            def datosTemp = []
 //            datos.each { sol ->
 //                println "tiene aval? " + sol.aval
-//                if (sol.aval?.numero =~ numero) {
+//                if (sol.aval?.zona =~ zona) {
 //                    println "encontro "
 //                    datosTemp.add(sol)
 //                }
 //            }
 //            datos = datosTemp
-////            println "datos numero "+datos
+////            println "datos zona "+datos
 //        }
 //        if (proceso && proceso != "") {
 //            def datosTemp = []
@@ -465,7 +465,7 @@ class RevisionAvalController {
         def firmas = firmasService.listaFirmasCombos()
         def numero = 0
         def max = Aval.list([sort: "numero", order: "desc", max: 1])
-//        println "max " + max.numero
+//        println "max " + max.zona
         if (max.size() > 0) {
             numero = max[0].numero + 1
         }
@@ -597,7 +597,7 @@ class RevisionAvalController {
                             aval.concepto = sol.concepto
                             aval.path = " "
                             aval.memo = sol.memo
-//                    aval.numero = sol.numero
+//                    aval.zona = sol.zona
                             aval.numero = 0
                             aval.estado = EstadoAval.findByCodigo("EF1")
                             aval.monto = sol.monto
@@ -1052,14 +1052,14 @@ class RevisionAvalController {
                 aval.fechaAprobacion = new Date()
 
 //                if(aval.proceso.proyecto.codigo == "P.19") {
-//                    numero = aval.proceso.proyecto.siguienteNumeroAval
+//                    zona = aval.proceso.proyecto.siguienteNumeroAval
 //                } else {
 //                    unej.refresh()
-//                    numero = unej.numeroAval   //numeración única para GPE para todos los avales excepto proy: P.19
-//                    if (numero == 0) {
-//                        numero = 1
+//                    zona = unej.numeroAval   //numeración única para GPE para todos los avales excepto proy: P.19
+//                    if (zona == 0) {
+//                        zona = 1
 //                    } else {
-//                        numero = numero + 1
+//                        zona = zona + 1
 //                    }
 //                }
 
@@ -1070,7 +1070,7 @@ class RevisionAvalController {
                 aval.estado = EstadoAval.findByCodigo("E02")
                 aval.save(flush: true)
 
-//                unej.numeroAval = numero
+//                unej.numeroAval = zona
 //                unej.save(flush: true)
 
                 def sol = SolicitudAval.findByAval(aval)

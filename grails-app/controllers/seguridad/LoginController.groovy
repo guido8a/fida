@@ -33,7 +33,7 @@ class LoginController {
 //            isNull("fechaRecibido")
 //        }.size()
 
-        0  //retorna numero de alertas
+        0  //retorna zona de alertas
 
     }
 

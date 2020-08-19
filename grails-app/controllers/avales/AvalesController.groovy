@@ -271,7 +271,7 @@ class AvalesController{
         def priorizado = []
 //        def acts = []
 //        if (params.id != "-1") {
-//            acts = MarcoLogico.findAllByMarcoLogico(comp, [sort: "numero"])
+//            acts = MarcoLogico.findAllByMarcoLogico(comp, [sort: "zona"])
 //        }
 //        def acts = proyectosService.getActividadesUnidadComponente(session.asignaciones, comp)
         def anio = Anio.get(params.anio)
@@ -296,7 +296,7 @@ class AvalesController{
         def comp = MarcoLogico.get(params.id)
 //        def acts = []
 //        if (params.id != "-1") {
-//            acts = MarcoLogico.findAllByMarcoLogico(comp, [sort: "numero"])
+//            acts = MarcoLogico.findAllByMarcoLogico(comp, [sort: "zona"])
 //        }
 //        def acts = proyectosService.getActividadesUnidadComponente(session.asignaciones, comp)
         def anio = Anio.get(params.anio)
@@ -629,17 +629,17 @@ class AvalesController{
                 solicitud = solicitudes.first()
             }
 
-//            def numero
-//            numero = SolicitudAval.findAllByUnidad(session.usuario.unidad, [sort: "numero", order: "desc", max: 1])
-//            if (numero.size() > 0) {
-//                numero = numero?.pop()?.numero
+//            def zona
+//            zona = SolicitudAval.findAllByUnidad(session.usuario.unidad, [sort: "zona", order: "desc", max: 1])
+//            if (zona.size() > 0) {
+//                zona = zona?.pop()?.zona
 //            }
-//            if (!numero) {
-//                numero = 1
+//            if (!zona) {
+//                zona = 1
 //            } else {
-//                numero = numero + 1
+//                zona = zona + 1
 //            }
-//            numero = 0
+//            zona = 0
             def r = verificarProceso(proceso, solicitud)
             flash.message = r.message
             if((flash.message != "") && (solicitud?.estado?.codigo != 'D01' )) {
@@ -1319,17 +1319,17 @@ class AvalesController{
         } else {
             def sol = SolicitudAval.findByFirma(firma)
             sol.estado = EstadoAval.findByCodigo("R01")
-//            def numero
-//            numero = SolicitudAval.findAllByUnidad(session.usuario.unidad, [sort: "numero", order: "desc", max: 1])
-//            if (numero.size() > 0) {
-//                numero = numero?.pop()?.numero
+//            def zona
+//            zona = SolicitudAval.findAllByUnidad(session.usuario.unidad, [sort: "zona", order: "desc", max: 1])
+//            if (zona.size() > 0) {
+//                zona = zona?.pop()?.zona
 //            }
-//            if (!numero) {
-//                numero = 1
+//            if (!zona) {
+//                zona = 1
 //            } else {
-//                numero = numero + 1
+//                zona = zona + 1
 //            }
-//            sol.numero = numero
+//            sol.zona = zona
             sol.save(flush: true)
             try {
                 def gerentes = firmasService.listaGerentesUnidad(sol.usuario.unidad)
@@ -1382,24 +1382,24 @@ class AvalesController{
 //            def gerencia = UnidadEjecutora.get(firmasService.requirentes(session.usuario.unidad).id)
             def gerencia = UnidadEjecutora.get(1)
 
-//            numero = SolicitudAval.findAllByUnidad(session.usuario.unidad, [sort: "numero", order: "desc", max: 1])
-//            numero = gerencia.numeroSolicitudAval
-            numero = gerencia.numero
+//            zona = SolicitudAval.findAllByUnidad(session.usuario.unidad, [sort: "zona", order: "desc", max: 1])
+//            zona = gerencia.numeroSolicitudAval
+            numero = gerencia.zona
             if (numero == 0) {
                 numero = 1
             } else {
                 numero++
             }
 
-//            println "solicitd a firmar para gerencia: $gerencia, numero actual : ${gerencia.numeroSolicitudAval}, nuevo: $numero"
-            println "solicitd a firmar para gerencia: $gerencia, numero actual : ${gerencia.numero}, nuevo: $numero"
+//            println "solicitd a firmar para gerencia: $gerencia, zona actual : ${gerencia.numeroSolicitudAval}, nuevo: $zona"
+            println "solicitd a firmar para gerencia: $gerencia, zona actual : ${gerencia.zona}, nuevo: $numero"
 
             sol.numero = numero
             sol.save(flush: true)
 
             def unej = UnidadEjecutora.get(gerencia.id)
-//            unej.numeroSolicitudAval = numero
-            unej.numero = numero
+//            unej.numeroSolicitudAval = zona
+            unej.zona = numero
             unej.save(flush: true)
 
             def perfilDireccionPlanificacion = Prfl.findByCodigo("PLAN")

@@ -381,7 +381,7 @@ class AsignacionController {
     }
 
     def agregaAsignacionPrio() {
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
         def listaFuentes = Financiamiento.findAllByProyectoAndAnio(Proyecto.get(params.proy), Anio.get(params.anio)).fuente
         def asgnInstance = Asignacion.get(params.id)
 
@@ -390,7 +390,7 @@ class AsignacionController {
 
 
     def agregaAsignacion() {
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
         def listaFuentes = Financiamiento.findAllByProyectoAndAnio(Proyecto.get(params.proy), Anio.get(params.anio)).sort{it.fuente.codigo}
         def asgnInstance = Asignacion.get(params.id)
         def dist = null
@@ -442,7 +442,7 @@ class AsignacionController {
         def prsp = []
         if (!params.tipo) {
             if (params.parametro && params.parametro.trim().size() > 0) {
-                prsp = Presupuesto.findAll("from Presupuesto where numero like '%${params.parametro}%' and movimiento=1 order by numero")
+                prsp = Presupuesto.findAll("from Presupuesto where zona like '%${params.parametro}%' and movimiento=1 order by zona")
             } else {
                 println "aqui "
                 prsp = Presupuesto.findAllByMovimiento(1, [sort: "numero", max: 20])
@@ -450,13 +450,13 @@ class AsignacionController {
         } else {
             if (params.tipo == "1") {
                 if (params.parametro && params.parametro.trim().size() > 0) {
-                    prsp = Presupuesto.findAll("from Presupuesto where numero like '%${params.parametro}%' and movimiento=1 order by numero")
+                    prsp = Presupuesto.findAll("from Presupuesto where zona like '%${params.parametro}%' and movimiento=1 order by zona")
                 } else {
                     prsp = Presupuesto.findAllByMovimiento(1, [sort: "numero", max: 20])
                 }
             } else {
                 if (params.parametro && params.parametro.trim().size() > 0) {
-                    prsp = Presupuesto.findAll("from Presupuesto where lower(descripcion) like lower('%${params.parametro}%') and movimiento=1 order by numero")
+                    prsp = Presupuesto.findAll("from Presupuesto where lower(descripcion) like lower('%${params.parametro}%') and movimiento=1 order by zona")
                 } else {
                     prsp = Presupuesto.findAllByMovimiento(1, [sort: "descripcion", max: 20])
                 }
@@ -912,7 +912,7 @@ class AsignacionController {
         println "crear asgn inv " + params
         def proy = Proyecto.get(params.id)
         def unidad = proy?.unidadEjecutora ?: ''
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
         def comp = MarcoLogico.findAllByProyectoAndTipoElemento(proy, TipoElemento.get(2), [sort: "id"])
         def cmp
         def acts = []
@@ -1314,7 +1314,7 @@ class AsignacionController {
 //            //cargar los detalles para el anio 'actual'
 //            def detalles
 //
-//            def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+//            def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 //
 //            return [unidad  : unidad, actual: actual, asignaciones: asignaciones, fuentes: fuentes, programas: programas, detalles: detalles,
 //                    programa: programa, totalUnidad: total, maxUnidad: maxUnidad, componentes: componentes, max: max, objetivos: objetivos, campos: campos]
@@ -1399,7 +1399,7 @@ class AsignacionController {
 
         def asignacion = Asignacion.get(params.id)
 
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
         def fuentes = Fuente.list([sort: 'descripcion'])
 
         return [campos: campos, fuentes: fuentes, asignacion: asignacion]
@@ -1462,7 +1462,7 @@ class AsignacionController {
     def asignacionCreacion_ajax() {
 
         def fuentes = Fuente.list([sort: 'descripcion'])
-        def campos = ["numero": ["Número", "string"], "descripcion": ["Descripción", "string"]]
+        def campos = ["zona": ["Número", "string"], "descripcion": ["Descripción", "string"]]
 
         return [fuentes: fuentes, campos: campos]
 
