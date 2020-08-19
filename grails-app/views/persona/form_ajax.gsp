@@ -7,7 +7,6 @@ option[selected]{
     background-color: yellow;
 }
 
-
 </style>
 
 <g:if test="${!personaInstance}">
@@ -17,7 +16,6 @@ option[selected]{
 
     <div class="modal-contenido">
         <g:form class="form-horizontal" name="frmPersona" role="form" controller="persona" action="savePersona_ajax" method="POST">
-
             <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'login', 'error')} ${hasErrors(bean: personaInstance, field: 'password', 'error')}">
                 <g:hiddenField name="id" value="${personaInstance?.id}"/>
                 <g:hiddenField name="unidadEjecutora" value="${unidad?.id}"/>
@@ -27,11 +25,6 @@ option[selected]{
                         <label for="login" class="col-md-4 control-label">
                             Usuario
                         </label>
-
-%{--                        <div class="col-md-8">--}%
-%{--                            <g:textField name="login" maxlength="15" required="" class="form-control input-sm required" value="${personaInstance?.login}"/>--}%
-%{--                        </div>--}%
-
                         <div class="col-md-8">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon"><i class="fa fa-user"></i>
@@ -41,19 +34,11 @@ option[selected]{
                         </div>
                     </span>
                 </div>
-
                 <div class="col-md-6">
                     <span class="grupo">
                         <label for="password" class="col-md-4 control-label">
                             Password
                         </label>
-
-%{--                        <div class="col-md-8">--}%
-%{--                            <g:textField name="password" maxlength="63" required="" class="form-control input-sm required" value="${personaInstance?.password}"/>--}%
-%{--                        </div>--}%
-
-%{--                        <input name="password"  maxlength="63" type="password" class="form-control input-sm required"--}%
-%{--                               placeholder="Contraseña" required value="${personaInstance?.password}">--}%
                         <div class="col-md-8">
                             <div class="input-group input-group-sm"><span class="input-group-addon"><i class="fa fa-key"></i>
                             </span><g:field type="password" name="password"  maxlength="63" class="form-control input-sm noEspacios required" value="${personaInstance?.password ?: ''}"/>
@@ -87,7 +72,6 @@ option[selected]{
                     </span>
                 </div>
             </div>
-
             <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'cedula', 'error')}">
                 <div class="col-md-6">
                     <span class="grupo">
@@ -114,7 +98,6 @@ option[selected]{
                     </span>
                 </div>
             </div>
-
             <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'mail', 'error')} ${hasErrors(bean: personaInstance, field: 'telefono', 'error')} ">
                 <div class="col-md-6">
                     <span class="grupo">
@@ -150,7 +133,19 @@ option[selected]{
                         </label>
 
                         <div class="col-md-10">
-                            <g:textArea name="direccion" cols="80" rows="1" maxlength="15" class="form-control input-sm" value="${personaInstance?.direccion}" style="resize: none"/>
+                            <g:textArea name="direccion" cols="80" rows="1" maxlength="255" class="form-control input-sm" value="${personaInstance?.direccion}" style="resize: none"/>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'referencia', 'error')} ">
+                <div class="col-md-12 ">
+                    <span class="grupo">
+                        <label for="referencia" class="col-md-2 control-label">
+                            Referencia
+                        </label>
+                        <div class="col-md-10">
+                            <g:textArea name="referencia" cols="80" rows="1" maxlength="255" class="form-control input-sm" value="${personaInstance?.referencia}" style="resize: none"/>
                         </div>
                     </span>
                 </div>
@@ -232,50 +227,6 @@ option[selected]{
                 </div>
             </div>
 
-
-        %{--            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'perfil', 'error')} ">--}%
-        %{--                <div class="col-md-12">--}%
-        %{--                    <span class="grupo">--}%
-        %{--                        <label for="perfil" class="col-md-2 control-label">--}%
-        %{--                            Perfiles--}%
-        %{--                        </label>--}%
-
-        %{--                        <div class="col-md-10">--}%
-        %{--                            <div class="row">--}%
-        %{--                                    <div class="col-md-8">--}%
-        %{--                                        <g:select name="perfil" from="${Prfl.list([sort: 'nombre'])}" class="form-control input-sm"--}%
-        %{--                                                  optionKey="id" optionValue="nombre"/>--}%
-        %{--                                    </div>--}%
-
-        %{--                                    <div class="col-md-2">--}%
-        %{--                                        <a href="#" class="btn btn-success btn-sm" id="btn-addPerfil" title="Agregar perfil">--}%
-        %{--                                            <i class="fa fa-plus"></i> Agregar perfil--}%
-        %{--                                        </a>--}%
-        %{--                                    </div>--}%
-        %{--                            </div>--}%
-
-        %{--                            <div class="row" style="margin-top: 5px">--}%
-        %{--                                <div class="col-md-6">--}%
-        %{--                                    <table id="tblPerfiles" class="table table-hover table-bordered table-condensed">--}%
-        %{--                                        <g:each in="${perfiles.perfil}" var="perfil">--}%
-        %{--                                            <tr class="perfiles" data-id="${perfil.id}">--}%
-        %{--                                                <td>--}%
-        %{--                                                    ${perfil?.nombre}--}%
-        %{--                                                </td>--}%
-        %{--                                                <td width="35">--}%
-        %{--                                                    <a href="#" class="btn btn-danger btn-xs btn-deletePerfil">--}%
-        %{--                                                        <i class="fa fa-trash"></i>--}%
-        %{--                                                    </a>--}%
-        %{--                                                </td>--}%
-        %{--                                            </tr>--}%
-        %{--                                        </g:each>--}%
-        %{--                                    </table>--}%
-        %{--                                </div>--}%
-        %{--                            </div>--}%
-        %{--                        </div>--}%
-        %{--                    </span>--}%
-        %{--                </div>--}%
-        %{--            </div>--}%
         </g:form>
     </div>
 

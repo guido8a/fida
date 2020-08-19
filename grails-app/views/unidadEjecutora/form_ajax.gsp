@@ -27,17 +27,30 @@
         </span>
     </div>
 
-    <div class="form-group ${hasErrors(bean: unidad, field: 'tipoInstitucion', 'error')} ${hasErrors(bean: unidad, field: 'provincia', 'error')}">
+    <div class="form-group ${hasErrors(bean: unidad, field: 'tipoInstitucion', 'error')} ${hasErrors(bean: unidad, field: 'codigo', 'error')}">
         <span class="grupo">
             <label for="tipoInstitucion" class="col-md-2 control-label text-info">
                 Tipo Institución
             </label>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <g:select from="${seguridad.TipoInstitucion.list().sort{it.descripcion}}" name="tipoInstitucion" class="form-control input-sm"
                           value="${unidad?.tipoInstitucion?.id}" optionKey="id" optionValue="descripcion"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
+        <span class="grupo">
+            <label for="codigo" class="col-md-2 control-label text-info">
+                Código
+            </label>
+            <div class="col-md-3">
+                <g:textField name="codigo" maxlength="4" class="form-control input-sm" value="${unidad?.codigo}"/>
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </span>
+
+    </div>
+
+    <div class="form-group ${hasErrors(bean: unidad, field: 'provincia', 'error')}">
         <span class="grupo">
             <label for="provincia" class="col-md-2 control-label text-info">
                 Provincia
@@ -48,23 +61,30 @@
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
+        <span class="grupo">
+            <label class="col-md-2 control-label text-info">
+                Cantón
+            </label>
+            <div class="col-md-3" id="divCanton">
+
+            </div>
+        </span>
     </div>
 
     <div class="form-group ${hasErrors(bean: unidad, field: 'codigo', 'error')}  ${hasErrors(bean: unidad, field: 'fechaInicio', 'error')}">
         <span class="grupo">
-            <label for="codigo" class="col-md-2 control-label text-info">
-                Código
+            <label class="col-md-2 control-label text-info">
+                Parroquia
             </label>
-            <div class="col-md-3">
-                <g:textField name="codigo" maxlength="4" required="" class="form-control required input-sm" value="${unidad?.codigo}"/>
-                <p class="help-block ui-helper-hidden"></p>
+            <div class="col-md-4" id="divParroquia">
+
             </div>
         </span>
         <span class="grupo">
             <label class="col-md-2 control-label text-info">
                 Fecha Inicio
             </label>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <input name="fechaInicio" id='datetimepicker1' type='text' class="form-control" value="${unidad?.fechaInicio?.format("dd-MM-yyyy")}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
@@ -92,6 +112,27 @@
         </span>
     </div>
 
+    <div class="form-group ${hasErrors(bean: unidad, field: 'ruc', 'error')} ${hasErrors(bean: unidad, field: 'rup', 'error')}">
+        <span class="grupo">
+            <label for="ruc" class="col-md-2 control-label text-info">
+                Ruc
+            </label>
+            <div class="col-md-4">
+                <g:textField name="ruc" maxlength="13" class="form-control valid input-sm" value="${unidad?.ruc}"/>
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </span>
+        <span class="grupo">
+            <label for="rup" class="col-md-1 control-label text-info">
+                Rup
+            </label>
+            <div class="col-md-4">
+                <g:textField name="rup" maxlength="13" class="form-control input-sm" value="${unidad?.rup}"/>
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </span>
+    </div>
+
     <div class="form-group ${hasErrors(bean: unidad, field: 'direccion', 'error')} ">
         <span class="grupo">
             <label for="direccion" class="col-md-2 control-label text-info">
@@ -99,6 +140,18 @@
             </label>
             <div class="col-md-9">
                 <g:textArea name="direccion"  maxlength="127" class="form-control input-sm" style="resize: none" value="${unidad?.direccion}"/>
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </span>
+    </div>
+
+    <div class="form-group ${hasErrors(bean: unidad, field: 'referencia', 'error')} ">
+        <span class="grupo">
+            <label for="referencia" class="col-md-2 control-label text-info">
+                Referencia
+            </label>
+            <div class="col-md-9">
+                <g:textArea name="referencia"  maxlength="255" class="form-control input-sm" style="resize: none" value="${unidad?.referencia}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -170,10 +223,51 @@
             </div>
         </span>
     </div>
+
+    <div class="form-group ${hasErrors(bean: unidad, field: 'legal', 'error')}${hasErrors(bean: unidad, field: 'anio', 'error')} ">
+        <span class="grupo">
+            <label for="anio" class="col-md-2 control-label text-info">
+                Número de Años
+            </label>
+            <div class="col-md-2">
+                <g:textField name="anio" maxlength="2" class="form-control digits input-sm" value="${unidad?.anio ?: ''}"/>
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </span>
+        <span class="grupo">
+            <label for="legal" class="col-md-3 control-label text-info">
+                Legalmente conformada
+            </label>
+            <div class="col-md-2">
+                <g:select name="legal" from="${[1:'SI',0:'NO']}" class="form-control" optionKey="key" optionValue="value" value="${unidad?.legal}"/>
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </span>
+    </div>
 </g:form>
 
 <script type="text/javascript">
 
+    $("#provincia").change(function () {
+        var pro = $(this).val();
+       cargarCanton(pro);
+    });
+
+    cargarCanton($("#provincia option:selected").val());
+
+    function cargarCanton (id) {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'unidadEjecutora', action: 'canton_ajax')}',
+            data:{
+                id: id,
+                unidad: '${unidad?.id}'
+            },
+            success: function (msg) {
+                $("#divCanton").html(msg)
+            }
+        });
+    }
 
     $('#datetimepicker1').datetimepicker({
         locale: 'es',

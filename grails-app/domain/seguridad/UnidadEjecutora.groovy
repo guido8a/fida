@@ -1,6 +1,7 @@
 package seguridad
 
 import audita.Auditable
+import geografia.Parroquia
 import geografia.Provincia
 import parametros.Anio
 import poa.Asignacion
@@ -24,6 +25,12 @@ class UnidadEjecutora implements Auditable{
     String observaciones
     int zona = 0
     int orden = 0
+    Parroquia parroquia
+    String referencia
+    String legal
+    String ruc
+    String rup
+    int anio = 0
 
     static auditable = true
 
@@ -50,10 +57,16 @@ class UnidadEjecutora implements Auditable{
             observaciones column: 'unejobsr'
             zona column: 'unejnmsr'
             orden column: 'unejordn'
+            parroquia column: 'parr__id'
+            referencia column: 'unejrefe'
+            legal column: 'unejlgal'
+            ruc column: 'unej_ruc'
+            rup column: 'unej_rup'
+            anio column: 'unejanio'
         }
     }
     static constraints = {
-        nombre(size: 1..63, blank: false, nullable: false, attributes: [title: 'nombre'])
+        nombre(size: 1..255, blank: false, nullable: false, attributes: [title: 'nombre'])
         codigo(size: 1..4, blank: true, nullable: true, attributes: [title: 'codigo'])
         direccion(size: 1..127, blank: true, nullable: true, attributes: [title: 'direccion'])
         sigla(size: 0..7, blank: true, nullable: true, attributes: [title: 'sigla'])
@@ -66,6 +79,13 @@ class UnidadEjecutora implements Auditable{
         mail(blank: true, nullable: true)
         fechaInicio(blank: true, nullable: true)
         fechaFin(blank: true, nullable: true)
+        parroquia(blank:true, nullable: true)
+        referencia(size: 1..255, blank: true, nullable: true)
+        legal(blank:true, nullable: true)
+        ruc(size: 1..13, blank: true, nullable: true)
+        rup(size: 1..13, blank: true, nullable: true)
+        anio(blank:true, nullable:true)
+        tipoInstitucion(blank:true, nullable: true)
     }
 
     @Override

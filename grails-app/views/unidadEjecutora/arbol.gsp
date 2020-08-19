@@ -90,7 +90,7 @@
     </div>
 
     <div class="col-md-5 text-right pull-right" style="font-size: 14px">
-        <i class="fa fa-building text-success fa-2x"></i> Unidad Ejecutora / Organización
+        <i class="fa fa-home text-success fa-2x"></i> Unidad Ejecutora / Organización
         <i class="fa fa-user-circle text-primary fa-2x" style="margin-left: 50px"></i> Persona
     </div>
 </div>

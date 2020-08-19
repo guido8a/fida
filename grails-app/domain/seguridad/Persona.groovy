@@ -25,6 +25,7 @@ class Persona implements Auditable{
     String sexo
     String discapacidad
     String direccion
+    String referencia
 
     static auditable = true
 
@@ -59,6 +60,7 @@ class Persona implements Auditable{
             sexo column: 'prsnsexo'
             discapacidad column: 'prsndscp'
             direccion column: 'prsndire'
+            referencia column: 'prsnrefe'
         }
     }
     static constraints = {
@@ -79,7 +81,8 @@ class Persona implements Auditable{
         autorizacion(matches: /^[a-zA-Z0-9ñÑáéíóúÁÉÍÚÓüÜ_-]+$/, blank: true, nullable: true, attributes: [mensaje: 'Contraseña para autorizaciones'])
         activo(blank: false, attributes: [title: 'activo'])
         discapacidad(size: 0..15, blank: true, nullable: true)
-        direccion(size: 0..15, blank: true, nullable: true)
+        direccion(size: 0..255, blank: true, nullable: true)
+        referencia(size: 0..255, blank: true, nullable: true)
     }
 
     String toString() {

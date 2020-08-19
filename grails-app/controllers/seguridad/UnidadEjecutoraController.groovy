@@ -1,5 +1,7 @@
 package seguridad
 
+import geografia.Canton
+import geografia.Parroquia
 import geografia.Provincia
 import parametros.Anio
 import proyectos.PresupuestoUnidad
@@ -49,6 +51,7 @@ class UnidadEjecutoraController {
             texto = "Unidad creada correctamente"
         }
 
+        params.anio = params.anio ? params.anio : 0
         unidad.properties = params
 
         if(!unidad.save(flush:true)){
@@ -182,10 +185,11 @@ class UnidadEjecutoraController {
                             tree += "</li>"
                         }else{
                             ico = ", \"icon\":\"fa fa-user-circle text-info\""
-                            iconoInactivo = ", \"icon\":\"fa fa-user-circle text-primary\""
+                            iconoInactivo = ", \"icon\":\"fa fa-user-circle text-default\""
                             clase = "jstree-closed"
                             clase3 = "jstree-closed inactivo"
-                            if(Persona.get(h.id).fechaFin == null){
+//                            if(Persona.get(h.id).fechaFin == null){
+                            if(Persona.get(h.id).activo == 1){
                                 tree += "<li id='usu_" + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"persona"}\" ${ico}}'>"
                             }else{
                                 tree += "<li id='usu_" + h.id + "' class='" + clase3 + "' data-jstree='{\"type\":\"${"persona"}\" ${iconoInactivo}}'>"
@@ -328,6 +332,30 @@ class UnidadEjecutoraController {
         } else {
             render "SUCCESS*Presupuesto modificado exitosamente"
         }
+    }
+
+    def canton_ajax () {
+        def provincia = Provincia.get(params.id)
+        def cantones = Canton.findAllByProvincia(provincia)
+        def unidad
+        if(params.unidad){
+            unidad = UnidadEjecutora.get(params.unidad)
+        }else{
+            unidad = new UnidadEjecutora()
+        }
+        return[cantones: cantones, unidad: unidad]
+    }
+
+    def parroquia_ajax(){
+        def canton = Canton.get(params.id)
+        def parroquias = Parroquia.findAllByCanton(canton)
+        def unidad
+        if(params.unidad){
+            unidad = UnidadEjecutora.get(params.unidad)
+        }else{
+            unidad = new UnidadEjecutora()
+        }
+        return[parroquias: parroquias, unidad: unidad]
     }
 
 }

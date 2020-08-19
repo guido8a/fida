@@ -6,6 +6,16 @@
 --%>
 <g:form class="form-horizontal" name="frmShowUnidad">
 
+
+    <div class="row">
+        <label class="col-md-3  text-info">
+            Nombre
+        </label>
+        <div class="col-md-8">
+            <strong style="color: #47b636">${unidad?.nombre}</strong>
+        </div>
+    </div>
+
     <g:if test="${unidad?.padre}">
         <div class="row">
             <label class="col-md-3  text-info">
@@ -48,23 +58,16 @@
             ${unidad?.fechaInicio?.format("dd-MM-yyyy")}
         </div>
     </div>
-
-    <div class="row">
-        <label class="col-md-3  text-info">
-            Nombre
-        </label>
-        <div class="col-md-3">
-            <strong style="color: #47b636">${unidad?.nombre}</strong>
+    <g:if test="${unidad?.sigla}">
+        <div class="row">
+            <label class="col-md-3  text-info">
+                Sigla
+            </label>
+            <div class="col-md-3">
+                ${unidad?.sigla}
+            </div>
         </div>
-
-        <label class="col-md-2  text-info">
-            Sigla
-        </label>
-        <div class="col-md-4">
-            ${unidad?.sigla}
-        </div>
-    </div>
-
+    </g:if>
     <div class="row">
         <label class="col-md-3  text-info">
             Teléfono
@@ -89,14 +92,16 @@
             ${unidad?.direccion}
         </div>
     </div>
-    <div class="row">
-        <label class="col-md-3  text-info">
-            Objetivo
-        </label>
-        <div class="col-md-6">
-            ${unidad?.objetivo}
+    <g:if test="${unidad?.objetivo}">
+        <div class="row">
+            <label class="col-md-3  text-info">
+                Objetivo
+            </label>
+            <div class="col-md-6">
+                ${unidad?.objetivo}
+            </div>
         </div>
-    </div>
+    </g:if>
     <div class="row">
         <label class="col-md-3  text-info">
             Observaciones
