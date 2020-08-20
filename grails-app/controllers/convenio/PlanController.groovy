@@ -1,6 +1,9 @@
 package convenio
 
+import parametros.Anio
+import parametros.proyectos.Fuente
 import parametros.proyectos.TipoElemento
+import proyectos.Financiamiento
 import proyectos.MarcoLogico
 import proyectos.Proyecto
 
@@ -163,7 +166,56 @@ class PlanController {
                 render "no"
             }
         }
+    }
 
+    def fuente_ajax () {
+        def plan = Plan.get(params.id)
+        return[plan: plan]
+    }
+
+    def tablaFuente_ajax(){
+        def plan = Plan.get(params.id)
+
+        def financiamientos = FinanciamientoPlan.findAllByPlan(plan).sort{it.fuente.descripcion}
+
+        return[plan: plan, financiamientos: financiamientos]
+    }
+
+    def saveFuente_ajax(){
+
+        def plan = Plan.get(params.id.toLong())
+        def fuente = Fuente.get(params.fuente.toLong())
+
+        def financiamientos = FinanciamientoPlan.findAllByPlanAndFuente(plan,fuente)
+        def financiamiento
+
+        if(financiamientos){
+            render "er_La fuente ya fué agregada"
+        }else{
+            financiamiento = new FinanciamientoPlan()
+            financiamiento.valor = params.monto.toDouble()
+            financiamiento.fuente = fuente
+            financiamiento.plan = plan
+        }
+
+        if(!financiamiento.save(flush:true)){
+            println("error al guardar la fuente del plan " + financiamiento.errors)
+            render "no"
+        }else{
+            render "ok"
+        }
+    }
+
+    def borrarFuente_ajax(){
+        def financiamiento = FinanciamientoPlan.get(params.id)
+
+        try{
+            financiamiento.delete(flush: true)
+            render "ok"
+        }catch(e){
+            println("error al borrar la fuente del plan " + e + financiamiento.errors)
+            render "no"
+        }
     }
 
 }

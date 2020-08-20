@@ -98,6 +98,31 @@
 
 <script type="text/javascript">
 
+    function agregarFuente(id){
+        $.ajax({
+            type    : "POST",
+            url     : "${createLink(controller: 'plan', action:'fuente_ajax')}",
+            data    : {
+                id : id
+            },
+            success : function (msg) {
+                bootbox.dialog({
+                    title   : "Fuentes",
+                    class   : "modal-lg",
+                    message : msg,
+                    buttons : {
+                        ok : {
+                            label     : "Salir",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     $("#btnAgregarPlan").click(function () {
         agregarPlan(null)
     });
@@ -202,6 +227,14 @@
                 action: function ($element) {
                     var id = $element.data("id");
                     agregarPlan(id);
+                }
+            },
+            fuente: {
+                label: "Fuente",
+                icon: "fa fa-money-bill",
+                action: function ($element) {
+                    var id = $element.data("id");
+                    agregarFuente(id);
                 }
             },
             eliminar: {
