@@ -187,15 +187,22 @@ class PlanController {
         def fuente = Fuente.get(params.fuente.toLong())
 
         def financiamientos = FinanciamientoPlan.findAllByPlanAndFuente(plan,fuente)
+        def totalFinanciado = FinanciamientoPlan.findAllByPlan(plan).valor.sum()
+        def restante = plan.costo.toDouble() - totalFinanciado
+
         def financiamiento
 
         if(financiamientos){
             render "er_La fuente ya fué agregada"
         }else{
-            financiamiento = new FinanciamientoPlan()
-            financiamiento.valor = params.monto.toDouble()
-            financiamiento.fuente = fuente
-            financiamiento.plan = plan
+            if(restante < params.monto.toDouble()){
+                render "er_El monto ingresado es mayor al valor restante"
+            }else{
+                financiamiento = new FinanciamientoPlan()
+                financiamiento.valor = params.monto.toDouble()
+                financiamiento.fuente = fuente
+                financiamiento.plan = plan
+            }
         }
 
         if(!financiamiento.save(flush:true)){
