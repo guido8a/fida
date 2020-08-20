@@ -192,7 +192,7 @@ class PlanController {
 
         if(params.monto.toDouble() < 0){
             render "er_Ingrese un número positivo"
-        }else{
+        } else {
             if(financiados){
                 totalFinanciado = financiados.valor.sum()
             }
@@ -207,8 +207,9 @@ class PlanController {
 
             if(financiamientos){
                 render "er_La fuente ya fué agregada"
-            }else{
-                if(restante < params.monto.toDouble()){
+            } else {
+//                println "${Math.round(restante*100)} < ${Math.round(params.monto.toDouble()*100)}"
+                if(Math.round(restante*100) < Math.round(params.monto.toDouble()*100)){
                     render "er_El monto ingresado es mayor al valor restante"
                 }else{
                     financiamiento = new FinanciamientoPlan()

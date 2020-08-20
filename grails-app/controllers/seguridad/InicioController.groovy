@@ -143,7 +143,7 @@ class InicioController {
                 sql = "insert into unej (unej__id, unejobsr, unejfcin, unejnmbr, unejnmsr, parr__id, unejdire, " +
                         "unejrefe, unejtelf, unejlgal, unej_ruc, unej_rup, unejmail, " +
                         "unejanio, unejordn) " +
-                        "values(default, '${rgst[0]}', '${fcha}', '${rgst[3]}', ${zona}, ${parr}, '${rgst[8]}', " +
+                        "values(default, '${rgst[1]}', '${fcha}', '${rgst[3]}', ${zona}, ${parr}, '${rgst[8]}', " +
                         "'${rgst[9]}', '${rgst[10]}', '${rgst[11][0]}', '${rgst[12]}', '${rgst[13]}', '${rgst[14]}', " +
                         "${rgst[15]}, ${orden})" +
                         "returning unej__Id"
