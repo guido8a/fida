@@ -185,32 +185,49 @@ class PlanController {
 
         def plan = Plan.get(params.id.toLong())
         def fuente = Fuente.get(params.fuente.toLong())
-
+        def totalFinanciado = 0
         def financiamientos = FinanciamientoPlan.findAllByPlanAndFuente(plan,fuente)
-        def totalFinanciado = FinanciamientoPlan.findAllByPlan(plan).valor.sum()
-        def restante = plan.costo.toDouble() - totalFinanciado
+        def financiados = FinanciamientoPlan.findAllByPlan(plan)
 
-        def financiamiento
 
-        if(financiamientos){
-            render "er_La fuente ya fué agregada"
+        if(params.monto.toDouble() < 0){
+            render "er_Ingrese un número positivo"
         }else{
-            if(restante < params.monto.toDouble()){
-                render "er_El monto ingresado es mayor al valor restante"
+            if(financiados){
+                totalFinanciado = financiados.valor.sum()
+            }
+
+            def restante = 0
+
+            if(plan.costo > 0){
+                restante = plan.costo - totalFinanciado
+            }
+
+            def financiamiento
+
+            if(financiamientos){
+                render "er_La fuente ya fué agregada"
             }else{
-                financiamiento = new FinanciamientoPlan()
-                financiamiento.valor = params.monto.toDouble()
-                financiamiento.fuente = fuente
-                financiamiento.plan = plan
+                if(restante < params.monto.toDouble()){
+                    render "er_El monto ingresado es mayor al valor restante"
+                }else{
+                    financiamiento = new FinanciamientoPlan()
+                    financiamiento.valor = params.monto.toDouble()
+                    financiamiento.fuente = fuente
+                    financiamiento.plan = plan
+                }
+            }
+
+            if(!financiamiento.save(flush:true)){
+                println("error al guardar la fuente del plan " + financiamiento.errors)
+                render "no"
+            }else{
+                render "ok"
             }
         }
 
-        if(!financiamiento.save(flush:true)){
-            println("error al guardar la fuente del plan " + financiamiento.errors)
-            render "no"
-        }else{
-            render "ok"
-        }
+
+
     }
 
     def borrarFuente_ajax(){
