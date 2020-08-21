@@ -70,9 +70,9 @@ class DescargasController {
         response.getOutputStream().write(b)
     }
 
-    def manualPOApermanente() {
-        def nombre = "manual del usuario poa permanente.pdf"
-        def path = '/var/fida/manual reportes.pdf'
+    def manualConvenios() {
+        def nombre = "manual convenios y talleres.pdf"
+        def path = '/var/fida/manual convenios y talleres.pdf'
         def file = new File(path)
         def b = file.getBytes()
         response.setContentType('pdf')
