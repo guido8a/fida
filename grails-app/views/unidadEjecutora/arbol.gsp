@@ -90,7 +90,7 @@
     </div>
 
     <div class="col-md-5 text-right pull-right" style="font-size: 14px">
-        <i class="fa fa-home text-success fa-2x"></i> Unidad Ejecutora / Organización
+        <i class="fas fa-warehouse text-success fa-1x"></i> Unidad Ejecutora / <i class="fa fa-home text-success fa-1x"></i> Organización
         <i class="fa fa-user-circle text-primary fa-2x" style="margin-left: 50px"></i> Persona
     </div>
 </div>
@@ -651,6 +651,7 @@
                 root                : {
                     icon : "fa fa-sitemap text-info"
                 },
+/*
                 unidadPadreActivo   : {
                     icon : "fa fa-building text-info"
                 },
@@ -663,6 +664,7 @@
                 unidadHijoInactivo  : {
                     icon : "fa fa-home text-muted"
                 },
+*/
                 usuarioActivo       : {
                     icon : "fa fa-user text-info"
                 },

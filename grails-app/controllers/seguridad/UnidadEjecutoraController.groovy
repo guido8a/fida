@@ -155,12 +155,14 @@ class UnidadEjecutoraController {
             def prov = Provincia.get(id)
             hijos = UnidadEjecutora.findAllByProvinciaAndPadreIsNullAndFechaFinIsNull(prov).sort{it.nombre}
             def presupuesto = ""
+            def icono = ""
             def data = ""
 
 //            ico = ", \"icon\":\"fa fa-building text-success\""
-            ico = ", \"icon\":\"fas fa-home text-success\""
             hijos.each { hijo ->
-//                println "procesa ${hijo.nombre}"
+                icono = hijo.tipoInstitucion.id == 1 ? "fas fa-warehouse" : "fa-home"
+                ico = ", \"icon\":\"fas ${icono} text-success\""
+//                println "${hijo.tipoInstitucion.id} --> '1' icon: $ico"
                 presupuesto = UnidadEjecutora.findByCodigoAndFechaFinIsNull('FRPS') ? ' presupuesto' : ''
                 clase = UnidadEjecutora.findByPadreAndFechaFinIsNull(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
                 clase2 = Persona.findAllByUnidadEjecutora(hijo) ? " hasChildren" : ''
