@@ -34,7 +34,7 @@
 <div class="col-md-6 alert alert-success" id="divResto"  style="height: 40px"></div>
 
 <div class="col-md-6 alert alert-info" style="height: 40px">
-    <h4>Total del proyecto: <g:formatNumber number="${plan?.costo}" type="currency" currencySymbol=""/></h4>
+    <h4>Total: <g:formatNumber number="${plan?.costo}" type="currency" currencySymbol=""/></h4>
 </div>
 
 <script type="text/javascript">

@@ -97,7 +97,7 @@
                 Nombre
             </label>
             <div class="col-md-6">
-                <g:textField name="nombre" maxlength="63" class="form-control required valid input-sm" value="${unidad?.nombre}"/>
+                <g:textField name="nombre" maxlength="255" class="form-control required valid input-sm" value="${unidad?.nombre}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -145,13 +145,25 @@
         </span>
     </div>
 
+    <div class="form-group ${hasErrors(bean: unidad, field: 'sector', 'error')} ">
+        <span class="grupo">
+            <label for="sector" class="col-md-2 control-label text-info">
+                Sector
+            </label>
+            <div class="col-md-9">
+                <g:textField name="sector" value="${unidad?.sector}" class="form-control" maxlength="127"/>
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </span>
+    </div>
+
     <div class="form-group ${hasErrors(bean: unidad, field: 'referencia', 'error')} ">
         <span class="grupo">
             <label for="referencia" class="col-md-2 control-label text-info">
                 Referencia
             </label>
             <div class="col-md-9">
-                <g:textArea name="referencia"  maxlength="255" class="form-control input-sm" style="resize: none" value="${unidad?.referencia}"/>
+                <g:textField name="referencia"  maxlength="255" class="form-control input-sm" value="${unidad?.referencia}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
@@ -163,7 +175,7 @@
                 Objetivo
             </label>
             <div class="col-md-9">
-                <g:textArea name="objetivo"  maxlength="63" class="form-control input-sm" style="resize: none" value="${unidad?.objetivo}"/>
+                <g:textField name="objetivo"  maxlength="63" class="form-control input-sm" value="${unidad?.objetivo}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>

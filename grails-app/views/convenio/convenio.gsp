@@ -56,9 +56,9 @@
             <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de negocio Solidario">
                 <i class="fa fa-hands-helping"></i> Plan de negocio Solidario
             </a>
-%{--            <a href="#" id="btnEstado" class="btn btn-sm btn-info" title="Indicadores">--}%
-%{--                <i class="fa fa-scroll"></i> Indicadores--}%
-%{--            </a>--}%
+            <a href="#" id="btnDatos" class="btn btn-sm btn-info" title="Datos de la organización">
+                <i class="fa fa-scroll"></i> Datos Organización
+            </a>
 %{--            <a href="#" id="editMrlg" class="btn btn-sm btn-info" title="Ver registro">--}%
 %{--                <i class="fa fa-clipboard"></i> Plan de negocio solidario--}%
 %{--            </a>--}%
@@ -209,6 +209,10 @@
 </div>
 
 <script type="text/javascript">
+
+    $("#btnDatos").click(function () {
+        location.href="${createLink(controller: 'datosOrganizacion', action: 'datos')}/" + '${convenio?.id}'
+    });
 
     $("#btnPlanNegocio").click(function () {
        location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + '${convenio?.id}'

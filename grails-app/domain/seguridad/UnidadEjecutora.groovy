@@ -31,6 +31,7 @@ class UnidadEjecutora implements Auditable{
     String ruc
     String rup
     int anio = 0
+    String sector
 
     static auditable = true
 
@@ -63,6 +64,7 @@ class UnidadEjecutora implements Auditable{
             ruc column: 'unej_ruc'
             rup column: 'unej_rup'
             anio column: 'unejanio'
+            sector column: 'unejsctr'
         }
     }
     static constraints = {
@@ -86,6 +88,7 @@ class UnidadEjecutora implements Auditable{
         rup(size: 1..13, blank: true, nullable: true)
         anio(blank:true, nullable:true)
         tipoInstitucion(blank:true, nullable: true)
+        sector(size: 0..127,blank: true, nullable: true)
     }
 
     @Override

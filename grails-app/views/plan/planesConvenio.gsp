@@ -26,7 +26,7 @@
             <i class="fa fa-arrow-left"></i> Convenio
         </g:link>
         <g:link controller="plan" action="plan" id="${convenio?.id}" class="btn btn-sm btn-info">
-            <i class="fa fa-camera-retro"></i> Períodos
+            <i class="fa fa-camera-retro"></i> Planificación
         </g:link>
     </div>
     <div class="btn-group">
@@ -138,7 +138,7 @@
             success : function (msg) {
                 var b = bootbox.dialog({
                     id      : "dlgCreatePlan",
-                    title   : "Nuevo Plan",
+                    title   : "Plan",
                     message : msg,
                     buttons : {
                         cancelar : {
