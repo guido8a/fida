@@ -12,7 +12,7 @@
             </label>
             <div class="col-md-8">
                 <g:select from="${seguridad.UnidadEjecutora.list().sort{it.nombre}}" name="unidadEjecutora" class="form-control input-sm"
-                          value="${convenio?.unidadEjecutora?.id}" optionKey="id" optionValue="nombre" disabled=""/>
+                          value="${unidad?.id}" optionKey="id" optionValue="nombre" disabled=""/>
             </div>
         </span>
     </div>
@@ -53,7 +53,7 @@
             type: 'POST',
             url: '${createLink(controller: 'etniaOrganizacion', action: 'tablaEtnias_ajax')}',
             data:{
-                id: '${convenio?.id}'
+                id: '${unidad?.id}'
             },
             success: function (msg) {
                 $("#divTablaEtnias").html(msg)
@@ -71,7 +71,7 @@
             type: 'GET',
             url: '${createLink(controller: 'etniaOrganizacion', action: 'agregarEtnia_ajax')}',
             data:{
-                id: '${convenio?.id}',
+                id: '${unidad?.id}',
                 raza: raza,
                 numero: $("#numero").val()
             },

@@ -14,8 +14,8 @@
 
 <div class="btn-toolbar toolbar">
     <div class="btn-group">
-        <g:link controller="convenio" action="convenio" id="${convenio?.id}" class="btn btn-sm btn-default">
-            <i class="fa fa-arrow-left"></i> Convenio
+        <g:link controller="unidadEjecutora" action="organizacion" id="${unidad?.id}" class="btn btn-sm btn-default">
+            <i class="fa fa-arrow-left"></i> Organización
         </g:link>
         <a href="#" class="btn btn-success" id="btnGuardarDatosOrg"><i class="fa fa-save"></i>Guardar</a>
     </div>
@@ -71,7 +71,7 @@
                         <label for="tipoCuenta" class="control-label text-info">
                             Tipo de cuenta
                         </label>
-                        <g:select name="tipoCuenta" from="${[0:'Ahorros', 1:'Corriente']}" optionValue="value" optionKey="key" class="form-control input-sm"/>
+                        <g:select name="tipoCuenta" from="${[0:'Ahorros', 1:'Corriente']}" value="${dato?.tipoCuenta}" optionValue="value" optionKey="key" class="form-control input-sm"/>
                         <p class="help-block ui-helper-hidden"></p>
                     </div>
                 </span>
@@ -383,7 +383,7 @@
             type    : "POST",
             url     : "${createLink(controller: 'etniaOrganizacion',action:'formEtnias_ajax')}",
             data    : {
-                convenio: '${convenio?.id}'
+                unidad: '${unidad?.id}'
             },
             success : function (msg) {
                 var b = bootbox.dialog({

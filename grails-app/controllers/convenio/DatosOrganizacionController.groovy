@@ -1,10 +1,12 @@
 package convenio
 
+import seguridad.UnidadEjecutora
+
 class DatosOrganizacionController {
 
     def datos(){
-        def convenio = Convenio.get(params.id)
-        def existe = DatosOrganizacion.findByUnidadEjecutora(convenio.unidadEjecutora)
+        def unidad = UnidadEjecutora.get(params.id)
+        def existe = DatosOrganizacion.findByUnidadEjecutora(unidad)
         def dato
         if(existe){
             dato = existe
@@ -12,7 +14,7 @@ class DatosOrganizacionController {
             dato = new DatosOrganizacion()
         }
 
-        return[dato:dato,unidad:convenio.unidadEjecutora,convenio:convenio]
+        return[dato:dato,unidad:unidad]
     }
 
     def saveDatos_ajax(){

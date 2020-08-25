@@ -47,14 +47,12 @@
             <a href="#" id="btnAdministradorCon" class="btn btn-sm btn-info" title="Administrador del unidad">
                 <i class="fa fa-user"></i> Composición Étnica
             </a>
-            <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de negocio Solidario">
-                <i class="fa fa-hands-helping"></i> Plan de negocio Solidario
-            </a>
-%{--
+%{--            <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de negocio Solidario">--}%
+%{--                <i class="fa fa-hands-helping"></i> Plan de negocio Solidario--}%
+%{--            </a>--}%
             <a href="#" id="btnDatos" class="btn btn-sm btn-info" title="Datos de la organización">
                 <i class="fa fa-scroll"></i> Datos Organización
             </a>
---}%
         </g:if>
         <a href="${createLink(controller: 'unidad', action: 'unidad')}" id="btnNuevoConvenio"
            class="btn btn-sm btn-success" title="Consultar artículo">

@@ -1,45 +1,35 @@
 package convenio
 
+import seguridad.UnidadEjecutora
 import taller.Raza
 
 
 class EtniaOrganizacionController {
 
     def formEtnias_ajax(){
-        def convenio = Convenio.get(params.convenio)
-        return[convenio: convenio]
+        def unidad = UnidadEjecutora.get(params.unidad)
+        return[unidad: unidad]
     }
 
     def tablaEtnias_ajax(){
-        def convenio = Convenio.get(params.id)
-        def etnias = EtniaOrganizacion.findAllByUnidadEjecutora(convenio.unidadEjecutora)
+        def unidad = UnidadEjecutora.get(params.id)
+        def etnias = EtniaOrganizacion.findAllByUnidadEjecutora(unidad)
 
         return[etnias: etnias]
     }
 
-    def revisar_ajax (){
-        def convenio = Convenio.get(params.id)
-        def raza = Raza.get(params.raza)
-        def etnias = EtniaOrganizacion.findByUnidadEjecutoraAndRaza(convenio.unidadEjecutora, raza)
-
-        if(etnias){
-            render "ok"
-        }else{
-            render "no"
-        }
-    }
 
     def agregarEtnia_ajax(){
-        def convenio = Convenio.get(params.id)
+        def unidad = UnidadEjecutora.get(params.id)
         def raza = Raza.get(params.raza)
-        def etnias = EtniaOrganizacion.findByUnidadEjecutoraAndRaza(convenio.unidadEjecutora, raza)
+        def etnias = EtniaOrganizacion.findByUnidadEjecutoraAndRaza(unidad, raza)
         def etniaOrg
         if(etnias){
             render "er"
         }else{
 
             etniaOrg = new EtniaOrganizacion()
-            etniaOrg.unidadEjecutora = convenio.unidadEjecutora
+            etniaOrg.unidadEjecutora = unidad
             etniaOrg.raza = raza
             etniaOrg.numero = params.numero.toInteger()
 
@@ -49,6 +39,18 @@ class EtniaOrganizacionController {
             }else{
                 render "ok"
             }
+        }
+    }
+
+    def borrarEtnia_ajax(){
+        def etnia = EtniaOrganizacion.get(params.id)
+
+        try{
+            etnia.delete(flush:true)
+            render "ok"
+        }catch(e){
+            println("error al borrar el elemento del tabla etnia " + e + etnia.errors)
+            render "no"
         }
     }
 

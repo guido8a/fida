@@ -28,8 +28,23 @@
 
 <script type="text/javascript">
 
-    $("#btnBorrarEtnia").click(function () {
-
+    $(".btnBorrarEtnia").click(function () {
+        var id = $(this).data("id");
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'etniaOrganizacion', action: 'borrarEtnia_ajax')}',
+            data:{
+                id: id
+            },
+            success: function (msg) {
+                if(msg == 'ok'){
+                    log("Borrado correctamente","success");
+                    cargarTablaEtnias();
+                }else{
+                    log("Error al borrar el elemento","error")
+                }
+            }
+        })
     });
 
 </script>
