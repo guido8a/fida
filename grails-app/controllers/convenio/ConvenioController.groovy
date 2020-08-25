@@ -187,7 +187,10 @@ class ConvenioController {
         }
 
         def cn = dbConnectionService.getConnection()
-        sql = "select * from cnvn, unej, parr where cnvn.parr__id = parr.parr__id and unej.unej__id = cnvn.unej__id and ${operador} ilike '%${params.texto}%' order by cnvnnmbr asc limit 20"
+        sql = "select cnvn.cnvn__id, cnvncdgo, cnvnnmbr, cnvnfcin, unejnmbr, parrnmbr from cnvn, unej, parr " +
+                "where cnvn.parr__id = parr.parr__id and " +
+                "unej.unej__id = cnvn.unej__id and ${operador} ilike '%${params.texto}%' " +
+                "order by cnvnnmbr asc limit 20"
 
         def res = cn.rows(sql.toString())
 

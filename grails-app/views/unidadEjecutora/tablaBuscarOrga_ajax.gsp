@@ -10,24 +10,25 @@
         <g:each in="${convenios}" var="convenio">
             <tr style="width: 100%">
                 <td style="width: 10%; text-align: center">
-                    <a href="#" class="btn btn-xs btn-success btnSeleConvenio"  title="Seleccionar convenio"
-                       data-id="${convenio.cnvn__id}">  <i class="fa fa-check"></i>
+                    <a href="#" class="btn btn-xs btn-success btnSeleccion"  title="Seleccionar convenio"
+                       data-id="${convenio.unej__id}">
+                        <i class="fa fa-check"></i>
                     </a>
                 </td>
-                <td style="width: 20%">
-                    ${convenio.parrnmbr}
-                </td>
-                <td style="width: 10%">
-                    ${convenio.cnvncdgo}
-                </td>
                 <td style="width: 30%">
-                    ${convenio.cnvnnmbr}
-                </td>
-                <td style="width: 15%">
                     ${convenio.unejnmbr}
                 </td>
                 <td style="width: 15%">
-                    ${convenio.cnvnfcin.format("dd-MM-yyyy")}
+                    ${convenio.provnmbr}
+                </td>
+                <td style="width: 15%">
+                    ${convenio.cntnnmbr}
+                </td>
+                <td style="width: 15%">
+                    ${convenio.parrnmbr}
+                </td>
+                <td style="width: 13%">
+                    ${convenio.unejfcin.format("dd-MM-yyyy")}
                 </td>
             </tr>
         </g:each>
@@ -36,9 +37,9 @@
 
 <script type="text/javascript">
 
-    $(".btnSeleConvenio").click(function () {
+    $(".btnSeleccion").click(function () {
         var id = $(this).data("id");
-        location.href="${createLink(controller: 'convenio', action: 'convenio')}/" + id
+        location.href="${createLink(controller: 'unidadEjecutora', action: 'organizacion')}/" + id
     });
 
 </script>

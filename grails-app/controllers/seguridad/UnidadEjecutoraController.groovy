@@ -10,6 +10,8 @@ class UnidadEjecutoraController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    def dbConnectionService
+
     def form_ajax(){
 
         def unidad
@@ -163,7 +165,8 @@ class UnidadEjecutoraController {
                 icono = hijo.tipoInstitucion.id == 1 ? "fas fa-warehouse" : "fa-home"
                 ico = ", \"icon\":\"fas ${icono} text-success\""
 //                println "${hijo.tipoInstitucion.id} --> '1' icon: $ico"
-                presupuesto = UnidadEjecutora.findByCodigoAndFechaFinIsNull('FRPS') ? ' presupuesto' : ''
+//                presupuesto = hijo.tipoInstitucion.id == 1 ? ' presupuesto' : ''
+                presupuesto = hijo.nombre.contains('FAREPS') ? ' presupuesto' : ''
                 clase = UnidadEjecutora.findByPadreAndFechaFinIsNull(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
                 clase2 = Persona.findAllByUnidadEjecutora(hijo) ? " hasChildren" : ''
                 tree += "<li id='uni_" + hijo.id + "' class='" + clase + clase2 + presupuesto + "' ${data} data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"
@@ -359,5 +362,57 @@ class UnidadEjecutoraController {
         }
         return[parroquias: parroquias, unidad: unidad]
     }
+
+    def organizacion(){
+        def unidad
+        if(params.id){
+            unidad = UnidadEjecutora.get(params.id)
+        }else{
+            unidad = new UnidadEjecutora()
+        }
+        return[unidad: unidad]
+    }
+
+    def buscarOrga_ajax() {
+
+    }
+
+    def tablaBuscarOrga_ajax(){
+        println "tablaBuscarOrga_ajax: $params"
+        def sql = ''
+        def operador = ''
+
+        switch (params.operador) {
+            case "0":
+                operador = "unejnmbr"
+                break;
+            case '1':
+                operador = "provnmbr"
+                break;
+            case "2":
+                operador = "cntnnmbr"
+                break;
+            case "3":
+                operador = "parrnmbr"
+                break;
+        }
+
+        def cn = dbConnectionService.getConnection()
+        sql = "select unej.unej__id, unejnmbr, unejfcin, provnmbr, cntnnmbr, parrnmbr " +
+                "from unej, prov, cntn, parr " +
+                "where parr.parr__id = unej.parr__id and cntn.cntn__id = parr.cntn__id and " +
+                "prov.prov__id = cntn.cntn__id and " +
+                "${operador} ilike '%${params.texto}%' " +
+                "order by unejnmbr asc limit 20"
+
+
+        def res = cn.rows(sql.toString())
+
+//        println("sql " + sql)
+
+        return [convenios: res]
+
+    }
+
 
 }
