@@ -19,6 +19,9 @@
         </g:link>
         <a href="#" class="btn btn-success" id="btnGuardarDatosOrg"><i class="fa fa-save"></i>Guardar</a>
     </div>
+    <div class="btn-group">
+        <a href="#" class="btn btn-info" id="btnEtnias"><i class="fa fa-meh"></i> Etnias</a>
+    </div>
 </div>
 
 <div class="panel panel-primary col-md-12">
@@ -35,7 +38,7 @@
                     <label for="unidadEjecutora_nombre" class="col-md-2 control-label text-info">
                         Organización
                     </label>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <g:hiddenField name="unidadEjecutora" value="${unidad?.id}"/>
                         <g:select from="${seguridad.UnidadEjecutora.list().sort{it.nombre}}" name="unidadEjecutora_nombre" class="form-control input-sm"
                                   value="${unidad?.id}" optionKey="id" optionValue="nombre" disabled=""/>
@@ -93,7 +96,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="totalSocios" class="col-md-2 control-label text-success">
+                    <label for="totalSocios" class="col-md-4 control-label text-success">
                         Total de Socios
                     </label>
                     <div class="col-md-1">
@@ -123,7 +126,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="totalFamilias" class="col-md-2 control-label text-success">
+                    <label for="totalFamilias" class="col-md-4 control-label text-success">
                         Total de Familias
                     </label>
                     <div class="col-md-1">
@@ -152,7 +155,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="socios" class="col-md-2 control-label text-success">
+                    <label for="socios" class="col-md-4 control-label text-success">
                         Total de Socios Legales
                     </label>
                     <div class="col-md-1">
@@ -204,7 +207,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="dirigentes" class="col-md-2 control-label text-success">
+                    <label for="dirigentes" class="col-md-4 control-label text-success">
                         Total de socios dirigentes
                     </label>
                     <div class="col-md-1">
@@ -233,7 +236,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="sociosJovenes" class="col-md-2 control-label text-success">
+                    <label for="sociosJovenes" class="col-md-4 control-label text-success">
                         Total de socios jóvenes
                     </label>
                     <div class="col-md-1">
@@ -262,7 +265,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="adultosMayores" class="col-md-2 control-label text-success">
+                    <label for="adultosMayores" class="col-md-4 control-label text-success">
                         Total de socios adultos mayores
                     </label>
                     <div class="col-md-1">
@@ -291,7 +294,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="discapacitados" class="col-md-2 control-label text-success">
+                    <label for="discapacitados" class="col-md-4 control-label text-success">
                         Total de socios con discapacidad
                     </label>
                     <div class="col-md-1">
@@ -320,7 +323,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="usuariosBono" class="col-md-2 control-label text-success">
+                    <label for="usuariosBono" class="col-md-4 control-label text-success">
                         Total de socios usuarios del bono de desarrollo humano
                     </label>
                     <div class="col-md-1">
@@ -349,7 +352,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="usuariosCredito" class="col-md-2 control-label text-success">
+                    <label for="usuariosCredito" class="col-md-4 control-label text-success">
                         Total de socios usuarios del crédito de desarrollo humano
                     </label>
                     <div class="col-md-1">
@@ -375,13 +378,41 @@
 
 <script type="text/javascript">
 
+    $("#btnEtnias").click(function () {
+        $.ajax({
+            type    : "POST",
+            url     : "${createLink(controller: 'etniaOrganizacion',action:'formEtnias_ajax')}",
+            data    : {
+                convenio: '${convenio?.id}'
+            },
+            success : function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlgEtnias",
+                    title : "Etnias de la organización",
+                    // class : "modal-lg",
+                    message : msg,
+                    buttons : {
+                        cancelar: {
+                            label: "Salir",
+                            className: "btn-primary",
+                            callback: function () {
+                            }
+                        }
+                    }
+                }); //dialog
+                setTimeout(function () {
+                    b.find(".form-control").first().focus()
+                }, 500);
+            } //success
+        }); //ajax
+    });
+
     $("#btnGuardarDatosOrg").click(function () {
-            submitForm()
+        submitForm()
     });
 
     function submitForm() {
         var $form = $("#frmSaveDatos");
-        // if ($form.valid()) {
             $.ajax({
                 type    : "POST",
                 url     : '${createLink(controller: 'datosOrganizacion', action:'saveDatos_ajax')}',
@@ -397,9 +428,6 @@
                     }
                 }
             });
-        // } else {
-        //     return false;
-        // } //else
     }
 
     $("#legales, #noLegales").keydown(function (ev) {
