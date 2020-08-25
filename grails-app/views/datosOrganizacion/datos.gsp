@@ -1,3 +1,4 @@
+<%@ page import="seguridad.UnidadEjecutora" %>
 <%--
   Created by IntelliJ IDEA.
   User: fabricio
@@ -368,6 +369,18 @@
                     </label>
                     <div class="col-md-1">
                         <g:textField name="mujeresCabezaHogar" value="${dato?.mujeresCabezaHogar}" maxlength="3" class="form-control input-sm number"/>
+                        <p class="help-block ui-helper-hidden"></p>
+                    </div>
+                </span>
+            </div>
+            <div class="form-group ${hasErrors(bean: dato, field: 'persona', 'error')}  ">
+                <span class="grupo">
+                    <label for="persona" class="col-md-2 control-label text-warning">
+                        Persona responsable
+                    </label>
+                    <div class="col-md-4">
+                      <g:select name="persona" from="${seguridad.Persona.findAllByUnidadEjecutora(seguridad.UnidadEjecutora.get(1)).sort{it.apellido}}"
+                                class="form-control" optionKey="id" optionValue="${{it.apellido + " " + it.nombre}}" value="${dato?.persona?.id}"/>
                         <p class="help-block ui-helper-hidden"></p>
                     </div>
                 </span>

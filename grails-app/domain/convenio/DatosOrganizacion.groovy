@@ -1,6 +1,7 @@
 package convenio
 
 import audita.Auditable
+import seguridad.Persona
 import seguridad.UnidadEjecutora
 
 class DatosOrganizacion implements Auditable{
@@ -37,6 +38,7 @@ class DatosOrganizacion implements Auditable{
     int usuariosCreditoHombres
     int usuariosCreditoMujeres
     int mujeresCabezaHogar
+    Persona persona
 
     static auditable = true
 
@@ -80,6 +82,7 @@ class DatosOrganizacion implements Auditable{
             usuariosCreditoHombres column: 'dtornchh'
             usuariosCreditoMujeres column: 'dtorncmj'
             mujeresCabezaHogar column: 'dtornmch'
+            persona column: 'prsn__id'
         }
     }
     static constraints = {
@@ -115,5 +118,6 @@ class DatosOrganizacion implements Auditable{
         usuariosCreditoHombres(blank:true, nullable:true)
         usuariosCreditoMujeres(blank:true, nullable:true)
         mujeresCabezaHogar(blank:true, nullable:true)
+        persona(blank:true, nullable: true)
     }
 }
