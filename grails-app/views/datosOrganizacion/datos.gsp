@@ -27,13 +27,14 @@
 
 <div class="panel panel-primary col-md-12">
     <div class="col-md-12" style="text-align: center">
-        <h3>Datos de Organización</h3>
+        <h3>Organización: ${unidad.nombre}</h3>
     </div>
 
     <div class="panel-info" style="padding: 3px; margin-top: 2px">
         <g:form class="form-horizontal" name="frmSaveDatos" controller="datosOrganizacion" action="saveDatos_ajax">
             <g:hiddenField name="id" value="${dato?.id}"/>
 
+%{--
             <div class="form-group ${hasErrors(bean: dato, field: 'unidadEjecutora', 'error')}  ">
                 <span class="grupo">
                     <label for="unidadEjecutora_nombre" class="col-md-2 control-label text-info">
@@ -47,8 +48,9 @@
                     </div>
                 </span>
             </div>
+--}%
             <div class="form-group ${hasErrors(bean: dato, field: 'cuenta', 'error')} ${hasErrors(bean: dato, field: 'financiera', 'error')} ">
-                <div class="col-md-1"></div>
+%{--                <div class="col-md-1"></div>--}%
                 <span class="grupo">
                     <div class="col-md-4">
                         <label for="financiera" class="control-label text-info">
@@ -59,7 +61,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="cuenta" class="control-label text-info">
                             Número cuenta
                         </label>
@@ -68,7 +70,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="tipoCuenta" class="control-label text-info">
                             Tipo de cuenta
                         </label>
@@ -76,10 +78,28 @@
                         <p class="help-block ui-helper-hidden"></p>
                     </div>
                 </span>
+
+                <span class="grupo">
+                    <label for="persona" class="col-md-3 control-label text-warning">
+                        Persona responsable de datos:
+                    </label>
+                    <div class="col-md-4">
+                        <g:select name="persona" from="${seguridad.Persona.findAllByUnidadEjecutora(seguridad.UnidadEjecutora.get(1)).sort{it.apellido}}"
+                                  class="form-control" optionKey="id" optionValue="${{it.apellido + " " + it.nombre}}" value="${dato?.persona?.id}"/>
+                        <p class="help-block ui-helper-hidden"></p>
+                    </div>
+                </span>
+
             </div>
+
+%{--
+            <div class="form-group ${hasErrors(bean: dato, field: 'persona', 'error')}  ">
+            </div>
+--}%
+
             <div class="form-group ${hasErrors(bean: dato, field: 'legales', 'error')} ${hasErrors(bean: dato, field: 'noLegales', 'error')}  ">
                 <span class="grupo">
-                    <label for="legales" class="col-md-2 control-label text-info">
+                    <label for="legales" class="col-md-3 control-label text-info">
                         Socios de la organización Legales
                     </label>
                     <div class="col-md-1">
@@ -87,8 +107,11 @@
                         <p class="help-block ui-helper-hidden"></p>
                     </div>
                 </span>
+
+%{--                <div class="col-md-1"></div>--}%
+
                 <span class="grupo">
-                    <label for="noLegales" class="col-md-2 control-label text-info">
+                    <label for="noLegales" class="col-md-3 control-label text-info">
                         Socios de la organización No Legales
                     </label>
                     <div class="col-md-1">
@@ -97,7 +120,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="totalSocios" class="col-md-4 control-label text-success">
+                    <label for="totalSocios" class="col-md-3 control-label text-success">
                         Total de Socios
                     </label>
                     <div class="col-md-1">
@@ -109,7 +132,7 @@
             </div>
             <div class="form-group ${hasErrors(bean: dato, field: 'familiasLegales', 'error')} ${hasErrors(bean: dato, field: 'familiasNoLegales', 'error')}  ">
                 <span class="grupo">
-                    <label for="familiasLegales" class="col-md-2 control-label text-info">
+                    <label for="familiasLegales" class="col-md-3 control-label text-info">
                         Familias Legales
                     </label>
                     <div class="col-md-1">
@@ -118,7 +141,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="familiasNoLegales" class="col-md-2 control-label text-info">
+                    <label for="familiasNoLegales" class="col-md-3 control-label text-info">
                         Familias No Legales
                     </label>
                     <div class="col-md-1">
@@ -127,7 +150,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="totalFamilias" class="col-md-4 control-label text-success">
+                    <label for="totalFamilias" class="col-md-3 control-label text-success">
                         Total de Familias
                     </label>
                     <div class="col-md-1">
@@ -138,7 +161,7 @@
             </div>
             <div class="form-group ${hasErrors(bean: dato, field: 'mujeresSocias', 'error')} ${hasErrors(bean: dato, field: 'hombresSocios', 'error')}  ">
                 <span class="grupo">
-                    <label for="mujeresSocias" class="col-md-2 control-label text-info">
+                    <label for="mujeresSocias" class="col-md-3 control-label text-info">
                         Socias Legales
                     </label>
                     <div class="col-md-1">
@@ -147,7 +170,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="hombresSocios" class="col-md-2 control-label text-info">
+                    <label for="hombresSocios" class="col-md-3 control-label text-info">
                         Socios Legales
                     </label>
                     <div class="col-md-1">
@@ -156,7 +179,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="socios" class="col-md-4 control-label text-success">
+                    <label for="socios" class="col-md-3 control-label text-success">
                         Total de Socios Legales
                     </label>
                     <div class="col-md-1">
@@ -168,7 +191,7 @@
 
             <div class="form-group ${hasErrors(bean: dato, field: 'jovenes', 'error')}  ">
                 <span class="grupo">
-                    <label for="jovenes" class="col-md-5 control-label text-info">
+                    <label for="jovenes" class="col-md-3 control-label text-info">
                         Jóvenes (18 - 29 años) socios legales que participan en el negocio
                     </label>
                     <div class="col-md-1">
@@ -179,7 +202,7 @@
             </div>
             <div class="form-group ${hasErrors(bean: dato, field: 'obreros', 'error')}  ">
                 <span class="grupo">
-                    <label for="obreros" class="col-md-5 control-label text-info">
+                    <label for="obreros" class="col-md-3 control-label text-info">
                         Empleados/obreros del negocio (personal externo)
                     </label>
                     <div class="col-md-1">
@@ -190,7 +213,7 @@
             </div>
             <div class="form-group ${hasErrors(bean: dato, field: 'dirigentesMujeres', 'error')} ${hasErrors(bean: dato, field: 'dirigentesHombres', 'error')}  ">
                 <span class="grupo">
-                    <label for="dirigentesMujeres" class="col-md-2 control-label text-info">
+                    <label for="dirigentesMujeres" class="col-md-3 control-label text-info">
                         Socias dirigentes mujeres
                     </label>
                     <div class="col-md-1">
@@ -199,7 +222,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="dirigentesHombres" class="col-md-2 control-label text-info">
+                    <label for="dirigentesHombres" class="col-md-3 control-label text-info">
                         Socios dirigentes hombres
                     </label>
                     <div class="col-md-1">
@@ -208,7 +231,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="dirigentes" class="col-md-4 control-label text-success">
+                    <label for="dirigentes" class="col-md-3 control-label text-success">
                         Total de socios dirigentes
                     </label>
                     <div class="col-md-1">
@@ -219,7 +242,7 @@
             </div>
             <div class="form-group ${hasErrors(bean: dato, field: 'sociosJovenesMujeres', 'error')} ${hasErrors(bean: dato, field: 'sociosJovenesHombres', 'error')}  ">
                 <span class="grupo">
-                    <label for="sociosJovenesMujeres" class="col-md-2 control-label text-info">
+                    <label for="sociosJovenesMujeres" class="col-md-3 control-label text-info">
                         Socias jóvenes mujeres
                     </label>
                     <div class="col-md-1">
@@ -228,7 +251,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="sociosJovenesHombres" class="col-md-2 control-label text-info">
+                    <label for="sociosJovenesHombres" class="col-md-3 control-label text-info">
                         Socios jóvenes hombres
                     </label>
                     <div class="col-md-1">
@@ -237,7 +260,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="sociosJovenes" class="col-md-4 control-label text-success">
+                    <label for="sociosJovenes" class="col-md-3 control-label text-success">
                         Total de socios jóvenes
                     </label>
                     <div class="col-md-1">
@@ -248,7 +271,7 @@
             </div>
             <div class="form-group ${hasErrors(bean: dato, field: 'adultosMayoresMujeres', 'error')} ${hasErrors(bean: dato, field: 'adultosMayoresHombres', 'error')}  ">
                 <span class="grupo">
-                    <label for="adultosMayoresMujeres" class="col-md-2 control-label text-info">
+                    <label for="adultosMayoresMujeres" class="col-md-3 control-label text-info">
                         Socios adultos mayores mujeres
                     </label>
                     <div class="col-md-1">
@@ -257,7 +280,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="adultosMayoresHombres" class="col-md-2 control-label text-info">
+                    <label for="adultosMayoresHombres" class="col-md-3 control-label text-info">
                         Socios  adultos mayores hombres
                     </label>
                     <div class="col-md-1">
@@ -266,7 +289,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="adultosMayores" class="col-md-4 control-label text-success">
+                    <label for="adultosMayores" class="col-md-3 control-label text-success">
                         Total de socios adultos mayores
                     </label>
                     <div class="col-md-1">
@@ -277,7 +300,7 @@
             </div>
             <div class="form-group ${hasErrors(bean: dato, field: 'discapacitadosMujeres', 'error')} ${hasErrors(bean: dato, field: 'discapacitadosHombres', 'error')}  ">
                 <span class="grupo">
-                    <label for="discapacitadosMujeres" class="col-md-2 control-label text-info">
+                    <label for="discapacitadosMujeres" class="col-md-3 control-label text-info">
                         Socios con discapcidad mujeres
                     </label>
                     <div class="col-md-1">
@@ -286,7 +309,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="discapacitadosHombres" class="col-md-2 control-label text-info">
+                    <label for="discapacitadosHombres" class="col-md-3 control-label text-info">
                         Socios con discapacidad hombres
                     </label>
                     <div class="col-md-1">
@@ -295,7 +318,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="discapacitados" class="col-md-4 control-label text-success">
+                    <label for="discapacitados" class="col-md-3 control-label text-success">
                         Total de socios con discapacidad
                     </label>
                     <div class="col-md-1">
@@ -306,7 +329,7 @@
             </div>
             <div class="form-group ${hasErrors(bean: dato, field: 'usuariosBonoMujeres', 'error')} ${hasErrors(bean: dato, field: 'usuariosBonoHombres', 'error')}  ">
                 <span class="grupo">
-                    <label for="usuariosBonoMujeres" class="col-md-2 control-label text-info">
+                    <label for="usuariosBonoMujeres" class="col-md-3 control-label text-info">
                         Socios mujeres usuarios del bono de desarrollo humano
                     </label>
                     <div class="col-md-1">
@@ -315,7 +338,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="usuariosBonoHombres" class="col-md-2 control-label text-info">
+                    <label for="usuariosBonoHombres" class="col-md-3 control-label text-info">
                         Socios hombres usuarios del bono de desarrollo humano
                     </label>
                     <div class="col-md-1">
@@ -324,7 +347,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="usuariosBono" class="col-md-4 control-label text-success">
+                    <label for="usuariosBono" class="col-md-3 control-label text-success">
                         Total de socios usuarios del bono de desarrollo humano
                     </label>
                     <div class="col-md-1">
@@ -335,7 +358,7 @@
             </div>
             <div class="form-group ${hasErrors(bean: dato, field: 'usuariosCreditoMujeres', 'error')} ${hasErrors(bean: dato, field: 'usuariosCreditoHombres', 'error')}  ">
                 <span class="grupo">
-                    <label for="usuariosCreditoMujeres" class="col-md-2 control-label text-info">
+                    <label for="usuariosCreditoMujeres" class="col-md-3 control-label text-info">
                         Socios mujeres usuarios del crédito de desarrollo humano
                     </label>
                     <div class="col-md-1">
@@ -344,7 +367,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="usuariosCreditoHombres" class="col-md-2 control-label text-info">
+                    <label for="usuariosCreditoHombres" class="col-md-3 control-label text-info">
                         Socios hombres usuarios del crédito de desarrollo humano
                     </label>
                     <div class="col-md-1">
@@ -353,7 +376,7 @@
                     </div>
                 </span>
                 <span class="grupo">
-                    <label for="usuariosCredito" class="col-md-4 control-label text-success">
+                    <label for="usuariosCredito" class="col-md-3 control-label text-success">
                         Total de socios usuarios del crédito de desarrollo humano
                     </label>
                     <div class="col-md-1">
@@ -364,23 +387,11 @@
             </div>
             <div class="form-group ${hasErrors(bean: dato, field: 'mujeresCabezaHogar', 'error')}  ">
                 <span class="grupo">
-                    <label for="mujeresCabezaHogar" class="col-md-2 control-label text-info">
+                    <label for="mujeresCabezaHogar" class="col-md-3 control-label text-info">
                         Socios mujeres cabeza de hogar
                     </label>
                     <div class="col-md-1">
                         <g:textField name="mujeresCabezaHogar" value="${dato?.mujeresCabezaHogar}" maxlength="3" class="form-control input-sm number"/>
-                        <p class="help-block ui-helper-hidden"></p>
-                    </div>
-                </span>
-            </div>
-            <div class="form-group ${hasErrors(bean: dato, field: 'persona', 'error')}  ">
-                <span class="grupo">
-                    <label for="persona" class="col-md-2 control-label text-warning">
-                        Persona responsable
-                    </label>
-                    <div class="col-md-4">
-                      <g:select name="persona" from="${seguridad.Persona.findAllByUnidadEjecutora(seguridad.UnidadEjecutora.get(1)).sort{it.apellido}}"
-                                class="form-control" optionKey="id" optionValue="${{it.apellido + " " + it.nombre}}" value="${dato?.persona?.id}"/>
                         <p class="help-block ui-helper-hidden"></p>
                     </div>
                 </span>
