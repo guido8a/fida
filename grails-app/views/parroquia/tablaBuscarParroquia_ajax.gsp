@@ -10,7 +10,9 @@
         <g:each in="${parroquias}" var="parroquia">
             <tr style="width: 100%">
                 <td style="width: 10%; text-align: center">
-                    <a href="#" class="btn btn-xs btn-success btnSeleParroquia"  title="Seleccionar parroquia" data-id="${parroquia.parr__id}" data-nombre="${parroquia.parrnmbr}" data-prov="${parroquia.provnmbr}">
+                    <a href="#" class="btn btn-xs btn-success btnSeleParroquia"
+                       title="Seleccionar parroquia" data-id="${parroquia.parr__id}"
+                       data-nombre="${parroquia.parrnmbr}" data-prov="${parroquia.provnmbr}" data-can="${parroquia.cntnnmbr}" data-idProv="${parroquia.prov__id}">
                         <i class="fa fa-check"></i>
                     </a>
                 </td>
@@ -34,10 +36,20 @@
         var id = $(this).data("id");
         var nombre = $(this).data("nombre");
         var provincia = $(this).data("prov");
+        var canton = $(this).data("can");
+        var idProvincia = $(this).data("idProv")
 
         $("#parroquiaTexto").val(nombre + " (" + provincia + ")");
         $("#parroquia").val(id);
         $(".buscarParroquia").removeAttr('disabled');
+
+        if(${tipo == '3'}){
+            $("#cantonTexto").val(canton);
+            $("#provinciaTexto").val(provincia);
+            $("#parroquiaTexto").val(nombre);
+            $("#provincia").val(idProvincia);
+        }
+
         if(${tipo != '1'}){
             comboComunidad(id)
         }

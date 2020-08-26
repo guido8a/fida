@@ -54,6 +54,9 @@ class UnidadEjecutoraController {
         }
 
         params.anio = params.anio ? params.anio : 0
+        if(!params.provincia){
+            params.provincia = Parroquia.get(params.parroquia).canton.provincia
+        }
         unidad.properties = params
 
         if(!unidad.save(flush:true)){

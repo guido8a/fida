@@ -130,7 +130,8 @@
                 </label>
 
                 <div class="col-md-2">
-                    <input name="provincia" type='text' class="form-control" readonly="" value="${unidad?.parroquia?.canton?.provincia?.nombre}"/>
+                    <g:hiddenField name="provincia" value="${unidad?.parroquia?.canton?.provincia?.id}"/>
+                    <input name="provinciaName" id="provinciaTexto" type='text' class="form-control" readonly="" value="${unidad?.parroquia?.canton?.provincia?.nombre}"/>
                 </div>
             </span>
             <span class="grupo">
@@ -138,7 +139,7 @@
                     Cantón
                 </label>
                 <div class="col-md-2">
-                    <input name="canton" type='text' class="form-control" readonly="" value="${unidad?.parroquia?.canton?.nombre}"/>
+                    <input name="canton" id="cantonTexto" type='text' class="form-control" readonly="" value="${unidad?.parroquia?.canton?.nombre}"/>
                 </div>
             </span>
             <span class="grupo">
@@ -146,11 +147,12 @@
                     Parroquia
                 </label>
                 <div class="col-md-2">
-                    <input name="parroquia" type='text' class="form-control" readonly="" value="${unidad?.parroquia?.nombre}"/>
+                    <g:hiddenField name="parroquia" value="${unidad?.parroquia?.id}"/>
+                    <input name="parroquiaName" id="parroquiaTexto" type='text' class="form-control" readonly="" value="${unidad?.parroquia?.nombre}"/>
                 </div>
             </span>
 
-            <a href="#" id="btnBuscar" class="btn btn-sm btn-success" title="Buscar ubicación geográfica">
+            <a href="#" class="btn btn-sm btn-success buscarParroquia" title="Buscar ubicación geográfica">
                 <i class="fa fa-search"></i> Buscar
             </a>
         </div>
@@ -358,12 +360,9 @@
                 </label>
 
                 <div class="col-md-1">
-%{--
-                    <g:textField name="anio" maxlength="2" class="form-control digits input-sm" readonly=""
-                                 value="${unidad?.anio ?: ''}"/>
---}%
-                    <g:textField name="anio" maxlength="2" class="form-control digits input-sm" readonly=""
-                                 value="${Math.round((new Date() - unidad?.fechaInicio)/365.25) ?: ''}"/>
+                    <g:textField name="anio" maxlength="2" class="form-control digits input-sm" value="${unidad?.anio ?: ''}"/>
+                    %{--                    <g:textField name="anio" maxlength="2" class="form-control digits input-sm" readonly=""--}%
+%{--                                 value="${Math.round((new Date() - unidad?.fechaInicio)/365.25) ?: ''}"/>--}%
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>
@@ -454,40 +453,33 @@
     });
 
     $("#btnGuardar").click(function () {
-        submitFormConvenio();
+        submitFormUnidad();
     });
 
-    function submitFormConvenio() {
-        var $form = $("#frmConvenio");
+    function submitFormUnidad() {
+        var $form = $("#frmSaveUnidad");
+        var $btn = $("#dlgCreateEdit").find("#btnSave");
         if ($form.valid()) {
-            var formData = new FormData($form[0]);
+            var data = $form.serialize();
+            $btn.replaceWith(spinner);
             var dialog = cargarLoader("Guardando...");
             $.ajax({
-                url: $form.attr("action"),
-                type: 'POST',
-                data: formData,
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (msg) {
+                type    : "POST",
+                url     : $form.attr("action"),
+                data    : data,
+                success : function (msg) {
                     dialog.modal('hide');
-                    var parts = msg.split("*");
-                    if (parts[0] == "SUCCESS") {
+                    var parts = msg.split("_");
+                    if(parts[0] == 'ok'){
                         log(parts[1], "success");
                         setTimeout(function () {
-                            location.href = "${createLink(controller: 'unidad', action: 'unidad')}/" + parts[2]
-                        }, 800);
-                    } else {
-                        if (parts[0] == 'er') {
-                            bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> " + parts[1])
-                        } else {
-                            log(parts[1], "error");
-                            return false;
-                        }
+                            var dialog = cargarLoader("Cargando...");
+                            location.reload(true);
+                        }, 1000);
+                    }else{
+                        bootbox.alert('<i class="fa fa-exclamation-triangle text-danger fa-3x"></i> ' + '<strong style="font-size: 14px">' + parts[1] + '</strong>');
+                        return false;
                     }
-                },
-                error: function () {
                 }
             });
         } else {
@@ -523,7 +515,7 @@
         });
     });
 
-    var bp
+    var bp;
 
     $(".buscarParroquia").click(function () {
         var dialog = cargarLoader("Cargando...");
@@ -532,7 +524,7 @@
             type: 'POST',
             url: '${createLink(controller: 'parroquia', action: 'buscarParroquia_ajax')}',
             data: {
-                tipo: 2
+                tipo: 3
             },
             success: function (msg) {
                 dialog.modal('hide');
@@ -609,14 +601,14 @@
     $("#btnCategoria").click(function () {
         $.ajax({
             type: "POST",
-            url: "${createLink(controller: 'etniaOrganizacion',action:'formEtnias_ajax')}",
+            url: "${createLink(controller: 'categoria',action:'formCategoria_ajax')}",
             data: {
                 unidad: '${unidad?.id}'
             },
             success: function (msg) {
                 var b = bootbox.dialog({
-                    id: "dlgEtnias",
-                    title: "Etnias de la organización",
+                    id: "dlgCategorias",
+                    title: "Categorías de la organización",
                     // class : "modal-lg",
                     message: msg,
                     buttons: {
@@ -638,14 +630,14 @@
     $("#btnNecesidad").click(function () {
         $.ajax({
             type: "POST",
-            url: "${createLink(controller: 'etniaOrganizacion',action:'formEtnias_ajax')}",
+            url: "${createLink(controller: 'necesidad',action:'formNecesidad_ajax')}",
             data: {
                 unidad: '${unidad?.id}'
             },
             success: function (msg) {
                 var b = bootbox.dialog({
-                    id: "dlgEtnias",
-                    title: "Etnias de la organización",
+                    id: "dlgNecesidades",
+                    title: "Tipos de necesidades de la organización",
                     // class : "modal-lg",
                     message: msg,
                     buttons: {

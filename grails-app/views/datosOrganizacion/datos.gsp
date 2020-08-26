@@ -20,9 +20,9 @@
         </g:link>
         <a href="#" class="btn btn-success" id="btnGuardarDatosOrg"><i class="fa fa-save"></i>Guardar</a>
     </div>
-    <div class="btn-group">
-        <a href="#" class="btn btn-info" id="btnEtnias"><i class="fa fa-meh"></i> Etnias</a>
-    </div>
+%{--    <div class="btn-group">--}%
+%{--        <a href="#" class="btn btn-info" id="btnEtnias"><i class="fa fa-meh"></i> Etnias</a>--}%
+%{--    </div>--}%
 </div>
 
 <div class="panel panel-primary col-md-12">
