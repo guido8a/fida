@@ -28,7 +28,9 @@
                     ${convenio.parrnmbr}
                 </td>
                 <td style="width: 13%">
-                    ${convenio.unejfcin.format("dd-MM-yyyy")}
+                    <g:if test="${convenio.unejfcin}">
+                        ${convenio.unejfcin.format("dd-MM-yyyy")}
+                    </g:if>
                 </td>
             </tr>
         </g:each>

@@ -46,9 +46,6 @@
             <a href="#" id="btnEtnias" class="btn btn-sm btn-info" title="Administrador del unidad">
                 <i class="fa fa-user"></i> Composición Étnica
             </a>
-        %{--            <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de negocio Solidario">--}%
-        %{--                <i class="fa fa-hands-helping"></i> Plan de negocio Solidario--}%
-        %{--            </a>--}%
             <a href="#" id="btnCategoria" class="btn btn-sm btn-info" title="Administrador del unidad">
                 <i class="fas fa-book-reader"></i> Categorías
             </a>
@@ -56,7 +53,7 @@
                 <i class="fas fa-book-reader"></i> Necesidades
             </a>
         </g:if>
-        <a href="${createLink(controller: 'unidad', action: 'unidad')}" id="btnNuevoConvenio"
+        <a href="${createLink(controller: 'unidadEjecutora', action: 'organizacion')}" id="btnNuevaOrganizacion"
            class="btn btn-sm btn-success" title="Consultar artículo">
             <i class="fas fa-plus"></i> Nueva Organización
         </a>
@@ -64,66 +61,16 @@
             <i class="fa fa-save"></i> Guardar
         </a>
         <g:if test="${unidad?.id}">
-            <a href="#" id="btnEliminar" class="btn btn-sm btn-danger" title="Guardar información">
+            <a href="#" id="btnEliminarOrganizacion" class="btn btn-sm btn-danger" title="Guardar información">
                 <i class="fa fa-trash"></i> Eliminar
             </a>
         </g:if>
     </div>
 
-%{--</div>--}%
-
     <g:form class="form-horizontal" name="frmSaveUnidad" controller="unidadEjecutora" action="saveUnidad_ajax">
         <g:hiddenField name="id" value="${unidad?.id}"/>
 
-    %{--
-        <div class="form-group ${hasErrors(bean: unidad, field: 'padre', 'error')}  ">
-            <span class="grupo">
-                <label for="padre" class="col-md-2 control-label text-info">
-                    Unidad Padre
-                </label>
-                <div class="col-md-6">
-                    <g:if test="${unidad?.id}">
-                        <g:select from="${seguridad.UnidadEjecutora.findAllByFechaFinIsNull().sort{it.nombre} - unidad}" name="padre" class="form-control input-sm"
-                                  value="${unidad?.padre?.id}" noSelection="[null:'- Ninguna -']" optionKey="id" optionValue="nombre"/>
-                    </g:if>
-                    <g:else>
-                        <g:select from="${seguridad.UnidadEjecutora.findAllByFechaFinIsNull().sort{it.nombre}}" name="padre" class="form-control input-sm"
-                                  value="${unidad?.padre?.id}" noSelection="[null:'- Ninguna -']" optionKey="id" optionValue="nombre"/>
-                    </g:else>
-                    <p class="help-block ui-helper-hidden"></p>
-                </div>
-            </span>
-        </div>
-    --}%
-
-        <div class="form-group ${hasErrors(bean: unidad, field: 'tipoInstitucion', 'error')} ${hasErrors(bean: unidad, field: 'codigo', 'error')}">
-            %{--
-                    <span class="grupo">
-                        <label for="tipoInstitucion" class="col-md-2 control-label text-info">
-                            Tipo Institución
-                        </label>
-                        <div class="col-md-4">
-                            <g:select from="${seguridad.TipoInstitucion.list().sort{it.descripcion}}" name="tipoInstitucion" class="form-control input-sm"
-                                      value="${unidad?.tipoInstitucion?.id}" optionKey="id" optionValue="descripcion"/>
-                            <p class="help-block ui-helper-hidden"></p>
-                        </div>
-                    </span>
-            --}%
-            %{--
-                    <span class="grupo">
-                        <label for="codigo" class="col-md-2 control-label text-info">
-                            Código
-                        </label>
-                        <div class="col-md-3">
-                            <g:textField name="codigo" maxlength="4" class="form-control input-sm" value="${unidad?.codigo}"/>
-                            <p class="help-block ui-helper-hidden"></p>
-                        </div>
-                    </span>
-            --}%
-
-        </div>
-
-        <div class="form-group ${hasErrors(bean: unidad, field: 'provincia', 'error')}">
+        <div class="form-group ${hasErrors(bean: unidad, field: 'provincia', 'error')}" style="margin-top: 10px">
             <span class="grupo">
                 <label class="col-md-2 control-label text-info">
                     Provincia
@@ -148,7 +95,7 @@
                 </label>
                 <div class="col-md-2">
                     <g:hiddenField name="parroquia" value="${unidad?.parroquia?.id}"/>
-                    <input name="parroquiaName" id="parroquiaTexto" type='text' class="form-control" readonly="" value="${unidad?.parroquia?.nombre}"/>
+                    <input name="parroquiaName" id="parroquiaTexto" type='text' class="form-control" required="" readonly="" value="${unidad?.parroquia?.nombre}"/>
                 </div>
             </span>
 
@@ -193,12 +140,12 @@
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>
-%{--
-        </div>
+            %{--
+                    </div>
 
 
-        <div class="form-group ${hasErrors(bean: unidad, field: 'ruc', 'error')} ${hasErrors(bean: unidad, field: 'rup', 'error')}">
---}%
+                    <div class="form-group ${hasErrors(bean: unidad, field: 'ruc', 'error')} ${hasErrors(bean: unidad, field: 'rup', 'error')}">
+            --}%
             <span class="grupo">
                 <label for="ruc" class="col-md-2 control-label text-info">
                     Ruc
@@ -313,7 +260,7 @@
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>
-%{--            <span class="col-md-1"></span>--}%
+            %{--            <span class="col-md-1"></span>--}%
             <span class="grupo">
                 <label for="orden" class="col-md-3 control-label text-info">
                     Orden
@@ -362,7 +309,7 @@
                 <div class="col-md-1">
                     <g:textField name="anio" maxlength="2" class="form-control digits input-sm" value="${unidad?.anio ?: ''}"/>
                     %{--                    <g:textField name="anio" maxlength="2" class="form-control digits input-sm" readonly=""--}%
-%{--                                 value="${Math.round((new Date() - unidad?.fechaInicio)/365.25) ?: ''}"/>--}%
+                    %{--                                 value="${Math.round((new Date() - unidad?.fechaInicio)/365.25) ?: ''}"/>--}%
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>
@@ -372,6 +319,47 @@
 </div>
 
 <script type="text/javascript">
+
+    $('#datetimepicker1').datetimepicker({
+        locale: 'es',
+        format: 'DD-MM-YYYY',
+        daysOfWeekDisabled: [0, 6],
+        // inline: true,
+        sideBySide: true,
+        // showClose: true,
+        icons: {
+            // close: 'closeText'
+        }
+    });
+
+    $("#btnEliminarOrganizacion").click(function () {
+        bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> ¿Está seguro de querer eliminar esta organización?", function (res) {
+            if(res){
+                $.ajax({
+                    type: 'POST',
+                    url: '${createLink(controller: 'unidadEjecutora', action: 'borrarUnidad_ajax')}',
+                    data:{
+                        id: '${unidad?.id}'
+                    },
+                    success: function (msg) {
+                        var parts = msg.split("_");
+                        if(parts[0] == 'ok'){
+                            log("Unidad borrada correctamente","success");
+                            setTimeout(function () {
+                                location.href="${createLink(controller: 'unidadEjecutora', action: 'organizacion')}"
+                            }, 1000);
+                        }else{
+                            if(parts[0] == 'res'){
+                                bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i>" + parts[1])
+                            }else{
+                            log("Error al borrar la unidad","error")
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    });
 
     $("#btnDatos").click(function () {
         location.href = "${createLink(controller: 'datosOrganizacion', action: 'datos')}/" + '${unidad?.id}'
@@ -410,47 +398,47 @@
         });
     });
 
-    $("#btnEliminar").click(function () {
-        bootbox.dialog({
-            title: "Alerta",
-            message: "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
-                "¿Está seguro que desea eliminar el unidad? Esta acción no se puede deshacer.</p>",
-            buttons: {
-                cancelar: {
-                    label: "Cancelar",
-                    className: "btn-primary",
-                    callback: function () {
-                    }
-                },
-                eliminar: {
-                    label: "<i class='fa fa-trash-o'></i> Eliminar",
-                    className: "btn-danger",
-                    callback: function () {
-                        var dialog = cargarLoader("Borrando...");
-                        $.ajax({
-                            type: "POST",
-                            url: '${createLink(controller:'unidad', action:'delete_ajax')}',
-                            data: {
-                                id: '${unidad?.id}'
-                            },
-                            success: function (msg) {
-                                dialog.modal('hide');
-                                var parts = msg.split("*");
-                                log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                                if (parts[0] == "SUCCESS") {
-                                    setTimeout(function () {
-                                        location.href = "${createLink(controller: 'unidad', action: 'unidad')}"
-                                    }, 1000);
-                                } else {
-                                    closeLoader();
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-        });
-    });
+    %{--$("#btnEliminar").click(function () {--}%
+    %{--    bootbox.dialog({--}%
+    %{--        title: "Alerta",--}%
+    %{--        message: "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +--}%
+    %{--            "¿Está seguro que desea eliminar el unidad? Esta acción no se puede deshacer.</p>",--}%
+    %{--        buttons: {--}%
+    %{--            cancelar: {--}%
+    %{--                label: "Cancelar",--}%
+    %{--                className: "btn-primary",--}%
+    %{--                callback: function () {--}%
+    %{--                }--}%
+    %{--            },--}%
+    %{--            eliminar: {--}%
+    %{--                label: "<i class='fa fa-trash-o'></i> Eliminar",--}%
+    %{--                className: "btn-danger",--}%
+    %{--                callback: function () {--}%
+    %{--                    var dialog = cargarLoader("Borrando...");--}%
+    %{--                    $.ajax({--}%
+    %{--                        type: "POST",--}%
+    %{--                        url: '${createLink(controller:'unidad', action:'delete_ajax')}',--}%
+    %{--                        data: {--}%
+    %{--                            id: '${unidad?.id}'--}%
+    %{--                        },--}%
+    %{--                        success: function (msg) {--}%
+    %{--                            dialog.modal('hide');--}%
+    %{--                            var parts = msg.split("*");--}%
+    %{--                            log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)--}%
+    %{--                            if (parts[0] == "SUCCESS") {--}%
+    %{--                                setTimeout(function () {--}%
+    %{--                                    location.href = "${createLink(controller: 'unidad', action: 'unidad')}"--}%
+    %{--                                }, 1000);--}%
+    %{--                            } else {--}%
+    %{--                                closeLoader();--}%
+    %{--                            }--}%
+    %{--                        }--}%
+    %{--                    });--}%
+    %{--                }--}%
+    %{--            }--}%
+    %{--        }--}%
+    %{--    });--}%
+    %{--});--}%
 
     $("#btnGuardar").click(function () {
         submitFormUnidad();
@@ -473,8 +461,7 @@
                     if(parts[0] == 'ok'){
                         log(parts[1], "success");
                         setTimeout(function () {
-                            var dialog = cargarLoader("Cargando...");
-                            location.reload(true);
+                            location.href="${createLink(controller: 'unidadEjecutora', action: 'organizacion')}/" + parts[2]
                         }, 1000);
                     }else{
                         bootbox.alert('<i class="fa fa-exclamation-triangle text-danger fa-3x"></i> ' + '<strong style="font-size: 14px">' + parts[1] + '</strong>');

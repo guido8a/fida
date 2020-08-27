@@ -201,7 +201,6 @@
         <div class="col-lg-6 mbr-col-md-10">
             <div class="wrap">
                 <div class="ico-wrap">
-                    %{--                            <span class="mbr-iconfont fa-calendar fa"></span>--}%
                     <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
                 </div>
                 <div class="text-wrap vcenter">
@@ -209,7 +208,9 @@
                         <span>Organizaciones</span>
                     </h2>
                     <p class="mbr-fonts-style text1 mbr-text display-6">
-                        Organizaciones de Economía Polular y Solidaria</p>
+                        Organizaciones de Economía Polular y Solidaria
+                    </p>
+
                 </div>
             </div>
         </div>
