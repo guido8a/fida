@@ -408,9 +408,9 @@ class UnidadEjecutoraController {
         def cn = dbConnectionService.getConnection()
         sql = "select unej.unej__id, unejnmbr, unejfcin, provnmbr, cntnnmbr, parrnmbr " +
                 "from unej, prov, cntn, parr " +
-                "where parr.parr__id = unej.parr__id and unej.prov__id = prov.prov__id and " +
-                "prov.prov__id = cntn.cntn__id and unej.unejfcfn is null and " +
-                "${operador} ilike '%${params.texto}%' " +
+                "where parr.parr__id = unej.parr__id and " +
+                "cntn.cntn__id = parr.cntn__id and prov.prov__id = cntn.prov__id and " +
+                "unej.unejfcfn is null and ${operador} ilike '%${params.texto}%' " +
                 "order by unejnmbr asc limit 20"
 
 
