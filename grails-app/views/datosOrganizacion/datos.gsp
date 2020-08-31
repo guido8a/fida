@@ -77,10 +77,10 @@
 
                 <span class="grupo">
                     <label for="persona" class="col-md-3 control-label text-warning">
-                        Persona responsable de datos:
+                        Persona responsable de datos: ${dato?.persona?.id}
                     </label>
                     <div class="col-md-4">
-                        <g:select name="persona" from="${seguridad.Persona.findAllByUnidadEjecutora(seguridad.UnidadEjecutora.get(1)).sort{it.apellido}}"
+                        <g:select name="persona" from="${seguridad.Persona.findAllByUnidadEjecutora(seguridad.UnidadEjecutora.get(2)).sort{it.apellido}}"
                                   class="form-control" optionKey="id" optionValue="${{it.apellido + " " + it.nombre}}" value="${dato?.persona?.id}"/>
                         <p class="help-block ui-helper-hidden"></p>
                     </div>

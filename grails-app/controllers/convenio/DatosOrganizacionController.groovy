@@ -14,7 +14,7 @@ class DatosOrganizacionController {
             dato = new DatosOrganizacion()
         }
 
-        return[dato:dato,unidad:unidad]
+        return[dato:dato, unidad:unidad]
     }
 
     def saveDatos_ajax(){

@@ -163,7 +163,11 @@ class UnidadEjecutoraController {
             }
         } else if (tipo == "prov") {
             def prov = Provincia.get(id)
-            hijos = UnidadEjecutora.findAllByProvinciaAndPadreIsNullAndFechaFinIsNull(prov).sort{it.nombre}
+            def cntn = Canton.findAllByProvincia(prov)
+            def parr = Parroquia.findAllByCantonInList(cntn)
+            def ieps = UnidadEjecutora.findAllByProvinciaAndPadreIsNullAndFechaFinIsNull(prov).sort{it.nombre}
+            hijos = UnidadEjecutora.findAllByParroquiaInListAndPadreIsNullAndFechaFinIsNull(parr).sort{it.nombre}
+            hijos += ieps
             def presupuesto = ""
             def icono = ""
             def data = ""
