@@ -89,6 +89,7 @@ class UnidadEjecutora implements Auditable{
         anio(blank:true, nullable:true)
         tipoInstitucion(blank:true, nullable: true)
         sector(size: 0..127,blank: true, nullable: true)
+        provincia(blank:true, nullable:true)
     }
 
     @Override
