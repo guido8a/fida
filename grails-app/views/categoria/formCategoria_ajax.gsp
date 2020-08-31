@@ -26,9 +26,21 @@
                 <g:select from="${convenio.TipoCategoria.list().sort{it.descripcion}}" name="categoria" class="form-control input-sm"
                           value="${''}" optionKey="id" optionValue="descripcion" />
             </div>
+
+        </span>
+    </div>
+    <div class="form-group">
+        <span class="grupo">
+            <label for="valor" class="col-md-2 control-label text-info">
+                Valor
+            </label>
+            <div class="col-md-5">
+                <g:textField name="valor" value="${''}" class="form-control number" maxlength="31"/>
+            </div>
             <a href="#" class="btn btn-success" id="btnAgregarCategoria"><i class="fa fa-plus"></i> Agregar </a>
         </span>
     </div>
+
     <div id="divTablaCategorias">
 
     </div>
@@ -53,16 +65,18 @@
 
     $("#btnAgregarCategoria").click(function () {
         var categoria = $("#categoria option:selected").val();
-        agregarCategorias(categoria);
+        var valor = $("#valor").val();
+        agregarCategorias(categoria,valor);
     });
 
-    function agregarCategorias(categoria){
+    function agregarCategorias(categoria,valor){
         $.ajax({
             type: 'POST',
             url: '${createLink(controller: 'categoria', action: 'agregarCategoria_ajax')}',
             data:{
                 id: '${unidad?.id}',
-                categoria: categoria
+                categoria: categoria,
+                valor: valor
             },
             success: function (msg) {
                 if(msg == 'ok'){

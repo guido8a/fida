@@ -13,7 +13,7 @@ class CategoriaController {
 
     def tablaCategoria_ajax(){
         def unidad = UnidadEjecutora.get(params.id)
-        def categorias = Categoria.findAllByUnidadEjecutora(unidad)
+        def categorias = Categoria.findAllByUnidadEjecutora(unidad).sort{it.tipoCategoria.descripcion}
         return [categorias:categorias]
     }
 
@@ -29,6 +29,7 @@ class CategoriaController {
             categoria = new Categoria()
             categoria.unidadEjecutora = unidad
             categoria.tipoCategoria = tipoCategoria
+            categoria.valor = params.valor
 
             if(!categoria.save(flush:true)){
                 println("error al guardar la categoria " + categoria.errors)

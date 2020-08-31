@@ -9,13 +9,15 @@
     <thead>
     <tr style="width: 100%">
         <th style="width: 90%">Categoría</th>
+        <th style="width: 90%">Valor</th>
         <th style="width: 10%"><i class="fa fa-trash"></i> </th>
     </tr>
     </thead>
     <tbody>
     <g:each in="${categorias}" var="categoria">
         <tr style="width: 100%">
-            <td style="width: 90%">${categoria?.tipoCategoria?.descripcion}</td>
+            <td style="width: 80%">${categoria?.tipoCategoria?.descripcion}</td>
+            <td style="width: 10%">${categoria?.valor}</td>
             <td style="width: 10%; text-align: center">
                 <a href="#" class="btn btn-danger btn-xs btnBorrarCategoria" data-id="${categoria?.id}"><i class="fa fa-trash"></i> </a>
             </td>

@@ -20,9 +20,6 @@
         </g:link>
         <a href="#" class="btn btn-success" id="btnGuardarDatosOrg"><i class="fa fa-save"></i>Guardar</a>
     </div>
-%{--    <div class="btn-group">--}%
-%{--        <a href="#" class="btn btn-info" id="btnEtnias"><i class="fa fa-meh"></i> Etnias</a>--}%
-%{--    </div>--}%
 </div>
 
 <div class="panel panel-primary col-md-12">
@@ -50,7 +47,6 @@
             </div>
 --}%
             <div class="form-group ${hasErrors(bean: dato, field: 'cuenta', 'error')} ${hasErrors(bean: dato, field: 'financiera', 'error')} ">
-%{--                <div class="col-md-1"></div>--}%
                 <span class="grupo">
                     <div class="col-md-4">
                         <label for="financiera" class="control-label text-info">
@@ -91,12 +87,6 @@
                 </span>
 
             </div>
-
-%{--
-            <div class="form-group ${hasErrors(bean: dato, field: 'persona', 'error')}  ">
-            </div>
---}%
-
             <div class="form-group ${hasErrors(bean: dato, field: 'legales', 'error')} ${hasErrors(bean: dato, field: 'noLegales', 'error')}  ">
                 <span class="grupo">
                     <label for="legales" class="col-md-3 control-label text-info">
@@ -107,8 +97,6 @@
                         <p class="help-block ui-helper-hidden"></p>
                     </div>
                 </span>
-
-%{--                <div class="col-md-1"></div>--}%
 
                 <span class="grupo">
                     <label for="noLegales" class="col-md-3 control-label text-info">
@@ -207,6 +195,17 @@
                     </label>
                     <div class="col-md-1">
                         <g:textField name="obreros" value="${dato?.obreros}" maxlength="3" class="form-control input-sm number"/>
+                        <p class="help-block ui-helper-hidden"></p>
+                    </div>
+                </span>
+            </div>
+            <div class="form-group ${hasErrors(bean: dato, field: 'adultos', 'error')}  ">
+                <span class="grupo">
+                    <label for="adultos" class="col-md-3 control-label text-info">
+                        Socios adultos
+                    </label>
+                    <div class="col-md-1">
+                        <g:textField name="adultos" value="${dato?.adultos}" maxlength="2" class="form-control input-sm number"/>
                         <p class="help-block ui-helper-hidden"></p>
                     </div>
                 </span>

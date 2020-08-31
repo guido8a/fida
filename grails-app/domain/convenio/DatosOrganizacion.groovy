@@ -39,6 +39,7 @@ class DatosOrganizacion implements Auditable{
     int usuariosCreditoMujeres
     int mujeresCabezaHogar
     Persona persona
+    int adultos
 
     static auditable = true
 
@@ -83,6 +84,7 @@ class DatosOrganizacion implements Auditable{
             usuariosCreditoMujeres column: 'dtorncmj'
             mujeresCabezaHogar column: 'dtornmch'
             persona column: 'prsn__id'
+            adultos column: 'dtornmad'
         }
     }
     static constraints = {
@@ -119,5 +121,6 @@ class DatosOrganizacion implements Auditable{
         usuariosCreditoMujeres(blank:true, nullable:true)
         mujeresCabezaHogar(blank:true, nullable:true)
         persona(blank:true, nullable: true)
+        adultos(blank:true, nullable: true)
     }
 }

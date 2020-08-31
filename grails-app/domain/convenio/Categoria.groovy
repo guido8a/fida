@@ -7,6 +7,7 @@ class Categoria implements Auditable{
 
     UnidadEjecutora unidadEjecutora
     TipoCategoria tipoCategoria
+    String valor
 
     static auditable = true
 
@@ -20,12 +21,14 @@ class Categoria implements Auditable{
             id column: 'ctgr__id'
             unidadEjecutora column: 'unej__id'
             tipoCategoria column: 'tpct__id'
+            valor column: 'ctgrvlor'
         }
     }
 
     static constraints = {
-       unidadEjecutora(blank: false, nullable: false)
-       tipoCategoria(blank: false, nullable: false)
+        unidadEjecutora(blank: false, nullable: false)
+        tipoCategoria(blank: false, nullable: false)
+        valor(size: 1..31, blank: false, nullable: false)
     }
 
 
