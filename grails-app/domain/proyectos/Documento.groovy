@@ -3,6 +3,7 @@ package proyectos
 import audita.Auditable
 import convenio.Convenio
 import parametros.proyectos.GrupoProcesos
+import seguridad.UnidadEjecutora
 
 /*Es toda documentación importante que debe ser archivada en el proyecto. Este comprende el archivo de proyecto o el archivo de casos de proyecto.
 Se usará preferentemente formato pdf, pero pueden incluirse otros formatos aunque no puedan ser visualizados desde el sistema.*/
@@ -18,7 +19,7 @@ class Documento implements Auditable {
      */
     Proyecto proyecto
 
-    Convenio convenio
+    UnidadEjecutora unidadEjecutora
     /**
      * Grupo de procesos del documento
      */
@@ -57,7 +58,7 @@ class Documento implements Auditable {
         columns {
             id column: 'dcmt__id'
             proyecto column: 'proy__id'
-            convenio column: 'cnvn__id'
+            unidadEjecutora column: 'unej__id'
             grupoProcesos column: 'grpr__id'
             descripcion column: 'dcmtdscr'
             clave column: 'dcmtclve'
@@ -71,7 +72,7 @@ class Documento implements Auditable {
      */
     static constraints = {
         proyecto(blank: true, nullable: true, attributes: [mensaje: 'Proyecto'])
-        convenio(blank: true, nullable: true, attributes: [mensaje: 'Convenio'])
+        unidadEjecutora(blank: true, nullable: true, attributes: [mensaje: 'Unidad ejecutora'])
         grupoProcesos(blank: true, nullable: true, attributes: [mensaje: 'Grupo de Procesos'])
         descripcion(size: 1..63, blank: true, nullable: true, attributes: [mensaje: 'Descripción del documento'])
         clave(size: 1..63, blank: true, nullable: true, attributes: [mensaje: 'Palabras clave'])

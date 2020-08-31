@@ -46,8 +46,7 @@
             <i class="fas fa-list-alt"></i> Lista de convenios
         </a>
         <g:if test="${convenio?.id}">
-            <a href="${createLink(controller: 'documento', action: 'listConvenio')}" id="btnNuevoConvenio"
-               class="btn btn-sm btn-info" title="Consultar artículo">
+            <a href="#" id="btnDocumentos" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-book-reader"></i> Biblioteca
             </a>
             <a href="#" id="btnAdministradorCon" class="btn btn-sm btn-info" title="Administrador del convenio">
@@ -56,12 +55,6 @@
             <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de negocio Solidario">
                 <i class="fa fa-hands-helping"></i> Plan de negocio Solidario
             </a>
-%{--            <a href="#" id="btnDatos" class="btn btn-sm btn-info" title="Datos de la organización">--}%
-%{--                <i class="fa fa-scroll"></i> Datos Organización--}%
-%{--            </a>--}%
-%{--            <a href="#" id="editMrlg" class="btn btn-sm btn-info" title="Ver registro">--}%
-%{--                <i class="fa fa-clipboard"></i> Plan de negocio solidario--}%
-%{--            </a>--}%
         </g:if>
         <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"
            class="btn btn-sm btn-success" title="Consultar artículo">
@@ -210,9 +203,9 @@
 
 <script type="text/javascript">
 
-    %{--$("#btnDatos").click(function () {--}%
-    %{--    location.href="${createLink(controller: 'datosOrganizacion', action: 'datos')}/" + '${convenio?.id}'--}%
-    %{--});--}%
+    $("#btnDocumentos").click(function () {
+        location.href="${createLink(controller: 'documento', action: 'listConvenio')}?id=" + '${convenio?.unidadEjecutora?.id}' + "&convenio=" + '${convenio?.id}'
+    });
 
     $("#btnPlanNegocio").click(function () {
        location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + '${convenio?.id}'

@@ -14,12 +14,12 @@
     </thead>
     <tbody id="tbDoc">
         <g:each in="${documentos}" var="doc">
-            <tr data-id="${doc.id}" >
-                <td>${doc.grupoProcesos.descripcion}</td>
-                <td><elm:textoBusqueda busca="${params.search}">${doc.descripcion}</elm:textoBusqueda></td>
-                <td><elm:textoBusqueda busca="${params.search}">${doc.clave}</elm:textoBusqueda></td>
-                <td><elm:textoBusqueda busca="${params.search}">${doc.resumen}</elm:textoBusqueda></td>
-                <td style="width: 90px;">
+            <tr data-id="${doc.id}" style="width: 100%">
+                <td style="width: 12%">${doc.grupoProcesos.descripcion}</td>
+                <td style="width: 15%"><elm:textoBusqueda busca="${params.search}">${doc.descripcion}</elm:textoBusqueda></td>
+                <td style="width: 15%"><elm:textoBusqueda busca="${params.search}">${doc.clave}</elm:textoBusqueda></td>
+                <td style="width: 50%"><elm:textoBusqueda busca="${params.search}">${doc.resumen}</elm:textoBusqueda></td>
+                <td style="width: 8%; text-align: center">
                     <div class="btn-group" role="group">
 
                         <a href="#" class="btn btn-xs btn-success btnDownDoc" data-id="${doc.id}" title="Descargar">
@@ -63,14 +63,6 @@
                     label: "Acciones",
                     header: true
                 },
-/*
-                ver: {
-                    label: "Ver",
-                    icon: "fa fa-search",
-                    action: function ($element) {
-                    }
-                },
-*/
                 editar: {
                     label: "Editar",
                     icon: "fa fa-edit",
@@ -102,11 +94,5 @@
                 $(".success").removeClass("success");
             }
         });
-
-
-
-
-
-
     });
 </script>

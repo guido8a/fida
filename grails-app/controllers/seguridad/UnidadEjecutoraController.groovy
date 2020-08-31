@@ -201,18 +201,23 @@ class UnidadEjecutoraController {
                             tree += "<a href='#' class='label_arbol'>" + h?.nombre + "</a>"
                             tree += "</li>"
                         }else{
-                            ico = ", \"icon\":\"fa fa-user-circle text-info\""
-                            iconoInactivo = ", \"icon\":\"fa fa-user-circle text-default\""
-                            clase = "jstree-closed"
-                            clase3 = "jstree-closed inactivo"
-//                            if(Persona.get(h.id).fechaFin == null){
-                            if(Persona.get(h.id).activo == 1){
-                                tree += "<li id='usu_" + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"persona"}\" ${ico}}'>"
+                            if(h instanceof UnidadEjecutora){
+
                             }else{
-                                tree += "<li id='usu_" + h.id + "' class='" + clase3 + "' data-jstree='{\"type\":\"${"persona"}\" ${iconoInactivo}}'>"
+                                ico = ", \"icon\":\"fa fa-user-circle text-info\""
+                                iconoInactivo = ", \"icon\":\"fa fa-user-circle text-default\""
+                                clase = "jstree-closed"
+                                clase3 = "jstree-closed inactivo"
+//                            if(Persona.get(h.id).fechaFin == null){
+                                if(Persona.get(h.id).activo == 1){
+                                    tree += "<li id='usu_" + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"persona"}\" ${ico}}'>"
+                                }else{
+                                    tree += "<li id='usu_" + h.id + "' class='" + clase3 + "' data-jstree='{\"type\":\"${"persona"}\" ${iconoInactivo}}'>"
+                                }
+                                tree += "<a href='#' class='label_arbol'>" + h.nombreCompleto + "</a>"
+                                tree += "</li>"
                             }
-                            tree += "<a href='#' class='label_arbol'>" + h.nombreCompleto + "</a>"
-                            tree += "</li>"
+
                         }
                     }
                     break

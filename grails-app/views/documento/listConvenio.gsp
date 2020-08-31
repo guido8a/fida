@@ -6,13 +6,20 @@
 </head>
 
 <div class="panel panel-primary col-md-12">
-    <h3>Biblioteca del Convenio</h3>
+    <h3>Biblioteca</h3>
     <div class="panel-info" style="padding: 3px; margin-top: 2px">
     <div class="btn-toolbar toolbar">
         <div class="btn-group">
-            <g:link controller="convenio" action="convenio" id="1" class="btn btn-sm btn-default">
-                <i class="fa fa-arrow-left"></i> Regresar a Convenios
-            </g:link>
+            <g:if test="${convenio}">
+                <g:link controller="convenio" action="convenio" id="${convenio?.id}" class="btn btn-sm btn-default">
+                    <i class="fa fa-arrow-left"></i> Regresar a Convenios
+                </g:link>
+            </g:if>
+            <g:else>
+                <g:link controller="unidadEjecutora" action="organizacion" id="${unidad?.id}" class="btn btn-sm btn-default">
+                    <i class="fa fa-arrow-left"></i> Regresar a Organizaciones
+                </g:link>
+            </g:else>
         </div>
 
     <div class="btn-group">
@@ -40,7 +47,7 @@
 
     function reloadTablaDocumento(search) {
         var data = {
-            id : "${convenio.id}"
+            id : "${unidad?.id}"
         };
         if (search) {
             data.search = search;
@@ -58,10 +65,7 @@
     function submitFormDocumento() {
         var $form = $("#frmDocumento");
         var $btn = $("#dlgCreateEdit").find("#btnSave");
-        // $form.validate();
-        // console.log('submit');
         if ($form.valid()) {
-            // console.log('submit--')
             $btn.replaceWith(spinner);
             openLoader("Guardando Documento");
             var formData = new FormData($form[0]);
@@ -133,7 +137,7 @@
     function createEditDocumento(id) {
         var title = id ? "Editar" : "Crear";
         var data = id ? {id : id} : {};
-        data.convenio = "${convenio.id}";
+        data.unidad = "${unidad.id}";
         $.ajax({
             type    : "POST",
             url     : "${createLink(controller:'documento', action:'formConvenio_ajax')}",

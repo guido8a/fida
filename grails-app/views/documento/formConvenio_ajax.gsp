@@ -1,7 +1,5 @@
 <%@ page import="proyectos.Documento" %>
 
-%{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
-%{--<script type="text/javascript" src="${resource(dir: 'js/plugins/jquery-validation-1.13.1/dist', file: 'additional-methods.min.js')}"></script>--}%
 <g:if test="${!documentoInstance}">
     <elm:notFound elem="Documento" genero="o"/>
 </g:if>
@@ -9,21 +7,18 @@
 
     <div class="modal-contenido">
         <g:uploadForm class="form-horizontal" name="frmDocumento" controller="documento" action="save_ajax" method="POST">
-%{--        <g:form class="form-horizontal" name="frmDocumento" controller="documento" action="save_ajax" method="POST"--}%
-%{--                attrs.enctype = "multipart/form-data">--}%
             <g:hiddenField name="id" value="${documentoInstance?.id}"/>
-            <g:hiddenField name="convenio.id" value="${documentoInstance?.convenioId?: convenio.id}"/>
+            <g:hiddenField name="unidad.id" value="${documentoInstance?.unidadEjecutora?.id ?: unidad.id}"/>
 
             <div class="form-group keeptogether ${hasErrors(bean: documentoInstance, field: 'grupoProcesos', 'error')} ">
                 <span class="grupo">
                     <label for="grupoProcesos" class="col-md-3 control-label">
                         Grupo de Procesos
                     </label>
-
                     <div class="col-md-6">
                         <g:select id="grupoProcesos" name="grupoProcesos.id" from="${parametros.proyectos.GrupoProcesos.list()}"
                                   optionKey="id" value="${documentoInstance?.grupoProcesos?.id}"
-                                  class="many-to-one form-control input-sm" noSelection="['null': '']"/>
+                                  class="many-to-one form-control input-sm" noSelection="['null': 'Seleccione...']"/>
                     </div>
                 </span>
             </div>
@@ -33,7 +28,6 @@
                     <label for="descripcion" class="col-md-3 control-label">
                         Descripción
                     </label>
-
                     <div class="col-md-8">
                         <g:textField name="descripcion" maxlength="63" class="form-control input-sm required"
                                      value="${documentoInstance?.descripcion}"/>
@@ -46,7 +40,6 @@
                     <label for="clave" class="col-md-3 control-label">
                         Palabras Clave
                     </label>
-
                     <div class="col-md-8">
                         <g:textField name="clave" maxlength="63" class="form-control input-sm" value="${documentoInstance?.clave}"/>
                     </div>
@@ -54,7 +47,6 @@
             </div>
 
             <div class="form-group keeptogether ${hasErrors(bean: documentoInstance, field: 'resumen', 'error')} ">
-%{--            <div class="row">--}%
                 <span class="grupo">
                     <label for="resumen" class="col-md-3 control-label">
                         Resumen
@@ -73,11 +65,9 @@
                         <label for="documento" class="col-md-3 control-label">
                             Documento
                         </label>
-
                         <div class="col-md-8">
                             <input type="file" name="documento" id="documento" class="form-control input-sm required"/>
                         </div>
-
                     </span>
                 </div>
             </g:if>
@@ -120,38 +110,7 @@
             }
             okExt += ext;
             okExt2 += ext;
-            // console.log('ext:', okExt, okExt2)
         });
-
-        // var validator = $("#frmDocumento").validate({
-/*
-        $("#frmDocumento").validate({
-            errorClass     : "help-block",
-            errorPlacement : function (error, element) {
-                if (element.parent().hasClass("input-group")) {
-                    error.insertAfter(element.parent());
-                } else {
-                    error.insertAfter(element);
-                }
-                element.parents(".grupo").addClass('has-error');
-            },
-            success: function (label) {
-                label.parents(".grupo").removeClass('has-error');
-                label.remove();
-            },
-            rules: {
-                documento : {
-                    required  : true,
-                    extension : okExt
-                }
-            },
-            messages       : {
-                documento : {
-                    extension : "Por favor ingrese un archivo de tipo " + okExt2
-                }
-            }
-        });
-*/
 
         $(".form-control").keydown(function (ev) {
             if (ev.keyCode == 13) {

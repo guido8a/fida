@@ -3,6 +3,7 @@ package proyectos
 import convenio.Convenio
 import grails.validation.ValidationException
 import org.springframework.dao.DataIntegrityViolationException
+import seguridad.UnidadEjecutora
 
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
@@ -178,17 +179,21 @@ class DocumentoController {
      * Acción llamada con ajax que muestra y permite modificar los documentos de un proyecto
      */
     def listConvenio() {
-        def convenio = convenio.Convenio.get(1)
-        return [convenio: convenio]
+        def convenio = null
+        if(params.convenio){
+            convenio = Convenio.get(params.convenio)
+        }
+        def unidad = UnidadEjecutora.get(params.id)
+        return [unidad:unidad, convenio: convenio]
     }
 
     /**
      * Acción llamada con ajax que llena la tabla de los documentos de un proyecto
      */
     def tablaDocConvenio_ajax() {
-        def convenio = Convenio.get(params.id)
+        def unidad = UnidadEjecutora.get(params.id)
         def documentos = Documento.withCriteria {
-            eq("convenio", convenio)
+            eq("unidadEjecutora", unidad)
             if (params.search && params.search != "") {
                 or {
                     ilike("descripcion", "%" + params.search + "%")
@@ -198,7 +203,7 @@ class DocumentoController {
             }
             order("descripcion", "asc")
         }
-        return [convenio: convenio, documentos: documentos]
+        return [documentos: documentos]
     }
 
     /**
@@ -249,7 +254,7 @@ class DocumentoController {
      */
     def formConvenio_ajax() {
         println "formConvenio_ajax: $params"
-        def convenio = Convenio.get(params.convenio.toLong())
+        def unidad = UnidadEjecutora.get(params.unidad.toLong())
         def documentoInstance = new Documento()
         if (params.id) {
             documentoInstance = Documento.get(params.id)
@@ -259,7 +264,7 @@ class DocumentoController {
                 documentoInstance = new Documento()
             }
         }
-        return [documentoInstance: documentoInstance, convenio: convenio]
+        return [documentoInstance: documentoInstance, unidad:unidad]
     } //form para cargar con ajax en un dialog
 
     /**
@@ -268,29 +273,33 @@ class DocumentoController {
      */
     def save_ajax() {
         println "save_ajax: $params"
-        def proyecto, convenio, proyName, convName
+        def proyecto, proyName, uniName, unidad
         if (params.proyecto && params.proyecto.id) {
             proyecto = Proyecto.get(params.proyecto.id.toLong())
             proyName = proyecto.nombre.tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
         }
-        if (params.convenio && params.convenio.id) {
-            convenio = Convenio.get(params.convenio.id.toLong())
-            convName = (convenio.nombre + "_" + convenio.codigo).tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
+//        if (params.convenio && params.convenio.id) {
+//            convenio = Convenio.get(params.convenio.id.toLong())
+//            convName = (convenio.nombre + "_" + convenio.codigo).tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
+//        }
+
+        if (params."unidad.id") {
+            unidad = UnidadEjecutora.get(params."unidad.id".toLong())
+            uniName = (unidad.nombre + "_" + unidad.codigo).tr(/áéíóúñÑÜüÁÉÍÓÚàèìòùÀÈÌÒÙÇç .!¡¿?&#°"'/, "aeiounNUuAEIOUaeiouAEIOUCc_")
         }
 
         def anio = new Date().format("yyyy")
         def pathSave = ""
         if (proyName) {
-//            pathSave = "${session.unidad.codigo}/" + anio + "/" + proyName + "/"
             pathSave = "proy/"
-        } else if (convName) {
-            pathSave = "conv${convenio.id}/"
+        } else if (uniName) {
+            pathSave = "uni${unidad?.id}/"
         }
         def path = "/var/fida/"
         if (proyName) {
             path += "documentosProyecto/" + pathSave
-        } else if (convName) {
-            path += "documentosConvenio/" + pathSave
+        } else if (uniName) {
+            path += "documentosUnidad/" + pathSave
         }
         //web-app/archivos
         new File(path).mkdirs()
@@ -416,9 +425,9 @@ class DocumentoController {
                 documentoInstance.documento = pathSave + nombre
 
                 println "archivo --> $pathSave  + $nombre"
-                if (convenio) {
-                    documentoInstance.convenio = convenio
-                    println "convenio --> $convenio"
+                if (unidad) {
+                    documentoInstance.unidadEjecutora = unidad
+                    println "unidad --> $unidad"
                 }
                 if (!documentoInstance.save(flush: true)) {
                     render "ERROR*Ha ocurrido un error al guardar Documento: " + renderErrors(bean: documentoInstance)
@@ -445,14 +454,7 @@ class DocumentoController {
                 }
                 params.remove("documento")
                 documentoInstance.properties = params
-/*
-                if (params.unidad && params.unidad.id) {
-                    documentoInstance.unidadEjecutora = UnidadEjecutora.get(params.unidad.id.toLong())
-                } else {
-                    documentoInstance.unidadEjecutora = session.unidad
-                }
-*/
-                if (!documentoInstance.save(flush: true)) {
+              if (!documentoInstance.save(flush: true)) {
                     render "ERROR*Ha ocurrido un error al guardar Documento: " + renderErrors(bean: documentoInstance)
                     return
                 }
@@ -498,13 +500,13 @@ class DocumentoController {
      * Acción llamada con ajax que verifica la existencia de un documento antes de ser descargado
      */
     def existeDoc_ajax() {
-//        println "existeDoc_ajax $params"
+        println "existeDoc_ajax $params"
         def doc = Documento.get(params.id)
         def path
         if (doc.proyecto) {
             path = "/var/fida/documentosProyecto/" + doc.documento
         } else {
-            path = "/var/fida/documentosConvenio/" + doc.documento
+            path = "/var/fida/documentosUnidad/" + doc.documento
         }
 //        println "--> ${path}"
         def file = new File(path)
@@ -524,7 +526,7 @@ class DocumentoController {
         if (doc.proyecto) {
             path = "/var/fida/documentosProyecto/" + doc.documento
         } else {
-            path = "/var/fida/documentosConvenio/" + doc.documento
+            path = "/var/fida/documentosUnidad/" + doc.documento
         }
         def nombre = doc.documento.split("/").last()
         def parts = nombre.split("\\.")

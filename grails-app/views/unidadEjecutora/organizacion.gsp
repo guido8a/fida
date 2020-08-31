@@ -40,6 +40,9 @@
             <i class="fas fa-list-alt"></i> Lista de organizaciones
         </a>
         <g:if test="${unidad?.id}">
+            <a href="#" id="btnDocumentos" class="btn btn-sm btn-info" title="Consultar documentos">
+                <i class="fas fa-book-reader"></i> Biblioteca
+            </a>
             <a href="#" id="btnDatos" class="btn btn-sm btn-info" title="Datos de la organización">
                 <i class="fa fa-scroll"></i> Datos Organización
             </a>
@@ -359,6 +362,10 @@
                 });
             }
         });
+    });
+
+    $("#btnDocumentos").click(function () {
+        location.href="${createLink(controller: 'documento', action: 'listConvenio')}?id=" + '${unidad?.id}'
     });
 
     $("#btnDatos").click(function () {
