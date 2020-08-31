@@ -146,6 +146,7 @@
         font-size: 1re
     }
 
+
     </style>
 </head>
 
@@ -159,22 +160,15 @@
     </h2>
     </div>
 
-
-
-
-    %{--    <section>--}%
-    %{--        <div class="container">--}%
-
     <div class="row mbr-justify-content-center">
 
     <a href= "${createLink(controller:'proyecto', action: 'proy', id:1)}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap">
-                <div class="ico-wrap">
-                    %{--                            <span class="mbr-iconfont fa-volume-up fa"></span>--}%
+            <div class="wrap" style="width: 553px; height: 120px">
+                <div style="width: 200px; height: 120px">
                     <asset:image src="apli/proyecto.png" title="Marco lógico de Proyecto"  width="80%" height="80%"/>
                 </div>
-                <div class="text-wrap vcenter">
+                <div style="width: 450px; height: 120px">
                     <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Proyecto</span></h2>
                     <p class="mbr-fonts-style text1 mbr-text display-6">Fortalecimiento de los Actores Rurales de la Economía Popular y Solidaria</p>
                 </div>
@@ -183,12 +177,11 @@
     </a>
     <a href= "${createLink(controller:'taller', action: 'listTaller')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap">
-                <div class="ico-wrap">
-                    %{--                            <span class="mbr-iconfont fa-calendar fa"></span>--}%
+            <div class="wrap" style="width: 553px; height: 120px">
+                <div style="width: 200px; height: 120px">
                     <asset:image src="apli/taller.png" title="Talleres" width="80%" height="80%"/>
                 </div>
-                <div class="text-wrap vcenter">
+                <div style="width: 450px; height: 120px">
                     <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
                         <span>Talleres</span>
                     </h2>
@@ -199,11 +192,11 @@
     </a>
     <a href= "${createLink(controller:'unidadEjecutora', action: 'organizacion')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap">
-                <div class="ico-wrap">
+            <div class="wrap" style="width: 553px; height: 120px">
+                <div style="width: 200px; height: 120px">
                     <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
                 </div>
-                <div class="text-wrap vcenter">
+                <div style="width: 450px; height: 120px">
                     <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
                         <span>Organizaciones</span>
                     </h2>
@@ -217,27 +210,26 @@
     </a>
     <a href= "${createLink(controller:'convenio', action: 'convenio')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap">
-                <div class="ico-wrap">
-                    %{--                            <span class="mbr-iconfont fa-calendar fa"></span>--}%
+            <div class="wrap" style="width: 553px; height: 120px">
+                <div style="width: 200px; height: 120px">
                     <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
                 </div>
-                <div class="text-wrap vcenter">
-                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
+                <div style="width: 450px; height: 120px">
+                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5 col-md-12">
                         <span>Planes de Negocio</span>
                     </h2>
-                    <p class="mbr-fonts-style text1 mbr-text display-6"> Planes de Negocio Solidarios</p>
+                    <p class="mbr-fonts-style text1 mbr-text display-6 col-md-12"> Planes de Negocio Solidarios</p>
                 </div>
             </div>
         </div>
     </a>
     <a href= "${createLink(controller:'convenio', action: 'convenio')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap">
-                <div class="ico-wrap">
+            <div class="wrap" style="width: 553px; height: 120px">
+                <div style="width: 200px; height: 120px">
                     <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
                 </div>
-                <div class="text-wrap vcenter">
+                <div style="width: 450px; height: 120px">
                     <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
                         <span>Convenios</span>
                     </h2>
@@ -248,12 +240,11 @@
         </div>
     </a>
     <div class="col-lg-6 mbr-col-md-10">
-        <div class="wrap">
-            <div class="ico-wrap">
-                %{--                            <span class="mbr-iconfont fa-calendar fa"></span>--}%
+        <div class="wrap" style="width: 553px; height: 120px">
+            <div style="width: 200px; height: 120px">
                 <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="80%" height="80%"/>
             </div>
-            <div class="text-wrap vcenter">
+            <div style="width: 450px; height: 120px">
                 <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
                     <span>Plan operativo anual</span>
                 </h2>
@@ -263,24 +254,22 @@
         </div>
     </div>
         <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap">
-                <div class="ico-wrap">
-%{--                    <span class="mbr-iconfont fa-trophy fa"></span>--}%
+            <div class="wrap" style="width: 553px; height: 120px">
+                <div style="width: 200px; height: 120px">
                     <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="80%" height="80%"/>
                 </div>
-                <div class="text-wrap vcenter">
+                <div style="width: 450px; height: 120px">
                     <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Ajustes</span></h2>
                     <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
                 </div>
             </div>
         </div>
     <div class="col-lg-6 mbr-col-md-10">
-        <div class="wrap">
-            <div class="ico-wrap">
-                %{--                    <span class="mbr-iconfont fa-trophy fa"></span>--}%
+        <div class="wrap" style="width: 553px; height: 120px">
+            <div style="width: 200px; height: 120px">
                 <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="80%" height="80%"/>
             </div>
-            <div class="text-wrap vcenter">
+            <div style="width: 450px; height: 120px">
                 <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Reformas</span></h2>
                 <p class="mbr-fonts-style text1 mbr-text display-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</p>
             </div>
