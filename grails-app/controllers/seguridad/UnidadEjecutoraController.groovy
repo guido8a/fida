@@ -83,7 +83,7 @@ class UnidadEjecutoraController {
         def unidad = UnidadEjecutora.get(params.id)
 
         def hijos = UnidadEjecutora.findAllByPadre(unidad)
-         hijos += Persona.findAllByUnidadEjecutora(unidad)
+        hijos += Persona.findAllByUnidadEjecutora(unidad)
 
         if(hijos.size() > 0){
             render "res_La unidad tiene unidades/usuarios asociados a ella "
@@ -165,29 +165,69 @@ class UnidadEjecutoraController {
             def prov = Provincia.get(id)
             def cntn = Canton.findAllByProvincia(prov)
             def parr = Parroquia.findAllByCantonInList(cntn)
-            def ieps = UnidadEjecutora.findAllByProvinciaAndPadreIsNullAndFechaFinIsNull(prov).sort{it.nombre}
-            hijos = UnidadEjecutora.findAllByParroquiaInListAndPadreIsNullAndFechaFinIsNull(parr).sort{it.nombre}
-            hijos += ieps
-            def presupuesto = ""
+            hijos = cntn
             def icono = ""
             def data = ""
 
-//            ico = ", \"icon\":\"fa fa-building text-success\""
             hijos.each { hijo ->
-                icono = hijo.tipoInstitucion.id == 1 ? "fas fa-warehouse" : "fa-home"
-                ico = ", \"icon\":\"fas ${icono} text-success\""
-//                println "${hijo.tipoInstitucion.id} --> '1' icon: $ico"
-//                presupuesto = hijo.tipoInstitucion.id == 1 ? ' presupuesto' : ''
-                presupuesto = hijo.nombre.contains('FAREPS') ? ' presupuesto' : ''
-                clase = UnidadEjecutora.findByPadreAndFechaFinIsNull(hijo) ? "jstree-closed hasChildren" : "jstree-closed"
-                clase2 = Persona.findAllByUnidadEjecutora(hijo) ? " hasChildren" : ''
-                tree += "<li id='uni_" + hijo.id + "' class='" + clase + clase2 + presupuesto + "' ${data} data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"
+                icono = "fa-save"
+                ico = ", \"icon\":\"fas ${icono} text-warning\""
+//                clase =  "jstree-closed hasChildren"
+                clase = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? "jstree-closed hasChildren" : "jstree-closed"
+                clase2 = UnidadEjecutora.findAllByParroquiaInListAndPadreIsNullAndFechaFinIsNull(parr).sort{it.nombre} ? " hasChildren" : ''
+//                clase2 = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? " hasChildren" : ''
+                tree += "<li id='cnt_" + hijo.id + "' class='" + clase + clase2 + "' ${data} data-jstree='{\"type\":\"${"canton"}\" ${ico}}' >"
                 tree += "<a href='#' class='label_arbol'>" + hijo?.nombre + "</a>"
                 tree += "</li>"
             }
-        } else {
-//            println ("---- no es raiz..." + tipo + " - " + id)
+        }
+//        else if (tipo == "cnt") {
+//            def cntn = Canton.get(id)
+//            def prov = cntn.provincia
+//            def parr = Parroquia.findAllByCanton(cntn)
+//            def ieps = UnidadEjecutora.findAllByProvinciaAndPadreIsNullAndFechaFinIsNull(prov).sort{it.nombre}
+//            hijos = UnidadEjecutora.findAllByParroquiaInListAndPadreIsNullAndFechaFinIsNull(parr).sort{it.nombre}
+//            hijos += ieps
+//            def icono = ""
+//            def data = ""
+//            def presupuesto = ""
+//
+//            hijos.each { hj ->
+//                icono = hj.tipoInstitucion.id == 1 ? "fas fa-warehouse" : "fa-home"
+//                ico = ", \"icon\":\"fas ${icono} text-success\""
+//                presupuesto = hj.nombre.contains('FAREPS') ? ' presupuesto' : ''
+//                clase = UnidadEjecutora.findByPadreAndFechaFinIsNull(hj) ? "jstree-closed hasChildren" : "jstree-closed"
+//                clase2 = Persona.findAllByUnidadEjecutora(hj) ? " hasChildren" : ''
+//                tree += "<li id='uni_" + hj.id + "' class='" + clase + clase2 + presupuesto + "' ${data} data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"
+//                tree += "<a href='#' class='label_arbol'>" + hj?.nombre + "</a>"
+//                tree += "</li>"
+//            }
+//        }
+        else {
             switch(tipo) {
+                case "cnt":
+                    println("cnt " + id)
+                    def cant = Canton.get(id)
+                    def prov = cant.provincia
+                    def parr = Parroquia.findAllByCanton(cant)
+                    println("parroquias " + parr)
+                    def presupuesto = ""
+                    def icono = ""
+                    def data = ""
+                    def ieps = UnidadEjecutora.findAllByProvinciaAndPadreIsNullAndFechaFinIsNull(prov).sort{it.nombre}
+                    hijos = UnidadEjecutora.findAllByParroquiaInListAndPadreIsNullAndFechaFinIsNull(parr).sort{it.nombre}
+                    hijos += ieps
+                    hijos.each { hj ->
+                        icono = hj.tipoInstitucion.id == 1 ? "fas fa-warehouse" : "fa-home"
+                        ico = ", \"icon\":\"fas ${icono} text-success\""
+                        presupuesto = hj.nombre.contains('FAREPS') ? ' presupuesto' : ''
+                        clase = UnidadEjecutora.findByPadreAndFechaFinIsNull(hj) ? "jstree-closed hasChildren" : "jstree-closed"
+                        clase2 = Persona.findAllByUnidadEjecutora(hj) ? " hasChildren" : ''
+                        tree += "<li id='uni_" + hj.id + "' class='" + clase + clase2 + presupuesto + "' ${data} data-jstree='{\"type\":\"${"unidadEjecutora"}\" ${ico}}' >"
+                        tree += "<a href='#' class='label_arbol'>" + hj?.nombre + "</a>"
+                        tree += "</li>"
+                    }
+                    break
                 case "uni":
                     hijos += UnidadEjecutora.findAllByPadreAndFechaFinIsNull(UnidadEjecutora.get(id), [sort: params.sort])
                     hijos += Persona.findAllByUnidadEjecutora(UnidadEjecutora.get(id), [sort: params.sort, order: params.order])
@@ -201,23 +241,18 @@ class UnidadEjecutoraController {
                             tree += "<a href='#' class='label_arbol'>" + h?.nombre + "</a>"
                             tree += "</li>"
                         }else{
-                            if(h instanceof UnidadEjecutora){
-
-                            }else{
-                                ico = ", \"icon\":\"fa fa-user-circle text-info\""
-                                iconoInactivo = ", \"icon\":\"fa fa-user-circle text-default\""
-                                clase = "jstree-closed"
-                                clase3 = "jstree-closed inactivo"
+                            ico = ", \"icon\":\"fa fa-user-circle text-info\""
+                            iconoInactivo = ", \"icon\":\"fa fa-user-circle text-default\""
+                            clase = "jstree-closed"
+                            clase3 = "jstree-closed inactivo"
 //                            if(Persona.get(h.id).fechaFin == null){
-                                if(Persona.get(h.id).activo == 1){
-                                    tree += "<li id='usu_" + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"persona"}\" ${ico}}'>"
-                                }else{
-                                    tree += "<li id='usu_" + h.id + "' class='" + clase3 + "' data-jstree='{\"type\":\"${"persona"}\" ${iconoInactivo}}'>"
-                                }
-                                tree += "<a href='#' class='label_arbol'>" + h.nombreCompleto + "</a>"
-                                tree += "</li>"
+                            if(Persona.get(h.id).activo == 1){
+                                tree += "<li id='usu_" + h.id + "' class='" + clase + "' data-jstree='{\"type\":\"${"persona"}\" ${ico}}'>"
+                            }else{
+                                tree += "<li id='usu_" + h.id + "' class='" + clase3 + "' data-jstree='{\"type\":\"${"persona"}\" ${iconoInactivo}}'>"
                             }
-
+                            tree += "<a href='#' class='label_arbol'>" + h.nombreCompleto + "</a>"
+                            tree += "</li>"
                         }
                     }
                     break
