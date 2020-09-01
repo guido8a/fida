@@ -84,7 +84,17 @@
                     </div>
                 </span>
             </div>
-
+            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'codigo', 'error')} ">
+                <span class="grupo">
+                    <label for="codigo" class="col-md-3 control-label">
+                        Código del taller
+                    </label>
+                    <div class="col-md-9">
+                        <g:textField name="codigo" class="form-control input-sm"
+                                     value="${tallerInstance?.codigo}" maxlength="15"/>
+                    </div>
+                </span>
+            </div>
             <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'tipoTaller', 'error')} ">
                 <span class="grupo">
                     <label for="tipoTaller" class="col-md-3 control-label">
@@ -176,7 +186,6 @@
                     </div>
                 </span>
             </div>
-
             <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'instructor', 'error')} ">
                 <span class="grupo">
                     <label for="instructor" class="col-md-3 control-label">
@@ -189,7 +198,51 @@
                     </div>
                 </span>
             </div>
+            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'documento', 'error')} ">
+                <span class="grupo">
+                    <label for="documento" class="col-md-3 control-label">
+                        Documento
+                    </label>
 
+                    <div class="col-md-2">
+                        <g:select name="documento" value="${tallerInstance?.documento}" class="form-control input-sm"
+                                  from="${[0: 'No', 1: 'Sí']}" optionKey="key" optionValue="value"/>
+                    </div>
+                </span>
+                <span class="grupo">
+                    <label for="modulo" class="col-md-3 control-label">
+                        Módulo
+                    </label>
+                    <div class="col-md-2">
+                        <g:select name="modulo" value="${tallerInstance?.modulo}" class="form-control input-sm"
+                                  from="${[0: 'No', 1: 'Sí']}" optionKey="key" optionValue="value"/>
+                    </div>
+                </span>
+            </div>
+            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'fichaTecnica', 'error')} ">
+                <span class="grupo">
+                    <label for="fichaTecnica" class="col-md-3 control-label">
+                        Ficha Técnica
+                    </label>
+
+                    <div class="col-md-9">
+                        <g:textField name="fichaTecnica" class="form-control input-sm"
+                                     value="${tallerInstance?.fichaTecnica}" maxlength="15"/>
+                    </div>
+                </span>
+            </div>
+            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'observaciones', 'error')} ">
+                <span class="grupo">
+                    <label for="observaciones" class="col-md-3 control-label">
+                        Observaciones
+                    </label>
+
+                    <div class="col-md-9">
+                        <g:textArea name="observaciones" rows="2" maxlength="255" class="form-control input-sm"
+                                    value="${tallerInstance?.observaciones}" style="resize: none"/>
+                    </div>
+                </span>
+            </div>
         </g:form>
     </div>
 

@@ -14,8 +14,7 @@ class Taller implements Auditable {
     TipoTaller tipoTaller
     Institucion institucion
     Capacidad capacidad
-
-//    String codigo
+    String codigo
     String nombre
     String objetivo
     Date fecha
@@ -23,6 +22,10 @@ class Taller implements Auditable {
     Date fechaFin
     Double valor = 0.0
     String instructor
+    String documento
+    String modulo
+    String fichaTecnica
+    String observaciones
 
     static auditable = true
 
@@ -43,7 +46,7 @@ class Taller implements Auditable {
             tipoTaller column: 'tptl__id'
             institucion column: 'inst__id'
             capacidad column: 'cpcd__id'
-//            codigo column: 'tllrcdgo'
+            codigo column: 'tllrcdgo'
             nombre column: 'tllrnmbr'
             objetivo column: 'tllrobjt'
             fecha column: 'tllrfcha'
@@ -51,6 +54,10 @@ class Taller implements Auditable {
             fechaFin column: 'tllrfcfn'
             valor column: 'tllrvlor'
             instructor column: 'tllrinst'
+            documento column: 'tllrdcmt'
+            modulo column: 'tllrmdlo'
+            fichaTecnica column: 'tllrfctc'
+            observaciones column: 'tllrobsr'
         }
     }
     static constraints = {
@@ -61,7 +68,7 @@ class Taller implements Auditable {
         tipoTaller(blank: false, nullable: false)
         institucion(blank: true, nullable: true)
         capacidad(blank: false, nullable: false)
-//        codigo(size: 0..15, blank: true, nullable: false)
+        codigo(blank: true, nullable: true)
         nombre(size: 3..255, blank: false)
         objetivo(blank: false)
         fecha(blank: false, nullable: false, attributes: [title: 'Fecha de inicio'])
@@ -69,6 +76,10 @@ class Taller implements Auditable {
         fechaFin(blank: true, nullable: true, attributes: [title: 'Fecha de finalización'])
         valor(blank: false, nullable: false)
         instructor(blank: false, nullable: false)
+        documento(blank: true, nullable: true)
+        modulo(blank: true, nullable: true)
+        observaciones(blank: true, nullable: true)
+        fichaTecnica(blank: true, nullable: true)
     }
 
     String toString() {
