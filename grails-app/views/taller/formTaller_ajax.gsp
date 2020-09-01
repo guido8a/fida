@@ -71,6 +71,7 @@
                 </span>
             </div>
 
+%{--
             <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'institucion', 'error')} ">
                 <span class="grupo">
                     <label for="institucion" class="col-md-3 control-label">
@@ -84,17 +85,8 @@
                     </div>
                 </span>
             </div>
-            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'codigo', 'error')} ">
-                <span class="grupo">
-                    <label for="codigo" class="col-md-3 control-label">
-                        Código del taller
-                    </label>
-                    <div class="col-md-9">
-                        <g:textField name="codigo" class="form-control input-sm"
-                                     value="${tallerInstance?.codigo}" maxlength="15"/>
-                    </div>
-                </span>
-            </div>
+--}%
+
             <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'tipoTaller', 'error')} ">
                 <span class="grupo">
                     <label for="tipoTaller" class="col-md-3 control-label">

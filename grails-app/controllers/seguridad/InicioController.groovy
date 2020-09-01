@@ -134,10 +134,10 @@ class InicioController {
             sql = "select count(*) nada from unej where unejnmbr = '${rgst[3].toString().trim()}'"
             cnta = cn.rows(sql.toString())[0]?.nada
 //            println "parr: $parr"
-            if(!parr) {
+            if (!parr) {
                 sqlParr = "select cntn__id from cntn where cntnnmbr ilike '%${rgst[6]}%'"
                 def cntn = cn.rows(sqlParr.toString())[0]?.cntn__id
-                if(cntn){
+                if (cntn) {
                     sqlParr = "insert into parr(parr__id, cntn__id, parrnmbr) " +
                             "values (default, ${cntn}, '${rgst[7]}') returning parr__id"
                     cn.eachRow(sqlParr.toString()) { d ->
@@ -150,12 +150,12 @@ class InicioController {
             }
 
             if (parr && (cnta == 0)) {
-                if(rgst[2]?.size() > 6) {
-                    fcha =  new Date().parse("dd/MM/yyyy", rgst[2]).format('yyyy-MM-dd')
+                if (rgst[2]?.size() > 6) {
+                    fcha = new Date().parse("dd/MM/yyyy", rgst[2]).format('yyyy-MM-dd')
                 } else {
                     fcha = '1-jan-1900'
                 }
-                zona =  rgst[4].split(' ').last()
+                zona = rgst[4].split(' ').last()
                 /* crea la UNEJ*/
                 sql = "insert into unej (unej__id, unejinst, unejfcin, unejnmbr, unejnmsr, parr__id, unejdire, " +
                         "unejrefe, unejtelf, unejlgal, unej_ruc, unej_rup, unejmail, " +
@@ -178,7 +178,7 @@ class InicioController {
                     /********** crea PRSN ***********/
 
                     nombres = rgst[16].split(' ').toList()
-                    if(nombres.size() > 3) {
+                    if (nombres.size() > 3) {
                         nmbr = "${nombres[0]} ${nombres[1]}"
                         apll = "${nombres[2]} ${nombres[3]}"
                         login = "${nmbr[0]}${nombres[2]}"
@@ -202,46 +202,46 @@ class InicioController {
                     sql = "insert into dtor (dtor__id, unej__id, " +
                             "dtornmhh, dtornmmj, dtornmjv, dtornmad, dtornsam, prsn__id) " +
                             "values(default, ${id}, " +
-                            "${rgst[21].trim()?:null}, ${rgst[22].trim()?:null}, ${rgst[23].trim()?:null}," +
-                            " ${rgst[24].trim()?:null}, ${rgst[25].trim()?:null}, ${resp})"
+                            "${rgst[21].trim() ?: null}, ${rgst[22].trim() ?: null}, ${rgst[23].trim() ?: null}," +
+                            " ${rgst[24].trim() ?: null}, ${rgst[25].trim() ?: null}, ${resp})"
                     println "sql2: $sql"
                     cn.execute(sql.toString())
 
                     println "insertaEtor.... ${rgst[26]},${rgst[27]},${rgst[28]},${rgst[29]},${rgst[30]},${rgst[31]}"
-                    println "insertaEtor..>> ${rgst[26].trim().size() > 0? rgst[26]: 'vacío'}"
-                    if(rgst[26].trim()?.size() > 0) insertaEtor(id, 2, rgst[26])
-                    if(rgst[27].trim()?.size() > 0) insertaEtor(id, 4, rgst[27])
-                    if(rgst[28].trim()?.size() > 0) insertaEtor(id, 3, rgst[28])
-                    if(rgst[29].trim()?.size() > 0) insertaEtor(id, 5, rgst[29])
-                    if(rgst[30].trim()?.size() > 0) insertaEtor(id, 1, rgst[30])
-                    if(rgst[31].trim()?.size() > 0) insertaEtor(id, 6, rgst[31])
+                    println "insertaEtor..>> ${rgst[26].trim().size() > 0 ? rgst[26] : 'vacío'}"
+                    if (rgst[26].trim()?.size() > 0) insertaEtor(id, 2, rgst[26])
+                    if (rgst[27].trim()?.size() > 0) insertaEtor(id, 4, rgst[27])
+                    if (rgst[28].trim()?.size() > 0) insertaEtor(id, 3, rgst[28])
+                    if (rgst[29].trim()?.size() > 0) insertaEtor(id, 5, rgst[29])
+                    if (rgst[30].trim()?.size() > 0) insertaEtor(id, 1, rgst[30])
+                    if (rgst[31].trim()?.size() > 0) insertaEtor(id, 6, rgst[31])
 
                     println "inicia insertaCtgr.... ${rgst[39]}, ${rgst[41]}"
                     /* tpct:1,2 col:39,41 es numérico */
-                    if(rgst[39]?.toInteger() > 0) insertaCtgr(id, 1, rgst[39])
-                    if(rgst[41]?.toInteger() > 0) insertaCtgr(id, 2, rgst[41])
+                    if (rgst[39]?.toInteger() > 0) insertaCtgr(id, 1, rgst[39])
+                    if (rgst[41]?.toInteger() > 0) insertaCtgr(id, 2, rgst[41])
 
-                    if(rgst[42]) insertaCtgr(id, 3, rgst[42])
-                    if(rgst[43]) insertaCtgr(id, 4, rgst[43])
-                    if(rgst[44]) insertaCtgr(id, 5, rgst[44])
-                    if(rgst[45]) insertaCtgr(id, 6, rgst[45])
-                    if(rgst[46]) insertaCtgr(id, 7, rgst[46])
-                    if(rgst[47]) insertaCtgr(id, 8, rgst[47])
-                    if(rgst[48]) insertaCtgr(id, 9, rgst[48])
-                    if(rgst[49]) insertaCtgr(id, 10, rgst[49])
-                    if(rgst[50]) insertaCtgr(id, 11, rgst[50])
-                    if(rgst[51]) insertaCtgr(id, 12, rgst[51])
-                    if(rgst[52]) insertaCtgr(id, 13, rgst[52])
+                    if (rgst[42]) insertaCtgr(id, 3, rgst[42])
+                    if (rgst[43]) insertaCtgr(id, 4, rgst[43])
+                    if (rgst[44]) insertaCtgr(id, 5, rgst[44])
+                    if (rgst[45]) insertaCtgr(id, 6, rgst[45])
+                    if (rgst[46]) insertaCtgr(id, 7, rgst[46])
+                    if (rgst[47]) insertaCtgr(id, 8, rgst[47])
+                    if (rgst[48]) insertaCtgr(id, 9, rgst[48])
+                    if (rgst[49]) insertaCtgr(id, 10, rgst[49])
+                    if (rgst[50]) insertaCtgr(id, 11, rgst[50])
+                    if (rgst[51]) insertaCtgr(id, 12, rgst[51])
+                    if (rgst[52]) insertaCtgr(id, 13, rgst[52])
 
                     println "inicia insertaNecd.... ${rgst[53]}, ${rgst[60]}"
-                    if(rgst[53]) insertaNecd(id, 1)
-                    if(rgst[54]) insertaNecd(id, 2)
-                    if(rgst[55]) insertaNecd(id, 3)
-                    if(rgst[56]) insertaNecd(id, 4)
-                    if(rgst[57]) insertaNecd(id, 5)
-                    if(rgst[58]) insertaNecd(id, 6)
-                    if(rgst[59]) insertaNecd(id, 7)
-                    if(rgst[60]) insertaNecd(id, 8)
+                    if (rgst[53]) insertaNecd(id, 1)
+                    if (rgst[54]) insertaNecd(id, 2)
+                    if (rgst[55]) insertaNecd(id, 3)
+                    if (rgst[56]) insertaNecd(id, 4)
+                    if (rgst[57]) insertaNecd(id, 5)
+                    if (rgst[58]) insertaNecd(id, 6)
+                    if (rgst[59]) insertaNecd(id, 7)
+                    if (rgst[60]) insertaNecd(id, 8)
 
 
                 } catch (Exception ex) {
@@ -317,4 +317,218 @@ class InicioController {
         cn.rows(sql.toString())[0].prsn__id
     }
 
+
+    /** carga datos desde un CSV - utf-8: si ya existe lo actualiza
+     * */
+    def leeTalleres() {
+        println ">>leeTalleres.."
+        def contador = 0
+        def cn = dbConnectionService.getConnection()
+        def estc
+        def rgst = []
+        def cont = 0
+        def repetidos = 0
+        def procesa = 5
+        def crea_log = false
+        def inserta
+        def fcha
+        def magn
+        def sqlp
+        def directorio
+        def tipo = 'prueba'
+//        def tipo = 'prod'
+
+        if (tipo == 'prueba') { //botón: Cargar datos Minutos
+            procesa = 5
+            crea_log = false
+        } else {
+            procesa = 100000000000
+            crea_log = true
+        }
+
+        def nmbr = ""
+        def arch = new File('/home/guido/proyectos/FAREPS/data/talleres.csv')
+        def cuenta = 0
+        def line
+        arch.withReader { reader ->
+            while ((line = reader.readLine()) != null) {
+                if (cuenta > 0 && cuenta < procesa) {
+
+                    rgst = line.split('\t')
+                    rgst = rgst*.trim()
+                    println "***** $rgst"
+
+                    inserta = cargaTaller(rgst)
+                    cont += inserta.insertados
+                    repetidos += inserta.repetidos
+
+                    cuenta++
+                } else {
+                    cuenta++
+                }
+            }
+            println "---> archivo: ${arch.toString()} --> cont: $cont, repetidos: $repetidos"
+//        return "Se han cargado ${cont} líneas de datos y han existido : <<${repetidos}>> repetidos"
+            render "Se han cargado ${cont} líneas de datos y han existido : <<${repetidos}>> repetidos"
+        }
     }
+
+    def cargaTaller(rgst) {
+        def errores = ""
+        def cnta = 0
+        def insertados = 0
+        def repetidos = 0
+        def cn = dbConnectionService.getConnection()
+        def sqlParr = ""
+        def sql = ""
+        def parr = 0
+        def tx = ""
+        def fcha = ""
+        def zona = ""
+        def nombres
+        def nmbr = "", apll = "", unej = "", orden = 0, tptl = ""
+        def id = 0
+        def resp = 0
+
+//        println "\n inicia cargado de datos para $rgst"
+        cnta = 0
+        if (rgst[1].toString().size() > 0) {
+            tx = rgst[4].split('-').last().split(' ').last()
+//            sqlParr = "select parr__id from parr where parrnmbr ilike '%${tx}%'"
+            sqlParr = "select parr__id from parr, cntn, prov where parrnmbr ilike '%${tx}%' and " +
+                    "cntn.cntn__id = parr.cntn__id and prov.prov__id = cntn.prov__id and " +
+                    "provnmbr ilike '${rgst[2].toString().trim()}'"
+//            println "sqlParr: $sqlParr"
+            parr = cn.rows(sqlParr.toString())[0]?.parr__id
+
+            println "parr: $parr"
+            if (!parr) {
+                sqlParr = "select cntn__id from cntn where cntnnmbr ilike '%${rgst[3]}%'"
+                def cntn = cn.rows(sqlParr.toString())[0]?.cntn__id
+/*
+                if (cntn) {
+                    sqlParr = "insert into parr(parr__id, cntn__id, parrnmbr) " +
+                            "values (default, ${cntn}, '${rgst[7]}') returning parr__id"
+                    cn.eachRow(sqlParr.toString()) { d ->
+                        parr = d.parr__id
+                    }
+                    println "parr --> $parr"
+                }
+*/
+//                println "no existe parroquia: ${rgst[5]} ${rgst[6]} ${tx} --> cntn: ${cntn}"
+//                println "sql: $sqlParr"
+            }
+
+            def unejnmbr = rgst[8][rgst[8].indexOf(' ') + 1..-1]
+            def tllrfcha = new Date().parse("dd/MM/yyyy", rgst[20]).format('yyyy-MM-dd')
+            def comilla = rgst[22]? "'" : ""
+
+            sql = "select unej__id from unej where unejnmbr ilike '%${unejnmbr.trim()}%'"
+            unej = cn.rows(sql.toString())[0]?.unej__id
+            sql = "select count(*) nada from tllr where tllrfcha = '${tllrfcha}' and unej__id = ${unej}"
+            cnta = cn.rows(sql.toString())[0]?.nada
+            sql = "select tptl__id from tptl where tptldscr ilike '%${rgst[19]}%'"
+            tptl = cn.rows(sql.toString())[0]?.tptl__id
+            println "unej: ${unej} --> ${rgst[8]}, cnta: ${cnta}, tptl: ${tptl}"
+
+            if (parr && (cnta == 0)) {
+                if (rgst[2]?.size() > 6) {
+                    fcha = new Date().parse("dd/MM/yyyy", rgst[2]).format('yyyy-MM-dd')
+                } else {
+                    fcha = '1-jan-1900'
+                }
+                zona = rgst[4].split(' ').last()
+                /* crea la UNEJ*/
+                sql = "insert into tllr (tllr__id, parr__id, unej__id, unej_eps, tptl__id, tllrnmbr, " +
+                        "tllrobjt, tllrfcha, tllrobsr) " +
+                        "values(default, '${parr}', '${unej}', 2, ${tptl}, 'Taller ${tllrfcha}', " +
+                        "'${rgst[19]}', '${tllrfcha}', ${comilla}${rgst[22]?: null}${comilla}) " +
+                        "returning tllr__id"
+                println "sql ---> ${sql}"
+
+//                try {
+//                    cn.eachRow(sql.toString()) { d ->
+//                        id = d.unej__id
+//                        insertados++
+//                        orden++
+//                    }
+//                    println "---> id: ${id}"
+
+                    /********** crea PRSN ***********/
+
+                    sql = "insert into prtl (prtl__id, tllr__id, cmnd__id, parr__id, raza__id, " +
+                            "prtlcdla, prtlnmbr, prtlapll, prtlcrgo, prtlsexo, " +
+                            "prtledad, prtlmail, prtltelf, prtlcell) " +
+                            "values(default, ${id}, '${rgst[17]}', '${rgst[18]}', '${rgst[19].replaceAll('\'', '')}', '${rgst[20]}', " +
+                            "'0000', '${nmbr}', '${apll}', 0, 'F' )"
+                    println "sql2: $sql"
+//                    cn.execute(sql.toString())
+
+//                    resp = hallaResponsable(rgst[36])
+//                    println "resp: ${resp}"
+
+//                    sql = "insert into dtor (dtor__id, unej__id, " +
+//                            "dtornmhh, dtornmmj, dtornmjv, dtornmad, dtornsam, prsn__id) " +
+//                            "values(default, ${id}, " +
+//                            "${rgst[21].trim() ?: null}, ${rgst[22].trim() ?: null}, ${rgst[23].trim() ?: null}," +
+//                            " ${rgst[24].trim() ?: null}, ${rgst[25].trim() ?: null}, ${resp})"
+//                    println "sql2: $sql"
+//                    cn.execute(sql.toString())
+//
+//                    println "insertaEtor.... ${rgst[26]},${rgst[27]},${rgst[28]},${rgst[29]},${rgst[30]},${rgst[31]}"
+//                    println "insertaEtor..>> ${rgst[26].trim().size() > 0 ? rgst[26] : 'vacío'}"
+//                    if (rgst[26].trim()?.size() > 0) insertaEtor(id, 2, rgst[26])
+//                    if (rgst[27].trim()?.size() > 0) insertaEtor(id, 4, rgst[27])
+//                    if (rgst[28].trim()?.size() > 0) insertaEtor(id, 3, rgst[28])
+//                    if (rgst[29].trim()?.size() > 0) insertaEtor(id, 5, rgst[29])
+//                    if (rgst[30].trim()?.size() > 0) insertaEtor(id, 1, rgst[30])
+//                    if (rgst[31].trim()?.size() > 0) insertaEtor(id, 6, rgst[31])
+//
+//                    println "inicia insertaCtgr.... ${rgst[39]}, ${rgst[41]}"
+                    /* tpct:1,2 col:39,41 es numérico *//*
+
+                    if (rgst[39]?.toInteger() > 0) insertaCtgr(id, 1, rgst[39])
+                    if (rgst[41]?.toInteger() > 0) insertaCtgr(id, 2, rgst[41])
+
+                    if (rgst[42]) insertaCtgr(id, 3, rgst[42])
+                    if (rgst[43]) insertaCtgr(id, 4, rgst[43])
+                    if (rgst[44]) insertaCtgr(id, 5, rgst[44])
+                    if (rgst[45]) insertaCtgr(id, 6, rgst[45])
+                    if (rgst[46]) insertaCtgr(id, 7, rgst[46])
+                    if (rgst[47]) insertaCtgr(id, 8, rgst[47])
+                    if (rgst[48]) insertaCtgr(id, 9, rgst[48])
+                    if (rgst[49]) insertaCtgr(id, 10, rgst[49])
+                    if (rgst[50]) insertaCtgr(id, 11, rgst[50])
+                    if (rgst[51]) insertaCtgr(id, 12, rgst[51])
+                    if (rgst[52]) insertaCtgr(id, 13, rgst[52])
+
+                    println "inicia insertaNecd.... ${rgst[53]}, ${rgst[60]}"
+                    if (rgst[53]) insertaNecd(id, 1)
+                    if (rgst[54]) insertaNecd(id, 2)
+                    if (rgst[55]) insertaNecd(id, 3)
+                    if (rgst[56]) insertaNecd(id, 4)
+                    if (rgst[57]) insertaNecd(id, 5)
+                    if (rgst[58]) insertaNecd(id, 6)
+                    if (rgst[59]) insertaNecd(id, 7)
+                    if (rgst[60]) insertaNecd(id, 8)
+
+
+                } catch (Exception ex) {
+                    repetidos++
+                    println "Error principal $ex"
+                    println "sql: $sql"
+                }
+*/
+
+
+            }
+//            println "sql: $sql"
+
+
+        }
+        cnta++
+        return [errores: errores, insertados: insertados, repetidos: repetidos]
+    }
+
+
+}

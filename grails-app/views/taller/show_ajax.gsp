@@ -32,12 +32,14 @@
                 <div class="col-md-9">${tallerInstance?.unidadEps}</div>
             </div>
 
+%{--
         <g:if test="${tallerInstance?.institucion}">
             <div class="row">
                 <div class="col-md-3 show-label">Institución</div>
                 <div class="col-md-9">${tallerInstance?.institucion?.descripcion}</div>
             </div>
         </g:if>
+--}%
 
             <div class="row">
                 <div class="col-md-3 show-label">Tipo de Taller</div>

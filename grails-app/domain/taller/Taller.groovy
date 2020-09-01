@@ -12,9 +12,9 @@ class Taller implements Auditable {
     UnidadEjecutora unidadEjecutora
     UnidadEjecutora unidadEps
     TipoTaller tipoTaller
-    Institucion institucion
+//    Institucion institucion
     Capacidad capacidad
-    String codigo
+//    String codigo
     String nombre
     String objetivo
     Date fecha
@@ -44,9 +44,9 @@ class Taller implements Auditable {
             unidadEjecutora column: 'unej__id'
             unidadEps column: 'unej_eps'
             tipoTaller column: 'tptl__id'
-            institucion column: 'inst__id'
+//            institucion column: 'inst__id'
             capacidad column: 'cpcd__id'
-            codigo column: 'tllrcdgo'
+//            codigo column: 'tllrcdgo'
             nombre column: 'tllrnmbr'
             objetivo column: 'tllrobjt'
             fecha column: 'tllrfcha'
@@ -66,9 +66,9 @@ class Taller implements Auditable {
         unidadEjecutora(blank: false, nullable: false)
         unidadEps(blank: false, nullable: false)
         tipoTaller(blank: false, nullable: false)
-        institucion(blank: true, nullable: true)
+//        institucion(blank: true, nullable: true)
         capacidad(blank: false, nullable: false)
-        codigo(blank: true, nullable: true)
+//        codigo(blank: true, nullable: true)
         nombre(size: 3..255, blank: false)
         objetivo(blank: false)
         fecha(blank: false, nullable: false, attributes: [title: 'Fecha de inicio'])
