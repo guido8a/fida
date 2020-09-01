@@ -1,10 +1,12 @@
 package convenio
 
 import audita.Auditable
+import planes.PlanesNegocio
 
 class Periodo implements Auditable {
 
     Convenio convenio
+    PlanesNegocio planesNegocio
     int numero
     Date fechaInicio
     Date fechaFin
@@ -22,6 +24,7 @@ class Periodo implements Auditable {
         columns {
             id column: 'prdo__id'
             convenio column: 'cnvn__id'
+            planesNegocio column: 'plns__id'
             numero column: 'prdonmro'
             fechaInicio column: 'prdofcin'
             fechaFin column: 'prdofcfn'
@@ -32,6 +35,7 @@ class Periodo implements Auditable {
 
     static constraints = {
         convenio(nullable: false, blank:false)
+        planesNegocio(nullable: false, blank:false)
         numero(nullable: false, blank: false)
         fechaInicio(nullable: true, blank: true)
         fechaFin(nullable: true, blank: true)

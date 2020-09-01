@@ -2,11 +2,13 @@ package convenio
 
 import audita.Auditable
 import geografia.Parroquia
+import planes.PlanesNegocio
 import seguridad.UnidadEjecutora
 
 class Convenio implements Auditable{
 
     Parroquia parroquia
+    PlanesNegocio planesNegocio
     UnidadEjecutora unidadEjecutora
     String codigo
     String nombre
@@ -29,6 +31,7 @@ class Convenio implements Auditable{
         columns {
             id column: 'cnvn__id'
             parroquia column: 'parr__id'
+            planesNegocio column: 'plns__id'
             unidadEjecutora column: 'unej__id'
             codigo column: 'cnvncdgo'
             nombre column: 'cnvnnmbr'
@@ -43,6 +46,7 @@ class Convenio implements Auditable{
     }
     static constraints = {
         parroquia(blank: false, nullable: false)
+        planesNegocio(blank: false, nullable: false)
         unidadEjecutora(blank: false, nullable: false)
         codigo(size: 0..15, blank: true, nullable: false)
         nombre(size: 3..255, blank: false)
