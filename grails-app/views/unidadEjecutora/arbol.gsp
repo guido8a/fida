@@ -250,7 +250,8 @@
 
         var esRoot = nodeType == "root";
         var esPrincipal = nodeType == "unidadEjecutora";
-        var esCanton = nodeType.contains("persona");
+        var esCanton = nodeType.contains("canton");
+        var esPersona = nodeType.contains("persona");
         var tieneHijos = $node.hasClass("hasChildren");
         var inactivo = $node.hasClass("inactivo");
         var tienePresupuesto = $node.hasClass("presupuesto");
@@ -552,7 +553,11 @@
                 items.presupuesto = presupuestoEntidad;
             }
 
-        } else if (esCanton) {
+        }
+        else if(esCanton){
+            items.agregarUnidad = agregarUnidad;
+        }
+        else if (esPersona) {
             items.agregarPersona = agregarPersona2;
             items.verPersona = verPersona;
             items.editarPersona = editarPersona;

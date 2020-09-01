@@ -170,7 +170,7 @@ class UnidadEjecutoraController {
             def data = ""
 
             hijos.each { hijo ->
-                icono = "fa-save"
+                icono = "fa-parking"
                 ico = ", \"icon\":\"fas ${icono} text-warning\""
 //                clase =  "jstree-closed hasChildren"
                 clase = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? "jstree-closed hasChildren" : "jstree-closed"
@@ -206,11 +206,9 @@ class UnidadEjecutoraController {
         else {
             switch(tipo) {
                 case "cnt":
-                    println("cnt " + id)
                     def cant = Canton.get(id)
                     def prov = cant.provincia
                     def parr = Parroquia.findAllByCanton(cant)
-                    println("parroquias " + parr)
                     def presupuesto = ""
                     def icono = ""
                     def data = ""
