@@ -31,7 +31,7 @@ class PersonaTallerController {
             if (params.search && params.search != "") {
                 or {
                     ilike("nombre", "%" + params.search + "%")
-                    ilike("objetivo", "%" + params.search + "%")
+                    ilike("apellido", "%" + params.search + "%")
                 }
             }
             order("nombre", "asc")
