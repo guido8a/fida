@@ -25,7 +25,9 @@ class PersonaTallerController {
      * Acción llamada con ajax que llena la tabla de los prsnTallers de un proyecto
      */
     def tablaPrtl_ajax() {
+        def taller = Taller.get(params.id)
         def prsnTaller = PersonaTaller.withCriteria {
+            eq("taller",taller)
             if (params.search && params.search != "") {
                 or {
                     ilike("nombre", "%" + params.search + "%")
