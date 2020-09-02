@@ -210,6 +210,7 @@
             </div>
         </div>
     </a>
+%{--
     <a href= "${createLink(controller:'convenio', action: 'convenio')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
             <div class="wrap" style="width: 553px; height: 120px">
@@ -225,6 +226,7 @@
             </div>
         </div>
     </a>
+--}%
     <a href= "${createLink(controller:'convenio', action: 'convenio')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
             <div class="wrap" style="width: 553px; height: 120px">
