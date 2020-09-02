@@ -7,9 +7,9 @@ import seguridad.UnidadEjecutora
 
 class Convenio implements Auditable{
 
-    Parroquia parroquia
+//    Parroquia parroquia
     PlanesNegocio planesNegocio
-    UnidadEjecutora unidadEjecutora
+//    UnidadEjecutora unidadEjecutora
     String codigo
     String nombre
     String objetivo
@@ -30,9 +30,9 @@ class Convenio implements Auditable{
 
         columns {
             id column: 'cnvn__id'
-            parroquia column: 'parr__id'
+//            parroquia column: 'parr__id'
             planesNegocio column: 'plns__id'
-            unidadEjecutora column: 'unej__id'
+//            unidadEjecutora column: 'unej__id'
             codigo column: 'cnvncdgo'
             nombre column: 'cnvnnmbr'
             objetivo column: 'cnvnobjt'
@@ -45,9 +45,9 @@ class Convenio implements Auditable{
         }
     }
     static constraints = {
-        parroquia(blank: false, nullable: false)
+//        parroquia(blank: false, nullable: false)
         planesNegocio(blank: false, nullable: false)
-        unidadEjecutora(blank: false, nullable: false)
+//        unidadEjecutora(blank: false, nullable: false)
         codigo(size: 0..15, blank: true, nullable: false)
         nombre(size: 3..255, blank: false)
         objetivo(blank: false)

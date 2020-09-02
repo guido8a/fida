@@ -153,6 +153,7 @@ class ConvenioController {
     }
 
     def convenio(){
+        println "convenio $params"
         def convenio
         if(params.id){
             convenio = Convenio.get(params.id)

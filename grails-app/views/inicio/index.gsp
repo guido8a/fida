@@ -175,6 +175,7 @@
             </div>
         </div>
     </a>
+%{--
     <a href= "${createLink(controller:'taller', action: 'listTaller')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
             <div class="wrap" style="width: 553px; height: 120px">
@@ -190,6 +191,7 @@
             </div>
         </div>
     </a>
+--}%
     <a href= "${createLink(controller:'unidadEjecutora', action: 'organizacion')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
             <div class="wrap" style="width: 553px; height: 120px">

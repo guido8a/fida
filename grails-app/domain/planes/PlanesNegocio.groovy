@@ -7,7 +7,7 @@ import seguridad.UnidadEjecutora
 class PlanesNegocio implements Auditable{
 
     UnidadEjecutora unidadEjecutora
-    Parroquia parroquia
+//    Parroquia parroquia
     String nombre
     String objeto
     String nudoCritico
@@ -39,7 +39,7 @@ class PlanesNegocio implements Auditable{
         columns {
             id column: 'plns__id'
             unidadEjecutora column: 'unej__id'
-            parroquia column: 'parr__id'
+//            parroquia column: 'parr__id'
             nombre column: 'plnsnmbr'
             objeto column: 'plnsobjt'
             nudoCritico column: 'plnsndcr'
@@ -65,7 +65,7 @@ class PlanesNegocio implements Auditable{
 
     static constraints = {
         unidadEjecutora(nullable: false, blank: false)
-        parroquia(nullable: false, blank: false)
+//        parroquia(nullable: false, blank: false)
         nombre(size: 1..255, nullable: false, blank: false)
         objeto(nullable: true, blank: true)
         nudoCritico(nullable: true, blank: true)

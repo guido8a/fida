@@ -79,6 +79,7 @@
             <a href="#" id="btnPlanes" class="btn btn-sm btn-info" title="Planes">
                 <i class="fas fa-briefcase"></i> Planes de negocio
             </a>
+
         </g:if>
     </div>
 
@@ -337,6 +338,10 @@
 
     $("#btnTalleres").click(function () {
         location.href="${createLink(controller: 'taller', action: 'listTaller')}?id=" + '${unidad?.id}'
+    });
+
+    $("#btnPlanes").click(function () {
+        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}?unej=" + '${unidad?.id}'
     });
 
     $('#datetimepicker1').datetimepicker({
