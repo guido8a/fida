@@ -91,6 +91,14 @@
                             createEditTaller(id);
                         }
                     },
+                    instituciones: {
+                        label: "Instituciones asociadas",
+                        icon: "fas fa-building",
+                        action: function ($element) {
+                            var id = $element.data("id");
+                            cargarInstituciones(id);
+                        }
+                    },
                     Asistentes: {
                         label: "Asistentes al Taller",
                         icon: "fas fa-user-friends",
@@ -118,7 +126,34 @@
                 }
             });
 
-
+            function cargarInstituciones(id){
+                $.ajax({
+                    type: "POST",
+                    url: "${createLink(controller: 'taller',action:'instituciones_ajax')}",
+                    data: {
+                        id:id
+                    },
+                    success: function (msg) {
+                        var b = bootbox.dialog({
+                            id: "dlgInstituciones",
+                            title: "Instituciones participantes",
+                            // class : "modal-lg",
+                            message: msg,
+                            buttons: {
+                                cancelar: {
+                                    label: "Salir",
+                                    className: "btn-primary",
+                                    callback: function () {
+                                    }
+                                }
+                            }
+                        }); //dialog
+                        setTimeout(function () {
+                            b.find(".form-control").first().focus()
+                        }, 500);
+                    } //success
+                }); //ajax
+            }
 
     });
 </script>

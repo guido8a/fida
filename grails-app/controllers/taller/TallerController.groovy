@@ -1,10 +1,13 @@
 package taller
 
+import convenio.Necesidad
+import convenio.TipoNecesidad
 import geografia.Canton
 import geografia.Comunidad
 import geografia.Parroquia
 import grails.validation.ValidationException
 import org.springframework.dao.DataIntegrityViolationException
+import seguridad.UnidadEjecutora
 import taller.Taller
 import proyectos.Proyecto
 
@@ -175,9 +178,55 @@ class TallerController {
         if(params.tipo == '3'){
             taller = PersonaTaller.get(params.taller)
         }else{
-           taller = Taller.get(params.taller)
+            taller = Taller.get(params.taller)
         }
         return [cantones: cantones, taller: taller]
+    }
+
+    def instituciones_ajax(){
+        def taller = Taller.get(params.id)
+        return[taller: taller]
+    }
+
+    def tablaInstituciones_ajax(){
+        def taller = Taller.get(params.id)
+        def instituciones = InstitucionAsociada.findAllByTaller(taller)
+        return[instituciones:instituciones]
+    }
+
+    def borrarInstitucion_ajax(){
+        def institucion = InstitucionAsociada.get(params.id)
+
+        try{
+            institucion.delete(flush:true)
+            render "ok"
+        }catch(e){
+            println("error al borrar el elemento del tabla inas " + e + " " + institucion.errors)
+            render "no"
+        }
+    }
+
+    def agregarInstitucion_ajax(){
+
+        def taller = Taller.get(params.id)
+        def institucion = Institucion.get(params.institucion)
+        def existe = InstitucionAsociada.findAllByTallerAndInstitucion(taller, institucion)
+
+        def inas
+        if(existe){
+            render "er"
+        }else{
+            inas = new InstitucionAsociada()
+            inas.taller = taller
+            inas.institucion = institucion
+
+            if(!inas.save(flush:true)){
+                println("error al guardar inas " + inas.errors)
+                render "no"
+            }else{
+                render "ok"
+            }
+        }
     }
 
 }
