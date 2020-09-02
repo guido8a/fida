@@ -11,8 +11,8 @@
     <div class="btn-toolbar toolbar">
 
         <div class="btn-group">
-            <g:link controller="taller" action="listTaller" class="btn btn-sm btn-default">
-                <i class="fa fa-arrow-left"></i> Lista de talleres
+            <g:link controller="taller" action="listTaller" id="${unidad?.id}" class="btn btn-sm btn-default">
+                <i class="fa fa-arrow-left"></i> Regresar a taller
             </g:link>
         </div>
 

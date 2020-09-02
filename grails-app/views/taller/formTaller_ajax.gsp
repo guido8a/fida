@@ -8,6 +8,7 @@
     <div class="modal-contenido">
         <g:form class="form-horizontal" name="frmTaller" controller="taller" action="save_ajax" method="POST">
             <g:hiddenField name="id" value="${tallerInstance?.id}"/>
+            <g:hiddenField name="unidadEjecutora" value="${unidad?.id}"/>
 
             <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'parroquia', 'error')} ">
                 <span class="grupo">
@@ -41,20 +42,20 @@
                 </span>
             </div>
 
-            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'unidadEjecutora', 'error')} ">
-                <span class="grupo">
-                    <label for="unidadEjecutora" class="col-md-3 control-label">
-                        Organización
-                    </label>
+%{--            <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'unidadEjecutora', 'error')} ">--}%
+%{--                <span class="grupo">--}%
+%{--                    <label for="unidadEjecutora" class="col-md-3 control-label">--}%
+%{--                        Organización--}%
+%{--                    </label>--}%
 
-                    <div class="col-md-9">
-                        <g:select id="unidadEjecutora" name="unidadEjecutora.id"
-                                  from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(1))}"
-                                  optionKey="id" value="${tallerInstance?.unidadEjecutora?.id}"
-                                  class="many-to-one form-control input-sm"/>
-                    </div>
-                </span>
-            </div>
+%{--                    <div class="col-md-9">--}%
+%{--                        <g:select id="unidadEjecutora" name="unidadEjecutora.id"--}%
+%{--                                  from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(1))}"--}%
+%{--                                  optionKey="id" value="${tallerInstance?.unidadEjecutora?.id}"--}%
+%{--                                  class="many-to-one form-control input-sm"/>--}%
+%{--                    </div>--}%
+%{--                </span>--}%
+%{--            </div>--}%
 
             <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'unidadEps', 'error')} ">
                 <span class="grupo">

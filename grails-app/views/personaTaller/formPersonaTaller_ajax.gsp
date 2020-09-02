@@ -54,6 +54,15 @@
                         <g:textField name="cedula" maxlength="10" class="form-control input-sm required digits"
                                      value="${prtlInstance?.cedula}"/>
                     </div>
+                    <label for="edad" class="col-md-2 control-label">
+                        Edad
+                    </label>
+                    <span class="grupo">
+                        <div class="col-md-2">
+                            <g:textField name="edad" maxlength="10" class="form-control input-sm digits"
+                                         value="${prtlInstance?.edad ?: ''}"/>
+                        </div>
+                    </span>
                 </span>
             </div>
 
@@ -163,13 +172,24 @@
                     </div>
                 </span>
 
-                <label for="mail" class="col-md-1 control-label">
+                <label for="celular" class="col-md-1 control-label">
+                    Celular
+                </label>
+                <span class="grupo">
+                    <div class="col-md-3">
+                        <g:textField name="celular" maxlength="15" class="form-control input-sm digits"
+                                     value="${prtlInstance?.celular}"/>
+                    </div>
+                </span>
+            </div>
+            <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'telefono', 'error')} ">
+                <label for="mail" class="col-md-3 control-label">
                     Mail
                 </label>
                 <span class="grupo">
                     <div class="col-md-5">
                         <g:textField name="mail" maxlength="63" class="form-control input-sm email"
-                                     value="${prtlInstance?.mail}"/>
+                                     value="${prtlInstance?.mail ?: ''}"/>
                     </div>
                 </span>
             </div>

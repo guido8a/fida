@@ -22,6 +22,8 @@ class PersonaTaller implements Auditable {
     String discapacidad
     String direccion
     String telefono
+    int edad
+    String celular
 
     static auditable = true
 
@@ -50,6 +52,8 @@ class PersonaTaller implements Auditable {
             discapacidad column: 'prtldscp'
             direccion column: 'prtldire'
             telefono column: 'prtltelf'
+            edad column: 'prtledad'
+            celular column: 'prtlcell'
         }
     }
     static constraints = {
@@ -67,6 +71,9 @@ class PersonaTaller implements Auditable {
         direccion(blank: true, nullable: true)
         telefono(blank: true, nullable: true)
         mail(blank: true, nullable: true)
+        edad(blank: true, nullable: true)
+        celular(blank: true, nullable: true)
+
     }
 
     String toString() {

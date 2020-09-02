@@ -8,6 +8,7 @@ import geografia.Parroquia
 import grails.validation.ValidationException
 import org.springframework.dao.DataIntegrityViolationException
 import seguridad.UnidadEjecutora
+import seguridad.UnidadEjecutoraController
 import taller.Taller
 import proyectos.Proyecto
 
@@ -27,15 +28,17 @@ class TallerController {
      * Acción llamada con ajax que muestra y permite modificar los tallers de un proyecto
      */
     def listTaller() {
-        def proyecto = Proyecto.get(1)
-        return [proyecto: proyecto]
+        def unidad = UnidadEjecutora.get(params.id)
+        return [unidad:unidad]
     }
 
     /**
      * Acción llamada con ajax que llena la tabla de los tallers de un proyecto
      */
     def tablaTaller_ajax() {
+        def unidad = UnidadEjecutora.get(params.id)
         def taller = Taller.withCriteria {
+            eq("unidadEjecutora",unidad)
             if (params.search && params.search != "") {
                 or {
                     ilike("nombre", "%" + params.search + "%")
@@ -74,28 +77,21 @@ class TallerController {
      */
     def formTaller_ajax() {
         println "formTaller_ajax: $params"
+        def unidad = UnidadEjecutora.get(params.unidad)
         def lugar = ""
         def tallerInstance = new Taller()
         if (params.id) {
             tallerInstance = Taller.get(params.id)
             if (!tallerInstance) {
-//                render "ERROR*No se encontró Taller."
-//                return
                 tallerInstance = new Taller()
             }
         }
-//        tallerInstance.properties = params
-//        if(tallerInstance.comunidad) {
-//            lugar = "${tallerInstance.comunidad.nombre} Parr: ${tallerInstance.parroquia.nombre} " +
-//                    "(${tallerInstance.parroquia.canton.provincia.nombre})"
 
         if(tallerInstance?.parroquia){
             lugar = "${tallerInstance.parroquia.nombre} " +
                     "(${tallerInstance.parroquia.canton.provincia.nombre})"
         }
-
-//        }
-        return [tallerInstance: tallerInstance, lugar: lugar]
+        return [tallerInstance: tallerInstance, lugar: lugar,unidad: unidad]
     } //form para cargar con ajax en un dialog
 
     /**

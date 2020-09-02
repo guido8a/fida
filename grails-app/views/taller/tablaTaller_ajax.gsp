@@ -20,7 +20,7 @@
             <tr data-id="${tl.id}" style="width: 100%">
                 <td style="width: 10%"><elm:textoBusqueda busca="${params.search}">${tl.nombre}</elm:textoBusqueda></td>
                 <td style="width: 17%"><elm:textoBusqueda busca="${params.search}">${tl.objetivo}</elm:textoBusqueda></td>
-                <td style="width: 23%">${tl.tipoTaller.descripcion}</td>
+                <td style="width: 23%">${tl.tipoTaller?.descripcion}</td>
                 <td style="width: 7%">${tl.fechaInicio?.format("dd-MM-yyyy")}</td>
                 <td style="width: 7%">${tl.fechaFin?.format("dd-MM-yyyy")}</td>
                 <td style="width: 8%">${tl.valor}</td>

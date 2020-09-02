@@ -16,9 +16,9 @@ class PersonaTallerController {
      * Acción llamada con ajax que muestra y permite modificar los prsnTallers de un proyecto
      */
     def listPrtl() {
-        println "listPrtl--> $params"
+//        println "listPrtl--> $params"
         def taller = Taller.get(params.id)
-        return [taller: taller]
+        return [taller: taller,unidad: taller.unidadEjecutora]
     }
 
     /**

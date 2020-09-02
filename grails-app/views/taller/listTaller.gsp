@@ -11,6 +11,9 @@
     <div class="btn-toolbar toolbar">
 
     <div class="btn-group">
+        <g:link controller="unidadEjecutora" action="organizacion" id="${unidad?.id}" class="btn btn-sm btn-default">
+            <i class="fa fa-arrow-left"></i> Regresar a organización
+        </g:link>
         <a href="#" class="btn btn-sm btn-success" id="btnAddTllr">
             <i class="fa fa-plus"></i> Agregar nuevo Taller
         </a>
@@ -32,11 +35,11 @@
 
 
 <script type="text/javascript">
-    var bm
+    var bm;
 
     function reloadTablaTaller(search) {
         var data = {
-            id : "${proyecto.id}"
+            id : "${unidad.id}"
         };
         if (search) {
             data.search = search;
@@ -139,7 +142,10 @@
         $.ajax({
             type    : "POST",
             url     : "${createLink(controller:'taller', action:'formTaller_ajax')}",
-            data    : data,
+            data    : {
+                id: id ? id : '',
+                unidad: '${unidad?.id}'
+            },
             success : function (msg) {
                 bm = bootbox.dialog({
                     id      : "dlgCreateEdit",

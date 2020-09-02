@@ -27,7 +27,7 @@ class Comunidad implements Serializable {
         nombre(size: 1..63, blank: false, attributes: [title: 'nombre'])
         numero(size: 1..8, blank: false, attributes: [title: 'numero'])
         parroquia(blank: true, nullable: true, attributes: [title: 'parroquia'])
-        latitud(blank: false, nullable: true, attributes: [title: 'latitud'])
-        longitud(blank: false,nullable: true, attributes: [title: 'longitud'])
+        latitud(blank: true, nullable: true, attributes: [title: 'latitud'])
+        longitud(blank: true,nullable: true, attributes: [title: 'longitud'])
     }
 }

@@ -31,6 +31,24 @@
 </head>
 
 <body>
+
+
+<div class="btn-group">
+    <a href="${createLink(controller: 'unidadEjecutora', action: 'organizacion')}" id="btnNuevaOrganizacion"
+       class="btn btn-sm btn-success" title="Consultar artículo">
+        <i class="fas fa-plus"></i> Nueva Organización
+    </a>
+    <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
+        <i class="fa fa-save"></i> Guardar
+    </a>
+    <g:if test="${unidad?.id}">
+        <a href="#" id="btnEliminarOrganizacion" class="btn btn-sm btn-danger" title="Guardar información">
+            <i class="fa fa-trash"></i> Eliminar
+        </a>
+    </g:if>
+</div>
+
+
 <h3 style="text-align: center">Organizaciones</h3>
 
 <div class="panel panel-primary col-md-12">
@@ -46,26 +64,20 @@
             <a href="#" id="btnDatos" class="btn btn-sm btn-info" title="Datos de la organización">
                 <i class="fa fa-scroll"></i> Datos Organización
             </a>
-            <a href="#" id="btnEtnias" class="btn btn-sm btn-info" title="Administrador del unidad">
+            <a href="#" id="btnEtnias" class="btn btn-sm btn-info" title="Etnias">
                 <i class="fa fa-user"></i> Composición Étnica
             </a>
-            <a href="#" id="btnCategoria" class="btn btn-sm btn-info" title="Administrador del unidad">
-                <i class="fas fa-book-reader"></i> Categorías
+            <a href="#" id="btnCategoria" class="btn btn-sm btn-info" title="Categorias">
+                <i class="fas fa-paperclip"></i> Categorías
             </a>
-            <a href="#" id="btnNecesidad" class="btn btn-sm btn-info" title="Administrador del unidad">
-                <i class="fas fa-book-reader"></i> Necesidades
+            <a href="#" id="btnNecesidad" class="btn btn-sm btn-info" title="Necesidades">
+                <i class="fas fa-cart-plus"></i> Necesidades
             </a>
-        </g:if>
-        <a href="${createLink(controller: 'unidadEjecutora', action: 'organizacion')}" id="btnNuevaOrganizacion"
-           class="btn btn-sm btn-success" title="Consultar artículo">
-            <i class="fas fa-plus"></i> Nueva Organización
-        </a>
-        <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
-            <i class="fa fa-save"></i> Guardar
-        </a>
-        <g:if test="${unidad?.id}">
-            <a href="#" id="btnEliminarOrganizacion" class="btn btn-sm btn-danger" title="Guardar información">
-                <i class="fa fa-trash"></i> Eliminar
+            <a href="#" id="btnTalleres" class="btn btn-sm btn-info" title="Talleres">
+                <i class="fas fa-users-cog"></i> Talleres
+            </a>
+            <a href="#" id="btnPlanes" class="btn btn-sm btn-info" title="Planes">
+                <i class="fas fa-briefcase"></i> Planes de negocio
             </a>
         </g:if>
     </div>
@@ -323,6 +335,10 @@
 
 <script type="text/javascript">
 
+    $("#btnTalleres").click(function () {
+        location.href="${createLink(controller: 'taller', action: 'listTaller')}?id=" + '${unidad?.id}'
+    });
+
     $('#datetimepicker1').datetimepicker({
         locale: 'es',
         format: 'DD-MM-YYYY',
@@ -355,7 +371,7 @@
                             if(parts[0] == 'res'){
                                 bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i>" + parts[1])
                             }else{
-                            log("Error al borrar la unidad","error")
+                                log("Error al borrar la unidad","error")
                             }
                         }
                     }
