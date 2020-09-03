@@ -38,29 +38,36 @@
 </head>
 
 <body>
+
+<div class="btn-group">
+    <a href="#" class="btn btn-sm btn-default btnRegresar">
+        <i class="fa fa-arrow-left"></i> Regresar a organización
+    </a>
+</div>
+
+
 <h3 style="text-align: center">Plan de Negocio Solidario</h3>
 <div class="panel panel-primary col-md-12">
     <div class="panel-heading" style="padding: 3px; margin-top: 2px; text-align: ${plns?.id ? 'center' : 'left'}">
-        <a href="#" id="btnBuscarConvenio"
-           class="btn btn-sm btn-info" title="Buscar plns">
-            <i class="fas fa-list-alt"></i> Retornar a Organización
-        </a>
-        <a href="#" id="btnBuscarConvenio"
-           class="btn btn-sm btn-info" title="Buscar plns">
-            <i class="fas fa-list-alt"></i> Lista de Planes
-        </a>
+    %{--        <a href="#" id="btnBuscarConvenio"--}%
+    %{--           class="btn btn-sm btn-info" title="Buscar plns">--}%
+    %{--            <i class="fas fa-list-alt"></i> Retornar a Organización--}%
+    %{--        </a>--}%
+    %{--        <a href="#" id="btnBuscarConvenio"--}%
+    %{--           class="btn btn-sm btn-info" title="Buscar plns">--}%
+    %{--            <i class="fas fa-list-alt"></i> Lista de Planes--}%
+    %{--        </a>--}%
         <g:if test="${plns?.id}">
             <a href="#" id="btnDocumentos" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-book-reader"></i> Biblioteca
             </a>
-            <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de negocio Solidario">
-                <i class="fa fa-hands-helping"></i> Plan de negocio Solidario
-            </a>
+        %{--            <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de negocio Solidario">--}%
+        %{--                <i class="fa fa-hands-helping"></i> Plan de negocio Solidario--}%
+        %{--            </a>--}%
         </g:if>
-        <a href="${createLink(controller: 'plns', action: 'plns')}" id="btnNuevoConvenio"
-           class="btn btn-sm btn-success" title="Consultar artículo">
-            <i class="fas fa-plus"></i> Nuevo plns
-        </a>
+%{--        <a href="#}" id="btnNuevoPlan" class="btn btn-sm btn-success" title="Nuevo plan">--}%
+%{--            <i class="fas fa-plus"></i> Nuevo plan--}%
+%{--        </a>--}%
         <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
         </a>
@@ -73,52 +80,52 @@
 
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
-            <g:form class="form-horizontal" name="frmPlan" controller="planesNegocio" action="save_ajax" method="POST">
+            <g:form class="form-horizontal" name="frmPlan" controller="planesNegocio" action="savePlan_ajax" method="POST">
                 <g:hiddenField name="id" value="${plns?.id}"/>
                 <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Organización</span>
                         <div class="col-md-10">
                             <span class="grupo">
-                                <g:select id="unidadEjecutora" name="unidadEjecutora.id"
+                                <g:hiddenField name="unidadEjecutora" value="${unidad?.id}"/>
+                                <g:select id="unidadEjecutoraNombre" name="unidadEjecutora_name"
                                           from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2))}"
                                           optionKey="id" value="${plns?.unidadEjecutora?.id}"
-                                          class="many-to-one form-control input-sm"/>
+                                          class="many-to-one form-control input-sm" disabled=""/>
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="row izquierda">
-                     <div class="col-md-12 input-group">
-                         <span class="grupo">
-                              <span class="col-md-2 label label-primary text-info mediano">Provincia</span>
-                              <div class="col-md-2">
-                                  <g:hiddenField name="provincia" value="${plns?.unidadEjecutora?.parroquia?.canton?.provincia?.id}"/>
-                            <input name="provinciaName" id="provinciaTexto" type='text' class="form-control"
-                                   readonly="" value="${plns?.unidadEjecutora?.parroquia?.canton?.provincia?.nombre}"/>
-                        </div>
-                    </span>
-                    <span class="grupo">
-                        <label class="col-md-1 control-label text-info">
-                            Cantón
-                        </label>
-                        <div class="col-md-2">
-                            <input name="canton" id="cantonTexto" type='text' class="form-control" readonly=""
-                                   value="${plns?.unidadEjecutora?.parroquia?.canton?.nombre}"/>
-                        </div>
-                    </span>
-                    <span class="grupo">
-                        <label class="col-md-1 control-label text-info">
-                            Parroquia
-                        </label>
-                        <div class="col-md-4">
-                            <g:hiddenField name="parroquia" value="${unidad?.parroquia?.id}"/>
-                            <input name="parroquiaName" id="parroquiaTexto" type='text' class="form-control"
-                                   required="" readonly="" value="${plns?.unidadEjecutora?.parroquia?.nombre}"/>
-                        </div>
-                    </span>
-
-                </div>
+                    <div class="col-md-12 input-group">
+                        <span class="grupo">
+                            <span class="col-md-2 label label-primary text-info mediano">Provincia</span>
+                            <div class="col-md-2">
+                                <g:hiddenField name="provincia" value="${unidad?.parroquia?.canton?.provincia?.id}"/>
+                                <input name="provinciaName" id="provinciaTexto" type='text' class="form-control"
+                                       readonly="" value="${unidad.parroquia?.canton?.provincia?.nombre}"/>
+                            </div>
+                        </span>
+                        <span class="grupo">
+                            <label class="col-md-1 control-label text-info">
+                                Cantón
+                            </label>
+                            <div class="col-md-2">
+                                <input name="canton" id="cantonTexto" type='text' class="form-control" readonly=""
+                                       value="${unidad?.parroquia?.canton?.nombre}"/>
+                            </div>
+                        </span>
+                        <span class="grupo">
+                            <label class="col-md-1 control-label text-info">
+                                Parroquia
+                            </label>
+                            <div class="col-md-4">
+                                <g:hiddenField name="parroquia" value="${unidad?.parroquia?.id}"/>
+                                <input name="parroquiaName" id="parroquiaTexto" type='text' class="form-control"
+                                       required="" readonly="" value="${unidad?.parroquia?.nombre}"/>
+                            </div>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="row izquierda">
@@ -127,7 +134,7 @@
                         <div>
                             <div class="col-md-10">
                                 <span class="grupo">
-                                    <g:textField name="nombre" maxlength="63" class="form-control input-sm required"
+                                    <g:textField name="nombre" maxlength="255" class="form-control input-sm required"
                                                  value="${plns?.nombre}"/>
                                 </span>
                             </div>
@@ -151,7 +158,6 @@
                 <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Nudo Crítico</span>
-
                         <div class="col-md-10">
                             <span class="grupo">
                                 <g:textArea name="nudoCritico" rows="2" maxlength="1024" class="form-control input-sm required"
@@ -160,23 +166,21 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Fecha de Presentación</span>
                         <span class="grupo">
                             <div class="col-md-2 ">
-                                <input name="fechaInicio" id='fechaInicio' type='text' class="form-control"
+                                <input name="fechaPresentacion" id="fp" type='text' class="form-control"
                                        value="${plns?.fechaPresentacion?.format("dd-MM-yyyy")}"/>
 
                                 <p class="help-block ui-helper-hidden"></p>
                             </div>
                         </span>
-%{--                        <span class="col-md-1 mediano"></span>--}%
                         <span class="col-md-2 label label-primary text-info mediano">Fecha Comité</span>
                         <span class="grupo">
                             <div class="col-md-2">
-                                <input name="fechaFin" id='fechaComite' type='text' class="form-control"
+                                <input name="fechaComite" id="fc" type='text' class="form-control"
                                        value="${plns?.fechaComite?.format("dd-MM-yyyy")}"/>
 
                                 <p class="help-block ui-helper-hidden"></p>
@@ -185,9 +189,8 @@
                         <span class="col-md-2 label label-primary text-info mediano">Fecha Aprobación</span>
                         <span class="grupo">
                             <div class="col-md-2">
-                                <input name="fechaFin" id='fechaAprobacion' type='text' class="form-control"
+                                <input name="fechaAprobacion" id="fa" type='text' class="form-control"
                                        value="${plns?.fechaAprobacion?.format("dd-MM-yyyy")}"/>
-
                                 <p class="help-block ui-helper-hidden"></p>
                             </div>
                         </span>
@@ -198,22 +201,22 @@
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Monto del Plan</span>
                         <div class="col-md-2">
-                            <g:textField name="monto" class="form-control input-sm required"
+                            <g:textField name="monto" class="form-control input-sm required number"
                                          value="${plns?.monto}"/>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Calificación</span>
                         <div class="col-md-1">
-                            <input name="calificacion" type='text' class="form-control"
-                                value="${plns?.calificacion}"/>
+                            <input name="calificacion" type='text' class="form-control number"
+                                   value="${plns?.calificacion}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-1"></span>
                         <span class="col-md-2 label label-primary text-info mediano">Inversión por Socio</span>
                         <div class="col-md-2">
-                            <input name="calificacion" type='text' class="form-control"
-                                value="${plns?.numeroSocios}"/>
+                            <input name="numeroSocios" type='text' class="form-control number"
+                                   value="${plns?.numeroSocios}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
@@ -224,96 +227,87 @@
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Ventas proyectadas</span>
                         <div class="col-md-2">
-                            <g:textField name="venta" class="form-control input-sm required"
+                            <g:textField name="venta" class="form-control input-sm required number"
                                          value="${plns?.venta}"/>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Costos proyectados</span>
                         <div class="col-md-2">
-                            <input name="costo" type='text' class="form-control"
-                                value="${plns?.costo}"/>
+                            <input name="costo" type='text' class="form-control number"
+                                   value="${plns?.costo}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Excedente</span>
                         <div class="col-md-2">
-                            <input name="excedente" type='text' class="form-control"
-                                value="${plns?.excedente}"/>
+                            <input name="excedente" type='text' class="form-control number"
+                                   value="${plns?.excedente}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
-
                     </div>
                 </div>
-
                 <div class="row izquierda" style="margin-bottom: 20px">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Valos Actual Neto</span>
                         <div class="col-md-2">
-                            <g:textField name="van" class="form-control input-sm required"
+                            <g:textField name="van" class="form-control input-sm required number"
                                          value="${plns?.van}"/>
                         </div>
-
                         <span class="col-md-2 label label-primary text-info mediano">Tasa Interna de Retorno</span>
                         <div class="col-md-2">
-                            <input name="tir" type='text' class="form-control"
-                                value="${plns?.tir}"/>
+                            <input name="tir" type='text' class="form-control number"
+                                   value="${plns?.tir}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Tasa</span>
                         <div class="col-md-2">
-                            <input name="tasa" type='text' class="form-control"
-                                value="${plns?.tasa}"/>
+                            <input name="tasa" type='text' class="form-control number"
+                                   value="${plns?.tasa}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
-
                     </div>
                 </div>
-
                 <div class="row izquierda" style="margin-bottom: 20px">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Capital de Trabajo</span>
                         <div class="col-md-2">
-                            <g:textField name="capitalTrabajo" class="form-control input-sm required"
+                            <g:textField name="capitalTrabajo" class="form-control input-sm required number"
                                          value="${plns?.capitalTrabajo}"/>
                         </div>
-
                         <span class="col-md-2 label label-primary text-info mediano">Inversiones preooperativas y legales</span>
                         <div class="col-md-2">
-                            <input name="inversiones" type='text' class="form-control"
-                                value="${plns?.inversiones}"/>
+                            <input name="inversiones" type='text' class="form-control number"
+                                   value="${plns?.inversiones}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Terrenos y Construcciones</span>
                         <div class="col-md-2">
-                            <input name="terreno" type='text' class="form-control"
-                                value="${plns?.terreno}"/>
+                            <input name="terreno" type='text' class="form-control number"
+                                   value="${plns?.terreno}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
-
                     </div>
                 </div>
-
                 <div class="row izquierda" style="margin-bottom: 20px">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Maquinaria y Equipo</span>
                         <div class="col-md-2">
-                            <input name="maquinaria" type='text' class="form-control"
-                                value="${plns?.maquinaria}"/>
+                            <input name="maquinaria" type='text' class="form-control number"
+                                   value="${plns?.maquinaria}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Muebles y equipos de oficina</span>
                         <div class="col-md-2">
-                            <input name="muebles" type='text' class="form-control"
-                                value="${plns?.muebles}"/>
+                            <input name="muebles" type='text' class="form-control number"
+                                   value="${plns?.muebles}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                     </div>
                 </div>
-
             </g:form>
         </div>
     </div>
@@ -321,49 +315,32 @@
 
 <script type="text/javascript">
 
+    $("#btnNuevoPlan").click(function () {
+        bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> Para generar un nuevo plan se borrará el plan actual, está seguro?", function (res) {
+            if(res){
+            }
+        });
+    });
+
+    $(".btnRegresar").click(function () {
+        location.href="${createLink(controller: 'unidadEjecutora', action: 'organizacion')}/" + '${unidad?.id}'
+    });
+
     $("#btnDocumentos").click(function () {
         location.href="${createLink(controller: 'documento', action: 'listConvenio')}?id=" +
             '${plns?.unidadEjecutora?.id}' + "&plns=" + '${plns?.id}'
     });
 
     $("#btnPlanNegocio").click(function () {
-       location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + '${plns?.id}'
+        location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + '${plns?.id}'
     });
 
-    $("#btnAdministradorCon").click(function () {
-        var dialog = cargarLoader("Cargando...");
-        $.ajax({
-            type: 'POST',
-            url: '${createLink(controller: 'administradorConvenio', action: 'administrador_ajax')}',
-            data:{
-                id: '${plns?.id}'
-            },
-            success:function (msg) {
-                dialog.modal('hide');
-                var ad = bootbox.dialog({
-                    id    : "dlgBuscarAdministradorCon",
-                    title : "Asignar administrador",
-                    class : "modal-lg",
-                    closeButton: false,
-                    message : msg,
-                    buttons : {
-                        cancelar : {
-                            label     : "Cancelar",
-                            className : "btn-primary",
-                            callback  : function () {
-                            }
-                        }
-                    }
-                }); //dialog
-            }
-        });
-    });
 
     $("#btnEliminar").click(function () {
         bootbox.dialog({
             title   : "Alerta",
             message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
-                "¿Está seguro que desea eliminar el plns? Esta acción no se puede deshacer.</p>",
+                "¿Está seguro que desea eliminar el plan de negocio? Esta acción no se puede deshacer.</p>",
             buttons : {
                 cancelar : {
                     label     : "Cancelar",
@@ -378,20 +355,19 @@
                         var dialog = cargarLoader("Borrando...");
                         $.ajax({
                             type    : "POST",
-                            url     : '${createLink(controller:'plns', action:'delete_ajax')}',
+                            url     : '${createLink(controller:'planesNegocio', action:'deletePlan_ajax')}',
                             data    : {
                                 id : '${plns?.id}'
                             },
                             success : function (msg) {
                                 dialog.modal('hide');
-                                var parts = msg.split("*");
-                                log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                                if (parts[0] == "SUCCESS") {
+                                if (msg == "ok") {
+                                    log("Plan borrado correctamente","success")
                                     setTimeout(function () {
-                                        location.href="${createLink(controller: 'plns', action: 'plns')}"
+                                        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/" + '${unidad?.id}'
                                     }, 1000);
                                 } else {
-                                    closeLoader();
+                                    log("Error al borrar el plan","error")
                                 }
                             }
                         });
@@ -407,78 +383,52 @@
 
     function submitFormPlanes() {
         var $form = $("#frmPlan");
-        // var data = $form.serialize();
-        console.log('save....', $form.valid());
+        var $btn = $("#dlgCreateEdit").find("#btnSave");
         if ($form.valid()) {
-            console.log('save.... ok');
-            var formData = new FormData($form[0]);
+            var data = $form.serialize();
+            $btn.replaceWith(spinner);
             var dialog = cargarLoader("Guardando...");
             $.ajax({
-                url         : $form.attr("action"),
-                type        : 'POST',
-                data        : formData,
-                async       : false,
-                cache       : false,
-                contentType : false,
-                processData : false,
-                success     : function (msg) {
+                type    : "POST",
+                url     : $form.attr("action"),
+                data    : data,
+                success : function (msg) {
                     dialog.modal('hide');
-                    var parts = msg.split("*");
-                    if (parts[0] == "SUCCESS") {
-                        log(parts[1],"success");
-/*
+                    // var parts = msg.split("_");
+                    if(msg == 'ok'){
+                        log("Plan de negocios guardado correctamente", "success");
                         setTimeout(function () {
-                            location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/" + parts[2]
-                        }, 800);
-*/
-                    } else {
-                        if(parts[0] == 'er'){
-                            bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> " + parts[1])
-                        }else{
-                            log(parts[1],"error");
-                            return false;
-                        }
+                            location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/" + '${unidad?.id}'
+                        }, 1000);
+                    }else{
+                        log("Error al guardar el plan de negocios","error")
                     }
-                },
-                error       : function () {
                 }
             });
-            return false;
         } else {
             return false;
         } //else
         return false;
     }
 
-    $("#btnBuscarConvenio").click(function () {
-        var dialog = cargarLoader("Cargando...");
-        $.ajax({
-            type: 'POST',
-            url: '${createLink(controller: 'plns', action: 'buscarConvenio_ajax')}',
-            data:{
-            },
-            success:function (msg) {
-                dialog.modal('hide');
-                var b = bootbox.dialog({
-                    id    : "dlgBuscarConvenio",
-                    title : "Buscar Convenio",
-                    class : "modal-lg",
-                    closeButton: false,
-                    message : msg,
-                    buttons : {
-                        cancelar : {
-                            label     : "Cancelar",
-                            className : "btn-primary",
-                            callback  : function () {
-                            }
-                        }
-                    }
-                }); //dialog
-            }
-        });
+
+    $('#fc').datetimepicker({
+        locale: 'es',
+        format: 'DD-MM-YYYY',
+        daysOfWeekDisabled: [0, 6],
+        sideBySide: true,
+        showClose: true
     });
 
-    $('#fechaInicio').datetimepicker({
+    $('#fp').datetimepicker({
+        locale: 'es',
+        format: 'DD-MM-YYYY',
+        daysOfWeekDisabled: [0, 6],
+        sideBySide: true,
+        showClose: true
+    });
+
+    $('#fa').datetimepicker({
         locale: 'es',
         format: 'DD-MM-YYYY',
         daysOfWeekDisabled: [0, 6],
@@ -486,13 +436,6 @@
         showClose: true,
     });
 
-    $('#fechaFin').datetimepicker({
-        locale: 'es',
-        format: 'DD-MM-YYYY',
-        daysOfWeekDisabled: [0, 6],
-        sideBySide: true,
-        showClose: true,
-    });
 
 
 </script>

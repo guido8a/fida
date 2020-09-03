@@ -4,6 +4,7 @@ import geografia.Comunidad
 import geografia.Parroquia
 import org.springframework.dao.DataIntegrityViolationException
 import proyectos.Proyecto
+import seguridad.UnidadEjecutora
 import seguridad.UnidadEjecutoraController
 
 class PlanesNegocioController {
@@ -105,16 +106,20 @@ class PlanesNegocioController {
     }
 
     def planes() {
-        println "planes $params"
-        def plan
-        if (params.id) {
-            plan = PlanesNegocio.get(params.id)
-        } else if(params.unej) {
-            plan = PlanesNegocio.findByUnidadEjecutora(seguridad.UnidadEjecutora.get(params.unej))
-        } else {
-            plan = new PlanesNegocio()
+//        println "planes $params"
+        def unidad = UnidadEjecutora.get(params.id)
+        def plns = PlanesNegocio.findByUnidadEjecutora(unidad)
+        if(!plns){
+            plns = new PlanesNegocio()
         }
-        return [plns: plan]
+//        if (params.id) {
+//            plan = PlanesNegocio.get(params.id)
+//        } else if(params.unej) {
+//            plan = PlanesNegocio.findByUnidadEjecutora(seguridad.UnidadEjecutora.get(params.unej))
+//        } else {
+//            plan = new PlanesNegocio()
+//        }
+        return [plns: plns, unidad: unidad]
     }
 
     def buscarPlanesNegocio_ajax() {
@@ -158,6 +163,48 @@ class PlanesNegocioController {
     def observaciones_ajax() {
         def administrador = AdministradorPlanesNegocio.get(params.id)
         return [administrador: administrador]
+    }
+
+    def savePlan_ajax () {
+//        println("params sp " + params)
+
+        if(params.fechaAprobacion){
+            params.fechaAprobacion = new Date().parse("dd-MM-yyy", params.fechaAprobacion)
+        }
+        if(params.fechaPresentacion){
+            params.fechaPresentacion = new Date().parse("dd-MM-yyy", params.fechaPresentacion)
+        }
+        if(params.fechaComite){
+            params.fechaComite = new Date().parse("dd-MM-yyy", params.fechaComite)
+        }
+
+        def plan
+
+        if(params.id){
+            plan = PlanesNegocio.get(params.id)
+        }else{
+            plan = new PlanesNegocio()
+        }
+
+        plan.properties = params
+
+        if(!plan.save(flush:true)){
+            println("error al guardar el plan de negocio " + plan.errors)
+            render "no"
+        }else{
+            render "ok"
+        }
+    }
+
+    def deletePlan_ajax(){
+        def plan = PlanesNegocio.get(params.id)
+        try{
+            plan.delete(flush:true)
+            render"ok"
+        }catch(e){
+            println("Error al borrar el plan de negocio" + plan.errors)
+            render "no"
+        }
     }
 
 }

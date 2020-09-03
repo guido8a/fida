@@ -341,7 +341,7 @@
     });
 
     $("#btnPlanes").click(function () {
-        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}?unej=" + '${unidad?.id}'
+        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/" + '${unidad?.id}'
     });
 
     $('#datetimepicker1').datetimepicker({
