@@ -201,8 +201,10 @@
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Monto del Plan</span>
                         <div class="col-md-2">
-                            <g:textField name="monto" class="form-control input-sm required number"
-                                         value="${plns?.monto}" maxlength="14"/>
+%{--                            <g:textField name="monto" class="form-control input-sm required number"--}%
+%{--                                         value="${plns?.monto}" maxlength="14"/>--}%
+                            <g:textField name="monto" class="form-control input-sm required number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.monto, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Calificación</span>
@@ -215,8 +217,10 @@
                         <span class="col-md-1"></span>
                         <span class="col-md-2 label label-primary text-info mediano">Inversión por Socio</span>
                         <div class="col-md-2">
-                            <input name="numeroSocios" type='text' class="form-control number"
-                                   value="${plns?.numeroSocios}" maxlength="14"/>
+%{--                            <input name="numeroSocios" type='text' class="form-control number"--}%
+%{--                                   value="${plns?.numeroSocios}" maxlength="14"/>--}%
+                            <g:textField name="numeroSocios" class="form-control input-sm number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.numeroSocios, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
@@ -227,21 +231,27 @@
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Ventas proyectadas</span>
                         <div class="col-md-2">
-                            <g:textField name="venta" class="form-control input-sm required number"
-                                         value="${plns?.venta}" maxlength="14"/>
+%{--                            <g:textField name="venta" class="form-control input-sm required number"--}%
+%{--                                         value="${plns?.venta}" maxlength="14"/>--}%
+                            <g:textField name="venta" class="form-control input-sm required number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.venta, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Costos proyectados</span>
                         <div class="col-md-2">
-                            <input name="costo" type='text' class="form-control number"
-                                   value="${plns?.costo}" maxlength="14"/>
+%{--                            <input name="costo" type='text' class="form-control number"--}%
+%{--                                   value="${plns?.costo}" maxlength="14"/>--}%
+                            <g:textField name="costo" class="form-control input-sm number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.costo, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Excedente</span>
                         <div class="col-md-2">
-                            <input name="excedente" type='text' class="form-control number"
-                                   value="${plns?.excedente}" maxlength="14"/>
+%{--                            <input name="excedente" type='text' class="form-control number"--}%
+%{--                                   value="${plns?.excedente}" maxlength="14"/>--}%
+                            <g:textField name="excedente" class="form-control input-sm number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.excedente, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
                     </div>
@@ -250,20 +260,26 @@
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Valos Actual Neto</span>
                         <div class="col-md-2">
-                            <g:textField name="van" class="form-control input-sm required number"
-                                         value="${plns?.van}" maxlength="14"/>
+%{--                            <g:textField name="van" class="form-control input-sm required number"--}%
+%{--                                         value="${plns?.van}" maxlength="14"/>--}%
+                            <g:textField name="van" class="form-control input-sm required number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.van, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                         </div>
                         <span class="col-md-2 label label-primary text-info mediano">Tasa Interna de Retorno</span>
                         <div class="col-md-2">
-                            <input name="tir" type='text' class="form-control number"
-                                   value="${plns?.tir}" maxlength="14"/>
+%{--                            <input name="tir" type='text' class="form-control number"--}%
+%{--                                   value="${plns?.tir}" maxlength="14"/>--}%
+                            <g:textField name="tir" class="form-control input-sm number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.tir, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Tasa</span>
                         <div class="col-md-2">
-                            <input name="tasa" type='text' class="form-control number"
-                                   value="${plns?.tasa}" maxlength="14"/>
+%{--                            <input name="tasa" type='text' class="form-control number"--}%
+%{--                                   value="${plns?.tasa}" maxlength="14"/>--}%
+                            <g:textField name="tasa" class="form-control input-sm number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.tasa, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
                     </div>
@@ -272,20 +288,26 @@
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Capital de Trabajo</span>
                         <div class="col-md-2">
-                            <g:textField name="capitalTrabajo" class="form-control input-sm required number"
-                                         value="${plns?.capitalTrabajo}" maxlength="14"/>
+%{--                            <g:textField name="capitalTrabajo" class="form-control input-sm required number"--}%
+%{--                                         value="${plns?.capitalTrabajo}" maxlength="14"/>--}%
+                            <g:textField name="capitalTrabajo" class="form-control input-sm required number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.capitalTrabajo, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                         </div>
                         <span class="col-md-2 label label-primary text-info mediano">Inversiones preooperativas y legales</span>
                         <div class="col-md-2">
-                            <input name="inversiones" type='text' class="form-control number"
-                                   value="${plns?.inversiones}" maxlength="14"/>
+%{--                            <input name="inversiones" type='text' class="form-control number"--}%
+%{--                                   value="${plns?.inversiones}" maxlength="14"/>--}%
+                            <g:textField name="inversiones" class="form-control input-sm number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.inversiones, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Terrenos y Construcciones</span>
                         <div class="col-md-2">
-                            <input name="terreno" type='text' class="form-control number"
-                                   value="${plns?.terreno}" maxlength="14"/>
+%{--                            <input name="terreno" type='text' class="form-control number"--}%
+%{--                                   value="${plns?.terreno}" maxlength="14"/>--}%
+                            <g:textField name="terreno" class="form-control input-sm number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.terreno, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
                     </div>
@@ -294,15 +316,19 @@
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Maquinaria y Equipo</span>
                         <div class="col-md-2">
-                            <input name="maquinaria" type='text' class="form-control number"
-                                   value="${plns?.maquinaria}" maxlength="14"/>
+%{--                            <input name="maquinaria" type='text' class="form-control number"--}%
+%{--                                   value="${plns?.maquinaria}" maxlength="14"/>--}%
+                            <g:textField name="maquinaria" class="form-control input-sm number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.maquinaria, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Muebles y equipos de oficina</span>
                         <div class="col-md-2">
-                            <input name="muebles" type='text' class="form-control number"
-                                   value="${plns?.muebles}" maxlength="14"/>
+%{--                            <input name="muebles" type='text' class="form-control number"--}%
+%{--                                   value="${plns?.muebles}" maxlength="14"/>--}%
+                            <g:textField name="muebles" class="form-control input-sm number" maxlength="14"
+                                         value="${util.formatNumber(number: plns?.muebles, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
