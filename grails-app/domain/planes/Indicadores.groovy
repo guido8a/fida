@@ -22,7 +22,7 @@ class Indicadores implements Auditable {
     }
 
     static constraints = {
-        codigo(size: 1..15, blank: false, nullable: false)
+        codigo(size: 1..15, blank: true, nullable: true)
         descripcion(size: 1..255, nullable: false, blank: false)
     }
 

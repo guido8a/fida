@@ -61,13 +61,13 @@
             <a href="#" id="btnDocumentos" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-book-reader"></i> Biblioteca
             </a>
-        %{--            <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de negocio Solidario">--}%
-        %{--                <i class="fa fa-hands-helping"></i> Plan de negocio Solidario--}%
-        %{--            </a>--}%
+            <a href="#" id="btnIndicadores" class="btn btn-sm btn-warning" title="Indicadores del plan">
+                <i class="fa fa-italic"></i> Indicadores
+            </a>
         </g:if>
-%{--        <a href="#}" id="btnNuevoPlan" class="btn btn-sm btn-success" title="Nuevo plan">--}%
-%{--            <i class="fas fa-plus"></i> Nuevo plan--}%
-%{--        </a>--}%
+    %{--        <a href="#}" id="btnNuevoPlan" class="btn btn-sm btn-success" title="Nuevo plan">--}%
+    %{--            <i class="fas fa-plus"></i> Nuevo plan--}%
+    %{--        </a>--}%
         <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
         </a>
@@ -202,13 +202,13 @@
                         <span class="col-md-2 label label-primary text-info mediano">Monto del Plan</span>
                         <div class="col-md-2">
                             <g:textField name="monto" class="form-control input-sm required number"
-                                         value="${plns?.monto}"/>
+                                         value="${plns?.monto}" maxlength="14"/>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Calificación</span>
                         <div class="col-md-1">
                             <input name="calificacion" type='text' class="form-control number"
-                                   value="${plns?.calificacion}"/>
+                                   value="${plns?.calificacion}" maxlength="2"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
@@ -216,7 +216,7 @@
                         <span class="col-md-2 label label-primary text-info mediano">Inversión por Socio</span>
                         <div class="col-md-2">
                             <input name="numeroSocios" type='text' class="form-control number"
-                                   value="${plns?.numeroSocios}"/>
+                                   value="${plns?.numeroSocios}" maxlength="14"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
@@ -228,20 +228,20 @@
                         <span class="col-md-2 label label-primary text-info mediano">Ventas proyectadas</span>
                         <div class="col-md-2">
                             <g:textField name="venta" class="form-control input-sm required number"
-                                         value="${plns?.venta}"/>
+                                         value="${plns?.venta}" maxlength="14"/>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Costos proyectados</span>
                         <div class="col-md-2">
                             <input name="costo" type='text' class="form-control number"
-                                   value="${plns?.costo}"/>
+                                   value="${plns?.costo}" maxlength="14"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Excedente</span>
                         <div class="col-md-2">
                             <input name="excedente" type='text' class="form-control number"
-                                   value="${plns?.excedente}"/>
+                                   value="${plns?.excedente}" maxlength="14"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
                     </div>
@@ -251,19 +251,19 @@
                         <span class="col-md-2 label label-primary text-info mediano">Valos Actual Neto</span>
                         <div class="col-md-2">
                             <g:textField name="van" class="form-control input-sm required number"
-                                         value="${plns?.van}"/>
+                                         value="${plns?.van}" maxlength="14"/>
                         </div>
                         <span class="col-md-2 label label-primary text-info mediano">Tasa Interna de Retorno</span>
                         <div class="col-md-2">
                             <input name="tir" type='text' class="form-control number"
-                                   value="${plns?.tir}"/>
+                                   value="${plns?.tir}" maxlength="14"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Tasa</span>
                         <div class="col-md-2">
                             <input name="tasa" type='text' class="form-control number"
-                                   value="${plns?.tasa}"/>
+                                   value="${plns?.tasa}" maxlength="14"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
                     </div>
@@ -273,19 +273,19 @@
                         <span class="col-md-2 label label-primary text-info mediano">Capital de Trabajo</span>
                         <div class="col-md-2">
                             <g:textField name="capitalTrabajo" class="form-control input-sm required number"
-                                         value="${plns?.capitalTrabajo}"/>
+                                         value="${plns?.capitalTrabajo}" maxlength="14"/>
                         </div>
                         <span class="col-md-2 label label-primary text-info mediano">Inversiones preooperativas y legales</span>
                         <div class="col-md-2">
                             <input name="inversiones" type='text' class="form-control number"
-                                   value="${plns?.inversiones}"/>
+                                   value="${plns?.inversiones}" maxlength="14"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Terrenos y Construcciones</span>
                         <div class="col-md-2">
                             <input name="terreno" type='text' class="form-control number"
-                                   value="${plns?.terreno}"/>
+                                   value="${plns?.terreno}" maxlength="14"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
                     </div>
@@ -295,14 +295,14 @@
                         <span class="col-md-2 label label-primary text-info mediano">Maquinaria y Equipo</span>
                         <div class="col-md-2">
                             <input name="maquinaria" type='text' class="form-control number"
-                                   value="${plns?.maquinaria}"/>
+                                   value="${plns?.maquinaria}" maxlength="14"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
                         <span class="col-md-2 label label-primary text-info mediano">Muebles y equipos de oficina</span>
                         <div class="col-md-2">
                             <input name="muebles" type='text' class="form-control number"
-                                   value="${plns?.muebles}"/>
+                                   value="${plns?.muebles}" maxlength="14"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
 
@@ -315,11 +315,33 @@
 
 <script type="text/javascript">
 
-    $("#btnNuevoPlan").click(function () {
-        bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> Para generar un nuevo plan se borrará el plan actual, está seguro?", function (res) {
-            if(res){
-            }
-        });
+    $("#btnIndicadores").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "${createLink(controller: 'planesNegocio',action:'formIndicadores_ajax')}",
+                data: {
+                    id: '${plns?.id}'
+                },
+                success: function (msg) {
+                    var b = bootbox.dialog({
+                        id: "dlgIndicadores",
+                        title: "Indicadores del plan",
+                        // class : "modal-lg",
+                        message: msg,
+                        buttons: {
+                            cancelar: {
+                                label: "Salir",
+                                className: "btn-primary",
+                                callback: function () {
+                                }
+                            }
+                        }
+                    }); //dialog
+                    setTimeout(function () {
+                        b.find(".form-control").first().focus()
+                    }, 500);
+                } //success
+            }); //ajax
     });
 
     $(".btnRegresar").click(function () {

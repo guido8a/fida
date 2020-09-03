@@ -1,8 +1,12 @@
 package planes
 
+import convenio.Necesidad
+import convenio.TipoNecesidad
 import geografia.Comunidad
 import geografia.Parroquia
 import org.springframework.dao.DataIntegrityViolationException
+import parametros.proyectos.IndicadorOrms
+import proyectos.Indicador
 import proyectos.Proyecto
 import seguridad.UnidadEjecutora
 import seguridad.UnidadEjecutoraController
@@ -207,4 +211,46 @@ class PlanesNegocioController {
         }
     }
 
+    def formIndicadores_ajax(){
+        def plan = PlanesNegocio.get(params.id)
+        return[plan:plan]
+    }
+
+    def tablaIndicadores_ajax(){
+        def plan = PlanesNegocio.get(params.id)
+        def indicadores = IndicadorPlan.findAllByPlanesNegocio(plan)
+        return[indicadores:indicadores]
+    }
+
+    def agregarIndicador_ajax(){
+        def plan = PlanesNegocio.get(params.id)
+        def indicador = Indicadores.get(params.indicador)
+        def existe = IndicadorPlan.findAllByPlanesNegocioAndIndicadores(plan,indicador)
+        def indicadorPlan
+        if(existe){
+            render "er"
+        }else{
+            indicadorPlan = new IndicadorPlan()
+            indicadorPlan.planesNegocio = plan
+            indicadorPlan.indicadores = indicador
+
+            if(!indicadorPlan.save(flush:true)){
+                println("error al guardar el indicador inpn " + indicadorPlan.errors)
+                render "no"
+            }else{
+                render "ok"
+            }
+        }
+    }
+
+    def borrarIndicador_ajax(){
+        def indicador = IndicadorPlan.get(params.id)
+        try{
+            indicador.delete(flush:true)
+            render "ok"
+        }catch(e){
+            println("error al borrar el indicador inpn")
+            render "no"
+        }
+    }
 }
