@@ -10,6 +10,8 @@ import proyectos.Indicador
 import proyectos.Proyecto
 import seguridad.UnidadEjecutora
 import seguridad.UnidadEjecutoraController
+import taller.PersonaTaller
+import taller.Taller
 
 class PlanesNegocioController {
 
@@ -252,5 +254,28 @@ class PlanesNegocioController {
             println("error al borrar el indicador inpn")
             render "no"
         }
+    }
+
+    def evaluaciones(){
+        def plan = PlanesNegocio.get(params.id)
+        return[plan:plan]
+    }
+
+    def tablaEvaluaciones_ajax(){
+        def plan = PlanesNegocio.get(params.id)
+//        def evaluaciones = Evaluacion.findAllByPlanesNegocio(plan)
+
+        def evaluaciones = Evaluacion.withCriteria {
+            eq("planesNegocio",plan)
+            if (params.search && params.search != "") {
+                or {
+                    ilike("descripcion", "%" + params.search + "%")
+                    ilike("tipoEvaluacion.descripcion", "%" + params.search + "%")
+                }
+            }
+            order("descripcion", "asc")
+        }
+
+        return[evaluaciones:evaluaciones]
     }
 }

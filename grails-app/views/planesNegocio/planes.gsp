@@ -64,6 +64,9 @@
             <a href="#" id="btnIndicadores" class="btn btn-sm btn-warning" title="Indicadores del plan">
                 <i class="fa fa-italic"></i> Indicadores
             </a>
+            <a href="#" id="btnEvaluaciones" class="btn btn-sm btn-info" title="Evaluaciones del plan">
+                <i class="fa fa-pen-square"></i> Evaluaciones
+            </a>
         </g:if>
     %{--        <a href="#}" id="btnNuevoPlan" class="btn btn-sm btn-success" title="Nuevo plan">--}%
     %{--            <i class="fas fa-plus"></i> Nuevo plan--}%
@@ -379,8 +382,9 @@
             '${plns?.unidadEjecutora?.id}' + "&plns=" + '${plns?.id}'
     });
 
-    $("#btnPlanNegocio").click(function () {
-        location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + '${plns?.id}'
+    $("#btnEvaluaciones").click(function () {
+        location.href="${createLink(controller: 'planesNegocio', action: 'evaluaciones')}/" + '${plns?.id}'
+
     });
 
 

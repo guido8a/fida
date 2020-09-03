@@ -1,9 +1,12 @@
 package planes
 
 import audita.Auditable
+import parametros.convenio.TipoEvaluacion
 
 class Evaluacion implements Auditable{
 
+    PlanesNegocio planesNegocio
+    TipoEvaluacion tipoEvaluacion
     Date fecha
     Date fechaInicio
     Date fechaFin
@@ -18,6 +21,8 @@ class Evaluacion implements Auditable{
         id generator: 'identity'
         columns {
             id column: 'eval__id'
+            planesNegocio column: 'plns__id'
+            tipoEvaluacion column: 'tpev__id'
             fecha column: 'evalfcha'
             fechaInicio column: 'evalfcin'
             fechaFin column: 'evalfcfn'
@@ -26,6 +31,8 @@ class Evaluacion implements Auditable{
     }
 
     static constraints = {
+        planesNegocio(blank:false, nullable: false)
+        tipoEvaluacion(blank:false, nullable: false)
         fecha(nullable: false, blank: false)
         fechaInicio(nullable: false, blank: false)
         fechaFin(nullable: true, blank: true)
