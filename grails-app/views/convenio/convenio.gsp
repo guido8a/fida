@@ -47,13 +47,13 @@
         </a>
         <g:if test="${convenio?.id}">
             <a href="#" id="btnDocumentos" class="btn btn-sm btn-info" title="Consultar documentos">
-                <i class="fas fa-book-reader"></i> Biblioteca
+                <i class="fas fa-book-reader"></i> Biblioteca de la Organización
             </a>
             <a href="#" id="btnAdministradorCon" class="btn btn-sm btn-info" title="Administrador del convenio">
                 <i class="fa fa-user"></i> Administrador
             </a>
             <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de ejecución">
-                <i class="fa fa-hands-helping"></i> Plan de ejecución
+                <i class="fa fa-hands-helping"></i> Plan de ejecución (cronograma valorado)
             </a>
         </g:if>
         <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"

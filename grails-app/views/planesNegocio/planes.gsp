@@ -59,13 +59,16 @@
     %{--        </a>--}%
         <g:if test="${plns?.id}">
             <a href="#" id="btnDocumentos" class="btn btn-sm btn-info" title="Consultar documentos">
-                <i class="fas fa-book-reader"></i> Biblioteca
+                <i class="fas fa-book-reader"></i> Biblioteca de la Organización
             </a>
             <a href="#" id="btnIndicadores" class="btn btn-sm btn-warning" title="Indicadores del plan">
-                <i class="fa fa-italic"></i> Indicadores
+                <i class="fa fa-italic"></i> Indicadores del PNS
             </a>
             <a href="#" id="btnEvaluaciones" class="btn btn-sm btn-info" title="Evaluaciones del plan">
                 <i class="fa fa-pen-square"></i> Evaluaciones
+            </a>
+            <a href="#" id="btnEvaluaciones" class="btn btn-sm btn-info" title="Evaluaciones del plan">
+                <i class="fa fa-pen-square"></i> Planificación (cronograma)
             </a>
         </g:if>
     %{--        <a href="#}" id="btnNuevoPlan" class="btn btn-sm btn-success" title="Nuevo plan">--}%
