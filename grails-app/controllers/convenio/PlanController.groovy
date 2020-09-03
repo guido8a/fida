@@ -3,6 +3,9 @@ package convenio
 import parametros.Anio
 import parametros.proyectos.Fuente
 import parametros.proyectos.TipoElemento
+import planes.GrupoActividad
+import planes.PlanesNegocio
+import poa.Presupuesto
 import proyectos.Financiamiento
 import proyectos.MarcoLogico
 import proyectos.Proyecto
@@ -98,7 +101,7 @@ class PlanController {
     }
 
     def formPlan_ajax (){
-        def convenio = Convenio.get(params.convenio)
+        def plns = PlanesNegocio.get(params.convenio)
         def plan
 
         if(params.id){
@@ -106,13 +109,13 @@ class PlanController {
         }else{
             plan = new Plan()
         }
-        return[convenio: convenio, plan: plan]
+        return[plns: plns, plan: plan]
     }
 
     def actividad_ajax(){
         def tipo = TipoElemento.get(4)
-        def componente = MarcoLogico.get(params.id)
-        def actividades = MarcoLogico.findAllByMarcoLogicoAndTipoElemento(componente,tipo).sort{it.objeto}
+        def componente = GrupoActividad.get(params.id)
+        def actividades = GrupoActividad.findAllByPadre(componente).sort{it.descripcion}
         def plan
         if(params.plan){
             plan = Plan.get(params.plan)
@@ -125,12 +128,12 @@ class PlanController {
 
     def planesConvenio (){
         def convenio = Convenio.get(params.id)
-        def planes = Plan.findAllByConvenio(convenio)
+        def planes = Plan.findAllByPlanesNegocio(convenio.planesNegocio, [sort: 'grupoActividad.descripcion'])
         return[convenio: convenio, planes: planes]
     }
 
     def savePlan_ajax(){
-//        println("params sp " + params)
+        println "savePlan_ajac $params"
 
         def plan
 
@@ -144,6 +147,7 @@ class PlanController {
         plan.properties = params
 
         if(!plan.save(flush:true)){
+            println "error: ${plan.errors}"
             render "no"
         }else{
             render "ok"
@@ -242,5 +246,114 @@ class PlanController {
             render "no"
         }
     }
+
+    def arbol() {
+        def id = params.id
+        return [arbol: makeTree(id), plns: id]
+    }
+
+/*
+    */
+/**
+     * Acción llamada con ajax que permite realizar búsquedas en el árbol
+     *//*
+
+    def arbolSearch_ajax() {
+        def search = params.str.trim()
+        if (search != "") {
+            def c = Presupuesto.createCriteria()
+            def find = c.list(params) {
+                or {
+                    ilike("numero", "%" + search + "%")
+                    ilike("descripcion", "%" + search + "%")
+                }
+            }
+            println find
+            def presupuestos = []
+            find.each { pres ->
+                if (pres.presupuesto && !presupuestos.contains(pres.presupuesto)) {
+                    def pr = pres
+                    while (pr) {
+                        if (pr.presupuesto && !presupuestos.contains(pr.presupuesto)) {
+                            presupuestos.add(pr.presupuesto)
+                        }
+                        pr = pr.presupuesto
+                    }
+                }
+            }
+            presupuestos = presupuestos.reverse()
+
+            def ids = "["
+            if (find.size() > 0) {
+                ids += "\"#root\","
+                presupuestos.each { pr ->
+                    ids += "\"#lid_" + pr.id + "\","
+                }
+                ids = ids[0..-2]
+            }
+            ids += "]"
+            render ids
+        } else {
+            render ""
+        }
+    }
+
+*/
+    /**
+     * Función que genera el árbol de partidas presupuestarias
+     */
+    def makeTree(id) {
+        def plns = PlanesNegocio.get(id)
+        def lista = GrupoActividad.findAllByPadreIsNullAndPlanesNegocio(plns, [sort: "numero"]).id
+        def res = ""
+        println "root: ${lista}"
+        res += "<ul>"
+        res += "<li id='root' data-level='0' class='root jstree-open' data-jstree='{\"type\":\"root\"}'>"
+        res += "<a href='#' class='label_arbol'>Grupo de Actividades</a>"
+        res += "<ul>"
+        lista.each {
+            res += imprimeHijos(it)
+        }
+        res += "</ul>"
+        res += "</ul>"
+    }
+
+    /**
+     * Función que genera las hojas del árbol de un padre específico
+     */
+    def imprimeHijos(padre) {
+        def band = true
+        def t = ""
+        def txt = ""
+
+        def grac = GrupoActividad.get(padre)
+
+        def l = GrupoActividad.findAllByPadre(grac, [sort: 'numero']);
+
+        l.each {
+            println "---- hijos"
+            band = false;
+            t += imprimeHijos(it.id)
+        }
+
+        if (!band) {
+            def clase = "jstree-open"
+            if (!grac.padre) {
+                clase = "jstree-closed"
+            }
+            txt += "<li id='li_" + grac.id + "' class='padre " + clase + "' data-jstree='{\"type\":\"padre\"}'>"
+            txt += "<a href='#' class='label_arbol'>" + grac + "</a>"
+            txt += "<ul>"
+            txt += t
+            txt += "</ul>"
+        } else {
+            txt += "<li id='li_" + grac.id + "' class='hijo jstree-leaf' data-jstree='{\"type\":\"hijo\"}'>"
+            txt += "<a href='#' class='label_arbol'>" + grac + "</a>"
+        }
+        txt += "</li>"
+        return txt
+    }
+
+
 
 }

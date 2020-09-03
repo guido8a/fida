@@ -22,23 +22,31 @@
 
 <div class="btn-toolbar toolbar">
     <div class="btn-group">
+        <g:link controller="planesNegocio" action="planes" id="${convenio?.planesNegocio.id}" class="btn btn-sm btn-default">
+            <i class="fa fa-arrow-left"></i> Plan de Negocios Solidarios
+        </g:link>
         <g:link controller="convenio" action="convenio" id="${convenio?.id}" class="btn btn-sm btn-default">
             <i class="fa fa-arrow-left"></i> Convenio
         </g:link>
         <g:link controller="plan" action="plan" id="${convenio?.id}" class="btn btn-sm btn-info">
-            <i class="fa fa-camera-retro"></i> Planificación
+            <i class="fa fa-camera-retro"></i> Cronograma valorado
         </g:link>
     </div>
     <div class="btn-group">
         <a href="#" class="btn btn-success" id="btnAgregarPlan" >
-            <i class="fa fa-plus"></i> Agregar Plan
+            <i class="fa fa-plus"></i> Agregar actividad del Plan
         </a>
+    </div>
+    <div class="btn-group">
+        <g:link controller="plan" action="arbol" id="${convenio?.id}" class="btn btn-sm btn-default">
+            <i class="fa fa-plus"></i> Agregar Componente
+        </g:link>
     </div>
 </div>
 
 <div class="row" style="text-align: center">
     <div class="panel-primary " style="font-size: 14px; margin-bottom: 5px">
-        <strong style="color: #5596ff; ">Convenio: ${convenio?.nombre}</strong>
+        <strong style="color: #5596ff; ">Planificación: ${convenio?.planesNegocio?.nombre}</strong>
     </div>
 </div>
 
@@ -64,8 +72,8 @@
         <g:each in="${planes}" var="plan" status="i">
             <tr style="width: 100%" data-id="${plan?.id}">
 
-                <td style="width: 15%">${plan?.marcoLogico?.tipoElemento == parametros.proyectos.TipoElemento.get(4) ? plan?.marcoLogico?.marcoLogico?.objeto : ''}</td>
-                <td style="width: 15%">${plan?.marcoLogico?.tipoElemento == parametros.proyectos.TipoElemento.get(4) ? plan?.marcoLogico?.objeto : ''}</td>
+                <td style="width: 15%">${plan?.grupoActividad?.padre?.descripcion}</td>
+                <td style="width: 15%">${plan?.grupoActividad?.padre != null ? plan?.grupoActividad?.descripcion : ''}</td>
                 <td style="width: 19%">${plan?.descripcion}</td>
                 <td style="width: 8%">${plan?.unidadComprasPublicas?.descripcion}</td>
                 <td style="width: 8%" title="${plan?.codigoComprasPublicas?.descripcion}">${plan?.codigoComprasPublicas?.numero}</td>

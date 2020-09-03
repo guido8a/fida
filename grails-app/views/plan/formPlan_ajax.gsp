@@ -1,4 +1,4 @@
-<%@ page import="parametros.proyectos.TipoElemento" %>
+<%@ page import="planes.GrupoActividad; parametros.proyectos.TipoElemento" %>
 <%--
   Created by IntelliJ IDEA.
   User: fabricio
@@ -14,12 +14,12 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-3">
                     <label>
-                        Convenio
+                        Plan de Negocios Solidario
                     </label>
                 </div>
                 <div class="col-md-7">
-                    <g:hiddenField name="convenio" value="${convenio?.id}"/>
-                    <strong style="font-size: 14px; color: #5596ff">${convenio?.nombre}</strong>
+                    <g:hiddenField name="plns" value="${plns?.id}"/>
+                    <strong style="font-size: 14px; color: #5596ff">${plns?.nombre}</strong>
                 </div>
             </span>
         </div>
@@ -33,8 +33,8 @@
                 </div>
                 <div class="col-md-7">
                     <g:select name="componente" class="form-control"
-                              from="${proyectos.MarcoLogico.findAllByTipoElemento(parametros.proyectos.TipoElemento.get(3))}"
-                              optionKey="id" optionValue="objeto" value="${plan?.marcoLogico?.marcoLogico?.id}"/>
+                              from="${planes.GrupoActividad.findAllByPlanesNegocioAndPadreIsNull(plns)}"
+                              optionKey="id" optionValue="descripcion" value="${plan?.grupoActividad?.descripcion}"/>
                 </div>
             </span>
         </div>

@@ -5,4 +5,5 @@
   Time: 15:55
 --%>
 
-<g:select name="marcoLogico" from="${actividades}" optionValue="objeto" optionKey="id" class="form-control" value="${plan?.marcoLogico?.id}"/>
+<g:select name="grupoActividad" from="${actividades}" optionValue="descripcion" optionKey="id" class="form-control"
+          value="${plan?.grupoActividad?.id}"/>

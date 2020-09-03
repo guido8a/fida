@@ -52,8 +52,8 @@
             <a href="#" id="btnAdministradorCon" class="btn btn-sm btn-info" title="Administrador del convenio">
                 <i class="fa fa-user"></i> Administrador
             </a>
-            <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de negocio Solidario">
-                <i class="fa fa-hands-helping"></i> Plan de negocio Solidario
+            <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de ejecución">
+                <i class="fa fa-hands-helping"></i> Plan de ejecución
             </a>
         </g:if>
         <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"

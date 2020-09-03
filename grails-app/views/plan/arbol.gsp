@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta name="layout" content="main">
-        <title>Cuentas presupuestarias</title>
+        <title>Actividades del Plan</title>
         <asset:javascript src="/jstree-3.0.8/dist/jstree.min.js"/>
         <asset:stylesheet src="/jstree-3.0.8/dist/themes/default/style.min.css"/>
         <asset:stylesheet src="/apli/jstree-context.css"/>
@@ -40,7 +40,7 @@
 
     <div class="row" style="margin-bottom: 10px;">
         <div class="btn-group">
-            <g:link controller="inicio" action="parametros" class="btn btn-default">
+            <g:link controller="plan" action="planesConvenio" id="${plns}" class="btn btn-default">
                 <i class="fa fa-arrow-left"></i> Regresar
             </g:link>
 
