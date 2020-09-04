@@ -114,19 +114,26 @@ class PlanesNegocioController {
     }
 
     def planes() {
-//        println "planes $params"
-        def unidad = UnidadEjecutora.get(params.id)
+        println "planes $params"
+        def unidad
+        if(params.unej) {
+            unidad = UnidadEjecutora.get(params.unej)
+        } else {
+            unidad = UnidadEjecutora.get(params.id)
+        }
+
+        def plan
         def plns = PlanesNegocio.findByUnidadEjecutora(unidad)
         if(!plns){
             plns = new PlanesNegocio()
         }
-//        if (params.id) {
-//            plan = PlanesNegocio.get(params.id)
-//        } else if(params.unej) {
-//            plan = PlanesNegocio.findByUnidadEjecutora(seguridad.UnidadEjecutora.get(params.unej))
-//        } else {
-//            plan = new PlanesNegocio()
-//        }
+        if (params.id) {
+            plan = PlanesNegocio.get(params.id)
+        } else if(params.unej) {
+            plan = PlanesNegocio.findByUnidadEjecutora(seguridad.UnidadEjecutora.get(params.unej))
+        } else {
+            plan = new PlanesNegocio()
+        }
         return [plns: plns, unidad: unidad]
     }
 

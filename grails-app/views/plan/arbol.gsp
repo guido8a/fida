@@ -90,17 +90,18 @@
             var searchRes = [];
             var posSearchShow = 0;
             var $treeContainer = $("#tree");
+            var plns = "${plns}"
 
             function submitFormPresupuesto() {
-                var $form = $("#frmPresupuesto");
+                var $form = $("#frmGrupoAc");
                 var $btn = $("#dlgCreateEditPresupuesto").find("#btnSave");
                 if ($form.valid()) {
                     $btn.replaceWith(spinner);
-                    openLoader("Guardando Presupuesto");
+                    openLoader("Guardando Actividad");
                     $.ajax({
                         type    : "POST",
                         url     : $form.attr("action"),
-                        data    : $form.serialize(),
+                        data    : $form.serialize(), plns: plns,
                         success : function (msg) {
                             var parts = msg.split("*");
                             log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
@@ -122,7 +123,7 @@
                 bootbox.dialog({
                     title   : "Eliminar el Registro",
                     message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'> </i><p style='margin-left: 40px'>¿Está seguro " +
-                        "que desea eliminar el Presupuesto seleccionado?<br/>Esta acción no se puede deshacer.</p>",
+                        "que desea eliminar la Actividad seleccionado?<br/>Esta acción no se puede deshacer.</p>",
                     buttons : {
                         cancelar : {
                             label     : "Cancelar",
@@ -134,7 +135,7 @@
                             label     : "<i class='fa fa-trash'></i> Eliminar",
                             className : "btn-danger",
                             callback  : function () {
-                                openLoader("Eliminando Presupuesto");
+                                openLoader("Eliminando Actividad");
                                 $.ajax({
                                     type    : "POST",
                                     url     : '${createLink(controller: 'presupuesto', action:'delete_ajax')}',
@@ -163,18 +164,20 @@
             }
             function createEditPresupuesto(padreId, id) {
                 var title = id ? "Editar" : "Crear";
-                var data = id ? {id : id} : {};
+                var plns = "${plns}"
+                var data = id ? {id : id}: {};
                 if (padreId) {
                     data.padre = padreId;
                 }
+                data.plns = plns
                 $.ajax({
                     type    : "POST",
-                    url     : "${createLink(controller: 'presupuesto', action:'form_ajax')}",
+                    url     : "${createLink(controller: 'plan', action:'form_ajax')}",
                     data    : data,
                     success : function (msg) {
                         var b = bootbox.dialog({
                             id    : "dlgCreateEditPresupuesto",
-                            title : title + " Presupuesto",
+                            title : title + " Grupo de Actividades",
 
                             message : msg,
                             buttons : {
@@ -223,7 +226,7 @@
                 var items = {};
 
                 var crearHijo = {
-                    label           : "Crear Hijo",
+                    label           : "Crear Elemento",
                     icon            : "far fa-edit text-success",
                     separator_after : true,
                     action          : function () {

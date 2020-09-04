@@ -1,11 +1,11 @@
 package convenio
 
+import org.springframework.dao.DataIntegrityViolationException
 import parametros.Anio
 import parametros.proyectos.Fuente
 import parametros.proyectos.TipoElemento
 import planes.GrupoActividad
 import planes.PlanesNegocio
-import poa.Presupuesto
 import proyectos.Financiamiento
 import proyectos.MarcoLogico
 import proyectos.Proyecto
@@ -101,7 +101,8 @@ class PlanController {
     }
 
     def formPlan_ajax (){
-        def plns = PlanesNegocio.get(params.convenio)
+        println "formPlan_ajax: $params"
+        def plns = PlanesNegocio.get(params.planNs)
         def plan
 
         if(params.id){
@@ -109,6 +110,7 @@ class PlanController {
         }else{
             plan = new Plan()
         }
+        println "PNS: ${plns.id}"
         return[plns: plns, plan: plan]
     }
 
@@ -127,9 +129,10 @@ class PlanController {
     }
 
     def planesConvenio (){
-        def convenio = Convenio.get(params.id)
-        def planes = Plan.findAllByPlanesNegocio(convenio.planesNegocio, [sort: 'grupoActividad.descripcion'])
-        return[convenio: convenio, planes: planes]
+        println "planesConvenio: ${params}"
+        def plns = PlanesNegocio.get(params.id)
+        def planes = Plan.findAllByPlanesNegocio(plns, [sort: 'grupoActividad.descripcion'])
+        return[planNs: plns, planes: planes]
     }
 
     def savePlan_ajax(){
@@ -261,7 +264,7 @@ class PlanController {
     def arbolSearch_ajax() {
         def search = params.str.trim()
         if (search != "") {
-            def c = Presupuesto.createCriteria()
+            def c = GrupoActividad.createCriteria()
             def find = c.list(params) {
                 or {
                     ilike("numero", "%" + search + "%")
@@ -271,13 +274,13 @@ class PlanController {
             println find
             def presupuestos = []
             find.each { pres ->
-                if (pres.presupuesto && !presupuestos.contains(pres.presupuesto)) {
+                if (pres.GrupoActividad && !presupuestos.contains(pres.GrupoActividad)) {
                     def pr = pres
                     while (pr) {
-                        if (pr.presupuesto && !presupuestos.contains(pr.presupuesto)) {
-                            presupuestos.add(pr.presupuesto)
+                        if (pr.GrupoActividad && !presupuestos.contains(pr.GrupoActividad)) {
+                            presupuestos.add(pr.GrupoActividad)
                         }
-                        pr = pr.presupuesto
+                        pr = pr.GrupoActividad
                     }
                 }
             }
@@ -331,7 +334,7 @@ class PlanController {
         def l = GrupoActividad.findAllByPadre(grac, [sort: 'numero']);
 
         l.each {
-            println "---- hijos"
+//            println "---- hijos"
             band = false;
             t += imprimeHijos(it.id)
         }
@@ -353,6 +356,79 @@ class PlanController {
         txt += "</li>"
         return txt
     }
+
+    def form_ajax() {
+        println "form_ajax $params"
+        def plns = PlanesNegocio.get(params.plns)
+        def grupoAc = new GrupoActividad()
+        if (params.id) {
+            grupoAc = GrupoActividad.get(params.id)
+            if (!grupoAc) {
+                render "ERROR*No se encontró GrupoActividad."
+                return
+            }
+        }
+        grupoAc.properties = params
+        if (params.padre) {
+            def padre = GrupoActividad.get(params.padre.toLong())
+            grupoAc.padre = padre
+        }
+
+        return [grupoAc: grupoAc, plns: plns.id]
+    } //form para cargar con ajax en un dialog
+
+    def save_ajax() {
+        println "save_ajax: $params"
+        def plns = PlanesNegocio.get(params.plns)
+        def grupoAc = new GrupoActividad()
+        if (params.id) {
+            grupoAc = GrupoActividad.get(params.id)
+            if (!grupoAc) {
+                render "ERROR*No se encontró GrupoActividad."
+                return
+            }
+        }
+        grupoAc.properties = params
+        grupoAc.planesNegocio = plns
+        println "padre: ${grupoAc.padre}, ${params.padre}"
+
+        if (!grupoAc.save(flush: true)) {
+            render "ERROR*Ha ocurrido un error al guardar GrupoActividad: " + renderErrors(bean: grupoAc)
+            return
+        }
+        render "SUCCESS*${params.id ? 'Actualización' : 'Creación'} de Actividad exitosa."
+        return
+    } //save para grabar desde ajax
+
+    /**
+     * Acción llamada con ajax que permite eliminar un elemento
+     * @render ERROR*[mensaje] cuando no se pudo eliminar correctamente, SUCCESS*[mensaje] cuando se eliminó correctamente
+     */
+    def delete_ajax() {
+        if (params.id) {
+            def grupoAc = GrupoActividad.get(params.id)
+            if (!grupoAc) {
+                render "ERROR*No se encontró GrupoActividad."
+                return
+            }
+            def hijos = GrupoActividad.findAllByPresupuesto(grupoAc)
+            if (hijos == 0) {
+                try {
+                    grupoAc.delete(flush: true)
+                    render "SUCCESS*Eliminación de GrupoActividad exitosa."
+                    return
+                } catch (DataIntegrityViolationException e) {
+                    render "ERROR*Ha ocurrido un error al eliminar GrupoActividad"
+                    return
+                }
+            } else {
+                render "ERROR*El GrupoActividad tiene presupuestos asociados, no puede eliminarlo"
+            }
+        } else {
+            render "ERROR*No se encontró GrupoActividad."
+            return
+        }
+    } //delete para eliminar via ajax
 
 
 

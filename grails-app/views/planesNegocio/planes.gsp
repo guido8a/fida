@@ -370,6 +370,11 @@
 
     });
 
+    $("#btnPlanificacion").click(function () {
+        location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + '${plns?.id}'
+
+    });
+
 
     $("#btnEliminar").click(function () {
         bootbox.dialog({

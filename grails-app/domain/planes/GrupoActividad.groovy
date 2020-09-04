@@ -27,6 +27,7 @@ class GrupoActividad implements Auditable {
 
     static constraints = {
         numero(size: 1..7, blank: false, nullable: false)
+        padre(blank: true, nullable: true)
         planesNegocio(blank: false, nullable: false)
         descripcion(size: 1..255, nullable: false, blank: false)
     }

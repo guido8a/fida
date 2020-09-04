@@ -22,13 +22,13 @@
 
 <div class="btn-toolbar toolbar">
     <div class="btn-group">
-        <g:link controller="planesNegocio" action="planes" id="${convenio?.planesNegocio.id}" class="btn btn-sm btn-default">
-            <i class="fa fa-arrow-left"></i> Plan de Negocios Solidarios
+        <g:link controller="unidadEjecutora" action="organizacion" id="${planNs?.unidadEjecutora?.id}" class="btn btn-sm btn-default">
+            <i class="fa fa-arrow-left"></i> Organización
         </g:link>
-        <g:link controller="convenio" action="convenio" id="${convenio?.id}" class="btn btn-sm btn-default">
-            <i class="fa fa-arrow-left"></i> Convenio
-        </g:link>
-        <g:link controller="plan" action="plan" id="${convenio?.id}" class="btn btn-sm btn-info">
+        <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-default" title="Consultar documentos">
+            <i class="fa fa-arrow-left"></i> Plan de Negocios Solidario
+        </a>
+        <g:link controller="plan" action="plan" id="${planNs?.id}" class="btn btn-sm btn-info">
             <i class="fa fa-camera-retro"></i> Cronograma valorado
         </g:link>
     </div>
@@ -38,15 +38,15 @@
         </a>
     </div>
     <div class="btn-group">
-        <g:link controller="plan" action="arbol" id="${convenio?.id}" class="btn btn-sm btn-default">
-            <i class="fa fa-plus"></i> Agregar Componente
+        <g:link controller="plan" action="arbol" id="${planNs?.id}" class="btn btn-sm btn-default">
+            <i class="fas fa-clipboard-list"></i> Componentes y Actidades del Cronograma
         </g:link>
     </div>
 </div>
 
 <div class="row" style="text-align: center">
     <div class="panel-primary " style="font-size: 14px; margin-bottom: 5px">
-        <strong style="color: #5596ff; ">Planificación: ${convenio?.planesNegocio?.nombre}</strong>
+        <strong style="color: #5596ff; ">Planificación: ${planNs?.nombre}</strong>
     </div>
 </div>
 
@@ -135,18 +135,23 @@
         agregarPlan(null)
     });
 
+    $("#btnPlanNegocio").click(function () {
+        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/?unej=" + '${planNs?.unidadEjecutora.id}'
+    });
+
     function agregarPlan(id) {
         $.ajax({
             type    : "POST",
             url     : "${createLink(controller:'plan', action:'formPlan_ajax')}",
             data    : {
-                convenio: '${convenio?.id}',
+                planNs: '${planNs?.id}',
                 id: id
             },
             success : function (msg) {
                 var b = bootbox.dialog({
                     id      : "dlgCreatePlan",
                     title   : "Plan",
+                    class   : "modal-lg",
                     message : msg,
                     buttons : {
                         cancelar : {

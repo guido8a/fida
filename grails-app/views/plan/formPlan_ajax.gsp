@@ -31,7 +31,7 @@
                         Componente
                     </label>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-8">
                     <g:select name="componente" class="form-control"
                               from="${planes.GrupoActividad.findAllByPlanesNegocioAndPadreIsNull(plns)}"
                               optionKey="id" optionValue="descripcion" value="${plan?.grupoActividad?.descripcion}"/>
@@ -46,7 +46,7 @@
                         Actividad
                     </label>
                 </div>
-                <div class="col-md-7" id="divActividad">
+                <div class="col-md-8" id="divActividad">
                 </div>
             </span>
         </div>
@@ -58,7 +58,7 @@
                         Unidad de compras públicas
                     </label>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-4">
                     <g:select name="unidadComprasPublicas"
                               from="${convenio.UnidadComprasPublicas.list().sort{it.descripcion}}"
                               optionKey="id" optionValue="descripcion" class="form-control" value="${plan?.unidadComprasPublicas?.id}"/>
@@ -73,10 +73,11 @@
                         Tipo de proceso
                     </label>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-4">
                     <g:select name="tipoProcesoComprasPublicas"
                               from="${convenio.TipoProcesoComprasPublicas.list().sort{it.descripcion}}"
-                              optionKey="id" optionValue="descripcion" class="form-control" value="${plan?.tipoProcesoComprasPublicas?.id}"/>
+                              optionKey="id" optionValue="descripcion" class="form-control"
+                              value="${plan?.tipoProcesoComprasPublicas?.id?:1}"/>
                 </div>
             </span>
         </div>
@@ -88,7 +89,7 @@
                         Código CPC
                     </label>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <g:hiddenField name="codigoComprasPublicas" value="${plan?.codigoComprasPublicas?.id}"/>
                     <g:textField name="codigoComprasPublicasNombre" readonly=""
                                  class="form-control" value="${plan?.codigoComprasPublicas ? (plan?.codigoComprasPublicas?.numero + " - " + plan?.codigoComprasPublicas?.descripcion) : ''}"/>
@@ -108,7 +109,7 @@
                         Descripción
                     </label>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-8">
                     <g:textArea name="descripcion" value="${plan?.descripcion}" class="form-control required" style="resize: none; height: 100px" maxlength="255"/>
                 </div>
             </span>
@@ -124,11 +125,13 @@
                 </div>
             </span>
             <span class="grupo">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label>
                         Costo
                     </label>
-                    <g:textField name="costo" class="form-control number required" value="${plan?.costo}"/>
+%{--                    <g:textField name="costo" class="form-control number required" value="${plan?.costo}"/>--}%
+                    <g:textField name="costo" class="form-control number required"
+                                 value="${util.formatNumber(number: plan?.costo, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                 </div>
             </span>
             <span class="grupo">
@@ -139,16 +142,13 @@
                     <g:textField name="ejecutado" class="form-control number" value="${plan?.ejecutado}"/>
                 </div>
             </span>
-        </div>
-        <div class="form-group keeptogether">
             <span class="grupo">
-                <div class="col-md-1"></div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label>
                         Estado
                     </label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <g:select name="estado" from="${[1:'Activo',0:'Inactivo']}" optionValue="value" optionKey="key" class="form-control" value="${plan?.estado}"/>
                 </div>
             </span>
