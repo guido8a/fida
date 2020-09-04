@@ -5,7 +5,9 @@ import convenio.TipoNecesidad
 import geografia.Comunidad
 import geografia.Parroquia
 import org.springframework.dao.DataIntegrityViolationException
+import parametros.proyectos.Fuente
 import parametros.proyectos.IndicadorOrms
+import proyectos.Financiamiento
 import proyectos.Indicador
 import proyectos.Proyecto
 import seguridad.UnidadEjecutora
@@ -172,7 +174,7 @@ class PlanesNegocioController {
     }
 
     def savePlan_ajax () {
-//        println("params sp " + params)
+        println("params sp " + params)
 
         if(params.fechaAprobacion){
             params.fechaAprobacion = new Date().parse("dd-MM-yyy", params.fechaAprobacion)
@@ -194,11 +196,23 @@ class PlanesNegocioController {
 
         plan.properties = params
 
-        if(!plan.save(flush:true)){
-            println("error al guardar el plan de negocio " + plan.errors)
-            render "no"
+        def ct = params?.capitalTrabajo?.toDouble()
+        def inv = params?.inversiones?.toDouble()
+        def trr = params?.terreno?.toDouble()
+        def maq = params?.maquinaria?.toDouble()
+        def mue = params?.muebles?.toDouble()
+
+        def suma = Math.round((ct+inv+trr+maq+mue) * 100) / 100
+
+        if(suma > params.monto?.toDouble()){
+            render "er"
         }else{
-            render "ok"
+            if(!plan.save(flush:true)){
+                println("error al guardar el plan de negocio " + plan.errors)
+                render "no"
+            }else{
+                render "ok"
+            }
         }
     }
 
@@ -262,10 +276,8 @@ class PlanesNegocioController {
     }
 
     def tablaEvaluaciones_ajax(){
-        println("params " + params)
+//        println("params " + params)
         def plan = PlanesNegocio.get(params.id)
-//        def evaluaciones = Evaluacion.findAllByPlanesNegocio(plan)
-
         def evaluaciones = Evaluacion.withCriteria {
             eq("planesNegocio",plan)
             if (params.search && params.search != "") {
@@ -278,5 +290,47 @@ class PlanesNegocioController {
         }
 
         return[evaluaciones:evaluaciones]
+    }
+
+    def financiamiento_ajax(){
+//        def unidad = UnidadEjecutora.get(params.id)
+//        def plan = PlanesNegocio.findByUnidadEjecutora(unidad)
+        def plan = PlanesNegocio.get(params.id)
+        return[plan:plan]
+    }
+
+    def tablaFinanciamientoPlan_ajax(){
+        def plan = PlanesNegocio.get(params.id)
+        def financiamientos = FinanciamientoPlanNegocio.findAllByPlanesNegocio(plan).sort{it.fuente.descripcion}
+        return [plan: plan, financiamientos: financiamientos]
+    }
+
+    def saveFinanciamientoPlanNegocio_ajax(){
+        def plan = PlanesNegocio.get(params.id)
+        def fuente = Fuente.get(params.fuente)
+
+        def fn = new FinanciamientoPlanNegocio()
+        fn.valor = params.monto.toDouble()
+        fn.fuente = fuente
+        fn.planesNegocio = plan
+
+        if(!fn.save(flush:true)){
+            println("error al agregar fnpn " + fn.errors)
+            render "no"
+        }else{
+            render "ok"
+        }
+    }
+
+    def borrarFinanciamientoPlanNegocio_ajax() {
+        def financiamiento = FinanciamientoPlanNegocio.get(params.id)
+
+        try{
+            financiamiento.delete(flush:true)
+            render "ok"
+        }catch(e){
+            println("error al borrar el finaciamiento" + financiamiento.errors)
+            render "no"
+        }
     }
 }

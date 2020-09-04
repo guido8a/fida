@@ -27,8 +27,8 @@
                 </td>
                 <td class="text-right">
                     <g:formatNumber number="${finPorcentaje / 100}" type="percent"
-                                    minFractionDigits="2"
-                                    maxFractionDigits="2"/>
+                                    minFractionDigits="4"
+                                    maxFractionDigits="4"/>
                 </td>
                 <td>
                     ${fin.anio.anio}
@@ -67,13 +67,6 @@
     $(function () {
         setSuma(suma);
         setRestante(restante);
-
-        // setTimeout(function () {
-        //     $("#tblFinanciamiento").fixedHeaderTable({
-        //         height : 250,
-        //         footer : true
-        //     });
-        // }, 500);
 
         $(".btn-delete-fin").click(function () {
             var id = $(this).attr("id");

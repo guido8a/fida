@@ -33,17 +33,20 @@
         <div class="" style="width: 99.7%;height: 320px; overflow-y: auto;float: right; margin-top: -20px">
             <table class="table-bordered table-condensed table-hover" style="width: 100%">
                 <tbody>
-                <g:each in="${evaluaciones}" var="evaluacion">
-                    <tr data-id="${evaluacion.id}" style="width: 100%">
-                        <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">${evaluacion?.tipoEvaluacion?.descripcion}</elm:textoBusqueda></td>
-                        <td style="width: 39%"><elm:textoBusqueda busca="${params.search}">${evaluacion?.descripcion}</elm:textoBusqueda></td>
-                        <td style="width: 20%">${evaluacion?.fechaInicio?.format("dd-MM-yyyy")}</td>
-                        <td style="width: 20%; text-align: center">${evaluacion?.fechaFin?.format("dd-MM-yyyy")}</td>
-                        <g:if test="${evaluaciones?.size() < 7}">
-                            <td style="width: 1%"></td>
-                        </g:if>
-                    </tr>
-                </g:each>
+%{--                <g:if test="${detalles}">--}%
+%{--                    <td style="width: 25%">${deta}</td>--}%
+%{--                </g:if>--}%
+%{--                <g:each in="${evaluaciones}" var="evaluacion">--}%
+%{--                    <tr data-id="${evaluacion.id}" style="width: 100%">--}%
+%{--                        <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">${evaluacion?.tipoEvaluacion?.descripcion}</elm:textoBusqueda></td>--}%
+%{--                        <td style="width: 39%"><elm:textoBusqueda busca="${params.search}">${evaluacion?.descripcion}</elm:textoBusqueda></td>--}%
+%{--                        <td style="width: 20%">${evaluacion?.fechaInicio?.format("dd-MM-yyyy")}</td>--}%
+%{--                        <td style="width: 20%; text-align: center">${evaluacion?.fechaFin?.format("dd-MM-yyyy")}</td>--}%
+%{--                        <g:if test="${evaluaciones?.size() < 7}">--}%
+%{--                            <td style="width: 1%"></td>--}%
+%{--                        </g:if>--}%
+%{--                    </tr>--}%
+%{--                </g:each>--}%
                 </tbody>
             </table>
         </div>

@@ -49,14 +49,6 @@
 <h3 style="text-align: center">Plan de Negocio Solidario</h3>
 <div class="panel panel-primary col-md-12">
     <div class="panel-heading" style="padding: 3px; margin-top: 2px; text-align: ${plns?.id ? 'center' : 'left'}">
-    %{--        <a href="#" id="btnBuscarConvenio"--}%
-    %{--           class="btn btn-sm btn-info" title="Buscar plns">--}%
-    %{--            <i class="fas fa-list-alt"></i> Retornar a Organización--}%
-    %{--        </a>--}%
-    %{--        <a href="#" id="btnBuscarConvenio"--}%
-    %{--           class="btn btn-sm btn-info" title="Buscar plns">--}%
-    %{--            <i class="fas fa-list-alt"></i> Lista de Planes--}%
-    %{--        </a>--}%
         <g:if test="${plns?.id}">
             <a href="#" id="btnDocumentos" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-book-reader"></i> Biblioteca de la Organización
@@ -74,9 +66,6 @@
                 <i class="fa fa-pen-square"></i> Evaluaciones
             </a>
         </g:if>
-    %{--        <a href="#}" id="btnNuevoPlan" class="btn btn-sm btn-success" title="Nuevo plan">--}%
-    %{--            <i class="fas fa-plus"></i> Nuevo plan--}%
-    %{--        </a>--}%
         <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
         </a>
@@ -86,7 +75,6 @@
             </a>
         </g:if>
     </div>
-
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
             <g:form class="form-horizontal" name="frmPlan" controller="planesNegocio" action="savePlan_ajax" method="POST">
@@ -136,7 +124,6 @@
                         </span>
                     </div>
                 </div>
-
                 <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Nombre</span>
@@ -150,7 +137,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Objeto</span>
@@ -163,7 +149,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row izquierda">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Nudo Crítico</span>
@@ -182,7 +167,6 @@
                             <div class="col-md-2 ">
                                 <input name="fechaPresentacion" id="fp" type='text' class="form-control"
                                        value="${plns?.fechaPresentacion?.format("dd-MM-yyyy")}"/>
-
                                 <p class="help-block ui-helper-hidden"></p>
                             </div>
                         </span>
@@ -191,7 +175,6 @@
                             <div class="col-md-2">
                                 <input name="fechaComite" id="fc" type='text' class="form-control"
                                        value="${plns?.fechaComite?.format("dd-MM-yyyy")}"/>
-
                                 <p class="help-block ui-helper-hidden"></p>
                             </div>
                         </span>
@@ -205,29 +188,22 @@
                         </span>
                     </div>
                 </div>
-
                 <div class="row izquierda" style="margin-bottom: 20px">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Monto del Plan</span>
                         <div class="col-md-2">
-%{--                            <g:textField name="monto" class="form-control input-sm required number"--}%
-%{--                                         value="${plns?.monto}" maxlength="14"/>--}%
                             <g:textField name="monto" class="form-control input-sm required number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.monto, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                         </div>
-
                         <span class="col-md-2 label label-primary text-info mediano">Calificación</span>
                         <div class="col-md-1">
                             <input name="calificacion" type='text' class="form-control number"
                                    value="${plns?.calificacion}" maxlength="2"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
-
                         <span class="col-md-1"></span>
                         <span class="col-md-2 label label-primary text-info mediano">Inversión por Socio</span>
                         <div class="col-md-2">
-%{--                            <input name="numeroSocios" type='text' class="form-control number"--}%
-%{--                                   value="${plns?.numeroSocios}" maxlength="14"/>--}%
                             <g:textField name="numeroSocios" class="form-control input-sm number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.numeroSocios, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
@@ -235,30 +211,21 @@
 
                     </div>
                 </div>
-
                 <div class="row izquierda" style="margin-bottom: 20px">
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Ventas proyectadas</span>
                         <div class="col-md-2">
-%{--                            <g:textField name="venta" class="form-control input-sm required number"--}%
-%{--                                         value="${plns?.venta}" maxlength="14"/>--}%
                             <g:textField name="venta" class="form-control input-sm required number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.venta, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                         </div>
-
                         <span class="col-md-2 label label-primary text-info mediano">Costos proyectados</span>
                         <div class="col-md-2">
-%{--                            <input name="costo" type='text' class="form-control number"--}%
-%{--                                   value="${plns?.costo}" maxlength="14"/>--}%
                             <g:textField name="costo" class="form-control input-sm number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.costo, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
                         </div>
-
                         <span class="col-md-2 label label-primary text-info mediano">Excedente</span>
                         <div class="col-md-2">
-%{--                            <input name="excedente" type='text' class="form-control number"--}%
-%{--                                   value="${plns?.excedente}" maxlength="14"/>--}%
                             <g:textField name="excedente" class="form-control input-sm number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.excedente, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
@@ -269,15 +236,11 @@
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Valos Actual Neto</span>
                         <div class="col-md-2">
-%{--                            <g:textField name="van" class="form-control input-sm required number"--}%
-%{--                                         value="${plns?.van}" maxlength="14"/>--}%
                             <g:textField name="van" class="form-control input-sm required number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.van, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                         </div>
                         <span class="col-md-2 label label-primary text-info mediano">Tasa Interna de Retorno</span>
                         <div class="col-md-2">
-%{--                            <input name="tir" type='text' class="form-control number"--}%
-%{--                                   value="${plns?.tir}" maxlength="14"/>--}%
                             <g:textField name="tir" class="form-control input-sm number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.tir, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
@@ -285,8 +248,6 @@
 
                         <span class="col-md-2 label label-primary text-info mediano">Tasa</span>
                         <div class="col-md-2">
-%{--                            <input name="tasa" type='text' class="form-control number"--}%
-%{--                                   value="${plns?.tasa}" maxlength="14"/>--}%
                             <g:textField name="tasa" class="form-control input-sm number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.tasa, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
@@ -297,15 +258,11 @@
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Capital de Trabajo</span>
                         <div class="col-md-2">
-%{--                            <g:textField name="capitalTrabajo" class="form-control input-sm required number"--}%
-%{--                                         value="${plns?.capitalTrabajo}" maxlength="14"/>--}%
                             <g:textField name="capitalTrabajo" class="form-control input-sm required number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.capitalTrabajo, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                         </div>
-                        <span class="col-md-2 label label-primary text-info mediano">Inversiones preooperativas y legales</span>
+                        <span class="col-md-2 label label-primary text-info mediano">Inversiones preoperativas y legales</span>
                         <div class="col-md-2">
-%{--                            <input name="inversiones" type='text' class="form-control number"--}%
-%{--                                   value="${plns?.inversiones}" maxlength="14"/>--}%
                             <g:textField name="inversiones" class="form-control input-sm number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.inversiones, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
@@ -313,8 +270,6 @@
 
                         <span class="col-md-2 label label-primary text-info mediano">Terrenos y Construcciones</span>
                         <div class="col-md-2">
-%{--                            <input name="terreno" type='text' class="form-control number"--}%
-%{--                                   value="${plns?.terreno}" maxlength="14"/>--}%
                             <g:textField name="terreno" class="form-control input-sm number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.terreno, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
@@ -325,8 +280,6 @@
                     <div class="col-md-12 input-group">
                         <span class="col-md-2 label label-primary text-info mediano">Maquinaria y Equipo</span>
                         <div class="col-md-2">
-%{--                            <input name="maquinaria" type='text' class="form-control number"--}%
-%{--                                   value="${plns?.maquinaria}" maxlength="14"/>--}%
                             <g:textField name="maquinaria" class="form-control input-sm number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.maquinaria, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
@@ -334,8 +287,6 @@
 
                         <span class="col-md-2 label label-primary text-info mediano">Muebles y equipos de oficina</span>
                         <div class="col-md-2">
-%{--                            <input name="muebles" type='text' class="form-control number"--}%
-%{--                                   value="${plns?.muebles}" maxlength="14"/>--}%
                             <g:textField name="muebles" class="form-control input-sm number" maxlength="14"
                                          value="${util.formatNumber(number: plns?.muebles, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                             <p class="help-block ui-helper-hidden"></p>
@@ -349,6 +300,32 @@
 </div>
 
 <script type="text/javascript">
+
+    $("#btnFinanciamiento").click(function () {
+        var id = '${plns?.id}';
+        $.ajax({
+            type    : "POST",
+            url     : "${createLink(controller: 'planesNegocio', action:'financiamiento_ajax')}",
+            data    : {
+                id : id
+            },
+            success : function (msg) {
+                bootbox.dialog({
+                    title   : "Presupuesto/Fuentes",
+                    class   : "modal-lg",
+                    message : msg,
+                    buttons : {
+                        ok : {
+                            label     : "Salir",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    });
 
     $("#btnIndicadores").click(function () {
             $.ajax({
@@ -452,14 +429,22 @@
                 data    : data,
                 success : function (msg) {
                     dialog.modal('hide');
-                    // var parts = msg.split("_");
                     if(msg == 'ok'){
                         log("Plan de negocios guardado correctamente", "success");
                         setTimeout(function () {
                             location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/" + '${unidad?.id}'
                         }, 1000);
                     }else{
-                        log("Error al guardar el plan de negocios","error")
+                        if(msg = 'er'){
+                            bootbox.alert('<i class="fa fa-exclamation-triangle text-danger fa-3x"></i></br> '
+                                + '<strong style="font-size: 14px">'
+                                + "La suma de los valores:" + '</br>' + " * Capital de trabajo" + '</br>'
+                                + " * Inversiones preoperativas y legales" + '</br>' + " * Terrenos y Construcciones" + '</br>'
+                                + " * Maquinarias y Equipo" + '</br>' + " * Muebles y equipos de oficina" + '</br>'
+                                + "es mayor al monto total del Plan" + '</strong>');
+                        }else{
+                            log("Error al guardar el plan de negocios","error")
+                        }
                     }
                 }
             });
@@ -468,7 +453,6 @@
         } //else
         return false;
     }
-
 
     $('#fc').datetimepicker({
         locale: 'es',
