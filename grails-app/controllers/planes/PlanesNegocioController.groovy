@@ -201,8 +201,6 @@ class PlanesNegocioController {
             plan = new PlanesNegocio()
         }
 
-        plan.properties = params
-
         def ct = params?.capitalTrabajo?.toDouble()
         def inv = params?.inversiones?.toDouble()
         def trr = params?.terreno?.toDouble()
@@ -210,6 +208,21 @@ class PlanesNegocioController {
         def mue = params?.muebles?.toDouble()
 
         def suma = Math.round((ct+inv+trr+maq+mue) * 100) / 100
+
+        plan.properties = params
+        plan.capitalTrabajo = params?.capitalTrabajo?.toDouble()
+        plan.inversiones = params?.inversiones?.toDouble()
+        plan.terreno = params?.terreno?.toDouble()
+        plan.maquinaria = params?.maquinaria?.toDouble()
+        plan.muebles = params?.muebles?.toDouble()
+        plan.monto = params?.monto?.toDouble()
+        plan.venta = params?.venta?.toDouble()
+        plan.costo = params?.costo?.toDouble()
+        plan.excedente = params?.excedente?.toDouble()
+        plan.van = params?.van?.toDouble()
+        plan.tir = params?.tir?.toDouble()
+        plan.tasa = params?.tasa?.toDouble()
+
 
         if(suma > params.monto?.toDouble()){
             render "er"

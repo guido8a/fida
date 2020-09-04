@@ -38,7 +38,14 @@
 </head>
 
 <body>
+<div class="btn-group">
+    <a href="#" class="btn btn-sm btn-default" id="btnRegresar" >
+        <i class="fa fa-arrow-left"></i> Ir al Plan de Negocio Solidario
+    </a>
+</div>
+
 <h3 style="text-align: center">Convenios de Economía Popular y Solidaria</h3>
+
 <div class="panel panel-primary col-md-12">
     <div class="panel-heading" style="padding: 3px; margin-top: 2px; text-align: ${convenio?.id ? 'center' : 'left'}">
         <a href="#" id="btnBuscarConvenio"
@@ -127,16 +134,18 @@
                         <label class="col-md-1 control-label text-info">
                             Parroquia
                         </label>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <g:hiddenField name="parroquia" value="${unidad?.parroquia?.id}"/>
                             <input name="parroquiaName" id="parroquiaTexto" type='text' class="form-control"
                                    required="" readonly="" value="${convenio?.planesNegocio?.unidadEjecutora?.parroquia?.nombre}"/>
                         </div>
                     </span>
 
+%{--
                     <a href="#" class="btn btn-sm btn-success buscarParroquia" title="Buscar ubicación geográfica">
                         <i class="fa fa-search"></i> Buscar
                     </a>
+--}%
                 </div>
                 </div>
 
@@ -247,7 +256,13 @@
     });
 
     $("#btnPlanNegocio").click(function () {
-       location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + '${convenio?.id}'
+       location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + "${convenio?.id}"
+    });
+
+    $("#btnRegresar").click(function () {
+        console.log('regresa', "${convenio?.planesNegocio?.unidadEjecutora?.id}")
+       var id = "${convenio?.planesNegocio?.unidadEjecutora?.id}"
+       location.href="${createLink(controller: 'planesNegocio', action: 'planes')}" + "/?id=" + id
     });
 
     $("#btnAdministradorCon").click(function () {

@@ -73,10 +73,10 @@
             <a href="#" id="btnNecesidad" class="btn btn-sm btn-info" title="Necesidades">
                 <i class="fas fa-cart-plus"></i> Necesidades
             </a>
-            <a href="#" id="btnTalleres" class="btn btn-sm btn-info" title="Talleres">
+            <a href="#" id="btnTalleres" class="btn btn-sm btn-warning" title="Talleres">
                 <i class="fas fa-users-cog"></i> Talleres
             </a>
-            <a href="#" id="btnPlanes" class="btn btn-sm btn-info" title="Planes">
+            <a href="#" id="btnPlanes" class="btn btn-sm btn-warning" title="Planes">
                 <i class="fas fa-briefcase"></i> Planes de negocio
             </a>
 

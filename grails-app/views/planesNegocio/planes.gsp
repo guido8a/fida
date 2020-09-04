@@ -65,6 +65,9 @@
             <a href="#" id="btnEvaluaciones" class="btn btn-sm btn-info" title="Evaluaciones del plan">
                 <i class="fa fa-pen-square"></i> Evaluaciones
             </a>
+            <a href="#" id="btnConvenio" class="btn btn-sm btn-warning" title="Evaluaciones del plan">
+                <i class="fa fa-pen-square"></i> Convenio
+            </a>
         </g:if>
         <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
@@ -372,6 +375,11 @@
 
     $("#btnPlanificacion").click(function () {
         location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + '${plns?.id}'
+
+    });
+
+    $("#btnConvenio").click(function () {
+        location.href="${createLink(controller: 'convenio', action: 'convenio')}/" + '${plns?.id}'
 
     });
 
