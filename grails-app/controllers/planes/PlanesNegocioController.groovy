@@ -262,6 +262,7 @@ class PlanesNegocioController {
     }
 
     def tablaEvaluaciones_ajax(){
+        println("params " + params)
         def plan = PlanesNegocio.get(params.id)
 //        def evaluaciones = Evaluacion.findAllByPlanesNegocio(plan)
 

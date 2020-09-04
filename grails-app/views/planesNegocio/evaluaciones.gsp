@@ -42,6 +42,8 @@
 <script type="text/javascript">
     var bm;
 
+    cargarTablaEvaluaciones();
+
     function cargarTablaEvaluaciones(search) {
         var data = {
             id : "${plan.id}"
@@ -63,87 +65,81 @@
         createEditEvaluacion();
     });
 
-    %{--function submitFormTaller() {--}%
-    %{--    var $form = $("#frmTaller");--}%
-    %{--    var $btn = $("#dlgCreateEdit").find("#btnSave");--}%
-    %{--    // $form.validate();--}%
-    %{--    // console.log('submit');--}%
-    %{--    if ($form.valid()) {--}%
-    %{--        // console.log('submit--')--}%
-    %{--        $btn.replaceWith(spinner);--}%
-    %{--        var formData = new FormData($form[0]);--}%
-    %{--        var dialog = cargarLoader("Guardando...");--}%
-    %{--        $.ajax({--}%
-    %{--            url         : $form.attr("action"),--}%
-    %{--            type        : 'POST',--}%
-    %{--            data        : formData,--}%
-    %{--            async       : false,--}%
-    %{--            cache       : false,--}%
-    %{--            contentType : false,--}%
-    %{--            processData : false,--}%
-    %{--            success     : function (msg) {--}%
-    %{--                dialog.modal('hide');--}%
-    %{--                var parts = msg.split("*");--}%
-    %{--                if (parts[0] == "SUCCESS") {--}%
-    %{--                    log(parts[1],"success");--}%
-    %{--                    reloadTablaTaller();--}%
-    %{--                    bm.modal("hide");--}%
-    %{--                } else {--}%
-    %{--                    if(parts[0] == 'er'){--}%
-    %{--                        bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> " + parts[1])--}%
-    %{--                        // return false;--}%
-    %{--                    }else{--}%
-    %{--                        spinner.replaceWith($btn);--}%
-    %{--                        log(parts[1],"error");--}%
-    %{--                        return false;--}%
-    %{--                    }--}%
-    %{--                }--}%
-    %{--            },--}%
-    %{--            error       : function () {--}%
-    %{--            }--}%
-    %{--        });--}%
-    %{--    } else {--}%
-    %{--        return false;--}%
-    %{--    } //else--}%
-    %{--    return false;--}%
-    %{--}--}%
-    %{--function deleteTaller(itemId) {--}%
-    %{--    bootbox.dialog({--}%
-    %{--        title   : "Alerta",--}%
-    %{--        message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +--}%
-    %{--            "¿Está seguro que desea eliminar el Taller seleccionado? Esta acción no se puede deshacer.</p>",--}%
-    %{--        buttons : {--}%
-    %{--            cancelar : {--}%
-    %{--                label     : "Cancelar",--}%
-    %{--                className : "btn-primary",--}%
-    %{--                callback  : function () {--}%
-    %{--                }--}%
-    %{--            },--}%
-    %{--            eliminar : {--}%
-    %{--                label     : "<i class='fa fa-trash'></i> Eliminar",--}%
-    %{--                className : "btn-danger",--}%
-    %{--                callback  : function () {--}%
-    %{--                    openLoader("Eliminando Taller");--}%
-    %{--                    $.ajax({--}%
-    %{--                        type    : "POST",--}%
-    %{--                        url     : '${createLink(controller:'taller', action:'delete_ajax')}',--}%
-    %{--                        data    : {--}%
-    %{--                            id : itemId--}%
-    %{--                        },--}%
-    %{--                        success : function (msg) {--}%
-    %{--                            var parts = msg.split("*");--}%
-    %{--                            log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)--}%
-    %{--                            closeLoader();--}%
-    %{--                            if (parts[0] == "SUCCESS") {--}%
-    %{--                                reloadTablaTaller();--}%
-    %{--                            }--}%
-    %{--                        }--}%
-    %{--                    });--}%
-    %{--                }--}%
-    %{--            }--}%
-    %{--        }--}%
-    %{--    });--}%
-    %{--}--}%
+    function borrarEvaluacion(id) {
+        bootbox.dialog({
+            title   : "Alerta",
+            message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
+                "¿Está seguro que desea eliminar la evaluación seleccionada? Esta acción no se puede deshacer.</p>",
+            buttons : {
+                cancelar : {
+                    label     : "Cancelar",
+                    className : "btn-primary",
+                    callback  : function () {
+                    }
+                },
+                eliminar : {
+                    label     : "<i class='fa fa-trash'></i> Eliminar",
+                    className : "btn-danger",
+                    callback  : function () {
+                        var dialog = cargarLoader("Borrando...");
+                        $.ajax({
+                            type    : "POST",
+                            url     : '${createLink(controller:'evaluacion', action:'borrarEvaluacion_ajax')}',
+                            data    : {
+                                id : id
+                            },
+                            success : function (msg) {
+                                dialog.modal('hide');
+                                var parts = msg.split("_");
+                                if(parts[0] == 'ok'){
+                                    log("Evaluación borrada correctamente","success")
+                                    cargarTablaEvaluaciones();
+                                }else{
+                                    if(parts[0] == 'er'){
+                                        bootbox.alert('<i class="fa fa-exclamation-triangle text-danger fa-3x"></i> ' + '<strong style="font-size: 14px">' + "La evaluación ya posee detalles, no puede ser borrada!" + '</strong>');
+                                        return false;
+                                    }else{
+                                        log("Error al borrar la evaluación","error")
+                                    }
+                                }
+
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+    function submitFormEvaluacion() {
+        var $form = $("#frmEvaluacion");
+        var $btn = $("#dlgCreateEdit").find("#btnSave");
+        if ($form.valid()) {
+            var data = $form.serialize();
+            $btn.replaceWith(spinner);
+            var dialog = cargarLoader("Guardando...");
+            $.ajax({
+                type    : "POST",
+                url     : $form.attr("action"),
+                data    : data,
+                success : function (msg) {
+                    dialog.modal('hide');
+                    // var parts = msg.split("_");
+                    if(msg == 'ok'){
+                        log("Evaluación creada correctamente", "success");
+                        cargarTablaEvaluaciones();
+                        %{--setTimeout(function () {--}%
+                        %{--    location.href="${createLink(controller: 'unidadEjecutora', action: 'organizacion')}/" + parts[2]--}%
+                        %{--}, 1000);--}%
+                    }else{
+                        log("Error al crear la evaluación", "success");
+                    }
+                }
+            });
+        } else {
+            return false;
+        } //else
+        return false;
+    }
 
     function createEditEvaluacion(id) {
         var title = id ? "Editar" : "Crear";
@@ -156,9 +152,9 @@
                 plan: '${plan?.id}'
             },
             success : function (msg) {
-                bm = bootbox.dialog({
+                var b = bootbox.dialog({
                     id      : "dlgCreateEditEvaluacion",
-                    title   : title + " Evaluación del plan",
+                    title   : title + " evaluación del plan",
                     message : msg,
                     buttons : {
                         cancelar : {
@@ -172,32 +168,17 @@
                             label     : "<i class='fa fa-save'></i> Guardar",
                             className : "btn-success",
                             callback  : function () {
-                                return submitFormEvaluacion();
+                                submitFormEvaluacion();
                             } //callback
                         } //guardar
                     } //buttons
                 }); //dialog
                 setTimeout(function () {
-                    bm.find(".form-control").first().focus()
+                    b.find(".form-control").first().focus()
                 }, 500);
             } //success
         }); //ajax
     } //createEdit
-
-    %{--reloadTablaTaller();--}%
-
-    %{--$("#btnSearchDoc").click(function () {--}%
-    %{--    reloadTablaTaller($.trim($("#searchDoc").val()));--}%
-    %{--});--}%
-    %{--$("#searchDoc").keyup(function (ev) {--}%
-    %{--    if (ev.keyCode == 13) {--}%
-    %{--        reloadTablaTaller($.trim($("#searchDoc").val()));--}%
-    %{--    }--}%
-    %{--});--}%
-    %{--$("#btnAddTllr").click(function () {--}%
-    %{--    createEditTaller();--}%
-    %{--});--}%
-
 
 </script>
 </html>

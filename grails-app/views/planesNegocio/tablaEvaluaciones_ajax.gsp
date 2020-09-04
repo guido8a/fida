@@ -22,9 +22,9 @@
                 <g:each in="${evaluaciones}" var="evaluacion">
                     <tr data-id="${evaluacion.id}" style="width: 100%">
                         <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">${evaluacion?.tipoEvaluacion?.descripcion}</elm:textoBusqueda></td>
-                        <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">${evaluacion?.descripcion}</elm:textoBusqueda></td>
-                        <td style="width: 10%">${evaluacion?.fechaInicio}</td>
-                        <td style="width: 10%; text-align: center">${evaluacion?.fechaFin}</td>
+                        <td style="width: 39%"><elm:textoBusqueda busca="${params.search}">${evaluacion?.descripcion}</elm:textoBusqueda></td>
+                        <td style="width: 20%">${evaluacion?.fechaInicio?.format("dd-MM-yyyy")}</td>
+                        <td style="width: 20%; text-align: center">${evaluacion?.fechaFin?.format("dd-MM-yyyy")}</td>
                         <g:if test="${evaluaciones?.size() < 7}">
                             <td style="width: 1%"></td>
                         </g:if>
@@ -54,40 +54,20 @@
                     label: "Acciones",
                     header: true
                 },
-                ver: {
-                    label: "Ver",
-                    icon: "fa fa-search",
-                    action: function ($element) {
-                        var id = $element.data("id");
-                        $.ajax({
-                            type: "POST",
-                            url: "${createLink(controller:'personaTaller', action:'show_ajax')}",
-                            data: {
-                                id: id
-                            },
-                            success: function (msg) {
-                                bootbox.dialog({
-                                    title: "Ver Persona del taller",
-                                    message: msg,
-                                    buttons: {
-                                        ok: {
-                                            label: "Aceptar",
-                                            className: "btn-primary",
-                                            callback: function () {
-                                            }
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    }
-                },
                 editar: {
                     label: "Editar",
                     icon: "fa fa-edit",
                     action: function ($element) {
                         var id = $element.data("id");
-                        createEditPersonaTaller(id);
+                        createEditEvaluacion(id);
+                    }
+                },
+                detalle: {
+                    label: "Detalle",
+                    icon: "fa fa-align-justify",
+                    action: function ($element) {
+                        var id = $element.data("id");
+                        location.href="${createLink(controller: 'evaluacion', action: 'detalleEvaluacion')}/" + id
                     }
                 },
                 eliminar: {
@@ -96,7 +76,7 @@
                     separator_before: true,
                     action: function ($element) {
                         var id = $element.data("id");
-                        boorarPersonaTaller(id);
+                        borrarEvaluacion(id);
                     }
                 }
             },
