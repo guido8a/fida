@@ -64,11 +64,14 @@
             <a href="#" id="btnIndicadores" class="btn btn-sm btn-warning" title="Indicadores del plan">
                 <i class="fa fa-italic"></i> Indicadores del PNS
             </a>
-            <a href="#" id="btnEvaluaciones" class="btn btn-sm btn-info" title="Evaluaciones del plan">
-                <i class="fa fa-pen-square"></i> Evaluaciones
+            <a href="#" id="btnFinanciamiento" class="btn btn-sm btn-info" title="Evaluaciones del plan">
+                <i class="far fa-money-bill-alt"></i> Financiamiento
             </a>
             <a href="#" id="btnEvaluaciones" class="btn btn-sm btn-info" title="Evaluaciones del plan">
                 <i class="fa fa-pen-square"></i> Planificación (cronograma)
+            </a>
+            <a href="#" id="btnEvaluaciones" class="btn btn-sm btn-info" title="Evaluaciones del plan">
+                <i class="fa fa-pen-square"></i> Evaluaciones
             </a>
         </g:if>
     %{--        <a href="#}" id="btnNuevoPlan" class="btn btn-sm btn-success" title="Nuevo plan">--}%
