@@ -309,7 +309,7 @@ class PlanesNegocioController {
             order("descripcion", "asc")
         }
 
-        return[evaluaciones:evaluaciones]
+        return[evaluaciones: evaluaciones]
     }
 
     def financiamiento_ajax(){

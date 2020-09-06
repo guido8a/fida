@@ -63,7 +63,7 @@
                     }
                 },
                 detalle: {
-                    label: "Detalle",
+                    label: "Detalle de la Evaluación",
                     icon: "fa fa-align-justify",
                     action: function ($element) {
                         var id = $element.data("id");

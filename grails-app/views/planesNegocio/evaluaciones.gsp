@@ -13,7 +13,7 @@
 </head>
 
 <div class="panel panel-primary col-md-12">
-    <h3>Evaluaciones del Plan de negocios</h3>
+    <h3>Evaluaciones del Plan de Negocios de: ${plan.unidadEjecutora}</h3>
     <div class="panel-info" style="padding: 3px; margin-top: 2px">
         <div class="btn-toolbar toolbar">
 

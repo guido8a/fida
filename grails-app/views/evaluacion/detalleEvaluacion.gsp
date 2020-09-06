@@ -10,48 +10,159 @@
     <title>Detalle de Evaluaciones</title>
 </head>
 <body>
-<div class="panel panel-primary col-md-12" >
-    <div class="btn-group" style="margin-top: 10px">
-        <g:link controller="planesNegocio" action="evaluaciones" id="${plan?.id}" class="btn btn-sm btn-default">
-            <i class="fa fa-arrow-left"></i> Regresar a evaluaciones
-        </g:link>
+
+<h3>Detalle de la Evaluación: ${evaluacion.descripcion} - ${evaluacion.planesNegocio.unidadEjecutora.nombre} </h3>
+
+<fieldset class="borde">
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-sm-2" align="center" style="margin-top: 20px">
+            <a href="${createLink(controller: "planesNegocio", action: "evaluaciones")}/?id=${plns.id}"  class="btn btn-primary">
+                <i class="fa fa-arrow-left"></i> Regresar a Evaluaciones
+            </a>
+        </div>
+
+        <div class="btn-group col-sm-1" style="margin-top: 20px; margin-left: -20px; width: 150px">
+            <a href="#" class="btn btn-azul" id="btn-consultar"><i class="fa fa-search"></i> Desplegar Indicadores</a>
+        </div>
+        <div class="btn-group col-sm-3" style="margin-top: 20px; margin-left: -0px; width: 300px;">
+            <a href="#" class="btn btn-success btn-actualizar"><i class="fa fa-save"></i> Guardar</a>
+%{--            <a href="#" class="btn btn-warning btn-generar" style="margin-left: 5px"><i class="fa fa-users"></i> Generar Alíc.</a>--}%
+        </div>
+
     </div>
 
-    <h3>Detalle de Evaluaciones</h3>
-    <div class="panel-info" style="padding: 3px; margin-top: 2px">
-        <table class="table table-condensed table-hover table-striped table-bordered">
-            <thead>
-            <tr style="width: 100%">
-                <th style="width: 25%">Evaluación</th>
-                <th style="width: 25%">Tipo de Evaluación</th>
-                <th style="width: 25%">Indicador</th>
-                <th style="width: 15%">Valor</th>
-                <th style="width: 10%">Acciones</th>
-            </tr>
-            </thead>
-        </table>
-        <div class="" style="width: 99.7%;height: 320px; overflow-y: auto;float: right; margin-top: -20px">
-            <table class="table-bordered table-condensed table-hover" style="width: 100%">
-                <tbody>
-%{--                <g:if test="${detalles}">--}%
-%{--                    <td style="width: 25%">${deta}</td>--}%
-%{--                </g:if>--}%
-%{--                <g:each in="${evaluaciones}" var="evaluacion">--}%
-%{--                    <tr data-id="${evaluacion.id}" style="width: 100%">--}%
-%{--                        <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">${evaluacion?.tipoEvaluacion?.descripcion}</elm:textoBusqueda></td>--}%
-%{--                        <td style="width: 39%"><elm:textoBusqueda busca="${params.search}">${evaluacion?.descripcion}</elm:textoBusqueda></td>--}%
-%{--                        <td style="width: 20%">${evaluacion?.fechaInicio?.format("dd-MM-yyyy")}</td>--}%
-%{--                        <td style="width: 20%; text-align: center">${evaluacion?.fechaFin?.format("dd-MM-yyyy")}</td>--}%
-%{--                        <g:if test="${evaluaciones?.size() < 7}">--}%
-%{--                            <td style="width: 1%"></td>--}%
-%{--                        </g:if>--}%
-%{--                    </tr>--}%
-%{--                </g:each>--}%
-                </tbody>
-            </table>
-        </div>
+</fieldset>
+
+
+<fieldset class="borde" %{--style="width: 1170px"--}%>
+
+    <div id="divTabla" style="height: 760px; overflow-y:auto; overflow-x: hidden;">
+
     </div>
-</div>
+
+
+    <fieldset class="borde hide" style="width: 1170px; height: 58px" id="error">
+
+        <div class="alert alert-error">
+
+            <h4 style="margin-left: 450px">No existen datos!!</h4>
+
+            <div style="margin-left: 420px">
+                Ingrese los parámetros de búsqueda!
+
+            </div>
+        </div>
+
+    </fieldset>
+
+</fieldset>
+
+
+<script type="text/javascript">
+
+    function consultar() {
+        var oblg = $("#obligaciones").val();
+
+        $.ajax({
+            type    : "POST",
+            url     : "${createLink(action:'tabla')}",
+            data    : {
+                oblg  : oblg
+            },
+            success : function (msg) {
+                $("#divTabla").html(msg);
+            }
+        });
+    }
+
+
+    $(function () {
+
+        consultar();
+
+        $("#btn-consultar").click(function () {
+            var lgar = $("#listaPrecio").val();
+            if (lgar != -1) {
+                $("#error").hide();
+                consultar();
+                $("#divTabla").show();
+            } else {
+                $("#divTabla").html("").hide();
+                $("#error").show();
+            }
+        });
+
+        $(".btn-actualizar").click(function () {
+//                    $("#dlgLoad").dialog("open");
+            var data = "";
+
+            var fcha = $("#fechaOb").val();
+            var oblg = $("#obligaciones").val();
+
+            $(".editable").each(function () {
+                var id = $(this).attr("id");
+                var valor = $(this).data("valor");
+                var data1 = $(this).data("original");
+                var ingr = $(this).data("ingr");
+                var obsrog = $(this).data("obsrog");
+
+                console.log('valor', valor);
+                var chk = $(this).siblings(".chk").children("input").is(":checked");
+//                        console.log(chk);
+                var obsr = $(this).siblings(".observaciones").children("input").val();
+
+                if (chk && (obsr != obsrog) && (ingr)) {
+//                            console.log('obsr:', obsr, 'obsrog:', obsrog);
+                    if (data != '') {
+                        data += "&"
+                    }
+                    data += "&obsr=" + id + "_id" + ingr + "_ob" + obsr
+//                            console.log('obsr:', obsr, 'data:', data);
+                }
+//                        console.log('data:', data)
+                if (chk && (parseFloat(valor) > 0 && parseFloat(data1) != parseFloat(valor))) {
+                    if (data != "") {
+                        data += "&";
+                    }
+                    var val = valor ? valor : data1;
+                    if (obsr != obsrog) {
+                        data += "&item=" + id + "_" + val + "_id" + ingr + "_ob" + obsr;// + "_" + chk;
+                    } else {
+                        data += "&item=" + id + "_" + val + "_id" + ingr;// + "_" + chk;
+                    }
+
+                }
+            });
+//                    console.log('data -->', data);
+            $.ajax({
+                type: "POST",
+                url: "${createLink(action: 'actualizar')}",
+                data: data + "&fecha=" + fcha + "&oblg=" + oblg,
+                success: function (msg) {
+//                            $("#dlgLoad").dialog("close");
+                    var parts = msg.split("_");
+                    var ok = parts[0];
+                    var no = parts[1];
+
+                    $(ok).each(function () {
+                        var fec = $(this).siblings(".fecha");
+                        fec.text($("#fecha").val());
+                        var $tdChk = $(this).siblings(".chk");
+                        var chk = $tdChk.children("input").is(":checked");
+                        if (chk) {
+                            $tdChk.html('<i class="icon-ok"></i>');
+                        }
+                    });
+
+                    doHighlight({elem: $(ok), clase: "ok"});
+                    doHighlight({elem: $(no), clase: "no"});
+                    $(ok).removeClass('gris');
+
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
 
