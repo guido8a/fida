@@ -16,37 +16,6 @@ option[selected]{
 
     <div class="modal-contenido">
         <g:form class="form-horizontal" name="frmPersona" role="form" controller="persona" action="savePersona_ajax" method="POST">
-            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'login', 'error')} ${hasErrors(bean: personaInstance, field: 'password', 'error')}">
-                <g:hiddenField name="id" value="${personaInstance?.id}"/>
-                <g:hiddenField name="unidadEjecutora" value="${unidad?.id}"/>
-
-                <div class="col-md-6">
-                    <span class="grupo">
-                        <label for="login" class="col-md-4 control-label">
-                            Usuario
-                        </label>
-                        <div class="col-md-8">
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-addon"><i class="fa fa-user"></i>
-                                </span>
-                                <g:field type="login" name="login" maxlength="15" style="" class="form-control input-sm noEspacios required" value="${personaInstance?.login ?: ''}"/>
-                            </div>
-                        </div>
-                    </span>
-                </div>
-                <div class="col-md-6">
-                    <span class="grupo">
-                        <label for="password" class="col-md-4 control-label">
-                            Password
-                        </label>
-                        <div class="col-md-8">
-                            <div class="input-group input-group-sm"><span class="input-group-addon"><i class="fa fa-key"></i>
-                            </span><g:field type="password" name="password"  maxlength="63" class="form-control input-sm noEspacios required" value="${personaInstance?.password ?: ''}"/>
-                            </div>
-                        </div>
-                    </span>
-                </div>
-            </div>
             <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'nombre', 'error')} ${hasErrors(bean: personaInstance, field: 'apellido', 'error')} required">
                 <div class="col-md-6">
                     <span class="grupo">
@@ -79,7 +48,7 @@ option[selected]{
                             Cédula
                         </label>
 
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <g:textField name="cedula" maxlength="10" class="form-control input-sm required digits" value="${personaInstance?.cedula}"/>
                         </div>
                     </span>
@@ -208,6 +177,39 @@ option[selected]{
                     </span>
                 </div>
             </div>
+
+            <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'login', 'error')} ${hasErrors(bean: personaInstance, field: 'password', 'error')}">
+                <g:hiddenField name="id" value="${personaInstance?.id}"/>
+                <g:hiddenField name="unidadEjecutora" value="${unidad?.id}"/>
+
+                <div class="col-md-6">
+                    <span class="grupo">
+                        <label for="login" class="col-md-4 control-label">
+                            Usuario
+                        </label>
+                        <div class="col-md-8">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-user"></i>
+                                </span>
+                                <g:field type="login" name="login" maxlength="15" style="" class="form-control input-sm noEspacios required" value="${personaInstance?.login ?: ''}"/>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+                <div class="col-md-6">
+                    <span class="grupo">
+                        <label for="password" class="col-md-4 control-label">
+                            Password
+                        </label>
+                        <div class="col-md-8">
+                            <div class="input-group input-group-sm"><span class="input-group-addon"><i class="fa fa-key"></i>
+                            </span><g:field type="password" name="password"  maxlength="63" class="form-control input-sm noEspacios required" value="${personaInstance?.password ?: ''}"/>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </div>
+
 
             <div class="form-group keeptogether ${hasErrors(bean: personaInstance, field: 'autorizacion', 'error')}">
                 <div class="col-md-12">

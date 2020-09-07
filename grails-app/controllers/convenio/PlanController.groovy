@@ -148,7 +148,10 @@ class PlanController {
         }
 
         params.ejecutado = params.ejecutado ? params.ejecutado : 0
+        params.costo = params.costo.toDouble()
+        params.cantidad = params.cantidad.toDouble()
         plan.properties = params
+//        plan.ejecutado = params.ejecutado.toDouble()
 
         if(!plan.save(flush:true)){
             println "error: ${plan.errors}"

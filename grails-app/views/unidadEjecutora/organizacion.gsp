@@ -47,22 +47,26 @@
         </a>
     </g:if>
 </div>
+<a href="#" id="btnBuscarConvenio"
+   class="btn btn-sm btn-info" title="Buscar unidad">
+    <i class="fas fa-list-alt"></i> Lista de organizaciones
+</a>
+
 
 
 <h3 style="text-align: center">Organizaciones</h3>
 
 <div class="panel panel-primary col-md-12">
     <div class="panel-heading" style="padding: 3px; margin-top: 2px; text-align: ${unidad?.id ? 'center' : 'left'}">
-        <a href="#" id="btnBuscarConvenio"
-           class="btn btn-sm btn-info" title="Buscar unidad">
-            <i class="fas fa-list-alt"></i> Lista de organizaciones
-        </a>
         <g:if test="${unidad?.id}">
             <a href="#" id="btnDocumentos" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-book-reader"></i> Biblioteca
             </a>
             <a href="#" id="persona" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-user"></i> Representante
+            </a>
+            <a href="#" id="persona" class="btn btn-sm btn-info" title="Consultar documentos">
+                <i class="fas fa-user-friends"></i> Beneficiarios
             </a>
             <a href="#" id="btnDatos" class="btn btn-sm btn-info" title="Datos de la organización">
                 <i class="fa fa-scroll"></i> Datos Organización

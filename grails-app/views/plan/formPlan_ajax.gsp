@@ -58,22 +58,21 @@
                         Unidad de compras públicas
                     </label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <g:select name="unidadComprasPublicas"
                               from="${convenio.UnidadComprasPublicas.list().sort{it.descripcion}}"
                               optionKey="id" optionValue="descripcion" class="form-control" value="${plan?.unidadComprasPublicas?.id}"/>
                 </div>
             </span>
-        </div>
-        <div class="form-group keeptogether">
+
             <span class="grupo">
                 <div class="col-md-1"></div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label>
                         Tipo de proceso
                     </label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <g:select name="tipoProcesoComprasPublicas"
                               from="${convenio.TipoProcesoComprasPublicas.list().sort{it.descripcion}}"
                               optionKey="id" optionValue="descripcion" class="form-control"
@@ -89,14 +88,35 @@
                         Código CPC
                     </label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-7">
                     <g:hiddenField name="codigoComprasPublicas" value="${plan?.codigoComprasPublicas?.id}"/>
                     <g:textField name="codigoComprasPublicasNombre" readonly=""
                                  class="form-control" value="${plan?.codigoComprasPublicas ? (plan?.codigoComprasPublicas?.numero + " - " + plan?.codigoComprasPublicas?.descripcion) : ''}"/>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <a href="#" class="btn btn-info btnBuscarCPC">
-                        Buscar CPC
+                        <i class="fa fa-search"></i>
+                    </a>
+                </div>
+            </span>
+        </div>
+
+        <div class="form-group keeptogether">
+            <span class="grupo">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <label for="codigoComprasPublicas" class="control-label">
+                        Partida
+                    </label>
+                </div>
+                <div class="col-md-7">
+                    <g:hiddenField name="presupuesto" value="${plan?.presupuesto?.id}"/>
+                    <g:textField name="codigoComprasPublicasNombre" readonly=""
+                                 class="form-control" value="${plan?.presupuesto ? (plan?.presupuesto?.numero + " - " + plan?.codigoComprasPublicas?.descripcion) : ''}"/>
+                </div>
+                <div class="col-md-1">
+                    <a href="#" class="btn btn-info btnBuscarCPC">
+                        <i class="fa fa-search"></i>
                     </a>
                 </div>
             </span>
@@ -134,6 +154,7 @@
                                  value="${util.formatNumber(number: plan?.costo, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                 </div>
             </span>
+%{--
             <span class="grupo">
                 <div class="col-md-3">
                     <label>
@@ -142,12 +163,15 @@
                     <g:textField name="ejecutado" class="form-control number" value="${plan?.ejecutado}"/>
                 </div>
             </span>
+--}%
+            <span class="grupo col-md-2"></span>
             <span class="grupo">
                 <div class="col-md-2">
                     <label>
                         Estado
                     </label>
                 </div>
+                <span class="grupo col-md-2"></span>
                 <div class="col-md-2">
                     <g:select name="estado" from="${[1:'Activo',0:'Inactivo']}" optionValue="value" optionKey="key" class="form-control" value="${plan?.estado}"/>
                 </div>
