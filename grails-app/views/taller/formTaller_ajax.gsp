@@ -66,7 +66,7 @@
                     <div class="col-md-9">
                         <g:select id="unidadEps" name="unidadEps.id"
                                   from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2))}"
-                                  optionKey="id" value="${tallerInstance?.unidadEps?.id}"
+                                  optionKey="id" value="${tallerInstance?.unidadEjecutora?.id}"
                                   class="many-to-one form-control input-sm"/>
                     </div>
                 </span>
@@ -194,7 +194,7 @@
             <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'documento', 'error')} ">
                 <span class="grupo">
                     <label for="documento" class="col-md-3 control-label">
-                        Documento
+                        Documento o Certificado
                     </label>
 
                     <div class="col-md-2">
@@ -204,7 +204,7 @@
                 </span>
                 <span class="grupo">
                     <label for="modulo" class="col-md-3 control-label">
-                        Módulo
+                        Por módulos
                     </label>
                     <div class="col-md-2">
                         <g:select name="modulo" value="${tallerInstance?.modulo}" class="form-control input-sm"

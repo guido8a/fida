@@ -156,7 +156,8 @@ class UnidadEjecutoraController {
 //                println "procesa ${hijo.nombre}"
 //                presupuesto = UnidadEjecutora.findByCodigoAndFechaFinIsNull('FRPS') ? ' presupuesto' : ''
                 clase = "jstree-closed hasChildren"
-                clase2 = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? " hasChildren" : ''
+//                clase2 = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? " hasChildren" : ''
+                clase2 = UnidadEjecutora.findAllByProvincia(hijo).sort{it.nombre} ? " hasChildren" : ''
                 tree += "<li id='prov_" + hijo.id + "' class='" + clase + clase2 + "' ${data} data-jstree='{\"type\":\"${"prov"}\" ${ico}}' >"
                 tree += "<a href='#' class='label_arbol'>" + hijo?.nombre + "</a>"
                 tree += "</li>"
@@ -174,9 +175,8 @@ class UnidadEjecutoraController {
                 ico = ", \"icon\":\"fas ${icono} text-warning\""
 //                clase =  "jstree-closed hasChildren"
                 clase = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? "jstree-closed hasChildren" : "jstree-closed"
-                clase2 = UnidadEjecutora.findAllByParroquiaInListAndPadreIsNullAndFechaFinIsNull(parr).sort{it.nombre} ? " hasChildren" : ''
 //                clase2 = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? " hasChildren" : ''
-                tree += "<li id='cnt_" + hijo.id + "' class='" + clase + clase2 + "' ${data} data-jstree='{\"type\":\"${"canton"}\" ${ico}}' >"
+                tree += "<li id='cnt_" + hijo.id + "' class='" + clase + "' ${data} data-jstree='{\"type\":\"${"canton"}\" ${ico}}' >"
                 tree += "<a href='#' class='label_arbol'>" + hijo?.nombre + "</a>"
                 tree += "</li>"
             }

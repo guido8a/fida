@@ -222,6 +222,7 @@ class AsignacionController {
 
     def asignacionProyectov2() {
         println "params asignacionProyectov2: " + params
+        if(!params.id) params.id = 1
         def proyecto = Proyecto.get(params.id)
         def asignaciones = []
         def actual

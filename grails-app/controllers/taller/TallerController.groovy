@@ -56,14 +56,14 @@ class TallerController {
      * @render ERROR*[mensaje] cuando no se encontró el elemento
      */
     def show_ajax() {
-        println "show_ajax: $params"
+//        println "show_ajax: $params"
         if (params.id) {
             def tallerInstance = Taller.get(params.id)
             if (!tallerInstance) {
                 render "ERROR*No se encontró Taller."
                 return
             }
-//            println ".... show_ajax ${tallerInstance?.proyecto.nombre}"
+//            println ".... show_ajax ${tallerInstance?.nombre}"
             return [tallerInstance: tallerInstance]
         } else {
             render "ERROR*No se encontró Taller."

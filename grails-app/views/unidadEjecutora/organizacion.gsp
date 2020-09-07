@@ -61,6 +61,9 @@
             <a href="#" id="btnDocumentos" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-book-reader"></i> Biblioteca
             </a>
+            <a href="#" id="persona" class="btn btn-sm btn-info" title="Consultar documentos">
+                <i class="fas fa-user"></i> Representante
+            </a>
             <a href="#" id="btnDatos" class="btn btn-sm btn-info" title="Datos de la organización">
                 <i class="fa fa-scroll"></i> Datos Organización
             </a>

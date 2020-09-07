@@ -13,7 +13,7 @@
 
             <div class="row">
                 <div class="col-md-3 show-label">Comunidad</div>
-                <div class="col-md-9">${tallerInstance.comunidad.nombre}</div>
+                <div class="col-md-9">${tallerInstance?.comunidad?.nombre}</div>
             </div>
 
             <div class="row">
