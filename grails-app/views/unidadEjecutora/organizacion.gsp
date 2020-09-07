@@ -116,7 +116,7 @@
                 <label class="col-md-1 control-label text-info">
                     Parroquia
                 </label>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <g:hiddenField name="parroquia" value="${unidad?.parroquia?.id}"/>
                     <input name="parroquiaName" id="parroquiaTexto" type='text' class="form-control" required="" readonly="" value="${unidad?.parroquia?.nombre}"/>
                 </div>
@@ -283,7 +283,8 @@
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>
-            %{--            <span class="col-md-1"></span>--}%
+            <span class="col-md-1"></span>
+%{--
             <span class="grupo">
                 <label for="orden" class="col-md-3 control-label text-info">
                     Orden
@@ -295,6 +296,7 @@
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>
+--}%
             <span class="grupo">
                 <label for="legal" class="col-md-3 control-label text-info">
                     Legalmente conformada
