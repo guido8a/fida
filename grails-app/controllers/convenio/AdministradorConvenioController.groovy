@@ -11,9 +11,9 @@ class AdministradorConvenioController {
 
         def existente = AdministradorConvenio.findByConvenioAndFechaFinIsNull(convenio)
         if(existente){
-            administradores = Persona.findAllByUnidadEjecutoraAndIdNotEqual(convenio.unidadEjecutora, existente.persona.id)
+            administradores = Persona.findAllByUnidadEjecutoraAndIdNotEqual(convenio?.planesNegocio?.unidadEjecutora, existente.persona.id)
         }else{
-            administradores = Persona.findAllByUnidadEjecutora(convenio.unidadEjecutora)
+            administradores = Persona.findAllByUnidadEjecutora(convenio?.planesNegocio?.unidadEjecutora)
         }
 
         return [administradores: administradores, convenio: convenio]
