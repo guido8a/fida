@@ -118,6 +118,8 @@ class UnidadEjecutoraController {
         String tree = "", clase = "", rel = "", clase2="", clase3=""
         def padre
         def hijos = []
+        def cn = dbConnectionService.getConnection()
+        def sql = ""
 
         if(id.contains("_")) {
             id = params.id.split("_")[1]
@@ -174,7 +176,11 @@ class UnidadEjecutoraController {
                 icono = "fa-parking"
                 ico = ", \"icon\":\"fas ${icono} text-warning\""
 //                clase =  "jstree-closed hasChildren"
-                clase = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? "jstree-closed hasChildren" : "jstree-closed"
+//                clase = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? "jstree-closed hasChildren" : "jstree-closed"
+                sql = "select count(*) cnta from unej, parr where cntn__id = ${hijo.id} and " +
+                        "parr.parr__id = unej.parr__id"
+                println "sql: $sql"
+                clase = cn.rows(sql.toString())[0].cnta > 0 ? "jstree-closed hasChildren" : "jstree-closed"
 //                clase2 = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? " hasChildren" : ''
                 tree += "<li id='cnt_" + hijo.id + "' class='" + clase + "' ${data} data-jstree='{\"type\":\"${"canton"}\" ${ico}}' >"
                 tree += "<a href='#' class='label_arbol'>" + hijo?.nombre + "</a>"
@@ -207,14 +213,15 @@ class UnidadEjecutoraController {
             switch(tipo) {
                 case "cnt":
                     def cant = Canton.get(id)
-                    def prov = cant.provincia
+//                    def prov = cant.provincia
                     def parr = Parroquia.findAllByCanton(cant)
                     def presupuesto = ""
                     def icono = ""
                     def data = ""
-                    def ieps = UnidadEjecutora.findAllByProvinciaAndPadreIsNullAndFechaFinIsNull(prov).sort{it.nombre}
+//                    def ieps = UnidadEjecutora.findAllByProvinciaAndPadreIsNullAndFechaFinIsNull(prov).sort{it.nombre}
                     hijos = UnidadEjecutora.findAllByParroquiaInListAndPadreIsNullAndFechaFinIsNull(parr).sort{it.nombre}
-                    hijos += ieps
+                    println "cntn: ${cant.id}, ${cant.nombre}, hijos: ${hijos.size()}"
+//                    hijos += ieps
                     hijos.each { hj ->
                         icono = hj.tipoInstitucion.id == 1 ? "fas fa-warehouse" : "fa-home"
                         ico = ", \"icon\":\"fas ${icono} text-success\""
