@@ -21,9 +21,9 @@
         <g:set var="suma" value="${suma + fin.valor}"/>
         <g:set var="finPorcentaje" value="${(fin.valor * 100) / plan?.costo}"/>
         <g:set var="prct" value="${prct + finPorcentaje}"/>
-        <tr data-fuente="${fin.fuente.id}">
+        <tr data-fuente="${fin.financiamientoPlanNegocio.fuente.id}">
             <td>
-                ${fin.fuente.descripcion}
+                ${fin.financiamientoPlanNegocio.fuente.descripcion}
             </td>
             <td class="text-right">
                 <g:formatNumber number="${fin.valor}" type="currency" currencySymbol=""/>
@@ -79,6 +79,7 @@
                             if(msg == 'ok'){
                                 log("Fuente borrada correctamente","success");
                                 reloadTabla();
+                                cargarDisponible($("#fuente option:selected").val());
                             }else{
                                 log("Error al borrar la fuente","error");
                             }

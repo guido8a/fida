@@ -39,7 +39,7 @@
     </div>
     <div class="btn-group">
         <g:link controller="plan" action="arbol" id="${planNs?.id}" class="btn btn-sm btn-default">
-            <i class="fas fa-clipboard-list"></i> Componentes y Actidades del Cronograma
+            <i class="fas fa-clipboard-list"></i> Componentes y Actividades del Cronograma
         </g:link>
     </div>
 </div>
@@ -71,7 +71,6 @@
         <g:set var="totalE" value="${0}"/>
         <g:each in="${planes}" var="plan" status="i">
             <tr style="width: 100%" data-id="${plan?.id}">
-
                 <td style="width: 15%">${plan?.grupoActividad?.padre?.descripcion}</td>
                 <td style="width: 15%">${plan?.grupoActividad?.padre != null ? plan?.grupoActividad?.descripcion : ''}</td>
                 <td style="width: 19%">${plan?.descripcion}</td>
@@ -105,6 +104,32 @@
     </table>
 
 <script type="text/javascript">
+
+
+    function agregarFuenteFNPL(id){
+        $.ajax({
+            type    : "POST",
+            url     : "${createLink(controller: 'plan', action:'fuenteFnpl_ajax')}",
+            data    : {
+                id : id
+            },
+            success : function (msg) {
+                bootbox.dialog({
+                    title   : "Fuentes",
+                    class   : "modal-lg",
+                    message : msg,
+                    buttons : {
+                        ok : {
+                            label     : "Salir",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
 
     function agregarFuente(id){
         $.ajax({
@@ -247,7 +272,8 @@
                 icon: "fa fa-money-bill",
                 action: function ($element) {
                     var id = $element.data("id");
-                    agregarFuente(id);
+                    // agregarFuente(id);
+                    agregarFuenteFNPL(id)
                 }
             },
             eliminar: {

@@ -60,7 +60,7 @@
                 <i class="far fa-money-bill-alt"></i> Financiamiento
             </a>
             <a href="#" id="btnPlanificacion" class="btn btn-sm btn-info" title="Evaluaciones del plan">
-                <i class="fa fa-pen-square"></i> Planificación (cronograma)
+                <i class="fa fa-list-ol"></i> Planificación (cronograma)
             </a>
             <a href="#" id="btnEvaluaciones" class="btn btn-sm btn-info" title="Evaluaciones del plan">
                 <i class="fa fa-pen-square"></i> Evaluaciones

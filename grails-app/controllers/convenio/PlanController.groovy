@@ -4,6 +4,7 @@ import org.springframework.dao.DataIntegrityViolationException
 import parametros.Anio
 import parametros.proyectos.Fuente
 import parametros.proyectos.TipoElemento
+import planes.FinanciamientoPlanNegocio
 import planes.GrupoActividad
 import planes.PlanesNegocio
 import proyectos.Financiamiento
@@ -175,6 +176,17 @@ class PlanController {
         }
     }
 
+    def fuenteFnpl_ajax () {
+        def plan = Plan.get(params.id)
+        def planNegocio = plan.planesNegocio
+        def fuentes = FinanciamientoPlanNegocio.findAllByPlanesNegocio(planNegocio).sort{it.fuente.descripcion}
+        return[plan: plan, fuentes: fuentes]
+    }
+
+    def tablaFuenteFnpl_ajax (){
+
+    }
+
     def fuente_ajax () {
         def plan = Plan.get(params.id)
         return[plan: plan]
@@ -182,19 +194,27 @@ class PlanController {
 
     def tablaFuente_ajax(){
         def plan = Plan.get(params.id)
-
-        def financiamientos = FinanciamientoPlan.findAllByPlan(plan).sort{it.fuente.descripcion}
-
+        def financiamientos = FinanciamientoPlan.findAllByPlan(plan).sort{it.financiamientoPlanNegocio.fuente.descripcion}
         return[plan: plan, financiamientos: financiamientos]
     }
 
     def saveFuente_ajax(){
 
         def plan = Plan.get(params.id.toLong())
-        def fuente = Fuente.get(params.fuente.toLong())
+        def finanPlanNegocio = FinanciamientoPlanNegocio.get(params.fuente.toLong())
         def totalFinanciado = 0
-        def financiamientos = FinanciamientoPlan.findAllByPlanAndFuente(plan,fuente)
+        def financiamientos = FinanciamientoPlan.findAllByPlanAndFinanciamientoPlanNegocio(plan,finanPlanNegocio)
         def financiados = FinanciamientoPlan.findAllByPlan(plan)
+
+
+
+        def usado = FinanciamientoPlan.findAllByFinanciamientoPlanNegocio(finanPlanNegocio)
+        def restanteFnpn = 0
+        if(usado){
+            restanteFnpn = finanPlanNegocio.valor - usado.valor.sum()
+        }else{
+            restanteFnpn = finanPlanNegocio.valor
+        }
 
 
         if(params.monto.toDouble() < 0){
@@ -219,10 +239,14 @@ class PlanController {
                 if(Math.round(restante*100) < Math.round(params.monto.toDouble()*100)){
                     render "er_El monto ingresado es mayor al valor restante"
                 }else{
-                    financiamiento = new FinanciamientoPlan()
-                    financiamiento.valor = params.monto.toDouble()
-                    financiamiento.fuente = fuente
-                    financiamiento.plan = plan
+                    if(params.monto.toDouble() > restanteFnpn){
+                        render "er_El monto ingresado es mayor al valor disponible de la fuente"
+                    }else{
+                        financiamiento = new FinanciamientoPlan()
+                        financiamiento.valor = params.monto.toDouble()
+                        financiamiento.financiamientoPlanNegocio = finanPlanNegocio
+                        financiamiento.plan = plan
+                    }
                 }
             }
 
@@ -233,8 +257,6 @@ class PlanController {
                 render "ok"
             }
         }
-
-
 
     }
 
@@ -430,6 +452,17 @@ class PlanController {
         }
     } //delete para eliminar via ajax
 
+    def disponible_ajax(){
+        def plan = FinanciamientoPlanNegocio.get(params.id)
+        def usado = FinanciamientoPlan.findAllByFinanciamientoPlanNegocio(plan)
+        def restante
+        if(usado){
+            restante = plan.valor - usado.valor.sum()
+        }else{
+            restante = plan.valor
+        }
 
+        return[plan:plan, restante: restante]
+    }
 
 }
