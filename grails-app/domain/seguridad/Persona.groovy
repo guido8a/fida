@@ -26,6 +26,7 @@ class Persona implements Auditable{
     String discapacidad
     String direccion
     String referencia
+    String representante = 'N'
 
     static auditable = true
 
@@ -61,6 +62,7 @@ class Persona implements Auditable{
             discapacidad column: 'prsndscp'
             direccion column: 'prsndire'
             referencia column: 'prsnrefe'
+            representante column: 'prsnrplg'
         }
     }
     static constraints = {
@@ -83,6 +85,7 @@ class Persona implements Auditable{
         discapacidad(size: 0..15, blank: true, nullable: true)
         direccion(size: 0..255, blank: true, nullable: true)
         referencia(size: 0..255, blank: true, nullable: true)
+        representante(blank: true, nullable: true)
     }
 
     String toString() {
