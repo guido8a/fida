@@ -179,7 +179,7 @@ class UnidadEjecutoraController {
 //                clase = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? "jstree-closed hasChildren" : "jstree-closed"
                 sql = "select count(*) cnta from unej, parr where cntn__id = ${hijo.id} and " +
                         "parr.parr__id = unej.parr__id"
-                println "sql: $sql"
+//                println "sql: $sql"
                 clase = cn.rows(sql.toString())[0].cnta > 0 ? "jstree-closed hasChildren" : "jstree-closed"
 //                clase2 = UnidadEjecutora.findAllByPadreIsNullAndFechaFinIsNull().sort{it.nombre} ? " hasChildren" : ''
                 tree += "<li id='cnt_" + hijo.id + "' class='" + clase + "' ${data} data-jstree='{\"type\":\"${"canton"}\" ${ico}}' >"
