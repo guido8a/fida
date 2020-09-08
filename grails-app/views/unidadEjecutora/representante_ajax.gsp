@@ -20,12 +20,10 @@
             <input name="fechaInicioBA" id='fechaInicioBA' type='text' class="form-control"
                    value="${new Date().format("dd-MM-yyyy")}"/>
         </div>
-
         <div class="col-md-1 btn-group">
-            <a href="#" class="btn btn-success" id="btnAgregarAdmin">
+            <a href="#" class="btn btn-success" id="btnAgregarRep">
                 <i class="fa fa-plus"></i> Agregar
             </a>
-
         </div>
     </div>
 
@@ -35,8 +33,8 @@
         <th style="width: 12%">Fecha Inicio</th>
         <th style="width: 12%">Fecha Fin</th>
         <th style="width: 20%">Mail</th>
-        <th style="width: 15%">Teléfono</th>
-        <th style="width: 5%"><i class="fa fa-trash"></i> </th>
+        <th style="width: 20%">Teléfono</th>
+%{--        <th style="width: 5%"><i class="fa fa-trash"></i> </th>--}%
         </thead>
     </table>
 
@@ -53,33 +51,6 @@
         daysOfWeekDisabled: [0, 6],
         sideBySide: true,
         showClose: true
-    });
-
-    $("#btnAgregarAdmin").click(function () {
-        var i = $("#buscarA").val();
-        if(i == 0){
-            bootbox.alert("<i class='fa fa-exclamation-triangle fa-2x text-warning text-shadow'></i> <strong style='font-size: 14px'>Seleccione un administrador!</strong>");
-            return false;
-        }else{
-            $.ajax({
-                type: 'POST',
-                url:'${createLink(controller: 'administradorConvenio', action: 'guardarAdministrador_ajax')}',
-                data: {
-                    id: '${convenio?.id}',
-                    persona: $("#buscarA").val(),
-                    fechaInicio: $("#fechaInicioBA").val()
-                },
-                success: function (msg) {
-                    if(msg == 'ok'){
-                        log("Administrador asignado correctamente","success");
-                        cargarTablaAdministrador();
-                    }else{
-                        log("Error al asignar el administrador","error")
-                    }
-                }
-            })
-
-        }
     });
 
     cargarTablaRepresentante();
@@ -99,4 +70,35 @@
         });
     }
 
+    $("#btnAgregarRep").click(function () {
+        var i = $("#buscarA").val();
+        if(i == 0){
+            bootbox.alert("<i class='fa fa-exclamation-triangle fa-2x text-warning text-shadow'></i> <strong style='font-size: 14px'>Seleccione un representante!</strong>");
+            return false;
+        }else{
+            $.ajax({
+                type: 'POST',
+                url:'${createLink(controller: 'unidadEjecutora', action: 'guardarRepresentante_ajax')}',
+                data: {
+                    id: '${unidad?.id}',
+                    persona: $("#buscarA").val(),
+                    fechaInicio: $("#fechaInicioBA").val()
+                },
+                success: function (msg) {
+                    if(msg == 'ok'){
+                        log("Representante asignado correctamente","success");
+                        cargarTablaRepresentante();
+                    }else{
+                        // if(msg == 'er'){
+                        //     bootbox.alert("<i class='fa fa-exclamation-triangle fa-2x text-warning text-shadow'></i> <strong style='font-size: 14px'>Ya se encuentra asignado un representante!</strong>");
+                        //     return false;
+                        // }else{
+                            log("Error al asignar el representante","error")
+                        // }
+                    }
+                }
+            })
+
+        }
+    });
 </script>

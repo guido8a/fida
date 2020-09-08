@@ -65,7 +65,7 @@
             <a href="#" id="btnRepresentante" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-user"></i> Representante
             </a>
-            <a href="#" id="persona" class="btn btn-sm btn-info" title="Consultar documentos">
+            <a href="#" id="btnBeneficiario" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-user-friends"></i> Beneficiarios
             </a>
             <a href="#" id="btnDatos" class="btn btn-sm btn-info" title="Datos de la organización">
@@ -380,6 +380,10 @@
 
     $("#btnPlanes").click(function () {
         location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/" + '${unidad?.id}'
+    });
+
+    $("#btnBeneficiario").click(function (){
+        location.href="${createLink(controller: 'unidadEjecutora', action: 'beneficiarios')}/" + '${unidad?.id}'
     });
 
     $('#datetimepicker1').datetimepicker({

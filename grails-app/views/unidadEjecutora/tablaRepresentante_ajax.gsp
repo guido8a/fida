@@ -22,12 +22,12 @@
                     <td style="width: 20%">
                         ${representante?.personaOrganizacion?.mail}
                     </td>
-                    <td style="width: 15%">
+                    <td style="width: 20%">
                         ${representante?.personaOrganizacion?.telefono}
                     </td>
-                    <td style="width: 5%; text-align: center">
-                        <a href="#" class="btn btn-danger btn-xs btnBorrarRepresentante"><i class="fa fa-trash"></i> </a>
-                    </td>
+%{--                    <td style="width: 5%; text-align: center">--}%
+%{--                        <a href="#" class="btn btn-danger btn-xs btnBorrarRepresentante"><i class="fa fa-trash"></i> </a>--}%
+%{--                    </td>--}%
                 </tr>
             </g:each>
         </table>
@@ -56,7 +56,7 @@
                         var id = $element.data("id");
                         $.ajax({
                             type: "POST",
-                            url: "${createLink(controller:'convenio', action:'observaciones_ajax')}",
+                            url: "${createLink(controller:'unidadEjecutora', action:'observacionesRep_ajax')}",
                             data: {
                                 id: id
                             },
@@ -66,7 +66,7 @@
                                     message: msg,
                                     buttons: {
                                         cancelar: {
-                                            label: "Aceptar",
+                                            label: "Salir",
                                             className: "btn-primary",
                                             callback: function () {
                                             }
@@ -75,7 +75,7 @@
                                             label: "Guardar",
                                             className: "btn-success",
                                             callback: function () {
-                                                guardarObservacion(id, $("#observaciones").val())
+                                                guardarObservacionRep(id, $("#observacionesRep").val())
                                             }
                                         }
                                     }
@@ -93,10 +93,10 @@
             }
         });
 
-        function guardarObservacion(id, texto){
+        function guardarObservacionRep(id, texto){
             $.ajax({
                 type: 'POST',
-                url: '${createLink(controller: 'administradorConvenio', action: 'guardarObservacion_ajax')}',
+                url: '${createLink(controller: 'unidadEjecutora', action: 'guardarObservacionRep_ajax')}',
                 data:{
                     id: id,
                     texto: texto
@@ -105,8 +105,8 @@
                     if(msg == 'ok'){
                         log("Observación guardada correctamente","success");
                         setTimeout(function () {
-                            cargarTablaAdministrador();
-                        }, 1000);
+                            cargarTablaRepresentante();
+                        }, 800);
                     }else{
                         log("Error al guardar la observación","error")
                     }

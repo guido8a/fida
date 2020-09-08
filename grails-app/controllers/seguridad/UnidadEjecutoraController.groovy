@@ -494,5 +494,57 @@ class UnidadEjecutoraController {
         return[representantes: representantes]
     }
 
+    def guardarRepresentante_ajax(){
+        def unidad = UnidadEjecutora.get(params.id)
+        def personas = PersonaOrganizacion.findAllByUnidadEjecutora(unidad)
+        def existente = Representante.findByPersonaOrganizacionInListAndFechaFinIsNull(personas)
+        def persona = PersonaOrganizacion.get(params.persona)
+        def representante
+//        if(existente){
+//            render "er"
+//        }else{
 
+        existente.fechaFin = new Date().parse("dd-MM-yyyy",params.fechaInicio)
+        existente.save(flush:true)
+
+        representante = new Representante()
+        representante.personaOrganizacion = persona
+        representante.fechaInicio = new Date().parse("dd-MM-yyyy",params.fechaInicio)
+
+        if(!representante.save(flush:true)){
+            println("error al guardar el representante" + representante.errors)
+            render "no"
+        }else{
+            render "ok"
+        }
+//        }
+    }
+
+    def observacionesRep_ajax(){
+        def rep = Representante.get(params.id)
+        return[representante:rep]
+    }
+
+    def guardarObservacionRep_ajax(){
+        def representante = Representante.get(params.id)
+        representante.observaciones = params.texto
+
+        if(!representante.save(flush:true)){
+            println("error al guardar la observacion del rep " + representante.errors)
+            render "no"
+        }else{
+            render "ok"
+        }
+    }
+
+    def beneficiarios(){
+        def unidad = UnidadEjecutora.get(params.id)
+        return[unidad:unidad]
+    }
+
+    def tablaBeneficiarios_ajax(){
+        def unidad = UnidadEjecutora.get(params.id)
+        def beneficiarios = PersonaOrganizacion.findAllByUnidadEjecutoraAndFechaFinIsNull(unidad)
+        return[beneficiarios: beneficiarios, unidad:unidad]
+    }
 }
