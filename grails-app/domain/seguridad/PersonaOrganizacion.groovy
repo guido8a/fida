@@ -23,7 +23,7 @@ class PersonaOrganizacion implements Auditable{
     static auditable = true
 
     static mapping = {
-        table 'prsn'
+        table 'pror'
         cache usage: 'read-write', include: 'non-lazy'
         id generator: 'identity'
         version false

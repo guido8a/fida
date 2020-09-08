@@ -1,5 +1,6 @@
 package seguridad
 
+import convenio.AdministradorConvenio
 import geografia.Canton
 import geografia.Parroquia
 import geografia.Provincia
@@ -468,6 +469,29 @@ class UnidadEjecutoraController {
 //        println("sql " + sql)
 
         return [convenios: res]
+    }
+
+    def representante_ajax(){
+        def unidad = UnidadEjecutora.get(params.id)
+        def personas = PersonaOrganizacion.findAllByUnidadEjecutora(unidad)
+
+        def existente = Representante.findByPersonaOrganizacionInListAndFechaFinIsNull(personas)
+        def listaRepresentantes
+
+        if(existente){
+            listaRepresentantes = PersonaOrganizacion.findAllByUnidadEjecutoraAndIdNotEqual(unidad, existente.personaOrganizacion.id)
+        }else{
+            listaRepresentantes = PersonaOrganizacion.findAllByUnidadEjecutora(unidad)
+        }
+
+        return[lista: listaRepresentantes, unidad: unidad]
+    }
+
+    def tablaRepresentante_ajax(){
+        def unidad = UnidadEjecutora.get(params.id)
+        def personas = PersonaOrganizacion.findAllByUnidadEjecutora(unidad)
+        def representantes = Representante.findAllByPersonaOrganizacionInList(personas).sort{it.fechaFin}
+        return[representantes: representantes]
     }
 
 

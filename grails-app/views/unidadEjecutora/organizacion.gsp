@@ -62,7 +62,7 @@
             <a href="#" id="btnDocumentos" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-book-reader"></i> Biblioteca
             </a>
-            <a href="#" id="persona" class="btn btn-sm btn-info" title="Consultar documentos">
+            <a href="#" id="btnRepresentante" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-user"></i> Representante
             </a>
             <a href="#" id="persona" class="btn btn-sm btn-info" title="Consultar documentos">
@@ -344,6 +344,35 @@
 </div>
 
 <script type="text/javascript">
+
+    $("#btnRepresentante").click(function () {
+            var dialog = cargarLoader("Cargando...");
+            $.ajax({
+                type: 'POST',
+                url: '${createLink(controller: 'unidadEjecutora', action: 'representante_ajax')}',
+                data:{
+                    id: '${unidad?.id}'
+                },
+                success:function (msg) {
+                    dialog.modal('hide');
+                    var ad = bootbox.dialog({
+                        id    : "dlgBuscarRepresentante",
+                        title : "Asignar representante",
+                        class : "modal-lg",
+                        closeButton: false,
+                        message : msg,
+                        buttons : {
+                            cancelar : {
+                                label     : "Cancelar",
+                                className : "btn-primary",
+                                callback  : function () {
+                                }
+                            }
+                        }
+                    }); //dialog
+                }
+            });
+    })
 
     $("#btnTalleres").click(function () {
         location.href="${createLink(controller: 'taller', action: 'listTaller')}?id=" + '${unidad?.id}'
