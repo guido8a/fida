@@ -54,12 +54,13 @@ class PersonaOrganizacionController {
         if(representante){
             render "er"
         }else{
-            try{
-                beneficiario.delete(flush:true)
-                render "ok"
-            }catch(e){
+
+            beneficiario.fechaFin = new Date()
+            if(!beneficiario.save(flush:true)){
                 println("error al borrar el beneficiario " + beneficiario.error)
                 render "no"
+            }else{
+                render "ok"
             }
         }
     }
