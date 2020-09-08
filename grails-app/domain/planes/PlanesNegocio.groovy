@@ -28,6 +28,8 @@ class PlanesNegocio implements Auditable{
     double terreno
     double maquinaria
     double muebles
+    int plazo = 0
+    String estado = 'N'
 
     static auditable = true
 
@@ -60,6 +62,8 @@ class PlanesNegocio implements Auditable{
             terreno column: 'plnstrcn'
             maquinaria column: 'plnsmqeq'
             muebles column: 'plnsmbeq'
+            plazo column: 'plnsplzo'
+            estado column: 'plnsetdo'
         }
     }
 
@@ -86,5 +90,6 @@ class PlanesNegocio implements Auditable{
         terreno(nullable: true, blank: true)
         maquinaria(nullable: true, blank: true)
         muebles(nullable: true, blank: true)
+        estado(nullable: false, blank: false)
     }
 }

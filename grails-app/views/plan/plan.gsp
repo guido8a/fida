@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="layout" content="main">
-    <title>Planificación de Actividades</title>
+    <title>Programación de Actividades</title>
 </head>
 
 <body>
@@ -17,7 +17,7 @@
 <div class="btn-toolbar toolbar">
     <div class="btn-group">
         <g:link controller="plan" action="planesConvenio" id="${convenio?.id}" class="btn btn-sm btn-default">
-            <i class="fa fa-arrow-left"></i> Plan
+            <i class="fa fa-arrow-left"></i> Planificación
         </g:link>
 %{--        <a href="#" class="btn btn-success" id="btnAgregarPlan" >--}%
 %{--            <i class="fa fa-plus"></i> Agregar Plan--}%
@@ -26,7 +26,7 @@
 </div>
 
 <div class="panel-primary " style="text-align: center; font-size: 14px; margin-bottom: 10px">
-    <strong style="color: #5596ff; ">Planificación de Actividades</strong>
+    <strong style="color: #5596ff; ">Programación de las Actividades del PNS: ${convenio?.planesNegocio?.nombre}</strong>
 </div>
 
 

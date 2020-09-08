@@ -24,7 +24,7 @@
 
     <div class="btn-group">
         <a href="#" class="btn btn-sm btn-success" id="btnAddDoc">
-            <i class="fa fa-plus"></i> Agregar documento de la Biblioteca
+            <i class="fa fa-plus"></i> Agregar documento a la Biblioteca
         </a>
     </div>
 

@@ -357,7 +357,7 @@
                     dialog.modal('hide');
                     var ad = bootbox.dialog({
                         id    : "dlgBuscarRepresentante",
-                        title : "Asignar representante",
+                        title : "Representante Legal de: ${unidad.nombre}",
                         class : "modal-lg",
                         closeButton: false,
                         message : msg,

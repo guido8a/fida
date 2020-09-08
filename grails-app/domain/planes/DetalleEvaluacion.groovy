@@ -9,6 +9,7 @@ class DetalleEvaluacion implements Auditable{
     Evaluacion evaluacion
     IndicadorPlan indicadorPlan
     Double valor
+    String observaciones
 
     static auditable = true
 
@@ -23,6 +24,7 @@ class DetalleEvaluacion implements Auditable{
             evaluacion column: 'eval'
             indicadorPlan column: 'inpn__id'
             valor column: 'dtevvlor'
+            observaciones column: 'dtevobsr'
         }
     }
 
@@ -31,5 +33,6 @@ class DetalleEvaluacion implements Auditable{
         evaluacion(nullable: false, blank: false)
         indicadorPlan(nullable: false, blank: false)
         valor(nullable: false, blank: false)
+        observaciones(nullable: true, blank: true)
     }
 }
