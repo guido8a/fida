@@ -91,13 +91,13 @@
             </div>
             <div class="form-group keeptogether ${hasErrors(bean: beneficiario, field: 'titulo', 'error')} ">
                 <label for="sexo" class="col-md-3 control-label">
-                    Género
+                    Sexo
                 </label>
                 <div class="col-md-3">
                     <g:select from="${[M: 'Masculino', F: 'Femenino']}" optionKey="key" optionValue="value" name="sexo" class="form-control" value="${beneficiario?.sexo}"/>
                 </div>
                 <label for="discapacidad" class="col-md-3 control-label">
-                    Discapacidad
+                    Discapacitado
                 </label>
                 <span class="grupo">
                     <div class="col-md-3">
@@ -110,7 +110,7 @@
                     Teléfono
                 </label>
                 <span class="grupo">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <g:textField name="telefono" maxlength="31" class="form-control input-sm digits"
                                      value="${beneficiario?.telefono}"/>
                     </div>
@@ -120,7 +120,7 @@
                     Mail
                 </label>
                 <span class="grupo">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <g:textField name="mail" maxlength="63" class="form-control input-sm email"
                                      value="${beneficiario?.mail}"/>
                     </div>
