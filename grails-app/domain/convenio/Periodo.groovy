@@ -5,7 +5,7 @@ import planes.PlanesNegocio
 
 class Periodo implements Auditable {
 
-    Convenio convenio
+//    Convenio convenio
     PlanesNegocio planesNegocio
     int numero
     Date fechaInicio
@@ -23,7 +23,7 @@ class Periodo implements Auditable {
         id generator: 'identity'
         columns {
             id column: 'prdo__id'
-            convenio column: 'cnvn__id'
+//            convenio column: 'cnvn__id'
             planesNegocio column: 'plns__id'
             numero column: 'prdonmro'
             fechaInicio column: 'prdofcin'
@@ -34,7 +34,7 @@ class Periodo implements Auditable {
     }
 
     static constraints = {
-        convenio(nullable: false, blank:false)
+//        convenio(nullable: false, blank:false)
         planesNegocio(nullable: false, blank:false)
         numero(nullable: false, blank: false)
         fechaInicio(nullable: true, blank: true)

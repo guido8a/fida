@@ -470,4 +470,23 @@ class PlanController {
         return[plan:plan, restante: restante]
     }
 
+    def poneFechas() {
+        println "poneFechas: $params"
+        def plns = PlanesNegocio.get(params.id)
+        def cnvn = Convenio.findByPlanesNegocio(plns)
+        def fcin = cnvn.fechaInicio
+        def fcfn = fcin + 30 - 1
+        def dias = 0
+
+
+        while(dias < cnvn.plazo) {
+
+            println "fecha: $fcin -- $fcfn"
+            dias += 30
+            fcin = fcfn + 1
+            fcfn = fcin + 30 - 1
+        }
+        render 'ok'
+    }
+
 }
