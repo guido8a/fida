@@ -423,12 +423,20 @@ class UnidadEjecutoraController {
 
     def organizacion(){
         def unidad
+        def anios
         if(params.id){
             unidad = UnidadEjecutora.get(params.id)
         }else{
             unidad = new UnidadEjecutora()
         }
-        return[unidad: unidad]
+
+        if(unidad.fechaInicio) {
+            anios = Math.round((new Date() - unidad.fechaInicio)/365.25)
+        } else {
+            anios = 0
+        }
+
+        return[unidad: unidad, anios: anios]
     }
 
     def buscarOrga_ajax() {

@@ -321,9 +321,9 @@
                 </label>
 
                 <div class="col-md-1">
-                    <g:textField name="anio" maxlength="2" class="form-control digits input-sm" value="${unidad?.anio ?: ''}"/>
-%{--                     <g:textField name="anio" maxlength="2" class="form-control digits input-sm" readonly=""--}%
-%{--                         value="${Math.round((new Date() - unidad?.fechaInicio?: new Date())/365.25) ?: ''}"/>--}%
+%{--                    <g:textField name="anio" maxlength="2" class="form-control digits input-sm" value="${unidad?.anio ?: ''}"/>--}%
+                     <g:textField name="anio" maxlength="2" class="form-control digits input-sm" readonly=""
+                         value="${anios}"/>
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>
