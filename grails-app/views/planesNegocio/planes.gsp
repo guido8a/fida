@@ -70,10 +70,10 @@
             </a>
         </g:if>
         <g:if test="${plns?.estado == 'N'}">
-            <g:if test="${plns?.id}">
                 <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
                     <i class="fa fa-save"></i> Guardar
                 </a>
+            <g:if test="${plns?.id}">
                 <a href="#" id="btnEliminar" class="btn btn-sm btn-danger" title="Guardar información">
                     <i class="fa fa-trash"></i> Eliminar
                 </a>
