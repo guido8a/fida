@@ -181,7 +181,7 @@
                     if(msg == 'ok'){
                         log("Valor guardado correctamente","success");
                         setTimeout(function () {
-                            cargarTablaComponentes(${convenio?.id}, $("#plazo option:selected").val());
+                            cargarTablaComponentes(${planNs?.id}, $("#plazo option:selected").val());
                         }, 800);
                     }else{
                         log("Error al guardar el valor","error")

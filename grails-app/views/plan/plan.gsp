@@ -15,43 +15,26 @@
 <body>
 
 <div class="btn-toolbar toolbar">
-    <div class="btn-group">
-        <g:link controller="plan" action="planesConvenio" id="${convenio?.id}" class="btn btn-sm btn-default">
+    <div class="btn-group col-md-12">
+        <g:link controller="plan" action="planesConvenio" id="${planNs?.id}" class="btn btn-sm btn-default">
             <i class="fa fa-arrow-left"></i> Planificación
         </g:link>
-%{--        <a href="#" class="btn btn-success" id="btnAgregarPlan" >--}%
-%{--            <i class="fa fa-plus"></i> Agregar Plan--}%
-%{--        </a>--}%
+        <div class="panel-primary col-md-9" style="text-align: center; font-size: 14px; margin-bottom: 10px">
+            <span class="col-md-3"></span>
+            <span class="col-md-3 panel-primary">Seleccione el Año</span>
+            <span class="col-md-2">
+                <g:select from="${combo}" optionKey="key" optionValue="value" class="form-control input-sm"
+                          name="plazo" id="plazo"/>
+            </span>
+        </div>
     </div>
 </div>
 
 <div class="panel-primary " style="text-align: center; font-size: 14px; margin-bottom: 10px">
-    <strong style="color: #5596ff; ">Programación de las Actividades del PNS: ${convenio?.planesNegocio?.nombre}</strong>
+    <strong style="color: #5596ff; ">Programación de las Actividades del PNS: ${planNs?.nombre}</strong>
 </div>
 
-
-<table class="table table-condensed table-bordered table-hover table-striped" id="tblCrono" style="width: 100%">
-    <thead>
-    <tr>
-        <th style="width:10%">Seleccione el Año</th>
-        <th colspan="16">
-            <g:select from="${combo}" optionKey="key" optionValue="value" class="form-control input-sm"
-                      style="width: 90px; display: inline" name="plazo" id="plazo"/>
-        </th>
-    </tr>
-
-    <tr id="trMeses">
-        <th style="width: 15%">Componentes/Actividades</th>
-        <th style="width: 6%">Costo</th>
-        <g:each in="${lista}" var="periodo">
-            <th style="width:6%">
-                ${periodo}
-            </th>
-        </g:each>
-        <th>Total Asignado</th>
-    </tr>
-    </thead>
-</table>
+<div id="divCabecera"></div>
 
 <div id="divTabla"></div>
 
@@ -59,17 +42,35 @@
 
     $("#plazo").change(function (){
        var p = $(this).val();
-        cargarTablaComponentes(${convenio?.id}, p);
+        cargarCabecera(${planNs?.id}, p);
+        cargarTablaComponentes(${planNs?.id}, p);
     });
 
-    cargarTablaComponentes(${convenio?.id}, $("#plazo option:selected").val());
+    cargarCabecera(${planNs?.id}, $("#plazo option:selected").val());
 
-    function cargarTablaComponentes(convenio, periodo){
+    cargarTablaComponentes(${planNs?.id}, $("#plazo option:selected").val());
+
+    function cargarCabecera(planNs, periodo){
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'plan', action: 'cabecera_ajax')}',
+            data:{
+                id: planNs,
+                periodo: periodo
+            },
+            success: function (msg) {
+                $("#divCabecera").html(msg)
+            }
+        })
+
+    }
+
+    function cargarTablaComponentes(planNs, periodo){
         $.ajax({
             type: 'POST',
             url: '${createLink(controller: 'plan', action: 'tablaPlan_ajax')}',
             data:{
-                id: convenio,
+                id: planNs,
                 periodo: periodo
             },
             success: function (msg) {

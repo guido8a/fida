@@ -36,28 +36,24 @@ class PlanController {
 //    }
 
     def plan(){
-        def convenio = Convenio.get(params.id)
-        def plazo = convenio?.plazo ? (convenio?.plazo?.toInteger() / 360) : 0
+        println "plan $params"
+        def plns = PlanesNegocio.get(params.id)
+        def plazo = plns?.plazo ? (plns?.plazo?.toInteger() / 360) : 0
         def plazoEntero = Math.ceil(plazo).toInteger()
         def combo = [:]
-        def listaPeriodos = []
 
-        for (int j = 0; j < 12; j++) {
-            listaPeriodos.add("Período ${j + 1}")
-        }
-
-        for(int i=1; plazoEntero >= i; i++ ){
+        for(i in 1..plazoEntero){
             combo << ["${i}":"Año ${i}"]
         }
 
 //        println("--> " + combo)
-        return[convenio: convenio, combo: combo, lista: listaPeriodos]
+        return[planNs: plns, combo: combo]
     }
 
 
     def tablaPlan_ajax(){
 
-        def convenio = Convenio.get(params.id)
+        def plns = PlanesNegocio.get(params.id)
 
         def listaPeriodos = []
 
@@ -65,7 +61,7 @@ class PlanController {
             listaPeriodos.add("Período ${j + 1}")
         }
 
-        def sql = "select * from planes(${convenio?.id}, ${params.periodo}) order by comp__id"
+        def sql = "select * from planes(${plns?.id}, ${params.periodo}) order by comp__id"
         def cn = dbConnectionService.getConnection()
         def res = cn.rows(sql.toString())
 
@@ -73,7 +69,41 @@ class PlanController {
 
         println("sql " + sql)
 
-        return [componentes: res, lista: listaPeriodos, anio: params.periodo, convenio: convenio, tam: tam]
+        return [componentes: res, lista: listaPeriodos, anio: params.periodo, planNs: plns, tam: tam]
+    }
+
+    def cabecera_ajax(){
+        println "cabecera $params"
+        def cn = dbConnectionService.getConnection()
+        def plns = PlanesNegocio.get(params.id)
+        def prdo = params.periodo.toInteger()
+        def desde = (prdo - 1)*12 + 1
+        def hasta = prdo * 12
+        def sql = "select prdonmro, prdofcfn, prdofcin from prdo where plns__id = ${plns.id} and " +
+                "prdonmro between ${desde} and ${hasta} order by prdonmro"
+        def nmro = 0
+        def periodos = ""
+        println "sql: $sql"
+
+        cn.eachRow(sql.toString()) {d ->
+            if(d.prdofcin && d.prdofcfn) {
+                periodos += (periodos? '_' : '') + "${d.prdofcin.format('dd-MMM-yy')} - ${d.prdofcfn.format('dd-MMM-yy')}"
+                nmro++
+            } else {
+                periodos += (periodos? '_' : '') + "Periodo ${d.prdonmro}"
+                nmro++
+            }
+        }
+
+        println "numero: $nmro"
+
+        while (nmro < 12) {
+            periodos += (periodos? '_' : '') + "-"
+            nmro++
+        }
+
+//        println "periodos: ${periodos}"
+        return[planNs: plns, periodos: periodos]
     }
 
 
