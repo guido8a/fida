@@ -477,16 +477,23 @@ class PlanController {
         def fcin = cnvn.fechaInicio
         def fcfn = fcin + 30 - 1
         def dias = 0
-
+        def nmro = 1
+        def prdo
 
         while(dias < cnvn.plazo) {
-
-            println "fecha: $fcin -- $fcfn"
+            prdo = Periodo.findByPlanesNegocioAndNumero(plns, nmro)
+            prdo.fechaInicio = fcin
+            prdo.fechaFin = fcfn
+            prdo.save(flush: true)
+//            println "prdo: ${prdo.numero} --> $nmro"
+//            println "fecha: $fcin -- $fcfn"
             dias += 30
             fcin = fcfn + 1
             fcfn = fcin + 30 - 1
+            nmro++
         }
-        render 'ok'
+        flash.message = "Se ha actualizado los periodos"
+        redirect(controller: 'plan', action: 'planesConvenio', id: plns.id)
     }
 
 }

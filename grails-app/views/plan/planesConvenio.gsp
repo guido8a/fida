@@ -20,6 +20,8 @@
 
 <body>
 
+<elm:flashMessage tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:flashMessage>
+
 <div class="btn-toolbar toolbar">
     <div class="btn-group">
         <g:link controller="unidadEjecutora" action="organizacion" id="${planNs?.unidadEjecutora?.id}" class="btn btn-sm btn-default">
