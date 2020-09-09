@@ -133,8 +133,10 @@ class PlanController {
 //        println "planesConvenio: ${params}"
         def plns = PlanesNegocio.get(params.id)
         def cnvn = Convenio.findByPlanesNegocio(plns)
+        def periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(plns)
         def planes = Plan.findAllByPlanesNegocio(plns, [sort: 'grupoActividad.descripcion'])
-        return[planNs: plns, planes: planes, cnvn: cnvn]
+        println "planesConvenio --> ${plns.id}"
+        return[planNs: plns, planes: planes, cnvn: cnvn, periodo: periodo]
     }
 
     def savePlan_ajax(){
@@ -479,6 +481,14 @@ class PlanController {
         def dias = 0
         def nmro = 1
         def prdo
+
+/*
+        if(prdo) {
+            flash.message = "Ya están generadas las fechas de los periodos"
+            redirect(controller: 'plan', action: 'planesConvenio', id: plns.id)
+            return
+        }
+*/
 
         while(dias < cnvn.plazo) {
             prdo = Periodo.findByPlanesNegocioAndNumero(plns, nmro)

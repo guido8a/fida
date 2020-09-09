@@ -46,7 +46,8 @@
     </div>
     <g:if test="${cnvn}">
         <div class="btn-group">
-            <g:link controller="plan" action="poneFechas" id="${planNs?.id}" class="btn btn-sm btn-default">
+            <g:link controller="plan" action="poneFechas" id="${planNs?.id}"
+                    class="btn btn-sm btn-default ${periodo? 'disabled' : ''}">
                 <i class="fas fa-cogs"></i> Poner fechas de ejecución
             </g:link>
         </div>
