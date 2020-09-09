@@ -18,7 +18,7 @@
                     </label>
                 </div>
                 <div class="col-md-7">
-                    <g:hiddenField name="plns" value="${plns?.id}"/>
+                    <g:hiddenField name="planesNegocio" value="${plns?.id}"/>
                     <strong style="font-size: 14px; color: #5596ff">${plns?.nombre}</strong>
                 </div>
             </span>
@@ -105,17 +105,17 @@
             <span class="grupo">
                 <div class="col-md-1"></div>
                 <div class="col-md-3">
-                    <label for="codigoComprasPublicas" class="control-label">
+                    <label for="partida1" class="control-label">
                         Partida
                     </label>
                 </div>
                 <div class="col-md-7">
-                    <g:hiddenField name="presupuesto" value="${plan?.presupuesto?.id}"/>
-                    <g:textField name="codigoComprasPublicasNombre" readonly=""
-                                 class="form-control" value="${plan?.presupuesto ? (plan?.presupuesto?.numero + " - " + plan?.codigoComprasPublicas?.descripcion) : ''}"/>
+                    <g:hiddenField name="partida1" value="${plan?.presupuesto?.id}"/>
+                    <g:textField name="partida1Texto" readonly=""
+                                 class="form-control" value="${plan?.presupuesto ? (plan?.presupuesto?.numero + " - " + plan?.presupuesto?.descripcion) : ''}"/>
                 </div>
                 <div class="col-md-1">
-                    <a href="#" class="btn btn-info btnBuscarCPC">
+                    <a href="#" class="btn btn-info btnBuscarPartida">
                         <i class="fa fa-search"></i>
                     </a>
                 </div>
@@ -149,21 +149,21 @@
                     <label>
                         Costo
                     </label>
-%{--                    <g:textField name="costo" class="form-control number required" value="${plan?.costo}"/>--}%
+                    %{--                    <g:textField name="costo" class="form-control number required" value="${plan?.costo}"/>--}%
                     <g:textField name="costo" class="form-control number required"
                                  value="${util.formatNumber(number: plan?.costo, maxFractionDigits: 2, minFractionDigits: 2)}"/>
                 </div>
             </span>
-%{--
-            <span class="grupo">
-                <div class="col-md-3">
-                    <label>
-                        Ejecutado
-                    </label>
-                    <g:textField name="ejecutado" class="form-control number" value="${plan?.ejecutado}"/>
-                </div>
-            </span>
---}%
+            %{--
+                        <span class="grupo">
+                            <div class="col-md-3">
+                                <label>
+                                    Ejecutado
+                                </label>
+                                <g:textField name="ejecutado" class="form-control number" value="${plan?.ejecutado}"/>
+                            </div>
+                        </span>
+            --}%
             <span class="grupo col-md-2"></span>
             <span class="grupo">
                 <div class="col-md-2">
@@ -181,6 +181,7 @@
 </div>
 
 <script type="text/javascript">
+
 
     cargarActividad($("#componente option:selected").val());
 
@@ -206,8 +207,38 @@
 
     var cd;
     var dg;
+    var bp2;
 
     $(document).ready(function() {
+
+        $(".btnBuscarPartida").click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '${createLink(controller: 'cronograma', action: 'buscarPartida_ajax')}',
+                data:{
+                    tipo: 1
+                },
+                success:function (msg) {
+                    bp2 = bootbox.dialog({
+                        id    : "dlgBuscarPartida2",
+                        title : "Buscar Partida",
+                        class : "modal-lg",
+                        message : msg,
+                        buttons : {
+                            cancelar : {
+                                label     : "Cancelar",
+                                className : "btn-primary",
+                                callback  : function () {
+                                }
+                            }
+                        } //buttons
+                    }); //dialog
+                }
+            });
+        });
+
+
+
 
         $(".btnBuscarCPC").click(function () {
             dg= cargarLoader("Cargando...");
@@ -242,6 +273,11 @@
             }); //ajax
         }
     });
+
+    function cerrarDialogo(){
+        bp2.dialog().dialog('open');
+        bp2.modal("hide");
+    }
 
     function cerrarDialogoBusquedaCPC(){
         cd.dialog().dialog('open');

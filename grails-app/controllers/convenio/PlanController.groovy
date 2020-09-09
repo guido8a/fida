@@ -130,14 +130,14 @@ class PlanController {
     }
 
     def planesConvenio (){
-        println "planesConvenio: ${params}"
+//        println "planesConvenio: ${params}"
         def plns = PlanesNegocio.get(params.id)
         def planes = Plan.findAllByPlanesNegocio(plns, [sort: 'grupoActividad.descripcion'])
         return[planNs: plns, planes: planes]
     }
 
     def savePlan_ajax(){
-        println "savePlan_ajac $params"
+//        println "savePlan_ajac $params"
 
         def plan
 
@@ -150,6 +150,7 @@ class PlanController {
         params.ejecutado = params.ejecutado ? params.ejecutado : 0
         params.costo = params.costo.toDouble()
         params.cantidad = params.cantidad.toDouble()
+        params.presupuesto = params.partida1
         plan.properties = params
 //        plan.ejecutado = params.ejecutado.toDouble()
 
