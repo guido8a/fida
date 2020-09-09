@@ -39,9 +39,11 @@
 
 <body>
 <div class="btn-group">
-    <a href="#" class="btn btn-sm btn-default" id="btnRegresar" >
-        <i class="fa fa-arrow-left"></i> Ir al Plan de Negocio Solidario
-    </a>
+    <g:if test="${convenio?.id}">
+        <a href="#" class="btn btn-sm btn-default" id="btnRegresar" >
+            <i class="fa fa-arrow-left"></i> Ir al Plan de Negocio Solidario
+        </a>
+    </g:if>
 </div>
 
 <h3 style="text-align: center">Convenios de Economía Popular y Solidaria</h3>
@@ -67,14 +69,24 @@
            class="btn btn-sm btn-success" title="Consultar artículo">
             <i class="fas fa-plus"></i> Nuevo convenio
         </a>
-        <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
-            <i class="fa fa-save"></i> Guardar
-        </a>
-        <g:if test="${convenio?.id}">
-            <a href="#" id="btnEliminar" class="btn btn-sm btn-danger" title="Guardar información">
-                <i class="fa fa-trash"></i> Eliminar
+        <g:if test="${convenio?.estado == 'N'}">
+            <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
+                <i class="fa fa-save"></i> Guardar
             </a>
+            <g:if test="${convenio?.id}">
+                <a href="#" id="btnEliminar" class="btn btn-sm btn-danger" title="Guardar información">
+                    <i class="fa fa-trash"></i> Eliminar
+                </a>
+                <a href="#" id="btnRegistrarConvenio" class="btn btn-sm btn-warning" title="Registrar el convenio">
+                    <i class="fa fa-check"></i> Registrar
+                </a>
+            </g:if>
         </g:if>
+        <g:else>
+            <a href="#" id="btnRegistrarConvenio" class="btn btn-sm btn-warning" title="Quitar registr del convenio">
+                <i class="fa fa-times-circle"></i> Desregistrar
+            </a>
+        </g:else>
     </div>
 
     <div class="tab-content">
@@ -112,41 +124,41 @@
                     </div>
                 </div>
                 <div class="row izquierda">
-                     <div class="col-md-12 input-group">
-                         <span class="grupo">
-                              <span class="col-md-2 label label-primary text-info mediano">Provincia</span>
-                              <div class="col-md-2">
-                                  <g:hiddenField name="provincia" value="${convenio?.planesNegocio?.unidadEjecutora?.parroquia?.canton?.provincia?.id}"/>
-                            <input name="provinciaName" id="provinciaTexto" type='text' class="form-control"
-                                   readonly="" value="${convenio?.planesNegocio?.unidadEjecutora?.parroquia?.canton?.provincia?.nombre}"/>
-                        </div>
-                    </span>
-                    <span class="grupo">
-                        <label class="col-md-1 control-label text-info">
-                            Cantón
-                        </label>
-                        <div class="col-md-2">
-                            <input name="canton" id="cantonTexto" type='text' class="form-control" readonly=""
-                                   value="${convenio?.planesNegocio?.unidadEjecutora?.parroquia?.canton?.nombre}"/>
-                        </div>
-                    </span>
-                    <span class="grupo">
-                        <label class="col-md-1 control-label text-info">
-                            Parroquia
-                        </label>
-                        <div class="col-md-4">
-                            <g:hiddenField name="parroquia" value="${unidad?.parroquia?.id}"/>
-                            <input name="parroquiaName" id="parroquiaTexto" type='text' class="form-control"
-                                   required="" readonly="" value="${convenio?.planesNegocio?.unidadEjecutora?.parroquia?.nombre}"/>
-                        </div>
-                    </span>
+                    <div class="col-md-12 input-group">
+                        <span class="grupo">
+                            <span class="col-md-2 label label-primary text-info mediano">Provincia</span>
+                            <div class="col-md-2">
+                                <g:hiddenField name="provincia" value="${convenio?.planesNegocio?.unidadEjecutora?.parroquia?.canton?.provincia?.id}"/>
+                                <input name="provinciaName" id="provinciaTexto" type='text' class="form-control"
+                                       readonly="" value="${convenio?.planesNegocio?.unidadEjecutora?.parroquia?.canton?.provincia?.nombre}"/>
+                            </div>
+                        </span>
+                        <span class="grupo">
+                            <label class="col-md-1 control-label text-info">
+                                Cantón
+                            </label>
+                            <div class="col-md-2">
+                                <input name="canton" id="cantonTexto" type='text' class="form-control" readonly=""
+                                       value="${convenio?.planesNegocio?.unidadEjecutora?.parroquia?.canton?.nombre}"/>
+                            </div>
+                        </span>
+                        <span class="grupo">
+                            <label class="col-md-1 control-label text-info">
+                                Parroquia
+                            </label>
+                            <div class="col-md-4">
+                                <g:hiddenField name="parroquia" value="${unidad?.parroquia?.id}"/>
+                                <input name="parroquiaName" id="parroquiaTexto" type='text' class="form-control"
+                                       required="" readonly="" value="${convenio?.planesNegocio?.unidadEjecutora?.parroquia?.nombre}"/>
+                            </div>
+                        </span>
 
-%{--
-                    <a href="#" class="btn btn-sm btn-success buscarParroquia" title="Buscar ubicación geográfica">
-                        <i class="fa fa-search"></i> Buscar
-                    </a>
---}%
-                </div>
+                        %{--
+                                            <a href="#" class="btn btn-sm btn-success buscarParroquia" title="Buscar ubicación geográfica">
+                                                <i class="fa fa-search"></i> Buscar
+                                            </a>
+                        --}%
+                    </div>
                 </div>
 
 
@@ -250,19 +262,41 @@
 
 <script type="text/javascript">
 
+    $("#btnRegistrarConvenio").click(function () {
+        var dialog = cargarLoader("Guardando...");
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'convenio', action: 'registrarConvenio_ajax')}',
+            data:{
+                id: '${convenio?.id}'
+            },
+            success: function (msg){
+                dialog.modal('hide');
+                if(msg == 'ok'){
+                    log("Cambio de estado correctamente","success");
+                    setTimeout(function () {
+                        location.href="${createLink(controller: 'convenio', action: 'convenio')}/" + '${convenio?.id}'
+                    }, 1000);
+                }else{
+                    log("Error al registrar el convenio","error")
+                }
+            }
+        });
+    });
+
     $("#btnDocumentos").click(function () {
         location.href="${createLink(controller: 'documento', action: 'listConvenio')}?id=" +
             '${convenio?.planesNegocio?.unidadEjecutora?.id}' + "&convenio=" + '${convenio?.id}'
     });
 
     $("#btnPlanNegocio").click(function () {
-       location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + "${convenio?.id}"
+        location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + "${convenio?.id}"
     });
 
     $("#btnRegresar").click(function () {
         console.log('regresa', "${convenio?.planesNegocio?.unidadEjecutora?.id}")
-       var id = "${convenio?.planesNegocio?.unidadEjecutora?.id}"
-       location.href="${createLink(controller: 'planesNegocio', action: 'planes')}" + "/?id=" + id
+        var id = "${convenio?.planesNegocio?.unidadEjecutora?.id}"
+        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}" + "/?id=" + id
     });
 
     $("#btnAdministradorCon").click(function () {

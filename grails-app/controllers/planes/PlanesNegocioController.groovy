@@ -1,5 +1,6 @@
 package planes
 
+import convenio.Convenio
 import convenio.Necesidad
 import convenio.TipoNecesidad
 import geografia.Comunidad
@@ -351,6 +352,22 @@ class PlanesNegocioController {
         }catch(e){
             println("error al borrar el finaciamiento" + financiamiento.errors)
             render "no"
+        }
+    }
+
+    def registrarPlan_ajax() {
+        def plan = PlanesNegocio.get(params.id)
+        if(plan.estado == 'N'){
+            plan.estado = 'R'
+        }else{
+            plan.estado = 'N'
+        }
+
+        if(!plan.save(flush:true)){
+            println("error al cambiar de estado al plan"  + plan.errors)
+            render "no"
+        }else{
+            render "ok"
         }
     }
 }

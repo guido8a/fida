@@ -444,13 +444,16 @@ class UnidadEjecutoraController {
             case "0":
                 operador = "unejnmbr"
                 break;
-            case '1':
+            case "1":
+                operador = "unej_ruc"
+                break;
+            case '2':
                 operador = "provnmbr"
                 break;
-            case "2":
+            case "3":
                 operador = "cntnnmbr"
                 break;
-            case "3":
+            case "4":
                 operador = "parrnmbr"
                 break;
         }

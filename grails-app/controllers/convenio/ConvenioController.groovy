@@ -192,18 +192,30 @@ class ConvenioController {
                 "where cnvn.parr__id = parr.parr__id and " +
                 "unej.unej__id = cnvn.unej__id and ${operador} ilike '%${params.texto}%' " +
                 "order by cnvnnmbr asc limit 20"
-
         def res = cn.rows(sql.toString())
-
 //        println("sql " + sql)
-
         return [convenios: res]
-
     }
 
     def observaciones_ajax(){
         def administrador = AdministradorConvenio.get(params.id)
         return[administrador:administrador]
+    }
+
+    def registrarConvenio_ajax(){
+        def convenio = Convenio.get(params.id)
+        if(convenio.estado == 'N'){
+            convenio.estado = 'R'
+        }else{
+            convenio.estado = 'N'
+        }
+
+        if(!convenio.save(flush:true)){
+            println("error al cambiar de estado al convenio"  + convenio.errors)
+            render "no"
+        }else{
+            render "ok"
+        }
     }
 
 }

@@ -13,7 +13,7 @@
             <label>Buscar:</label>
         </div>
         <div class="col-md-3">
-            <g:select name="buscarC" from="${[0: 'Nombre', 1: 'Provincia', 2: 'Cantón', 3: 'Parroquia']}" class="form-control" optionValue="value" optionKey="key"/>
+            <g:select name="buscarC" from="${[0: 'Nombre', 1: 'RUC',  2: 'Provincia', 3: 'Cantón', 4: 'Parroquia']}" class="form-control" optionValue="value" optionKey="key"/>
         </div>
         <div class="col-md-4">
             <g:textField name="txtBuscarConvenio" class="form-control" />

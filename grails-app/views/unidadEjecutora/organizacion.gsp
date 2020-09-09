@@ -57,8 +57,8 @@
 <h3 style="text-align: center">Organizaciones</h3>
 
 <div class="panel panel-primary col-md-12">
+    <g:if test="${unidad?.id}">
     <div class="panel-heading" style="padding: 3px; margin-top: 2px; text-align: ${unidad?.id ? 'center' : 'left'}">
-        <g:if test="${unidad?.id}">
             <a href="#" id="btnDocumentos" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-book-reader"></i> Biblioteca
             </a>
@@ -86,19 +86,16 @@
             <a href="#" id="btnPlanes" class="btn btn-sm btn-warning" title="Planes">
                 <i class="fas fa-briefcase"></i> Planes de negocio
             </a>
-
-        </g:if>
     </div>
+        </g:if>
 
     <g:form class="form-horizontal" name="frmSaveUnidad" controller="unidadEjecutora" action="saveUnidad_ajax">
         <g:hiddenField name="id" value="${unidad?.id}"/>
-
         <div class="form-group ${hasErrors(bean: unidad, field: 'provincia', 'error')}" style="margin-top: 10px">
             <span class="grupo">
                 <label class="col-md-2 control-label text-info">
                     Provincia
                 </label>
-
                 <div class="col-md-2">
                     <g:hiddenField name="provincia" value="${unidad?.parroquia?.canton?.provincia?.id}"/>
                     <input name="provinciaName" id="provinciaTexto" type='text' class="form-control" readonly="" value="${unidad?.parroquia?.canton?.provincia?.nombre}"/>
@@ -121,12 +118,10 @@
                     <input name="parroquiaName" id="parroquiaTexto" type='text' class="form-control" required="" readonly="" value="${unidad?.parroquia?.nombre}"/>
                 </div>
             </span>
-
-            <a href="#" class="btn btn-sm btn-success buscarParroquia" title="Buscar ubicación geográfica">
+            <a href="#" class="btn btn-sm btn-info buscarParroquia" title="Buscar ubicación geográfica">
                 <i class="fa fa-search"></i> Buscar
             </a>
         </div>
-
         <div class="form-group ${hasErrors(bean: unidad, field: 'nombre', 'error')} ${hasErrors(bean: unidad, field: 'sigla', 'error')}">
             <span class="grupo">
                 <label for="nombre" class="col-md-2 control-label text-info">
@@ -163,12 +158,6 @@
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>
-            %{--
-                    </div>
-
-
-                    <div class="form-group ${hasErrors(bean: unidad, field: 'ruc', 'error')} ${hasErrors(bean: unidad, field: 'rup', 'error')}">
-            --}%
             <span class="grupo">
                 <label for="ruc" class="col-md-2 control-label text-info">
                     Ruc

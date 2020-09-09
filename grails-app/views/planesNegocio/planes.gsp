@@ -66,17 +66,27 @@
                 <i class="fa fa-pen-square"></i> Evaluaciones
             </a>
             <a href="#" id="btnConvenio" class="btn btn-sm btn-warning" title="Evaluaciones del plan">
-                <i class="fa fa-pen-square"></i> Convenio
+                <i class="fa fa-handshake"></i> Convenio
             </a>
         </g:if>
-        <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
-            <i class="fa fa-save"></i> Guardar
-        </a>
-        <g:if test="${plns?.id}">
-            <a href="#" id="btnEliminar" class="btn btn-sm btn-danger" title="Guardar información">
-                <i class="fa fa-trash"></i> Eliminar
-            </a>
+        <g:if test="${plns?.estado == 'N'}">
+            <g:if test="${plns?.id}">
+                <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
+                    <i class="fa fa-save"></i> Guardar
+                </a>
+                <a href="#" id="btnEliminar" class="btn btn-sm btn-danger" title="Guardar información">
+                    <i class="fa fa-trash"></i> Eliminar
+                </a>
+                <a href="#" id="btnRegistrarPlan" class="btn btn-sm btn-warning" title="Registrar el plan">
+                    <i class="fa fa-check"></i> Registrar
+                </a>
+            </g:if>
         </g:if>
+        <g:else>
+            <a href="#" id="btnRegistrarPlan" class="btn btn-sm btn-warning" title="Quitar registro del plan">
+                <i class="fa fa-times-circle"></i> Desregistrar
+            </a>
+        </g:else>
     </div>
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
@@ -310,6 +320,28 @@
 </div>
 
 <script type="text/javascript">
+
+    $("#btnRegistrarPlan").click(function () {
+        var dialog = cargarLoader("Guardando...");
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'planesNegocio', action: 'registrarPlan_ajax')}',
+            data:{
+                id: '${plns?.id}'
+            },
+            success: function (msg){
+                dialog.modal('hide');
+                if(msg == 'ok'){
+                    log("Cambio de estado correcto","success");
+                    setTimeout(function () {
+                        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/" + '${unidad?.id}'
+                    }, 1000);
+                }else{
+                    log("Error al registrar el plan","error")
+                }
+            }
+        });
+    });
 
     $("#btnFinanciamiento").click(function () {
         var id = '${plns?.id}';
