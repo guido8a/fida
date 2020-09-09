@@ -42,12 +42,23 @@
             <i class="fas fa-clipboard-list"></i> Componentes y Actividades del Cronograma
         </g:link>
     </div>
+    <g:if test="${cnvn}">
+        <div class="btn-group">
+            <g:link controller="plan" action="poneFechas" id="${planNs?.id}" class="btn btn-sm btn-default">
+                <i class="fas fa-cogs"></i> Poner fechas de ejecución
+            </g:link>
+        </div>
+    </g:if>
 </div>
 
 <div class="row" style="text-align: center">
     <div class="panel-primary " style="font-size: 14px; margin-bottom: 5px">
+        <g:if test="${cnvn}">
+            <h3>Convenio: ${cnvn?.nombre}</h3>
+        </g:if>
         <strong style="color: #5596ff; ">Planificación: ${planNs?.nombre}</strong>
     </div>
+
 </div>
 
     <table style="font-size: 11px" class="table table-condensed table-bordered table-striped">

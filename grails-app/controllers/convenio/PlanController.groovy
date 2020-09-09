@@ -132,8 +132,9 @@ class PlanController {
     def planesConvenio (){
 //        println "planesConvenio: ${params}"
         def plns = PlanesNegocio.get(params.id)
+        def cnvn = Convenio.findByPlanesNegocio(plns)
         def planes = Plan.findAllByPlanesNegocio(plns, [sort: 'grupoActividad.descripcion'])
-        return[planNs: plns, planes: planes]
+        return[planNs: plns, planes: planes, cnvn: cnvn]
     }
 
     def savePlan_ajax(){

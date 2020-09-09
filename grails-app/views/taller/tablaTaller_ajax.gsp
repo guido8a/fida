@@ -92,7 +92,7 @@
                         }
                     },
                     instituciones: {
-                        label: "Instituciones asociadas",
+                        label: "Instituciones participantes",
                         icon: "fas fa-building",
                         action: function ($element) {
                             var id = $element.data("id");
