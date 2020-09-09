@@ -5,6 +5,17 @@
   Time: 10:15
 --%>
 
+<style>
+
+    .verde{
+        background-color: #93c17d;
+        font-weight: bold;
+    }
+
+</style>
+
+
+
 <table class="table table-condensed table-bordered table-hover table-striped" style="margin-top: -20px">
     <g:set var="itera" value=""/>
     <g:set var="anterior" value=""/>
@@ -16,10 +27,10 @@
         <g:if test="${j != 0}">
             <g:if test="${comp.comp__id !=  anterior}">
                 <tr class="warning total">
-                    <th colspan="14">TOTAL</th>
-                    <th class="text-right nop">
+                    <td colspan="14">TOTAL</td>
+                    <td class="text-right nop">
                         <g:formatNumber number="${totalFinal}" type="currency" currencySymbol=""/>
-                    </th>
+                    </td>
                 </tr>
                 <g:set var="totalFinal" value="${0}"/>
             </g:if>
@@ -27,30 +38,30 @@
 
         <tr id="comp${comp.comp__id}" class="comp">
             <g:if test="${j == 0}">
-                <th colspan="17" class="info">
+                <td colspan="17" class="info">
                     <strong>Componente</strong>:
                 ${(comp.compdscr.length() > 200) ? comp.compdscr.substring(0, 200) + "..." : comp.compdscr}
-                </th>
+                </td>
                 <g:set var="itera" value="${comp.comp__id}"/>
             </g:if>
             <g:else>
                 <g:if test="${comp.comp__id !=  itera}">
-                    <th colspan="17" class="info">
+                    <td colspan="17" class="info">
                         <strong>Componente</strong>:
                     ${(comp.compdscr.length() > 200) ? comp.compdscr.substring(0, 200) + "..." : comp.compdscr}
-                    </th>
+                    </td>
                     <g:set var="itera" value="${comp.comp__id}"/>
                 </g:if>
             </g:else>
         </tr>
 
         <tr data-id="${comp.actv__id}" class="act comp${comp.comp__id}">
-            <th class="success actividad" title="${comp.plandscr}" style="width:15%">
+            <td class="verde actividad" title="${comp.plandscr}" style="width:15%">
                 ${(comp.actvdscr.length() > 100) ? comp.actvdscr.substring(0, 100) + "..." : comp.actvdscr}
-            </th>
-            <th class="success actividad" title="${comp.actvdscr}" style="width:6%; text-align: right">
+            </td>
+            <td class="verde actividad" title="${comp.actvdscr}" style="width:6%; text-align: right">
                 <g:formatNumber number="${comp.plancsto}" type="currency" currencySymbol=""/>
-            </th>
+            </td>
             <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${1}">${comp.planms01}</th>
             <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${2}">${comp.planms02}</th>
             <th style="width: 6%; text-align: right" data-plan="${comp.plan__id}" data-per="${3}">${comp.planms03}</th>
@@ -73,10 +84,10 @@
 
         <g:if test="${j+1 == tam}">
             <tr class="warning total">
-                <th colspan="14">TOTAL</th>
-                <th class="text-right nop">
+                <td colspan="14"><strong>TOTAL</strong></td>
+                <td class="text-right nop" style="font-weight: bold">
                     <g:formatNumber number="${totalFinal}" type="currency" currencySymbol=""/>
-                </th>
+                </td>
             </tr>
         </g:if>
 

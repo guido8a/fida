@@ -16,6 +16,25 @@ class PlanController {
 
     def dbConnectionService
 
+//    def plan(){
+//        def convenio = Convenio.get(params.id)
+//        def plazo = convenio?.plazo ? (convenio?.plazo?.toInteger() / 360) : 0
+//        def plazoEntero = Math.ceil(plazo).toInteger()
+//        def combo = [:]
+//        def listaPeriodos = []
+//
+//        for (int j = 0; j < 12; j++) {
+//            listaPeriodos.add("Período ${j + 1}")
+//        }
+//
+//        for(int i=1; plazoEntero >= i; i++ ){
+//            combo << ["${i}":"Año ${i}"]
+//        }
+//
+////        println("--> " + combo)
+//        return[convenio: convenio, combo: combo, lista: listaPeriodos]
+//    }
+
     def plan(){
         def convenio = Convenio.get(params.id)
         def plazo = convenio?.plazo ? (convenio?.plazo?.toInteger() / 360) : 0
@@ -35,6 +54,7 @@ class PlanController {
         return[convenio: convenio, combo: combo, lista: listaPeriodos]
     }
 
+
     def tablaPlan_ajax(){
 
         def convenio = Convenio.get(params.id)
@@ -51,7 +71,7 @@ class PlanController {
 
         def tam = res?.size()
 
-//        println("sql " + sql)
+        println("sql " + sql)
 
         return [componentes: res, lista: listaPeriodos, anio: params.periodo, convenio: convenio, tam: tam]
     }
@@ -95,6 +115,7 @@ class PlanController {
         planPeriodo.valor = params.valor.toDouble()
 
         if(!planPeriodo.save(flush: true)){
+            println("errro al guardar el periodo " + planPeriodo.errors)
             render "no"
         }else{
             render "ok"

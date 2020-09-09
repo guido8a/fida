@@ -83,9 +83,11 @@
             </g:if>
         </g:if>
         <g:else>
+            <g:if test="${convenio?.id}">
             <a href="#" id="btnRegistrarConvenio" class="btn btn-sm btn-warning" title="Quitar registr del convenio">
                 <i class="fa fa-times-circle"></i> Desregistrar
             </a>
+            </g:if>
         </g:else>
     </div>
 
