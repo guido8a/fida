@@ -79,10 +79,10 @@
                 <i class="fa fa-hands-helping"></i> Plan de ejecución (cronograma valorado)
             </a>
             <a href="#" id="btnGarantias" class="btn btn-sm btn-info" title="Garantías">
-                <i class="fa fa-user-shield"></i> Garantías
+                <i class="fas fa-money-check-alt"></i> Garantías
             </a>
             <a href="#" id="btnDesembolso" class="btn btn-sm btn-info" title="Desembolso">
-                <i class="fa fa-search-dollar"></i> Desembolso
+                <i class="fas fa-dollar-sign"></i> Desembolsos
             </a>
         </g:if>
 %{--        <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"--}%
