@@ -44,7 +44,6 @@
                     <i class="fa fa-arrow-left"></i> Regresar a proyectos
                 </g:link>
             </div>
-
             <span style="margin-left: 30px">Buscar en la base de conocimiento por:</span>
             <div class="btn-group">
                 <input id="buscar" type="search" class="form-control" style="width: 200px">

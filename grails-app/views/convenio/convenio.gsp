@@ -55,11 +55,11 @@
         <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
         </a>
-%{--        <g:if test="${convenio?.id}">--}%
-%{--            <a href="#" id="btnEliminar" class="btn btn-sm btn-danger" title="Guardar información">--}%
-%{--                <i class="fa fa-trash"></i> Eliminar--}%
-%{--            </a>--}%
-%{--        </g:if>--}%
+    %{--        <g:if test="${convenio?.id}">--}%
+    %{--            <a href="#" id="btnEliminar" class="btn btn-sm btn-danger" title="Guardar información">--}%
+    %{--                <i class="fa fa-trash"></i> Eliminar--}%
+    %{--            </a>--}%
+    %{--        </g:if>--}%
     </g:if>
 </div>
 
@@ -88,14 +88,14 @@
                 <i class="fas fa-dollar-sign"></i> Desembolsos
             </a>
         </g:if>
-%{--        <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"--}%
-%{--           class="btn btn-sm btn-success" title="Consultar artículo">--}%
-%{--            <i class="fas fa-plus"></i> Nuevo convenio--}%
-%{--        </a>--}%
+    %{--        <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"--}%
+    %{--           class="btn btn-sm btn-success" title="Consultar artículo">--}%
+    %{--            <i class="fas fa-plus"></i> Nuevo convenio--}%
+    %{--        </a>--}%
         <g:if test="${convenio?.estado == 'N'}">
-%{--            <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">--}%
-%{--                <i class="fa fa-save"></i> Guardar--}%
-%{--            </a>--}%
+        %{--            <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">--}%
+        %{--                <i class="fa fa-save"></i> Guardar--}%
+        %{--            </a>--}%
             <g:if test="${convenio?.id}">
                 <a href="#" id="btnEliminar" class="btn btn-sm btn-danger" title="Guardar información">
                     <i class="fa fa-trash"></i> Eliminar
@@ -107,9 +107,9 @@
         </g:if>
         <g:else>
             <g:if test="${convenio?.id}">
-            <a href="#" id="btnRegistrarConvenio" class="btn btn-sm btn-warning" title="Quitar registr del convenio">
-                <i class="fa fa-times-circle"></i> Desregistrar
-            </a>
+                <a href="#" id="btnRegistrarConvenio" class="btn btn-sm btn-warning" title="Quitar registr del convenio">
+                    <i class="fa fa-times-circle"></i> Desregistrar
+                </a>
             </g:if>
         </g:else>
     </div>
@@ -286,6 +286,10 @@
 </div>
 
 <script type="text/javascript">
+
+    $("#btnGarantias").click(function () {
+        location.href="${createLink(controller: 'garantia', action: 'garantias')}/" + '${convenio?.id}'
+    });
 
     $("#btnRegistrarConvenio").click(function () {
         var dialog = cargarLoader("Guardando...");
