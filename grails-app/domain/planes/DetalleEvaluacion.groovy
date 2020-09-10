@@ -5,7 +5,7 @@ import parametros.convenio.TipoEvaluacion
 
 class DetalleEvaluacion implements Auditable{
 
-    TipoEvaluacion tipoEvaluacion
+//    TipoEvaluacion tipoEvaluacion
     Evaluacion evaluacion
     IndicadorPlan indicadorPlan
     Double valor
@@ -20,8 +20,8 @@ class DetalleEvaluacion implements Auditable{
         id generator: 'identity'
         columns {
             id column: 'dtev__id'
-            tipoEvaluacion column: 'tpev'
-            evaluacion column: 'eval'
+//            tipoEvaluacion column: 'tpev'
+            evaluacion column: 'eval__id'
             indicadorPlan column: 'inpn__id'
             valor column: 'dtevvlor'
             observaciones column: 'dtevobsr'
@@ -29,7 +29,7 @@ class DetalleEvaluacion implements Auditable{
     }
 
     static constraints = {
-        tipoEvaluacion(nullable: false, blank: false)
+//        tipoEvaluacion(nullable: false, blank: false)
         evaluacion(nullable: false, blank: false)
         indicadorPlan(nullable: false, blank: false)
         valor(nullable: false, blank: false)

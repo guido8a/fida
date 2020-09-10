@@ -22,7 +22,7 @@
         </div>
 
         <div class="btn-group col-sm-1" style="margin-top: 20px; margin-left: -20px; width: 150px">
-            <a href="#" class="btn btn-azul" id="btn-consultar"><i class="fa fa-search"></i> Desplegar Indicadores</a>
+            <a href="#" class="btn btn-azul" id="btn-consultar"><i class="fa fa-search"></i> Recargar Indicadores</a>
         </div>
         <div class="btn-group col-sm-3" style="margin-top: 20px; margin-left: -0px; width: 300px;">
             <a href="#" class="btn btn-success btn-actualizar"><i class="fa fa-save"></i> Guardar</a>
@@ -33,6 +33,7 @@
 
 </fieldset>
 
+<input class="hidden" id="planNs" value="${plns.id}">
 
 <fieldset class="borde" %{--style="width: 1170px"--}%>
 
@@ -61,13 +62,15 @@
 <script type="text/javascript">
 
     function consultar() {
-        var oblg = $("#obligaciones").val();
+        var plns = $("#planNs").val();
+        var eval = "${evaluacion.id}";
 
         $.ajax({
             type    : "POST",
             url     : "${createLink(action:'tabla')}",
             data    : {
-                oblg  : oblg
+                plns  : plns,
+                eval  : eval
             },
             success : function (msg) {
                 $("#divTabla").html(msg);
@@ -96,14 +99,14 @@
 //                    $("#dlgLoad").dialog("open");
             var data = "";
 
-            var fcha = $("#fechaOb").val();
-            var oblg = $("#obligaciones").val();
+            var plns = $("#planNs").val();
+            var eval = "${evaluacion.id}";
 
             $(".editable").each(function () {
                 var id = $(this).attr("id");
                 var valor = $(this).data("valor");
                 var data1 = $(this).data("original");
-                var ingr = $(this).data("ingr");
+                var inor = $(this).data("inor");
                 var obsrog = $(this).data("obsrog");
 
                 console.log('valor', valor);
@@ -111,24 +114,25 @@
 //                        console.log(chk);
                 var obsr = $(this).siblings(".observaciones").children("input").val();
 
-                if (chk && (obsr != obsrog) && (ingr)) {
-//                            console.log('obsr:', obsr, 'obsrog:', obsrog);
+/*
+                if (chk && (obsr != obsrog) && (inor)) {
                     if (data != '') {
                         data += "&"
                     }
-                    data += "&obsr=" + id + "_id" + ingr + "_ob" + obsr
-//                            console.log('obsr:', obsr, 'data:', data);
+                    data += "&obsr=" + id + "_inor" + inor + "_ob" + obsr
                 }
+*/
 //                        console.log('data:', data)
-                if (chk && (parseFloat(valor) > 0 && parseFloat(data1) != parseFloat(valor))) {
+                if (chk && (parseFloat(valor) > 0 && parseFloat(data1) != parseFloat(valor) || (obsr != obsrog) )) {
                     if (data != "") {
                         data += "&";
                     }
                     var val = valor ? valor : data1;
+                    // inpn__id  val  inor__id  ob
                     if (obsr != obsrog) {
-                        data += "&item=" + id + "_" + val + "_id" + ingr + "_ob" + obsr;// + "_" + chk;
+                        data += "&item=" + id + "_" + val + "_inor" + inor + "_ob" + obsr;// + "_" + chk;
                     } else {
-                        data += "&item=" + id + "_" + val + "_id" + ingr;// + "_" + chk;
+                        data += "&item=" + id + "_" + val + "_inor" + inor;// + "_" + chk;
                     }
 
                 }
@@ -137,7 +141,7 @@
             $.ajax({
                 type: "POST",
                 url: "${createLink(action: 'actualizar')}",
-                data: data + "&fecha=" + fcha + "&oblg=" + oblg,
+                data: data + "&plns=" + plns + "&eval=" + eval,
                 success: function (msg) {
 //                            $("#dlgLoad").dialog("close");
                     var parts = msg.split("_");

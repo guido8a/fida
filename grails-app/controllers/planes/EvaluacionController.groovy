@@ -57,6 +57,7 @@ class EvaluacionController {
         def detallesDetalles = null
 
         if(indicadores){
+/*
             if(detallesPlan){
                 indicadores.each {
                     if(detallesPlan?.indicadorPlan?.contains(it.indicadores)){
@@ -71,6 +72,7 @@ class EvaluacionController {
             }else{
                 detallesIndicadores = indicadores
             }
+*/
         }else{
             detallesIndicadores = null
         }
@@ -103,23 +105,24 @@ class EvaluacionController {
 
     def tabla() {
         println "tabla " + params
-        def sql = "select inpn__id, inpn.inor__id, inpn.plns__id, inordscr, 0 original, 'obsr' obsr from inpn, inor " +
+        def sql = "select 0 id, inpn__id, inpn.inor__id, inpn.plns__id, inordscr, 0 original, 'obsr' obsr from inpn, inor " +
                 "where inor.inor__id = inpn.inor__id order by inor__id"
         println("sql " + sql)
         def cn = dbConnectionService.getConnection()
-        def data = cn.rows(sql.toString())
+        def evaluacion = Evaluacion.get(params.eval)
+        def detalle = DetalleEvaluacion.countByEvaluacion(evaluacion)
+        def data
 
-/*
-        data = [[prsn__id:2, edifdscr:'Torre 1', prsnnmbr:'Santiago', prsnapll:'Naranjo', prsndpto:111,
-                 tpocdscr:'Propietario', ingr__id:88, ingrfcha:'2018-02-01 00:00:00.0', ingretdo:'P',
-                 ingrvlor:51.00, ingrobsr:'Febrero 2018'],
-                [prsn__id:3, edifdscr:'Torre 1', prsnnmbr:'Lilia', prsnapll:'Quintana', prsndpto:112,
-                 tpocdscr:'Propietario', ingr__id:89, ingrfcha:'2018-02-01 00:00:00.0', ingretdo:'P',
-                 ingrvlor:46.00, ingrobsr:'Febrero 2018']]
-*/
+        if(detalle) {
+            sql = "select dtev__id id, inpn.inpn__id, inpn.inor__id, inpn.plns__id, inordscr, dtevvlor original, " +
+                    " dtevobsr obsr from dtev, inpn, inor where eval__id = ${evaluacion.id} and " +
+                    "inpn.inpn__id = dtev.inpn__id and inor.inor__id = inpn.inor__id order by inor__id"
+        }
+        println "sql: $sql"
+        data = cn.rows(sql.toString())
 
 //        def par = [oblg:7, controller:'vivienda', format:null, action:'tabla']
-        [indicadores: data, params: params, band: false]
+        [indicadores: data, plns: params.plns, eval: params.eval, band: false, cuenta: detalle]
     }
 
     def actualizar() {
@@ -133,20 +136,17 @@ class EvaluacionController {
 
         def oks = "", nos = ""
 
-        def fecha = new Date().parse("dd-MM-yyyy", params.fecha);
-        println "fecha: $fecha"
+        def eval = Evaluacion.get(params.eval)
 
-        def oblg = Obligacion.get(params.oblg)
-
-        println "oblg: ${oblg.id}"
+        println "eval: ${eval.descripcion}"
 
         if(params.item) {
             params.item.each {
                 def parts = it.split("_")
 
-                def prsnId = parts[0]
+                def inpn = parts[0]
                 def valor  = parts[1].toDouble()
-                def ingr   = parts[2]
+                def inor   = parts[2]
                 def obsr = null
                 if(it.contains('_ob')) {
                     obsr   = parts[3]
@@ -157,98 +157,43 @@ class EvaluacionController {
                     }
                 }
 
-                if(ingr.size() > 2) {
-                    ingr = ingr[2..-1]
+                if(inor.size() > 4) {
+                    inor = inor[4..-1]
                 } else {
-                    ingr = null
+                    inor = null
                 }
 
-                def ingreso = Ingreso.get(ingr);
+                println "eval: ${params.eval}, inpn: $inpn, valor: $valor, inor: $inor, obsr: $obsr"
 
-/*
-                if (!ingreso) {
-                    ingreso = new Ingreso()
-                    ingreso.persona = Persona.get(prsnId)
-                    ingreso.obligacion = oblg
-                    ingreso.valor = valor
-                    ingreso.fecha = new Date()
-                } else {
-                    ingreso.valor = valor
-                    ingreso.fecha = new Date()
-                    ingreso.estado = 'M'
+                /* consultar si hay que actualizar DTEV */
+                def evaluacion = Evaluacion.get(params.eval);
+                def indicador = IndicadorPlan.get(inpn);
+                def detalle = DetalleEvaluacion.findByEvaluacionAndIndicadorPlan(evaluacion, indicador)
+
+                println "evaluacion: ${evaluacion.id}, indicador: ${indicador.id} inor: ${indicador.indicadores.descripcion}"
+
+                if(!detalle) {
+                    detalle = new DetalleEvaluacion()
+                    detalle.evaluacion = evaluacion
+                    detalle.indicadorPlan = indicador
                 }
-*/
+                detalle.valor = valor
+                detalle.observaciones = obsr
 
-                ingreso.observaciones = obsr
-
-                if (!ingreso.save(flush: true)) {
-                    println "error $parts, --> ${ingreso.errors}"
+                if (!detalle.save(flush: true)) {
+                    println "error $parts, --> ${detealle.errors}"
                     if (nos != "") {
                         nos += ","
                     }
-                    nos += "#" + prsnId
+                    nos += "#" + inpn
                 } else {
                     if (oks != "") {
                         oks += ","
                     }
-                    oks += "#" + prsnId
-                }
-
-            }
-
-        }
-
-        def obsr
-        def id
-        if(params.obsr){
-            params.obsr.each {
-                def p_obsr = it.split("_")
-                id = p_obsr[0]
-                def ingr   = p_obsr[1]
-                if(ingr.size() > 2) {
-                    ingr = ingr[2..-1]
-                } else {
-                    ingr = null
-                }
-
-                obsr = p_obsr[2]
-                if(obsr.size() > 2) {
-                    obsr = obsr[2..-1]
-                } else {
-                    obsr = null
-                }
-                println "id: $id, ingr: $ingr, obsr: $obsr"
-
-                def ingreso = Ingreso.get(ingr);
-
-/*
-                if (!ingreso) {
-                    println "crea ingreso"
-                    ingreso = new Ingreso()
-                    ingreso.persona = Persona.get(id)
-                    ingreso.fecha = new Date()
-                    ingreso.observaciones = obsr
-                } else {
-                    println "edita ingreso ${ingreso.id}"
-                    ingreso.observaciones = obsr
-                }
-*/
-
-                if (!ingreso.save(flush: true)) {
-                    println "error $p_obsr, --> ${ingreso.errors}"
-                    if (nos != "") {
-                        nos += ","
-                    }
-                    nos += "#" + id
-                } else {
-                    if (oks != "") {
-                        oks += ","
-                    }
-                    oks += "#" + id
+                    oks += "#" + inpn
                 }
             }
         }
-
         render oks + "_" + nos
     }
 
