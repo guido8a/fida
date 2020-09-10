@@ -44,6 +44,9 @@
             <i class="fa fa-arrow-left"></i> Ir al Plan de Negocio Solidario
         </a>
     </g:if>
+</div>
+
+<div class="btn-group">
     <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"
        class="btn btn-sm btn-success" title="Consultar artículo">
         <i class="fas fa-plus"></i> Nuevo convenio
