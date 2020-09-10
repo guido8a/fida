@@ -44,6 +44,20 @@
             <i class="fa fa-arrow-left"></i> Ir al Plan de Negocio Solidario
         </a>
     </g:if>
+    <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"
+       class="btn btn-sm btn-success" title="Consultar artículo">
+        <i class="fas fa-plus"></i> Nuevo convenio
+    </a>
+    <g:if test="${convenio?.estado == 'N'}">
+        <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
+            <i class="fa fa-save"></i> Guardar
+        </a>
+%{--        <g:if test="${convenio?.id}">--}%
+%{--            <a href="#" id="btnEliminar" class="btn btn-sm btn-danger" title="Guardar información">--}%
+%{--                <i class="fa fa-trash"></i> Eliminar--}%
+%{--            </a>--}%
+%{--        </g:if>--}%
+    </g:if>
 </div>
 
 <h3 style="text-align: center">Convenios de Economía Popular y Solidaria</h3>
@@ -64,15 +78,21 @@
             <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-warning" title="Plan de ejecución">
                 <i class="fa fa-hands-helping"></i> Plan de ejecución (cronograma valorado)
             </a>
-        </g:if>
-        <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"
-           class="btn btn-sm btn-success" title="Consultar artículo">
-            <i class="fas fa-plus"></i> Nuevo convenio
-        </a>
-        <g:if test="${convenio?.estado == 'N'}">
-            <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
-                <i class="fa fa-save"></i> Guardar
+            <a href="#" id="btnGarantias" class="btn btn-sm btn-info" title="Garantías">
+                <i class="fa fa-user-shield"></i> Garantías
             </a>
+            <a href="#" id="btnDesembolso" class="btn btn-sm btn-info" title="Desembolso">
+                <i class="fa fa-search-dollar"></i> Desembolso
+            </a>
+        </g:if>
+%{--        <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"--}%
+%{--           class="btn btn-sm btn-success" title="Consultar artículo">--}%
+%{--            <i class="fas fa-plus"></i> Nuevo convenio--}%
+%{--        </a>--}%
+        <g:if test="${convenio?.estado == 'N'}">
+%{--            <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">--}%
+%{--                <i class="fa fa-save"></i> Guardar--}%
+%{--            </a>--}%
             <g:if test="${convenio?.id}">
                 <a href="#" id="btnEliminar" class="btn btn-sm btn-danger" title="Guardar información">
                     <i class="fa fa-trash"></i> Eliminar
