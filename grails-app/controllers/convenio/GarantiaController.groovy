@@ -1,0 +1,7 @@
+package convenio
+
+
+class GarantiaController {
+
+
+}
