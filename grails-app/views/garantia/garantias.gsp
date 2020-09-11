@@ -104,6 +104,10 @@
     <p class="css-vertical-text">Garantías</p>
     <div class="linea"></div>
 
+<g:form class="form-horizontal" name="frmGarantia" controller="garantia" action="saveGarantia_ajax" method="POST">
+    <g:hiddenField name="convenio" value="${convenio?.id}"/>
+    <g:hiddenField name="tipo" value="${'add'}"/>
+    <g:hiddenField name="id" value="${''}"/>
     <div class="row izquierda">
         <div class="col-md-12 input-group">
             <span class="col-md-2 label label-primary text-info mediano">Tipo de garantía</span>
@@ -112,14 +116,12 @@
                     <g:select name="tipoGarantia" from="${convenio.TipoGarantia.list().sort{it.descripcion}}" class="form-control" optionKey="id" optionValue="descripcion"/>
                 </span>
             </div>
-
             <span class="col-md-2 label label-primary text-info mediano">Tipo documento de garantía</span>
             <div class="col-md-4">
                 <span class="grupo">
                     <g:select name="tipoDocumentoGarantia" from="${convenio.TipoDocumentoGarantia.list().sort{it.descripcion}}" class="form-control" optionKey="id" optionValue="descripcion"/>
                 </span>
             </div>
-
         </div>
     </div>
     <div class="row izquierda">
@@ -130,10 +132,16 @@
                     <g:select name="aseguradora" from="${convenio.Aseguradora.list().sort{it.nombre}}" class="form-control" optionKey="id" optionValue="nombre"/>
                 </span>
             </div>
-            <span class="col-md-2 label label-primary text-info mediano">Estado de garantía</span>
-            <div class="col-md-4">
+            <span class="col-md-1 label label-primary text-info mediano">Estado de garantía</span>
+            <div class="col-md-2">
                 <span class="grupo">
-                    <g:select name="estadoGarantia" from="${convenio.EstadoGarantia.list().sort{it.descripcion}}" class="form-control" optionKey="id" optionValue="descripcion"/>
+                    <g:select name="estadoGarantia" from="${convenio.EstadoGarantia.list().sort{it.descripcion}}" value="${1}" disabled="" class="form-control" optionKey="id" optionValue="descripcion"/>
+                </span>
+            </div>
+            <span class="col-md-1 label label-primary text-info mediano">Garantía original</span>
+            <div class="col-md-2">
+                <span class="grupo">
+                    <g:textField name="padre" class="form-control" disabled=""/>
                 </span>
             </div>
         </div>
@@ -143,13 +151,13 @@
             <span class="col-md-2 label label-primary text-info mediano">Número de garantía</span>
             <div class="col-md-4">
                 <span class="grupo">
-                    <g:textField name="codigo" class="form-control"/>
+                    <g:textField name="codigo" class="form-control required allCaps"/>
                 </span>
             </div>
-            <span class="col-md-2 label label-primary text-info mediano">Garantía original</span>
-            <div class="col-md-4">
+            <span class="col-md-1 label label-primary text-info mediano">Monto</span>
+            <div class="col-md-2">
                 <span class="grupo">
-                    <g:textField name="padre" class="form-control"/>
+                    <g:textField name="monto" class="form-control required number"/>
                 </span>
             </div>
         </div>
@@ -159,38 +167,99 @@
             <span class="col-md-2 label label-primary text-info mediano">Emisión</span>
             <div class="col-md-2">
                 <span class="grupo">
-                    <input name="fechaInicio" id='fechaInicio' type='text' class="form-control"
-                           />
+                    <input name="fechaEmision" id='fechaEmision' type='text' class="form-control required"/>
                 </span>
             </div>
             <span class="col-md-1 label label-primary text-info mediano">Vencimiento</span>
             <div class="col-md-2">
                 <span class="grupo">
-                    <input name="fechaFinalizacion" id='fechaFinalizacion' type='text' class="form-control"
-                    />
+                    <input name="fechaFinalizacion" id='fechaFinalizacion' type='text' class="form-control required" />
                 </span>
             </div>
             <span class="col-md-1 label label-primary text-info mediano">Días</span>
             <div class="col-md-2">
                 <span class="grupo">
-                    <g:textField name="diasGarantizados" class="form-control"/>
+                    <g:textField name="diasGarantizados" class="form-control" readonly=""/>
                 </span>
             </div>
+            <a href="#" class="btn btn-success" id="btnAgregarGarantia"><i class="fa fa-plus"></i> Agregar</a>
         </div>
     </div>
+</g:form>
 </div>
 
-<div style="margin-top: 10px; min-height: 150px" class="vertical-container">
+<div style="margin-top: 10px; min-height: 250px" class="vertical-container">
     <p class="css-vertical-text">Garantías Vigentes</p>
-
     <div class="linea"></div>
-
+    <div id="divTablaGarantias"></div>
 </div>
-
 
 <script type="text/javascript">
 
-    $('#fechaInicio').datetimepicker({
+    // $("#fechaEmision").onSelect(function () {
+    //     calcularDias();
+    // });
+    //
+    // function calcularDias(){
+    //     var e = $("#fechaEmision").val();
+    //     var f = $("#fechaFinalizacion").val();
+    //
+    //     println("e " + e)
+    //     println("f " + f)
+    //
+    //     if(e > f){
+    //         bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> La fecha de emisión es menor a la fecha de finalización ")
+    //     }
+    // }
+
+    cargarTablaGarantias();
+
+    $("#btnAgregarGarantia").click(function () {
+
+        var e = $("#fechaEmision").val();
+        var f = $("#fechaFinalizacion").val();
+
+
+        var $form = $("#frmGarantia");
+        var $btn = $("#dlgCreateEdit").find("#btnSave");
+        if ($form.valid()) {
+            var data = $form.serialize();
+            $btn.replaceWith(spinner);
+            var dialog = cargarLoader("Guardando...");
+            $.ajax({
+                type    : "POST",
+                url     : $form.attr("action"),
+                data    : data,
+                success : function (msg) {
+                    dialog.modal('hide');
+                    if(msg == 'ok'){
+                        log("Garantía agregada correctamente", "success");
+                        cargarTablaGarantias();
+                    }else{
+                        log("Error al agregar la garantía", "success");
+                    }
+                }
+            });
+        } else {
+            return false;
+        } //else
+        return false;
+    });
+
+    function cargarTablaGarantias () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'garantia', action: 'tablaGarantias_ajax')}',
+            data:{
+                id: '${convenio?.id}'
+            },
+            success: function (msg) {
+                $("#divTablaGarantias").html(msg)
+            }
+        })
+    }
+
+    $('#fechaEmision').datetimepicker({
         locale: 'es',
         format: 'DD-MM-YYYY',
         daysOfWeekDisabled: [0, 6],
@@ -198,7 +267,7 @@
         showClose: true,
     });
 
-    $('#fechaFinalización').datetimepicker({
+    $('#fechaFinalizacion').datetimepicker({
         locale: 'es',
         format: 'DD-MM-YYYY',
         daysOfWeekDisabled: [0, 6],
@@ -209,7 +278,6 @@
     $("#btnRegresarConvenio").click(function () {
         location.href="${createLink(controller: 'convenio', action: 'convenio')}/" + '${convenio?.id}'
     });
-
 
 </script>
 

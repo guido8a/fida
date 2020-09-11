@@ -34,6 +34,7 @@ class Garantia implements Auditable{
             tipoDocumentoGarantia column: 'tdgr__id'
             estado column: 'edgr__id'
             aseguradora column: 'asgr__id'
+            convenio column: 'cnvn__id'
             padre column: 'grntpdre'
             codigo column: 'grntcdgo'
             numeroRenovaciones column: 'grntnmrv'
@@ -49,6 +50,7 @@ class Garantia implements Auditable{
     }
 
     static constraints = {
+        convenio(blank:false, nullable: false)
         tipoGarantia(blank: true, nullable: true, attributes: [title: 'código'])
         tipoDocumentoGarantia(blank: true, nullable: true, attributes: [title: 'código'])
         estado(blank: true, nullable: true, attributes: [title: 'código'])
