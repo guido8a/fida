@@ -18,6 +18,7 @@ class GarantiaController {
         switch (params.tipo.toString().trim().toLowerCase()) {
             case "add":
                 garantia = new Garantia()
+                params.padre = null
                 break;
             case "edit":
                 garantia = Garantia.get(params.id)
@@ -29,12 +30,13 @@ class GarantiaController {
                 if (!padre.save(flush: true)) {
                     println "error save padre" + padre.errors
                 }
+                params.padre = padre
+                garantia = new Garantia()
                 break;
         }
 
-        params.diasGarantizados = 0
+        params.codigo = params.codigo.trim()?.toUpperCase()
         params.estado = EstadoGarantia.get(1)
-        params.padre = padre
         params.estadoGarantia = "N"
         params.monto = params.monto.toDouble()
         params.diasGarantizados = params.diasGarantizados.toInteger()
@@ -55,6 +57,23 @@ class GarantiaController {
         def convenio = Convenio.get(params.id)
         def garantias = Garantia.findAllByConvenio(convenio)
         return[garantias: garantias]
+    }
+
+    def calcularDias_ajax(){
+        def duration = groovy.time.TimeCategory.minus(
+                new Date().parse("dd-MM-yyyy",params.inicio),
+                new Date().parse("dd-MM-yyyy",params.fin)
+        );
+
+//        println("du " + duration.days)
+        render duration.days * -1
+    }
+
+    def retornaGarantia(){
+        def garantia = Garantia.get(params.id)
+        def datos = garantia?.diasGarantizados + "_" + garantia?.fechaFinalizacion?.format("dd-MM-yyyy") + "_" + garantia?.fechaInicio?.format("dd-MM-yyyy") + "_" + garantia?.monto + "_" + garantia?.codigo?.trim() + "_" + garantia?.padre + "_" + garantia?.estado?.id + "_" + garantia?.aseguradora?.id + "_" + garantia?.tipoDocumentoGarantia?.id + "_" + garantia?.tipoGarantia?.id + "_" + garantia?.id
+//        println("datos: "+ datos)
+        render datos
     }
 
 }
