@@ -79,7 +79,7 @@ class GarantiaController {
 
     def retornaGarantia(){
         def garantia = Garantia.get(params.id)
-        def datos = garantia?.diasGarantizados + "_" + garantia?.fechaFinalizacion?.format("dd-MM-yyyy") + "_" + garantia?.fechaInicio?.format("dd-MM-yyyy") + "_" + garantia?.monto + "_" + garantia?.codigo?.trim() + "_" + garantia?.padre + "_" + garantia?.estado?.id + "_" + garantia?.aseguradora?.id + "_" + garantia?.tipoDocumentoGarantia?.id + "_" + garantia?.tipoGarantia?.id + "_" + garantia?.id
+        def datos = garantia?.diasGarantizados + "_" + garantia?.fechaFinalizacion?.format("dd-MM-yyyy") + "_" + garantia?.fechaInicio?.format("dd-MM-yyyy") + "_" + garantia?.monto + "_" + garantia?.codigo?.trim() + "_" + garantia?.padre?.codigo + "_" + garantia?.estado?.id + "_" + garantia?.aseguradora?.id + "_" + garantia?.tipoDocumentoGarantia?.id + "_" + garantia?.tipoGarantia?.id + "_" + garantia?.id
 //        println("datos: "+ datos)
         render datos
     }
