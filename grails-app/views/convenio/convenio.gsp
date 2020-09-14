@@ -87,6 +87,9 @@
             <a href="#" id="btnDesembolso" class="btn btn-sm btn-info" title="Desembolso">
                 <i class="fas fa-dollar-sign"></i> Desembolsos
             </a>
+            <a href="#" id="btnInforme" class="btn btn-sm btn-info" title="Informe de avance">
+                <i class="fas fa-file"></i> Informes
+            </a>
         </g:if>
     %{--        <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"--}%
     %{--           class="btn btn-sm btn-success" title="Consultar artículo">--}%
@@ -289,6 +292,14 @@
 
     $("#btnGarantias").click(function () {
         location.href="${createLink(controller: 'garantia', action: 'garantias')}/" + '${convenio?.id}'
+    });
+
+    $("#btnDesembolso").click(function () {
+        location.href="${createLink(controller: 'desembolso', action: 'desembolso')}/" + '${convenio?.id}'
+    });
+
+    $("#btnInforme").click(function () {
+        location.href="${createLink(controller: 'informeAvance', action: 'informe')}/" + '${convenio?.id}'
     });
 
     $("#btnRegistrarConvenio").click(function () {

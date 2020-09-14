@@ -67,4 +67,8 @@ class Garantia implements Auditable{
         pedido(size: 1..1, blank: true, nullable: true, attributes: [title: 'código'])
     }
 
+    String toString() {
+        "${this.codigo} - ${this.aseguradora.nombre}"
+    }
+
 }
