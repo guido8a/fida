@@ -41,4 +41,8 @@ class Desembolso implements Auditable {
         fecha(nullable: false, blank:false)
         cur(nullable: false, blank:false)
     }
+
+    String toString() {
+        "${this.descripcion} - \$${this.valor} (${this.cur})"
+    }
 }

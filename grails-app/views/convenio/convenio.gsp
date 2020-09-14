@@ -334,7 +334,7 @@
     });
 
     $("#btnRegresar").click(function () {
-        console.log('regresa', "${convenio?.planesNegocio?.unidadEjecutora?.id}")
+        %{--console.log('regresa', "${convenio?.planesNegocio?.unidadEjecutora?.id}")--}%
         var id = "${convenio?.planesNegocio?.unidadEjecutora?.id}"
         location.href="${createLink(controller: 'planesNegocio', action: 'planes')}" + "/?id=" + id
     });

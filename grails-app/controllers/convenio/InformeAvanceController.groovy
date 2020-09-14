@@ -21,7 +21,7 @@ class InformeAvanceController {
      * Acción llamada con ajax que llena la tabla de los tallers de un proyecto
      */
     def tablaInforme_ajax() {
-        println "tablaDesembolso_ajax $params"
+        println "tablaInforme_ajax $params"
         def convenio = Convenio.get(params.id)
         def administrador = AdministradorConvenio.findByConvenioAndFechaFinIsNull(convenio)
         def informe = InformeAvance.withCriteria {
@@ -62,11 +62,12 @@ class InformeAvanceController {
      * @return infoInstance el objeto a modificar cuando se encontró el elemento
      * @render ERROR*[mensaje] cuando no se encontró el elemento
      */
-    def formDesembolso_ajax() {
-        println "formDesembolso_ajax: $params"
+    def formInforme_ajax() {
+        println "formInforme_ajax: $params"
         def convenio = Convenio.get(params.convenio)
         def infoInstance = new InformeAvance()
-        def garantias = Garantia.findAllByConvenio(convenio, [sort: 'fechaInicio', order: 'desc'])
+        def desembolso = Desembolso.findAllByConvenio(convenio)
+        def administrador = AdministradorConvenio.findAllByConvenio(convenio)
         if (params.id) {
             infoInstance = InformeAvance.get(params.id)
             if (!infoInstance) {
@@ -74,8 +75,8 @@ class InformeAvanceController {
             }
         }
 
-        println "convenio: ${convenio}"
-        return [infoInstance: infoInstance, convenio: convenio, garantias: garantias]
+        println "convenio: ${convenio}, admn: ${administrador}"
+        return [infoInstance: infoInstance, convenio: convenio, administrador: administrador, desembolso: desembolso]
     } //form para cargar con ajax en un dialog
 
     /**
@@ -83,12 +84,12 @@ class InformeAvanceController {
      * @render ERROR*[mensaje] cuando no se pudo grabar correctamente, SUCCESS*[mensaje] cuando se grabó correctamente
      */
     def save_ajax() {
-        println "save_ajax: $params"
+        println "informe save_ajax: $params"
         def informe
         def texto
-        def cmnd = null
-        def validaDesembolsos = true
-        if(validaDesembolsos){
+        def validaInformes = true
+
+        if(validaInformes){
 
             params.fecha = params.fecha ? new Date().parse("dd-MM-yyyy", params.fecha) : null
 
@@ -100,9 +101,8 @@ class InformeAvanceController {
                 texto = "InformeAvance creado correctamente"
             }
 
-            params.cur = params.cur.toString().toUpperCase()
             informe.properties = params
-            informe.valor = params.valor.toDouble()
+            informe.porcentaje = params.porcentaje.toDouble()
 
             println "informe: ${informe.properties}"
 

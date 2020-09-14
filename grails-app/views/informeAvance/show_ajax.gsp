@@ -2,48 +2,48 @@
 
 %{--<script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>--}%
 %{--<script type="text/javascript" src="${resource(dir: 'js/plugins/jquery-validation-1.13.1/dist', file: 'additional-methods.min.js')}"></script>--}%
-<g:if test="${!dsmbInstance}">
+<g:if test="${!infoInstance}">
     <elm:notFound elem="Taller" genero="o"/>
 </g:if>
 <g:else>
 
     <div class="modal-contenido">
-            <g:hiddenField name="id" value="${dsmbInstance?.id}"/>
+            <g:hiddenField name="id" value="${infoInstance?.id}"/>
 
 
             <div class="row">
                 <div class="col-md-3 show-label">Organización</div>
-                <div class="col-md-9">${dsmbInstance?.convenio?.planesNegocio?.unidadEjecutora}</div>
+                <div class="col-md-9">${infoInstance?.administradorConvenio?.convenio?.planesNegocio?.unidadEjecutora}</div>
             </div>
 
             <div class="row">
-                <div class="col-md-3 show-label">Financiamiento</div>
-                <div class="col-md-9">${dsmbInstance?.financiamientoPlanNegocio?.fuente?.descripcion}</div>
+                <div class="col-md-3 show-label">Administrador del Convenio</div>
+                <div class="col-md-9">${infoInstance?.administradorConvenio?.persona?.nombreCompleto}</div>
             </div>
 
             <div class="row">
-                <div class="col-md-3 show-label">Garantía</div>
-                <div class="col-md-9">${dsmbInstance?.garantia?.codigo}</div>
+                <div class="col-md-3 show-label">Desembolso</div>
+                <div class="col-md-9">${infoInstance?.desembolso?.descripcion}</div>
             </div>
 
             <div class="row">
-                <div class="col-md-3 show-label">descripcion</div>
-                <div class="col-md-9">${dsmbInstance?.descripcion}</div>
+                <div class="col-md-3 show-label">Informe</div>
+                <div class="col-md-9">${infoInstance?.informeAvance}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 show-label">Dificultades</div>
+                <div class="col-md-9">${infoInstance?.dificultadesAvance}</div>
             </div>
 
             <div class="row">
                 <div class="col-md-3 show-label">Fecha</div>
-                <div class="col-md-3">${dsmbInstance?.fecha?.format("dd-MM-yyyy")}</div>
+                <div class="col-md-3">${infoInstance?.fecha?.format("dd-MM-yyyy")}</div>
             </div>
 
             <div class="row">
                 <div class="col-md-3 show-label">Valor</div>
-                <div class="col-md-9">${dsmbInstance?.valor}</div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3 show-label">CUR</div>
-                <div class="col-md-9">${dsmbInstance?.cur}</div>
+                <div class="col-md-9">${infoInstance?.porcentaje}</div>
             </div>
 
     </div>
@@ -59,33 +59,6 @@
             return true;
         });
 
-        $(".buscarParroquia").click(function () {
-            var dialog = cargarLoader("Cargando...");
-            $.ajax({
-                type: 'POST',
-                url: '${createLink(controller: 'parroquia', action: 'buscarParroquia_ajax')}',
-                data:{
-                },
-                success:function (msg) {
-                    dialog.modal('hide');
-                    bp = bootbox.dialog({
-                        id    : "dlgBuscarParroquia",
-                        title : "Buscar Parroquia",
-                        class : "modal-lg",
-                        message : msg,
-                        buttons : {
-                            cancelar : {
-                                label     : "Cancelar",
-                                className : "btn-primary",
-                                callback  : function () {
-                                }
-                            }
-                        } //buttons
-                    }); //dialog
-                }
-            });
-        });
-
         function cerrarDialogoParroquia(){
             bp.dialog().dialog('open');
             bp.modal("hide");
@@ -98,15 +71,6 @@
             sideBySide: true,
             showClose: true,
         });
-
-        $('#fechaFin').datetimepicker({
-            locale: 'es',
-            format: 'DD-MM-YYYY',
-            daysOfWeekDisabled: [0, 6],
-            sideBySide: true,
-            showClose: true,
-        });
-
 
 
     </script>

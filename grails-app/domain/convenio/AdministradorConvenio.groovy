@@ -36,4 +36,8 @@ class AdministradorConvenio implements Auditable {
         observaciones(nullable: true, blank: true)
     }
 
+    String toString() {
+        "${this.persona.nombreCompleto}"
+    }
+
 }

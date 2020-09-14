@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="layout" content="main">
-<title>Desembolsoes</title>
+<title>Informees</title>
 </head>
 
 <div class="panel panel-primary col-md-12">
@@ -37,7 +37,7 @@
 <script type="text/javascript">
     var bm;
 
-    function reloadTablaDesembolso(search) {
+    function reloadTablaInforme(search) {
         var data = {
             id : "${convenio.id}"
         };
@@ -54,8 +54,8 @@
         });
     }
 
-    function submitFormDesembolso() {
-        var $form = $("#frmDesembolso");
+    function submitFormInforme() {
+        var $form = $("#frmInforme");
         var $btn = $("#dlgCreateEdit").find("#btnSave");
         // $form.validate();
         // console.log('submit');
@@ -77,7 +77,7 @@
                     var parts = msg.split("*");
                     if (parts[0] == "SUCCESS") {
                         log(parts[1],"success");
-                        reloadTablaDesembolso();
+                        reloadTablaInforme();
                         bm.modal("hide");
                     } else {
                         if(parts[0] == 'er'){
@@ -98,11 +98,11 @@
         } //else
         return false;
     }
-    function deleteDesembolso(itemId) {
+    function deleteInforme(itemId) {
         bootbox.dialog({
             title   : "Alerta",
             message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
-                    "¿Está seguro que desea eliminar el Desembolso seleccionado? Esta acción no se puede deshacer.</p>",
+                    "¿Está seguro que desea eliminar el Informe seleccionado? Esta acción no se puede deshacer.</p>",
             buttons : {
                 cancelar : {
                     label     : "Cancelar",
@@ -114,7 +114,7 @@
                     label     : "<i class='fa fa-trash'></i> Eliminar",
                     className : "btn-danger",
                     callback  : function () {
-                        openLoader("Eliminando Desembolso");
+                        openLoader("Eliminando Informe");
                         $.ajax({
                             type    : "POST",
                             url     : '${createLink(controller:'taller', action:'delete_ajax')}',
@@ -126,7 +126,7 @@
                                 log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                                 closeLoader();
                                 if (parts[0] == "SUCCESS") {
-                                    reloadTablaDesembolso();
+                                    reloadTablaInforme();
                                 }
                             }
                         });
@@ -136,12 +136,12 @@
         });
     }
 
-    function createEditDesembolso(id) {
+    function createEditInforme(id) {
         var title = id ? "Editar" : "Crear";
         var data = id ? {id : id} : {};
         $.ajax({
             type    : "POST",
-            url     : "${createLink(controller:'desembolso', action:'formDesembolso_ajax')}",
+            url     : "${createLink(controller:'informeAvance', action:'formInforme_ajax')}",
             data    : {
                 id: id ? id : '',
                 convenio: '${convenio?.id}'
@@ -149,7 +149,7 @@
             success : function (msg) {
                 bm = bootbox.dialog({
                     id      : "dlgCreateEdit",
-                    title   : title + " Desembolso del InformeAvance",
+                    title   : title + " Informe de Avance",
                     message : msg,
                     buttons : {
                         cancelar : {
@@ -163,7 +163,7 @@
                             label     : "<i class='fa fa-save'></i> Guardar",
                             className : "btn-success",
                             callback  : function () {
-                                return submitFormDesembolso();
+                                return submitFormInforme();
                             } //callback
                         } //guardar
                     } //buttons
@@ -175,18 +175,18 @@
         }); //ajax
     } //createEdit
 
-    reloadTablaDesembolso();
+    reloadTablaInforme();
 
     $("#btnSearchDoc").click(function () {
-        reloadTablaDesembolso($.trim($("#searchDoc").val()));
+        reloadTablaInforme($.trim($("#searchDoc").val()));
     });
     $("#searchDoc").keyup(function (ev) {
         if (ev.keyCode == 13) {
-            reloadTablaDesembolso($.trim($("#searchDoc").val()));
+            reloadTablaInforme($.trim($("#searchDoc").val()));
         }
     });
     $("#btnAddDsmb").click(function () {
-        createEditDesembolso();
+        createEditInforme();
     });
 
 

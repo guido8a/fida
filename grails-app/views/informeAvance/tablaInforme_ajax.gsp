@@ -5,9 +5,9 @@
 <table id="tblDocumentos" class="table table-condensed table-hover table-striped table-bordered">
     <thead>
         <tr>
-            <th>Administrador</th>
             <th>Desembolso</th>
-            <th>Avance</th>
+            <th>Informe</th>
+            <th>Dificultades</th>
             <th>Porcentaje</th>
             <th>Fecha</th>
         </tr>
@@ -16,10 +16,12 @@
         <g:each in="${informe}" var="info">
             <tr data-id="${info.id}" style="width: 100%">
                 <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">
-                    ${info?.desembolso?.descripcio}</elm:textoBusqueda></td>
+                    ${info?.desembolso?.descripcion}</elm:textoBusqueda></td>
                 <td style="width: 60%"><elm:textoBusqueda busca="${params.search}">
                     ${info?.informeAvance}</elm:textoBusqueda></td>
-                <td style="width: 10%">${info?.porcentaje}</td>
+                <td style="width: 60%"><elm:textoBusqueda busca="${params.search}">
+                    ${info?.dificultadesAvance}</elm:textoBusqueda></td>
+                <td style="width: 10%">${info?.porcentaje} %</td>
                 <td style="width: 10%">${info.fecha?.format("dd-MM-yyyy")}</td>
             </tr>
         </g:each>
@@ -47,7 +49,7 @@
                             var id = $element.data("id");
                             $.ajax({
                                 type: "POST",
-                                url: "${createLink(controller:'informe', action:'show_ajax')}",
+                                url: "${createLink(controller:'informeAvance', action:'show_ajax')}",
                                 data: {
                                     id: id
                                 },
@@ -73,7 +75,15 @@
                         icon: "fa fa-edit",
                         action: function ($element) {
                             var id = $element.data("id");
-                            createEditDesembolso(id);
+                            createEditInforme(id);
+                        }
+                    },
+                    avance: {
+                        label: "Detalle del Avance",
+                        icon: "fa fa-edit",
+                        action: function ($element) {
+                            var id = $element.data("id");
+                            location.href="${createLink(controller: 'avance', action: 'detalle')}" + "/?id=" + id;                           detalleAvance(id);
                         }
                     },
                     eliminar: {
@@ -93,35 +103,6 @@
                     $(".success").removeClass("success");
                 }
             });
-
-            function cargarInstituciones(id){
-                $.ajax({
-                    type: "POST",
-                    url: "${createLink(controller: 'informe',action:'instituciones_ajax')}",
-                    data: {
-                        id:id
-                    },
-                    success: function (msg) {
-                        var b = bootbox.dialog({
-                            id: "dlgInstituciones",
-                            title: "Instituciones participantes",
-                            // class : "modal-lg",
-                            message: msg,
-                            buttons: {
-                                cancelar: {
-                                    label: "Salir",
-                                    className: "btn-primary",
-                                    callback: function () {
-                                    }
-                                }
-                            }
-                        }); //dialog
-                        setTimeout(function () {
-                            b.find(".form-control").first().focus()
-                        }, 500);
-                    } //success
-                }); //ajax
-            }
 
     });
 </script>
