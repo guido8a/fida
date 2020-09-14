@@ -27,6 +27,7 @@ class AvanceController {
         def sql = "select comp__id, substr(compdscr,1,20), actv__id, actvdscr, plan__id, plandscr, plancntd, " +
                 "plancsto, planejec, planetdo from planes(1,1)"
         println("sql " + sql)
+
         def cn = dbConnectionService.getConnection()
         def evaluacion = Evaluacion.get(params.eval)
         def detalle = DetalleEvaluacion.countByEvaluacion(evaluacion)

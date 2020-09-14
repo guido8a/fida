@@ -15,14 +15,14 @@
     <tbody id="tbDoc">
         <g:each in="${informe}" var="info">
             <tr data-id="${info.id}" style="width: 100%">
-                <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">
+                <td style="width: 15%"><elm:textoBusqueda busca="${params.search}">
                     ${info?.desembolso?.descripcion}</elm:textoBusqueda></td>
-                <td style="width: 60%"><elm:textoBusqueda busca="${params.search}">
+                <td style="width: 35%"><elm:textoBusqueda busca="${params.search}">
                     ${info?.informeAvance}</elm:textoBusqueda></td>
-                <td style="width: 60%"><elm:textoBusqueda busca="${params.search}">
+                <td style="width: 35%"><elm:textoBusqueda busca="${params.search}">
                     ${info?.dificultadesAvance}</elm:textoBusqueda></td>
-                <td style="width: 10%">${info?.porcentaje} %</td>
-                <td style="width: 10%">${info.fecha?.format("dd-MM-yyyy")}</td>
+                <td style="width: 7%">${info?.porcentaje} %</td>
+                <td style="width: 8%">${info.fecha?.format("dd-MM-yyyy")}</td>
             </tr>
         </g:each>
     </tbody>
