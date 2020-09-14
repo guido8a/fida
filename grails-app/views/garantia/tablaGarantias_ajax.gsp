@@ -43,7 +43,7 @@ table
                 <td style="width:7%; background-color: ${garantia?.estado?.descripcion == 'Vigente' ? '#78B665' : garantia?.estado?.descripcion == 'Renovada' ? '#C19345' : ''}">${garantia?.estado?.descripcion}</td>
                 <td style="width:7%">${garantia?.fechaInicio?.format("dd-MM-yyyy")}</td>
                 <td style="width:7%">${garantia?.fechaFinalizacion?.format("dd-MM-yyyy")}</td>
-                <td style="width:8%"><g:formatNumber number="${garantia?.monto}" minFractionDigits="2" maxFractionDigits="2"/></td>
+                <td style="width:8%;text-align: right"><g:formatNumber number="${garantia?.monto}" minFractionDigits="2" maxFractionDigits="2"/></td>
                 <td style="width:8%; text-align: center">
                     <g:if test="${garantia?.estado?.descripcion == 'Vigente'}">
                         <a href="#" class="btn btn-success btn-xs btnEditar" title="Editar garantía" data-id="${garantia?.id}"><i class="fa fa-edit"></i> </a>
