@@ -60,13 +60,21 @@ class GarantiaController {
     }
 
     def calcularDias_ajax(){
-        def duration = groovy.time.TimeCategory.minus(
-                new Date().parse("dd-MM-yyyy",params.inicio),
-                new Date().parse("dd-MM-yyyy",params.fin)
-        );
+
+        def d1 = new Date().parse("dd-MM-yyyy",params.inicio)
+        def d2 = new Date().parse("dd-MM-yyyy",params.fin)
+
+        if(d1 > d2){
+            render "er"
+        }else{
+            def duration = groovy.time.TimeCategory.minus(
+                    new Date().parse("dd-MM-yyyy",params.inicio),
+                    new Date().parse("dd-MM-yyyy",params.fin)
+            );
 
 //        println("du " + duration.days)
-        render duration.days * -1
+            render duration.days * -1
+        }
     }
 
     def retornaGarantia(){

@@ -180,7 +180,7 @@
                 <div class="col-md-2">
                     <span class="grupo">
                         <g:hiddenField name="diasGarantizados" value=""/>
-                        <g:textField name="diasGarantizados_name" id="dg" class="form-control" readonly=""/>
+                        <g:textField name="diasGarantizados_name" id="dg" class="form-control required" readonly=""/>
                     </span>
                 </div>
                 <a href="#" class="btn btn-success btnAgregarGarantia" ><i class="fa fa-plus"></i> Agregar</a>
@@ -227,23 +227,28 @@
         var f = $("#fechaFinalizacion").val();
 
         if(e && f){
-            if(e > f){
-                bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> La fecha de emisión es mayor a la fecha de finalización ");
-                $("#dg").val('');
-            }else{
-                $.ajax({
-                    type:'POST',
-                    url:'${createLink(controller: 'garantia', action: 'calcularDias_ajax')}',
-                    data:{
-                        inicio: e,
-                        fin: f
-                    },
-                    success:function (msg) {
+            // if(e > f){
+            //     bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> La fecha de emisión es mayor a la fecha de finalización ");
+            //     $("#dg").val('');
+            // }else{
+            $.ajax({
+                type:'POST',
+                url:'${createLink(controller: 'garantia', action: 'calcularDias_ajax')}',
+                data:{
+                    inicio: e,
+                    fin: f
+                },
+                success:function (msg) {
+                    if(msg =='er'){
+                        bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> La fecha de emisión es mayor a la fecha de finalización ");
+                        $("#dg").val('');
+                    }else{
                         $("#dg").val(msg);
                         $("#diasGarantizados").val(msg);
                     }
-                });
-            }
+                }
+            });
+            // }
         }
     }
 
