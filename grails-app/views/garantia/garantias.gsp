@@ -283,7 +283,7 @@
                 success : function (msg) {
                     dialog.modal('hide');
                     if(msg == 'ok'){
-                        log("Garantía agregada correctamente", "success");
+                        log("Garantía guardada correctamente", "success");
                         cargarTablaGarantias();
                         limpiarCampos();
                     }else{
