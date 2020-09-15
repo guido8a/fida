@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="layout" content="main">
-<title>Desembolsoes</title>
+<title>Desembolsos</title>
 </head>
 
 <div class="panel panel-primary col-md-12">

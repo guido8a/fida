@@ -30,11 +30,6 @@
 
 <script type="text/javascript">
     $(function () {
-        // setTimeout(function () {
-        //     $("#tblDocumentos").fixedHeaderTable({
-        //         height : 250
-        //     });
-        // }, 500);
 
             $("tbody>tr").contextMenu({
                 items: {
@@ -83,7 +78,7 @@
                         icon: "fa fa-edit",
                         action: function ($element) {
                             var id = $element.data("id");
-                            location.href="${createLink(controller: 'avance', action: 'detalle')}" + "/?id=" + id;                           detalleAvance(id);
+                            location.href="${createLink(controller: 'avance', action: 'detalle')}" + "/?id=" + id;
                         }
                     },
                     eliminar: {
@@ -92,7 +87,7 @@
                         separator_before: true,
                         action: function ($element) {
                             var id = $element.data("id");
-                            deleteTaller(id);
+                            borrarInforme(id);
                         }
                     }
                 },
@@ -103,6 +98,32 @@
                     $(".success").removeClass("success");
                 }
             });
+
+        function borrarInforme(id) {
+            bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> ¿Está seguro de querer borrar este informe?", function (res) {
+                if(res){
+                    $.ajax({
+                        type: 'POST',
+                        url: '${createLink(controller: 'informeAvance', action: 'borrarInforme_ajax')}',
+                        data:{
+                            id: id
+                        },
+                        success: function (msg) {
+                            if(msg == 'ok'){
+                                log("Informe borrado correctamente","success");
+                                reloadTablaInforme();
+                            }else{
+                                if(msg == 'er'){
+                                    bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i>  La información del informe ya está siendo utilizada, no puede ser borrado!")
+                                }else{
+                                    log("Error al borrar el informe","error")
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        }
 
     });
 </script>

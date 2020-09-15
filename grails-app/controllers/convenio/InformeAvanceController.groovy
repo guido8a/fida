@@ -146,4 +146,26 @@ class InformeAvanceController {
         }
     } //delete para eliminar via ajax
 
+
+    def borrarInforme_ajax(){
+        if(params.id){
+            def informe = InformeAvance.get(params.id)
+            def avanceExiste = Avance.findAllByInformeAvance(informe)
+
+            if(avanceExiste){
+                render "er"
+            }else{
+                try{
+                    informe.delete(flush:true)
+                    render "ok"
+                }catch(e){
+                    println("Error al borrar el informe " + informe.errors)
+                    render "no"
+                }
+            }
+        }else{
+            render "no"
+        }
+    }
+
 }

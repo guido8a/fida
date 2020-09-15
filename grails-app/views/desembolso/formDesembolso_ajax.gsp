@@ -36,12 +36,12 @@
             <div class="form-group keeptogether ${hasErrors(bean: dsmbInstance, field: 'financiamientoPlanNegocio', 'error')} ">
                 <span class="grupo">
                     <label for="financiamientoPlanNegocio" class="col-md-3 control-label">
-                        Capacidad del PFI
+                        Fuente de financiamiento
                     </label>
 
                     <div class="col-md-9">
                         <g:select id="financiamientoPlanNegocio" name="financiamientoPlanNegocio.id" from="${planes.FinanciamientoPlanNegocio.list()}"
-                                  optionKey="id" value="${dsmbInstance?.financiamientoPlanNegocio?.id}"
+                                  optionKey="id" optionValue="fuente" value="${dsmbInstance?.financiamientoPlanNegocio?.id}"
                                   class="many-to-one form-control input-sm required"/>
                     </div>
                 </span>
@@ -66,7 +66,7 @@
                 </label>
                 <span class="grupo">
                     <div class="col-md-3 ">
-                        <input name="fecha" id='fecha' type='text' class="form-control"
+                        <input name="fecha" id='fecha' type='text' class="form-control required"
                                value="${dsmbInstance?.fecha?.format("dd-MM-yyyy")}"/>
 
                         <p class="help-block ui-helper-hidden"></p>
@@ -93,7 +93,7 @@
                     </label>
 
                     <div class="col-md-9">
-                        <g:textField name="cur" class="form-control input-sm allCaps"
+                        <g:textField name="cur" class="form-control input-sm allCaps required"
                                      value="${dsmbInstance?.cur}" maxlength="15"/>
                     </div>
                 </span>

@@ -150,4 +150,27 @@ class DesembolsoController {
         }
     } //delete para eliminar via ajax
 
+
+    def borrarDesembolso_ajax(){
+        if(params.id){
+            def desembolso = Desembolso.get(params.id)
+            def infoExiste = InformeAvance.findAllByDesembolso(desembolso)
+
+            if(infoExiste){
+             render "er"
+            }else{
+                try{
+                   desembolso.delete(flush:true)
+                    render "ok"
+                }catch(e){
+                    println("Error al borrar el desembolso " + desembolso.errors)
+                    render "no"
+                }
+            }
+        }else{
+            render "no"
+        }
+    }
+
+
 }
