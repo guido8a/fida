@@ -23,9 +23,9 @@
                 <i class="fa fa-plus"></i> Agregar Asignaciones
             </g:link>
     --}%
-%{--        <a class="btn btn-default btn-sm" id="reporte">--}%
-%{--            <i class="fa fa-print"></i> Reporte Asignaciones--}%
-%{--        </a>--}%
+        <a class="btn btn-default btn-sm" id="btnReporteAsignaciones">
+            <i class="fa fa-print"></i> Reporte Asignaciones
+        </a>
 %{--        <a class="btn btn-default btn-sm" id="reporte2">--}%
 %{--            <i class="fa fa-print"></i> Reporte Asignaciones planificado--}%
 %{--        </a>--}%
@@ -57,7 +57,7 @@
     </div>
 </div>
 
-<div style="position: absolute;top:60px;right:10px;font-size: 11px;" class="text-info">
+<div style="position: absolute;top:60px;right:380px;font-size: 11px;" class="text-info">
     <div style="top:5px;right:10px;font-size: 11px;">
         <b>Total invertido proyecto actual:</b>
         <span id="spTotInv">
@@ -91,7 +91,7 @@
 </div>
 
 
-<div class="panel-primary " style="font-size: 14px; margin-bottom: 5px">
+<div class="panel-primary " style="font-size: 14px; margin-bottom: 5px; text-align: center; margin-top: 15px">
     <strong style="color: #5596ff; "> ${proyecto?.toStringCompleto()}, para el año ${actual}</strong>
 </div>
 
@@ -586,6 +586,12 @@
         var url = "${createLink(controller: 'reportes2', action: 'reporteAsignacionProyecto2')}?id=" + ${proyecto?.id} +"Wanio=" + anio;
         location.href = "${createLink(controller:'pdf',action:'pdfLink')}?url=" + url + "&filename='Reporte_asignaciones_planificado.pdf'";
     });
+
+    $("#btnReporteAsignaciones").click(function () {
+        var anio = $("#anio_asg").val();
+        location.href="${createLink(controller: 'reportes', action: 'reporteAsignaciones')}?id=" + '${proyecto?.id}' + "&anio=" + anio;
+    });
+
 </script>
 </body>
 </html>

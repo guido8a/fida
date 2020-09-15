@@ -11,6 +11,11 @@ import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
 import modificaciones.DetalleReforma
 import modificaciones.Reforma
+import parametros.Anio
+import parametros.proyectos.TipoElemento
+import poa.Asignacion
+import proyectos.MarcoLogico
+import proyectos.Proyecto
 
 import java.awt.Color
 
@@ -386,6 +391,133 @@ class ReportesController {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph(" "));
         }
+    }
+
+    def reporteAsignaciones (){
+
+        def proyecto = Proyecto.get(params.id)
+
+        def titulo = new Color(40, 140, 180)
+        Font times12bold = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+        Font times10bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font fontProyecto = new Font(Font.HELVETICA, 18, Font.NORMAL, titulo);
+        Font fontProyecto2 = new Font(Font.HELVETICA, 10, Font.NORMAL, titulo);
+        Font times8bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD)
+        Font times8normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL)
+        def fondo = new Color(240, 248, 250);
+        def frmtHd = [border: Color.LIGHT_GRAY, bwb: 0.1, bcb: Color.BLACK, bg: fondo, align: Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
+        def prmsCellHeadCentro = [border: Color.WHITE, align : Element.ALIGN_CENTER, valign: Element.ALIGN_LEFT]
+        def frmtDato = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
+        def frmtDatoDerecha = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_MIDDLE]
+
+        def baos = new ByteArrayOutputStream()
+        Document document
+        document = new Document(PageSize.A4);
+        def pdfw = PdfWriter.getInstance(document, baos)
+        document.open()
+        document.addTitle("Asignaciones " + new Date().format("dd_MM_yyyy"))
+        document.addSubject("Generado por el sistema FIDA")
+        document.addKeywords("reporte, fida, asignaciones")
+        document.addAuthor("FIDA")
+        document.addCreator("Tedein SA")
+
+        Paragraph preface = new Paragraph();
+        Paragraph pr_firma = new Paragraph();
+        addEmptyLine(preface, 1);
+        preface.setAlignment(Element.ALIGN_CENTER);
+        preface.add(new Paragraph("PROYECTO FAREPS", fontProyecto))
+        addEmptyLine(preface, 1);
+        document.add(preface);
+
+        def actual
+        def asignaciones = []
+
+        if (params.anio) {
+            actual = Anio.get(params.anio)
+        } else {
+            actual = Anio.findByAnio(new Date().format('yyyy'))
+        }
+
+        if (!actual) {
+            actual = Anio.list([sort: 'anio', order: 'desc']).pop()
+        }
+        def total = 0
+
+        MarcoLogico.withCriteria {
+            eq("proyecto", proyecto)
+            eq("tipoElemento", TipoElemento.get(4))
+            eq("estado", 0)
+            marcoLogico {
+                order("numero", "asc")
+            }
+            order("numero", "asc")
+        }.each { ml ->
+            def asig = Asignacion.withCriteria {
+                eq("marcoLogico", ml)
+                eq("anio", actual)
+                order("id", "asc")
+            }
+            if (asig) {
+                asignaciones += asig
+                asig.each { asg ->
+                    total = total + asg?.planificado
+                }
+            }
+        }
+
+        PdfPTable tablaCabecera2 = new PdfPTable(1)
+        tablaCabecera2.setWidthPercentage(100)
+        tablaCabecera2.setWidths(arregloEnteros([100]))
+        addCellTabla(tablaCabecera2, new Paragraph("ASIGNACIONES DEL PROYECTO", fontProyecto2), prmsCellHeadCentro)
+        addCellTabla(tablaCabecera2, new Paragraph(proyecto?.nombre, times10bold), prmsCellHeadCentro)
+        addCellTabla(tablaCabecera2, new Paragraph(actual.toString(), times10bold), prmsCellHeadCentro)
+        addCellTabla(tablaCabecera2, new Paragraph('', times12bold), prmsCellHeadCentro)
+        addCellTabla(tablaCabecera2, new Paragraph('', times12bold), prmsCellHeadCentro)
+
+        PdfPTable tablaHeader = new PdfPTable(6)
+        tablaHeader.setWidthPercentage(100)
+        tablaHeader.setWidths(arregloEnteros([20, 5, 30, 19, 10, 15]))
+
+        addCellTabla(tablaHeader, new Paragraph("COMPONENTE", times8bold), frmtHd)
+        addCellTabla(tablaHeader, new Paragraph("#", times8bold), frmtHd)
+        addCellTabla(tablaHeader, new Paragraph("ACTIVIDAD", times8bold), frmtHd)
+        addCellTabla(tablaHeader, new Paragraph("RESPONSABLE", times8bold), frmtHd)
+        addCellTabla(tablaHeader, new Paragraph("PARTIDA", times8bold), frmtHd)
+        addCellTabla(tablaHeader, new Paragraph("PLANIFICADO", times8bold), frmtHd)
+
+        PdfPTable tablaDetalle = new PdfPTable(6)
+        tablaDetalle.setWidthPercentage(100)
+        tablaDetalle.setWidths(arregloEnteros([20, 5, 30, 19, 10, 15]))
+
+        asignaciones.each{asignacion->
+            def plani =  g.formatNumber(number: asignacion?.planificado, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+            addCellTabla(tablaDetalle, new Paragraph(asignacion.marcoLogico.marcoLogico.toString(), times8normal), frmtDato)
+            addCellTabla(tablaDetalle, new Paragraph(asignacion.marcoLogico.numero.toString(), times8normal), frmtDato)
+            addCellTabla(tablaDetalle, new Paragraph(asignacion.marcoLogico.toString(), times8normal), frmtDato)
+            addCellTabla(tablaDetalle, new Paragraph(asignacion.unidad.toString(), times8normal), frmtDato)
+            addCellTabla(tablaDetalle, new Paragraph(asignacion.presupuesto.numero.toString(), times8normal), frmtDato)
+            addCellTabla(tablaDetalle, new Paragraph(plani.toString(), times8normal), frmtDatoDerecha)
+        }
+
+        def totalPlani =  g.formatNumber(number: total, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+
+        PdfPTable tablaTotales = new PdfPTable(2)
+        tablaTotales.setWidthPercentage(100)
+        tablaTotales.setWidths(arregloEnteros([85,15]))
+        addCellTabla(tablaTotales, new Paragraph("TOTAL", times8bold), frmtHd)
+        addCellTabla(tablaTotales, new Paragraph(totalPlani.toString(), times8bold), frmtDatoDerecha)
+
+        document.add(tablaCabecera2)
+        document.add(tablaHeader)
+        document.add(tablaDetalle)
+        document.add(tablaTotales)
+        document.close();
+        pdfw.close()
+        byte[] b = baos.toByteArray();
+        response.setContentType("application/pdf")
+        response.setHeader("Content-disposition", "attachment; filename=" + "asignaciones_" + new Date().format("dd-MM-yyyy"))
+        response.setContentLength(b.length)
+        response.getOutputStream().write(b)
     }
 
 }
