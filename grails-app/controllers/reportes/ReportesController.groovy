@@ -481,7 +481,7 @@ class ReportesController {
         addCellTabla(tablaHeader, new Paragraph("COMPONENTE", times8bold), frmtHd)
         addCellTabla(tablaHeader, new Paragraph("#", times8bold), frmtHd)
         addCellTabla(tablaHeader, new Paragraph("ACTIVIDAD", times8bold), frmtHd)
-        addCellTabla(tablaHeader, new Paragraph("RESPONSABLE", times8bold), frmtHd)
+        addCellTabla(tablaHeader, new Paragraph("UNIDAD EJECUTORA", times8bold), frmtHd)
         addCellTabla(tablaHeader, new Paragraph("PARTIDA", times8bold), frmtHd)
         addCellTabla(tablaHeader, new Paragraph("PLANIFICADO", times8bold), frmtHd)
 
