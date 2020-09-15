@@ -4,6 +4,7 @@ import convenio.Avance
 import org.springframework.dao.DataIntegrityViolationException
 import planes.DetalleEvaluacion
 import planes.Evaluacion
+import planes.IndicadorPlan
 import seguridad.UnidadEjecutora
 
 class AvanceController {
@@ -24,25 +25,14 @@ class AvanceController {
     /* de cada actividad planificada mostrar cantida e inversión organizado por componente */
     def tabla() {
         println "tabla " + params
-        def sql = "select comp__id, substr(compdscr,1,20), actv__id, actvdscr, plan__id, plandscr, plancntd, " +
-                "plancsto, planejec, planetdo from planes(1,1)"
+        def sql = "select * from avance(${params.info})"
         println("sql " + sql)
 
         def cn = dbConnectionService.getConnection()
-        def evaluacion = Evaluacion.get(params.eval)
-        def detalle = DetalleEvaluacion.countByEvaluacion(evaluacion)
-        def data
-
-        if(detalle) {
-            sql = "select dtev__id id, inpn.inpn__id, inpn.inor__id, inpn.plns__id, inordscr, dtevvlor original, " +
-                    " dtevobsr obsr from dtev, inpn, inor where eval__id = ${evaluacion.id} and " +
-                    "inpn.inpn__id = dtev.inpn__id and inor.inor__id = inpn.inor__id order by inor__id"
-        }
-        println "sql: $sql"
-        data = cn.rows(sql.toString())
+        def data = cn.rows(sql.toString())
 
 //        def par = [oblg:7, controller:'vivienda', format:null, action:'tabla']
-        [indicadores: data, plns: params.plns, eval: params.eval, band: false, cuenta: detalle]
+        [avance: data]
     }
 
     /**
@@ -154,5 +144,83 @@ class AvanceController {
             return
         }
     } //delete para eliminar via ajax
+
+
+    def actualizar() {
+        println "actualizar AV: $params"
+        if (params.item instanceof java.lang.String) {
+            params.item = [params.item]
+        }
+        if (params.obsr instanceof java.lang.String) {
+            params.obsr = [params.obsr]
+        }
+
+        def oks = "", nos = ""
+
+        def info = InformeAvance.get(params.info)
+
+        println "info: ${info.informeAvance}"
+
+        if(params.item) {
+            params.item.each {
+                def parts = it.split("_")
+
+                def plan = parts[0]
+                def valor  = parts[1].toDouble()
+//                def plan  = parts[2]
+                def obsr = null
+                if(it.contains('_ob')) {
+                    obsr   = parts[3]
+                    if(obsr.size() > 2) {
+                        obsr = obsr[2..-1]
+                    } else {
+                        obsr = null
+                    }
+                }
+
+/*
+                if(plan.size() > 4) {
+                    plan = plan[4..-1]
+                } else {
+                    plan = null
+                }
+*/
+
+                println "info: ${params.info}, plan: $plan, valor: $valor, obsr: $obsr"
+
+                /* consultar si hay que actualizar DTEV */
+                def evaluacion = Evaluacion.get(params.eval);
+                def planificacion = Plan.get(plan);
+                def avance = convenio.Avance.findByInformeAvanceAndPlan(info, planificacion)
+
+                println "evaluacion: ${evaluacion?.id}, informe: ${info.id} plan: ${planificacion.id}"
+
+                if(!avance) {
+                    avance = new Avance()
+                    avance.informeAvance = info
+                    avance.plan = planificacion
+                }
+                avance.valor = valor
+                avance.descripcion = obsr
+
+                if (!avance.save(flush: true)) {
+                    println "error $parts, --> ${avance.errors}"
+                    if (nos != "") {
+                        nos += ","
+                    }
+                    nos += "#" + plan
+                } else {
+                    if (oks != "") {
+                        oks += ","
+                    }
+                    oks += "#" + plan
+                }
+            }
+        }
+        println "--> ${oks}"
+        render oks + "_" + nos
+    }
+
+
 
 }
