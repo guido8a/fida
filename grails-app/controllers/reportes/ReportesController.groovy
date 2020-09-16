@@ -1592,19 +1592,6 @@ class ReportesController {
             fila++
         }
 
-//        obras.eachWithIndex {i, j->
-//            label = new Label(0, fila, i.obracdgo.toString()); sheet.addCell(label);
-//            label = new Label(1, fila, i.obranmbr.toString()); sheet.addCell(label);
-//            label = new Label(2, fila, i.tpobdscr.toString()); sheet.addCell(label);
-//            label = new Label(3, fila, i.obrafcha.toString()); sheet.addCell(label);
-//            label = new Label(4, fila, i.cntnnmbr.toString() + " " + i.parrnmbr.toString() + " " + i?.cmndnmbr?.toString()); sheet.addCell(label);
-//            number = new jxl.write.Number(5, fila, i.obravlor ); sheet.addCell(number);
-//            label = new Label(6, fila, i?.dptodscr?.toString()); sheet.addCell(label);
-//            label = new Label(7, fila, i?.obrarefe?.toString()); sheet.addCell(label);
-//            label = new Label(8, fila, i.estado); sheet.addCell(label);
-//            fila++
-//        }
-
         workbook.write();
         workbook.close();
         def output = response.getOutputStream()
