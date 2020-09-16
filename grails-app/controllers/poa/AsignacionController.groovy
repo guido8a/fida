@@ -256,7 +256,7 @@ class AsignacionController {
                     eq("estado", 0)
 //                    eq("responsable", unidadE)
                     marcoLogico {
-                        order("numeroComp", "asc")
+                        order("numero", "asc")
                     }
                     order("numero", "asc")
                 }.each { ml ->
@@ -759,7 +759,7 @@ class AsignacionController {
         def asgProy = []
         def proyecto
 
-        println "..... ${params.id}"
+//        println "..... ${params.id}"
 
         if(params.id){
             proyecto = Proyecto.get(params.id)

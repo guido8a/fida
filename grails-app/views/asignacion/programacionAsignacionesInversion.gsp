@@ -19,6 +19,9 @@
 <div class="btn-toolbar toolbar">
     <div class="btn-group">
         <g:link class="btn btn-default btn-sm" controller="asignacion" action="asignacionProyectov2"  params="[id:proyecto.id,anio:actual.id]"><i class="fa fa-arrow-left"></i> Asignaciones</g:link>
+        <a class="btn btn-info btn-sm" id="btnReporteAsignacionesCrono">
+            <i class="fa fa-print"></i> Reporte Asignaciones
+        </a>
         <div style="margin-left: 15px;display: inline-block;">
             <b style="font-size: 11px">Año:</b>
             <g:select from="${parametros.Anio.list([sort:'anio'])}" id="anio_asg" name="anio" optionKey="id" optionValue="anio" value="${actual.id}" style="font-size: 11px;width: 150px;display: inline" class="form-control"/>
@@ -72,14 +75,10 @@
             </tr>
             <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                 <g:each in="${meses}" var="mes" status="j">
-                %{--                    <g:if test="${ProgramacionAsignacion?.findAll('from ProgramacionAsignacion where asignacion = '+asg.id+' and mes = '+mes.id+'')?.size()>0}" >--}%
                     <g:if test="${poa.ProgramacionAsignacion.findAllByAsignacionAndMes(poa.Asignacion.get(asg.id),parametros.Mes.get(mes.id))?.size()>0}" >
-                    %{--                        <g:set var="progra" value="${ProgramacionAsignacion?.findAll('from ProgramacionAsignacion where asignacion = '+asg.id+' and mes = '+mes.id+' ')?.pop()}"></g:set>--}%
                         <g:set var="progra" value="${poa.ProgramacionAsignacion.findAllByAsignacionAndMes(poa.Asignacion.get(asg.id),parametros.Mes.get(mes.id))?.pop()}"/>
                         <td class="${mes}" style="width: 70px;padding: 0px;height: 30px">
-                            <input type="text" class="${j} valor asg_cor_${asg.id} form-control input-sm number"  mes="${mes.id}"
-%{--                                 value="${util.formatNumber(number:progra?.valor, format:'###,##0', minFractionDigits:'2',maxFractionDigits:'2')}" style="width: 100%;margin: 0px">--}%
-                                 value="${progra?.valor}" style="width: 100%;margin: 0px">
+                            <input type="text" class="${j} valor asg_cor_${asg.id} form-control input-sm number"  mes="${mes.id}" value="${progra?.valor}" style="width: 100%;margin: 0px">
                             <g:set var="totalFila" value="${totalFila+=progra.valor}"/>
                             <g:if test="${j==0}">
                                 <g:set var="ene" value="${ene.toDouble()+progra?.valor}"/>
@@ -142,21 +141,21 @@
             <td colspan="15"><b>TOTALES</b></td>
         </tr>
         <tr>
-%{--
-            <td style="text-align: center"><util:formatNumber number="${ene}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><util:formatNumber number="${feb}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><util:formatNumber number="${mar}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><util:formatNumber number="${abr}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><util:formatNumber number="${may}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><util:formatNumber number="${jun}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><util:formatNumber number="${jul}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><util:formatNumber number="${ago}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><util:formatNumber number="${sep}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><util:formatNumber number="${oct}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><util:formatNumber number="${nov}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><util:formatNumber number="${dic}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
-            <td style="text-align: center"><util:formatNumber number="${ene.toDouble()+feb.toDouble()+mar.toDouble()+abr.toDouble()+may.toDouble()+jun.toDouble()+jul.toDouble()+ago.toDouble()+sep.toDouble()+oct.toDouble()+nov.toDouble()+dic.toDouble()}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
---}%
+            %{--
+                        <td style="text-align: center"><util:formatNumber number="${ene}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                        <td style="text-align: center"><util:formatNumber number="${feb}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                        <td style="text-align: center"><util:formatNumber number="${mar}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                        <td style="text-align: center"><util:formatNumber number="${abr}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                        <td style="text-align: center"><util:formatNumber number="${may}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                        <td style="text-align: center"><util:formatNumber number="${jun}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                        <td style="text-align: center"><util:formatNumber number="${jul}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                        <td style="text-align: center"><util:formatNumber number="${ago}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                        <td style="text-align: center"><util:formatNumber number="${sep}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                        <td style="text-align: center"><util:formatNumber number="${oct}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                        <td style="text-align: center"><util:formatNumber number="${nov}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                        <td style="text-align: center"><util:formatNumber number="${dic}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+                        <td style="text-align: center"><util:formatNumber number="${ene.toDouble()+feb.toDouble()+mar.toDouble()+abr.toDouble()+may.toDouble()+jun.toDouble()+jul.toDouble()+ago.toDouble()+sep.toDouble()+oct.toDouble()+nov.toDouble()+dic.toDouble()}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
+            --}%
 
             <td style="text-align: center"><util:formatNumber number="${ene}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
             <td style="text-align: center"><util:formatNumber number="${feb}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/></td>
@@ -178,6 +177,12 @@
 
 
 <script type="text/javascript">
+
+    $("#btnReporteAsignacionesCrono").click(function () {
+        var anio = $("#anio_asg").val();
+        location.href="${createLink(controller: 'reportes', action: 'reporteAsignacionesExcel')}?id=" + '${proyecto?.id}' + "&anio=" + anio;
+    });
+
     $("#anio_asg").change(function(){
         location.href="${createLink(controller:'asignacion',action:'programacionAsignacionesInversion')}?id=${proyecto.id}&anio="+$(this).val()
     });
