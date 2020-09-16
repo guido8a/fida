@@ -1,8 +1,9 @@
 package preguntas
 
-import convenio.*
 import org.springframework.dao.DataIntegrityViolationException
-import seguridad.UnidadEjecutora
+import proyectos.Indicador
+import proyectos.MarcoLogico
+import proyectos.Proyecto
 
 class PreguntaController {
 
@@ -22,9 +23,7 @@ class PreguntaController {
      */
     def tablaPregunta_ajax() {
         println "tablaPregunta_ajax $params"
-        def convenio = UnidadEjecutora.get(params.id)
         def pregunta = Pregunta.withCriteria {
-            eq("convenio", convenio)
             if (params.search && params.search != "") {
                 or {
                     ilike("descripcion", "%" + params.search + "%")
@@ -38,19 +37,19 @@ class PreguntaController {
 
     /**
      * Acción llamada con ajax que muestra la información de un elemento particular
-     * @return dsmbInstance el objeto a mostrar cuando se encontró el elemento
+     * @return pregInstance el objeto a mostrar cuando se encontró el elemento
      * @render ERROR*[mensaje] cuando no se encontró el elemento
      */
     def show_ajax() {
 //        println "show_ajax: $params"
         if (params.id) {
-            def dsmbInstance = Pregunta.get(params.id)
-            if (!dsmbInstance) {
+            def pregInstance = Pregunta.get(params.id)
+            if (!pregInstance) {
                 render "ERROR*No se encontró Pregunta."
                 return
             }
-//            println ".... show_ajax ${dsmbInstance?.nombre}"
-            return [dsmbInstance: dsmbInstance]
+//            println ".... show_ajax ${pregInstance?.nombre}"
+            return [pregInstance: pregInstance]
         } else {
             render "ERROR*No se encontró Pregunta."
         }
@@ -58,24 +57,25 @@ class PreguntaController {
 
     /**
      * Acción llamada con ajax que muestra un formulario para crear o modificar un elemento
-     * @return dsmbInstance el objeto a modificar cuando se encontró el elemento
+     * @return pregInstance el objeto a modificar cuando se encontró el elemento
      * @render ERROR*[mensaje] cuando no se encontró el elemento
      */
     def formPregunta_ajax() {
         println "formPregunta_ajax: $params"
-        def convenio = Convenio.get(params.convenio)
-        def vigente = EstadoGarantia.get(1)
-        def dsmbInstance = new Pregunta()
-        def garantias = Garantia.findAllByConvenioAndEstado(convenio, vigente, [sort: 'fechaInicio', order: 'desc'])
+        def proy = Proyecto.get(1)
+        def tpel = parametros.proyectos.TipoElemento.get(4)
+        def mrlg = MarcoLogico.findAllByProyectoAndTipoElemento(proy, tpel)
+        def pregInstance = new Pregunta()
+        def indicador = Indicador.findAllByMarcoLogico(mrlg, [sort: 'descripcion'])
         if (params.id) {
-            dsmbInstance = Pregunta.get(params.id)
-            if (!dsmbInstance) {
-                dsmbInstance = new Pregunta()
+            pregInstance = Pregunta.get(params.id)
+            if (!pregInstance) {
+                pregInstance = new Pregunta()
             }
         }
 
-        println "convenio: ${convenio}, garantías: ${garantias}"
-        return [dsmbInstance: dsmbInstance, convenio: convenio, garantias: garantias]
+        println "indicador: ${indicador?.size()}"
+        return [pregInstance: pregInstance, indicadores: indicador]
     } //form para cargar con ajax en un dialog
 
     /**
@@ -123,14 +123,14 @@ class PreguntaController {
      */
     def delete_ajax() {
         if (params.id) {
-            def dsmbInstance = Pregunta.get(params.id)
-            if (!dsmbInstance) {
+            def pregInstance = Pregunta.get(params.id)
+            if (!pregInstance) {
                 render "ERROR*No se encontró Pregunta."
                 return
             }
             try {
-                def path = servletContext.getRealPath("/") + "tallersProyecto/" + dsmbInstance.pregunta
-                dsmbInstance.delete(flush: true)
+                def path = servletContext.getRealPath("/") + "tallersProyecto/" + pregInstance.pregunta
+                pregInstance.delete(flush: true)
                 println path
                 def f = new File(path)
                 println f.delete()

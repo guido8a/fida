@@ -16,7 +16,7 @@
             <i class="fa fa-arrow-left"></i> Regresar al Convenio
         </g:link>
 --}%
-        <a href="#" class="btn btn-sm btn-success" id="btnAddDsmb">
+        <a href="#" class="btn btn-sm btn-success" id="btnAddPreg">
             <i class="fa fa-plus"></i> Nueva Pregunta
         </a>
     </div>
@@ -48,7 +48,7 @@
         }
         $.ajax({
             type    : "POST",
-            url     : "${createLink(controller:'desembolso', action:'tablaPregunta_ajax')}",
+            url     : "${createLink(controller:'pregunta', action:'tablaPregunta_ajax')}",
             data    : data,
             success : function (msg) {
                 $("#tabla").html(msg);
@@ -143,7 +143,7 @@
         var data = id ? {id : id} : {};
         $.ajax({
             type    : "POST",
-            url     : "${createLink(controller:'desembolso', action:'formPregunta_ajax')}",
+            url     : "${createLink(controller:'pregunta', action:'formPregunta_ajax')}",
             data    : {
                 id: id ? id : '',
                 convenio: '${convenio?.id}'
@@ -187,7 +187,7 @@
             reloadTablaPregunta($.trim($("#searchDoc").val()));
         }
     });
-    $("#btnAddDsmb").click(function () {
+    $("#btnAddPreg").click(function () {
         createEditPregunta();
     });
 

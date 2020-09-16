@@ -1,9 +1,7 @@
 package preguntas
 
 import audita.Auditable
-import planes.PlanesNegocio
 import proyectos.Indicador
-import proyectos.MarcoLogico
 
 class Pregunta implements Auditable {
 

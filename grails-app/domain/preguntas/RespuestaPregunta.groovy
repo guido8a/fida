@@ -5,7 +5,7 @@ import audita.Auditable
 class RespuestaPregunta implements Auditable {
 
     Respuesta respuesta
-    PreguntaController pregunta
+    Pregunta pregunta
 
     static auditable = true
 
