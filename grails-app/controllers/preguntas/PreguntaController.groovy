@@ -13,7 +13,7 @@ class PreguntaController {
      * Acción llamada con ajax que muestra y permite modificar los tallers de un proyecto
      */
     def pregunta() {
-        def pregunta = Pregunta.get(params.1)
+        def pregunta = Pregunta.get(1)
         return [pregunta: pregunta]
     }
 
