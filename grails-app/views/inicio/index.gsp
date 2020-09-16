@@ -289,7 +289,7 @@
         </div>
         </a>
 
-        <a href= "${createLink(controller:'ajuste', action: 'pendientes')}" style="text-decoration: none">
+        <a href= "${createLink(controller:'pregunta', action: 'pregunta')}" style="text-decoration: none">
             <div class="col-lg-6 mbr-col-md-10">
                 <div class="wrap" style="width: 553px; height: 120px">
                     <div style="width: 200px; height: 120px">
@@ -297,8 +297,8 @@
                     </div>
                     <div style="width: 450px; height: 120px">
                         <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Evaluaciones</span></h2>
-                        <p class="mbr-fonts-style text1 mbr-text display-6">Ajustes realizadas al Plan Operativo Anual.
-                        Los ajustes pueden ser movimiento de recursos, creación de partidas, etc.</p>
+                        <p class="mbr-fonts-style text1 mbr-text display-6">Encuestas de los Indicadores del Marco Lógico.
+                        Los resultados se exportan a una hoja de cálculo para el análisis respectivo.</p>
 
                     </div>
                 </div>
@@ -312,8 +312,8 @@
                     </div>
                     <div style="width: 450px; height: 120px">
                         <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Reportes</span></h2>
-                        <p class="mbr-fonts-style text1 mbr-text display-6">Reformas realizadas al Plan Operativo Anual.
-                        Las reformas pueden ser movimiento de recursos, creación de partidas, etc.</p>
+                        <p class="mbr-fonts-style text1 mbr-text display-6">Reportes de los módulos del sistema. Se generan tanto
+                        en formato PDF como en hojas de cálculo.</p>
                     </div>
                 </div>
             </div>
