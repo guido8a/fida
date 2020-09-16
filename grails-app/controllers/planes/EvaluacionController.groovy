@@ -126,7 +126,7 @@ class EvaluacionController {
     }
 
     def actualizar() {
-        println "actualizar $params"
+        println "actualizar-eval $params"
         if (params.item instanceof java.lang.String) {
             params.item = [params.item]
         }
@@ -194,6 +194,7 @@ class EvaluacionController {
                 }
             }
         }
+        println "--> ${oks}"
         render oks + "_" + nos
     }
 

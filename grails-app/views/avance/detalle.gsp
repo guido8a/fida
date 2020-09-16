@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<h3>Detalle del Avance del Informe: ${informe.fecha} </h3>
+<h3>Detalle del Avance del Informe: ${informe.informeAvance.size() > 40? informe?.informeAvance[0..39] + '..' : informe?.informeAvance} </h3>
 
 <fieldset class="borde">
     <div class="row" style="margin-bottom: 20px;">
@@ -33,7 +33,7 @@
 
 </fieldset>
 
-<input class="hidden" id="planNs" value="${informe?.id}">
+<input class="hidden" id="informe" value="${informe?.id}">
 
 <fieldset class="borde" %{--style="width: 1170px"--}%>
 
@@ -62,15 +62,13 @@
 <script type="text/javascript">
 
     function consultar() {
-        var plns = $("#planNs").val();
-        var eval = "${informe?.id}";
+        var info = "${informe?.id}";
 
         $.ajax({
             type    : "POST",
             url     : "${createLink(action:'tabla')}",
             data    : {
-                plns  : plns,
-                eval  : eval
+                info  : info
             },
             success : function (msg) {
                 $("#divTabla").html(msg);
@@ -98,18 +96,15 @@
         $(".btn-actualizar").click(function () {
 //                    $("#dlgLoad").dialog("open");
             var data = "";
-
-            var plns = $("#planNs").val();
             var info = "${informe?.id}";
 
             $(".editable").each(function () {
                 var id = $(this).attr("id");
                 var valor = $(this).data("valor");
                 var data1 = $(this).data("original");
-                var inor = $(this).data("inor");
+                var plan = $(this).data("plan");
                 var obsrog = $(this).data("obsrog");
 
-                console.log('valor', valor);
                 var chk = $(this).siblings(".chk").children("input").is(":checked");
 //                        console.log(chk);
                 var obsr = $(this).siblings(".observaciones").children("input").val();
@@ -122,26 +117,22 @@
                     data += "&obsr=" + id + "_inor" + inor + "_ob" + obsr
                 }
 */
-//                        console.log('data:', data)
-                if (chk && (parseFloat(valor) > 0 && parseFloat(data1) != parseFloat(valor) || (obsr != obsrog) )) {
+                console.log('obsr:',obsr != '');
+                if ((parseFloat(valor) > 0 && obsr != '' && parseFloat(data1) != parseFloat(valor) || (obsr != obsrog) )) {
                     if (data != "") {
                         data += "&";
                     }
                     var val = valor ? valor : data1;
                     // inpn__id  val  inor__id  ob
-                    if (obsr != obsrog) {
-                        data += "&item=" + id + "_" + val + "_inor" + inor + "_ob" + obsr;// + "_" + chk;
-                    } else {
-                        data += "&item=" + id + "_" + val + "_inor" + inor;// + "_" + chk;
-                    }
+                    data += "&item=" + id + "_" + val + "_plan" + plan + "_ob" + obsr;// + "_" + chk;
 
                 }
             });
 //                    console.log('data -->', data);
             $.ajax({
                 type: "POST",
-                url: "${createLink(action: 'actualizar')}",
-                data: data + "&plns=" + plns + "&eval=" + eval,
+                url: "${createLink(controller: 'avance', action: 'actualizar')}",
+                data: data + "&info=" + info,
                 success: function (msg) {
 //                            $("#dlgLoad").dialog("close");
                     var parts = msg.split("_");

@@ -65,6 +65,7 @@
 
     <script type="text/javascript">
 
+/*
         $(".btnCambiarEstado").click(function () {
             var id = $(this).data("id");
             bootbox.confirm("<i class='fa fa-warning fa-3x pull-left text-warning'></i>" + "<strong>" +  "Está seguro que desea cambiar el estado?" + "</strong>", function (res) {
@@ -91,6 +92,7 @@
                 }
             });
         });
+*/
 
         $(".btnBorrarRegistro").click(function () {
             var persona = $(this).data("id");
