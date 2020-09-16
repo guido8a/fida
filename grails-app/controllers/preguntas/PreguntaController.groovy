@@ -75,7 +75,7 @@ class PreguntaController {
         }
 
         println "indicador: ${indicador?.size()}"
-        return [pregInstance: pregInstance, indicadores: indicador]
+        return [pregInstance: pregInstance, marcoLogico: mrlg, indicadores: indicador]
     } //form para cargar con ajax en un dialog
 
     /**

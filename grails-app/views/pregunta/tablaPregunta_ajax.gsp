@@ -13,10 +13,10 @@
     <tbody id="tbDoc">
     <g:each in="${pregunta}" var="preg">
         <tr data-id="${preg.id}" style="width: 100%">
-            <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">
+            <td style="width: 40%"><elm:textoBusqueda busca="${params.search}">
                 ${preg?.indicador?.descripcion}</elm:textoBusqueda></td>
-            <td style="width: 8%">${preg?.numero}</td>
-            <td style="width: 72%"><elm:textoBusqueda busca="${params.search}">${preg?.descripcion}</elm:textoBusqueda></td>
+            <td style="width: 5%">${preg?.numero}</td>
+            <td style="width: 55%"><elm:textoBusqueda busca="${params.search}">${preg?.descripcion}</elm:textoBusqueda></td>
         </tr>
     </g:each>
     </tbody>
@@ -63,7 +63,15 @@
                     icon: "fa fa-edit",
                     action: function ($element) {
                         var id = $element.data("id");
-                        createEditDesembolso(id);
+                        createEditPregunta(id);
+                    }
+                },
+                respuestas: {
+                    label: "Fijar Respuestas posibles",
+                    icon: "fa fa-edit",
+                    action: function ($element) {
+                        var id = $element.data("id");
+                        ponerRespuestas(id);
                     }
                 },
                 eliminar: {

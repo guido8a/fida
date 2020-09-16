@@ -13,6 +13,20 @@
                     <h4> Preguntas para la Encuesta del Indicadores del Marco Lógico</h4>
                 </span>
 
+            <div class="form-group keeptogether ${hasErrors(bean: pregInstance, field: 'marcoLogico', 'error')} ">
+                <span class="grupo">
+                    <label for="marcoLogico" class="col-md-3 control-label">
+                        Actividad
+                    </label>
+
+                    <div class="col-md-9">
+                        <g:select id="marcoLogico" name="marcoLogico.id" from="${marcoLogico}"
+                                  optionKey="id" optionValue="objeto" value="${pregInstance?.indicador?.marcoLogico?.id}"
+                                  class="many-to-one form-control input-sm required"/>
+                    </div>
+                </span>
+            </div>
+
             <div class="form-group keeptogether ${hasErrors(bean: pregInstance, field: 'indicador', 'error')} ">
                 <span class="grupo">
                     <label for="indicador" class="col-md-3 control-label">
@@ -27,85 +41,19 @@
                 </span>
             </div>
 
-            <div class="form-group keeptogether ${hasErrors(bean: pregInstance, field: 'financiamientoPlanNegocio', 'error')} ">
-                <span class="grupo">
-                    <label for="financiamientoPlanNegocio" class="col-md-3 control-label">
-                        Fuente de financiamiento
-                    </label>
-
-                    <div class="col-md-9">
-                        <g:select id="financiamientoPlanNegocio" name="financiamientoPlanNegocio.id" from="${planes.FinanciamientoPlanNegocio.list()}"
-                                  optionKey="id" optionValue="fuente" value="${pregInstance?.financiamientoPlanNegocio?.id}"
-                                  class="many-to-one form-control input-sm required"/>
-                    </div>
-                </span>
-            </div>
-
             <div class="form-group keeptogether ${hasErrors(bean: pregInstance, field: 'descripcion', 'error')} ">
                 <span class="grupo">
                     <label for="descripcion" class="col-md-3 control-label">
-                        Nombre
+                        Descripción
                     </label>
 
                     <div class="col-md-9">
-                        <g:textField name="descripcion" maxlength="63" class="form-control input-sm required"
-                                     value="${pregInstance?.descripcion}"/>
+                        <g:textArea name="descripcion" rows="4" maxlength="255" class="form-control input-sm required"
+                                    value="${pregInstance?.descripcion}" style="resize: none"/>
                     </div>
                 </span>
             </div>
 
-            <div class="form-group keeptogether ${hasErrors(bean: pregInstance, field: 'fecha', 'error')} ">
-                <label for="fecha" class="col-md-3 control-label">
-                    Fecha
-                </label>
-                <span class="grupo">
-                    <div class="col-md-3 ">
-                        <input name="fecha" id='fecha' type='text' class="form-control required"
-                               value="${pregInstance?.fecha?.format("dd-MM-yyyy")}"/>
-
-                        <p class="help-block ui-helper-hidden"></p>
-                    </div>
-                </span>
-            </div>
-
-            <div class="form-group keeptogether ${hasErrors(bean: pregInstance, field: 'valor', 'error')} ">
-                <span class="grupo">
-                    <label for="valor" class="col-md-3 control-label">
-                        Valor del desembolso
-                    </label>
-
-                    <div class="col-md-4">
-                        <g:textField name="valor" class="form-control input-sm required"
-                                     value="${pregInstance?.valor}"/>
-                    </div>
-                </span>
-            </div>
-            <div class="form-group keeptogether ${hasErrors(bean: pregInstance, field: 'cur', 'error')} ">
-                <span class="grupo">
-                    <label for="cur" class="col-md-3 control-label">
-                        CUR
-                    </label>
-
-                    <div class="col-md-9">
-                        <g:textField name="cur" class="form-control input-sm allCaps required"
-                                     value="${pregInstance?.cur}" maxlength="15"/>
-                    </div>
-                </span>
-            </div>
-%{--
-            <div class="form-group keeptogether ${hasErrors(bean: pregInstance, field: 'observaciones', 'error')} ">
-                <span class="grupo">
-                    <label for="observaciones" class="col-md-3 control-label">
-                        Observaciones
-                    </label>
-
-                    <div class="col-md-9">
-                        <g:textArea name="observaciones" rows="2" maxlength="255" class="form-control input-sm"
-                                    value="${pregInstance?.observaciones}" style="resize: none"/>
-                    </div>
-                </span>
-            </div>
---}%
         </g:form>
     </div>
 

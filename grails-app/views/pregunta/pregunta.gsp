@@ -11,13 +11,13 @@
     <div class="btn-toolbar toolbar">
 
     <div class="btn-group">
-%{--
-        <g:link controller="convenio" action="convenio" id="${convenio?.id}" class="btn btn-sm btn-default">
-            <i class="fa fa-arrow-left"></i> Regresar al Convenio
-        </g:link>
---}%
         <a href="#" class="btn btn-sm btn-success" id="btnAddPreg">
             <i class="fa fa-plus"></i> Nueva Pregunta
+        </a>
+    </div>
+    <div class="btn-group">
+        <a href="#" class="btn btn-sm btn-primary" id="btnRespuesta">
+            <i class="fa fa-plus"></i> Banco de Respuestas Posibles
         </a>
     </div>
 
@@ -189,6 +189,10 @@
     });
     $("#btnAddPreg").click(function () {
         createEditPregunta();
+    });
+
+    $("#btnRespuesta").click(function () {
+        location.href="${createLink(controller: 'respuesta', action: 'list')}"
     });
 
 
