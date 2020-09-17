@@ -50,7 +50,8 @@ class RespuestaController {
     def list() {
         def respuestaInstanceList = getList(params, false)
         def respuestaInstanceCount = getList(params, true).size()
-        return [respuestaInstanceList: respuestaInstanceList, respuestaInstanceCount: respuestaInstanceCount]
+        def respuestas = Respuesta.list().sort{it.tipo}
+        return [respuestaInstanceList: respuestaInstanceList, respuestaInstanceCount: respuestaInstanceCount, respuesta: respuestas]
     }
 
 

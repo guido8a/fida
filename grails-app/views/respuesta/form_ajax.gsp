@@ -6,19 +6,18 @@
     <g:form class="form-horizontal" name="frmRespuesta" role="form" action="save_ajax" method="POST" useToken="true">
         <g:hiddenField name="id" value="${respuestaInstance?.id}" />
         
-%{--
-        <div class="form-group ${hasErrors(bean: respuestaInstance, field: 'nombre', 'error')} ">
+
+        <div class="form-group ${hasErrors(bean: respuestaInstance, field: 'tipo', 'error')} ">
             <span class="grupo">
-                <label for="codigo" class="col-md-2 control-label text-info">
-                    Número
+                <label for="tipo" class="col-md-2 control-label text-info">
+                    Tipo
                 </label>
-                <div class="col-md-2">
-                    <g:textField name="codigo" maxlength="15" class="form-control required allCaps"
-                                value="${respuestaInstance?.id}"/>
+                <div class="col-md-4">
+                    <g:select name="tipo" from="${['M': 'Selección Múltiple', 'N':'Numérico', 'T':'Texto']}"
+                              optionValue="value" optionKey="key" class="form-control" value="${respuestaInstance?.tipo}"/>
                 </div>
             </span>
         </div>
---}%
 
         <div class="form-group ${hasErrors(bean: respuestaInstance, field: 'opcion', 'error')} ">
             <span class="grupo">

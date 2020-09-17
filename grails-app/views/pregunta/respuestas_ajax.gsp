@@ -5,23 +5,27 @@
   Time: 11:09
 --%>
 
-
-<%--
-  Created by IntelliJ IDEA.
-  User: fabricio
-  Date: 26/08/20
-  Time: 12:01
---%>
-
 <g:form class="form-horizontal" name="fmrRespuesta">
     <div class="form-group">
         <span class="grupo">
-            <label for="respuesta" class="col-md-2 control-label text-info">
+            <label for="tipo" class="col-md-2 control-label text-info">
+                Tipo
+            </label>
+            <div class="col-md-4">
+                <g:select from="${['M': 'Selección Múltiple', 'N':'Numérico', 'T':'Texto']}" name="tipo" class="form-control input-sm"
+                          optionKey="key" optionValue="value" />
+            </div>
+        </span>
+
+    </div>
+    <div class="form-group">
+        <span class="grupo">
+            <label class="col-md-2 control-label text-info">
                 Respuesta
             </label>
-            <div class="col-md-8">
-                <g:select from="${preguntas.Respuesta.list().sort{it.id}}" name="respuesta" class="form-control input-sm"
-                          value="${''}" optionKey="id" optionValue="opcion" />
+            <div class="col-md-8" id="divComboRespuestas">
+                %{--                <g:select from="${preguntas.Respuesta.list().sort{it.id}}" name="respuesta" class="form-control input-sm"--}%
+                %{--                          value="${''}" optionKey="id" optionValue="opcion" />--}%
             </div>
         </span>
         <a href="#" class="btn btn-success" id="btnAgregaRespuesta"><i class="fa fa-plus"></i> Agregar </a>
@@ -32,6 +36,26 @@
 </g:form>
 
 <script type="text/javascript">
+
+    $("#tipo").change(function () {
+        var tipo = $("#tipo option:selected").val();
+        cargarComboRespuestas(tipo)
+    });
+
+    cargarComboRespuestas($("#tipo option:selected").val());
+
+    function cargarComboRespuestas(tipo){
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'pregunta', action: 'comboRespuestas_ajax')}',
+            data:{
+                tipo: tipo
+            },
+            success: function (msg) {
+                $("#divComboRespuestas").html(msg)
+            }
+        });
+    }
 
     cargarTablaRespuestas();
 

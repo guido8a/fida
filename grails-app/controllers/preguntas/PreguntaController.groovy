@@ -218,7 +218,12 @@ class PreguntaController {
                 render "ok"
             }
         }
+    }
 
+    def comboRespuestas_ajax(){
+        def tipo = params.tipo
+        def respuestas = Respuesta.findAllByTipo(tipo)
+        return[respuestas: respuestas]
     }
 
 
