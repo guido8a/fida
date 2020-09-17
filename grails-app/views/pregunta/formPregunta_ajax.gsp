@@ -29,14 +29,14 @@
 
             <div class="form-group keeptogether ${hasErrors(bean: pregInstance, field: 'indicador', 'error')} ">
                 <span class="grupo">
-                    <label for="indicador" class="col-md-3 control-label">
+                    <label class="col-md-3 control-label">
                         Indicador
                     </label>
 
-                    <div class="col-md-9">
-                        <g:select from="${indicadores}" optionKey="id" name="indicador" value="${pregInstance?.indicador?.id}"
-                                  class="many-to-one form-control input-sm required"
-                                  noSelection="${[0:'Seleccione']}"/>
+                    <div class="col-md-9" id="divIndicador">
+%{--                        <g:select from="${indicadores}" optionKey="id" name="indicador" value="${pregInstance?.indicador?.id}"--}%
+%{--                                  class="many-to-one form-control input-sm required"--}%
+%{--                                  noSelection="${[0:'Seleccione']}"/>--}%
                     </div>
                 </span>
             </div>
@@ -59,6 +59,26 @@
 
     <script type="text/javascript">
 
+        cargarIndicador($("#marcoLogico option:selected").val());
+
+        $("#marcoLogico").change(function () {
+            var marco = $("#marcoLogico option:selected").val();
+            cargarIndicador(marco)
+        });
+
+        function cargarIndicador(marco){
+            $.ajax({
+                type: 'POST',
+                url: '${createLink(controller: 'pregunta', action: 'indicador_ajax')}',
+                data:{
+                    marco: marco,
+                    id: '${pregInstance?.id}'
+                },
+                success: function (msg) {
+                    $("#divIndicador").html(msg)
+                }
+            });
+        }
 
         $(".form-control").keydown(function (ev) {
             if (ev.keyCode == 13) {

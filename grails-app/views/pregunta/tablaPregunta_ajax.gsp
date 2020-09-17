@@ -43,7 +43,7 @@
                             },
                             success: function (msg) {
                                 bootbox.dialog({
-                                    title: "Ver Desembolso",
+                                    title: "Ver Pregunta",
                                     message: msg,
                                     buttons: {
                                         ok: {
@@ -71,7 +71,7 @@
                     icon: "fa fa-edit",
                     action: function ($element) {
                         var id = $element.data("id");
-                        ponerRespuestas(id);
+                        cargarSeleccionados(id);
                     }
                 },
                 eliminar: {
@@ -80,7 +80,7 @@
                     separator_before: true,
                     action: function ($element) {
                         var id = $element.data("id");
-                        deleteDesembolso(id);
+                        deletePregunta(id);
                     }
                 }
             },
@@ -92,27 +92,100 @@
             }
         });
 
-        function cargarInstituciones(id){
-            $.ajax({
-                type: "POST",
-                url: "${createLink(controller: 'pregunta',action:'instituciones_ajax')}",
-                data: {
-                    id:id
-                },
-                success: function (msg) {
-                    var b = bootbox.dialog({
-                        id: "dlgInstituciones",
-                        title: "Instituciones participantes",
-                        // class : "modal-lg",
-                        message: msg,
-                        buttons: {
-                            cancelar: {
-                                label: "Salir",
-                                className: "btn-primary",
-                                callback: function () {
+        %{--function cargarInstituciones(id){--}%
+        %{--    $.ajax({--}%
+        %{--        type: "POST",--}%
+        %{--        url: "${createLink(controller: 'pregunta',action:'instituciones_ajax')}",--}%
+        %{--        data: {--}%
+        %{--            id:id--}%
+        %{--        },--}%
+        %{--        success: function (msg) {--}%
+        %{--            var b = bootbox.dialog({--}%
+        %{--                id: "dlgInstituciones",--}%
+        %{--                title: "Instituciones participantes",--}%
+        %{--                // class : "modal-lg",--}%
+        %{--                message: msg,--}%
+        %{--                buttons: {--}%
+        %{--                    cancelar: {--}%
+        %{--                        label: "Salir",--}%
+        %{--                        className: "btn-primary",--}%
+        %{--                        callback: function () {--}%
+        %{--                        }--}%
+        %{--                    }--}%
+        %{--                }--}%
+        %{--            }); //dialog--}%
+        %{--            setTimeout(function () {--}%
+        %{--                b.find(".form-control").first().focus()--}%
+        %{--            }, 500);--}%
+        %{--        } //success--}%
+        %{--    }); //ajax--}%
+        %{--}--}%
+
+        function deletePregunta(id) {
+            bootbox.confirm({
+                size: "small",
+                title: 'Alerta',
+                message: "<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> ¿Está seguro de borrar esta pregunta?",
+                callback: function(result){
+                    if(result){
+                        $.ajax({
+                            type: 'POST',
+                            url: '${createLink(controller: 'pregunta', action: 'borrarPregunta_ajax')}',
+                            data:{
+                                id: id
+                            },
+                            success: function (msg) {
+                                if(msg == 'ok'){
+                                    log("Pregunta borrada correctamente","success");
+                                    reloadTablaPregunta();
+                                }else{
+                                    if(msg == 'er'){
+                                        bootbox.alert({
+                                            size: "small",
+                                            title: "Alerta!!!",
+                                            message: "<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i>  La pregunta ya está siendo utilizada, no puede ser borrada!",
+                                            callback: function(){}
+                                        })
+                                    }else{
+                                        log("Error al borrar la pregunta","error")
+                                    }
                                 }
                             }
-                        }
+                        });
+                    }
+                }
+            });
+        }
+
+
+        function cargarSeleccionados(id){
+            $.ajax({
+                type    : "POST",
+                url     : "${createLink(controller: 'pregunta', action:'respuestas_ajax')}",
+                data    : {
+                    id: id
+                },
+                success : function (msg) {
+                    var b = bootbox.dialog({
+                        id      : "dlgCreateEdit",
+                        title   : "Cargar respuestas seleccionadas",
+                        message : msg,
+                        buttons : {
+                            cancelar : {
+                                label     : "Cancelar",
+                                className : "btn-primary",
+                                callback  : function () {
+                                }
+                            },
+                            guardar  : {
+                                id        : "btnSave",
+                                label     : "<i class='fa fa-save'></i> Guardar",
+                                className : "btn-success",
+                                callback  : function () {
+
+                                } //callback
+                            } //guardar
+                        } //buttons
                     }); //dialog
                     setTimeout(function () {
                         b.find(".form-control").first().focus()
@@ -121,30 +194,5 @@
             }); //ajax
         }
 
-        function deleteDesembolso(id) {
-            bootbox.confirm("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> ¿Está seguro de querer borrar este pregunta?", function (res) {
-                if(res){
-                    $.ajax({
-                        type: 'POST',
-                        url: '${createLink(controller: 'pregunta', action: 'borrarDesembolso_ajax')}',
-                        data:{
-                            id: id
-                        },
-                        success: function (msg) {
-                            if(msg == 'ok'){
-                                log("Desembolso borrado correctamente","success")
-                                reloadTablaDesembolso();
-                            }else{
-                                if(msg == 'er'){
-                                    bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i>  La información del pregunta ya está siendo utilizada, no puede ser borrado!")
-                                }else{
-                                    log("Error al borrar el pregunta","error")
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-        }
     });
 </script>

@@ -121,51 +121,67 @@ class PreguntaController {
      * Acción llamada con ajax que permite eliminar un elemento
      * @render ERROR*[mensaje] cuando no se pudo eliminar correctamente, SUCCESS*[mensaje] cuando se eliminó correctamente
      */
-    def delete_ajax() {
-        if (params.id) {
-            def pregInstance = Pregunta.get(params.id)
-            if (!pregInstance) {
-                render "ERROR*No se encontró Pregunta."
-                return
-            }
-            try {
-                def path = servletContext.getRealPath("/") + "tallersProyecto/" + pregInstance.pregunta
-                pregInstance.delete(flush: true)
-                println path
-                def f = new File(path)
-                println f.delete()
-                render "SUCCESS*Eliminación de Pregunta exitosa."
-                return
-            } catch (DataIntegrityViolationException e) {
-                render "ERROR*Ha ocurrido un error al eliminar Pregunta"
-                return
-            }
-        } else {
-            render "ERROR*No se encontró Pregunta."
-            return
-        }
-    } //delete para eliminar via ajax
+//    def delete_ajax() {
+//        if (params.id) {
+//            def pregInstance = Pregunta.get(params.id)
+//            if (!pregInstance) {
+//                render "ERROR*No se encontró Pregunta."
+//                return
+//            }
+//            try {
+//                def path = servletContext.getRealPath("/") + "tallersProyecto/" + pregInstance.pregunta
+//                pregInstance.delete(flush: true)
+//                println path
+//                def f = new File(path)
+//                println f.delete()
+//                render "SUCCESS*Eliminación de Pregunta exitosa."
+//                return
+//            } catch (DataIntegrityViolationException e) {
+//                render "ERROR*Ha ocurrido un error al eliminar Pregunta"
+//                return
+//            }
+//        } else {
+//            render "ERROR*No se encontró Pregunta."
+//            return
+//        }
+//    } //delete para eliminar via ajax
 
 
     def borrarPregunta_ajax(){
         if(params.id){
             def pregunta = Pregunta.get(params.id)
-            def infoExiste = InformeAvance.findAllByPregunta(pregunta)
+            def respuestaExiste = RespuestaPregunta.findAllByPregunta(pregunta)
 
-            if(infoExiste){
+            if(respuestaExiste){
              render "er"
             }else{
                 try{
                    pregunta.delete(flush:true)
                     render "ok"
                 }catch(e){
-                    println("Error al borrar el pregunta " + pregunta.errors)
+                    println("Error al borrar la pregunta " + pregunta.errors)
                     render "no"
                 }
             }
         }else{
             render "no"
         }
+    }
+
+    def indicador_ajax(){
+//        println("params indi " + params)
+        def pregunta = Pregunta.get(params.id)
+        def actividad = MarcoLogico.get(params.marco)
+        def indicadores = Indicador.findAllByMarcoLogico(actividad, [sort: 'descripcion'])
+        return[indicadores:indicadores, pregunta: pregunta]
+    }
+
+    def respuestas_ajax(){
+        def pregunta = Pregunta.get(params.id)
+        def respuestas = Respuesta.list()
+        def seleccionadas = RespuestaPregunta.findAllByPregunta(pregunta)
+        println("sele " + seleccionadas.respuesta.id)
+        return[seleccionadas: seleccionadas, respuestas: respuestas]
     }
 
 

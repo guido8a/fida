@@ -41,7 +41,7 @@
 
     function reloadTablaPregunta(search) {
         var data = {
-            id : "${convenio?.id}"
+            %{--id : "${convenio?.id}"--}%
         };
         if (search) {
             data.search = search;
@@ -99,43 +99,6 @@
             return false;
         } //else
         return false;
-    }
-    function deletePregunta(itemId) {
-        bootbox.dialog({
-            title   : "Alerta",
-            message : "<i class='fa fa-trash fa-3x pull-left text-danger text-shadow'></i><p>" +
-                    "¿Está seguro que desea eliminar el Pregunta seleccionado? Esta acción no se puede deshacer.</p>",
-            buttons : {
-                cancelar : {
-                    label     : "Cancelar",
-                    className : "btn-primary",
-                    callback  : function () {
-                    }
-                },
-                eliminar : {
-                    label     : "<i class='fa fa-trash'></i> Eliminar",
-                    className : "btn-danger",
-                    callback  : function () {
-                        openLoader("Eliminando Pregunta");
-                        $.ajax({
-                            type    : "POST",
-                            url     : '${createLink(controller:'taller', action:'delete_ajax')}',
-                            data    : {
-                                id : itemId
-                            },
-                            success : function (msg) {
-                                var parts = msg.split("*");
-                                log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                                closeLoader();
-                                if (parts[0] == "SUCCESS") {
-                                    reloadTablaPregunta();
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-        });
     }
 
     function createEditPregunta(id) {
