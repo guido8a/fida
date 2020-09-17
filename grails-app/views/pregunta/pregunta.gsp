@@ -21,6 +21,12 @@
         </a>
     </div>
 
+    <div class="btn-group">
+        <a href="#" class="btn btn-sm btn-warning" id="btnEncuesta">
+            <i class="fa fa-plus"></i> Aplicar Encuesta
+        </a>
+    </div>
+
     <div class="btn-group col-md-3 pull-right">
         <div class="input-group input-group-sm">
             <input type="text" class="form-control input-sm " id="searchDoc" placeholder="Buscar"/>
@@ -156,6 +162,10 @@
 
     $("#btnRespuesta").click(function () {
         location.href="${createLink(controller: 'respuesta', action: 'list')}"
+    });
+
+    $("#btnEncuesta").click(function () {
+        location.href="${createLink(controller: 'encuesta', action: 'index')}"
     });
 
 
