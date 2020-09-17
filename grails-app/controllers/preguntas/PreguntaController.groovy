@@ -168,20 +168,57 @@ class PreguntaController {
         }
     }
 
-    def indicador_ajax(){
-//        println("params indi " + params)
-        def pregunta = Pregunta.get(params.id)
-        def actividad = MarcoLogico.get(params.marco)
-        def indicadores = Indicador.findAllByMarcoLogico(actividad, [sort: 'descripcion'])
-        return[indicadores:indicadores, pregunta: pregunta]
-    }
+//    def indicador_ajax(){
+////        println("params indi " + params)
+//        def pregunta = Pregunta.get(params.id)
+//        def actividad = MarcoLogico.get(params.marco)
+//        def indicadores = Indicador.findAllByMarcoLogico(actividad, [sort: 'descripcion'])
+//        return[indicadores:indicadores, pregunta: pregunta]
+//    }
 
     def respuestas_ajax(){
         def pregunta = Pregunta.get(params.id)
-        def respuestas = Respuesta.list()
-        def seleccionadas = RespuestaPregunta.findAllByPregunta(pregunta)
-        println("sele " + seleccionadas.respuesta.id)
-        return[seleccionadas: seleccionadas, respuestas: respuestas]
+        return[pregunta:pregunta]
+    }
+
+    def tablaRespuesta_ajax(){
+        def pregunta = Pregunta.get(params.id)
+        def respuestas = RespuestaPregunta.findAllByPregunta(pregunta).sort{it.respuesta}
+        return[respuestas: respuestas]
+    }
+
+    def borrarRespuestaSeleccionada_ajax(){
+        def respuesta = RespuestaPregunta.get(params.id)
+
+        try{
+            respuesta.delete(flush:true)
+            render"ok"
+        }catch(e){
+            println("error al borrar la respuesta seleccionada " + respuesta.errors)
+        }
+    }
+
+    def agregarRespuestaSeleccionada_ajax(){
+        def pregunta = Pregunta.get(params.id)
+        def respuesta = Respuesta.get(params.respuesta)
+
+        def existe = RespuestaPregunta.findAllByPreguntaAndRespuesta(pregunta, respuesta)
+
+        if(existe){
+            render "er"
+        }else{
+            def respuestaSel = new RespuestaPregunta()
+            respuestaSel.respuesta = respuesta
+            respuestaSel.pregunta = pregunta
+
+            if(!respuestaSel.save(flush:true)){
+                println("Error al guardar la respuesta" + respuestaSel.errors)
+                render "no"
+            }else{
+                render "ok"
+            }
+        }
+
     }
 
 
