@@ -158,78 +158,145 @@
                 };
 
                 map = new google.maps.Map(document.getElementById('mapa'), myOptions);
+
+                // addMarker({lat: 3.6, lng: -78.52}, "red");
+
+
+                // addMarker(latitudObra, longitudObra, "green");
+                addMarker(latitudObra, longitudObra, "blue");
+
                 limites2();
 
-                var kmzLayerVias = new google.maps.KmlLayer("http://www.tedein.com.ec/archivos/vias_ok.kmz");
-                var kmzLayer = new google.maps.KmlLayer("http://www.tedein.com.ec/archivos/parroquias.kmz");
-                kmzLayerVias.setMap(map);
-                kmzLayer.setMap(map);
+                // var kmzLayerVias = new google.maps.KmlLayer("http://www.tedein.com.ec/archivos/vias_ok.kmz");
+                // var kmzLayer = new google.maps.KmlLayer("http://www.tedein.com.ec/archivos/parroquias.kmz");
+                // kmzLayerVias.setMap(map);
+                // kmzLayer.setMap(map);
 
-                var posicion;
-                if (latitudObra == 0 || longitudObra == 0) {
-//            ////console.log("entro")
-                    posicion = new google.maps.LatLng(3.6, -78.52)
-                } else {
-                    posicion = new google.maps.LatLng(latitudObra, longitudObra)
+                // var posicion;
+                //
+                // if (latitudObra == 0 || longitudObra == 0) {
+                //     posicion = new google.maps.LatLng(3.6, -78.52)
+                // } else {
+                //     posicion = new google.maps.LatLng(latitudObra, longitudObra)
+                // }
+
+                // var marker2 = new google.maps.Marker({
+                //     map       : map,
+                //     position  : posicion,
+                //     draggable : true,
+                //     icon: {
+                //         url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                //     }
+                // });
+                //
+
+                //
+                // var marker3= new google.maps.Marker({
+                //     map       : map,
+                //     // position  : {lat: 3.5, lng: -78.40},
+                //     position  : new google.maps.LatLng(3.5, -78.42),
+                //     draggable : true,
+                //     icon: {
+                //         url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
+                //     }
+                // });
+
+                var markersArray = [];
+
+                function addMarker(lati, longi, color) {
+                    var url = "http://maps.google.com/mapfiles/ms/icons/";
+                    url += color + "-dot.png";
+
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: new google.maps.LatLng(lati, longi),
+                        draggable : true,
+                        icon: {
+                            url: url
+                        }
+                    });
+
+                    //store the marker object drawn in global array
+                    markersArray.push(marker);
                 }
-                var marker2 = new google.maps.Marker({
-                    map       : map,
-//            position: new google.maps.LatLng(-0.21, -78.52),
-//            position: new google.maps.LatLng(latitudObra, longitudObra),
-                    position  : posicion,
-                    draggable : true
-                });
 
-                google.maps.event.addListener(marker2, 'drag', function (event) {
-                    var latlng = marker2.getPosition();
+//                 google.maps.event.addListener(marker2, 'drag', function (event) {
+//                     var latlng = marker2.getPosition();
+//
+//                     var coords = "";
+//
+//                     lat = latlng.lat();
+//                     longitud = latlng.lng();
+//
+//                     if (lat >= 0) {
+//                         coords += "N ";
+//                     } else {
+//                         coords += "S "
+//                     }
+//                     var pa = lat.toString().split(".");
+//                     var ng = Math.abs(parseFloat(pa[0]));
+//                     var nm = (Math.abs(lat) - ng) * 60;
+//
+//                     coords += ng + " " + nm + " ";
+//
+//                     if (longitud >= 0) {
+//                         coords += "E ";
+//                     } else {
+//                         coords += "W "
+//                     }
+//                     var pn = longitud.toString().split(".");
+//                     var eg = Math.abs(parseFloat(pn[0]));
+//                     var em = (Math.abs(longitud) - eg) * 60;
+//
+//                     coords += eg + " " + em + " ";
+//                     $("#divCoords").text(coords).data("coords", coords);
+//
+// //            $("#latitud").val(lat);
+// //                    $("#latitud").val(number_format(lat, 8, ".", ","));
+// //                    $("#longitud").val(number_format(longitud, 8, ".", ","));
+// //            $("#longitud").val(longitud);
+//                 });
 
-                    var coords = "";
 
-                    lat = latlng.lat();
-                    longitud = latlng.lng();
+                // google.maps.event.addListener(marker3, 'drag', function (event) {
+                //     var latlng = marker3.getPosition();
+                //
+                //     var coords = "";
+                //
+                //     lat = latlng.lat();
+                //     longitud = latlng.lng();
+                //
+                //     if (lat >= 0) {
+                //         coords += "N ";
+                //     } else {
+                //         coords += "S "
+                //     }
+                //     var pa = lat.toString().split(".");
+                //     var ng = Math.abs(parseFloat(pa[0]));
+                //     var nm = (Math.abs(lat) - ng) * 60;
+                //
+                //     coords += ng + " " + nm + " ";
+                //
+                //     if (longitud >= 0) {
+                //         coords += "E ";
+                //     } else {
+                //         coords += "W "
+                //     }
+                //     var pn = longitud.toString().split(".");
+                //     var eg = Math.abs(parseFloat(pn[0]));
+                //     var em = (Math.abs(longitud) - eg) * 60;
+                //
+                //     coords += eg + " " + em + " ";
+                //     $("#divCoords").text(coords).data("coords", coords);
+                // });
 
-                    if (lat >= 0) {
-                        coords += "N ";
-                    } else {
-                        coords += "S "
-                    }
-                    var pa = lat.toString().split(".");
-                    var ng = Math.abs(parseFloat(pa[0]));
-                    var nm = (Math.abs(lat) - ng) * 60;
-
-                    coords += ng + " " + nm + " ";
-
-                    if (longitud >= 0) {
-                        coords += "E ";
-                    } else {
-                        coords += "W "
-                    }
-                    var pn = longitud.toString().split(".");
-                    var eg = Math.abs(parseFloat(pn[0]));
-                    var em = (Math.abs(longitud) - eg) * 60;
-
-                    coords += eg + " " + em + " ";
-                    $("#divCoords").text(coords).data("coords", coords);
-
-//            $("#latitud").val(lat);
-//                    $("#latitud").val(number_format(lat, 8, ".", ","));
-//                    $("#longitud").val(number_format(longitud, 8, ".", ","));
-//            $("#longitud").val(longitud);
-                });
-
-                google.maps.event.addListenerOnce(marker2, 'dragstart', function () {
-
-                    var posicion = marker2.getPosition();
-
-                    latorigen = posicion.lat();
-                    longorigen = posicion.lng();
-
-//            $("#lato").val(latorigen);
-                    $("#lato").val(number_format(latorigen, 5, ".", ","));
-                    $("#longo").val(number_format(longorigen, 5, ".", ","));
-//            $("#longo").val(longorigen);
-
-                });
+                // google.maps.event.addListenerOnce(marker2, 'dragstart', function () {
+                //     var posicion = marker2.getPosition();
+                //     latorigen = posicion.lat();
+                //     longorigen = posicion.lng();
+                //     $("#lato").val(number_format(latorigen, 5, ".", ","));
+                //     $("#longo").val(number_format(longorigen, 5, ".", ","));
+                // });
 //        var paths = [new google.maps.LatLng(0.3173,-79.26 ),
 //            new google.maps.LatLng(0.169 ,-77.96 ),
 //            new google.maps.LatLng(-0.06,-77.31 )];
