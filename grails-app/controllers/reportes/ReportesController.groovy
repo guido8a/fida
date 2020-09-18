@@ -1602,4 +1602,21 @@ class ReportesController {
 
     }
 
+    def mapa() {
+//        def obra = Obra.get(params.id)
+//        def persona = Persona.get(session.usuario.id)
+//
+        def coordenadas = "N 0 1.4487389362487455 W 78 53.441314453125415"
+        def coordsParts = coordenadas.split(" ")
+        def lat, lng
+
+        lat = (coordsParts[0] == 'N' ? 1 : -1) * (coordsParts[1].toInteger() + (coordsParts[2].toDouble() / 60))
+        lng = (coordsParts[3] == 'N' ? 1 : -1) * (coordsParts[4].toInteger() + (coordsParts[5].toDouble() / 60))
+
+        def duenoObra = 0
+
+        return [lat: lat, lng: lng, coordenadas: coordenadas]
+    }
+
+
 }

@@ -123,28 +123,11 @@
                 <g:hiddenField name="id" value="${convenio?.id}"/>
                 <div class="row izquierda">
                     <div class="col-md-12 input-group">
-                        %{--
-                                                <span class="col-md-2 label label-primary text-info mediano">Parroquia</span>
-                                                <div class="col-md-4">
-                                                    <g:hiddenField name="parroquia" id="parroquia" value="${convenio?.parroquia?.id}"/>
-                                                    <span class="grupo">
-                                                        <div class="input-group input-group-sm" >
-                                                            <input type="text" class="form-control buscarParroquia" name="parroquiaName"
-                                                                   id="parroquiaTexto" value="${convenio?.id ? convenio?.parroquia?.nombre + " (" + convenio?.parroquia?.canton?.provincia?.nombre + ")" : ''}">
-                                                            <span class="input-group-btn">
-                                                                <a href="#" class="btn btn-info buscarParroquia" title="Buscar Parroquia">
-                                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                                                </a>
-                                                            </span>
-                                                        </div>
-                                                    </span>
-                                                </div>
-                        --}%
                         <span class="col-md-2 label label-primary text-info mediano">Organización</span>
                         <div class="col-md-10">
                             <span class="grupo">
                                 <g:select id="unidadEjecutora" name="unidadEjecutora.id"
-                                          from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2))}"
+                                          from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2), [sort: 'nombre'])}"
                                           optionKey="id" value="${convenio?.planesNegocio?.unidadEjecutora?.id}"
                                           class="many-to-one form-control input-sm"/>
                             </span>

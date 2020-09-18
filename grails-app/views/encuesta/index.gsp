@@ -40,7 +40,22 @@
 
         Por favor lea  y entienda bien las preguntas y señale la opción de respuesta que más se aplique.<br><br>
 
+          <div class="row izquierda" style="margin-top: 70px;">
+              <div class="col-md-12 input-group">
+                  <span class="col-md-3 panel panel-info" style="height: 35px; text-align: end">Selecciones la Organización</span>
+                  <div class="col-md-9">
+                      <span class="grupo">
+                          <g:select id="unidadEjecutora" name="unidadEjecutora.id"
+                                    from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2), [sort: 'nombre'])}"
+                                    optionKey="id" value="${convenio?.planesNegocio?.unidadEjecutora?.id}"
+                                    class="many-to-one form-control input-sm"/>
+                      </span>
+                  </div>
+              </div>
+          </div>
+
       </div>
+        <div>
         <div class="btn-group">
             <a href="#" class="btn btn-sm btn-warning" id="btnFin" style="color: #fee">
                 <i class="fa fa-plus"></i> Abandonar la Encuesta
@@ -51,6 +66,7 @@
             <a href="#" class="btn btn-sm btn-primary" id="btnEncuesta" style="color: #fff">
                 <i class="fa fa-plus"></i> Empezar
             </a>
+        </div>
         </div>
 
 
