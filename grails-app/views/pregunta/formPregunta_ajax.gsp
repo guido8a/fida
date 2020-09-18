@@ -60,11 +60,10 @@
                     </label>
 
                     <div class="col-md-3">
-                      <g:textField name="numero" value="${pregInstance?.numero}" class="form-control required" maxlength="3"/>
+                      <g:textField name="numero" value="${pregInstance?.numero ?: ''}" class="form-control required" maxlength="3"/>
                     </div>
                 </span>
             </div>
-
         </g:form>
     </div>
 
@@ -115,22 +114,6 @@
         %{--        }--}%
         %{--    });--}%
         %{--}--}%
-
-        $(".form-control").keydown(function (ev) {
-            if (ev.keyCode == 13) {
-                submitFormDesembolso();
-                return false;
-            }
-            return true;
-        });
-
-        $('#fecha').datetimepicker({
-            locale: 'es',
-            format: 'DD-MM-YYYY',
-            // daysOfWeekDisabled: [0, 6],
-            sideBySide: true,
-            showClose: true
-        });
 
     </script>
 </g:else>

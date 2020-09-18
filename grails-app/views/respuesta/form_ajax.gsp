@@ -13,7 +13,7 @@
                     Tipo
                 </label>
                 <div class="col-md-4">
-                    <g:select name="tipo" from="${['M': 'Selección Múltiple', 'N':'Numérico', 'T':'Texto']}"
+                    <g:select name="tipo" from="${['M': 'Opción Múltiple', 'N':'Numérico', 'T':'Texto']}"
                               optionValue="value" optionKey="key" class="form-control" value="${respuestaInstance?.tipo}"/>
                 </div>
             </span>

@@ -242,24 +242,30 @@ class PreguntaController {
     }
 
     def savePregunta_ajax(){
-        println("params " + params)
+//        println("params " + params)
         def pregunta
         def indicador = Indicador.get(params.indicador)
 
-        if(params.id){
-            pregunta = Pregunta.get(params.id)
-        }else{
-            pregunta = new Pregunta()
-        }
+        def numeroExiste = Pregunta.findAllByNumero(params.numero.toInteger())
 
-        pregunta.indicador = indicador
-        pregunta.descripcion = params.descripcion
-        pregunta.numero = params.numero.toInteger()
-
-        if(!pregunta.save(flush:true)){
-            render "no"
+        if(numeroExiste){
+            render "er"
         }else{
-            render "ok"
+            if(params.id){
+                pregunta = Pregunta.get(params.id)
+            }else{
+                pregunta = new Pregunta()
+            }
+
+            pregunta.indicador = indicador
+            pregunta.descripcion = params.descripcion
+            pregunta.numero = params.numero.toInteger()
+
+            if(!pregunta.save(flush:true)){
+                render "no"
+            }else{
+                render "ok"
+            }
         }
 
     }

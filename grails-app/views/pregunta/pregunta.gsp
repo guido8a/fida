@@ -76,7 +76,17 @@
                         log("Pregunta agregada correctamente","success");
                         reloadTablaPregunta();
                     } else {
-                        log("Error al agregar la pregunta","error")
+                        if(msg == 'er'){
+                            bootbox.alert({
+                                size: "small",
+                                title: "Alerta!!!",
+                                message: "<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i>  El número ingresado ya se encuentra asignado a otra pregunta!",
+                                callback: function(){
+                                }
+                            });
+                        }else{
+                            log("Error al agregar la pregunta","error")
+                        }
                     }
                 }
             });
@@ -84,46 +94,6 @@
             return false;
         } //else
     }
-
-    // function submitFormPregunta() {
-    //     var $form = $("#frmPregunta");
-    //     var $btn = $("#dlgCreateEdit").find("#btnSave");
-    //     if ($form.valid()) {
-    //         $btn.replaceWith(spinner);
-    //         var formData = new FormData($form[0]);
-    //         var dialog = cargarLoader("Guardando...");
-    //         $.ajax({
-    //             url         : $form.attr("action"),
-    //             type        : 'POST',
-    //             data        : formData,
-    //             async       : false,
-    //             cache       : false,
-    //             contentType : false,
-    //             processData : false,
-    //             success     : function (msg) {
-    //                 dialog.modal('hide');
-    //                 var parts = msg.split("*");
-    //                 if (parts[0] == "SUCCESS") {
-    //                     log(parts[1],"success");
-    //                     reloadTablaPregunta();
-    //                     bm.modal("hide");
-    //                 } else {
-    //                     if(parts[0] == 'er'){
-    //                         bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> " + parts[1])
-    //                         // return false;
-    //                     }else{
-    //                         spinner.replaceWith($btn);
-    //                         log(parts[1],"error");
-    //                         return false;
-    //                     }
-    //                 }
-    //             }
-    //         });
-    //     } else {
-    //         return false;
-    //     } //else
-    //     return false;
-    // }
 
     function createEditPregunta(id) {
         var title = id ? "Editar" : "Crear";
@@ -137,7 +107,7 @@
                 %{--convenio: '${convenio?.id}'--}%
             },
             success : function (msg) {
-                bm = bootbox.dialog({
+                var b = bootbox.dialog({
                     id      : "dlgCreateEdit",
                     title   : title + " Pregunta",
                     message : msg,
@@ -159,7 +129,7 @@
                     } //buttons
                 }); //dialog
                 setTimeout(function () {
-                    bm.find(".form-control").first().focus()
+                    b.find(".form-control").first().focus()
                 }, 500);
             } //success
         }); //ajax
