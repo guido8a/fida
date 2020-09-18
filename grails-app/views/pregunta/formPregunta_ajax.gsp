@@ -60,7 +60,7 @@
                     </label>
 
                     <div class="col-md-3">
-                      <g:textField name="numero" value="${pregInstance?.numero}" class="form-control digits required" maxlength="3"/>
+                      <g:textField name="numero" value="${pregInstance?.numero}" class="form-control required" maxlength="3"/>
                     </div>
                 </span>
             </div>

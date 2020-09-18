@@ -30,7 +30,7 @@ class PreguntaController {
 //                    ilike("objetivo", "%" + params.search + "%")
                 }
             }
-            order("descripcion", "asc")
+            order("numero", "asc")
         }
         return [pregunta: pregunta]
     }
