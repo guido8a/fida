@@ -9,7 +9,7 @@ class Encuesta implements Auditable {
     UnidadEjecutora unidadEjecutora
     Date fecha
     String observaciones
-    String estado = 'I'
+    String estado = 'N'
 
     static auditable = true
 
@@ -31,7 +31,7 @@ class Encuesta implements Auditable {
         unidadEjecutora(blank: false, nullable: false)
         fecha(blank: false, nullable: false)
         estado(nullable: false, blank: false)
-        observaciones(size: 1..255, nullable: false, blank: false)
+        observaciones(size: 1..255, nullable: true, blank: true)
     }
 
     String toString() {

@@ -23,7 +23,7 @@ class EncuestaController {
         def cn = dbConnectionService.getConnection()
         def tx = "select max(coalesce(pregnmro,0)) nmro, encu.encu__id from dtec, rspg, preg, encu " +
                 "where unej__id = ${session.unidad.id} and dtec.encu__id = encu.encu__id and " +
-                "rspg.rspg__id = dtec.rspg__id and preg.preg__id = rspg.preg__id and encuetdo = 'I' group by encu.encu__id"
+                "rspg.rspg__id = dtec.rspg__id and preg.preg__id = rspg.preg__id and encuetdo = 'N' group by encu.encu__id"
         println "sql: $tx"
         def ninguna
         def actual
@@ -62,6 +62,21 @@ class EncuestaController {
 //        println "tiempo ejecución ponePregunta: ${TimeCategory.minus(pruebasFin, pruebasInicio)}"
 
 //        println "pregunta ${pregunta.id}, persona: ${session.tipoPersona}"
+
+        encu.fecha = new Date()
+        encu.estado = 'N'
+        encu.unidadEjecutora = session.unidad
+
+        try{
+//                println "inicia save"
+            encu.save(flush: true)
+            println "creado encuesta.. ok"
+            creado = true
+        } catch (e){
+//                println "****** $e"
+            println("error al crear ponePregunta: " + encu.errors)
+        }
+
 
         render (view: 'pregunta',
                 model: [encu: encu.id, actual: actual, total: 100, pregunta: pregunta, rp: rp,
@@ -113,6 +128,62 @@ class EncuestaController {
         return preg
     }
 
+    def anterior() {
+        println "params anterior: $params"
+        def cn = dbConnectionService.getConnection()
+        def actual = params.actual.toInteger() - 1
+        def tx = "select teti__id from encu where encu__id = ${params.encu__id}"
+//        println "anterior sql: $tx"
+        if((cn.rows(tx.toString())[0]?.teti__id == 4) && params.actual.toInteger() == 3) {
+            tx = "select count(*) cnta from encu, dtec where encu.encu__id = ${params.encu__id} and " +
+                    "dtec.encu__id = encu.encu__id and prte__id = 68 and prit__id <> 2"
+//            println "... $tx"
+            if(cn.rows(tx.toString())[0]?.cnta == 0)
+                actual--
+        }
+
+        ponePregunta(actual, session.total, session.encuesta, session.tipoEncuesta)
+    }
+
+    /** registra respuesta de preguntaPrit
+     * repuestas: rppg__id
+     * materia:   dcta__id
+     * preg__id:  prte__id  **/
+    def respuesta() {
+        println "respuesta: $params"
+        def cn = dbConnectionService.getConnection()
+        def dtec
+        //igual que en respuestaAsgn
+        def tx = "select dtec__id from dtec, rspg where encu__id = ${params.encu__id} and " +
+                "rspg.rspg__id = dtec.rspg__id and rspg.preg__id = ${params.preg__id}"
+//        println "respuesta sql: $tx"
+        dtec = cn.rows(tx.toString())[0]?.dtec__id
+
+        //siempre se responde causa y respuesta
+        if(dtec) {
+            tx = "update dtec set rspg__id = ${params.respuestas} where dtec__id = ${dtec}"
+        } else {
+            tx = "insert into dtec(rspg__id, encu__id) " +
+                    "values(${params.respuestas}, ${params.encu__id})"
+        }
+        try {
+            cn.execute(tx.toString())
+        }
+        catch (e) {
+            println e.getMessage()
+        }
+//        println "... sql: $tx"
+        cn.close()
+        //llamar al a siguiente pregunta
+        def actual = params.actual.toInteger() + 1
+
+        if(actual > session.total) {// ya ha terminado la ponePregunta
+            finalizaEncuesta(session.encuesta.id)
+        } else {
+//            ponePregunta(actual, session.total, session.encuesta, session.tipoEncuesta)
+            ponePregunta(actual, 100, params.encu__id)
+        }
+    }
 
 
 }
