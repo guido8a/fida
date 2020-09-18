@@ -246,7 +246,6 @@ class PreguntaController {
         def pregunta
         def indicador = Indicador.get(params.indicador)
 
-
         if(params.id){
             pregunta = Pregunta.get(params.id)
         }else{
