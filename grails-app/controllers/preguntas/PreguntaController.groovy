@@ -205,9 +205,24 @@ class PreguntaController {
         def existe = RespuestaPregunta.findAllByPreguntaAndRespuesta(pregunta, respuesta)
 
         if(existe){
-            render "er"
+            render "er_La respuesta seleccionada ya se encuentra en la lista!"
+            return false
         }else{
-            def respuestaSel = new RespuestaPregunta()
+
+            def respuestaSel
+            def existente = RespuestaPregunta.findAllByPregunta(pregunta)
+
+            if(existente){
+                if(existente.respuesta.tipo.contains(respuesta?.tipo)){
+                    respuestaSel = new RespuestaPregunta()
+                }else{
+                 render "er_El tipo seleccionado es distinto al de las respuestas ya seleccionadas anteriormente en la lista!"
+                 return false
+                }
+            }else{
+                respuestaSel = new RespuestaPregunta()
+            }
+
             respuestaSel.respuesta = respuesta
             respuestaSel.pregunta = pregunta
 
@@ -224,6 +239,30 @@ class PreguntaController {
         def tipo = params.tipo
         def respuestas = Respuesta.findAllByTipo(tipo)
         return[respuestas: respuestas]
+    }
+
+    def savePregunta_ajax(){
+        println("params " + params)
+        def pregunta
+        def indicador = Indicador.get(params.indicador)
+
+
+        if(params.id){
+            pregunta = Pregunta.get(params.id)
+        }else{
+            pregunta = new Pregunta()
+        }
+
+        pregunta.indicador = indicador
+        pregunta.descripcion = params.descripcion
+        pregunta.numero = params.numero.toInteger()
+
+        if(!pregunta.save(flush:true)){
+            render "no"
+        }else{
+            render "ok"
+        }
+
     }
 
 

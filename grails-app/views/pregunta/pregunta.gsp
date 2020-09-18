@@ -17,13 +17,13 @@
     </div>
     <div class="btn-group">
         <a href="#" class="btn btn-sm btn-primary" id="btnRespuesta">
-            <i class="fa fa-plus"></i> Banco de Respuestas Posibles
+            <i class="fa fa-book"></i> Banco de Respuestas Posibles
         </a>
     </div>
 
     <div class="btn-group">
         <a href="#" class="btn btn-sm btn-warning" id="btnEncuesta">
-            <i class="fa fa-plus"></i> Aplicar Encuesta
+            <i class="fa fa-user-edit"></i> Aplicar Encuesta
         </a>
     </div>
 
@@ -65,47 +65,67 @@
     function submitFormPregunta() {
         var $form = $("#frmPregunta");
         var $btn = $("#dlgCreateEdit").find("#btnSave");
-        // $form.validate();
-        // console.log('submit');
         if ($form.valid()) {
-            // console.log('submit--')
             $btn.replaceWith(spinner);
-            var formData = new FormData($form[0]);
-            var dialog = cargarLoader("Guardando...");
             $.ajax({
-                url         : $form.attr("action"),
-                type        : 'POST',
-                data        : formData,
-                async       : false,
-                cache       : false,
-                contentType : false,
-                processData : false,
-                success     : function (msg) {
-                    dialog.modal('hide');
-                    var parts = msg.split("*");
-                    if (parts[0] == "SUCCESS") {
-                        log(parts[1],"success");
-                        reloadTablaPregunta();
-                        bm.modal("hide");
+                type    : "POST",
+                url     : '${createLink(controller: 'pregunta', action:'savePregunta_ajax')}',
+                data    : $form.serialize(),
+                success : function (msg) {
+                    var parts = msg.split("_");
+                    log(parts[1], parts[0] == "OK" ? "success" : "error"); // log(msg, type, title, hide)
+                    if (parts[0] == "OK") {
+                        location.reload(true);
                     } else {
-                        if(parts[0] == 'er'){
-                            bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> " + parts[1])
-                            // return false;
-                        }else{
-                            spinner.replaceWith($btn);
-                            log(parts[1],"error");
-                            return false;
-                        }
+                        spinner.replaceWith($btn);
+                        return false;
                     }
-                },
-                error       : function () {
                 }
             });
         } else {
             return false;
         } //else
-        return false;
     }
+
+    // function submitFormPregunta() {
+    //     var $form = $("#frmPregunta");
+    //     var $btn = $("#dlgCreateEdit").find("#btnSave");
+    //     if ($form.valid()) {
+    //         $btn.replaceWith(spinner);
+    //         var formData = new FormData($form[0]);
+    //         var dialog = cargarLoader("Guardando...");
+    //         $.ajax({
+    //             url         : $form.attr("action"),
+    //             type        : 'POST',
+    //             data        : formData,
+    //             async       : false,
+    //             cache       : false,
+    //             contentType : false,
+    //             processData : false,
+    //             success     : function (msg) {
+    //                 dialog.modal('hide');
+    //                 var parts = msg.split("*");
+    //                 if (parts[0] == "SUCCESS") {
+    //                     log(parts[1],"success");
+    //                     reloadTablaPregunta();
+    //                     bm.modal("hide");
+    //                 } else {
+    //                     if(parts[0] == 'er'){
+    //                         bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> " + parts[1])
+    //                         // return false;
+    //                     }else{
+    //                         spinner.replaceWith($btn);
+    //                         log(parts[1],"error");
+    //                         return false;
+    //                     }
+    //                 }
+    //             }
+    //         });
+    //     } else {
+    //         return false;
+    //     } //else
+    //     return false;
+    // }
 
     function createEditPregunta(id) {
         var title = id ? "Editar" : "Crear";
@@ -114,13 +134,14 @@
             type    : "POST",
             url     : "${createLink(controller:'pregunta', action:'formPregunta_ajax')}",
             data    : {
-                id: id ? id : '',
-                convenio: '${convenio?.id}'
+                id: id ? id : ''
+                // ,
+                %{--convenio: '${convenio?.id}'--}%
             },
             success : function (msg) {
                 bm = bootbox.dialog({
                     id      : "dlgCreateEdit",
-                    title   : title + " Pregunta del Convenio",
+                    title   : title + " Pregunta",
                     message : msg,
                     buttons : {
                         cancelar : {

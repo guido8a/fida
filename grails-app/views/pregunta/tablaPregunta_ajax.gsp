@@ -5,18 +5,18 @@
 <table id="tblDocumentos" class="table table-condensed table-hover table-striped table-bordered">
     <thead>
     <tr>
-        <th>Indicador</th>
         <th>Número</th>
+        <th>Indicador</th>
         <th>Descripción</th>
     </tr>
     </thead>
     <tbody id="tbDoc">
     <g:each in="${pregunta}" var="preg">
         <tr data-id="${preg.id}" style="width: 100%">
-            <td style="width: 40%"><elm:textoBusqueda busca="${params.search}">
+            <td style="width: 5%; text-align: center; background-color: #78b665">${preg?.numero}</td>
+            <td style="width: 50%"><elm:textoBusqueda busca="${params.search}">
                 ${preg?.indicador?.descripcion}</elm:textoBusqueda></td>
-            <td style="width: 5%">${preg?.numero}</td>
-            <td style="width: 55%"><elm:textoBusqueda busca="${params.search}">${preg?.descripcion}</elm:textoBusqueda></td>
+            <td style="width: 45%"><elm:textoBusqueda busca="${params.search}">${preg?.descripcion}</elm:textoBusqueda></td>
         </tr>
     </g:each>
     </tbody>
@@ -30,34 +30,34 @@
                     label: "Acciones",
                     header: true
                 },
-                ver: {
-                    label: "Ver",
-                    icon: "fa fa-search",
-                    action: function ($element) {
-                        var id = $element.data("id");
-                        $.ajax({
-                            type: "POST",
-                            url: "${createLink(controller:'pregunta', action:'show_ajax')}",
-                            data: {
-                                id: id
-                            },
-                            success: function (msg) {
-                                bootbox.dialog({
-                                    title: "Ver Pregunta",
-                                    message: msg,
-                                    buttons: {
-                                        ok: {
-                                            label: "Aceptar",
-                                            className: "btn-primary",
-                                            callback: function () {
-                                            }
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    }
-                },
+                %{--ver: {--}%
+                %{--    label: "Ver",--}%
+                %{--    icon: "fa fa-search",--}%
+                %{--    action: function ($element) {--}%
+                %{--        var id = $element.data("id");--}%
+                %{--        $.ajax({--}%
+                %{--            type: "POST",--}%
+                %{--            url: "${createLink(controller:'pregunta', action:'show_ajax')}",--}%
+                %{--            data: {--}%
+                %{--                id: id--}%
+                %{--            },--}%
+                %{--            success: function (msg) {--}%
+                %{--                bootbox.dialog({--}%
+                %{--                    title: "Ver Pregunta",--}%
+                %{--                    message: msg,--}%
+                %{--                    buttons: {--}%
+                %{--                        ok: {--}%
+                %{--                            label: "Aceptar",--}%
+                %{--                            className: "btn-primary",--}%
+                %{--                            callback: function () {--}%
+                %{--                            }--}%
+                %{--                        }--}%
+                %{--                    }--}%
+                %{--                });--}%
+                %{--            }--}%
+                %{--        });--}%
+                %{--    }--}%
+                %{--},--}%
                 editar: {
                     label: "Editar",
                     icon: "fa fa-edit",
@@ -68,7 +68,7 @@
                 },
                 respuestas: {
                     label: "Fijar Respuestas posibles",
-                    icon: "fa fa-edit",
+                    icon: "fa fa-pen-nib",
                     action: function ($element) {
                         var id = $element.data("id");
                         cargarSeleccionados(id);
@@ -91,35 +91,6 @@
                 $(".success").removeClass("success");
             }
         });
-
-        %{--function cargarInstituciones(id){--}%
-        %{--    $.ajax({--}%
-        %{--        type: "POST",--}%
-        %{--        url: "${createLink(controller: 'pregunta',action:'instituciones_ajax')}",--}%
-        %{--        data: {--}%
-        %{--            id:id--}%
-        %{--        },--}%
-        %{--        success: function (msg) {--}%
-        %{--            var b = bootbox.dialog({--}%
-        %{--                id: "dlgInstituciones",--}%
-        %{--                title: "Instituciones participantes",--}%
-        %{--                // class : "modal-lg",--}%
-        %{--                message: msg,--}%
-        %{--                buttons: {--}%
-        %{--                    cancelar: {--}%
-        %{--                        label: "Salir",--}%
-        %{--                        className: "btn-primary",--}%
-        %{--                        callback: function () {--}%
-        %{--                        }--}%
-        %{--                    }--}%
-        %{--                }--}%
-        %{--            }); //dialog--}%
-        %{--            setTimeout(function () {--}%
-        %{--                b.find(".form-control").first().focus()--}%
-        %{--            }, 500);--}%
-        %{--        } //success--}%
-        %{--    }); //ajax--}%
-        %{--}--}%
 
         function deletePregunta(id) {
             bootbox.confirm({

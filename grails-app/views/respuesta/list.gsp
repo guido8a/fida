@@ -155,34 +155,6 @@
                     label  : "Acciones",
                     header : true
                 },
-                ver      : {
-                    label  : "Ver",
-                    icon   : "fa fa-search",
-                    action : function ($element) {
-                        var id = $element.data("id");
-                        $.ajax({
-                            type    : "POST",
-                            url     : "${createLink(action:'show_ajax')}",
-                            data    : {
-                                id : id
-                            },
-                            success : function (msg) {
-                                bootbox.dialog({
-                                    title   : "Ver",
-                                    message : msg,
-                                    buttons : {
-                                        ok : {
-                                            label     : "Aceptar",
-                                            className : "btn-primary",
-                                            callback  : function () {
-                                            }
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    }
-                },
                 editar   : {
                     label  : "Editar",
                     icon   : "fa fa-pen",

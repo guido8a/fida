@@ -6,7 +6,7 @@ import proyectos.Indicador
 class Pregunta implements Auditable {
 
     Indicador indicador
-    String numero
+    int numero
     String descripcion
 
     static auditable = true

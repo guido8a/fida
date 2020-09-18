@@ -24,8 +24,6 @@
                 Respuesta
             </label>
             <div class="col-md-8" id="divComboRespuestas">
-                %{--                <g:select from="${preguntas.Respuesta.list().sort{it.id}}" name="respuesta" class="form-control input-sm"--}%
-                %{--                          value="${''}" optionKey="id" optionValue="opcion" />--}%
             </div>
         </span>
         <a href="#" class="btn btn-success" id="btnAgregaRespuesta"><i class="fa fa-plus"></i> Agregar </a>
@@ -86,12 +84,13 @@
                 respuesta: res
             },
             success: function (msg) {
-                if(msg == 'ok'){
+                var parts = msg.split("_")
+                if(parts[0] == 'ok'){
                     log("Agregado correctamente","success");
                     cargarTablaRespuestas();
                 }else{
-                    if(msg == 'er'){
-                        bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> La respuesta seleccionada ya se encuentra en la lista!")
+                    if(parts[0] == 'er'){
+                        bootbox.alert("<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i>" + parts[1])
                     }else{
                         log("Error al agregar la respuesta","error")
                     }

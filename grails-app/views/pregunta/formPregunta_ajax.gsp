@@ -6,7 +6,7 @@
 <g:else>
 
     <div class="modal-contenido">
-        <g:form class="form-horizontal" name="frmDesembolso" controller="desembolso" action="save_ajax" method="POST">
+        <g:form class="form-horizontal" name="frmPregunta" controller="pregunta" action="savePregunta_ajax" method="POST">
             <g:hiddenField name="id" value="${pregInstance?.id}"/>
 
                 <span class="col-md-12">
@@ -37,11 +37,10 @@
                         <g:select from="${proyectos.Indicador.list().sort{it.descripcion}}" optionKey="id" optionValue="descripcion" name="indicador"
                                   value="${pregInstance?.indicador?.id}"
                                   class="many-to-one form-control input-sm required"
-                                  noSelection="${[0:'Seleccione']}"/>
+                                  />
                     </div>
                 </span>
             </div>
-
             <div class="form-group keeptogether ${hasErrors(bean: pregInstance, field: 'descripcion', 'error')} ">
                 <span class="grupo">
                     <label for="descripcion" class="col-md-2 control-label">
@@ -54,11 +53,47 @@
                     </div>
                 </span>
             </div>
+            <div class="form-group keeptogether ${hasErrors(bean: pregInstance, field: 'numero', 'error')} ">
+                <span class="grupo">
+                    <label class="col-md-2 control-label">
+                        Número
+                    </label>
+
+                    <div class="col-md-3">
+                      <g:textField name="numero" value="${pregInstance?.numero}" class="form-control digits required" maxlength="3"/>
+                    </div>
+                </span>
+            </div>
 
         </g:form>
     </div>
 
     <script type="text/javascript">
+
+        $("#numero").keydown(function (ev) {
+            return validarNumero(ev)
+        });
+
+
+        function validarNumero(ev) {
+            /*
+             48-57      -> numeros
+             96-105     -> teclado numerico
+             188        -> , (coma)
+             190        -> . (punto) teclado
+             110        -> . (punto) teclado numerico
+             8          -> backspace
+             46         -> delete
+             9          -> tab
+             37         -> flecha izq
+             39         -> flecha der
+             */
+            return ((ev.keyCode >= 48 && ev.keyCode <= 57) ||
+                (ev.keyCode >= 96 && ev.keyCode <= 105) ||
+                ev.keyCode == 8 || ev.keyCode == 46 || ev.keyCode == 9 ||
+                ev.keyCode == 37 || ev.keyCode == 39);
+        }
+
 
         %{--cargarIndicador($("#marcoLogico option:selected").val());--}%
 
