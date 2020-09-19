@@ -14,7 +14,7 @@ class PreguntaController {
      * Acción llamada con ajax que muestra y permite modificar los tallers de un proyecto
      */
     def pregunta() {
-        def pregunta = Pregunta.get(1)
+        def pregunta = new Pregunta()
         return [pregunta: pregunta]
     }
 
@@ -67,6 +67,8 @@ class PreguntaController {
         def mrlg = MarcoLogico.findAllByProyectoAndTipoElemento(proy, tpel)
         def pregInstance = new Pregunta()
         def indicador = Indicador.findAllByMarcoLogico(mrlg, [sort: 'descripcion'])
+        def nmro = Pregunta.count()
+
         if (params.id) {
             pregInstance = Pregunta.get(params.id)
             if (!pregInstance) {
@@ -75,7 +77,7 @@ class PreguntaController {
         }
 
         println "indicador: ${indicador?.size()}"
-        return [pregInstance: pregInstance, marcoLogico: mrlg, indicadores: indicador]
+        return [pregInstance: pregInstance, indicadores: indicador, numero: nmro +1]
     } //form para cargar con ajax en un dialog
 
     /**

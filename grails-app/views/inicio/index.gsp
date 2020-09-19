@@ -304,7 +304,7 @@
                 </div>
             </div>
         </a>
-        <a href= "${createLink(controller:'reforma', action: 'pendientes')}" style="text-decoration: none">
+        <a href= "${createLink(controller:'reportes', action: 'mapa')}" style="text-decoration: none">
             <div class="col-lg-6 mbr-col-md-10">
                 <div class="wrap" style="width: 553px; height: 120px">
                     <div style="width: 200px; height: 120px">

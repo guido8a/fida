@@ -10,6 +10,8 @@ import com.lowagie.text.Paragraph
 import com.lowagie.text.pdf.PdfPCell
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
+import grails.converters.JSON
+import groovy.json.JsonBuilder
 import jxl.WorkbookSettings
 import jxl.write.Label
 import jxl.write.NumberFormat
@@ -37,10 +39,14 @@ import org.apache.poi.xssf.usermodel.XSSFCell as Cell
 import org.apache.poi.xssf.usermodel.XSSFRow as Row
 import org.apache.poi.xssf.usermodel.XSSFSheet as Sheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook as Workbook
+import seguridad.TipoInstitucion
+import seguridad.UnidadEjecutora
 
 import java.awt.Color
 
 class ReportesController {
+
+    def dbConnectionService
 
     def reporteAjustes() {
 
@@ -1665,19 +1671,20 @@ class ReportesController {
     }
 
     def mapa() {
-//        def obra = Obra.get(params.id)
-//        def persona = Persona.get(session.usuario.id)
-//
-        def coordenadas = "N 0 1.4487389362487455 W 78 53.441314453125415"
-        def coordsParts = coordenadas.split(" ")
-        def lat, lng
+        def cn = dbConnectionService.getConnection()
+        def sql = "select unej__id, unejnmbr, cntnlatt, cntnlong from unej, parr, cntn " +
+                "where parr.parr__id = unej.parr__id and cntn.cntn__id = parr.cntn__id and tpin__id = 2"
 
-        lat = (coordsParts[0] == 'N' ? 1 : -1) * (coordsParts[1].toInteger() + (coordsParts[2].toDouble() / 60))
-        lng = (coordsParts[3] == 'N' ? 1 : -1) * (coordsParts[4].toInteger() + (coordsParts[5].toDouble() / 60))
+        def coord = '', nmbr = ''
+        println "sql: $sql"
 
-        def duenoObra = 0
+        cn.eachRow(sql.toString()) {d ->
+            coord += (coord? '_' : '') + "${d.cntnlatt} ${d.cntnlong}"
+            nmbr += (nmbr? '_' : '') + "${d.unejnmbr}"
+        }
+//        println "data: ${data as JSON}"
 
-        return [lat: lat, lng: lng, coordenadas: coordenadas]
+        return [cord: coord, nmbr: nmbr]
     }
 
 

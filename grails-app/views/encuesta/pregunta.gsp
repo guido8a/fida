@@ -53,6 +53,8 @@
     <g:form name="forma" role="form" action="respuesta" controller="encuesta" method="POST">
         <input type="hidden" name="encu__id" value="${encu}">
         <input type="hidden" name="actual" value="${actual}">
+        <input type="hidden" name="total" value="${total}">
+        <input type="hidden" name="unidad" value="${unidad}">
 
         <div class="mensaje" style="display: none;"></div>
 
@@ -68,17 +70,38 @@
         <div class="panel panel-default fila2">
 
             <div class="panel-heading">
-                <span style="font-weight: bold">Seleccione una Respuesta</span>
+                <span style="font-weight: bold">Respuesta</span>
             </div>
 
             <div class="panel-body">
-                <g:each in="${rp}" var="respuesta">
-                    <div class="radio-toolbar resp" style="margin-bottom: 0;">
-                        <input type="radio" name="respuestas" value="${respuesta.id}"
-                            ${(respuesta.id == resp[0] ? 'checked' : ' ')} id="${respuesta.id}">
-                        <label for="${respuesta.id}">${respuesta.dscr}</label>
+%{--                ${rp[0].id == 3}--}%
+                <g:if test="${rp[0].dscr == 'Número'}">
+                    <div class="resp" style="margin-bottom: 0;">
+                        <label for="numero">Ingrese un numéro</label>
+                        <input type="number" name="numero" value="${resp[1]}" id="numero">
+                        <input type="hidden" name="resp" value="3">
+                        <input type="hidden" name="rspg" value="${rp[0].id}">
                     </div>
-                </g:each>
+                </g:if>
+                <g:else>
+                    <g:if test="${rp[0].dscr == 'Texto libre'}">
+                        <div class="resp" style="margin-bottom: 0;">
+                            <label for="texto">Escriba su respuesta</label>
+                            <input type="text" style="width: 230px" name="texto" value="${resp[1]?:''}" id="texto">
+                            <input type="hidden" name="resp" value="4">
+                            <input type="hidden" name="rspg" value="${rp[0].id}">
+                        </div>
+                    </g:if>
+                    <g:else>
+                    <g:each in="${rp}" var="respuesta">
+                        <div class="radio-toolbar resp" style="margin-bottom: 0;">
+                            <input type="radio" name="respuestas" value="${respuesta.id}"
+                                ${(respuesta.id == resp[0] ? 'checked' : ' ')} id="${respuesta.id}">
+                            <label for="${respuesta.id}">${respuesta.dscr}</label>
+                        </div>
+                    </g:each>
+                    </g:else>
+                </g:else>
             </div>
         </div>
 
@@ -100,9 +123,10 @@
 
 
 <script type="text/javascript">
-    var url = "${resource(dir:'images', file:'spinner32.gif')}";
+    var url = "${assetPath(src: '/apli/spinner32.gif')}";
 //    var spinner = $("<div class='btn col-md-4 col-xs-4' style='height: auto; border-color: #495a6b'><img  src='" + url + "'/><span> Cargando...</span></div>");
-    var spinner = $("<div class='btn col-md-4 col-xs-4' style='height: 40px; border-color: #495a6b'><img  src='" + url + "'/><span>  Cargando...</span></div>");
+    var spinner = $("<div class='btn col-md-4 col-xs-4' style='height: 40px; border-color: #495a6b'>" +
+        "<img  src='" + url + "'/><span>  Cargando...</span></div>");
 
     $(function () {
         $(document).ready(function () {
@@ -149,14 +173,20 @@
                 callback: function (result) {
                     if(result) {
                         $("#anterior").replaceWith(spinner);
-                        location.href = "${createLink(action: 'anterior')}" + "?encu__id=${encu}&actual=${actual}"
+                        location.href = "${createLink(action: 'anterior')}" +
+                            "?encu__id=${encu}&actual=${actual}&total=${total}&unej=${unidad}"
                     }
                 }
             });
         });
 
         $("#siguiente").click(function () {
-            var respit = $('input[name=respuestas]:checked').length;
+            var respit
+            if("${rp[0].id == 3}") {
+                respit = $('#numero').val()
+            } else {
+                respit = $('input[name=respuestas]:checked').length;
+            }
             if (respit == 0) {
                 bootbox.alert({
                     title: "No ha seleccionado una respuesta",

@@ -64,7 +64,7 @@
 
         <div class="btn-group">
             <a href="#" class="btn btn-sm btn-primary" id="btnEncuesta" style="color: #fff">
-                <i class="fa fa-plus"></i> Empezar
+                <i class="fa fa-plus"></i> Empezar o Reanudar la Encuesta
             </a>
         </div>
         </div>
@@ -80,7 +80,8 @@
       });
 
       $("#btnEncuesta").click(function () {
-          location.href="${createLink(controller: 'encuesta', action: 'ponePregunta')}"
+          var unej = $("#unidadEjecutora").val()
+          location.href="${createLink(controller: 'encuesta', action: 'iniciaEncu')}" + "?unej=" + unej
       });
 
 
