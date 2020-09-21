@@ -811,7 +811,7 @@ class ReportesController {
         label = new Label(1, 2, "REPORTE ENCUESTAS", times16format); sheet.addCell(label);
         label = new Label(0, 4, "UNIDAD EJECUTORA", times16format); sheet.addCell(label);
 
-        def preguntas = Pregunta.list().sort{it.descripcion}
+        def preguntas = Pregunta.list().sort{it.numero}
 
         preguntas.eachWithIndex {pregunta, i->
             label = new Label(i+1, 4, pregunta?.descripcion?.toString(), times16format); sheet.addCell(label);
@@ -820,7 +820,7 @@ class ReportesController {
         def encuestas = Encuesta.findAllByEstado('C').sort{it.unidadEjecutora.nombre}
 
         encuestas.each{encuesta->
-            def detalles = DetalleEncuesta.findAllByEncuesta(encuesta).sort{it.respuestaPregunta.pregunta.descripcion}
+            def detalles = DetalleEncuesta.findAllByEncuesta(encuesta).sort{it.respuestaPregunta.pregunta.numero}
             detalles.eachWithIndex{detalle,j->
                 label = new Label(0, fila,  detalle?.encuesta?.unidadEjecutora?.nombre?.toString(), times16formatN); sheet.addCell(label);
                 if(detalle?.valor){
@@ -831,81 +831,6 @@ class ReportesController {
             }
             fila++
         }
-
-//        asgProy.each{asg->
-//            def totalFilas = 0
-//            label = new Label(0, fila, asg?.marcoLogico?.marcoLogico?.toString()); sheet.addCell(label);
-//            label = new Label(1, fila, asg?.marcoLogico?.numero?.toString()); sheet.addCell(label);
-//            label = new Label(2, fila, asg?.marcoLogico?.toString()); sheet.addCell(label);
-//            label = new Label(3, fila, asg?.presupuesto?.numero?.toString()); sheet.addCell(label);
-//            label = new Label(4, fila, asg?.fuente?.descripcion?.toString()); sheet.addCell(label);
-//            number = new jxl.write.Number(5, fila, asg?.planificado); sheet.addCell(number);
-//            meses.eachWithIndex{mes,j->
-//                def v = ProgramacionAsignacion.findByAsignacionAndMes(Asignacion.get(asg?.id),Mes.get(mes.id))
-//                number = new jxl.write.Number((j + 6), fila, v?.valor?.toDouble() ?: 0 ); sheet.addCell(number)
-//                totalFilas += (v?.valor?.toDouble() ?: 0)
-//                totalFinal += (v?.valor?.toDouble() ?: 0)
-//                if(mes.numero == 1){
-//                    ene += (v?.valor?.toDouble() ?: 0)
-//                }
-//                if(mes.numero == 2){
-//                    feb += (v?.valor?.toDouble() ?: 0)
-//                }
-//                if(mes.numero == 3){
-//                    mar += (v?.valor?.toDouble() ?: 0)
-//                }
-//                if(mes.numero == 4){
-//                    abr += (v?.valor?.toDouble() ?: 0)
-//                }
-//                if(mes.numero == 5){
-//                    may += (v?.valor?.toDouble() ?: 0)
-//                }
-//                if(mes.numero == 6){
-//                    jun += (v?.valor?.toDouble() ?: 0)
-//                }
-//                if(mes.numero == 7){
-//                    jul += (v?.valor?.toDouble() ?: 0)
-//                }
-//                if(mes.numero == 8){
-//                    ago += (v?.valor?.toDouble() ?: 0)
-//                }
-//                if(mes.numero == 9){
-//                    sep += (v?.valor?.toDouble() ?: 0)
-//                }
-//                if(mes.numero == 10){
-//                    oct += (v?.valor?.toDouble() ?: 0)
-//                }
-//                if(mes.numero == 11){
-//                    nov += (v?.valor?.toDouble() ?: 0)
-//                }
-//                if(mes.numero == 12){
-//                    dic += (v?.valor?.toDouble() ?: 0)
-//                }
-//            }
-//            number = new jxl.write.Number(18, fila, totalFilas ); sheet.addCell(number);
-//            fila++
-//        }
-
-//        label = new Label(0, fila, ''); sheet.addCell(label);
-//        label = new Label(1, fila, ''); sheet.addCell(label);
-//        label = new Label(2, fila, ''); sheet.addCell(label);
-//        label = new Label(3, fila, ''); sheet.addCell(label);
-//        label = new Label(4, fila, ''); sheet.addCell(label);
-//        label = new Label(5, fila, 'TOTALES'); sheet.addCell(label);
-//        number = new jxl.write.Number(6, fila, ene ); sheet.addCell(number);
-//        number = new jxl.write.Number(7, fila, feb ); sheet.addCell(number);
-//        number = new jxl.write.Number(8, fila, mar ); sheet.addCell(number);
-//        number = new jxl.write.Number(9, fila, abr ); sheet.addCell(number);
-//        number = new jxl.write.Number(10, fila, may ); sheet.addCell(number);
-//        number = new jxl.write.Number(11, fila, jun ); sheet.addCell(number);
-//        number = new jxl.write.Number(12, fila, jul ); sheet.addCell(number);
-//        number = new jxl.write.Number(13, fila, ago ); sheet.addCell(number);
-//        number = new jxl.write.Number(14, fila, sep ); sheet.addCell(number);
-//        number = new jxl.write.Number(15, fila, oct ); sheet.addCell(number);
-//        number = new jxl.write.Number(16, fila, nov ); sheet.addCell(number);
-//        number = new jxl.write.Number(17, fila, dic ); sheet.addCell(number);
-//        number = new jxl.write.Number(18, fila, totalFinal ); sheet.addCell(number);
-
 
         workbook.write();
         workbook.close();
