@@ -61,10 +61,10 @@
         </div>
 
         <div class="btn-group" style="margin-top: 10px; margin-left: 20px">
-            <button class="btn btn-sm btn-primary" id="btnVolver"><i class="icon-arrow-left"></i> Regresar</button>
+            <a href="#" class="btn btn-info" id="btnVolver"><i class="fa fa-arrow-left"></i> Regresar </a>
         </div>
         <div class="btn-group" style="margin-top: 10px; margin-left: 10px">
-            <button class="btn btn-sm btn-default" id="btnImprimir"><i class="icon-print"></i> Imprimir</button>
+            <a href="#" class="btn btn-success" id="btnImprimir"><i class="fa fa-print"></i> Imprimir </a>
         </div>
 
 
@@ -149,8 +149,7 @@
             });
 
             $("#btnVolver").click(function () {
-                %{--location.href="${createLink(action: 'registroObra')}";--}%
-                location.href = "${g.createLink(controller: 'inicio', action: 'index')}";
+                location.href = "${g.createLink(controller: 'reportes', action: 'reportes')}";
             });
 
             $("#btnImprimir").click(function () {

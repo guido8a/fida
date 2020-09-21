@@ -30,6 +30,8 @@ import parametros.Mes
 import parametros.proyectos.TipoElemento
 import poa.Asignacion
 import poa.ProgramacionAsignacion
+import preguntas.DetalleEncuesta
+import preguntas.Encuesta
 import proyectos.MarcoLogico
 import proyectos.Proyecto
 
@@ -131,7 +133,6 @@ class ReportesController {
         addEmptyLine(preface, 1);
         preface.setAlignment(Element.ALIGN_CENTER);
         preface.add(new Paragraph("PROYECTO FAREPS", fontProyecto));
-//        addEmptyLine(preface, 1);
         preface.add(new Paragraph(titulo_rep, fontTitulo));
         addEmptyLine(preface, 1);
         document.add(logo)
@@ -171,7 +172,6 @@ class ReportesController {
         addCellTabla(tablaCabecera2, new Paragraph("", times10bold), prmsCellHeadCentro)
 
         addCellTabla(tablaPie, new Paragraph("", times10normal), frmtDato2)
-//        addCellTabla(tablaPie, new Paragraph("", times10normal), prmsCellHead3)
         addCellTabla(tablaPie, new Paragraph("Elaborado por:", times10bold), prmsCellHead3)
         addCellTabla(tablaPie, new Paragraph(reforma.persona.nombreCompleto, times10normal), prmsCellHead3)
         addCellTabla(tablaPie, new Paragraph("Fecha:", times10bold), prmsCellHead3)
@@ -180,12 +180,6 @@ class ReportesController {
         if(reforma?.nota) {
             addCellTabla(tablaPie, new Paragraph("Nota:", times10bold), prmsCellHead3)
             addCellTabla(tablaPie, new Paragraph(reforma.nota, times10normal), prmsCellHead3)
-//            document.add(new Paragraph(reforma.nota))
-//            document.add(new Paragraph("<b>hola</b> reforma.nota"))
-//                    ITextRenderer render = new ITextRenderer()
-//            document.add(render.setText("<b>hola</b> reforma.nota")))
-//            document.add(new Paragraph("http://lineadecodigo.com"));
-//            addCellTabla(tablaPie, new Paragraph("", times10normal), frmtDato2)
         }
 
         addCellTabla(tablaHeader, new Paragraph("AÑO", times8bold), frmtHd)
@@ -547,932 +541,6 @@ class ReportesController {
         response.getOutputStream().write(b)
     }
 
-//    def reporteExcelAsignaciones(){
-//        println "poaXlsx: $params"
-//        def datos = poa_funcion(0)
-//
-//        def anio = datos.anio
-//        def data = datos.data
-//        def anios = datos.anios
-//        def meses = datos.meses
-//        def totales = datos.totales
-//
-//        def iniRow = 0
-//        def iniCol = 1
-//
-//        def curRow = iniRow
-//        def curCol = iniCol
-//
-//        try {
-//            Workbook wb = new Workbook()
-//            Sheet sheet = wb.createSheet("Planificación operativa anual")
-//            // Create a new font and alter it.
-//            def estilos = getEstilos(wb)
-//            CellStyle styleHeader = estilos.styleHeader
-//            CellStyle styleTabla = estilos.styleTabla
-//            CellStyle styleDate = estilos.styleDate
-//            CellStyle styleNumber = estilos.styleNumber
-//            CellStyle styleSubtotal = estilos.styleSubtotal
-//            CellStyle styleSubtotalNumber = estilos.styleSubtotalNumber
-//            CellStyle styleFooter = estilos.styleFooter
-//            CellStyle styleFooterCenter = estilos.styleFooterCenter
-//
-//            // Create a row and put some cells in it. Rows are 0 based.
-//            def titulo = "PLANIFICACIÓN OPERATIVA ANUAL"
-//            def subtitulo = "POA AÑO ${anio.anio} - EN DÓLARES"
-//            curRow = setTitulos(sheet, estilos, iniRow, iniCol, titulo, subtitulo)
-//
-//            Row rowHeader = sheet.createRow((short) curRow)
-//            Cell cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("PLAN NACIONAL DE DESARROLLO")
-//            cellHeader.setCellStyle(styleHeader)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("")
-//            cellHeader.setCellStyle(styleHeader)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("")
-//            cellHeader.setCellStyle(styleHeader)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("OBJETIVO ESTRATÉGICO")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 12500)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("ESTRATEGIA")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 6000)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("PORTAFOLIO")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 6000)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("PROGRAMA")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 6000)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("COD.")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 2000)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("PROYECTO")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 10000)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("COMPONENTE")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 6000)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("GG")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 2000)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("P")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 2000)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("C")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 2000)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("PARTIDA PRESUPUESTARIA")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 4000)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("#")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 1500)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("ACTIVIDAD")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 6000)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("RESPONSABLE")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 5000)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("FECHA DE INICIO")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 2500)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("FECHA DE FIN")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 2500)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("PRESUPUESTO")
-//            cellHeader.setCellStyle(styleHeader)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("")
-//            cellHeader.setCellStyle(styleHeader)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("")
-//            cellHeader.setCellStyle(styleHeader)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("")
-//            cellHeader.setCellStyle(styleHeader)
-//            curCol++
-//
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("PROGRAMACIÓN MENSUAL AÑO " + anio.anio)
-//            cellHeader.setCellStyle(styleHeader)
-//            curCol++
-//
-//            def colMes = curCol
-//            def colFinMes = colMes + meses.size() - 1
-//            meses.eachWithIndex { m, i ->
-//                if (i > 0) {
-//                    cellHeader = rowHeader.createCell((short) curCol)
-//                    cellHeader.setCellValue("")
-//                    cellHeader.setCellStyle(styleHeader)
-//                    sheet.setColumnWidth(curCol, 3000)
-//                    curCol++
-//                }
-//            }
-//
-//            anios.each { a ->
-//                def str = "AÑO ${a}"
-//                if (a == anio.anio) {
-//                    str = "TOTAL"
-//                }
-//                cellHeader = rowHeader.createCell((short) curCol)
-//                cellHeader.setCellValue(str)
-//                cellHeader.setCellStyle(styleHeader)
-//                sheet.setColumnWidth(curCol, 3000)
-//                curCol++
-//            }
-//
-//            def totalCols = curCol
-//            cellHeader = rowHeader.createCell((short) curCol)
-//            cellHeader.setCellValue("TOTAL PLURIANUAL")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 3000)
-//
-//            def rowHeader1o = curRow
-//            curRow++
-//            def rowHeader2o = curRow
-//
-//            curCol = iniCol
-//
-//            Row rowHeader2 = sheet.createRow((short) curRow)
-//            cellHeader = rowHeader2.createCell((short) curCol)
-//            cellHeader.setCellValue("OBJETIVO")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 6000)
-//            curCol++
-//
-//            cellHeader = rowHeader2.createCell((short) curCol)
-//            cellHeader.setCellValue("POLÍTICA")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 6000)
-//            curCol++
-//
-//            cellHeader = rowHeader2.createCell((short) curCol)
-//            cellHeader.setCellValue("META")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 6000)
-//            curCol++
-//
-//            curCol = colMes - 5
-//            cellHeader = rowHeader2.createCell((short) curCol)
-//            cellHeader.setCellValue("ARRASTRE")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 3000)
-//            curCol++
-//
-//            cellHeader = rowHeader2.createCell((short) curCol)
-//            cellHeader.setCellValue("FUENTE")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 4000)
-//            curCol++
-//
-//            cellHeader = rowHeader2.createCell((short) curCol)
-//            cellHeader.setCellValue("NUEVO")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 3000)
-//            curCol++
-//
-//            cellHeader = rowHeader2.createCell((short) curCol)
-//            cellHeader.setCellValue("PRESUPUESTO CODIFICADO")
-//            cellHeader.setCellStyle(styleHeader)
-//            sheet.setColumnWidth(curCol, 3000)
-//            curCol++
-//
-//            meses.eachWithIndex { m, i ->
-//                cellHeader = rowHeader2.createCell((short) curCol)
-//                cellHeader.setCellValue(m.descripcion)
-//                cellHeader.setCellStyle(styleHeader)
-//                sheet.setColumnWidth(curCol, 3000)
-//                curCol++
-//            }
-//
-////            ReportesNuevosExcelController.joinTitulos(sheet, iniRow, iniCol, totalCols)
-//
-//            sheet.addMergedRegion(new CellRangeAddress(
-//                    rowHeader1o, //first row (0-based)
-//                    rowHeader1o, //last row  (0-based)
-//                    iniCol, //first column (0-based)
-//                    iniCol + 2  //last column  (0-based)
-//            ))
-//            (1..16).each { n ->
-//                sheet.addMergedRegion(new CellRangeAddress(
-//                        rowHeader1o, //first row (0-based)
-//                        rowHeader2o, //last row  (0-based)
-//                        iniCol + 2 + n, //first column (0-based)
-//                        iniCol + 2 + n  //last column  (0-based)
-//                ))
-//            }
-//            sheet.addMergedRegion(new CellRangeAddress(
-//                    rowHeader1o, //first row (0-based)
-//                    rowHeader1o, //last row  (0-based)
-//                    colMes - 5, //first column (0-based)
-//                    colMes - 2  //last column  (0-based)
-//            ))
-//            sheet.addMergedRegion(new CellRangeAddress(
-//                    rowHeader1o, //first row (0-based)
-//                    rowHeader1o, //last row  (0-based)
-//                    colMes - 1, //first column (0-based)
-//                    colFinMes - 1  //last column  (0-based)
-//            ))
-//            (1..4).each { n ->
-//                sheet.addMergedRegion(new CellRangeAddress(
-//                        rowHeader1o, //first row (0-based)
-//                        rowHeader2o, //last row  (0-based)
-//                        colFinMes - 1 + n, //first column (0-based)
-//                        colFinMes - 1 + n  //last column  (0-based)
-//                ))
-//            }
-//
-//            curRow++
-//
-//            def strAnio = anio.anio
-//            def keyArrastre = "" + (strAnio.toInteger() - 1)        //ARRASTRE
-//            def keyNuevo = "N" + strAnio                            //NUEVO
-//            def keyTotalActual = "T" + strAnio                      //PRESUPUESTO CODIFICADO
-//
-//            data.each { v ->
-//                curCol = iniCol
-//
-//                Proyecto proyecto = v.proyecto
-//                Asignacion asignacion = v.asignacion
-//
-//                def esSubtotal = v.asignacion == null
-//
-//                Row tableRow = sheet.createRow((short) curRow)
-//                def tableCell = tableRow.createCell(curCol)
-//
-//                if (esSubtotal) {
-//
-//                    tableCell.setCellValue("SUBTOTAL PROYECTO: " + proyecto.nombre)
-//                    tableCell.setCellStyle(styleSubtotal)
-//                    curCol += 19
-//
-//                    sheet.addMergedRegion(new CellRangeAddress(
-//                            curRow, //first row (0-based)
-//                            curRow, //last row  (0-based)
-//                            iniCol, //first column (0-based)
-//                            iniCol + 18 //last column  (0-based)
-//                    ))
-//
-//                    tableCell = tableRow.createCell((short) curCol)
-//                    tableCell.setCellValue(v.valores[keyArrastre] ?: 0)
-//                    tableCell.setCellStyle(styleSubtotalNumber)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell((short) curCol)
-//                    tableCell.setCellValue("")
-//                    tableCell.setCellStyle(styleSubtotalNumber)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell((short) curCol)
-//                    tableCell.setCellValue(v.valores[keyNuevo] ?: 0)
-//                    tableCell.setCellStyle(styleSubtotalNumber)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell((short) curCol)
-//                    tableCell.setCellValue(v.valores[keyTotalActual] ?: 0)
-//                    tableCell.setCellStyle(styleSubtotalNumber)
-//                    curCol++
-//
-//                    meses.each { mes ->
-//                        def keyMes = mes.numero + "_" + anio.anio
-//                        tableCell = tableRow.createCell((short) curCol)
-//                        tableCell.setCellValue(v.valores[keyMes] ?: 0)
-//                        tableCell.setCellStyle(styleSubtotalNumber)
-//                        curCol++
-//                    }
-//
-//                    anios.each { a ->
-//                        tableCell = tableRow.createCell((short) curCol)
-//                        tableCell.setCellValue(v.valores[a] ?: 0)
-//                        tableCell.setCellStyle(styleSubtotalNumber)
-//                        curCol++
-//                    }
-//
-//                    tableCell = tableRow.createCell((short) curCol)
-//                    tableCell.setCellValue(v.valores["T"] ?: 0)
-//                    tableCell.setCellStyle(styleSubtotalNumber)
-//                    curCol++
-//                } else {
-////                    def metas = MetaBuenVivirProyecto.withCriteria {
-////                        eq("proyecto", proyecto)
-////                        metaBuenVivir {
-////                            politica {
-////                                objetivo {
-////                                    order("codigo", "asc")
-////                                }
-////                                order("codigo", "asc")
-////                            }
-////                            order("codigo", "asc")
-////                        }
-////                    }
-////                    def meta = metas.size() > 0 ? metas.first() : null
-//
-//                    tableCell.setCellValue("")
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue("")
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue("")
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue("")
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue("")
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue("")
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue("")
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(proyecto.codigo)
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(proyecto.nombre)
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(asignacion.marcoLogico.marcoLogico.toStringCompleto())
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(asignacion.presupuesto.numero[0..1])
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(proyecto.codigoEsigef)
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(asignacion.marcoLogico.marcoLogico.numero)
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(asignacion.presupuesto.numero)
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(asignacion.marcoLogico.numero)
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(asignacion.marcoLogico.toStringCompleto())
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue("") // Responsable
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue("")
-//                    tableCell.setCellStyle(styleDate)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue("")
-//                    tableCell.setCellStyle(styleDate)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(v.valores[keyArrastre] ?: 0)
-//                    tableCell.setCellStyle(styleNumber)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(asignacion.fuente.descripcion)
-//                    tableCell.setCellStyle(styleTabla)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(v.valores[keyNuevo] ?: 0)
-//                    tableCell.setCellStyle(styleNumber)
-//                    curCol++
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(v.valores[keyTotalActual] ?: 0)
-//                    tableCell.setCellStyle(styleNumber)
-//                    curCol++
-//
-//                    meses.each { mes ->
-//                        def keyMes = mes.numero + "_" + anio.anio
-//
-//                        tableCell = tableRow.createCell(curCol)
-//                        tableCell.setCellValue(v.valores[keyMes] ?: 0)
-//                        tableCell.setCellStyle(styleNumber)
-//                        curCol++
-//                    }
-//                    anios.each { a ->
-//                        tableCell = tableRow.createCell(curCol)
-//                        tableCell.setCellValue(v.valores[a] ?: 0)
-//                        tableCell.setCellStyle(styleNumber)
-//                        curCol++
-//                    }
-//
-//                    tableCell = tableRow.createCell(curCol)
-//                    tableCell.setCellValue(v.valores["T"] ?: 0)
-//                    tableCell.setCellStyle(styleNumber)
-//                    curCol++
-//                }
-//
-//                curRow++
-//            }
-//
-//            sheet.addMergedRegion(new CellRangeAddress(
-//                    curRow, //first row (0-based)
-//                    curRow, //last row  (0-based)
-//                    iniCol, //first column (0-based)
-//                    iniCol + 18 //last column  (0-based)
-//            ))
-//
-//            curCol = iniCol
-//            Row totalRow = sheet.createRow((short) curRow)
-//
-//            Cell cellFooter = totalRow.createCell((short) curCol)
-//            curCol++
-//            cellFooter.setCellValue("TOTAL")
-//            cellFooter.setCellStyle(styleFooterCenter)
-//
-//            (1..18).each {
-//                cellFooter = totalRow.createCell((short) curCol)
-//                curCol++
-//                cellFooter.setCellValue("")
-//                cellFooter.setCellStyle(styleFooterCenter)
-//            }
-//
-//            cellFooter = totalRow.createCell((short) curCol)
-//            curCol++
-//            cellFooter.setCellValue(totales[keyArrastre] ?: 0)
-//            cellFooter.setCellStyle(styleFooter)
-//
-//            cellFooter = totalRow.createCell((short) curCol)
-//            curCol++
-//            cellFooter.setCellValue("")
-//            cellFooter.setCellStyle(styleFooterCenter)
-//
-//            cellFooter = totalRow.createCell((short) curCol)
-//            curCol++
-//            cellFooter.setCellValue(totales[keyNuevo] ?: 0)
-//            cellFooter.setCellStyle(styleFooter)
-//
-//            cellFooter = totalRow.createCell((short) curCol)
-//            curCol++
-//            cellFooter.setCellValue(totales[keyTotalActual] ?: 0)
-//            cellFooter.setCellStyle(styleFooter)
-//
-//            meses.each { mes ->
-//                def keyMes = mes.numero + "_" + anio.anio
-//                cellFooter = totalRow.createCell((short) curCol)
-//                curCol++
-//                cellFooter.setCellValue(totales[keyMes] ?: 0)
-//                cellFooter.setCellStyle(styleFooter)
-//            }
-//
-//            anios.each { a ->
-//                cellFooter = totalRow.createCell((short) curCol)
-//                curCol++
-//                cellFooter.setCellValue(totales[a] ?: 0)
-//                cellFooter.setCellStyle(styleFooter)
-//            }
-//
-//            cellFooter = totalRow.createCell((short) curCol)
-//            curCol++
-//            cellFooter.setCellValue(totales["T"] ?: 0)
-//            cellFooter.setCellStyle(styleFooter)
-//
-//            def output = response.getOutputStream()
-//            def header = "attachment; filename=" + "asignacionesPoa_" + new Date().format("dd-MM-yyyy") + ".xlsx"
-//            response.setContentType("application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-//            response.setHeader("Content-Disposition", header)
-//            wb.write(output)
-//            output.flush()
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
-//
-//    def poa_funcion(siguiente) {
-//
-//
-//
-//        def strAnio = new Date().format('yyyy')
-//        def anio
-//
-//
-//        if(siguiente == 1){
-//            println("entro 1")
-//            anio = Anio.findByAnio(strAnio.toInteger() + 1)
-//        }else{
-//            println("entro 0")
-//            anio = Anio.findByAnio(strAnio)
-//        }
-//
-//
-//        def keyArrastre = "" + (strAnio.toInteger() - 1)        //ARRASTRE
-//        def keyNuevo = "N" + strAnio                            //NUEVO
-//        def keyTotalActual = "T" + strAnio                      //PRESUPUESTO CODIFICADO
-//        def keyActual = strAnio                                 //TOTAL
-//        def keyTotal = "T"
-//
-//        def data = []
-//        def anios = []
-//        anios += keyActual
-//        def meses = Mes.list([sort: "numero"])
-//        def proyectos = Proyecto.list([sort: "codigo"])
-//
-//        def totales = [:]
-//        totales[keyArrastre] = 0
-//        totales[keyNuevo] = 0
-//        totales[keyTotalActual] = 0
-//        totales[keyActual] = 0
-//        totales[keyTotal] = 0
-//
-//        proyectos.each { proy ->
-//            def totalesProyecto = [:]
-//            totalesProyecto[keyArrastre] = 0
-//            totalesProyecto[keyNuevo] = 0
-//            totalesProyecto[keyTotalActual] = 0
-//            totalesProyecto[keyActual] = 0
-//            totalesProyecto[keyTotal] = 0
-//
-//            def actividades = MarcoLogico.findAllByProyecto(proy)
-//            def asignaciones = []
-//            def asignacionesCero = []
-////            println("actividades" + actividades)
-//            if (actividades.size() > 0) {
-//                asignaciones = Asignacion.withCriteria {
-//                    inList("marcoLogico", actividades)
-//                }
-//            }else{
-//                asignacionesCero = Asignacion.findAllByPriorizado(0.toDouble())
-//
-//            }
-//
-//            asignacionesCero = Asignacion.findAllByMarcoLogicoInListAndPriorizado(actividades, 0)    //añadido para que salgan valores priorizados en 0 no funciona para el año actual + 1.
-//
-//
-////            println("asignaciones " + asignacionesCero)
-//
-//            (asignaciones + asignacionesCero).each { asg ->
-////                println("id" + asg.id)
-//                def m = [:]
-//                m.proyecto = proy
-//                m.asignacion = asg
-//                m.valores = [:]
-//                m.valores[keyArrastre] = 0
-//                m.valores[keyNuevo] = 0
-//                m.valores[keyTotalActual] = 0
-//                m.valores[keyActual] = 0
-//                m.valores[keyTotal] = 0
-//                def anioAsg = asg.anio
-//                if (anioAsg.id == anio.id) {
-//                    meses.each { mes ->
-//                        def keyMes = mes.numero + "_" + anio.anio
-//                        def programacion = ProgramacionAsignacion.findAllByAsignacionAndMes(asg, mes)
-//                        if (!m.valores[keyMes]) {
-//                            m.valores[keyMes] = 0
-//                        }
-//                        if (!totales[keyMes]) {
-//                            totales[keyMes] = 0
-//                        }
-//                        if (!totalesProyecto[keyMes]) {
-//                            totalesProyecto[keyMes] = 0
-//                        }
-//                        def v = 0
-//                        if (programacion.size() == 1) {
-//                            v = programacion.first().valor
-//                        } else if (programacion.size() > 1) {
-//                            v = programacion.first().valor
-//                            println "existe ${programacion.size()} programaciones para asignacion ${asg.id} mes ${mes.id} (${mes.descripcion}):" +
-//                                    " ${programacion.id}, se utilizo ${programacion.first().id}"
-//                        }
-//                        m.valores[keyMes] += v
-//                        m.valores[keyActual] += v
-//
-//                        totales[keyMes] += v
-//                        totalesProyecto[keyMes] += v
-//
-//                        totales[keyActual] += v
-//                        totalesProyecto[keyActual] += v
-//                    }
-//
-//                    m.valores[keyTotal] += asg.priorizado
-//
-//                    totales[keyTotal] += asg.priorizado
-//                    totalesProyecto[keyTotal] += asg.priorizado
-//
-//                    if (asg.fuente.codigo == "998") {
-//                        m.valores[keyArrastre] += asg.priorizado
-//                        totales[keyArrastre] += asg.priorizado
-//                        totalesProyecto[keyArrastre] += asg.priorizado
-//
-//                        m.valores[keyTotalActual] += asg.priorizado
-//                        totales[keyTotalActual] += asg.priorizado
-//                        totalesProyecto[keyTotalActual] += asg.priorizado
-//                    } else {
-//                        m.valores[keyNuevo] += asg.priorizado
-//                        totales[keyNuevo] += asg.priorizado
-//                        totalesProyecto[keyNuevo] += asg.priorizado
-//
-//                        m.valores[keyTotalActual] += asg.priorizado
-//                        totales[keyTotalActual] += asg.priorizado
-//                        totalesProyecto[keyTotalActual] += asg.priorizado
-//                    }
-//                } else {
-//                    m.valores[keyTotal] += asg.planificado
-//                    totales[keyTotal] += asg.planificado
-//                    totalesProyecto[keyTotal] += asg.planificado
-//                    if (!m.valores[anioAsg.anio]) {
-//                        m.valores[anioAsg.anio] = 0
-//                        if (!anios.contains(anioAsg.anio)) {
-//                            anios += anioAsg.anio
-//                            totales[anioAsg.anio] = 0
-//                        }
-//                        if (!totalesProyecto[anioAsg.anio]) {
-//                            totalesProyecto[anioAsg.anio] = 0
-//                        }
-//                    }
-//
-//                    m.valores[anioAsg.anio] += asg.planificado
-//                    totales[anioAsg.anio] += asg.planificado
-//                    totalesProyecto[anioAsg.anio] += asg.planificado
-//                }
-//                if (m.valores[keyTotal] > 0) {
-//                    data += m
-//                }
-//            }
-//            /* ****** subtotal proyecto ****** */
-//            def m = [:]
-//            m.proyecto = proy
-//            m.asignacion = null
-//            m.valores = [:]
-//            m.valores[keyArrastre] = totalesProyecto[keyArrastre]
-//            m.valores[keyNuevo] = totalesProyecto[keyNuevo]
-//            m.valores[keyTotalActual] = totalesProyecto[keyTotalActual]
-//            m.valores[keyActual] = totalesProyecto[keyActual]
-//            m.valores[keyTotal] = totalesProyecto[keyTotal]
-//
-//            meses.each { mes ->
-//                def keyMes = mes.numero + "_" + anio.anio
-//                m.valores[keyMes] = totalesProyecto[keyMes]
-//            }
-//
-//            anios.each { a ->
-//                m.valores[a] = totalesProyecto[a]
-//            }
-//            if (m.valores[keyTotal] > 0) {
-//                data += m
-//            }
-//        }
-//        anios = anios.sort()
-//        return [anio: anio, data: data, anios: anios, meses: meses, totales: totales]
-//    }
-//
-//    public static setTitulos(Sheet sheet, estilos, int iniRow, int iniCol, String titulo, String subtitulo) {
-//        CellStyle styleYachay = estilos.styleYachay
-//        CellStyle styleTitulo = estilos.styleTitulo
-//        CellStyle styleSubtitulo = estilos.styleSubtitulo
-//        CellStyle styleFecha = estilos.styleFecha
-//
-//        def curRow = iniRow
-//
-//        Row rowYachay = sheet.createRow((short) curRow)
-//        Cell cellYachay = rowYachay.createCell((short) iniCol)
-//        cellYachay.setCellValue("FIDA")
-//        cellYachay.setCellStyle(styleYachay)
-//        curRow++
-//
-//        Row rowTitulo = sheet.createRow((short) curRow)
-//        Cell cellTitulo = rowTitulo.createCell((short) iniCol)
-//        cellTitulo.setCellValue(titulo)
-//        cellTitulo.setCellStyle(styleTitulo)
-//        curRow++
-//
-//        if (subtitulo && subtitulo != "") {
-//            Row rowSubtitulo = sheet.createRow((short) curRow)
-//            Cell cellSubtitulo = rowSubtitulo.createCell((short) iniCol + 3)
-//            cellSubtitulo.setCellValue(subtitulo)
-//            cellSubtitulo.setCellStyle(styleTitulo)
-//            curRow++
-//        }
-//
-//        Row rowFecha = sheet.createRow((short) curRow)
-//        Cell cellFecha = rowFecha.createCell((short) iniCol + 1)
-//        cellFecha.setCellValue("Fecha del reporte: " + new Date().format("dd-MM-yyyy HH:mm"))
-//        cellFecha.setCellStyle(styleFecha)
-//        curRow++
-//
-//        return curRow
-//    }
-//
-//    public static getEstilos(Workbook wb) {
-//
-//        XSSFCreationHelper createHelper = wb.getCreationHelper();
-//        def numberFormat = createHelper.createDataFormat().getFormat('#,##0.00')
-//        def dateFormat = createHelper.createDataFormat().getFormat("dd-MM-yyyy")
-//
-//        org.apache.poi.ss.usermodel.Font fontYachay = wb.createFont()
-//        fontYachay.setFontHeightInPoints((short) 12)
-//        fontYachay.setBold(true)
-//
-//        org.apache.poi.ss.usermodel.Font fontTitulo = wb.createFont()
-//        fontTitulo.setFontHeightInPoints((short) 12)
-//        fontTitulo.setBold(true)
-//
-//        org.apache.poi.ss.usermodel.Font fontSubtitulo = wb.createFont()
-//        fontSubtitulo.setFontHeightInPoints((short) 12)
-//        fontSubtitulo.setBold(true)
-//
-//        org.apache.poi.ss.usermodel.Font fontHeader = wb.createFont()
-//        fontHeader.setFontHeightInPoints((short) 9)
-//        fontHeader.setColor(new XSSFColor(new java.awt.Color(255, 255, 255)))
-//        fontHeader.setBold(true)
-//
-//        org.apache.poi.ss.usermodel.Font fontTabla = wb.createFont()
-//        fontTabla.setFontHeightInPoints((short) 9)
-//
-//        org.apache.poi.ss.usermodel.Font fontSubtotal = wb.createFont()
-//        fontSubtotal.setFontHeightInPoints((short) 9)
-//        fontSubtotal.setBold(true)
-//
-//        org.apache.poi.ss.usermodel.Font fontFecha = wb.createFont()
-//        fontFecha.setFontHeightInPoints((short) 9)
-//
-//        org.apache.poi.ss.usermodel.Font fontFooter = wb.createFont()
-//        fontFooter.setFontHeightInPoints((short) 9)
-//        fontFooter.setBold(true)
-//
-//        CellStyle styleYachay = wb.createCellStyle()
-//        styleYachay.setFont(fontYachay)
-//        styleYachay.setAlignment(CellStyle.ALIGN_CENTER)
-//        styleYachay.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
-//
-//        CellStyle styleTitulo = wb.createCellStyle()
-//        styleTitulo.setFont(fontTitulo)
-//        styleTitulo.setAlignment(CellStyle.ALIGN_CENTER)
-//        styleTitulo.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
-//
-//        CellStyle styleSubtitulo = wb.createCellStyle()
-//        styleSubtitulo.setFont(fontSubtitulo)
-//        styleSubtitulo.setAlignment(CellStyle.ALIGN_CENTER)
-//        styleSubtitulo.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
-//
-//        CellStyle styleHeader = wb.createCellStyle()
-//        styleHeader.setFont(fontHeader)
-//        styleHeader.setAlignment(CellStyle.ALIGN_CENTER)
-//        styleHeader.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
-//        styleHeader.setFillForegroundColor(new XSSFColor(new java.awt.Color(50, 96, 144)));
-//        styleHeader.setFillPattern(CellStyle.SOLID_FOREGROUND)
-//        styleHeader.setWrapText(true);
-//        styleHeader.setBorderBottom(CellStyle.BORDER_THIN);
-//        styleHeader.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-//        styleHeader.setBorderLeft(CellStyle.BORDER_THIN);
-//        styleHeader.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-//        styleHeader.setBorderRight(CellStyle.BORDER_THIN);
-//        styleHeader.setRightBorderColor(IndexedColors.BLACK.getIndex());
-//        styleHeader.setBorderTop(CellStyle.BORDER_THIN);
-//        styleHeader.setTopBorderColor(IndexedColors.BLACK.getIndex());
-//
-//        CellStyle styleFecha = wb.createCellStyle()
-//        styleFecha.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
-//        styleFecha.setFont(fontFecha)
-//        styleFecha.setWrapText(true);
-//
-//        CellStyle styleTabla = wb.createCellStyle()
-//        styleTabla.setVerticalAlignment(CellStyle.VERTICAL_CENTER)
-//        styleTabla.setFont(fontTabla)
-//        styleTabla.setWrapText(true);
-//        styleTabla.setBorderBottom(CellStyle.BORDER_THIN);
-//        styleTabla.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-//        styleTabla.setBorderLeft(CellStyle.BORDER_THIN);
-//        styleTabla.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-//        styleTabla.setBorderRight(CellStyle.BORDER_THIN);
-//        styleTabla.setRightBorderColor(IndexedColors.BLACK.getIndex());
-//        styleTabla.setBorderTop(CellStyle.BORDER_THIN);
-//        styleTabla.setTopBorderColor(IndexedColors.BLACK.getIndex());
-//
-//        CellStyle styleDate = styleTabla.clone()
-//        styleDate.setDataFormat(dateFormat);
-//
-//        CellStyle styleNumber = styleTabla.clone()
-//        styleNumber.setDataFormat(numberFormat);
-//
-//        CellStyle styleSubtotal = styleTabla.clone()
-//        styleSubtotal.setFont(fontSubtotal)
-//        styleSubtotal.setAlignment(CellStyle.ALIGN_CENTER)
-//        styleSubtotal.setFillForegroundColor(new XSSFColor(new java.awt.Color(111, 169, 237)));
-//        styleSubtotal.setFillPattern(CellStyle.SOLID_FOREGROUND)
-//
-//        CellStyle styleSubtotalNumber = styleSubtotal.clone()
-//        styleSubtotalNumber.setAlignment(CellStyle.ALIGN_RIGHT)
-//        styleSubtotalNumber.setDataFormat(numberFormat);
-//
-//        CellStyle styleFooterText = styleTabla.clone()
-//        styleFooterText.setFont(fontFooter)
-//        styleFooterText.setFillForegroundColor(new XSSFColor(new java.awt.Color(200, 200, 200)));
-//        styleFooterText.setFillPattern(CellStyle.SOLID_FOREGROUND)
-//
-//        CellStyle styleFooterCenter = styleFooterText.clone()
-//        styleFooterCenter.setAlignment(CellStyle.ALIGN_RIGHT)
-//
-//        CellStyle styleFooter = styleFooterText.clone()
-//        styleFooter.setDataFormat(numberFormat);
-//
-//        return [styleYachay    : styleYachay, styleTitulo: styleTitulo, styleSubtitulo: styleSubtitulo, styleHeader: styleHeader,
-//                styleNumber    : styleNumber, styleFooter: styleFooter, styleDate: styleDate,
-//                styleSubtotal  : styleSubtotal, styleSubtotalNumber: styleSubtotalNumber, styleTabla: styleTabla,
-//                styleFooterText: styleFooterText, styleFooterCenter: styleFooterCenter, styleFecha: styleFecha]
-//    }
-
     def reporteAsignacionesExcel () {
 
         def proyecto = Proyecto.get(params.id)
@@ -1685,6 +753,114 @@ class ReportesController {
 //        println "data: ${data as JSON}"
 
         return [cord: coord, nmbr: nmbr]
+    }
+
+    def reportes(){
+
+    }
+
+    def reporteEncuestas(){
+
+        def titulo = new Color(40, 140, 180)
+        Font times12bold = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+        Font times10bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font fontProyecto = new Font(Font.HELVETICA, 18, Font.NORMAL, titulo);
+        Font fontProyecto2 = new Font(Font.HELVETICA, 10, Font.NORMAL, titulo);
+        Font times8bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD)
+        Font times8normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL)
+        def fondo = new Color(240, 248, 250);
+        def frmtHd = [border: Color.LIGHT_GRAY, bwb: 0.1, bcb: Color.BLACK, bg: fondo, align: Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
+        def prmsCellHeadCentro = [border: Color.WHITE, align : Element.ALIGN_CENTER, valign: Element.ALIGN_LEFT]
+        def frmtDato = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
+        def frmtDatoDerecha = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_MIDDLE]
+
+        def baos = new ByteArrayOutputStream()
+        Document document
+        document = new Document(PageSize.A4);
+        def pdfw = PdfWriter.getInstance(document, baos)
+        document.open()
+        document.addTitle("Encuestas " + new Date().format("dd_MM_yyyy"))
+        document.addSubject("Generado por el sistema FIDA")
+        document.addKeywords("reporte, fida, encuestas")
+        document.addAuthor("FIDA")
+        document.addCreator("Tedein SA")
+
+        Paragraph preface = new Paragraph();
+        Paragraph pr_firma = new Paragraph();
+        addEmptyLine(preface, 1);
+        preface.setAlignment(Element.ALIGN_CENTER);
+        preface.add(new Paragraph("PROYECTO FAREPS", fontProyecto))
+        addEmptyLine(preface, 1);
+        document.add(preface);
+
+
+        def actual
+        def asignaciones = []
+        def total = 0
+
+
+        def encuestas = Encuesta.findAllByEstado("C").sort{it.unidadEjecutora.id}
+
+
+        PdfPTable tablaCabecera2 = new PdfPTable(1)
+        tablaCabecera2.setWidthPercentage(100)
+        tablaCabecera2.setWidths(arregloEnteros([100]))
+        addCellTabla(tablaCabecera2, new Paragraph("ENCUESTAS", fontProyecto2), prmsCellHeadCentro)
+//        addCellTabla(tablaCabecera2, new Paragraph(proyecto?.nombre, times10bold), prmsCellHeadCentro)
+//        addCellTabla(tablaCabecera2, new Paragraph(actual.toString(), times10bold), prmsCellHeadCentro)
+        addCellTabla(tablaCabecera2, new Paragraph('', times12bold), prmsCellHeadCentro)
+        addCellTabla(tablaCabecera2, new Paragraph('', times12bold), prmsCellHeadCentro)
+
+        PdfPTable tablaHeader = new PdfPTable(3)
+        tablaHeader.setWidthPercentage(100)
+        tablaHeader.setWidths(arregloEnteros([20, 40, 40]))
+
+        addCellTabla(tablaHeader, new Paragraph("UNIDAD EJECUTORA", times8bold), frmtHd)
+        addCellTabla(tablaHeader, new Paragraph("PREGUNTA", times8bold), frmtHd)
+        addCellTabla(tablaHeader, new Paragraph("RESPUESTA", times8bold), frmtHd)
+
+        PdfPTable tablaDetalle = new PdfPTable(3)
+        tablaDetalle.setWidthPercentage(100)
+        tablaDetalle.setWidths(arregloEnteros([20, 40, 40]))
+
+        encuestas.each{encuesta->
+            def detalles = DetalleEncuesta.findAllByEncuesta(encuesta).sort{it.respuestaPregunta.pregunta.descripcion}
+            detalles.each {detalle->
+                addCellTabla(tablaDetalle, new Paragraph(detalle?.encuesta?.unidadEjecutora?.nombre?.toString(), times8normal), frmtDato)
+                addCellTabla(tablaDetalle, new Paragraph(detalle?.respuestaPregunta?.pregunta?.descripcion?.toString(), times8normal), frmtDato)
+                addCellTabla(tablaDetalle, new Paragraph(detalle?.valor?.toString(), times8normal), frmtDato)
+            }
+        }
+
+//        asignaciones.each{asignacion->
+//            def plani =  g.formatNumber(number: asignacion?.planificado, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+//            addCellTabla(tablaDetalle, new Paragraph(asignacion.marcoLogico.marcoLogico.toString(), times8normal), frmtDato)
+//            addCellTabla(tablaDetalle, new Paragraph(asignacion.marcoLogico.numero.toString(), times8normal), frmtDato)
+//            addCellTabla(tablaDetalle, new Paragraph(asignacion.marcoLogico.toString(), times8normal), frmtDato)
+//            addCellTabla(tablaDetalle, new Paragraph(asignacion.unidad.toString(), times8normal), frmtDato)
+//            addCellTabla(tablaDetalle, new Paragraph(asignacion.presupuesto.numero.toString(), times8normal), frmtDato)
+//            addCellTabla(tablaDetalle, new Paragraph(plani.toString(), times8normal), frmtDatoDerecha)
+//        }
+
+//        def totalPlani =  g.formatNumber(number: total, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+
+//        PdfPTable tablaTotales = new PdfPTable(2)
+//        tablaTotales.setWidthPercentage(100)
+//        tablaTotales.setWidths(arregloEnteros([85,15]))
+//        addCellTabla(tablaTotales, new Paragraph("TOTAL", times8bold), frmtHd)
+//        addCellTabla(tablaTotales, new Paragraph(totalPlani.toString(), times8bold), frmtDatoDerecha)
+
+        document.add(tablaCabecera2)
+        document.add(tablaHeader)
+        document.add(tablaDetalle)
+//        document.add(tablaTotales)
+        document.close();
+        pdfw.close()
+        byte[] b = baos.toByteArray();
+        response.setContentType("application/pdf")
+        response.setHeader("Content-disposition", "attachment; filename=" + "encuestas_" + new Date().format("dd-MM-yyyy"))
+        response.setContentLength(b.length)
+        response.getOutputStream().write(b)
     }
 
 
