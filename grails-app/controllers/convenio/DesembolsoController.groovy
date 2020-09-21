@@ -4,6 +4,7 @@ package convenio
 import geografia.Comunidad
 import geografia.Parroquia
 import org.springframework.dao.DataIntegrityViolationException
+import parametros.proyectos.Fuente
 import seguridad.UnidadEjecutora
 import convenio.Desembolso
 import taller.Taller
@@ -87,37 +88,44 @@ class DesembolsoController {
      * @render ERROR*[mensaje] cuando no se pudo grabar correctamente, SUCCESS*[mensaje] cuando se grabó correctamente
      */
     def save_ajax() {
-        println "save_ajax: $params"
+//        println "save_ajax: $params"
         def desembolso
         def texto
         def cmnd = null
+        def convenio  = Convenio.get(params.convenio)
+        def fuente = Fuente.get(params."financiamientoPlanNegocio.id")
+        def maximo = (convenio.monto * fuente.porcentaje)/100
         def validaDesembolsos = true
         if(validaDesembolsos){
 
-            params.fecha = params.fecha ? new Date().parse("dd-MM-yyyy", params.fecha) : null
-
-            if(params.id){
-                desembolso = Desembolso.get(params.id)
-                texto = "Desembolso actualizada correctamente"
+            if(params.valor.toDouble() > maximo){
+                render "er*El valor ingresado es mayor al monto máximo permitido"
             }else{
-                desembolso = new Desembolso()
-                texto = "Desembolso creado correctamente"
-            }
+                params.fecha = params.fecha ? new Date().parse("dd-MM-yyyy", params.fecha) : null
 
-            params.cur = params.cur.toString().toUpperCase()
-            desembolso.properties = params
-            desembolso.valor = params.valor.toDouble()
+                if(params.id){
+                    desembolso = Desembolso.get(params.id)
+                    texto = "Desembolso actualizada correctamente"
+                }else{
+                    desembolso = new Desembolso()
+                    texto = "Desembolso creado correctamente"
+                }
 
-            println "desembolso: ${desembolso.properties}"
+                params.cur = params.cur.toString().toUpperCase()
+                desembolso.properties = params
+                desembolso.valor = params.valor.toDouble()
 
-            if(!desembolso.save(flush:true)){
-                println "Error en save de desembolso ejecutora\n" + desembolso.errors
-                render "no*Error al guardar la desembolso"
-            }else{
-                render "SUCCESS*" + texto
+//                println "desembolso: ${desembolso.properties}"
+
+                if(!desembolso.save(flush:true)){
+                    println "Error en save de desembolso ejecutora\n" + desembolso.errors
+                    render "no*Error al guardar la desembolso"
+                }else{
+                    render "SUCCESS*" + texto
+                }
             }
         }else{
-            render "er*Validacion de desemboplsos"
+            render "er*Validacion de desembolsos"
         }
     } //save para grabar desde ajax
 
@@ -170,6 +178,15 @@ class DesembolsoController {
         }else{
             render "no"
         }
+    }
+
+    def maximo_ajax(){
+        println("params m " + params)
+        def fuente = Fuente.get(params.id)
+        def convenio = Convenio.get(params.convenio)
+        def maximo = (convenio.monto * fuente.porcentaje)/100
+        def n = g.formatNumber(number: maximo, maxFractionDigits: 2, minFractionDigits: 2, format: '##,###')
+        return[maximo:n]
     }
 
 

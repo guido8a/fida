@@ -13,6 +13,10 @@ class Fuente {
      * Código de la fuente
      */
     String codigo
+    /**
+     * Porcentaje del desembolso
+     */
+    double porcentaje
 
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
@@ -33,6 +37,7 @@ class Fuente {
             id column: 'fnte__id'
             codigo column: 'fntecdgo'
             descripcion column: 'fntedscr'
+            porcentaje column: 'fntepcnt'
         }
     }
 
@@ -42,6 +47,7 @@ class Fuente {
     static constraints = {
         codigo(size: 1..3, blank: true, nullable: true, attributes: [mensaje: 'Código fuente de financiamiento del proyecto'])
         descripcion(size: 1..63, blank: true, nullable: true, attributes: [mensaje: 'Descripción de la fuente de financiamiento del proyecto'])
+        porcentaje(blank:true, nullable:true)
     }
 
     /**

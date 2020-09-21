@@ -21,14 +21,9 @@
                     </label>
 
                     <div class="col-md-9">
-%{--
-                        <g:select id="garantia" name="garantia.id" from="${convenio.Garantia.list()}"
-                                  optionKey="id" value="${dsmbInstance?.garantia?.id}"
-                                  class="many-to-one form-control input-sm required"/>
---}%
                         <g:select from="${garantias}" optionKey="id" name="garantia" value="${dsmbInstance?.garantia?.id}"
                                   class="many-to-one form-control input-sm required"
-                                  noSelection="${[0:'Seleccione']}"/>
+                                  />
                     </div>
                 </span>
             </div>
@@ -84,6 +79,12 @@
                         <g:textField name="valor" class="form-control input-sm required"
                                      value="${dsmbInstance?.valor}"/>
                     </div>
+                    <label class="col-md-1 control-label">
+                        Máximo
+                    </label>
+                    <div class="col-md-3" id="valorMaximo">
+
+                    </div>
                 </span>
             </div>
             <div class="form-group keeptogether ${hasErrors(bean: dsmbInstance, field: 'cur', 'error')} ">
@@ -117,6 +118,26 @@
 
     <script type="text/javascript">
 
+        cargarMaximo($("#financiamientoPlanNegocio option:selected").val());
+
+        $("#financiamientoPlanNegocio").change(function () {
+            var mx = $("#financiamientoPlanNegocio option:selected").val();
+            cargarMaximo(mx)
+        });
+
+        function cargarMaximo(id){
+            $.ajax({
+                type: 'POST',
+                url:'${createLink(controller: 'desembolso', action: 'maximo_ajax')}',
+                data:{
+                    id:id,
+                    convenio: '${convenio?.id}'
+                },
+                success: function(msg){
+                    $("#valorMaximo").html(msg)
+                }
+            });
+        }
 
         $(".form-control").keydown(function (ev) {
             if (ev.keyCode == 13) {
