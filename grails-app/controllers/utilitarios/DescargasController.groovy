@@ -24,19 +24,6 @@ class DescargasController {
         response.getOutputStream().write(b)
     }
 
-/*
-    def manualReformas() {
-        def nombre = 'manual_reformas.pdf'
-        def path = '/var/fida/manual reformas.pdf'
-        def file = new File(path)
-        def b = file.getBytes()
-        response.setContentType('pdf')
-        response.setHeader("Content-disposition", "attachment; filename=" + nombre)
-        response.setContentLength(b.length)
-        response.getOutputStream().write(b)
-    }
-*/
-
     def manualAjustes() {
         def nombre = 'manual_reformas.pdf'
         def path = '/var/fida/manual reformas.pdf'
@@ -70,9 +57,9 @@ class DescargasController {
         response.getOutputStream().write(b)
     }
 
-    def manualConvenios() {
-        def nombre = "manual convenios y talleres.pdf"
-        def path = '/var/fida/manual convenios y talleres.pdf'
+    def manualEvaluaciones() {
+        def nombre = "manual evaluaciones.pdf"
+        def path = '/var/fida/manual evaluaciones.pdf'
         def file = new File(path)
         def b = file.getBytes()
         response.setContentType('pdf')

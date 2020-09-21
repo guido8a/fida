@@ -21,11 +21,13 @@
         </a>
     </div>
 
+%{--
     <div class="btn-group">
         <a href="#" class="btn btn-sm btn-warning" id="btnEncuesta">
             <i class="fa fa-user-edit"></i> Aplicar Encuesta
         </a>
     </div>
+--}%
 
     <div class="btn-group col-md-3 pull-right">
         <div class="input-group input-group-sm">

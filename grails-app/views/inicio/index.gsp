@@ -99,7 +99,8 @@
         padding: 1rem 1rem 1rem 1rem;
         border-radius: 0.5rem;
         box-shadow: 7px 7px 30px -5px rgba(0,0,0,0.1);
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
+        width: 553px; height: 115px
     }
 
     .wrap:hover {
@@ -164,7 +165,7 @@
 
     <a href= "${createLink(controller:'proyecto', action: 'proy', id:1)}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap" style="width: 553px; height: 120px">
+            <div class="wrap">
                 <div style="width: 200px; height: 120px">
                     <asset:image src="apli/proyecto.png" title="Marco lógico de Proyecto"  width="80%" height="80%"/>
                 </div>
@@ -194,7 +195,7 @@
 --}%
     <a href= "${createLink(controller:'unidadEjecutora', action: 'organizacion')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap" style="width: 553px; height: 120px">
+            <div class="wrap">
                 <div style="width: 200px; height: 120px">
                     <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
                 </div>
@@ -229,7 +230,7 @@
 --}%
     <a href= "${createLink(controller:'convenio', action: 'convenio')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap" style="width: 553px; height: 120px">
+            <div class="wrap">
                 <div style="width: 200px; height: 120px">
                     <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
                 </div>
@@ -245,7 +246,7 @@
     </a>
     <a href= "${createLink(controller:'asignacion', action: 'asignacionProyectov2')}" style="text-decoration: none">
     <div class="col-lg-6 mbr-col-md-10">
-        <div class="wrap" style="width: 553px; height: 120px">
+        <div class="wrap">
             <div style="width: 200px; height: 120px">
                 <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="80%" height="80%"/>
             </div>
@@ -261,7 +262,7 @@
     </a>
         <a href= "${createLink(controller:'ajuste', action: 'pendientes')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap" style="width: 553px; height: 120px">
+            <div class="wrap">
                 <div style="width: 200px; height: 120px">
                     <asset:image src="apli/plan.png" title="Ajustes al Plan Operativo Anual" width="80%" height="80%"/>
                 </div>
@@ -276,7 +277,7 @@
         </a>
         <a href= "${createLink(controller:'reforma', action: 'pendientes')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
-        <div class="wrap" style="width: 553px; height: 120px">
+        <div class="wrap">
             <div style="width: 200px; height: 120px">
                 <asset:image src="apli/plan.png" title="Reformas al Plan Operativo Anual" width="80%" height="80%"/>
             </div>
@@ -291,9 +292,9 @@
 
         <a href= "${createLink(controller:'pregunta', action: 'pregunta')}" style="text-decoration: none">
             <div class="col-lg-6 mbr-col-md-10">
-                <div class="wrap" style="width: 553px; height: 120px">
+                <div class="wrap">
                     <div style="width: 200px; height: 120px">
-                        <asset:image src="apli/evaluacion.png" title="Ajustes al Plan Operativo Anual" width="80%" height="80%"/>
+                        <asset:image src="apli/evaluacion.png" title="Encuestas de los Indicadores del Marco Lógico" width="80%" height="80%"/>
                     </div>
                     <div style="width: 450px; height: 120px">
                         <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Evaluaciones</span></h2>
@@ -306,14 +307,28 @@
         </a>
         <a href= "${createLink(controller:'reportes', action: 'reportes')}" style="text-decoration: none">
             <div class="col-lg-6 mbr-col-md-10">
-                <div class="wrap" style="width: 553px; height: 120px">
+                <div class="wrap">
                     <div style="width: 200px; height: 120px">
-                        <asset:image src="apli/reportes.png" title="Reformas al Plan Operativo Anual" width="80%" height="80%"/>
+                        <asset:image src="apli/reportes.png" title="Reportes generales del sistema" width="80%" height="80%"/>
                     </div>
                     <div style="width: 450px; height: 120px">
                         <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Reportes</span></h2>
                         <p class="mbr-fonts-style text1 mbr-text display-6">Reportes de los módulos del sistema. Se generan tanto
                         en formato PDF como en hojas de cálculo.</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <a href= "${createLink(controller:'encuesta', action: 'index')}" style="text-decoration: none">
+            <div class="col-lg-12">
+                <div class="wrap" style="width: 100%; height: 70px">
+                    <div style="width: 100px; height: 60px">
+                        <asset:image src="apli/evaluacion.png" title="Aplicar encuesta" width="80%" height="80%"/>
+                    </div>
+                    <div style="width: 900px; height: 120px">
+                        <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Aplicar Encuesta</span></h2>
+                        <p class="mbr-fonts-style text1 mbr-text display-6">Aplicar la Encuesta de Indicadores del Marco Lógico.</p>
+
                     </div>
                 </div>
             </div>

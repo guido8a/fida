@@ -42,7 +42,7 @@
 
           <div class="row izquierda" style="margin-top: 70px;">
               <div class="col-md-12 input-group">
-                  <span class="col-md-3 panel panel-info" style="height: 35px; text-align: end">Selecciones la Organización</span>
+                  <span class="col-md-3 panel panel-info" style="height: 35px; text-align: end">Seleccione su Organización</span>
                   <div class="col-md-9">
                       <span class="grupo">
                           <g:select id="unidadEjecutora" name="unidadEjecutora.id"
@@ -76,7 +76,7 @@
       var bm;
 
       $("#btnFin").click(function () {
-          location.href="${createLink(controller: 'pregunta', action: 'pregunta')}"
+          location.href="${createLink(controller: 'inicio', action: 'index')}"
       });
 
       $("#btnEncuesta").click(function () {
