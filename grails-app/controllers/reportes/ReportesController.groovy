@@ -12,6 +12,7 @@ import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
 import grails.converters.JSON
 import groovy.json.JsonBuilder
+import jxl.CellView
 import jxl.WorkbookSettings
 import jxl.write.Label
 import jxl.write.NumberFormat
@@ -32,6 +33,7 @@ import poa.Asignacion
 import poa.ProgramacionAsignacion
 import preguntas.DetalleEncuesta
 import preguntas.Encuesta
+import preguntas.Pregunta
 import proyectos.MarcoLogico
 import proyectos.Proyecto
 
@@ -759,109 +761,240 @@ class ReportesController {
 
     }
 
-    def reporteEncuestas(){
+    public static void autoSizeColumns(WritableSheet sheet, int columns) {
+        for (int c = 0; c < columns; c++) {
+            CellView cell = sheet.getColumnView(c);
+            cell.setAutosize(true);
+            sheet.setColumnView(c, cell);
+        }
+    }
 
-        def titulo = new Color(40, 140, 180)
-        Font times12bold = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
-        Font times10bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font fontProyecto = new Font(Font.HELVETICA, 18, Font.NORMAL, titulo);
-        Font fontProyecto2 = new Font(Font.HELVETICA, 10, Font.NORMAL, titulo);
-        Font times8bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD)
-        Font times8normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL)
-        def fondo = new Color(240, 248, 250);
-        def frmtHd = [border: Color.LIGHT_GRAY, bwb: 0.1, bcb: Color.BLACK, bg: fondo, align: Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
-        def prmsCellHeadCentro = [border: Color.WHITE, align : Element.ALIGN_CENTER, valign: Element.ALIGN_LEFT]
-        def frmtDato = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
-        def frmtDatoDerecha = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_MIDDLE]
+    def reportesEncuestasExcel(){
 
-        def baos = new ByteArrayOutputStream()
-        Document document
-        document = new Document(PageSize.A4);
-        def pdfw = PdfWriter.getInstance(document, baos)
-        document.open()
-        document.addTitle("Encuestas " + new Date().format("dd_MM_yyyy"))
-        document.addSubject("Generado por el sistema FIDA")
-        document.addKeywords("reporte, fida, encuestas")
-        document.addAuthor("FIDA")
-        document.addCreator("Tedein SA")
+        def cantidadPreguntas = Pregunta.countByIdIsNotNull()
 
-        Paragraph preface = new Paragraph();
-        Paragraph pr_firma = new Paragraph();
-        addEmptyLine(preface, 1);
-        preface.setAlignment(Element.ALIGN_CENTER);
-        preface.add(new Paragraph("PROYECTO FAREPS", fontProyecto))
-        addEmptyLine(preface, 1);
-        document.add(preface);
+//        println("cp " + cantidadPreguntas)
 
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
 
-        def actual
-        def asignaciones = []
-        def total = 0
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
 
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
 
-        def encuestas = Encuesta.findAllByEstado("C").sort{it.unidadEjecutora.id}
+        def row = 0
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+//        sheet.setRowView(4,1000)
 
+        // fija el ancho de la columna
+        // sheet.setColumnView(1,40)
 
-        PdfPTable tablaCabecera2 = new PdfPTable(1)
-        tablaCabecera2.setWidthPercentage(100)
-        tablaCabecera2.setWidths(arregloEnteros([100]))
-        addCellTabla(tablaCabecera2, new Paragraph("ENCUESTAS", fontProyecto2), prmsCellHeadCentro)
-//        addCellTabla(tablaCabecera2, new Paragraph(proyecto?.nombre, times10bold), prmsCellHeadCentro)
-//        addCellTabla(tablaCabecera2, new Paragraph(actual.toString(), times10bold), prmsCellHeadCentro)
-        addCellTabla(tablaCabecera2, new Paragraph('', times12bold), prmsCellHeadCentro)
-        addCellTabla(tablaCabecera2, new Paragraph('', times12bold), prmsCellHeadCentro)
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
 
-        PdfPTable tablaHeader = new PdfPTable(3)
-        tablaHeader.setWidthPercentage(100)
-        tablaHeader.setWidths(arregloEnteros([20, 40, 40]))
+        sheet.setColumnView(0, 35)
+        for(def i=0; i< cantidadPreguntas; i++){
+            sheet.setColumnView(i+1, 40)
+        }
 
-        addCellTabla(tablaHeader, new Paragraph("UNIDAD EJECUTORA", times8bold), frmtHd)
-        addCellTabla(tablaHeader, new Paragraph("PREGUNTA", times8bold), frmtHd)
-        addCellTabla(tablaHeader, new Paragraph("RESPUESTA", times8bold), frmtHd)
+//        autoSizeColumns(sheet, (cantidadPreguntas.toInteger() + 1))
 
-        PdfPTable tablaDetalle = new PdfPTable(3)
-        tablaDetalle.setWidthPercentage(100)
-        tablaDetalle.setWidths(arregloEnteros([20, 40, 40]))
+        def label
+        def fila = 5;
+
+        label = new Label(1, 2, "REPORTE ENCUESTAS", times16format); sheet.addCell(label);
+        label = new Label(0, 4, "UNIDAD EJECUTORA", times16format); sheet.addCell(label);
+
+        def preguntas = Pregunta.list().sort{it.descripcion}
+
+        preguntas.eachWithIndex {pregunta, i->
+            label = new Label(i+1, 4, pregunta?.descripcion?.toString(), times16format); sheet.addCell(label);
+        }
+
+        def encuestas = Encuesta.findAllByEstado('C').sort{it.unidadEjecutora.nombre}
 
         encuestas.each{encuesta->
             def detalles = DetalleEncuesta.findAllByEncuesta(encuesta).sort{it.respuestaPregunta.pregunta.descripcion}
-            detalles.each {detalle->
-                addCellTabla(tablaDetalle, new Paragraph(detalle?.encuesta?.unidadEjecutora?.nombre?.toString(), times8normal), frmtDato)
-                addCellTabla(tablaDetalle, new Paragraph(detalle?.respuestaPregunta?.pregunta?.descripcion?.toString(), times8normal), frmtDato)
-                addCellTabla(tablaDetalle, new Paragraph(detalle?.valor?.toString(), times8normal), frmtDato)
+            detalles.eachWithIndex{detalle,j->
+                label = new Label(0, fila,  detalle?.encuesta?.unidadEjecutora?.nombre?.toString(), times16formatN); sheet.addCell(label);
+                if(detalle?.valor){
+                    label = new Label(j+1, fila, detalle?.valor?.toString(), times16formatN); sheet.addCell(label);
+                }else{
+                    label = new Label(j+1, fila, detalle?.respuestaPregunta?.respuesta?.opcion?.toString(), times16formatN); sheet.addCell(label);
+                }
             }
+            fila++
         }
 
-//        asignaciones.each{asignacion->
-//            def plani =  g.formatNumber(number: asignacion?.planificado, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
-//            addCellTabla(tablaDetalle, new Paragraph(asignacion.marcoLogico.marcoLogico.toString(), times8normal), frmtDato)
-//            addCellTabla(tablaDetalle, new Paragraph(asignacion.marcoLogico.numero.toString(), times8normal), frmtDato)
-//            addCellTabla(tablaDetalle, new Paragraph(asignacion.marcoLogico.toString(), times8normal), frmtDato)
-//            addCellTabla(tablaDetalle, new Paragraph(asignacion.unidad.toString(), times8normal), frmtDato)
-//            addCellTabla(tablaDetalle, new Paragraph(asignacion.presupuesto.numero.toString(), times8normal), frmtDato)
-//            addCellTabla(tablaDetalle, new Paragraph(plani.toString(), times8normal), frmtDatoDerecha)
+//        asgProy.each{asg->
+//            def totalFilas = 0
+//            label = new Label(0, fila, asg?.marcoLogico?.marcoLogico?.toString()); sheet.addCell(label);
+//            label = new Label(1, fila, asg?.marcoLogico?.numero?.toString()); sheet.addCell(label);
+//            label = new Label(2, fila, asg?.marcoLogico?.toString()); sheet.addCell(label);
+//            label = new Label(3, fila, asg?.presupuesto?.numero?.toString()); sheet.addCell(label);
+//            label = new Label(4, fila, asg?.fuente?.descripcion?.toString()); sheet.addCell(label);
+//            number = new jxl.write.Number(5, fila, asg?.planificado); sheet.addCell(number);
+//            meses.eachWithIndex{mes,j->
+//                def v = ProgramacionAsignacion.findByAsignacionAndMes(Asignacion.get(asg?.id),Mes.get(mes.id))
+//                number = new jxl.write.Number((j + 6), fila, v?.valor?.toDouble() ?: 0 ); sheet.addCell(number)
+//                totalFilas += (v?.valor?.toDouble() ?: 0)
+//                totalFinal += (v?.valor?.toDouble() ?: 0)
+//                if(mes.numero == 1){
+//                    ene += (v?.valor?.toDouble() ?: 0)
+//                }
+//                if(mes.numero == 2){
+//                    feb += (v?.valor?.toDouble() ?: 0)
+//                }
+//                if(mes.numero == 3){
+//                    mar += (v?.valor?.toDouble() ?: 0)
+//                }
+//                if(mes.numero == 4){
+//                    abr += (v?.valor?.toDouble() ?: 0)
+//                }
+//                if(mes.numero == 5){
+//                    may += (v?.valor?.toDouble() ?: 0)
+//                }
+//                if(mes.numero == 6){
+//                    jun += (v?.valor?.toDouble() ?: 0)
+//                }
+//                if(mes.numero == 7){
+//                    jul += (v?.valor?.toDouble() ?: 0)
+//                }
+//                if(mes.numero == 8){
+//                    ago += (v?.valor?.toDouble() ?: 0)
+//                }
+//                if(mes.numero == 9){
+//                    sep += (v?.valor?.toDouble() ?: 0)
+//                }
+//                if(mes.numero == 10){
+//                    oct += (v?.valor?.toDouble() ?: 0)
+//                }
+//                if(mes.numero == 11){
+//                    nov += (v?.valor?.toDouble() ?: 0)
+//                }
+//                if(mes.numero == 12){
+//                    dic += (v?.valor?.toDouble() ?: 0)
+//                }
+//            }
+//            number = new jxl.write.Number(18, fila, totalFilas ); sheet.addCell(number);
+//            fila++
 //        }
 
-//        def totalPlani =  g.formatNumber(number: total, format: "##,##0", maxFractionDigits: 2, minFractionDigits: 2)
+//        label = new Label(0, fila, ''); sheet.addCell(label);
+//        label = new Label(1, fila, ''); sheet.addCell(label);
+//        label = new Label(2, fila, ''); sheet.addCell(label);
+//        label = new Label(3, fila, ''); sheet.addCell(label);
+//        label = new Label(4, fila, ''); sheet.addCell(label);
+//        label = new Label(5, fila, 'TOTALES'); sheet.addCell(label);
+//        number = new jxl.write.Number(6, fila, ene ); sheet.addCell(number);
+//        number = new jxl.write.Number(7, fila, feb ); sheet.addCell(number);
+//        number = new jxl.write.Number(8, fila, mar ); sheet.addCell(number);
+//        number = new jxl.write.Number(9, fila, abr ); sheet.addCell(number);
+//        number = new jxl.write.Number(10, fila, may ); sheet.addCell(number);
+//        number = new jxl.write.Number(11, fila, jun ); sheet.addCell(number);
+//        number = new jxl.write.Number(12, fila, jul ); sheet.addCell(number);
+//        number = new jxl.write.Number(13, fila, ago ); sheet.addCell(number);
+//        number = new jxl.write.Number(14, fila, sep ); sheet.addCell(number);
+//        number = new jxl.write.Number(15, fila, oct ); sheet.addCell(number);
+//        number = new jxl.write.Number(16, fila, nov ); sheet.addCell(number);
+//        number = new jxl.write.Number(17, fila, dic ); sheet.addCell(number);
+//        number = new jxl.write.Number(18, fila, totalFinal ); sheet.addCell(number);
 
-//        PdfPTable tablaTotales = new PdfPTable(2)
-//        tablaTotales.setWidthPercentage(100)
-//        tablaTotales.setWidths(arregloEnteros([85,15]))
-//        addCellTabla(tablaTotales, new Paragraph("TOTAL", times8bold), frmtHd)
-//        addCellTabla(tablaTotales, new Paragraph(totalPlani.toString(), times8bold), frmtDatoDerecha)
 
-        document.add(tablaCabecera2)
-        document.add(tablaHeader)
-        document.add(tablaDetalle)
-//        document.add(tablaTotales)
-        document.close();
-        pdfw.close()
-        byte[] b = baos.toByteArray();
-        response.setContentType("application/pdf")
-        response.setHeader("Content-disposition", "attachment; filename=" + "encuestas_" + new Date().format("dd-MM-yyyy"))
-        response.setContentLength(b.length)
-        response.getOutputStream().write(b)
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteExcelEncuestas_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
     }
+
+//    def reporteEncuestasPdf(){
+//
+//        def titulo = new Color(40, 140, 180)
+//        Font times12bold = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+//        Font times10bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+//        Font fontProyecto = new Font(Font.HELVETICA, 18, Font.NORMAL, titulo);
+//        Font fontProyecto2 = new Font(Font.HELVETICA, 10, Font.NORMAL, titulo);
+//        Font times8bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD)
+//        Font times8normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL)
+//        def fondo = new Color(240, 248, 250);
+//        def frmtHd = [border: Color.LIGHT_GRAY, bwb: 0.1, bcb: Color.BLACK, bg: fondo, align: Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
+//        def prmsCellHeadCentro = [border: Color.WHITE, align : Element.ALIGN_CENTER, valign: Element.ALIGN_LEFT]
+//        def frmtDato = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
+//        def frmtDatoDerecha = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_MIDDLE]
+//
+//        def baos = new ByteArrayOutputStream()
+//        Document document
+//        document = new Document(PageSize.A4);
+//        def pdfw = PdfWriter.getInstance(document, baos)
+//        document.open()
+//        document.addTitle("Encuestas " + new Date().format("dd_MM_yyyy"))
+//        document.addSubject("Generado por el sistema FIDA")
+//        document.addKeywords("reporte, fida, encuestas")
+//        document.addAuthor("FIDA")
+//        document.addCreator("Tedein SA")
+//
+//        Paragraph preface = new Paragraph();
+//        Paragraph pr_firma = new Paragraph();
+//        addEmptyLine(preface, 1);
+//        preface.setAlignment(Element.ALIGN_CENTER);
+//        preface.add(new Paragraph("PROYECTO FAREPS", fontProyecto))
+//        addEmptyLine(preface, 1);
+//        document.add(preface);
+//
+//        def actual
+//        def asignaciones = []
+//        def total = 0
+//
+//        def encuestas = Encuesta.findAllByEstado("C").sort{it.unidadEjecutora.id}
+//
+//        PdfPTable tablaCabecera2 = new PdfPTable(1)
+//        tablaCabecera2.setWidthPercentage(100)
+//        tablaCabecera2.setWidths(arregloEnteros([100]))
+//        addCellTabla(tablaCabecera2, new Paragraph("ENCUESTAS", fontProyecto2), prmsCellHeadCentro)
+//        addCellTabla(tablaCabecera2, new Paragraph('', times12bold), prmsCellHeadCentro)
+//        addCellTabla(tablaCabecera2, new Paragraph('', times12bold), prmsCellHeadCentro)
+//
+//        PdfPTable tablaHeader = new PdfPTable(3)
+//        tablaHeader.setWidthPercentage(100)
+//        tablaHeader.setWidths(arregloEnteros([20, 40, 40]))
+//
+//        addCellTabla(tablaHeader, new Paragraph("UNIDAD EJECUTORA", times8bold), frmtHd)
+//        addCellTabla(tablaHeader, new Paragraph("PREGUNTA", times8bold), frmtHd)
+//        addCellTabla(tablaHeader, new Paragraph("RESPUESTA", times8bold), frmtHd)
+//
+//        PdfPTable tablaDetalle = new PdfPTable(3)
+//        tablaDetalle.setWidthPercentage(100)
+//        tablaDetalle.setWidths(arregloEnteros([20, 40, 40]))
+//
+//        encuestas.each{encuesta->
+//            def detalles = DetalleEncuesta.findAllByEncuesta(encuesta).sort{it.respuestaPregunta.pregunta.descripcion}
+//            detalles.each {detalle->
+//                addCellTabla(tablaDetalle, new Paragraph(detalle?.encuesta?.unidadEjecutora?.nombre?.toString(), times8normal), frmtDato)
+//                addCellTabla(tablaDetalle, new Paragraph(detalle?.respuestaPregunta?.pregunta?.descripcion?.toString(), times8normal), frmtDato)
+//                addCellTabla(tablaDetalle, new Paragraph(detalle?.valor?.toString(), times8normal), frmtDato)
+//            }
+//        }
+//
+//        document.add(tablaCabecera2)
+//        document.add(tablaHeader)
+//        document.add(tablaDetalle)
+//        document.close();
+//        pdfw.close()
+//        byte[] b = baos.toByteArray();
+//        response.setContentType("application/pdf")
+//        response.setHeader("Content-disposition", "attachment; filename=" + "encuestas_" + new Date().format("dd-MM-yyyy"))
+//        response.setContentLength(b.length)
+//        response.getOutputStream().write(b)
+//    }
 
 
 }

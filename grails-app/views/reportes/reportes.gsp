@@ -121,7 +121,7 @@
                         <i class="fa fa-map-marked-alt fa-4x text-success"></i>
                         <br/> Localización de proyectos
                     </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="undd" controller="reportes" action="reporteEncuestas">
+                    <g:link class="link btn btn-success btn-ajax example_c item" texto="undd" controller="reportes" action="reportesEncuestasExcel">
                         <i class="fa fa-paste fa-4x text-success"></i>
                         <br/> Encuestas
                     </g:link>
