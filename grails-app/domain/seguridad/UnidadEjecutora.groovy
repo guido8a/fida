@@ -32,6 +32,10 @@ class UnidadEjecutora implements Auditable{
     String rup
     int anio = 0
     String sector
+    String institucion
+    String actividad
+    String actividadSecundaria
+    String fortaleza
 
     static auditable = true
 
@@ -65,6 +69,10 @@ class UnidadEjecutora implements Auditable{
             rup column: 'unej_rup'
             anio column: 'unejanio'
             sector column: 'unejsctr'
+            institucion column: 'unejinst'
+            actividad column: 'unejactv'
+            actividadSecundaria column: 'unejacsc'
+            fortaleza column: 'unejfort'
         }
     }
     static constraints = {
@@ -90,6 +98,10 @@ class UnidadEjecutora implements Auditable{
         tipoInstitucion(blank:true, nullable: true)
         sector(size: 0..127,blank: true, nullable: true)
         provincia(blank:true, nullable:true)
+        institucion(blank: true, nullable: true)
+        actividad(blank: true, nullable: true)
+        actividadSecundaria(blank: true, nullable: true)
+        fortaleza(blank: true, nullable: true)
     }
 
     @Override

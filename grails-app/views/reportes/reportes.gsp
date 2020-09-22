@@ -125,18 +125,14 @@
                         <i class="fa fa-paste fa-4x text-success"></i>
                         <br/> Encuestas
                     </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="trnp" controller="transporte" action="list">
-                        <i class="fa fa-truck fa-4x text-success"></i>
-                        <br/> Transporte
-                    </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="dire" controller="direccion" action="list">
-                        <i class="fa fa-list fa-4x text-success"></i>
-                        <br/> Direcciones del Personal
-                    </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="dpto" controller="departamento" action="arbol">
+                    <a href="#" id="btnOrganizaciones" class="btn btn-info btn-ajax example_c item" texto="trnp">
                         <i class="fa fa-building fa-4x text-success"></i>
-                        <br/> Coordinación del Personal
-                    </g:link>
+                        <br/> Organizaciones
+                    </a>
+                    <a href="#" id="btnSocios" class="btn btn-info btn-ajax example_c item" texto="dire">
+                        <i class="fa fa-users fa-4x text-success"></i>
+                        <br/> Socios
+                    </a>
                 </p>
             </div>
         </div>
@@ -295,26 +291,22 @@
 
 <div id="grpo" style="display:none">
     <h3>Grupos de Rubros</h3><br>
-
     <p>Grupos para la clasificación de los rubros para la elaboración de los distintos análisis de precios unitarios</p>
 </div>
 
 <div id="trnp" style="display:none">
-    <h3>Transporte</h3><br>
-
-    <p>Variable de transporte que define entre Chofer y medio o vehículo de transporte, como Volquetas.</p>
+    <h3>Organizaciones</h3><br>
+    <p>Listado de organizaciones por provincia.</p>
 </div>
 
 <div id="dpto" style="display:none">
-    <h3>Coordinación</h3><br>
-
-    <p>Distribución administrativa de la institución: nivel de Gestión, que la conforman, para la asociación de los
-    empleados a cada uno de ellos.</p>
+    <h3>Socios</h3><br>
+    <p>Listado de socios por organización.</p>
 </div>
-<div id="dire" style="display:none">
-    <h3>Direcciones</h3><br>
 
-    <p>Distribución administrativa de la institución: Direcciones o según el organigrama del GADPP, nivel de Secretarías.</p>
+<div id="dire" style="display:none">
+    <h3>Socios</h3><br>
+    <p>Listado de socios por organización.</p>
 </div>
 
 <div id="func" style="display:none">
@@ -464,6 +456,70 @@
 </div>
 
 <script type="text/javascript">
+
+    $("#btnSocios").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'organizaciones_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlOrganizacion",
+                    title : "Seleccione una Organización",
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reporteSociosExcel')}/" + $("#organizacion option:selected").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
+
+    $("#btnOrganizaciones").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'provincia_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlProvincia",
+                    title : "Seleccione una provincia",
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reporteOrganizacionesExcel')}/" + $("#provincia option:selected").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
 
     $("#btnIva").click(function () {
         $.ajax({

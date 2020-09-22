@@ -10,6 +10,10 @@ import com.lowagie.text.Paragraph
 import com.lowagie.text.pdf.PdfPCell
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
+import convenio.DatosOrganizacion
+import geografia.Canton
+import geografia.Parroquia
+import geografia.Provincia
 import grails.converters.JSON
 import groovy.json.JsonBuilder
 import jxl.CellView
@@ -758,7 +762,12 @@ class ReportesController {
     }
 
     def reportes(){
+    }
 
+    def provincia_ajax(){
+    }
+
+    def organizaciones_ajax(){
     }
 
     public static void autoSizeColumns(WritableSheet sheet, int columns) {
@@ -836,6 +845,160 @@ class ReportesController {
         workbook.close();
         def output = response.getOutputStream()
         def header = "attachment; filename=" + "reporteExcelEncuestas_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+    }
+
+    def reporteOrganizacionesExcel(){
+
+        def provincia = Provincia.get(params.id)
+        def cantones = Canton.findAllByProvincia(provincia)
+        def parroquias = Parroquia.findAllByCantonInList(cantones)
+        def tipo = TipoInstitucion.get(2)
+        def organizaciones = UnidadEjecutora.findAllByParroquiaInListAndTipoInstitucion(parroquias,tipo)
+
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        def row = 0
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+//        sheet.setRowView(4,34)
+
+        // fija el ancho de la columna
+         sheet.setColumnView(0,30)
+         sheet.setColumnView(1,30)
+         sheet.setColumnView(2,30)
+         sheet.setColumnView(3,30)
+         sheet.setColumnView(4,30)
+         sheet.setColumnView(5,30)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+        autoSizeColumns(sheet, 10)
+
+        def label
+        def fila = 5;
+
+        label = new Label(1, 2, "REPORTE ORGANIZACIONES", times16format); sheet.addCell(label);
+        label = new Label(1, 3, "PROVINCIA: " + provincia?.nombre, times16format); sheet.addCell(label);
+        label = new Label(0, 4, "NOMBRE", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "DIRECCIÓN", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "TELÉFONO", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "EMAIL", times16format); sheet.addCell(label);
+        label = new Label(4, 4, "REFERENCIA", times16format); sheet.addCell(label);
+        label = new Label(5, 4, "ACTIVIDAD", times16format); sheet.addCell(label);
+        label = new Label(6, 4, "# SOCIOS", times16format); sheet.addCell(label);
+        label = new Label(7, 4, "# HOMBRES", times16format); sheet.addCell(label);
+        label = new Label(8, 4, "# MUJERES", times16format); sheet.addCell(label);
+        label = new Label(9, 4, "# JÓVENES", times16format); sheet.addCell(label);
+
+        organizaciones.each {organizacion->
+            def dtor = DatosOrganizacion.findAllByUnidadEjecutora(organizacion)
+            label = new Label(0, fila,  organizacion?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(1, fila,  organizacion?.direccion?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(2, fila,  organizacion?.telefono?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(3, fila,  organizacion?.mail?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(4, fila,  organizacion?.referencia?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(5, fila,  organizacion?.actividad?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(6, fila,  (dtor?.hombresSocios?.sum() + dtor?.mujeresSocias?.sum())?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(7, fila,  dtor?.hombresSocios?.sum()?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(8, fila,  dtor?.mujeresSocias?.sum()?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(9, fila,  dtor?.jovenes?.sum()?.toString(), times16formatN); sheet.addCell(label);
+            fila++
+        }
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteExcelOrganizaciones_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+    }
+
+
+    def reporteSociosExcel(){
+        def organizacion = UnidadEjecutora.get(params.id)
+
+
+
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        def row = 0
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+//        sheet.setRowView(4,34)
+
+        // fija el ancho de la columna
+        sheet.setColumnView(0,30)
+        sheet.setColumnView(1,30)
+        sheet.setColumnView(2,30)
+        sheet.setColumnView(3,30)
+        sheet.setColumnView(4,30)
+        sheet.setColumnView(5,30)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+//        autoSizeColumns(sheet, (cantidadPreguntas.toInteger() + 1))
+
+        def label
+        def fila = 5;
+
+        label = new Label(1, 2, "REPORTE ORGANIZACIONES", times16format); sheet.addCell(label);
+        label = new Label(1, 3, "PROVINCIA: " + provincia?.nombre, times16format); sheet.addCell(label);
+        label = new Label(0, 4, "NOMBRE", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "DIRECCIÓN", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "TELÉFONO", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "EMAIL", times16format); sheet.addCell(label);
+        label = new Label(4, 4, "REFERENCIA", times16format); sheet.addCell(label);
+        label = new Label(5, 4, "ACTIVIDAD", times16format); sheet.addCell(label);
+        label = new Label(6, 4, "# SOCIOS", times16format); sheet.addCell(label);
+        label = new Label(7, 4, "# HOMBRES", times16format); sheet.addCell(label);
+        label = new Label(8, 4, "# MUJERES", times16format); sheet.addCell(label);
+        label = new Label(9, 4, "# JÓVENES", times16format); sheet.addCell(label);
+
+//        organizaciones.each {organizacion->
+//            def dtor = DatosOrganizacion.findAllByUnidadEjecutora(organizacion)
+//            label = new Label(0, fila,  organizacion?.nombre?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(1, fila,  organizacion?.direccion?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(2, fila,  organizacion?.telefono?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(3, fila,  organizacion?.mail?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(4, fila,  organizacion?.referencia?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(5, fila,  organizacion?.actividad?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(6, fila,  (dtor?.hombresSocios?.sum() + dtor?.mujeresSocias?.sum())?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(7, fila,  dtor?.hombresSocios?.sum()?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(8, fila,  dtor?.mujeresSocias?.sum()?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(9, fila,  dtor?.jovenes?.sum()?.toString(), times16formatN); sheet.addCell(label);
+//            fila++
+//        }
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteExcelOrganizaciones_" + new Date().format("dd-MM-yyyy") + ".xls";
         response.setContentType("application/octet-stream")
         response.setHeader("Content-Disposition", header);
         output.write(file.getBytes());
