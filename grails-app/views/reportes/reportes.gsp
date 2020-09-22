@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Parámetros</title>
+    <title>Reportes</title>
 
     %{--    <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins', file: 'jquery.cookie.js')}"></script>--}%
 
@@ -140,10 +140,10 @@
         <div class="row">
             <div class="col-md-12 col-xs-5">
                 <p>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="func" controller="funcion" action="list">
-                        <i class="fa fa-id-badge fa-4x text-success"></i>
-                        <br/> Funciones del Personal
-                    </g:link>
+                    <a href="#" id="btnTalleres" class="btn btn-info btn-ajax example_c item" texto="func">
+                        <i class="fa fa-book-medical fa-4x text-success"></i>
+                        <br/> Talleres
+                    </a>
                     <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="ddlb" controller="diaLaborable" action="calendario">
                         <i class="fa fa-calendar-day fa-4x text-success"></i>
                         <br/> Días Laborables
@@ -310,10 +310,8 @@
 </div>
 
 <div id="func" style="display:none">
-    <h3>Funciones del Personal</h3><br>
-
-    <p>Funciones que una persona puede desempeñar en los procesos de
-    contratación y ejecución de obras.</p>
+    <h3>Talleres</h3><br>
+    <p>Listado de capacitaciones que ha recibido una organización.</p>
 </div>
 
 <div id="iva" style="display:none">
@@ -456,6 +454,38 @@
 </div>
 
 <script type="text/javascript">
+
+    $("#btnTalleres").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'organizaciones_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlOrganizacion",
+                    title : "Seleccione una Organización",
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reporteTalleresExcel')}/" + $("#organizacion option:selected").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
 
     $("#btnSocios").click(function () {
         $.ajax({
