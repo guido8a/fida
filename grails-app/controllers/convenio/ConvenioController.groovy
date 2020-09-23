@@ -4,8 +4,10 @@ package convenio
 import geografia.Comunidad
 import geografia.Parroquia
 import org.springframework.dao.DataIntegrityViolationException
+import planes.PlanesNegocio
 import proyectos.Proyecto
 import convenio.Convenio
+import seguridad.UnidadEjecutora
 
 class ConvenioController {
 
@@ -88,11 +90,13 @@ class ConvenioController {
      * @render ERROR*[mensaje] cuando no se pudo grabar correctamente, SUCCESS*[mensaje] cuando se grabó correctamente
      */
     def save_ajax() {
+        println "save_cnvn --> $params"
         def convenio
         def texto
 
-        if(params.parroquia){
-            def parroquia = Parroquia.get(params.parroquia)
+//        if(params.parroquia){
+            def unej = UnidadEjecutora.get(params.unidadEjecutora)
+            def plns = PlanesNegocio.findByUnidadEjecutora(unej)
 
             params.fechaInicio = params.fechaInicio ? new Date().parse("dd-MM-yyyy", params.fechaInicio) : null
             params.fechaFin = params.fechaFin ? new Date().parse("dd-MM-yyyy", params.fechaFin) : null
@@ -109,7 +113,8 @@ class ConvenioController {
             convenio.properties = params
             convenio.fecha = new Date()
             convenio.monto = params.monto.toDouble()
-            convenio.parroquia = parroquia
+//            convenio.parroquia = parroquia
+            convenio.planesNegocio = plns
 
             if(!convenio.save(flush:true)){
                 println "Error en save de convenio ejecutora\n" + convenio.errors
@@ -117,9 +122,9 @@ class ConvenioController {
             }else{
                 render "SUCCESS*" + texto + "*" + convenio?.id
             }
-        }else{
-            render "er*Seleccione una parroquia!"
-        }
+//        }else{
+//            render "er*Seleccione una parroquia!"
+//        }
     } //save para grabar desde ajax
 
     /**
@@ -155,12 +160,17 @@ class ConvenioController {
     def convenio(){
         println "convenio $params"
         def convenio
+        def planes = PlanesNegocio.list()
+        def unidades = []
+        planes.each { p ->
+            unidades.add(p.unidadEjecutora)
+        }
         if(params.id){
             convenio = Convenio.get(params.id)
         }else{
             convenio = new Convenio()
         }
-        return[convenio: convenio]
+        return[convenio: convenio, unidades: unidades]
     }
 
     def buscarConvenio_ajax(){
@@ -188,9 +198,10 @@ class ConvenioController {
         }
 
         def cn = dbConnectionService.getConnection()
-        sql = "select cnvn.cnvn__id, cnvncdgo, cnvnnmbr, cnvnfcin, unejnmbr, parrnmbr from cnvn, unej, parr " +
-                "where cnvn.parr__id = parr.parr__id and " +
-                "unej.unej__id = cnvn.unej__id and ${operador} ilike '%${params.texto}%' " +
+        sql = "select cnvn.cnvn__id, cnvncdgo, cnvnnmbr, cnvnfcin, unejnmbr, parrnmbr " +
+                "from cnvn, plns, unej, parr " +
+                "where plns.plns__id = cnvn.plns__id and unej.unej__id = plns.unej__id and " +
+                "parr.parr__id = unej.parr__id and ${operador} ilike '%${params.texto}%' " +
                 "order by cnvnnmbr asc limit 20"
         def res = cn.rows(sql.toString())
 //        println("sql " + sql)

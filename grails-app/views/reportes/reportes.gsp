@@ -64,7 +64,7 @@
     }
 
     .example_c {
-        color: #494949 !important;
+        color: #808b9d !important;
         /*text-transform: uppercase;*/
         text-decoration: none;
         background: #ffffff;

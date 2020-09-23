@@ -126,10 +126,17 @@
                         <span class="col-md-2 label label-primary text-info mediano">Organización</span>
                         <div class="col-md-10">
                             <span class="grupo">
+%{--
                                 <g:select id="unidadEjecutora" name="unidadEjecutora.id"
                                           from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2), [sort: 'nombre'])}"
                                           optionKey="id" value="${convenio?.planesNegocio?.unidadEjecutora?.id}"
                                           class="many-to-one form-control input-sm"/>
+--}%
+                                <g:select from="${unidades}" optionKey="id" name="unidadEjecutora"
+                                          value="${convenio?.planesNegocio?.unidadEjecutora?.id}"
+                                          class="many-to-one form-control input-sm required"
+                                />
+
                             </span>
                         </div>
                     </div>
@@ -160,7 +167,7 @@
                             <div class="col-md-4">
                                 <g:hiddenField name="parroquia" value="${unidad?.parroquia?.id}"/>
                                 <input name="parroquiaName" id="parroquiaTexto" type='text' class="form-control"
-                                       required="" readonly="" value="${convenio?.planesNegocio?.unidadEjecutora?.parroquia?.nombre}"/>
+                                       readonly="" value="${convenio?.planesNegocio?.unidadEjecutora?.parroquia?.nombre}"/>
                             </div>
                         </span>
 
