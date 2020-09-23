@@ -116,17 +116,24 @@
                 /* maneja los datos */
                 var cord = '${cord}'.split('_')
                 var nmbr = '${nmbr}'.split('_')
+                var plns = '${plns}'.split('_')
                 // console.log('nmbr:', cord);
 
                 for (var i = 0; i <= cord.length; ++i) {
                     var cr = cord[i].split(' ')
+                    var path = ''
+                    if(plns[i] == 'S') {
+                        path = '${assetPath(src: '/apli/pin-p.png')}'
+                    } else {
+                        path = '${assetPath(src: '/apli/pin-o.png')}'
+                    }
                     var marker = new google.maps.Marker({
                         map: map,
                         position: new google.maps.LatLng(parseFloat(cr[0]) + 0.1* Math.random(),
                             parseFloat(cr[1]) + 0.1* Math.random()),
-                        icon: '${assetPath(src: '/apli/pin-p.png')}'
+                        icon: path
                     });
-                    poneMensaje(marker, nmbr[i]);
+                    poneMensaje(marker, nmbr[i].strReplaceAll('kk', '<br>'));
                 }
 
 
