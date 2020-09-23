@@ -464,7 +464,7 @@
                             label     : "<i class='fa fa-check'></i> Aceptar",
                             className : "btn-success",
                             callback  : function () {
-                                location.href="${createLink(controller: 'reportes', action: 'reportePoaFuenteExcel')}/" + $("#provincia option:selected").val()
+                                location.href="${createLink(controller: 'reportes', action: 'reportePoaFuenteExcel')}?fuente=" + $("#fuente option:selected").val() + "&fi=" + $("#fechaInicio").val() + "&ff=" + $("#fechaFin").val()
                             } //callback
                         } //guardar
                     } //buttons

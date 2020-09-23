@@ -32,6 +32,7 @@ import org.apache.poi.xssf.usermodel.XSSFColor
 import org.apache.poi.xssf.usermodel.XSSFCreationHelper
 import parametros.Anio
 import parametros.Mes
+import parametros.proyectos.Fuente
 import parametros.proyectos.TipoElemento
 import poa.Asignacion
 import poa.ProgramacionAsignacion
@@ -1198,6 +1199,126 @@ class ReportesController {
     }
 
     def reportePoaFuenteExcel(){
+
+//        println("params rp " +  params)
+
+        def proyecto = Proyecto.get(1)
+        def asignaciones = []
+        def fuente = Fuente.get(params.fuente)
+        def fi = new Date().parse("dd-MM-yyyy",params.fi)
+        def ff = new Date().parse("dd-MM-yyyy",params.ff)
+
+        MarcoLogico.withCriteria {
+            eq("proyecto", proyecto)
+            eq("tipoElemento", TipoElemento.get(4))
+            eq("estado", 0)
+            marcoLogico {
+                order("numero", "asc")
+            }
+            order("numero", "asc")
+        }.each { ml ->
+            def asig = Asignacion.withCriteria {
+                eq("marcoLogico", ml)
+                eq("fuente",fuente)
+                order("id", "asc")
+            }
+            if (asig) {
+                asignaciones += asig
+            }
+        }
+
+        def poas = ProcesoAsignacion.withCriteria {
+            'in'("asignacion", asignaciones)
+            proceso{
+                gt("fechaInicio", fi)
+                lt("fechaFin",ff)
+            }
+        }
+
+//        println("poas " + poas)
+
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        def row = 0
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+//        sheet.setRowView(4,34)
+
+        // fija el ancho de la columna
+        sheet.setColumnView(0,30)
+        sheet.setColumnView(1,40)
+        sheet.setColumnView(2,40)
+        sheet.setColumnView(3,25)
+        sheet.setColumnView(4,35)
+        sheet.setColumnView(5,20)
+        sheet.setColumnView(6,20)
+        sheet.setColumnView(7,10)
+        sheet.setColumnView(8,10)
+        sheet.setColumnView(9,10)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+//        autoSizeColumns(sheet, 10)
+
+        def label
+        def fila = 5;
+
+        label = new Label(1, 2, "REPORTE POA POR FUENTE", times16format); sheet.addCell(label);
+        label = new Label(1, 3, "FUENTE: " + fuente?.descripcion, times16format); sheet.addCell(label);
+        label = new Label(0, 4, "PROCESO", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "MONTO", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "FECHA INICIO", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "FECHA FIN", times16format); sheet.addCell(label);
+
+        poas.each{poa->
+            label = new Label(0, fila, poa?.proceso?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(1, fila, poa?.monto?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(2, fila, poa?.proceso?.fechaInicio?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(3, fila, poa?.proceso?.fechaFin?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+            fila++
+        }
+
+
+//        talleres.each{taller->
+//            def hombres = PersonaTaller.countBySexoAndTaller('A',taller)
+//            def mujeres = PersonaTaller.countBySexoAndTaller('E',taller)
+//
+//            label = new Label(0, fila, taller?.parroquia?.nombre?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(1, fila, taller?.unidadEjecutora?.nombre?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(2, fila, taller?.tipoTaller?.descripcion?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(3, fila, taller?.nombre?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(4, fila, taller?.objetivo?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(5, fila, taller?.fechaInicio?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(6, fila, taller?.fechaFin?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(7, fila, hombres?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(8, fila, mujeres?.toString(), times16formatN); sheet.addCell(label);
+//            label = new Label(9, fila, (hombres.plus(mujeres))?.toString(), times16formatN); sheet.addCell(label);
+//            fila++
+//        }
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteExcelPOAxFuente_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+
+
+
+
+
 
     }
 
