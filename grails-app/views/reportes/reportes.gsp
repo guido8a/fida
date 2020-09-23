@@ -107,7 +107,7 @@
 %{--<ul class="nav nav-tabs">--}%
 <ul class="nav nav-pills">
     <li class="active"><a data-toggle="pill" href="#generales">Generales</a></li>
-    <li><a data-toggle="pill" href="#obra">Reportes 2</a></li>
+    <li><a data-toggle="pill" href="#obra">POA</a></li>
     <li><a data-toggle="pill" href="#cont">Reportes 3</a></li>
 </ul>
 
@@ -144,22 +144,10 @@
                         <i class="fa fa-book-medical fa-4x text-success"></i>
                         <br/> Talleres
                     </a>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="ddlb" controller="diaLaborable" action="calendario">
-                        <i class="fa fa-calendar-day fa-4x text-success"></i>
-                        <br/> Días Laborables
-                    </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="anio" controller="anio" action="list">
-                        <i class="fab fa-amilia fa-4x text-success"></i>
-                        <br/> Ingreso de Años
-                    </g:link>
-                    <a href="#" class="btn btn-success bt-ajax example_c item disabled" texto="iva" id="btnIva">
-                        <i class="fa fa-file-invoice-dollar fa-4x text-success"></i>
-                        <br/> Iva
+                    <a href="#" id="btnCapacitaciones" class="btn btn-info btn-ajax example_c item" texto="ddlb">
+                        <i class="fa fa-atlas fa-4x text-success"></i>
+                        <br/> Capacitaciones
                     </a>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="crit" controller="criterio" action="list">
-                        <i class="fa fa-hand-point-up fa-4x text-success"></i>
-                        <br/> Criterio
-                    </g:link>
                 </p>
             </div>
         </div>
@@ -169,11 +157,10 @@
         <div class="row">
             <div class="col-md-12 col-xs-5">
                 <p>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="tpob" controller="tipoProyecto" action="list">
+                    <a href="#" id="btnPoaFuente" class="btn btn-info btn-ajax example_c item" texto="tpob">
                         <i class="fa fa-list-alt fa-4x text-success"></i>
-                        <br/> Tipo de Proyecto
-                    </g:link>
-
+                        <br/> POA por fuente
+                    </a>
                     <g:link class="link btn btn-info btn-ajax example_c item disabled" texto="prsp"  controller="presupuesto" action="list">
                         <i class="fa fa-building fa-4x"></i>
                         <br/> Partida Presupuestaria
@@ -183,35 +170,35 @@
                         <i class="fa fa-building fa-4x"></i>
                         <br/> Textos Fijos
                     </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="anua" controller="valoresAnuales" action="list">
+                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="anua" controller="valoresAnuales" action="list">
                         <i class="fa fa-search-dollar fa-4x text-success"></i>
                         <br/> Valores Anuales
                     </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="listas" controller="tipoLista" action="list">
+                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="listas" controller="tipoLista" action="list">
                         <i class="fa fa-list-alt fa-4x text-success"></i>
                         <br/> Tipo de listas de precios
                     </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="adqu" controller="tipoAdquisicion" action="list">
+                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="adqu" controller="tipoAdquisicion" action="list">
                         <i class="fa fa-cubes fa-4x text-success"></i>
                         <br/> Tipo de Adquisición
                     </g:link>
                 </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 col-xs-5">
-                <p>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="prog" controller="programacion" action="list">
-                        <i class="fa fa-stopwatch fa-4x text-success"></i>
-                        <br/> Programacion
-                    </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="prof" controller="proforma" action="proforma">
-                        <i class="fa fa-file-export fa-4x text-success"></i>
-                        <br/> Proforma
-                    </g:link>
-                </p>
-            </div>
-        </div>
+%{--        <div class="row">--}%
+%{--            <div class="col-md-12 col-xs-5">--}%
+%{--                <p>--}%
+%{--                    <g:link class="link btn btn-success btn-ajax example_c item" texto="prog" controller="programacion" action="list">--}%
+%{--                        <i class="fa fa-stopwatch fa-4x text-success"></i>--}%
+%{--                        <br/> Programacion--}%
+%{--                    </g:link>--}%
+%{--                    <g:link class="link btn btn-success btn-ajax example_c item" texto="prof" controller="proforma" action="proforma">--}%
+%{--                        <i class="fa fa-file-export fa-4x text-success"></i>--}%
+%{--                        <br/> Proforma--}%
+%{--                    </g:link>--}%
+%{--                </p>--}%
+%{--            </div>--}%
+%{--        </div>--}%
     </div>
 
     <div id="cont" class="tab-pane fade">
@@ -340,8 +327,8 @@
 </div>
 
 <div id="tpob" style="display:none">
-    <h3>Tipo de Obra</h3><br>
-    <p>Tipo de obra a ejecutarse.</p>
+    <h3>POA por fuente</h3><br>
+    <p>Ejecución del POA por fuente de financiamiento.</p>
 </div>
 <div id="csob" style="display:none">
     <h3>Clase de Obra</h3><br>
@@ -447,13 +434,76 @@
 </div>
 
 <div id="ddlb" style="display:none">
-    <h3>Días laborables</h3><br>
-    <p>El calendario se genera en forma automática para cada año, con los fines de semana definidos como días no
-    laborables, en el se debe corregir para que solo aparezcan señalados los días que no son laborables.
-    </p>
+    <h3>Capacitaciones</h3><br>
+    <p>Listado de capacitaciones por provincia</p>
 </div>
 
 <script type="text/javascript">
+
+    $("#btnPoaFuente").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'fuente_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlFuente",
+                    title : "Seleccione",
+                    message : msg,
+                    class   : "modal-sm",
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reportePoaFuenteExcel')}/" + $("#provincia option:selected").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
+
+    $("#btnCapacitaciones").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'provincia_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlProvincia",
+                    title : "Seleccione una provincia",
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reporteCapacitacionesExcel')}/" + $("#provincia option:selected").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
 
     $("#btnTalleres").click(function () {
         $.ajax({

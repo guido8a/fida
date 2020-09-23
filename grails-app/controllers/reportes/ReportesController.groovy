@@ -50,6 +50,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook as Workbook
 import seguridad.PersonaOrganizacion
 import seguridad.TipoInstitucion
 import seguridad.UnidadEjecutora
+import taller.PersonaTaller
 import taller.Taller
 
 import java.awt.Color
@@ -787,6 +788,10 @@ class ReportesController {
     def organizaciones_ajax(){
     }
 
+    def fuente_ajax(){
+
+    }
+
     public static void autoSizeColumns(WritableSheet sheet, int columns) {
         for (int c = 0; c < columns; c++) {
             CellView cell = sheet.getColumnView(c);
@@ -1014,7 +1019,7 @@ class ReportesController {
             fila++
         }
 
-       workbook.write();
+        workbook.write();
         workbook.close();
         def output = response.getOutputStream()
         def header = "attachment; filename=" + "reporteExcelSocios_" + new Date().format("dd-MM-yyyy") + ".xls";
@@ -1044,7 +1049,7 @@ class ReportesController {
 
         // fija el ancho de la columna
         sheet.setColumnView(0,30)
-        sheet.setColumnView(1,30)
+        sheet.setColumnView(1,40)
         sheet.setColumnView(2,30)
         sheet.setColumnView(3,30)
         sheet.setColumnView(4,30)
@@ -1103,10 +1108,97 @@ class ReportesController {
         workbook.write();
         workbook.close();
         def output = response.getOutputStream()
-        def header = "attachment; filename=" + "reporteExcelSocios_" + new Date().format("dd-MM-yyyy") + ".xls";
+        def header = "attachment; filename=" + "reporteExcelTalleres_" + new Date().format("dd-MM-yyyy") + ".xls";
         response.setContentType("application/octet-stream")
         response.setHeader("Content-Disposition", header);
         output.write(file.getBytes());
+    }
+
+    def reporteCapacitacionesExcel(){
+        def provincia = Provincia.get(params.id)
+        def cantones = Canton.findAllByProvincia(provincia)
+        def parroquias = Parroquia.findAllByCantonInList(cantones)
+        def organizacion = UnidadEjecutora.findAllByParroquiaInList(parroquias)
+        def talleres = Taller.findAllByUnidadEjecutoraInList(organizacion).sort{it.unidadEjecutora.parroquia.nombre + it.unidadEjecutora.nombre}
+
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        def row = 0
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+//        sheet.setRowView(4,34)
+
+        // fija el ancho de la columna
+        sheet.setColumnView(0,30)
+        sheet.setColumnView(1,40)
+        sheet.setColumnView(2,40)
+        sheet.setColumnView(3,25)
+        sheet.setColumnView(4,35)
+        sheet.setColumnView(5,20)
+        sheet.setColumnView(6,20)
+        sheet.setColumnView(7,10)
+        sheet.setColumnView(8,10)
+        sheet.setColumnView(9,10)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+//        autoSizeColumns(sheet, 10)
+
+        def label
+        def fila = 5;
+
+        label = new Label(1, 2, "REPORTE CAPACITACIONES POR PROVINCIA", times16format); sheet.addCell(label);
+        label = new Label(1, 3, "PROVINCIA: " + provincia?.nombre, times16format); sheet.addCell(label);
+        label = new Label(0, 4, "PARROQUIA", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "ORGANIZACIÓN", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "TIPO DE TALLER", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "NOMBRE", times16format); sheet.addCell(label);
+        label = new Label(4, 4, "OBJETIVO", times16format); sheet.addCell(label);
+        label = new Label(5, 4, "FECHA INICIO", times16format); sheet.addCell(label);
+        label = new Label(6, 4, "FECHA FIN", times16format); sheet.addCell(label);
+        label = new Label(7, 4, "HOMBRES", times16format); sheet.addCell(label);
+        label = new Label(8, 4, "MUJERES", times16format); sheet.addCell(label);
+        label = new Label(9, 4, "TOTAL", times16format); sheet.addCell(label);
+
+        talleres.each{taller->
+            def hombres = PersonaTaller.countBySexoAndTaller('A',taller)
+            def mujeres = PersonaTaller.countBySexoAndTaller('E',taller)
+
+            label = new Label(0, fila, taller?.parroquia?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(1, fila, taller?.unidadEjecutora?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(2, fila, taller?.tipoTaller?.descripcion?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(3, fila, taller?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(4, fila, taller?.objetivo?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(5, fila, taller?.fechaInicio?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(6, fila, taller?.fechaFin?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(7, fila, hombres?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(8, fila, mujeres?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(9, fila, (hombres.plus(mujeres))?.toString(), times16formatN); sheet.addCell(label);
+            fila++
+        }
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteExcelTalleres_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+    }
+
+    def reportePoaFuenteExcel(){
+
     }
 
 //    def reporteEncuestasPdf(){
