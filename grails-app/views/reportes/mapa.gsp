@@ -119,6 +119,7 @@
                 var plns = '${plns}'.split('_')
                 // console.log('nmbr:', cord);
 
+                //ver en: http://maps.google.com/mapfiles/ms/icons/red-dot.png
                 for (var i = 0; i <= cord.length; ++i) {
                     var cr = cord[i].split(' ')
                     var path = ''
