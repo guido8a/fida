@@ -10,7 +10,10 @@ import com.lowagie.text.Paragraph
 import com.lowagie.text.pdf.PdfPCell
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
+import convenio.AdministradorConvenio
+import convenio.Convenio
 import convenio.DatosOrganizacion
+import convenio.Desembolso
 import geografia.Canton
 import geografia.Parroquia
 import geografia.Provincia
@@ -34,6 +37,7 @@ import parametros.Anio
 import parametros.Mes
 import parametros.proyectos.Fuente
 import parametros.proyectos.TipoElemento
+import planes.PlanesNegocio
 import poa.Asignacion
 import poa.ProgramacionAsignacion
 import preguntas.DetalleEncuesta
@@ -790,7 +794,9 @@ class ReportesController {
     }
 
     def fuente_ajax(){
+    }
 
+    def componente_ajax(){
     }
 
     public static void autoSizeColumns(WritableSheet sheet, int columns) {
@@ -1274,38 +1280,26 @@ class ReportesController {
         def label
         def fila = 5;
 
-        label = new Label(1, 2, "REPORTE POA POR FUENTE", times16format); sheet.addCell(label);
+        label = new Label(1, 2, "REPORTE DE EJECUCIÓN DE POA POR FUENTE DE FINANCIAMIENTO", times16format); sheet.addCell(label);
         label = new Label(1, 3, "FUENTE: " + fuente?.descripcion, times16format); sheet.addCell(label);
-        label = new Label(0, 4, "PROCESO", times16format); sheet.addCell(label);
-        label = new Label(1, 4, "MONTO", times16format); sheet.addCell(label);
-        label = new Label(2, 4, "FECHA INICIO", times16format); sheet.addCell(label);
-        label = new Label(3, 4, "FECHA FIN", times16format); sheet.addCell(label);
+        label = new Label(0, 4, "COMPONENTE", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "ACTIVIDAD", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "PROCESO", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "PLANIFICADO", times16format); sheet.addCell(label);
+        label = new Label(4, 4, "EJECUTADO", times16format); sheet.addCell(label);
+        label = new Label(5, 4, "FECHA INICIO", times16format); sheet.addCell(label);
+        label = new Label(6, 4, "FECHA FIN", times16format); sheet.addCell(label);
 
         poas.each{poa->
-            label = new Label(0, fila, poa?.proceso?.nombre?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(1, fila, poa?.monto?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(2, fila, poa?.proceso?.fechaInicio?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(3, fila, poa?.proceso?.fechaFin?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(0, fila, poa?.asignacion?.marcoLogico?.marcoLogico?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(1, fila, poa?.asignacion?.marcoLogico?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(2, fila, poa?.proceso?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(3, fila, poa?.asignacion?.planificado?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(4, fila, poa?.monto?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(5, fila, poa?.proceso?.fechaInicio?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(6, fila, poa?.proceso?.fechaFin?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
             fila++
         }
-
-
-//        talleres.each{taller->
-//            def hombres = PersonaTaller.countBySexoAndTaller('A',taller)
-//            def mujeres = PersonaTaller.countBySexoAndTaller('E',taller)
-//
-//            label = new Label(0, fila, taller?.parroquia?.nombre?.toString(), times16formatN); sheet.addCell(label);
-//            label = new Label(1, fila, taller?.unidadEjecutora?.nombre?.toString(), times16formatN); sheet.addCell(label);
-//            label = new Label(2, fila, taller?.tipoTaller?.descripcion?.toString(), times16formatN); sheet.addCell(label);
-//            label = new Label(3, fila, taller?.nombre?.toString(), times16formatN); sheet.addCell(label);
-//            label = new Label(4, fila, taller?.objetivo?.toString(), times16formatN); sheet.addCell(label);
-//            label = new Label(5, fila, taller?.fechaInicio?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
-//            label = new Label(6, fila, taller?.fechaFin?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
-//            label = new Label(7, fila, hombres?.toString(), times16formatN); sheet.addCell(label);
-//            label = new Label(8, fila, mujeres?.toString(), times16formatN); sheet.addCell(label);
-//            label = new Label(9, fila, (hombres.plus(mujeres))?.toString(), times16formatN); sheet.addCell(label);
-//            fila++
-//        }
 
         workbook.write();
         workbook.close();
@@ -1314,11 +1308,184 @@ class ReportesController {
         response.setContentType("application/octet-stream")
         response.setHeader("Content-Disposition", header);
         output.write(file.getBytes());
+    }
 
+    def reportePoaComponenteExcel(){
 
+//        println("params " + params)
 
+        def proyecto = Proyecto.get(1)
+        def componente = MarcoLogico.get(params.componente)
+        def actividades = MarcoLogico.findAllByMarcoLogicoAndTipoElemento(componente, TipoElemento.get(4))
+        def fi = new Date().parse("dd-MM-yyyy",params.fi)
+        def ff = new Date().parse("dd-MM-yyyy",params.ff)
 
+        def asignaciones = Asignacion.findAllByMarcoLogico(actividades)
+        def poas = null
 
+        if(asignaciones){
+            poas = ProcesoAsignacion.withCriteria {
+                'in'("asignacion", asignaciones)
+                proceso{
+                    gt("fechaInicio", fi)
+                    lt("fechaFin",ff)
+                }
+            }
+        }
+
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        def row = 0
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+//        sheet.setRowView(4,34)
+
+        // fija el ancho de la columna
+        sheet.setColumnView(0,30)
+        sheet.setColumnView(1,40)
+        sheet.setColumnView(2,40)
+        sheet.setColumnView(3,25)
+        sheet.setColumnView(4,35)
+        sheet.setColumnView(5,20)
+        sheet.setColumnView(6,20)
+        sheet.setColumnView(7,10)
+        sheet.setColumnView(8,10)
+        sheet.setColumnView(9,10)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+//        autoSizeColumns(sheet, 10)
+
+        def label
+        def fila = 5;
+
+        label = new Label(1, 2, "REPORTE DE EJECUCIÓN DE POA POR COMPONENTE", times16format); sheet.addCell(label);
+        label = new Label(1, 3, "COMPONENTE: " + componente?.objeto, times16format); sheet.addCell(label);
+        label = new Label(0, 4, "COMPONENTE", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "ACTIVIDAD", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "PROCESO", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "PLANIFICADO", times16format); sheet.addCell(label);
+        label = new Label(4, 4, "EJECUTADO", times16format); sheet.addCell(label);
+        label = new Label(5, 4, "FECHA INICIO", times16format); sheet.addCell(label);
+        label = new Label(6, 4, "FECHA FIN", times16format); sheet.addCell(label);
+
+        poas.each{poa->
+            label = new Label(0, fila, poa?.asignacion?.marcoLogico?.marcoLogico?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(1, fila, poa?.asignacion?.marcoLogico?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(2, fila, poa?.proceso?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(3, fila, poa?.asignacion?.planificado?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(4, fila, poa?.monto?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(5, fila, poa?.proceso?.fechaInicio?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(6, fila, poa?.proceso?.fechaFin?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+            fila++
+        }
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteExcelPOAxComponente_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+
+    }
+
+    def reportesConveniosExcel(){
+
+        def organizacion = UnidadEjecutora.get(params.id)
+        def plan = PlanesNegocio.findByUnidadEjecutora(organizacion)
+        def convenios = Convenio.findAllByPlanesNegocio(plan)
+
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        def row = 0
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+//        sheet.setRowView(4,34)
+
+        // fija el ancho de la columna
+        sheet.setColumnView(0,30)
+        sheet.setColumnView(1,30)
+        sheet.setColumnView(2,30)
+        sheet.setColumnView(3,30)
+        sheet.setColumnView(4,30)
+        sheet.setColumnView(5,30)
+        sheet.setColumnView(6,20)
+        sheet.setColumnView(7,20)
+        sheet.setColumnView(8,30)
+        sheet.setColumnView(9,30)
+        sheet.setColumnView(10,30)
+        sheet.setColumnView(11,30)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+//        autoSizeColumns(sheet, 10)
+
+        def label
+        def fila = 5;
+
+        label = new Label(1, 2, "REPORTE DE CONVENIOS CONSOLIDADOS", times16format); sheet.addCell(label);
+        label = new Label(1, 3, "ORGANIZACIÓN: " + organizacion?.nombre, times16format); sheet.addCell(label);
+        label = new Label(0, 4, "CÓDIGO", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "NOMBRE", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "OBJETO", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "ADMINISTRADOR", times16format); sheet.addCell(label);
+        label = new Label(4, 4, "FECHA INICIO", times16format); sheet.addCell(label);
+        label = new Label(5, 4, "FECHA FIN", times16format); sheet.addCell(label);
+        label = new Label(6, 4, "PLAZO", times16format); sheet.addCell(label);
+        label = new Label(7, 4, "MONTO", times16format); sheet.addCell(label);
+        label = new Label(8, 4, "DESEMBOLSO", times16format); sheet.addCell(label);
+        label = new Label(9, 4, "PROVINCIA", times16format); sheet.addCell(label);
+        label = new Label(10, 4, "CANTÓN", times16format); sheet.addCell(label);
+        label = new Label(11, 4, "PARROQUIA", times16format); sheet.addCell(label);
+
+        convenios.each{convenio->
+            def admin = AdministradorConvenio.findByConvenio(convenio)
+            def desembolsos = Desembolso.findAllByConvenio(convenio).valor.sum()
+            label = new Label(0, fila, convenio?.codigo?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(1, fila, convenio?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(2, fila, convenio?.objetivo?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(3, fila, (admin?.persona?.nombre?.toString() + " " + admin?.persona?.apellido?.toString()), times16formatN); sheet.addCell(label);
+            label = new Label(4, fila, convenio?.fechaInicio?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(5, fila,convenio?.fechaFin?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(6, fila,convenio?.plazo?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(7, fila,convenio?.monto?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(8, fila,desembolsos?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(9, fila,convenio?.planesNegocio?.unidadEjecutora?.parroquia?.canton?.provincia?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(10, fila,convenio?.planesNegocio?.unidadEjecutora?.parroquia?.canton?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(11, fila,convenio?.planesNegocio?.unidadEjecutora?.parroquia?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            fila++
+        }
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteExcelConvenios_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
 
     }
 

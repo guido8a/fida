@@ -148,6 +148,10 @@
                         <i class="fa fa-atlas fa-4x text-success"></i>
                         <br/> Capacitaciones
                     </a>
+                    <a href="#" id="btnConvenios" class="btn btn-info btn-ajax example_c item" texto="auxl">
+                        <i class="fa fa-handshake fa-4x text-success"></i>
+                        <br/> Convenios
+                    </a>
                 </p>
             </div>
         </div>
@@ -161,15 +165,10 @@
                         <i class="fa fa-list-alt fa-4x text-success"></i>
                         <br/> POA por fuente
                     </a>
-                    <g:link class="link btn btn-info btn-ajax example_c item disabled" texto="prsp"  controller="presupuesto" action="list">
-                        <i class="fa fa-building fa-4x"></i>
-                        <br/> Partida Presupuestaria
-                    </g:link>
-
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="auxl" controller="auxiliar" action="textosFijos">
-                        <i class="fa fa-building fa-4x"></i>
-                        <br/> Textos Fijos
-                    </g:link>
+                    <a href="#" id="btnPoaComponente" class="btn btn-info btn-ajax example_c item" texto="prsp">
+                        <i class="fa fa-list-ol fa-4x text-success"></i>
+                        <br/> POA por componente
+                    </a>
                     <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="anua" controller="valoresAnuales" action="list">
                         <i class="fa fa-search-dollar fa-4x text-success"></i>
                         <br/> Valores Anuales
@@ -185,20 +184,6 @@
                 </p>
             </div>
         </div>
-%{--        <div class="row">--}%
-%{--            <div class="col-md-12 col-xs-5">--}%
-%{--                <p>--}%
-%{--                    <g:link class="link btn btn-success btn-ajax example_c item" texto="prog" controller="programacion" action="list">--}%
-%{--                        <i class="fa fa-stopwatch fa-4x text-success"></i>--}%
-%{--                        <br/> Programacion--}%
-%{--                    </g:link>--}%
-%{--                    <g:link class="link btn btn-success btn-ajax example_c item" texto="prof" controller="proforma" action="proforma">--}%
-%{--                        <i class="fa fa-file-export fa-4x text-success"></i>--}%
-%{--                        <br/> Proforma--}%
-%{--                    </g:link>--}%
-%{--                </p>--}%
-%{--            </div>--}%
-%{--        </div>--}%
     </div>
 
     <div id="cont" class="tab-pane fade">
@@ -335,9 +320,8 @@
     <p>Clase de obra, ejemplo: aulas, pavimento, cubierta, estructuras, adoquinado, puentes, mejoramiento, etc.</p>
 </div>
 <div id="prsp" style="display:none">
-    <h3>Partida presupuestaria</h3><br>
-    <p>Con la cual se financia la obra. El registro se debe hacer conforme se obtenga la partida desde el financiero,
-    una vez que se haya expedido la certificación presupuestaria para la obra.</p>
+    <h3>POA por componente</h3><br>
+    <p>Ejecución del POA por componente y actividad.</p>
 </div>
 <div id="edob" style="display:none">
     <h3>Estado de la Obra</h3><br>
@@ -348,8 +332,8 @@
     <p>Programa del cual forma parte una obra o proyecto.</p>
 </div>
 <div id="auxl" style="display:none">
-    <h3>Textos fijos</h3><br>
-    <p>Textos para los documentos precontractuales de presupuesto, volúmenes de obra y fórmula polinómica.</p>
+    <h3>Convenios consolidados</h3><br>
+    <p>Listado de convenios.</p>
 </div>
 <div id="tpfp" style="display:none">
     <h3>Tipo de fórmula polinómica</h3><br>
@@ -439,6 +423,71 @@
 </div>
 
 <script type="text/javascript">
+
+    $("#btnConvenios").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'organizaciones_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlOrganizacion",
+                    title : "Seleccione una Organización",
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reportesConveniosExcel')}/" + $("#organizacion option:selected").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
+
+    $("#btnPoaComponente").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'componente_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlFuente",
+                    title : "Seleccione",
+                    message : msg,
+                    class   : "modal-sm",
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reportePoaComponenteExcel')}?componente=" + $("#componente option:selected").val() + "&fi=" + $("#fechaInicio").val() + "&ff=" + $("#fechaFin").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
 
     $("#btnPoaFuente").click(function () {
         $.ajax({
