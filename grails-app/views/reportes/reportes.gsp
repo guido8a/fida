@@ -169,18 +169,14 @@
                         <i class="fa fa-list-ol fa-4x text-success"></i>
                         <br/> POA por componente
                     </a>
+                    <a href="#" id="btnPoaGrupo" class="btn btn-info btn-ajax example_c item" texto="crit">
+                        <i class="fa fa-th-list fa-4x text-success"></i>
+                        <br/> POA por grupo de gasto
+                    </a>
                     <a href="#" id="btnReporteAsignacionesCrono" class="btn btn-info btn-ajax example_c item" texto="anua">
                         <i class="fa fa-calendar-check fa-4x text-success"></i>
                         <br/> Cronograma valorado
                     </a>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="listas" controller="tipoLista" action="list">
-                        <i class="fa fa-list-alt fa-4x text-success"></i>
-                        <br/> Tipo de listas de precios
-                    </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="adqu" controller="tipoAdquisicion" action="list">
-                        <i class="fa fa-cubes fa-4x text-success"></i>
-                        <br/> Tipo de Adquisición
-                    </g:link>
                 </p>
             </div>
         </div>
@@ -227,25 +223,12 @@
 
 <div id="grgf" style="display:none">
     <h3>Localización geográfica</h3><br>
-
     <p>Mapa que contiene la localización geográfica de los proyectos</p>
-</div>
-
-<div id="tpit" style="display:none">
-    <h3>Tipo de ítem</h3><br>
-
-    <p>Diferencia entre los ítems y los rubros. Un rubro se halla conformado por ítems de los grupos: Materiales, Mano de obra y Equipos.</p>
 </div>
 
 <div id="undd" style="display:none">
     <h3>Reporte de encuestas</h3><br>
-
     <p>Reporte de las encuestas generadas en el sistema</p>
-</div>
-
-<div id="grpo" style="display:none">
-    <h3>Grupos de Rubros</h3><br>
-    <p>Grupos para la clasificación de los rubros para la elaboración de los distintos análisis de precios unitarios</p>
 </div>
 
 <div id="trnp" style="display:none">
@@ -268,29 +251,9 @@
     <p>Listado de capacitaciones que ha recibido una organización.</p>
 </div>
 
-<div id="iva" style="display:none">
-    <h3>IVA</h3><br>
-    <p>Permite cambiar el valor del IVA </p>
-</div>
-
 <div id="crit" style="display:none">
-    <h3>Criterios de selección</h3><br>
-    <p>Criterios de selección de precios unitarios </p>
-</div>
-
-<div id="prof" style="display:none">
-    <h3>Proforma</h3><br>
-    <p>Proforma</p>
-</div>
-
-<div id="tptr" style="display:none">
-    <h3>Tipo de Trámite</h3><br>
-    <p>Tipos de trámites a los cuales se asociarán los procesos y documentación. El tipo de trámite sirve para la
-    Gestión de procesos y Flujo de trabajo en concordancia con el Sistema de Administración Documental SAD. </p>
-</div>
-<div id="rltr" style="display:none">
-    <h3>Rol de la Persona en el Trámite</h3><br>
-    <p>Distintos roles que puede desempeñar una persona en el trámite. </p>
+    <h3>POA por grupo de gasto</h3><br>
+    <p>Ejecución del POA por grupo de gasto</p>
 </div>
 
 <div id="tpob" style="display:none">
@@ -333,78 +296,50 @@
     <h3>Cronograma valorado</h3><br>
     <p>Cronograma valorado por año</p>
 </div>
-
-<div id="tpcr" style="display:none">
-    <h3>Tipo de contrato</h3><br>
-    <p>Tipo de contrato que se puede registrar en el sistema, por ejemplo: COntrato, escritura pública, convenio.</p>
-</div>
-<div id="tpgr" style="display:none">
-    <h3>Tipo de garantía</h3><br>
-    <p>Tipo de garantía que se debe presentar en el contrato. Puden ser por ejemplo: Buen uso del anticipo, fiel cumplimiento,
-    buena calidad de materiales, etc.</p>
-</div>
-<div id="tdgr" style="display:none">
-    <h3>Documento de la garantía</h3><br>
-    <p>Documento que se presenta como garantía.</p>
-</div>
-<div id="edgr" style="display:none">
-    <h3>Estado de la garantía</h3><br>
-    <p>Estado que puede tener la garantía. Pueden ser por ejemplo: Vigente, pedido de cobro, devuelta, efectivizada, pasivo,
-    renovada, vencida, etc.</p>
-</div>
-<div id="mnda" style="display:none">
-    <h3>Moneda de la garantía</h3><br>
-    <p>Moneda en la que se entrega la garantía.</p>
-</div>
-<div id="tpas" style="display:none">
-    <h3>Tipo de Aseguradora</h3><br>
-    <p>Tipo de aseguradora que emite la garantía, puede ser Banco, Cooperativa, Aseguradora.</p>
-</div>
-<div id="asgr" style="display:none">
-    <h3>Aseguradora</h3><br>
-    <p>Aseguradora que emite la garantía, puede ser Banco, Cooperativa, Aseguradora. Se registran los datos de la
-    aseguradora</p>
-</div>
-<div id="itun" style="display: none">
-    <h3>Unidad del item</h3>
-    <p>Unidades que se emplean en el Pan Anual de Compras Públicas</p>
-    <p>Adquisiciones según el INCOP</p>
-</div>
-<div id="tppt" style="display:none">
-    <h3>Tipo de Procedimiento</h3><br>
-    <p>Tipo de Procedimiento de contratación según el monto a contratarse.</p>
-    <p>Pueden ser: Ínfima Cuantía, Subasta, Licitación, etc.</p>
-</div>
-<div id="tpcp" style="display: none">
-    <h3>Tipo de Compra</h3>
-    <p>Tipo de bien que se va a adquirir, pudiendo ser: Bien, Obra, Servcios, Consultoría, etc.</p>
-</div>
 <div id="fnfn" style="display: none">
     <h3>Fuente de financiamiento</h3>
     <p>Fuente de financiamiento de las partidas presupuestarias</p>
     <p>Entidad que financia la adquisición o construcción.</p>
 </div>
-
-<div id="espc" style="display: none">
-    <h3>Espacialidad del Proveedor</h3>
-    <p>Experiencia o especialidad del proveedor en los servicios que puede proveer</p>
-</div>
-
-<div id="edpl" style="display:none">
-    <h3>Estado de la Planilla</h3><br>
-    <p>Estado que puede tener una planilla dentro del proceso de ejecución de la obra: ingresada, pagada, anulada.</p>
-</div>
-<div id="tppl" style="display:none">
-    <h3>Tipo de Planilla</h3><br>
-    <p>Tipo de planilla, pueden ser: anticipo, liquidación, avance de obra, reajuste, etc. </p>
-</div>
-
 <div id="ddlb" style="display:none">
     <h3>Capacitaciones</h3><br>
     <p>Listado de capacitaciones por provincia</p>
 </div>
 
 <script type="text/javascript">
+
+    $("#btnPoaGrupo").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'grupoGasto_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlgGrupo",
+                    title : "Seleccione un grupo de gasto",
+                    class   : "modal-sm",
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reportePoaxGrupoExcel')}?grupo=" + $("#grupo option:selected").val() + "&fi=" + $("#fechaInicio").val() + "&ff=" + $("#fechaFin").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
 
     $("#btnReporteAsignacionesCrono").click(function () {
         $.ajax({
@@ -416,6 +351,7 @@
                 var b = bootbox.dialog({
                     id    : "dlAnio",
                     title : "Seleccione un Año",
+                    class   : "modal-sm",
                     message : msg,
                     buttons : {
                         cancelar : {

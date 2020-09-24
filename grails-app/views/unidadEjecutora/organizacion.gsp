@@ -35,14 +35,14 @@
 
 <div class="btn-group">
     <a href="${createLink(controller: 'unidadEjecutora', action: 'organizacion')}" id="btnNuevaOrganizacion"
-       class="btn btn-sm btn-success" title="Consultar artículo">
+       class="btn btn-sm btn-success" title="Crear una nueva organización">
         <i class="fas fa-plus"></i> Nueva Organización
     </a>
-    <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
+    <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar organización">
         <i class="fa fa-save"></i> Guardar
     </a>
     <g:if test="${unidad?.id}">
-        <a href="#" id="btnEliminarOrganizacion" class="btn btn-sm btn-danger" title="Guardar información">
+        <a href="#" id="btnEliminarOrganizacion" class="btn btn-sm btn-danger" title="Borrar organización">
             <i class="fa fa-trash"></i> Eliminar
         </a>
     </g:if>
@@ -62,10 +62,10 @@
             <a href="#" id="btnDocumentos" class="btn btn-sm btn-info" title="Consultar documentos">
                 <i class="fas fa-book-reader"></i> Biblioteca
             </a>
-            <a href="#" id="btnRepresentante" class="btn btn-sm btn-info" title="Consultar documentos">
+            <a href="#" id="btnRepresentante" class="btn btn-sm btn-info" title="Representante de la organización">
                 <i class="fas fa-user"></i> Representante
             </a>
-            <a href="#" id="btnBeneficiario" class="btn btn-sm btn-info" title="Consultar documentos">
+            <a href="#" id="btnBeneficiario" class="btn btn-sm btn-info" title="Socios beneficiarios">
                 <i class="fas fa-user-friends"></i> Beneficiarios
             </a>
             <a href="#" id="btnDatos" class="btn btn-sm btn-info" title="Datos de la organización">
