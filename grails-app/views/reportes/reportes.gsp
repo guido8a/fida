@@ -169,10 +169,10 @@
                         <i class="fa fa-list-ol fa-4x text-success"></i>
                         <br/> POA por componente
                     </a>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="anua" controller="valoresAnuales" action="list">
-                        <i class="fa fa-search-dollar fa-4x text-success"></i>
-                        <br/> Valores Anuales
-                    </g:link>
+                    <a href="#" id="btnReporteAsignacionesCrono" class="btn btn-info btn-ajax example_c item" texto="anua">
+                        <i class="fa fa-calendar-check fa-4x text-success"></i>
+                        <br/> Cronograma valorado
+                    </a>
                     <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="listas" controller="tipoLista" action="list">
                         <i class="fa fa-list-alt fa-4x text-success"></i>
                         <br/> Tipo de listas de precios
@@ -190,47 +190,29 @@
         <div class="row">
             <div class="col-md-12 col-xs-5">
                 <p>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="tpgr" controller="tipoGarantia" action="list">
-                        <i class="fab fa-gofore fa-4x text-success"></i>
+                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="tpgr" controller="tipoGarantia" action="list">
+                        <i class="fab fa-gofore fa-4x text-success disabled"></i>
                         <br/>Tipo de Garantía
                     </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="tdgr" controller="tipoDocumentoGarantia" action="list">
+                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="tdgr" controller="tipoDocumentoGarantia" action="list">
                         <i class="fab fa-gofore fa-4x text-success"></i>
                         <br/> Tipo de documento de garantía
                     </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="edgr" controller="estadoGarantia" action="list">
+                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="edgr" controller="estadoGarantia" action="list">
                         <i class="fab fa-gofore fa-4x text-success"></i>
                         <br/> Estado de la garantía
                     </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="asgr" controller="aseguradora" action="list">
+                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="asgr" controller="aseguradora" action="list">
                         <i class="fab fa-adn fa-4x text-success"></i>
                         <br/> Aseguradora
                     </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="tpas" controller="tipoAseguradora" action="list">
+                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="tpas" controller="tipoAseguradora" action="list">
                         <i class="fab fa-adn fa-4x text-success"></i>
                         <br/> Tipo de aseguradora
                     </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="itun" controller="unidadIncop" action="calendario">
+                    <g:link class="link btn btn-success btn-ajax example_c item disabled disabled" texto="itun" controller="unidadIncop" action="calendario">
                         <i class="fa fa-building fa-4x"></i>
                         <br/> Unidad del Item
-                    </g:link>
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-xs-5">
-                <p>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="tppt" controller="tipoProcedimiento" action="list">
-                        <i class="fa fa-file-powerpoint fa-4x text-success"></i>
-                        <br/>Tipo de procedimiento
-                    </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="tpcp" controller="tipoCompra" action="list">
-                        <i class="fa fa-cash-register fa-4x text-success"></i>
-                        <br/> Tipo de compra
-                    </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="fnfn" controller="fuenteFinanciamiento" action="list">
-                        <i class="fa fa-hand-holding-usd fa-4x  text-success"></i>
-                        <br/> Fuente de Financiamiento
                     </g:link>
                 </p>
             </div>
@@ -348,8 +330,8 @@
     <p>Registro de los años para el control y manejo de los índices año por año.</p>
 </div>
 <div id="anua" style="display:none">
-    <h3>Variables Anuales</h3><br>
-    <p>Valores de las variables anuales.</p>
+    <h3>Cronograma valorado</h3><br>
+    <p>Cronograma valorado por año</p>
 </div>
 
 <div id="tpcr" style="display:none">
@@ -423,6 +405,38 @@
 </div>
 
 <script type="text/javascript">
+
+    $("#btnReporteAsignacionesCrono").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'anio_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlAnio",
+                    title : "Seleccione un Año",
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reporteAsignacionesExcel')}?id=" + '${1}' + "&anio=" + $("#anioR option:selected").val();
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
 
     $("#btnConvenios").click(function () {
         $.ajax({

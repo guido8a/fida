@@ -557,6 +557,8 @@ class ReportesController {
 
     def reporteAsignacionesExcel () {
 
+//        println("--> " + params)
+
         def proyecto = Proyecto.get(params.id)
         def meses = Mes.list([sort: "id"])
 
@@ -798,6 +800,8 @@ class ReportesController {
 
     def componente_ajax(){
     }
+
+    def anio_ajax(){}
 
     public static void autoSizeColumns(WritableSheet sheet, int columns) {
         for (int c = 0; c < columns; c++) {
