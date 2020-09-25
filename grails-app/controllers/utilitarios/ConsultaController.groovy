@@ -31,11 +31,11 @@ class ConsultaController {
         println response.dump()*/
 
         def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl')
-        client.authorization = new HTTPBasicAuthorization("iOpaDRIeps", "6Tmq[]3ic}")
+//        client.authorization = new HTTPBasicAuthorization("iOpaDRIeps", "6Tmq[]3ic}")
         println "...1"
         def response = client.send(
-//                login: "iOpaDRIeps",
-//                password: "6Tmq[]3ic}",
+                login: "iOpaDRIeps",
+                password: "6Tmq[]3ic}",
                 connectTimeout:5000,
                 readTimeout:20000,
                 useCaches:false,
@@ -50,12 +50,14 @@ class ConsultaController {
     }
 
     def prueba1() {
-        def parametros = [login: "iOpaDRIeps", password: "6Tmq[]3ic}", exceptions:true]
-        def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl', parametros)
+//        def parametros = [login: "iOpaDRIeps", password: "6Tmq[]3ic}", exceptions:true]
+        def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl')
 //        client.authorization = new HTTPBasicAuthorization("iOpaDRIeps", "6Tmq[]3ic}")
         println "...1"
 
         def valoresBuscarSRI = [:]
+        valoresBuscarSRI['login'] = 'iOpaDRIeps'
+        valoresBuscarSRI['password'] = '6Tmq[]3ic}'
         valoresBuscarSRI['numeroIdentificacion'] = '1760003330001'
         valoresBuscarSRI['codigoPaquete'] = 186
 
@@ -65,33 +67,72 @@ class ConsultaController {
     }
 
     def prueba2() {
-//        def parametros = [login: "iOpaDRIeps", password: "6Tmq[]3ic}", exceptions:true]
-        def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl', parametros)
-        client.authorization = new HTTPBasicAuthorization("iOpaDRIeps", "6Tmq[]3ic}")
+        def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl')
         println "...1"
 
-        def valoresBuscarSRI = [:]
-        valoresBuscarSRI['numeroIdentificacion'] = '1760003330001'
-        valoresBuscarSRI['codigoPaquete'] = 186
-
-        def resp = client.send("getFichaGeneral", valoresBuscarSRI);
-        println "$resp"
-        render resp
+        def response = client.send(
+                login: "iOpaDRIeps",
+                password: "6Tmq[]3ic}",
+                connectTimeout:5000,
+                readTimeout:20000,
+                useCaches:false,
+                followRedirects:false,
+                sslTrustAllCerts:true) {
+            numeroIdentificacion: '1760003330001'
+            codigoPaquete: '186'
+        }
+        println "$response"
+        render response
     }
 
     def prueba3() {
-        def parametros = [login: "iOpaDRIeps", password: "6Tmq[]3ic}", exceptions:true]
-        def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl', parametros)
-        client.authorization = new HTTPBasicAuthorization("iOpaDRIeps", "6Tmq[]3ic}")
+        def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl')
         println "...1"
 
-        def valoresBuscarSRI = [:]
-        valoresBuscarSRI['numeroIdentificacion'] = '1760003330001'
-        valoresBuscarSRI['codigoPaquete'] = 186
+        def response = client.send(
+                login: "iOpaDRIeps",
+                password: "6Tmq[]3ic}",
+                connectTimeout:5000,
+                readTimeout:20000,
+                useCaches:false,
+                followRedirects:false,
+                sslTrustAllCerts:true,
+                numeroIdentificacion: '1760003330001',
+                codigoPaquete: '186')
 
-        def resp = client.send("getFichaGeneral", valoresBuscarSRI);
-        println "$resp"
-        render resp
+        println "$response"
+        render response
+    }
+
+    def prueba4() {
+        def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl')
+        println "...1"
+
+        def response = client.send(
+                login: "iOpaDRIeps",
+                password: "6Tmq[]3ic}",
+                connectTimeout:5000,
+                readTimeout:20000,
+                numeroIdentificacion: '1760003330001',
+                codigoPaquete: '186')
+
+        println "$response"
+        render response
+    }
+
+    def prueba5() {
+        def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl')
+        println "...1"
+
+        def response = client.send(
+                login: "iOpaDRIeps",
+                password: "6Tmq[]3ic}",
+                exceptions: true,
+                numeroIdentificacion: '1760003330001',
+                codigoPaquete: '186')
+
+        println "$response"
+        render response
     }
 
 
