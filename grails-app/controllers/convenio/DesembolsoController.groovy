@@ -94,7 +94,13 @@ class DesembolsoController {
         def cmnd = null
         def convenio  = Convenio.get(params.convenio)
         def fuente = Fuente.get(params."financiamientoPlanNegocio.id")
-        def maximo = (convenio.monto * fuente.porcentaje)/100
+        def maximo
+        if(convenio?.desembolso == 'N'){
+            maximo = (convenio.monto * fuente.porcentaje)/100
+        }else{
+            maximo = convenio.monto
+        }
+
         def validaDesembolsos = true
         if(validaDesembolsos){
 
@@ -165,10 +171,10 @@ class DesembolsoController {
             def infoExiste = InformeAvance.findAllByDesembolso(desembolso)
 
             if(infoExiste){
-             render "er"
+                render "er"
             }else{
                 try{
-                   desembolso.delete(flush:true)
+                    desembolso.delete(flush:true)
                     render "ok"
                 }catch(e){
                     println("Error al borrar el desembolso " + desembolso.errors)
@@ -184,7 +190,13 @@ class DesembolsoController {
         println("params m " + params)
         def fuente = Fuente.get(params.id)
         def convenio = Convenio.get(params.convenio)
-        def maximo = (convenio.monto * fuente.porcentaje)/100
+        def maximo
+        if(convenio?.desembolso == 'N'){
+            maximo = (convenio.monto * fuente.porcentaje)/100
+        }else{
+            maximo = convenio.monto
+        }
+
         def n = g.formatNumber(number: maximo, maxFractionDigits: 2, minFractionDigits: 2, format: '##,###')
         return[maximo:n]
     }

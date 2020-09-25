@@ -253,6 +253,12 @@
                             <g:textField name="monto" class="form-control input-sm required"
                                          value="${convenio?.monto}"/>
                         </div>
+                        <span class="col-md-2 mediano"></span>
+                        <span class="col-md-2 label label-primary text-info mediano">El desembolso sera del 100%?</span>
+
+                        <div class="col-md-2">
+                           <g:select name="desembolso" from="${['N': 'NO', 'S':'SI']}" class="form-control" optionValue="value" optionKey="key" value="${convenio?.desembolso}"/>
+                        </div>
                     </div>
                 </div>
 
