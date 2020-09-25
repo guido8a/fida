@@ -49,6 +49,51 @@ class ConsultaController {
 
     }
 
+    def prueba1() {
+        def parametros = [login: "iOpaDRIeps", password: "6Tmq[]3ic}", exceptions:true]
+        def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl', parametros)
+//        client.authorization = new HTTPBasicAuthorization("iOpaDRIeps", "6Tmq[]3ic}")
+        println "...1"
+
+        def valoresBuscarSRI = [:]
+        valoresBuscarSRI['numeroIdentificacion'] = '1760003330001'
+        valoresBuscarSRI['codigoPaquete'] = 186
+
+        def resp = client.send("getFichaGeneral", valoresBuscarSRI);
+        println "$resp"
+        render resp
+    }
+
+    def prueba2() {
+//        def parametros = [login: "iOpaDRIeps", password: "6Tmq[]3ic}", exceptions:true]
+        def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl', parametros)
+        client.authorization = new HTTPBasicAuthorization("iOpaDRIeps", "6Tmq[]3ic}")
+        println "...1"
+
+        def valoresBuscarSRI = [:]
+        valoresBuscarSRI['numeroIdentificacion'] = '1760003330001'
+        valoresBuscarSRI['codigoPaquete'] = 186
+
+        def resp = client.send("getFichaGeneral", valoresBuscarSRI);
+        println "$resp"
+        render resp
+    }
+
+    def prueba3() {
+        def parametros = [login: "iOpaDRIeps", password: "6Tmq[]3ic}", exceptions:true]
+        def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl', parametros)
+        client.authorization = new HTTPBasicAuthorization("iOpaDRIeps", "6Tmq[]3ic}")
+        println "...1"
+
+        def valoresBuscarSRI = [:]
+        valoresBuscarSRI['numeroIdentificacion'] = '1760003330001'
+        valoresBuscarSRI['codigoPaquete'] = 186
+
+        def resp = client.send("getFichaGeneral", valoresBuscarSRI);
+        println "$resp"
+        render resp
+    }
+
 
     boolean httpInit() {
         println "...httpInit"
