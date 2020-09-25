@@ -488,6 +488,7 @@
                     id    : "dlProvincia",
                     title : "Seleccione una provincia",
                     message : msg,
+                    class   : "modal-sm",
                     buttons : {
                         cancelar : {
                             label     : "Cancelar",
