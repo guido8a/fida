@@ -108,7 +108,7 @@
 <ul class="nav nav-pills">
     <li class="active"><a data-toggle="pill" href="#generales">Generales</a></li>
     <li><a data-toggle="pill" href="#obra">POA</a></li>
-    <li><a data-toggle="pill" href="#cont">Reportes 3</a></li>
+    <li><a data-toggle="pill" href="#cont">Datos geográficos</a></li>
 </ul>
 
 <div class="tab-content">
@@ -117,14 +117,11 @@
         <div class="row">
             <div class="col-md-12 col-xs-5">
                 <p>
-                    <g:link class="link btn btn-info btn-ajax example_c item" texto="grgf"  controller="reportes" action="mapa">
-                        <i class="fa fa-map-marked-alt fa-4x text-success"></i>
-                        <br/> Localización de proyectos
-                    </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="undd" controller="reportes" action="reportesEncuestasExcel">
-                        <i class="fa fa-paste fa-4x text-success"></i>
-                        <br/> Encuestas
-                    </g:link>
+                    %{--                    <g:link class="link btn btn-info btn-ajax example_c item" texto="grgf"  controller="reportes" action="mapa">--}%
+                    %{--                        <i class="fa fa-map-marked-alt fa-4x text-success"></i>--}%
+                    %{--                        <br/> Localización de proyectos--}%
+                    %{--                    </g:link>--}%
+
                     <a href="#" id="btnOrganizaciones" class="btn btn-info btn-ajax example_c item" texto="trnp">
                         <i class="fa fa-building fa-4x text-success"></i>
                         <br/> Organizaciones
@@ -133,6 +130,10 @@
                         <i class="fa fa-users fa-4x text-success"></i>
                         <br/> Socios
                     </a>
+                    <g:link class="link btn btn-success btn-ajax example_c item" texto="undd" controller="reportes" action="reportesEncuestasExcel">
+                        <i class="fa fa-paste fa-4x text-success"></i>
+                        <br/> Encuestas
+                    </g:link>
                 </p>
             </div>
         </div>
@@ -186,30 +187,34 @@
         <div class="row">
             <div class="col-md-12 col-xs-5">
                 <p>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="tpgr" controller="tipoGarantia" action="list">
-                        <i class="fab fa-gofore fa-4x text-success disabled"></i>
-                        <br/>Tipo de Garantía
+                    <g:link class="link btn btn-info btn-ajax example_c item" texto="grgf"  controller="reportes" action="mapa">
+                        <i class="fa fa-map-marked-alt fa-4x text-success"></i>
+                        <br/> Localización de proyectos
                     </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="tdgr" controller="tipoDocumentoGarantia" action="list">
-                        <i class="fab fa-gofore fa-4x text-success"></i>
-                        <br/> Tipo de documento de garantía
-                    </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="edgr" controller="estadoGarantia" action="list">
-                        <i class="fab fa-gofore fa-4x text-success"></i>
-                        <br/> Estado de la garantía
-                    </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="asgr" controller="aseguradora" action="list">
-                        <i class="fab fa-adn fa-4x text-success"></i>
-                        <br/> Aseguradora
-                    </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="tpas" controller="tipoAseguradora" action="list">
-                        <i class="fab fa-adn fa-4x text-success"></i>
-                        <br/> Tipo de aseguradora
-                    </g:link>
-                    <g:link class="link btn btn-success btn-ajax example_c item disabled disabled" texto="itun" controller="unidadIncop" action="calendario">
-                        <i class="fa fa-building fa-4x"></i>
-                        <br/> Unidad del Item
-                    </g:link>
+                %{--                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="tpgr" controller="tipoGarantia" action="list">--}%
+                %{--                        <i class="fab fa-gofore fa-4x text-success disabled"></i>--}%
+                %{--                        <br/>Tipo de Garantía--}%
+                %{--                    </g:link>--}%
+                %{--                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="tdgr" controller="tipoDocumentoGarantia" action="list">--}%
+                %{--                        <i class="fab fa-gofore fa-4x text-success"></i>--}%
+                %{--                        <br/> Tipo de documento de garantía--}%
+                %{--                    </g:link>--}%
+                %{--                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="edgr" controller="estadoGarantia" action="list">--}%
+                %{--                        <i class="fab fa-gofore fa-4x text-success"></i>--}%
+                %{--                        <br/> Estado de la garantía--}%
+                %{--                    </g:link>--}%
+                %{--                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="asgr" controller="aseguradora" action="list">--}%
+                %{--                        <i class="fab fa-adn fa-4x text-success"></i>--}%
+                %{--                        <br/> Aseguradora--}%
+                %{--                    </g:link>--}%
+                %{--                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="tpas" controller="tipoAseguradora" action="list">--}%
+                %{--                        <i class="fab fa-adn fa-4x text-success"></i>--}%
+                %{--                        <br/> Tipo de aseguradora--}%
+                %{--                    </g:link>--}%
+                %{--                    <g:link class="link btn btn-success btn-ajax example_c item disabled disabled" texto="itun" controller="unidadIncop" action="calendario">--}%
+                %{--                        <i class="fa fa-building fa-4x"></i>--}%
+                %{--                        <br/> Unidad del Item--}%
+                %{--                    </g:link>--}%
                 </p>
             </div>
         </div>
@@ -579,6 +584,7 @@
                     id    : "dlProvincia",
                     title : "Seleccione una provincia",
                     message : msg,
+                    class   : "modal-sm",
                     buttons : {
                         cancelar : {
                             label     : "Cancelar",
@@ -600,56 +606,56 @@
         })
     });
 
-    $("#btnIva").click(function () {
-        $.ajax({
-            type: 'POST',
-            url: '${createLink(controller: 'parametros', action: 'formIva_ajax')}',
-            data:{
-            },
-            success: function (msg) {
-                var b = bootbox.dialog({
-                    id    : "dlgIva",
-                    title : "Iva",
-                    message : msg,
-                    buttons : {
-                        cancelar : {
-                            label     : "Cancelar",
-                            className : "btn-primary",
-                            callback  : function () {
-                            }
-                        },
-                        guardar  : {
-                            id        : "btnSave",
-                            label     : "<i class='fa fa-save'></i> Guardar",
-                            className : "btn-success",
-                            callback  : function () {
-                                guardarIva($("#ivaExi").val());
-                            } //callback
-                        } //guardar
-                    } //buttons
-                }); //dialog
-            }
-        })
-    });
+    %{--$("#btnIva").click(function () {--}%
+    %{--    $.ajax({--}%
+    %{--        type: 'POST',--}%
+    %{--        url: '${createLink(controller: 'parametros', action: 'formIva_ajax')}',--}%
+    %{--        data:{--}%
+    %{--        },--}%
+    %{--        success: function (msg) {--}%
+    %{--            var b = bootbox.dialog({--}%
+    %{--                id    : "dlgIva",--}%
+    %{--                title : "Iva",--}%
+    %{--                message : msg,--}%
+    %{--                buttons : {--}%
+    %{--                    cancelar : {--}%
+    %{--                        label     : "Cancelar",--}%
+    %{--                        className : "btn-primary",--}%
+    %{--                        callback  : function () {--}%
+    %{--                        }--}%
+    %{--                    },--}%
+    %{--                    guardar  : {--}%
+    %{--                        id        : "btnSave",--}%
+    %{--                        label     : "<i class='fa fa-save'></i> Guardar",--}%
+    %{--                        className : "btn-success",--}%
+    %{--                        callback  : function () {--}%
+    %{--                            guardarIva($("#ivaExi").val());--}%
+    %{--                        } //callback--}%
+    %{--                    } //guardar--}%
+    %{--                } //buttons--}%
+    %{--            }); //dialog--}%
+    %{--        }--}%
+    %{--    })--}%
+    %{--});--}%
 
 
 
-    function  guardarIva(iva){
-        $.ajax({
-            type: 'POST',
-            url:'${createLink(controller: 'parametros', action: 'guardarIva_ajax')}',
-            data:{
-                iva:iva
-            },
-            success: function (msg) {
-                if(msg == 'ok'){
-                    log("Iva guardado correctamente", "success")
-                }else{
-                    log("Error al guardar el Iva","error")
-                }
-            }
-        });
-    }
+    %{--function  guardarIva(iva){--}%
+    %{--    $.ajax({--}%
+    %{--        type: 'POST',--}%
+    %{--        url:'${createLink(controller: 'parametros', action: 'guardarIva_ajax')}',--}%
+    %{--        data:{--}%
+    %{--            iva:iva--}%
+    %{--        },--}%
+    %{--        success: function (msg) {--}%
+    %{--            if(msg == 'ok'){--}%
+    %{--                log("Iva guardado correctamente", "success")--}%
+    %{--            }else{--}%
+    %{--                log("Error al guardar el Iva","error")--}%
+    %{--            }--}%
+    %{--        }--}%
+    %{--    });--}%
+    %{--}--}%
 
 
     function prepare() {
@@ -672,54 +678,48 @@
     });
 
 
-    $("#btnCambiarIva").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "${createLink(controller: "obra", action:'formIva_ajax')}",
-            data: {
+    %{--$("#btnCambiarIva").click(function () {--}%
+    %{--    $.ajax({--}%
+    %{--        type: "POST",--}%
+    %{--        url: "${createLink(controller: "obra", action:'formIva_ajax')}",--}%
+    %{--        data: {--}%
 
-            },
-            success: function (msg) {
-                var btnOk = $('<a href="#" data-dismiss="modal" class="btn">Cancelar</a>');
-                var btnSave = $('<a href="#"  class="btn btn-success"><i class="icon-save"></i> Guardar</a>');
+    %{--        },--}%
+    %{--        success: function (msg) {--}%
+    %{--            var btnOk = $('<a href="#" data-dismiss="modal" class="btn">Cancelar</a>');--}%
+    %{--            var btnSave = $('<a href="#"  class="btn btn-success"><i class="icon-save"></i> Guardar</a>');--}%
 
-                btnSave.click(function () {
-                    $(this).replaceWith(spinner);
-                    $.ajax({
-                        type: "POST",
-                        url: "${createLink(controller: 'obra', action:'guardarIva_ajax')}",
-                        data: $("#frmIva").serialize(),
-                        success: function (msg) {
-//                            if (msg.lastIndexOf("No", 0) == 0) {
-//                                alert(msg)
-//                            } else {
-//                                $("#claseObra").replaceWith(msg);
-//                                alert('Clase de obra creada!')
-//                            }
-                            if(msg == 'ok'){
-                                alert('Iva cambiado correctamente!');
-                                $("#modal-TipoObra").modal("hide");
-                            }else{
-                                alert("Error al cambiar el Iva")
+    %{--            btnSave.click(function () {--}%
+    %{--                $(this).replaceWith(spinner);--}%
+    %{--                $.ajax({--}%
+    %{--                    type: "POST",--}%
+    %{--                    url: "${createLink(controller: 'obra', action:'guardarIva_ajax')}",--}%
+    %{--                    data: $("#frmIva").serialize(),--}%
+    %{--                    success: function (msg) {--}%
+    %{--                        if(msg == 'ok'){--}%
+    %{--                            alert('Iva cambiado correctamente!');--}%
+    %{--                            $("#modal-TipoObra").modal("hide");--}%
+    %{--                        }else{--}%
+    %{--                            alert("Error al cambiar el Iva")--}%
 
-                            }
-                            $("#modal-TipoObra").modal("hide");
-                        }
-                    });
-                    return false;
+    %{--                        }--}%
+    %{--                        $("#modal-TipoObra").modal("hide");--}%
+    %{--                    }--}%
+    %{--                });--}%
+    %{--                return false;--}%
 
-                });
+    %{--            });--}%
 
-                $("#modalHeader_tipo").removeClass("btn-edit btn-show btn-delete");
-                $("#modalTitle_tipo").html("Cambiar IVA");
-                $("#modalBody_tipo").html(msg);
-                $("#modalFooter_tipo").html("").append(btnOk).append(btnSave);
-                $("#modal-TipoObra").modal("show");
-            }
-        });
-        return false;
+    %{--            $("#modalHeader_tipo").removeClass("btn-edit btn-show btn-delete");--}%
+    %{--            $("#modalTitle_tipo").html("Cambiar IVA");--}%
+    %{--            $("#modalBody_tipo").html(msg);--}%
+    %{--            $("#modalFooter_tipo").html("").append(btnOk).append(btnSave);--}%
+    %{--            $("#modal-TipoObra").modal("show");--}%
+    %{--        }--}%
+    %{--    });--}%
+    %{--    return false;--}%
 
-    });
+    %{--});--}%
 
     $(document).ready(function () {
         $('.item').hover(function () {
