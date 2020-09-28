@@ -113,7 +113,7 @@
         if($tr.data("perfil") != 'OBS') {
             items.actividades = {
                 label: "Actividades",
-                icon: "fa fa-calendar-o",
+                icon: "fa fa-chart-pie",
                 action: function ($element) {
                     var id = $element.data("id");
                     location.href = "${createLink(controller: "avanceFisico", action: "list")}?id=" + idPro;
