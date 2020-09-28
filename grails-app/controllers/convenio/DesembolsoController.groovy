@@ -9,6 +9,8 @@ import seguridad.UnidadEjecutora
 import convenio.Desembolso
 import taller.Taller
 
+import javax.sound.sampled.DataLine
+
 class DesembolsoController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -93,12 +95,22 @@ class DesembolsoController {
         def texto
         def cmnd = null
         def convenio  = Convenio.get(params.convenio)
+        def desembolsos = Desembolso.findAllByConvenio(convenio)
+        def desembolsoActual = Desembolso.get(params.id)
         def fuente = Fuente.get(params."financiamientoPlanNegocio.id")
         def maximo
         if(convenio?.desembolso == 'N'){
             maximo = (convenio.monto * fuente.porcentaje)/100
         }else{
             maximo = convenio.monto
+        }
+
+        if(desembolsos){
+            maximo = maximo - desembolsos.valor.sum()
+        }
+
+        if(desembolsoActual){
+            maximo = maximo + desembolsoActual.valor
         }
 
         def validaDesembolsos = true
@@ -189,7 +201,9 @@ class DesembolsoController {
     def maximo_ajax(){
         println("params m " + params)
         def fuente = Fuente.get(params.id)
+        def desembolsoActual = Desembolso.get(params.desembolso)
         def convenio = Convenio.get(params.convenio)
+        def desembolsos = Desembolso.findAllByConvenio(convenio)
         def maximo
         if(convenio?.desembolso == 'N'){
             maximo = (convenio.monto * fuente.porcentaje)/100
@@ -197,8 +211,45 @@ class DesembolsoController {
             maximo = convenio.monto
         }
 
+        if(desembolsos){
+         maximo = maximo - desembolsos.valor.sum()
+        }
+
+        if(desembolsoActual){
+            maximo = maximo + desembolsoActual.valor
+        }
+
         def n = g.formatNumber(number: maximo, maxFractionDigits: 2, minFractionDigits: 2, format: '##,###')
         return[maximo:n]
+    }
+
+    def verificarDesembolso_ajax(){
+        def convenio = Convenio.get(params.id)
+        def desembolsos = Desembolso.findAllByConvenio(convenio)
+
+        if(desembolsos){
+            def infos = InformeAvance.findAllByDesembolsoInList(desembolsos)
+            def avances = Avance.findAllByInformeAvanceInList(infos)
+            def totalAvance = avances.valor.sum()
+            def totalDesembolsos = (desembolsos.valor.sum() * 70)/100
+
+            def td = g.formatNumber(number: totalDesembolsos, maxFractionDigits: 2, minFractionDigits: 2, format: '##.###')
+            def ta = g.formatNumber(number: totalAvance, maxFractionDigits: 2, minFractionDigits: 2, format: '##.###')
+
+//            println("td " + td)
+//            println("av " + ta)
+
+//            if(totalDesembolsos > totalAvance){
+            if(td > ta){
+                render "no"
+            }else{
+                render "ok"
+            }
+        }else{
+          render "ok"
+        }
+
+
     }
 
 

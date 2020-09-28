@@ -131,7 +131,8 @@
                 url:'${createLink(controller: 'desembolso', action: 'maximo_ajax')}',
                 data:{
                     id:id,
-                    convenio: '${convenio?.id}'
+                    convenio: '${convenio?.id}',
+                    desembolso: '${dsmbInstance?.id}'
                 },
                 success: function(msg){
                     $("#valorMaximo").html(msg)

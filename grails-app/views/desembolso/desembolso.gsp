@@ -186,7 +186,25 @@
         }
     });
     $("#btnAddDsmb").click(function () {
-        createEditDesembolso();
+        $.ajax({
+           type: 'POST',
+           url: '${createLink(controller: 'desembolso', action: 'verificarDesembolso_ajax')}',
+           data:{
+                id: '${convenio?.id}'
+           },
+           success: function (msg) {
+               if(msg == 'ok'){
+                   createEditDesembolso();
+               }else{
+                   bootbox.alert({
+                       size: "small",
+                       title: "Alerta!!!",
+                       message: "<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i>  No es posible generar otro desembolso, los valores del avance no suman 70%!",
+                       callback: function(){}
+                   })
+               }
+           }
+        });
     });
 
 
