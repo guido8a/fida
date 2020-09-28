@@ -112,7 +112,7 @@
 
         if($tr.data("perfil") != 'OBS') {
             items.actividades = {
-                label: "Actividades",
+                label: "Avance Físico",
                 icon: "fa fa-chart-pie",
                 action: function ($element) {
                     var id = $element.data("id");
