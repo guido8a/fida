@@ -819,6 +819,8 @@ class ReportesController {
     def reportesEncuestasExcel(){
 
         def cantidadPreguntas = Pregunta.countByIdIsNotNull()
+        def fi = new Date().parse("dd-MM-yyyy",params.fi)
+        def ff = new Date().parse("dd-MM-yyyy",params.ff)
 
 //        println("cp " + cantidadPreguntas)
 
@@ -864,7 +866,7 @@ class ReportesController {
             label = new Label(i+1, 4, pregunta?.descripcion?.toString(), times16format); sheet.addCell(label);
         }
 
-        def encuestas = Encuesta.findAllByEstado('C').sort{it.unidadEjecutora.nombre}
+        def encuestas = Encuesta.findAllByEstadoAndFechaGreaterThanEqualsAndFechaLessThanEquals('C',fi,ff).sort{it.unidadEjecutora.nombre}
 
         encuestas.each{encuesta->
             def detalles = DetalleEncuesta.findAllByEncuesta(encuesta).sort{it.respuestaPregunta.pregunta.numero}

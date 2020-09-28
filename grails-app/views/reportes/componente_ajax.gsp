@@ -27,7 +27,7 @@
     $('#fechaInicio').datetimepicker({
         locale: 'es',
         format: 'DD-MM-YYYY',
-        daysOfWeekDisabled: [0, 6],
+        // daysOfWeekDisabled: [0, 6],
         sideBySide: true,
         showClose: true
     });
@@ -35,7 +35,7 @@
     $('#fechaFin').datetimepicker({
         locale: 'es',
         format: 'DD-MM-YYYY',
-        daysOfWeekDisabled: [0, 6],
+        // daysOfWeekDisabled: [0, 6],
         sideBySide: true,
         showClose: true
     });
