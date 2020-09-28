@@ -130,10 +130,10 @@
                         <i class="fa fa-users fa-4x text-success"></i>
                         <br/> Socios
                     </a>
-                    <g:link class="link btn btn-success btn-ajax example_c item" texto="undd" controller="reportes" action="reportesEncuestasExcel">
+                    <a href="#" id="btnEncuestas" class="btn btn-info btn-ajax example_c item" texto="undd">
                         <i class="fa fa-paste fa-4x text-success"></i>
                         <br/> Encuestas
-                    </g:link>
+                    </a>
                 </p>
             </div>
         </div>
@@ -312,6 +312,39 @@
 </div>
 
 <script type="text/javascript">
+
+    $("#btnEncuestas").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'encuesta_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlEncuesta",
+                    title : "Seleccione",
+                    message : msg,
+                    class   : "modal-sm",
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reportesEncuestasExcel')}?fi=" + $("#fechaInicio").val() + "&ff=" + $("#fechaFin").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
 
     $("#btnPoaGrupo").click(function () {
         $.ajax({

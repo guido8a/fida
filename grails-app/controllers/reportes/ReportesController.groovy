@@ -799,6 +799,8 @@ class ReportesController {
 
     def anio_ajax(){}
 
+    def encuesta_ajax(){}
+
     def grupoGasto_ajax(){
         def sql =  "select prspnmro from prsp where prspnmro ilike '%0000' order by prspnmro;"
         def cn = dbConnectionService.getConnection()
