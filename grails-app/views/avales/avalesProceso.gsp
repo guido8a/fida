@@ -66,7 +66,8 @@
                                 <td>${p.proceso.nombre}</td>
                                 <td>${p.concepto}</td>
                                 <td style="text-align: center">${p.fechaAprobacion?.format("dd-MM-yyyy")}</td>
-                                <td style="text-align: center">${p.numeroAval}</td>
+%{--                                <td style="text-align: center">${p.numeroAval}</td>--}%
+                                <td style="text-align: center">${p.numero}</td>
                                 <td style="text-align: right">
                                     <g:formatNumber number="${p.monto}" format="###,##0" minFractionDigits="2" maxFractionDigits="2"/>
                                 </td>
@@ -75,9 +76,9 @@
                                     ${p.estado?.descripcion}
                                 </td>
                                 <td style="text-align: center">
-                                    <a href="#" class="imprimiAval btn btn-info btn-sm" title="Imprimir" iden="${SolicitudAval.findByAval(p)?.id}">
-                                        <i class="fa fa-print "></i>
-                                    </a>
+%{--                                    <a href="#" class="imprimiAval btn btn-info btn-sm" title="Imprimir" iden="${SolicitudAval.findByAval(p)?.id}">--}%
+%{--                                        <i class="fa fa-print "></i>--}%
+%{--                                    </a>--}%
                                 </td>
                                 <td style="text-align: center">
                                     <g:if test="${p.estado.codigo == 'E02' && perfil != 'OBS'}">

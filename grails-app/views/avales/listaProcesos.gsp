@@ -22,8 +22,8 @@
     %{--</a>--}%
         <g:if test="${params.aval != 'no'}">
 
-            <g:link controller="avales" action="nuevaSolicitud" class="btn btn-default">
-                <i class="fa fa-edit"></i> Nuevo proceso para solicitud de aval
+            <g:link controller="revisionAval" action="pendientes" class="btn btn-default">
+                <i class="fa fa-edit"></i> Solicitar Aval
             </g:link>
 
         </g:if>
@@ -122,17 +122,17 @@
             };
         }
 
-        if($tr.data("perfil") != 'OBS') {
-            items.financiero = {
-                label: "Av. Financiero",
-                icon: "fa fa-line-chart",
-                action: function ($element) {
-                    var id = $element.data("id");
-                    location.href = "${createLink(controller: "hito", action: "avancesFinancieros")}?id=" + idPro;
+        %{--if($tr.data("perfil") != 'OBS') {--}%
+        %{--    items.financiero = {--}%
+        %{--        label: "Av. Financiero",--}%
+        %{--        icon: "fa fa-line-chart",--}%
+        %{--        action: function ($element) {--}%
+        %{--            var id = $element.data("id");--}%
+        %{--            location.href = "${createLink(controller: "hito", action: "avancesFinancieros")}?id=" + idPro;--}%
 
-                }
-            };
-        }
+        %{--        }--}%
+        %{--    };--}%
+        %{--}--}%
 
         return items
     }
