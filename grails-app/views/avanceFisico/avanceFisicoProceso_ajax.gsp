@@ -1,3 +1,4 @@
+<%@ page import="hitos.AvanceAvance" %>
 <%--
   Created by IntelliJ IDEA.
   User: fabricio
@@ -39,7 +40,7 @@
                 </div>
             </td>
             <td>
-                <g:set var="avance123" value="${AvanceAvance.findAllByAvanceFisico(avance, [sort: 'avance', order: "desc"])}"/>
+                <g:set var="avance123" value="${hitos.AvanceAvance.findAllByAvanceFisico(avance, [sort: 'avance', order: "desc"])}"/>
                 <a href="#" class="btnCompletar btn btn-success btn-sm" id="${avance.id}"
                    data-min="${avance123 && avance123.size() > 0 ? avance123.first().avance : 0}">
                 <i class="fa fa-check-circle"></i> Registrar avance
@@ -171,9 +172,8 @@
         var idAv1 = id;
         $.ajax({
            type : "POST",
-            url : "${createLink(action: 'detalleAv')}",
-            data : {id: idAv1}
-            ,
+            url : "${createLink(controller: 'avanceFisico', action: 'detalleAv')}",
+            data : {id: idAv1},
             success : function (msg) {
                 var b = bootbox.dialog ({
                     id : "dlgRegAv",
@@ -181,45 +181,51 @@
                     class : "modal-lg",
                     message : msg,
                     buttons : {
+                        cancelar: {
+                            label : "<i class='fa fa-times'></i> Cancelar",
+                            className: "btn-primary",
+                            callback : function () {
+                            }
+                        },
                         guardar: {
                         id: "btnSave",
                         label : "<i class='fa fa-save'></i> Guardar",
-                        classname: "btn-success",
+                        className: "btn-success",
                         callback : function () {
                             var avance = $.trim($("#avanceAvance").val());
                             var descripcion = $.trim($("#descripcionAvance").val());
                             if (avance == "" || isNaN(avance) || avance * 1 <= min || avance * 1 > 100) {
-                                log("El avance debe ser un número positivo mayor a " + min + " y menor a 100", 'error')
+                                log("El avance debe ser un número positivo mayor a " + min + " y menor a 100", 'error');
                                 return false
                             } else {
                                 if (descripcion == "") {
-                                    log("La descripción es obligatoria", 'error')
+                                    log("Ingrese una descripción", 'error');
                                     return false
                                 } else {
                                     $.ajax({
                                         type    : "POST",
-                                        url     : "${createLink(action:'agregarAvance')}",
+                                        url     : "${createLink(controller: 'avanceFisico', action:'agregarAvance')}",
                                         data    : {
                                             id     : idAv1,
                                             avance : avance,
                                             desc   : descripcion
                                         },
                                         success : function (msg) {
-                                            location.reload(true)
-
+                                            if(msg = 'ok'){
+                                                log("Guardado correctamente","success");
+                                                setTimeout(function () {
+                                                    location.reload(true);
+                                                }, 1000);
+                                            }else{
+                                                log("Error al guardar el avance","error")
+                                            }
                                         }
                                     });
                                 }
                             }
 
                         }
-                    },
-                        cancelar: {
-                            label : "Cancelar",
-                            classname: "btn-primary",
-                            callback : function () {
-                            }
-                        }
+                    }
                     }
                 });
                 setTimeout(function () {

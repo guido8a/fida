@@ -142,39 +142,44 @@
     function agregarSub() {
         $.ajax({
             type    : "POST",
-            url     : "${createLink(action: 'agregarSubact', id: proceso?.id)}",
-            %{--id : ${proceso?.id},--}%
+            url     : "${createLink(controller: 'avanceFisico', action: 'agregarSubact', id: proceso?.id)}",
             success : function (msg) {
                 var b = bootbox.dialog({
                     id      : "dlgAgregarSub",
                     title   : "Agregar Subactividad",
                     message : msg,
                     buttons : {
+                        cancelar : {
+                            label     : "<i class='fa fa-times'></i> Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
                         guardar  : {
                             label     : "<i class='fa fa-save'></i> Guardar",
-                            classname : "btn-success",
+                            className : "btn-success",
                             callback  : function () {
                                 var aporte = $.trim($("#aporte").val());
-                                var inicio = $.trim($("#inicioSub_input").val());
-                                var fin = $.trim($("#finSub_input").val());
+                                var inicio = $.trim($("#inicioSub").val());
+                                var fin = $.trim($("#finSub").val());
                                 var obs = $.trim($("#observaciones").val());
                                 var id = "${proceso.id}";
                                 if (aporte == "" || inicio == "" || fin == "" || obs.length < 1) {
-                                    log("Por favor ingrese el porcentaje de aportación, las fechas y la descripción de la sub actividad", "error")
+                                    log("Por favor ingrese el porcentaje de aportación, las fechas y la descripción de la sub actividad", "error");
                                     return false
                                 } else {
                                     if (isNaN(aporte)) {
-                                        log("Por favor ingrese un número válido en el porcentaje de avance", "error")
+                                        log("Por favor ingrese un número válido en el porcentaje de avance", "error");
                                         return false
                                     } else {
                                         aporte = parseFloat(aporte);
                                         if (aporte > max) {
-                                            log("El aporte ingresado debe ser un número menor a " + max, "error")
+                                            log("El aporte ingresado debe ser un número menor a " + max, "error");
                                             return false
                                         } else {
                                             $.ajax({
                                                 type    : "POST",
-                                                url     : "${createLink(action:'addAvanceFisicoProceso_ajax')}",
+                                                url     : "${createLink(controller: 'avanceFisico', action:'addAvanceFisicoProceso_ajax')}",
                                                 data    : {
                                                     id            : id,
                                                     avance        : aporte,
@@ -186,29 +191,28 @@
                                                     updateAll(msg);
                                                     var $d = $('#detalle');
                                                     $d.animate({scrollTop : $d[0].scrollHeight}, 1000);
-                                                    var parts = msg.split("*");
-                                                    log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                                                    if (parts[0] == "SUCCESS") {
-                                                        setTimeout(function () {
-                                                            location.reload(true);
-                                                        }, 1000);
-                                                    } else {
-                                                        closeLoader();
+                                                    if(msg == 'ok'){
+                                                        log("Guardado correctamente","success");
+                                                            setTimeout(function () {
+                                                                location.reload(true);
+                                                            }, 1000);
+                                                    }else{
+                                                        log("Error al guardar","error")
                                                     }
+                                                    // var parts = msg.split("*");
+                                                    // log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
+                                                    // if (parts[0] == "SUCCESS") {
+                                                    //     setTimeout(function () {
+                                                    //         location.reload(true);
+                                                    //     }, 1000);
+                                                    // } else {
+                                                    // }
                                                 }
                                             });
                                         }
                                     }
                                 }
                             }
-                        },
-                        cancelar : {
-                            label     : "Cancelar",
-                            classname : "btn-primary",
-                            callback  : function () {
-
-                            }
-
                         }
                     }
                 })

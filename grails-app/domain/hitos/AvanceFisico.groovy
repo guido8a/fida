@@ -5,8 +5,6 @@ import avales.Aval
 import avales.ProcesoAval
 
 class AvanceFisico implements Auditable {
-
-    Aval aval
     /*
     * Proceso
     */
@@ -50,11 +48,10 @@ class AvanceFisico implements Auditable {
         version false
         columns {
             id column: 'avfs__id'
-            aval column: 'aval__id'
             fecha column: 'avfsfcha'
             proceso column: 'prco__id'
             avance column: 'avfsavnc'
-            observaciones column: 'avfsobsv'
+            observaciones column: 'avfsobsr'
             completado column: 'avfsfccm'
             inicio column: 'avfsfcin'
             fin column: 'avfsfcfn'
@@ -65,8 +62,7 @@ class AvanceFisico implements Auditable {
  */
     static constraints = {
         proceso(nullable: false, blank: false)
-        aval(nullable: false, blank: false)
-        observaciones(blank: true, nullable: true, size: 1..1024)
+        observaciones(blank: true, nullable: true, size: 1..255)
         completado(blank: true, nullable: true)
         inicio(blank: true, nullable: true)
         fin(blank: true, nullable: true)

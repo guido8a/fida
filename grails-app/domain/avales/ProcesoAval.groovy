@@ -112,7 +112,7 @@ class ProcesoAval implements Auditable {
 
     def getColorSemaforo() {
         def dias = fechaFin - fechaInicio
-//        println "dias " + dias
+        println "dias " + dias
         def esperado = 0
         def now = new Date()
         if (now > fechaFin) {

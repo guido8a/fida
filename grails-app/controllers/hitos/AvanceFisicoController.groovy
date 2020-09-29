@@ -33,7 +33,7 @@ class AvanceFisicoController {
             println "\t" + it.avance
             tot += it.avance
         }
-        println "????? " + tot
+//        println "????? " + tot
 
         println ">>>>>>>>>>>>>>> " + totalAvance + " max " + maxAvance
 
@@ -53,7 +53,7 @@ class AvanceFisicoController {
      * Acción llamada con ajax que agrega un avance físico a un proceso
      */
     def addAvanceFisicoProceso_ajax = {
-//        println("params af " + params)
+        println("params af " + params)
 
         def proceso = ProcesoAval.get(params.id)
         def avance = new AvanceFisico()
@@ -67,9 +67,12 @@ class AvanceFisicoController {
             def totalAvance = AvanceFisico.findAllByProceso(proceso).sum { it.avance }
             max = 100 - totalAvance
             def minDate = (avance.fecha + 1).format("dd-MM-yyyy")
-            render "SUCCESS*Avance físico " + avance.observaciones + " agregado"
+//            render "SUCCESS*Avance físico " + avance.observaciones + " agregado"
+            render "ok"
         } else {
-            render "error*Ha ocurrido un error"
+//            render "error*Ha ocurrido un error"
+            println("error al guardar el avance fisico " + avance.errors)
+            render "no"
         }
     }
 
@@ -79,7 +82,23 @@ class AvanceFisicoController {
         av.avanceFisico = avance
         av.avance = params.avance.toDouble()
         av.descripcion = params.desc
-        av.save(flush: true)
-        render "ok"
+        if(!av.save(flush:true)){
+            println("Error al guardar el avance " + av.errors)
+            render "no"
+        }else{
+            render "ok"
+        }
+    }
+
+    def agregarSubact () {
+        println("params " + params)
+        def proceso = ProcesoAval.get(params.id)
+        println "proceso: $proceso"
+        return [proceso: proceso]
+    }
+
+    def detalleAv = {
+        def av = AvanceFisico.get(params.id)
+        return [av: av, avances: AvanceAvance.findAllByAvanceFisico(av, [sort: "id"])]
     }
 }
