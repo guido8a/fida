@@ -130,21 +130,7 @@ environments:
             username: postgres
             password: 'postgres'
 
-#        dataSource_visor:
-#            pooled: true
-#            jmxExport: true
-#            driverClassName: org.postgresql.Driver
-#            dbCreate: update
-#            url: jdbc:postgresql://127.0.0.1:5432/visorprod
-
-#        dataSources:
-#            visor:
-#                dbCreate: update
-#                url: jdbc:postgresql://127.0.0.1:5432/visorprod
         grails:
-#            serverURL: http://localhost:8080
-            #especificar una direccion IP para poder acceder desde otra computadora de la red
-#            serverURL: http://127.0.0.1:8080
             serverURL: http://192.168.0.100:8080
     test:
         dataSource:
@@ -154,6 +140,31 @@ environments:
         dataSource:
             dbCreate: none
             url: jdbc:postgresql://127.0.0.1:5432/fida
+            username: postgres
+            password: 'fareps_fda'
+#            password: 'steinsgate'
+            properties:
+                jmxEnabled: true
+                initialSize: 5
+                maxActive: 5
+                minIdle: 5
+                maxIdle: 5
+                maxWait: 10000
+                maxAge: 600000
+                timeBetweenEvictionRunsMillis: 5000
+                minEvictableIdleTimeMillis: 60000
+                validationQuery: SELECT 1
+                validationQueryTimeout: 3
+                validationInterval: 15000
+                testOnBorrow: true
+                testWhileIdle: true
+                testOnReturn: false
+                jdbcInterceptors: ConnectionState
+                defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+    pruebas:
+        dataSource:
+            dbCreate: none
+            url: jdbc:postgresql://127.0.0.1:5432/fida_prba
             username: postgres
             password: 'fareps_fda'
 #            password: 'steinsgate'
