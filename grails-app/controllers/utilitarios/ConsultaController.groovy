@@ -10,42 +10,87 @@ import wslite.http.auth.*
 class ConsultaController {
 
     def prueba() {
-        //https://github.com/jwagenleitner/groovy-wslite
-        //https://github.com/jwagenleitner/groovy-wslite/blob/master/README.md
-        //otro: https://josdem.io/techtalk/spring/spring_wslite_soap/
 
-/*        def file = new File("/tmp/file.xml")
-        assert file.exists()
-        String wsdl = 'https://server/servicios/soap/stamp.wsdl'
+        def sobre_xml = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:agr="https://www.economiasolidaria.gob.ec/">'
+        sobre_xml += '<soap:Header/><soap:Body><agr:WBConsultaCed>'
+        sobre_xml += '<agr:cadena>0601983869</agr:cadena>'
+        sobre_xml += '</agr:WBConsultaCed></soap:Body></soap:Envelope>'
 
-        def client = new SOAPClient(wsdl)
-        def response = client.send(SOAPAction: 'stamp') {
-            body {
-                stamp('xmlns': 'https://server/WSDL') {
-                    xml(file.bytes.encodeBase64().toString())
-                    username(username)
-                    password(password)
-                }
-            }
+
+        def soapUrl = new URL('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl')
+        def connection = soapUrl.openConnection()
+        println "abre conexion"
+        connection.setRequestMethod("POST")
+        connection.setConnectTimeout(5000)
+        connection.setReadTimeout(5000)
+        println "...post"
+        connection.login("iOpaDRIeps")
+        connection.password("6Tmq[]3ic}")
+        connection.exceptions(true)
+        connection.setRequestProperty("Content-Type", "text/plain")
+        println "...xml"
+        connection.doOutput = true
+        println "...do Output"
+
+        Writer writer = new OutputStreamWriter(connection.outputStream)
+
+        writer.write(sobre_xml)
+        println "...write"
+        writer.flush()
+        writer.close()
+        connection.connect()
+        println "...connect"
+
+        def respuesta = connection.content.text
+        def respuestaSri = new XmlSlurper().parseText(respuesta)
+        println respuestaSri
+
+
+/*
+        if (respuestaSri == "RECIBIDA") {
+            def para_autorizacion = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ec="http://ec.gob.sri.ws.autorizacion">
+                <soapenv:Header/>
+                <soapenv:Body>
+                <ec:autorizacionComprobante>
+                <claveAccesoComprobante>${clave}</claveAccesoComprobante>
+                </ec:autorizacionComprobante>
+                </soapenv:Body>
+                </soapenv:Envelope>"""
+
+            println "----\n ${para_autorizacion}\n----"
+            soapUrl = new URL("https://celcer.sri.gob.ec/comprobantes-electronicos-ws/AutorizacionComprobantesOffline?wsdl")
+            connection = soapUrl.openConnection()
+            println "abre conexion --- atrz"
+            connection.setRequestMethod("POST")
+            connection.setConnectTimeout(5000)
+            connection.setReadTimeout(5000)
+            println "...post"
+            connection.setRequestProperty("Content-Type", "application/xml")
+            println "...xml"
+            connection.doOutput = true
+            println "...do Output"
+
+            writer = new OutputStreamWriter(connection.outputStream)
+
+            writer.write(para_autorizacion)
+            println "...write"
+            writer.flush()
+            writer.close()
+            connection.connect()
+            println "...connect atz... "
+
+            respuesta = connection.content.text
+            def guardar = new File(path + "/sri${archivo}")
+            guardar.write(respuesta)
+
+            def atrz = respuesta =~ /numeroAutorizacion.(\d+)/
+
+            return atrz[0][1]
+
+        } else {
+            return "ha ocurrido un error al solicitar la autorización al SRI"
         }
-        println response.dump()*/
-
-        def client = new SOAPClient('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl')
-//        client.authorization = new HTTPBasicAuthorization("iOpaDRIeps", "6Tmq[]3ic}")
-        println "...1"
-        def response = client.send(
-                login: "iOpaDRIeps",
-                password: "6Tmq[]3ic}",
-                connectTimeout:5000,
-                readTimeout:20000,
-                useCaches:false,
-                followRedirects:false,
-                sslTrustAllCerts:true) {
-                    numeroIdentificacion: '1760003330001'
-                    codigoPaquete: '186'
-                }
-        println "$response"
-        render response
+*/
 
     }
 
