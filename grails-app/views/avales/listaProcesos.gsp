@@ -91,7 +91,7 @@
 
         if($tr.data("perfil") != 'OBS'){
             items.editar = {
-                label  : "Editar",
+                label  : "Ver proceso",
                 icon   : "fa fa-edit",
                 action : function ($element) {
                     var id = $element.data("id");
@@ -102,7 +102,7 @@
 
 
         items.avales = {
-            label  : "Avales",
+            label  : "Solicitudes y Avales",
             icon   : "fa fa-share-alt",
             action : function ($element) {
                 var id = $element.data("id");

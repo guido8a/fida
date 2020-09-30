@@ -20,6 +20,9 @@
                 <g:link controller="revisionAval" action="pendientes" class="btn btn-default">
                     <i class="fa fa-arrow-left"></i> Avales
                 </g:link>
+                <g:link controller="avales" action="listaProcesos" class="btn btn-primary">
+                    <i class="fa fa-arrow-left"></i> Procesos
+                </g:link>
 %{--                <g:if test="${proceso}">--}%
 %{--                    <g:link controller="avales" action="avalesProceso" id="${proceso?.id}" class="btn btn-info">--}%
 %{--                        <i class="fa fa-share-alt"></i> Avales y solicitudes de avales--}%
