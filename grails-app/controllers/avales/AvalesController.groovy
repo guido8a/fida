@@ -416,6 +416,7 @@ class AvalesController{
         def l = []
         procesos.each { p ->
             if (SolicitudAval.countByProcesoAndUnidadInList(p, unidades) > 0) {
+                if(SolicitudAval.findByProceso(p).estado.codigo == 'E02')
                 l += p
             }
         }

@@ -24,7 +24,7 @@
 
 <elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>
 
-<g:link controller="revisionAval" action="pendientes" class="btn btn-default">
+<g:link controller="avales" action="listaProcesos" class="btn btn-default">
     <i class="fa fa-arrow-left"></i> Lista de procesos
 </g:link>
 
