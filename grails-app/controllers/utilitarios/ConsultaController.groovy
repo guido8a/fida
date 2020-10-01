@@ -180,6 +180,42 @@ class ConsultaController {
         render response
     }
 
+   def prueba6() {
+       def sobre_xml = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:agr="https://www.economiasolidaria.gob.ec/">'
+       sobre_xml += '<soap:Header/><soap:Body><agr:WBConsultaCed>'
+       sobre_xml += '<agr:cadena>0601983869</agr:cadena>'
+       sobre_xml += '</agr:WBConsultaCed></soap:Body></soap:Envelope>'
+
+
+       def soapUrl = new URL('http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl')
+       def connection = soapUrl.openConnection()
+       println "abre conexion"
+       connection.setRequestMethod("POST")
+       connection.setConnectTimeout(5000)
+       connection.setReadTimeout(5000)
+       println "...post"
+//       connection.login("iOpaDRIeps")
+//       connection.password("6Tmq[]3ic}")
+       connection.exceptions(true)
+       connection.setRequestProperty("Content-Type", "text/plain")
+       println "...xml"
+       connection.doOutput = true
+       println "...do Output"
+
+       Writer writer = new OutputStreamWriter(connection.outputStream)
+
+       writer.write(sobre_xml)
+       println "...write"
+       writer.flush()
+       writer.close()
+       connection.connect()
+       println "...connect"
+
+       def respuesta = connection.content.text
+       def respuestaSri = new XmlSlurper().parseText(respuesta)
+       println respuestaSri
+    }
+
 
     boolean httpInit() {
         println "...httpInit"
