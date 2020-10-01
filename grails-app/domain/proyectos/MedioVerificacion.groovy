@@ -17,7 +17,7 @@ class MedioVerificacion implements Auditable {
         columns {
             id column:'mdvf__id'
             indicador column: 'indi__id'
-            descripcion column: 'mdfvdscr'
+            descripcion column: 'mdvfdscr'
         }
     }
     static constraints = {

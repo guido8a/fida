@@ -13,10 +13,6 @@ class ProcesoAsignacion implements Auditable {
      */
     ProcesoAval proceso
     /**
-     * Proceso aval corriente
-     */
-    AvalCorriente avalCorriente
-    /**
      * Asignación
      */
     Asignacion asignacion
@@ -47,7 +43,6 @@ class ProcesoAsignacion implements Auditable {
         columns {
             id column: 'poas__id'
             proceso column: 'prco__id'
-            avalCorriente column: 'avcr__id'
             asignacion column: 'asgn__id'
             monto column: 'poasmnto'
             devengado column: 'poasdvgd'
@@ -60,7 +55,6 @@ class ProcesoAsignacion implements Auditable {
      */
     static constraints = {
         proceso nullable: true
-        avalCorriente nullable: true
         liberado blank: true, nullable: true
     }
 }

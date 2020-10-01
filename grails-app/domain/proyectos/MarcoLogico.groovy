@@ -33,19 +33,6 @@ class MarcoLogico implements Auditable{
      */
     double monto
     /**
-     * Padre de la modificación del marco lógico
-     */
-//    MarcoLogico padreMod
-//    /**
-//     * Fecha de inicio del marco lógico
-//     */
-//    Date fechaInicio
-//    /**
-//     * Fecha de fin del marco lógico
-//     */
-//    Date fechaFin
-
-    /**
      * Número del marco lógico
      */
     int numero = 0;
