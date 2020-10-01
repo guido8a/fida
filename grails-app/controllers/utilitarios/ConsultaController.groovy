@@ -196,7 +196,7 @@ class ConsultaController {
        println "...post"
 //       connection.login("iOpaDRIeps")
 //       connection.password("6Tmq[]3ic}")
-       connection.exceptions(true)
+//       connection.exceptions(true)
        connection.setRequestProperty("Content-Type", "text/plain")
        println "...xml"
        connection.doOutput = true
