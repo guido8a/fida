@@ -656,4 +656,38 @@ class ProyectoController {
         }
     }
 
+    def cambiarEstado_ajax(){
+//        println("params ce " + params)
+
+        def proyecto = Proyecto.get(params.id)
+        def marcos = MarcoLogico.findAllByProyecto(proyecto)
+        def modificaciones = ModificacionMarcoLogico.findAllByMarcoLogicoInList(marcos)
+        def band = ''
+
+        if(proyecto.fechaRegistro){
+            if(MarcoLogico.findAllByProyectoAndFechaGreaterThanEquals(proyecto, proyecto.fechaRegistro)){
+                render "er"
+            }else{
+                band = 'R'
+            }
+        }else{
+                band = 'N'
+        }
+
+        if(modificaciones){
+            render"er"
+        }else{
+            if(band == 'R'){
+                proyecto.fechaRegistro = null
+            }else{
+                proyecto.fechaRegistro = new Date()
+            }
+
+            if(!proyecto.save(flush:true)){
+                render "no"
+            }else{
+                render "ok"
+            }
+        }
+    }
 }

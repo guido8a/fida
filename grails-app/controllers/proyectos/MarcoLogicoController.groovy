@@ -192,6 +192,7 @@ class MarcoLogicoController {
      */
     def form_componente_ajax() {
 //        println "Form componente: " + params
+
         def marcoLogicoInstance = new MarcoLogico()
         if (params.id) {
             marcoLogicoInstance = MarcoLogico.get(params.id)
@@ -209,21 +210,61 @@ class MarcoLogicoController {
      * @render ERROR*[mensaje] cuando no se pudo grabar correctamente, SUCCESS*[mensaje] cuando se grabó correctamente
      */
     def save_componente_ajax() {
-        def marcoLogicoInstance = new MarcoLogico()
-        if (params.id) {
-            marcoLogicoInstance = MarcoLogico.get(params.id)
-            if (!marcoLogicoInstance) {
-                render "ERROR*No se encontró Componente."
-                return
+
+        def proyecto = Proyecto.get(params."proyecto.id")
+        def marcoLogicoInstance
+
+        if(params.id){
+            if(proyecto.fechaRegistro){
+                println("con registro")
+
+                marcoLogicoInstance = MarcoLogico.get(params.id)
+
+                def modificacion = new ModificacionMarcoLogico()
+                modificacion.marcoLogico = marcoLogicoInstance
+                modificacion.objetivo = marcoLogicoInstance.objeto
+                modificacion.numero = marcoLogicoInstance.numero
+                modificacion.monto = marcoLogicoInstance.monto
+                modificacion.fecha = new Date()
+
+
+                if(!modificacion.save(flush:true)){
+                    println("error al guardar la modificacion " + modificacion.errors)
+                    render"ERROR*Error al generar la modificación"
+                }else{
+                    marcoLogicoInstance.properties = params
+                }
+
+            }else{
+                marcoLogicoInstance = new MarcoLogico()
+                if (params.id) {
+                    marcoLogicoInstance = MarcoLogico.get(params.id)
+                    if (!marcoLogicoInstance) {
+                        render "ERROR*No se encontró Componente."
+                        return
+                    }
+                }
+                marcoLogicoInstance.properties = params
+//                if (!marcoLogicoInstance.save(flush: true)) {
+//                    render "ERROR*Ha ocurrido un error al guardar Componente: " + renderErrors(bean: marcoLogicoInstance)
+//                    return
+//                }
+//                render "SUCCESS*${params.id ? 'Actualización' : 'Creación'} de Componente exitosa."
+//                return
             }
+        }else{
+            marcoLogicoInstance = new MarcoLogico()
+            marcoLogicoInstance.properties = params
         }
-        marcoLogicoInstance.properties = params
+
+//        marcoLogicoInstance.properties = params
         if (!marcoLogicoInstance.save(flush: true)) {
-            render "ERROR*Ha ocurrido un error al guardar Componente: " + renderErrors(bean: marcoLogicoInstance)
-            return
+            println("error al guardar el marco logico " + marcoLogicoInstance.errors)
+            render "ERROR*Ha ocurrido un error al guardar Componente"
         }
         render "SUCCESS*${params.id ? 'Actualización' : 'Creación'} de Componente exitosa."
-        return
+
+
     } //save para grabar desde ajax
 
     /**

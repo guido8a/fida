@@ -50,13 +50,20 @@
         <a href="#" id="btnFinanciamiento" class="btn btn-sm btn-info" title="Crear nuevo registro">
             <i class="fa fa-dollar-sign"></i> Financiamiento
         </a>
-        <a href="#" id="btnEstado" class="btn btn-sm btn-info" title="Estado">
-            <i class="fa fa-check"></i> Estado
-        </a>
+        <g:if test="${proy?.fechaRegistro}">
+            <a href="#" id="btnEstado" class="btn btn-sm btn-warning" title="Cambiar de estado al proyecto">
+                <i class="fa fa-check"></i> Desregistrar
+            </a>
+        </g:if>
+        <g:else>
+            <a href="#" id="btnEstado" class="btn btn-sm btn-info" title="Cambiar de estado al proyecto">
+                <i class="fa fa-check"></i> Estado
+            </a>
+        </g:else>
         <a href="#" id="btnVerMarco" class="btn btn-sm btn-info" title="Ver marco lógico">
             <i class="fa fa-search"></i> Ver Marco Lógico
         </a>
-        <a href="#" id="editMrlg" class="btn btn-sm btn-info" title="Ver registro">
+        <a href="#" id="editMrlg" class="btn btn-sm btn-info" title="Editar marco lógico">
             <i class="fa fa-clipboard"></i> Editar Marco Lógico
         </a>
         <a href="#" id="btnVerCronograma" class="btn btn-sm btn-info" title="Ver cronograma">
@@ -69,11 +76,6 @@
             <i class="fa fa-save"></i> Guardar
         </a>
     </div>
-
-
-    %{--    <div class="panel-group" style="height: 730px">--}%
-    %{--        <div class="col-md-12" style="margin-top: 10px">--}%
-    %{--            <div style="height: 3px; background-color: #CEDDE6"></div>--}%
 
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
@@ -206,114 +208,144 @@
             </g:form>
         </div>
     </div>
+</div>
 
+<script type="text/javascript">
 
-
-    <script type="text/javascript">
-
-        $("#btnVerCronograma").click(function () {
-            location.href="${createLink(controller: 'cronograma', action: 'form')}/" + '${proy?.id}'
-        });
-
-        $("#btnMeta").click(function () {
-            location.href="${createLink(controller: 'meta', action: 'list')}/" + '${proy?.id}'
-        });
-
-        $("#btnFinanciamiento").click(function () {
-            var id = '${proy?.id}';
-            $.ajax({
-                type    : "POST",
-                url     : "${createLink(controller: 'financiamiento', action:'list_ajax')}",
-                data    : {
-                    id : id
+    $("#btnEstado").click(function () {
+        bootbox.confirm({
+            size: "small",
+            title: 'Alerta',
+            message: "<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> ¿Está seguro de cambiar el estado del proyecto?",
+            buttons: {
+                confirm: {
+                    label: 'Aceptar',
+                    className: 'btn-success'
                 },
-                success : function (msg) {
-                    bootbox.dialog({
-                        title   : "Presupuesto/Fuentes",
-                        class   : "modal-lg",
-                        message : msg,
-                        buttons : {
-                            ok : {
-                                label     : "Salir",
-                                className : "btn-primary",
-                                callback  : function () {
+                cancel: {
+                    label: 'Cancelar',
+                    className: 'btn-primary'
+                }
+            },
+            callback: function(result){
+                if(result){
+                    $.ajax({
+                        type: 'POST',
+                        url: '${createLink(controller: 'proyecto', action: 'cambiarEstado_ajax')}',
+                        data:{
+                            id: '${proy?.id}'
+                        },
+                        success: function (msg) {
+                            if(msg == 'ok'){
+                                log("Estado cambiado correctamente","success");
+                                setTimeout(function () {
+                                    location.reload(true)
+                                }, 1000);
+                            }else{
+                                if(msg == 'er'){
+                                    bootbox.alert({
+                                        size: "small",
+                                        title: "Alerta!!!",
+                                        message: "<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i>  No se puede cambiar el estado, el marco lógico ya ha sido modificado!",
+                                        callback: function(){}
+                                    })
+                                }else{
+                                    log("Error al cambiar de estado","error")
                                 }
                             }
                         }
                     });
                 }
-            });
+            }
         });
+    });
 
-        $("#btnVerMarco").click(function () {
-            location.href="${createLink(controller: 'marcoLogico', action: 'verMarco')}/${proy?.id}"
-        });
+    $("#btnVerCronograma").click(function () {
+        location.href="${createLink(controller: 'cronograma', action: 'form')}/" + '${proy?.id}'
+    });
 
-        $("#btnBase").click(function () {
-            location.href = "${createLink(controller: 'proyecto', action: 'proy')}"
-        });
+    $("#btnMeta").click(function () {
+        location.href="${createLink(controller: 'meta', action: 'list')}/" + '${proy?.id}'
+    });
 
-        $("#editMrlg").click(function () {
-            location.href = "${createLink(controller: 'marcoLogico', action: 'marcoLogicoProyecto')}/${proy?.id}?list=list"
-        });
-
-        $("#btnGuardar").click(function () {
-
-            var $form = $("#frmProyecto");
-            var base_id = '${proy?.id}';
-            $form.validate();
-            // console.log('val:', $form.validate());
-            // console.log('val:', $form.validate().label);
-            if($form.valid()){
-                var dialog = cargarLoader("Guardando...");
-                $.ajax({type: 'POST',
-                    url: "${createLink(controller: 'proyecto', action: 'save_ajax')}",
-                    data:  $form.serialize(),
-                    success: function (msg) {
-                        dialog.modal('hide');
-                        var parte = msg.split("_");
-                        if(parte[0] == 'ok'){
-                            log("Proyecto guardado correctamente","success");
-                            setTimeout(function () {
-                            reCargar(parte[1]);
-                            }, 800);
-                        }else{
-                            dialog.modal('hide');
-                            log("Error al guardar el proyecto" + parte[1],"error")
+    $("#btnFinanciamiento").click(function () {
+        var id = '${proy?.id}';
+        $.ajax({
+            type    : "POST",
+            url     : "${createLink(controller: 'financiamiento', action:'list_ajax')}",
+            data    : {
+                id : id
+            },
+            success : function (msg) {
+                bootbox.dialog({
+                    title   : "Presupuesto/Fuentes",
+                    class   : "modal-lg",
+                    message : msg,
+                    buttons : {
+                        ok : {
+                            label     : "Salir",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
                         }
                     }
                 });
             }
         });
+    });
 
-        function reCargar(id) {
-//        console.log('recargar', id)
-            var url = "${createLink(controller: 'proyecto', action: 'proy')}" + "/" + id
-//        console.log('link', url)
-            location.href = url
-        }
+    $("#btnVerMarco").click(function () {
+        location.href="${createLink(controller: 'marcoLogico', action: 'verMarco')}/${proy?.id}"
+    });
 
-        /*
-            $("#frmProyecto").validate({
-                errorClass     : "help-block",
-                errorPlacement : function (error, element) {
-                    if (element.parent().hasClass("input-group")) {
-                        error.insertAfter(element.parent());
-                    } else {
-                        error.insertAfter(element);
+    $("#btnBase").click(function () {
+        location.href = "${createLink(controller: 'proyecto', action: 'proy')}"
+    });
+
+    $("#editMrlg").click(function () {
+        location.href = "${createLink(controller: 'marcoLogico', action: 'marcoLogicoProyecto')}/${proy?.id}?list=list"
+    });
+
+    $("#btnGuardar").click(function () {
+
+        var $form = $("#frmProyecto");
+        var base_id = '${proy?.id}';
+        $form.validate();
+        // console.log('val:', $form.validate());
+        // console.log('val:', $form.validate().label);
+        if($form.valid()){
+            var dialog = cargarLoader("Guardando...");
+            $.ajax({type: 'POST',
+                url: "${createLink(controller: 'proyecto', action: 'save_ajax')}",
+                data:  $form.serialize(),
+                success: function (msg) {
+                    dialog.modal('hide');
+                    var parte = msg.split("_");
+                    if(parte[0] == 'ok'){
+                        log("Proyecto guardado correctamente","success");
+                        setTimeout(function () {
+                            reCargar(parte[1]);
+                        }, 800);
+                    }else{
+                        dialog.modal('hide');
+                        log("Error al guardar el proyecto" + parte[1],"error")
                     }
-                    element.parents(".grupo").addClass('has-error');
-                },
-                success        : function (label) {
-                    label.parents(".grupo").removeClass('has-error');
-                    label.remove();
                 }
             });
-        */
+        }
+    });
 
+    function reCargar(id) {
+//        console.log('recargar', id)
+        var url = "${createLink(controller: 'proyecto', action: 'proy')}" + "/" + id
+//        console.log('link', url)
+        location.href = url
+    }
+
+    /*
         $("#frmProyecto").validate({
-            errorClass: "help-block",
-            errorPlacement: function (error, element) {
+            errorClass     : "help-block",
+            errorPlacement : function (error, element) {
                 if (element.parent().hasClass("input-group")) {
                     error.insertAfter(element.parent());
                 } else {
@@ -321,91 +353,108 @@
                 }
                 element.parents(".grupo").addClass('has-error');
             },
-            success: function (label) {
+            success        : function (label) {
                 label.parents(".grupo").removeClass('has-error');
                 label.remove();
-            },
-            rules: {
-                nombre: {
-                    remote: {
-                        url: "${createLink(action: 'validarNombre_ajax')}",
-                        type: "post"
-                    }
-                }
-            },
-            messages: {
-                nombre: {
-                    remote: "El nombre no contiene FAREPS"
-                }
             }
         });
+    */
 
-        $(".form-control").keydown(function (ev) {
-            if (ev.keyCode == 13) {
-                submitForm();
-                return false;
+    $("#frmProyecto").validate({
+        errorClass: "help-block",
+        errorPlacement: function (error, element) {
+            if (element.parent().hasClass("input-group")) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
             }
-            return true;
-        });
-
-        /*
-            function createContainer() {
-                var file = document.getElementById("file");
-                var next = $("#files").find(".fileContainer").size();
-                if (isNaN(next))
-                    next = 1;
-                else
-                    next++;
-                var ar = file.files[next - 1];
-                var div = $('<div class="fileContainer ui-corner-all d-' + next + '">');
-                var row1 = $("<div class='row resumen'>");
-                var row3 = $("<div class='row botones'  style='text-align: center'>");
-                var row4 = $("<div class='row'>");
-                row1.append("<div class='col-md-2 etiqueta' style='font-size: 14px'>Descripción</div>");
-                row1.append("<div class='col-md-5'><textarea maxlength='254' style='resize: none' class='form-control " + next + "' required id='descripcion' name='descripcion' cols='5' rows='5'></textarea></div>");
-                row3.append(" <a href='#' class='btn btn-azul subir' style='margin-left: 200px; margin-bottom: 10px' clase='" + next + "'><i class='fa fa-upload'></i> Guardar Imagen</a>");
-                div.append("<div class='row' style='margin-top: 10px; font-size: 14px'><div class='titulo-archivo col-md-10'><span style='color: #327BBA'>Archivo:</span> " + ar.name + "</div></div>");
-                div.append(row1);
-                div.append(row3);
-                $("#files").append(div);
-                if ($("#files").height() * 1 > 120) {
-                    $("#titulo-arch").show();
-                    $("#linea-arch").show();
-                } else {
-                    $("#titulo-arch").hide();
-                    $("#linea-arch").hide();
+            element.parents(".grupo").addClass('has-error');
+        },
+        success: function (label) {
+            label.parents(".grupo").removeClass('has-error');
+            label.remove();
+        },
+        rules: {
+            nombre: {
+                remote: {
+                    url: "${createLink(action: 'validarNombre_ajax')}",
+                    type: "post"
                 }
             }
-        */
+        },
+        messages: {
+            nombre: {
+                remote: "El nombre no contiene FAREPS"
+            }
+        }
+    });
+
+    $(".form-control").keydown(function (ev) {
+        if (ev.keyCode == 13) {
+            submitForm();
+            return false;
+        }
+        return true;
+    });
+
+    /*
+        function createContainer() {
+            var file = document.getElementById("file");
+            var next = $("#files").find(".fileContainer").size();
+            if (isNaN(next))
+                next = 1;
+            else
+                next++;
+            var ar = file.files[next - 1];
+            var div = $('<div class="fileContainer ui-corner-all d-' + next + '">');
+            var row1 = $("<div class='row resumen'>");
+            var row3 = $("<div class='row botones'  style='text-align: center'>");
+            var row4 = $("<div class='row'>");
+            row1.append("<div class='col-md-2 etiqueta' style='font-size: 14px'>Descripción</div>");
+            row1.append("<div class='col-md-5'><textarea maxlength='254' style='resize: none' class='form-control " + next + "' required id='descripcion' name='descripcion' cols='5' rows='5'></textarea></div>");
+            row3.append(" <a href='#' class='btn btn-azul subir' style='margin-left: 200px; margin-bottom: 10px' clase='" + next + "'><i class='fa fa-upload'></i> Guardar Imagen</a>");
+            div.append("<div class='row' style='margin-top: 10px; font-size: 14px'><div class='titulo-archivo col-md-10'><span style='color: #327BBA'>Archivo:</span> " + ar.name + "</div></div>");
+            div.append(row1);
+            div.append(row3);
+            $("#files").append(div);
+            if ($("#files").height() * 1 > 120) {
+                $("#titulo-arch").show();
+                $("#linea-arch").show();
+            } else {
+                $("#titulo-arch").hide();
+                $("#linea-arch").hide();
+            }
+        }
+    */
 
 
-        $('#fechaInicio').datetimepicker({
-            locale: 'es',
-            format: 'DD-MM-YYYY',
-            daysOfWeekDisabled: [0, 6],
-            sideBySide: true,
-            showClose: true,
-        });
+    $('#fechaInicio').datetimepicker({
+        locale: 'es',
+        format: 'DD-MM-YYYY',
+        daysOfWeekDisabled: [0, 6],
+        sideBySide: true,
+        showClose: true,
+    });
 
-        $('#fechaFin').datetimepicker({
-            locale: 'es',
-            format: 'DD-MM-YYYY',
-            daysOfWeekDisabled: [0, 6],
-            sideBySide: true,
-            showClose: true,
-        });
+    $('#fechaFin').datetimepicker({
+        locale: 'es',
+        format: 'DD-MM-YYYY',
+        daysOfWeekDisabled: [0, 6],
+        sideBySide: true,
+        showClose: true,
+    });
 
-        $("input[maxlength]").maxlength({
-            alwaysShow: true,
-            threshold: 10,
-            warningClass: "label label-success",
-            limitReachedClass: "label label-danger"
-        });
-        $("textarea[maxlength]").maxlength();
+    $("input[maxlength]").maxlength({
+        alwaysShow: true,
+        threshold: 10,
+        warningClass: "label label-success",
+        limitReachedClass: "label label-danger"
+    });
+    $("textarea[maxlength]").maxlength();
 
 
 
-    </script>
+</script>
 
 </body>
 </html>

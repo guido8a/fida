@@ -29,20 +29,7 @@
                 <i class="fa fa-plus"></i> componente
             </a>
         </div>
-    %{--        <div class="btn-group">--}%
-    %{--            <a href="#" class="btn btn-sm btn-info" id="btnAddFin" title="Agregar Fin"--}%
-    %{--               data-show="${componentes.size()}">--}%
-    %{--                <i class="fa fa-plus"></i> Fin--}%
-    %{--            </a>--}%
-    %{--        </div>--}%
-    %{--        <div class="btn-group">--}%
-    %{--            <a href="#" class="btn btn-sm btn-info" id="btnAddProp" title="Agregar Proósito"--}%
-    %{--               data-show="${componentes.size()}">--}%
-    %{--                <i class="fa fa-plus"></i> Propósito--}%
-    %{--            </a>--}%
-    %{--        </div>--}%
     </g:if>
-
 </div>
 
 <g:if test="${proyecto.aprobado == 'a'}">
@@ -50,11 +37,6 @@
         El proyecto está aprobado, no puede modificar ni agregar componentes ni actividades
     </div>
 </g:if>
-
-
-%{--<div class="alert alert-info" style="text-align: center">--}%
-%{--    <strong><h3 class="text-info" style="margin-bottom: 15px">Proyecto: ${proyecto?.nombre}</h3></strong>--}%
-%{--</div>--}%
 
 <div class="panel-primary col-md-12" style="text-align: left; font-size: 14px;">
     <strong>Marco Lógico: </strong> <strong style="color: #5596ff; "> ${proyecto?.nombre}</strong>
@@ -73,7 +55,6 @@
                         <a href="#">
                             ${compInfo}
                         </a>
-
                         <g:if test="${editable}">
                             <span class="btn-group pull-right">
                                 <a href="#" class="btn btn-xs btn-success btnAddAct" title="Agregar actividad"
@@ -101,13 +82,7 @@
                             <th style="width: 10%">#</th>
                             <th style="width: 60%">Actividad</th>
                             <th style="width: 15%">Monto</th>
-                            %{--                            <th style="width: 15%">Inicio</th>--}%
-                            %{--                            <th style="width: 15%">Fin</th>--}%
-                            %{--                            <th style="width: 10%">Responsable</th>--}%
-                            %{--                            <th style="width: 10%">Categoría</th>--}%
-                            %{--<g:if test="${editable}">--}%
                             <th style="width: 15%">Acciones</th>
-                            %{--</g:if>--}%
                         </tr>
                         </thead>
                         <tbody>
@@ -118,10 +93,6 @@
                                 <td class="text-center">${act.numero}</td>
                                 <td>${act?.objeto}</td>
                                 <td class="text-right"><g:formatNumber number="${act.monto}" type="currency" currencySymbol=""/></td>
-                            %{--                                <td class="text-center">${act.fechaInicio?.format('dd-MM-yyyy')}</td>--}%
-                            %{--                                <td class="text-center">${act.fechaFin?.format('dd-MM-yyyy')}</td>--}%
-                            %{--                                <td>${act.responsable?.nombre}</td>--}%
-                            %{--                                <td>${act.categoria?.descripcion}</td>--}%
                                 <g:if test="${editable}">
                                     <td style="text-align: center">
                                         <div class="btn-group ">
@@ -172,7 +143,7 @@
         </div>
         <div class="modal-footer">
             <a href="#" class="btn btn-success btn-sm" id="guardar-respaldo">
-                <i class="fa fa-save"></i>Guadar
+                <i class="fa fa-save"></i>Guardar
             </a>
             <a href="#" class="btn btn-danger btn-sm">Cerrar</a>
         </div>
