@@ -427,27 +427,152 @@
             %{--});--}%
 
             $("#btnAddComp").click(function () {
-                createEditComponente($(this).data("show"));
+
+                var s = $(this).data("show");
+
+                <g:if test="${proyecto?.fechaRegistro}">
+                bootbox.confirm({
+                    size: "small",
+                    title: 'Alerta',
+                    message: "<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> ¿El proyecto ya se encuentra registrado, está seguro de modificar el marco lógico?",
+                    buttons: {
+                        confirm: {
+                            label: 'Aceptar',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Cancelar',
+                            className: 'btn-primary'
+                        }
+                    },
+                    callback: function(result){
+                        if(result){
+                            createEditComponente(s);
+                            // return false;
+                        }
+                    }
+                });
+                </g:if>
+                <g:else>
+                createEditComponente(s);
                 return false;
+                </g:else>
+                %{--                --}%
+                %{--                --}%
+//                createEditComponente($(this).data("show"));
+//                return false;
             });
 
             $(".btnEditComp").click(function () {
-                createEditComponente($(this).data("show"), $(this).data("id"));
+
+                var s = $(this).data("show");
+                var id = $(this).data("id");
+
+                <g:if test="${proyecto?.fechaRegistro}">
+                bootbox.confirm({
+                    size: "small",
+                    title: 'Alerta',
+                    message: "<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> ¿El proyecto ya se encuentra registrado, está seguro de modificar el marco lógico?",
+                    buttons: {
+                        confirm: {
+                            label: 'Aceptar',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Cancelar',
+                            className: 'btn-primary'
+                        }
+                    },
+                    callback: function(result){
+                        if(result){
+                            createEditComponente(s, id);
+                        }
+                    }
+                });
+                </g:if>
+                <g:else>
+                createEditComponente(s, id);
                 return false;
+                </g:else>
             });
+
             $(".btnDeleteComp").click(function () {
                 deleteMarcoLogico($(this).data("id"), $(this).data("info"), "comp");
                 return false;
             });
 
             $(".btnAddAct").click(function () {
-                createEditActividad($(this).data("show"), $(this).data("id"));
+
+                var s = $(this).data("show");
+                var id = $(this).data("id");
+
+                <g:if test="${proyecto?.fechaRegistro}">
+                bootbox.confirm({
+                    size: "small",
+                    title: 'Alerta',
+                    message: "<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> ¿El proyecto ya se encuentra registrado, está seguro de modificar el marco lógico?",
+                    buttons: {
+                        confirm: {
+                            label: 'Aceptar',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Cancelar',
+                            className: 'btn-primary'
+                        }
+                    },
+                    callback: function(result){
+                        if(result){
+                            createEditActividad(s,id);
+                            // return false;
+                        }
+                    }
+                });
+                </g:if>
+                <g:else>
+                createEditActividad(s,id);
                 return false;
+                </g:else>
             });
 
             $(".btnEditAct").click(function () {
-                createEditActividad($(this).data("show"), $(this).data("com"), $(this).data("id"));
+
+
+                var s = $(this).data("show");
+                var id = $(this).data("id");
+                var c = $(this).data("com");
+
+                <g:if test="${proyecto?.fechaRegistro}">
+                bootbox.confirm({
+                    size: "small",
+                    title: 'Alerta',
+                    message: "<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning text-shadow'></i> ¿El proyecto ya se encuentra registrado, está seguro de modificar el marco lógico?",
+                    buttons: {
+                        confirm: {
+                            label: 'Aceptar',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Cancelar',
+                            className: 'btn-primary'
+                        }
+                    },
+                    callback: function(result){
+                        if(result){
+                            createEditActividad(s,c,id);
+                            // return false;
+                        }
+                    }
+                });
+                </g:if>
+                <g:else>
+                createEditActividad(s,c,id);
                 return false;
+                </g:else>
+
+
+                // createEditActividad($(this).data("show"), $(this).data("com"), $(this).data("id"));
+                // return false;
             });
 
             $(".btnDeleteAct").click(function () {

@@ -380,40 +380,86 @@ class MarcoLogicoController {
      * @render ERROR*[mensaje] cuando no se pudo grabar correctamente, SUCCESS*[mensaje] cuando se grabó correctamente
      */
     def save_actividad_ajax() {
-        def marcoLogicoInstance = new MarcoLogico()
-        if (params.id) {
-            marcoLogicoInstance = MarcoLogico.get(params.id)
-            if (!marcoLogicoInstance) {
-                render "ERROR*No se encontró Actividad."
-                return
+
+        def proyecto = Proyecto.get(params."proyecto.id")
+        def marcoLogicoInstance
+
+        if(params.id){
+
+            if(proyecto.fechaRegistro){
+                println("con registro")
+                marcoLogicoInstance = MarcoLogico.get(params.id)
+
+                def modificacion = new ModificacionMarcoLogico()
+                modificacion.marcoLogico = marcoLogicoInstance
+                modificacion.objetivo = marcoLogicoInstance.objeto
+                modificacion.numero = marcoLogicoInstance.numero
+                modificacion.monto = marcoLogicoInstance.monto
+                modificacion.fecha = new Date()
+
+                if(!modificacion.save(flush:true)){
+                    println("error al guardar la modificacion actividad " + modificacion.errors)
+                    render"ERROR*Error al generar la modificación"
+                }else{
+//                    marcoLogicoInstance.properties = params
+                }
+            }else{
+                marcoLogicoInstance = new MarcoLogico()
+                if (params.id) {
+                    marcoLogicoInstance = MarcoLogico.get(params.id)
+                    if (!marcoLogicoInstance) {
+                        render "ERROR*No se encontró Componente."
+                        return
+                    }
+                }
             }
-        } else {
-            def maxNum = MarcoLogico.list([sort: "numero", order: "desc", max: 1])
-            if (maxNum.size() > 0) {
-                maxNum = maxNum?.pop()?.numero
-                if (maxNum)
-                    maxNum = maxNum + 1
-            } else {
-                maxNum = 1
-            }
-            marcoLogicoInstance.numero = maxNum
+        }else{
+            marcoLogicoInstance = new MarcoLogico()
         }
+
+        def maxNum = MarcoLogico.list([sort: "numero", order: "desc", max: 1])
+        if (maxNum.size() > 0) {
+            maxNum = maxNum?.pop()?.numero
+            if (maxNum)
+                maxNum = maxNum + 1
+        } else {
+            maxNum = 1
+        }
+        marcoLogicoInstance.numero = maxNum
+
+
+//        if (params.id) {
+//            marcoLogicoInstance = MarcoLogico.get(params.id)
+//            if (!marcoLogicoInstance) {
+//                render "ERROR*No se encontró Actividad."
+//                return
+//            }
+//        } else {
+//            def maxNum = MarcoLogico.list([sort: "numero", order: "desc", max: 1])
+//            if (maxNum.size() > 0) {
+//                maxNum = maxNum?.pop()?.numero
+//                if (maxNum)
+//                    maxNum = maxNum + 1
+//            } else {
+//                maxNum = 1
+//            }
+//            marcoLogicoInstance.numero = maxNum
+//        }
 //        println "1: " + params
         if (!params.monto) {
             params.monto = 0
         }
         params.monto = params.monto.toString().replaceAll(",", "")
-//        println "2: " + params
         params.fecha = new Date();
         marcoLogicoInstance.properties = params
         marcoLogicoInstance.monto = params.monto.toDouble()
         if (!marcoLogicoInstance.save(flush: true)) {
             println "Error save actividad: " + marcoLogicoInstance.errors
-            render "ERROR*Ha ocurrido un error al guardar Actividad: " + renderErrors(bean: marcoLogicoInstance)
+            render "ERROR*Ha ocurrido un error al guardar Actividad"
             return
         }
         render "SUCCESS*${params.id ? 'Actualización' : 'Creación'} de Actividad exitosa."
-        return
+//        return
 
     }
 
