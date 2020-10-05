@@ -6,6 +6,7 @@ class PlanPeriodo {
     Plan plan
     Periodo periodo
     double valor
+    Date fecha
 
     static auditable = true
 
@@ -19,6 +20,7 @@ class PlanPeriodo {
             plan column: 'plan__id'
             periodo column: 'prdo__id'
             valor column: 'plprvlor'
+            fecha column: 'plprfcha'
         }
     }
 
@@ -26,5 +28,6 @@ class PlanPeriodo {
         plan(nullable: false, blank: false)
         periodo(nullable: false, blank: false)
         valor(nullable: false, blank:false)
+        fecha(nullable: true, blank:true)
     }
 }

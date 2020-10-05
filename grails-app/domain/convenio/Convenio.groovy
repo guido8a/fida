@@ -21,6 +21,7 @@ class Convenio implements Auditable{
     int periodo = 0
     String estado = 'N'
     String desembolso
+    Date fechaRegistro
 
     static auditable = true
 
@@ -46,6 +47,7 @@ class Convenio implements Auditable{
             periodo column: 'cnvnprdo'
             estado column: 'cnvnetdo'
             desembolso column: 'cnvndsmb'
+            fechaRegistro column: 'cnvnfcrg'
         }
     }
     static constraints = {
@@ -63,6 +65,7 @@ class Convenio implements Auditable{
         periodo(blank: false, nullable: false)
         estado(blank: false, nullable: false)
         desembolso(blank: true, nullable: true)
+        fechaRegistro(blank:true, nullable: true)
     }
 
     String toString() {
