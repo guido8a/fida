@@ -282,19 +282,6 @@
                                 </div>
                             </li>
 --}%
-                            <li>
-                                <i class="fa-li fas fa-dollar-sign text-success"></i>
-                                <g:link class="over text-success" controller="macroActividad" action="list">
-                                    Tipo de proceso de contratación
-                                </g:link> para la contratación de bienes o servicios del PNS
-
-                                <div class="descripcion hidden">
-                                    <h4>Tipo de proceso de contratación</h4>
-
-                                    <p>Sirve para el registro del bien o servicio a contratarse como
-                                    parte del Plan de Negocios Solidario</p>
-                                </div>
-                            </li>
 %{--
                             <li>
                                 <i class="fa-li far fa-calendar-alt text-success"></i>
