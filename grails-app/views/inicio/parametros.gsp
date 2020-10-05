@@ -181,6 +181,66 @@
                             </li>
 
                             <li>
+                                <i class="fa-li fa fa-map-marker text-warning"></i>
+                                <g:link class="over text-warning" controller="aseguradora" action="list">
+                                    Aseguradora
+                                </g:link> Lista de aseguradoras
+                                <div class="descripcion hidden">
+                                    <h4>Aseguradora</h4>
+                                    <p>Lista de aseguradoras</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa-li fa fa-map-marker text-warning"></i>
+                                <g:link class="over text-warning" controller="tipoCategoria" action="list">
+                                    Tipo de Categoría
+                                </g:link> Lista de tipos de categorías
+                                <div class="descripcion hidden">
+                                    <h4>Tipo de Categoría</h4>
+                                    <p>Lista de tipos de categorías</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa-li fa fa-map-marker text-warning"></i>
+                                <g:link class="over text-warning" controller="estadoGarantia" action="list">
+                                    Estado de la garantía
+                                </g:link> Lista de estados de la garantía
+                                <div class="descripcion hidden">
+                                    <h4>Estado de la garantía</h4>
+                                    <p>Lista de estados de la garantía</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa-li fa fa-map-marker text-warning"></i>
+                                <g:link class="over text-warning" controller="tipoNecesidad" action="list">
+                                    Tipo de necesidad
+                                </g:link> Listado de Tipos de necesidad
+                                <div class="descripcion hidden">
+                                    <h4>Tipo de necesidad</h4>
+                                    <p>Listado de Tipos de necesidad</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa-li fa fa-map-marker text-warning"></i>
+                                <g:link class="over text-warning" controller="tipoTaller" action="list">
+                                    Tipo de Taller
+                                </g:link> Listado de Tipos de talleres
+                                <div class="descripcion hidden">
+                                    <h4>Tipo de Taller</h4>
+                                    <p>Listado de Tipos de talleres</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa-li fa fa-map-marker text-warning"></i>
+                                <g:link class="over text-warning" controller="tipoProcesoComprasPublicas" action="list">
+                                    Tipo de Proceso
+                                </g:link> Listado de Tipos de proceso de comrpas públicas
+                                <div class="descripcion hidden">
+                                    <h4>Tipo de Proceso</h4>
+                                    <p>Listado de Tipos de proceso de comrpas públicas</p>
+                                </div>
+                            </li>
+                            <li>
                                 <i class="fa-li fas fa-chart-line text-success"></i>
                                 <g:link class="over text-success" controller="tipoEvaluacion" action="list">
                                     Tipo de evaluación
