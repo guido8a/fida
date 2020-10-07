@@ -38,6 +38,7 @@ class PlanController {
     def plan(){
         println "plan $params"
         def plns = PlanesNegocio.get(params.id)
+        def convenio = Convenio.get(params.convenio)
         def plazo = plns?.plazo ? (plns?.plazo?.toInteger() / 360) : 0
         def plazoEntero = Math.ceil(plazo).toInteger()
         def combo = [:]
@@ -47,13 +48,14 @@ class PlanController {
         }
 
 //        println("--> " + combo)
-        return[planNs: plns, combo: combo]
+        return[planNs: plns, combo: combo, convenio:convenio]
     }
 
 
     def tablaPlan_ajax(){
 
         def plns = PlanesNegocio.get(params.id)
+        def convenio = Convenio.get(params.convenio)
 
         def listaPeriodos = []
 
@@ -69,7 +71,7 @@ class PlanController {
 
         println("sql " + sql)
 
-        return [componentes: res, lista: listaPeriodos, anio: params.periodo, planNs: plns, tam: tam]
+        return [componentes: res, lista: listaPeriodos, anio: params.periodo, planNs: plns, tam: tam, convenio: convenio]
     }
 
     def cabecera_ajax(){
@@ -124,6 +126,7 @@ class PlanController {
 
 //        println("params pax " + params)
 
+        def convenio = Convenio.get(params.convenio)
         def pl = Plan.get(params.plan)
         def periodoNumero = (params.anio == '1' ? params.periodo : params.periodo.toInteger() + ((params.anio.toInteger() - 1) * 12))
         def periodoId = Periodo.findByNumero(periodoNumero)
@@ -131,21 +134,47 @@ class PlanController {
 //        println("pn " + periodoNumero)
 
         def planP = PlanPeriodo.findByPeriodoAndPlan(periodoId,pl)
-
         def planPeriodo
 
         if(planP){
-            planPeriodo = planP
+            if(convenio?.fechaRegistro){
+                def modificacion = new Modificacion()
+                modificacion.plan = planP.plan
+                modificacion.periodo = planP.periodo
+                modificacion.fecha = planP.fecha
+                modificacion.valor = planP.valor
+                modificacion.fechaModificacion = new Date()
+
+                if(!modificacion.save(flush:true)){
+                    println("error de mod " + modificacion.errors)
+                    render "er_Error al guardar la modificación del período"
+                    return
+                }else{
+                   planPeriodo = planP
+                }
+
+            }else{
+
+            }
         }else{
             planPeriodo = new PlanPeriodo()
             planPeriodo.plan = pl
             planPeriodo.periodo = periodoId
+            planPeriodo.fecha = new Date()
         }
+
+//        if(planP){
+//            planPeriodo = planP
+//        }else{
+//            planPeriodo = new PlanPeriodo()
+//            planPeriodo.plan = pl
+//            planPeriodo.periodo = periodoId
+//        }
 
         planPeriodo.valor = params.valor.toDouble()
 
         if(!planPeriodo.save(flush: true)){
-            println("errro al guardar el periodo " + planPeriodo.errors)
+            println("error al guardar el periodo " + planPeriodo.errors)
             render "no"
         }else{
             render "ok"

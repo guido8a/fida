@@ -71,7 +71,8 @@
             url: '${createLink(controller: 'plan', action: 'tablaPlan_ajax')}',
             data:{
                 id: planNs,
-                periodo: periodo
+                periodo: periodo,
+                convenio: '${convenio?.id}'
             },
             success: function (msg) {
                 $("#divTabla").html(msg)

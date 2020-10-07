@@ -6,12 +6,10 @@ import audita.Auditable
 class Modificacion implements Auditable {
 
     Plan plan
+    Periodo periodo
+    Date fecha
     Date fechaModificacion
-    String descripcion
-    double cantidad
-    double costo
-    Date fechaInicio
-    Date fechaFin
+    double valor
 
     static auditable = true
 
@@ -23,22 +21,18 @@ class Modificacion implements Auditable {
         columns {
             id column: 'mdcv__id'
             plan column: 'plan__id'
-            fechaModificacion column: 'mdcvfcha'
-            descripcion column: 'mdcvdscr'
-            cantidad column: 'mdcvcntd'
-            costo column: 'mdcvcsto'
-            fechaInicio column: 'mdcvfcin'
-            fechaFin column: 'mdcvfcfn'
+            periodo column: 'prdo__id'
+            fechaModificacion column: 'mdcvfcmd'
+            fecha column: 'mdcvfcha'
+            valor column: 'mdcvvlor'
         }
     }
 
     static constraints = {
         plan(nullable: false, blank: false)
+        periodo(nullable: false, blank: false)
+        fecha(nullable: false, blank:false)
         fechaModificacion(nullable: false, blank:false)
-        descripcion(size: 1..1023, nullable: false, blank:false)
-        cantidad(nullable: false, blank: false)
-        costo(nullable: false, blank: false)
-        fechaInicio(nullable: true, blank: true)
-        fechaFin(nullable: true, blank: true)
+        valor(nullable:false, blank:false)
     }
 }

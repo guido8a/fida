@@ -217,8 +217,10 @@ class ConvenioController {
         def convenio = Convenio.get(params.id)
         if(convenio.estado == 'N'){
             convenio.estado = 'R'
+            convenio.fechaRegistro = new Date()
         }else{
             convenio.estado = 'N'
+            convenio.fechaRegistro = null
         }
 
         if(!convenio.save(flush:true)){

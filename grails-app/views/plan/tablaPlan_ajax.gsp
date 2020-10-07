@@ -175,16 +175,22 @@
                     plan: id,
                     periodo: periodo,
                     anio: anio,
-                    valor: valor
+                    valor: valor,
+                    convenio: '${convenio?.id}'
                 },
                 success: function(msg){
-                    if(msg == 'ok'){
+                    var parts = msg.split("_")
+                    if(parts[0] == 'ok'){
                         log("Valor guardado correctamente","success");
                         setTimeout(function () {
                             cargarTablaComponentes(${planNs?.id}, $("#plazo option:selected").val());
                         }, 800);
                     }else{
-                        log("Error al guardar el valor","error")
+                        if(parts[0] == 'er'){
+                            log(parts[1],"error")
+                        }else{
+                            log("Error al guardar el valor","error")
+                        }
                     }
                 }
             })
