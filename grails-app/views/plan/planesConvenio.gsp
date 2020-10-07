@@ -27,12 +27,12 @@
         <g:link controller="unidadEjecutora" action="organizacion" id="${planNs?.unidadEjecutora?.id}" class="btn btn-sm btn-default">
             <i class="fa fa-arrow-left"></i> Organización
         </g:link>
+        <g:link controller="convenio" action="convenio" id="${cnvn?.id}" class="btn btn-sm btn-default">
+            <i class="fa fa-arrow-left"></i> Convenio
+        </g:link>
         <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-default" title="Consultar documentos">
             <i class="fa fa-arrow-left"></i> Plan de Negocios Solidario
         </a>
-%{--        <g:link controller="plan" action="plan" id="${planNs?.id}" class="btn btn-sm btn-info">--}%
-%{--            <i class="fa fa-camera-retro"></i> Cronograma valorado--}%
-%{--        </g:link>--}%
         <a href="#" id="btnCronograma" class="btn btn-sm btn-info" title="Cronograma">
             <i class="fa fa-calendar-alt"></i> Cronograma valorado
         </a>
