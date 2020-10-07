@@ -7,10 +7,10 @@
 
 <style>
 
-    .verde{
-        background-color: #93c17d;
-        font-weight: bold;
-    }
+.verde{
+    background-color: #93c17d;
+    font-weight: bold;
+}
 
 </style>
 
@@ -113,38 +113,30 @@
                     action: function ($element) {
                         var id = $element.data("plan");
                         var per = $element.data("per");
-                        $.ajax({
-                            type: "POST",
-                            url: "${createLink(controller:'plan', action:'valor_ajax')}",
-                            data: {
-                                id: id,
-                                anio: '${anio}',
-                                periodo: per
+
+                        <g:if test="${convenio?.fechaRegistro}">
+                        bootbox.confirm({
+                            title: "Alerta",
+                            message: "<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning'></i> El convenio ya se encuentra registrado, Está seguro de editar el valor del período?",
+                            buttons: {
+                                cancel: {
+                                    label: '<i class="fa fa-times"></i> Cancelar'
+                                },
+                                confirm: {
+                                    label: '<i class="fa fa-pen"></i> Aceptar',
+                                    className: 'btn-success'
+                                }
                             },
-                            success: function (msg) {
-                                bootbox.dialog({
-                                    title: "Editar valor del período",
-                                    message: msg,
-                                    class : "modal-sm",
-                                    buttons: {
-                                        cancel:{
-                                            label: "Cancelar",
-                                            className: "btn-primary",
-                                            callback: function () {
-                                            }
-                                        },
-                                        ok: {
-                                            label: "Aceptar",
-                                            className: "btn-success",
-                                            callback: function () {
-                                                var valor = $("#valorPeriodo").val();
-                                                guardarValorPeriodo(id, per, '${anio}', valor)
-                                            }
-                                        }
-                                    }
-                                });
+                            callback: function (result) {
+                                if(result) {
+                                    editarValor(id,per)
+                                }
                             }
                         });
+                        </g:if>
+                        <g:else>
+                        editarValor(id,per)
+                        </g:else>
                     }
                 },
                 eliminar: {
@@ -165,6 +157,41 @@
                 $(".success").removeClass("success");
             }
         });
+
+        function editarValor(id,per){
+            $.ajax({
+                type: "POST",
+                url: "${createLink(controller:'plan', action:'valor_ajax')}",
+                data: {
+                    id: id,
+                    anio: '${anio}',
+                    periodo: per
+                },
+                success: function (msg) {
+                    bootbox.dialog({
+                        title: "Editar valor del período",
+                        message: msg,
+                        class : "modal-sm",
+                        buttons: {
+                            cancel:{
+                                label: "Cancelar",
+                                className: "btn-primary",
+                                callback: function () {
+                                }
+                            },
+                            ok: {
+                                label: "Aceptar",
+                                className: "btn-success",
+                                callback: function () {
+                                    var valor = $("#valorPeriodo").val();
+                                    guardarValorPeriodo(id, per, '${anio}', valor)
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        }
 
 
         function guardarValorPeriodo(id,periodo,anio, valor){

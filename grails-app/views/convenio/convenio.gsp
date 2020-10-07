@@ -299,22 +299,41 @@
     });
 
     $("#btnRegistrarConvenio").click(function () {
-        var dialog = cargarLoader("Guardando...");
-        $.ajax({
-            type: 'POST',
-            url: '${createLink(controller: 'convenio', action: 'registrarConvenio_ajax')}',
-            data:{
-                id: '${convenio?.id}'
+
+        bootbox.confirm({
+            title: "Alerta",
+            message: "<i class='fa fa-exclamation-triangle fa-3x pull-left text-warning'></i> Está seguro de cambiar de estado al convenio?",
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> Cancelar'
+                },
+                confirm: {
+                    label: '<i class="fa fa-check"></i> Aceptar',
+                    className: 'btn-success'
+                }
             },
-            success: function (msg){
-                dialog.modal('hide');
-                if(msg == 'ok'){
-                    log("Cambio de estado correctamente","success");
-                    setTimeout(function () {
-                        location.href="${createLink(controller: 'convenio', action: 'convenio')}/" + '${convenio?.id}'
-                    }, 1000);
-                }else{
-                    log("Error al registrar el convenio","error")
+            callback: function (result) {
+                if(result) {
+                    var dialog = cargarLoader("Guardando...");
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '${createLink(controller: 'convenio', action: 'registrarConvenio_ajax')}',
+                        data:{
+                            id: '${convenio?.id}'
+                        },
+                        success: function (msg){
+                            dialog.modal('hide');
+                            if(msg == 'ok'){
+                                log("Cambio de estado correctamente","success");
+                                setTimeout(function () {
+                                    location.href="${createLink(controller: 'convenio', action: 'convenio')}/" + '${convenio?.id}'
+                                }, 1000);
+                            }else{
+                                log("Error al registrar el convenio","error")
+                            }
+                        }
+                    });
                 }
             }
         });
