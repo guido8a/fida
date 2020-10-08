@@ -28,19 +28,7 @@
     </form>
 </div>
 
-%{--<div class="row">--}%
-%{--    <div class="col-md-2 show-label">Total del proyecto</div>--}%
-
-%{--    <div class="col-md-10"><g:formatNumber number="${proyecto.monto.toDouble()}" type="currency" currencySymbol=""/></div>--}%
-%{--    <div class="col-md-12 alert alert-info" style="height: 40px">--}%
-%{--        <h4>Total del proyecto: <g:formatNumber number="${proyecto.monto.toDouble()}" type="currency" currencySymbol=""/></h4>--}%
-%{--    </div>--}%
-%{--</div>--}%
-
 <div id="tabla"></div>
-
-%{--<div class="row">--}%
-%{--    <div class="col-md-2 show-label alert-success">Restante</div>--}%
 
 <div class="col-md-6 alert alert-success" id="divResto"  style="height: 40px"></div>
 
@@ -48,9 +36,13 @@
     <h4>Total del proyecto: <g:formatNumber number="${proyecto.monto.toDouble()}" type="currency" currencySymbol=""/></h4>
 </div>
 
-%{--</div>--}%
-
 <script type="text/javascript">
+
+    $("#anio").change(function () {
+        var anio = $(this).val();
+            reloadTabla(anio);
+    });
+
     var total = parseFloat("${proyecto.monto}");
     var suma = 0;
     var restante = 0;
@@ -66,12 +58,13 @@
         $("#divResto").html('<h4>' + "Restante: $" + number_format(restante, 2, ".", ",") + '</h4>');
     }
 
-    function reloadTabla() {
+    function reloadTabla(anio) {
         $.ajax({
             type    : "POST",
             url     : "${createLink(controller:'financiamiento', action:'tablaFinanciamientosProyecto_ajax')}",
             data    : {
-                id : "${proyecto.id}"
+                id : "${proyecto.id}",
+                anio: anio
             },
             success : function (msg) {
                 $("#tabla").html(msg);
@@ -82,7 +75,8 @@
     }
 
     $(function () {
-        reloadTabla();
+        var an = $("#anio option:selected").val()
+        reloadTabla(an);
         var $frm = $("#frmFinanciamiento");
         $frm.validate({
             errorClass     : "help-block text-danger",
@@ -147,7 +141,7 @@
                             var parts = msg.split("*");
                             log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                             if (parts[0] == "SUCCESS") {
-                                reloadTabla();
+                                reloadTabla(anioId);
                             }
                         }
                     });

@@ -24,13 +24,17 @@ class FinanciamientoController {
      * Acción llamada con ajax que llena la tabla de los financiamientos de un proyecto
      */
     def tablaFinanciamientosProyecto_ajax() {
+//        println("params ftabla " + params)
+
         def proyecto = Proyecto.get(params.id)
+        def anio = Anio.get(params.anio.toLong())
 
         def financiamientos = Financiamiento.withCriteria {
             eq("proyecto", proyecto)
-            anio {
-                order("anio", "asc")
-            }
+            eq("anio",anio)
+//            anio {
+//                order("anio", "asc")
+//            }
             fuente {
                 order("descripcion", "asc")
             }

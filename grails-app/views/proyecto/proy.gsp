@@ -44,10 +44,10 @@
             <i class="fas fa-clipboard-check"></i> Base de Conocimiento
         </a>
         <a href="${createLink(controller: 'documento', action: 'listProyecto')}" id="btnConsultar"
-           class="btn btn-sm btn-info" title="Consultar artículo">
+           class="btn btn-sm btn-info" title="Consultar documentos del proyecto">
             <i class="fas fa-book-reader"></i> Biblioteca
         </a>
-        <a href="#" id="btnFinanciamiento" class="btn btn-sm btn-info" title="Crear nuevo registro">
+        <a href="#" id="btnFinanciamiento" class="btn btn-sm btn-info" title="Nuevo financiamiento">
             <i class="fa fa-dollar-sign"></i> Financiamiento
         </a>
         <g:if test="${proy?.fechaRegistro}">
