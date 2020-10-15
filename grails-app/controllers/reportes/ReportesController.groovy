@@ -1675,5 +1675,37 @@ class ReportesController {
 //        response.getOutputStream().write(b)
 //    }
 
+    def mapa2(){
+            def cn = dbConnectionService.getConnection()
+            def sql = "select * from rp_orgn() order by unejplns desc"
+
+            def coord = '', nmbr = '', txto = '', con_plan = '', plns, pfi, cnvn, cnvnfida, cnvnasap
+            println "sql: $sql"
+
+            cn.eachRow(sql.toString()) {d ->
+                coord += (coord? '_' : '') + "${d.unejlatt} ${d.unejlong}"
+                plns = d.unejplns.toInteger() > 0
+                pfi  = d.nmro_pfi.toInteger() > 0
+                cnvn = d.cnvnmnto?.toInteger() > 0
+                cnvnfida = d.cnvnfida?.toInteger() > 0
+                cnvnasap = d.cnvnasap?.toInteger() > 0
+                txto = "${d.unejnmbr} kkTalleres realizados: ${d.nmrotllr} " +
+                        "kkPersonas capacitadas: ${d.nmroprtl} " +
+                        "kkHombres: ${d.nmrohomb} Mujeres: ${d.nmromuje} Total: ${d.nmrobenf} " +
+                        (pfi ? 'kkSi cuenta con un PFI' :'') +
+                        (plns ? 'kkSi cuenta con un PNS' : '') +
+                        (cnvn ? "kkMonto del convenio: ${d.cnvnmnto}" : "") +
+                        (cnvnfida ? "kkAporte FIDA: ${d.cnvnfida}" : "") +
+                        (cnvnasap ? "kkAporte ASAP: ${d.cnvnasap}" : "")
+                if(d.unej__id == 200) println"unej: ${d.unejnmbr} --> ${plns}"
+                con_plan += (con_plan? '_' : '') + (plns ? 'S' : ' ')
+                nmbr += (nmbr? '_' : '') + txto
+
+            }
+//        println "data: ${con_plan.split('_')}"
+
+            return [cord: coord, nmbr: nmbr, plns: con_plan]
+    }
+
 
 }
