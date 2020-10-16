@@ -70,8 +70,13 @@
 %{--<div class="btn-group" style="margin-top: 10px; margin-left: 20px">--}%
 %{--    <a href="#" class="btn btn-info hidden" id="btnVolver"><i class="fa fa-arrow-left"></i> Regresar </a>--}%
 %{--</div>--}%
+
 <div class="btn-group" style="margin-top: 10px; margin-left: 10px">
-    <a href="#" class="btn btn-danger hidden" id="btnImprimir"><i class="fa fa-car"></i> Mapa Automático </a>
+    <a href="#" class="btn btn-primary" id="btnImprimir"><i class="fa fa-print"></i> Imprimir </a>
+</div>
+
+<div class="btn-group" style="margin-top: 10px; margin-left: 10px">
+    <a href="#" class="btn btn-danger hidden" id="btnAuto"><i class="fa fa-car"></i> Mapa Automático </a>
     <a href="#" class="btn btn-info" id="btnManual"><i class="fa fa-map-marker"></i> Mapa Manual </a>
 </div>
 
@@ -108,8 +113,6 @@
 
     function initialize() {
 
-        console.log("entro 1")
-
         var myOptions = {
             // center             : countryCenter,
             center             :  {lat: -1.7, lng: -78},
@@ -129,9 +132,11 @@
         map = new google.maps.Map(document.getElementById('mapa'), myOptions);
 
         /* maneja los datos */
-        var corde = '${cord}'.split('_')
-        var nmbr = '${nmbr}'.split('_')
-        var plns = '${plns}'.split('_')
+        var cord = '${cord}'.split('_');
+        var nmbr = '${nmbr}'.split('_');
+        var plns = '${plns}'.split('_');
+
+        poneMarcas(cord,plns,nmbr);
 
         //ver en: http://maps.google.com/mapfiles/ms/icons/red-dot.png
         %{--for (var i = 0; i <= corde.length; ++i) {--}%
@@ -154,8 +159,6 @@
 
     function initialize2() {
 
-        console.log("entro 2")
-
         var myOptions = {
             center             : countryCenter,
             // center             :  {lat: -1.8, lng: -79},
@@ -175,9 +178,11 @@
         map = new google.maps.Map(document.getElementById('mapa'), myOptions);
 
         /* maneja los datos */
-        var cord = '${cord}'.split('_')
-        var nmbr = '${nmbr}'.split('_')
-        var plns = '${plns}'.split('_')
+        var cord = '${cord}'.split('_');
+        var nmbr = '${nmbr}'.split('_');
+        var plns = '${plns}'.split('_');
+
+        poneMarcas(cord,plns,nmbr);
 
         //ver en: http://maps.google.com/mapfiles/ms/icons/red-dot.png
         %{--for (var i = 0; i <= cord.length; ++i) {--}%
@@ -207,6 +212,43 @@
         marker.addListener('click', function() {
             infowindow.open(marker.get('map'), marker);
         });
+    }
+
+
+
+    function poneMarcas(cord,plns,nmbr){
+        for (var i = 0; i <= cord.length; ++i) {
+            var cr = 0;
+
+            if(cord[i]){
+                cr = cord[i].split(' ')
+            }else{
+                cr = 0
+            }
+
+            var path = '';
+            if(plns[i] == 'S') {
+                path = '${assetPath(src: '/apli/pin-p.png')}'
+            } else {
+                path = '${assetPath(src: '/apli/pin-o.png')}'
+            }
+            var marker = new google.maps.Marker({
+                map: map,
+                position: new google.maps.LatLng(parseFloat(cr[0]) + 0.1* Math.random(),
+                    parseFloat(cr[1]) + 0.1* Math.random()),
+                icon: path
+            });
+
+            var n = '';
+
+            if(nmbr[i]){
+                n = nmbr[i]
+            }else{
+                n = ''
+            }
+
+            poneMensaje(marker,n.strReplaceAll('kk', '<br>'));
+        }
     }
 
     $(function () {
@@ -244,7 +286,7 @@
         clearTimeout(timer);
     }
 
-    $("#btnImprimir").click(function () {
+    $("#btnAuto").click(function () {
         $(this).addClass("hidden");
         $("#divAvances").addClass("hidden");
         $("#btnManual").removeClass("hidden");
@@ -253,7 +295,7 @@
 
     $("#btnManual").click(function () {
         $(this).addClass("hidden");
-        $("#btnImprimir").removeClass("hidden");
+        $("#btnAuto").removeClass("hidden");
         $("#divAvances").removeClass("hidden");
         cargarManual();
     });
@@ -264,6 +306,22 @@
 
     $("#btnAdelante").click(function (){
         initialize2();
+    });
+
+    $("#btnImprimir").click(function () {
+        $("#divAvances").addClass("hidden");
+
+        $("#nota").addClass('noprint')
+        $("#btnVolver").addClass('noprint')
+        $("#btnImprimir").addClass('noprint')
+        $("#btnAuto").addClass('noprint')
+        $("#btnManual").addClass('noprint')
+        window.print()
+        $("#nota").removeClass('noprint')
+        $("#btnVolver").removeClass('noprint')
+        $("#btnImprimir").removeClass('noprint')
+        $("#btnAuto").removeClass('noprint')
+        $("#btnManual").removeClass('noprint')
     });
 
 </script>
