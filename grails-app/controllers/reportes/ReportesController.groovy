@@ -19,6 +19,7 @@ import geografia.Parroquia
 import geografia.Provincia
 import grails.converters.JSON
 import groovy.json.JsonBuilder
+import groovy.xml.DOMBuilder
 import jxl.CellView
 import jxl.WorkbookSettings
 import jxl.write.Label
@@ -1705,6 +1706,87 @@ class ReportesController {
 //        println "data: ${con_plan.split('_')}"
 
             return [cord: coord, nmbr: nmbr, plns: con_plan]
+    }
+
+
+    //    <list>
+//        <technology>
+//            <name>Groovy</name>
+//        </technology>
+//    </list>
+
+
+    def leerXml(){
+        def text = '''
+
+
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+  <ns2:getFichaGeneralResponse xmlns:ns2="http://servicio.interoperadorws.interoperacion.dinardap.gob.ec/">
+  <return>
+  <codigoPaquete>185</codigoPaquete>
+  <instituciones>
+    <datosPrincipales>
+       <registros>
+         <campo>nombre</campo>
+         <codigo>2</codigo>
+         <valor>ALVAREZ MOREIRA MARCO ANTONIO</valor>
+       </registros>
+       <registros>
+         <campo>condicionCiudadano</campo>
+         <codigo>4</codigo>
+         <valor>CIUDADANO</valor>
+       </registros>
+       <registros>
+         <campo>fechaNacimiento</campo>
+         <codigo>5</codigo>
+         <valor>16/05/1986</valor>
+         </registros><registros>
+         <campo>lugarNacimiento</campo>
+         <codigo>6</codigo>
+         <valor>PICHINCHA/QUITO/CHIMBACALLE</valor>
+       </registros>
+       <registros>
+         <campo>nacionalidad</campo>
+         <codigo>7</codigo>
+         <valor>ECUATORIANA</valor>
+       </registros>
+     </datosPrincipales>
+     <nombre>Registro Civil</nombre>
+   </instituciones>
+   </return>
+   </ns2:getFichaGeneralResponse>
+ </soap:Body>
+</soap:Envelope>
+
+
+        '''
+
+//        def list = new XmlSlurper().parseText(text)
+        def list = new XmlParser().parseText(text)
+        assert list instanceof groovy.util.Node
+//        list.value
+
+//        def reader = new StringReader(text)
+//        def doc = DOMBuilder.parse(reader)
+
+        def response = new XmlSlurper().parseText(text)
+        def codigoPaquete = response.Body.getFichaGeneralResponse.return.codigoPaquete
+        def nombre = response.Body.getFichaGeneralResponse.return.instituciones.datosPrincipales.registros[0].valor
+        def ciudadano = response.Body.getFichaGeneralResponse.return.instituciones.datosPrincipales.registros[1].valor
+        def fecha = response.Body.getFichaGeneralResponse.return.instituciones.datosPrincipales.registros[2].valor
+        def lugar = response.Body.getFichaGeneralResponse.return.instituciones.datosPrincipales.registros[3].valor
+        def nacionalidad = response.Body.getFichaGeneralResponse.return.instituciones.datosPrincipales.registros[4].valor
+
+        println("CP:  " + codigoPaquete.text())
+        println("NOMBRE:  " + nombre.text())
+        println("CONDICION:  " + ciudadano.text())
+        println("FECHA  " + fecha.text())
+        println("LUGAR  " + lugar.text())
+        println("NACIONALIDAD  " + nacionalidad.text())
+        println("list " + list)
+
     }
 
 
