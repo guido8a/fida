@@ -1718,9 +1718,6 @@ class ReportesController {
 
     def leerXml(){
         def text = '''
-
-
-
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
   <ns2:getFichaGeneralResponse xmlns:ns2="http://servicio.interoperadorws.interoperacion.dinardap.gob.ec/">
@@ -1759,8 +1756,6 @@ class ReportesController {
    </ns2:getFichaGeneralResponse>
  </soap:Body>
 </soap:Envelope>
-
-
         '''
 
 //        def list = new XmlSlurper().parseText(text)

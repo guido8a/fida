@@ -136,10 +136,6 @@
                     });
                     poneMensaje(marker, nmbr[i].strReplaceAll('kk', '<br>'));
                 }
-
-
-                // limites2();
-
             }
 
             function poneMensaje(marker, secretMessage) {
