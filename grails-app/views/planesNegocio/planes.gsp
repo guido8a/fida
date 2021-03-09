@@ -100,7 +100,7 @@
                                 <g:hiddenField name="unidadEjecutora" value="${unidad?.id}"/>
                                 <g:select id="unidadEjecutoraNombre" name="unidadEjecutora_name"
                                           from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2))}"
-                                          optionKey="id" value="${plns?.unidadEjecutora?.id}"
+                                          optionKey="id" value="${plns?.unidadEjecutora?.id?: unidad?.id}"
                                           class="many-to-one form-control input-sm" disabled=""/>
                             </span>
                         </div>

@@ -1,9 +1,10 @@
 package reportes
 
 import avales.ProcesoAsignacion
+import com.itextpdf.text.Font
 import com.lowagie.text.Document
 import com.lowagie.text.Element
-import com.lowagie.text.Font
+import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.Image
 import com.lowagie.text.PageSize
 import com.lowagie.text.Paragraph
