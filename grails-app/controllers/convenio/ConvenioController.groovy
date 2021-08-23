@@ -178,7 +178,7 @@ class ConvenioController {
     }
 
     def tablaBuscarConvenio_ajax(){
-//        println("params buc " + params)
+        println("params tablaBuscarConvenio_ajax " + params)
         def sql = ''
         def operador = ''
 
@@ -204,7 +204,7 @@ class ConvenioController {
                 "parr.parr__id = unej.parr__id and ${operador} ilike '%${params.texto}%' " +
                 "order by cnvnnmbr asc limit 20"
         def res = cn.rows(sql.toString())
-//        println("sql " + sql)
+        println("sql " + sql)
         return [convenios: res]
     }
 

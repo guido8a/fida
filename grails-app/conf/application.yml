@@ -125,8 +125,9 @@ environments:
     development:
         dataSource:
             dbCreate: update
-            url: jdbc:postgresql://127.0.0.1:5432/fida
+#            url: jdbc:postgresql://127.0.0.1:5432/fida
 #            url: jdbc:postgresql://127.0.0.1:5432/fida_brre
+            url: jdbc:postgresql://127.0.0.1:5432/fida_prod
             username: postgres
             password: 'postgres'
 

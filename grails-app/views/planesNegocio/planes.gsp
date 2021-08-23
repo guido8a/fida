@@ -418,7 +418,7 @@
     });
 
     $("#btnConvenio").click(function () {
-        location.href="${createLink(controller: 'convenio', action: 'convenio')}/" + '${plns?.id}'
+        location.href="${createLink(controller: 'convenio', action: 'convenio')}/?plan=" + '${plns?.id}'
 
     });
 

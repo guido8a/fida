@@ -22,8 +22,8 @@
                 <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">${dt.nombre}</elm:textoBusqueda></td>
                 <td style="width: 14%"><elm:textoBusqueda busca="${params.search}">${dt.unidadEjecutora}</elm:textoBusqueda></td>
                 <td style="width: 30%"><elm:textoBusqueda busca="${params.search}">${dt.objetivo}</elm:textoBusqueda></td>
-                <td style="width: 7%">${dt.fechaInicio?.format("dd-MM-yyyy")}</td>
-                <td style="width: 7%">${dt.fechaFin?.format("dd-MM-yyyy")}</td>
+                <td style="width: 7%">${dt?.fechaInicio?.format("dd-MM-yyyy")}</td>
+                <td style="width: 7%">${dt?.fechaFin?.format("dd-MM-yyyy")}</td>
                 <td style="width: 7%">${dt.plazo}</td>
                 <td style="width: 7%">${dt.periodo}</td>
             </tr>
