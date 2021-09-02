@@ -54,7 +54,7 @@ class Convenio implements Auditable{
 //        parroquia(blank: false, nullable: false)
         planesNegocio(blank: false, nullable: false)
 //        unidadEjecutora(blank: false, nullable: false)
-        codigo(size: 0..15, blank: true, nullable: false)
+        codigo(size: 0..25, blank: true, nullable: false)
         nombre(size: 3..255, blank: false)
         objetivo(blank: false)
         fecha(blank: false, nullable: false, attributes: [title: 'Fecha de inicio'])

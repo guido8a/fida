@@ -201,7 +201,7 @@
                         <div>
                             <div class="col-md-10">
                                 <span class="grupo">
-                                    <g:textField name="nombre" maxlength="63" class="form-control input-sm required"
+                                    <g:textField name="nombre" maxlength="255" class="form-control input-sm required"
                                                  value="${convenio?.nombre}"/>
                                 </span>
                             </div>

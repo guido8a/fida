@@ -167,7 +167,11 @@ class ConvenioController {
         }
         if(params.id){
             convenio = Convenio.get(params.id)
-        }else{
+        } else if(params.plan) {
+            def plan = PlanesNegocio.get(params.plan)
+            println "PNS: $plan"
+            convenio = Convenio.findByPlanesNegocio(plan)
+        } else {
             convenio = new Convenio()
         }
         return[convenio: convenio, unidades: unidades]
