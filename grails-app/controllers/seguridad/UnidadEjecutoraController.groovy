@@ -555,7 +555,7 @@ class UnidadEjecutoraController {
 
     def tablaBeneficiarios_ajax(){
         def unidad = UnidadEjecutora.get(params.id)
-        def beneficiarios = PersonaOrganizacion.findAllByUnidadEjecutoraAndFechaFinIsNull(unidad)
+        def beneficiarios = PersonaOrganizacion.findAllByUnidadEjecutoraAndFechaFinIsNull(unidad).sort{it.apellido}
         return[beneficiarios: beneficiarios, unidad:unidad]
     }
 }

@@ -126,6 +126,16 @@
                     </div>
                 </span>
             </div>
+            <div class="form-group keeptogether ${hasErrors(bean: beneficiario, field: 'raza', 'error')} ">
+                <label for="raza" class="col-md-3 control-label">
+                    Raza
+                </label>
+                <span class="grupo">
+                    <div class="col-md-5">
+                        <g:select name="raza" from="${taller.Raza.list().sort{it.descripcion}}" class="form-control" value="${beneficiario?.raza?.id}" optionValue="descripcion" optionKey="id"/>
+                    </div>
+                </span>
+            </div>
         </g:form>
     </div>
 

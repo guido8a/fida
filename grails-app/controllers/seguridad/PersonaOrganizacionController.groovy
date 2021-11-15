@@ -1,5 +1,7 @@
 package seguridad
 
+import taller.Raza
+
 
 class PersonaOrganizacionController {
 
@@ -63,5 +65,11 @@ class PersonaOrganizacionController {
                 render "ok"
             }
         }
+    }
+
+    def resumenEtnias_ajax(){
+        def unidad = UnidadEjecutora.get(params.unidad)
+        def personas = PersonaOrganizacion.findAllByUnidadEjecutoraAndRaza(unidad)
+        return[personas:personas]
     }
 }

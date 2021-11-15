@@ -618,7 +618,8 @@
     $("#btnEtnias").click(function () {
         $.ajax({
             type: "POST",
-            url: "${createLink(controller: 'etniaOrganizacion',action:'formEtnias_ajax')}",
+            %{--url: "${createLink(controller: 'etniaOrganizacion',action:'formEtnias_ajax')}",--}%
+            url: "${createLink(controller: 'personaOrganizacion',action:'resumenEtnias_ajax')}",
             data: {
                 unidad: '${unidad?.id}'
             },
