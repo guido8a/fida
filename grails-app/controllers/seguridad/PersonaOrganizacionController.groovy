@@ -5,6 +5,8 @@ import taller.Raza
 
 class PersonaOrganizacionController {
 
+    def dbConnectionService
+
     def show_ajax(){
         def beneficiario = PersonaOrganizacion.get(params.id)
         return[beneficiario: beneficiario]
@@ -69,7 +71,10 @@ class PersonaOrganizacionController {
 
     def resumenEtnias_ajax(){
         def unidad = UnidadEjecutora.get(params.unidad)
-        def personas = PersonaOrganizacion.findAllByUnidadEjecutoraAndRaza(unidad)
-        return[personas:personas]
+        def cn = dbConnectionService.getConnection()
+        def sql = "select * from rp_etnia(${unidad?.id})"
+        def res = cn.rows(sql.toString())
+
+        return[etnias:res]
     }
 }

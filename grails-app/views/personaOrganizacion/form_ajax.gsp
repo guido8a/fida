@@ -128,7 +128,7 @@
             </div>
             <div class="form-group keeptogether ${hasErrors(bean: beneficiario, field: 'raza', 'error')} ">
                 <label for="raza" class="col-md-3 control-label">
-                    Raza
+                    Etnia
                 </label>
                 <span class="grupo">
                     <div class="col-md-5">
