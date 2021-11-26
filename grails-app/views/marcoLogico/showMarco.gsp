@@ -134,7 +134,8 @@
         <div class="dialog col-md-12" title="MATRIZ DE MARCO LOGICO DEL PROYECTO">
             <div class="btn-toolbar toolbar col-md-1" style="margin-bottom: 15px">
                 <div class="btn-group">
-                    <g:link controller="proyecto" action="proy" id="${proyecto?.id}" class="btn btn-default" title="Regresar al proyecto">
+                %{--                    <g:link controller="proyecto" action="proy" id="${proyecto?.id}" class="btn btn-default" title="Regresar al proyecto">--}%
+                    <g:link controller="marcoLogico" action="verMarco" id="${proyecto?.id}" class="btn btn-default" title="Regresar al proyecto">
                         <i class="fa fa-arrow-left"></i> Regresar
                     </g:link>
                 </div>
@@ -191,12 +192,12 @@
                         </div>
                     </g:each>
 
-%{--                    <g:if test="${indicadores}">--}%
-%{--                        <g:set var="existeMedio" value="${proyectos.MedioVerificacion?.findAllByIndicadorInList(indicadores)?.size() > 0 ? 1 : 0}"/>--}%
-%{--                    </g:if>--}%
-%{--                    <g:else>--}%
-%{--                        <g:set var="existeMedio" value="${0}"/>--}%
-%{--                    </g:else>--}%
+                %{--                    <g:if test="${indicadores}">--}%
+                %{--                        <g:set var="existeMedio" value="${proyectos.MedioVerificacion?.findAllByIndicadorInList(indicadores)?.size() > 0 ? 1 : 0}"/>--}%
+                %{--                    </g:if>--}%
+                %{--                    <g:else>--}%
+                %{--                        <g:set var="existeMedio" value="${0}"/>--}%
+                %{--                    </g:else>--}%
 
                     <div class="matriz ui-corner-all  fila " id="ind"
                          style="${(band.toInteger() == 0) ? 'margin-top:-10px;' : ''}">
@@ -211,12 +212,12 @@
                         </div>
 
                         <div class="filaMedio der">
-%{--                            <g:if test="${existeMedio == 0}">--}%
-%{--                                <div class=" texto agregado ui-corner-all md varios edicion btn btn-success " pref="mf_"--}%
-%{--                                     id="mf_0"--}%
-%{--                                     ml="Fin" div="mf_0" indicador="0" tipo="2" identificador="0"><i class="fa fa-folder-plus"></i> Agregar--}%
-%{--                                </div>--}%
-%{--                            </g:if>--}%
+                            %{--                            <g:if test="${existeMedio == 0}">--}%
+                            %{--                                <div class=" texto agregado ui-corner-all md varios edicion btn btn-success " pref="mf_"--}%
+                            %{--                                     id="mf_0"--}%
+                            %{--                                     ml="Fin" div="mf_0" indicador="0" tipo="2" identificador="0"><i class="fa fa-folder-plus"></i> Agregar--}%
+                            %{--                                </div>--}%
+                            %{--                            </g:if>--}%
                         </div>
                     </div>
                 </div>
@@ -290,12 +291,12 @@
                         </div>
                     </g:each>
 
-%{--                    <g:if test="${indicadores}">--}%
-%{--                        <g:set var="existeMedioProp" value="${proyectos.MedioVerificacion.findAllByIndicadorInList(indiProps).size() > 0 ? 1 : 0}"/>--}%
-%{--                    </g:if>--}%
-%{--                    <g:else>--}%
-%{--                        <g:set var="existeMedioProp" value="${0}"/>--}%
-%{--                    </g:else>--}%
+                %{--                    <g:if test="${indicadores}">--}%
+                %{--                        <g:set var="existeMedioProp" value="${proyectos.MedioVerificacion.findAllByIndicadorInList(indiProps).size() > 0 ? 1 : 0}"/>--}%
+                %{--                    </g:if>--}%
+                %{--                    <g:else>--}%
+                %{--                        <g:set var="existeMedioProp" value="${0}"/>--}%
+                %{--                    </g:else>--}%
 
                     <div class="matriz ui-corner-all  fila " id="ind"
                          style="${(band.toInteger() == 0) ? 'margin-top:-10px;' : ''}">
@@ -311,12 +312,12 @@
                         </div>
 
                         <div class="filaMedio der">
-%{--                            <g:if test="${existeMedioProp == 0}">--}%
-%{--                                <div class=" texto agregado ui-corner-all md btn btn-success varios edicion" pref="mp_"--}%
-%{--                                     id="mp_0"--}%
-%{--                                     ml="Proposito" div="mp_0" indicador="0" tipo="2"--}%
-%{--                                     identificador="0"><i class="fa fa-folder-plus"></i> Agregar</div>--}%
-%{--                            </g:if>--}%
+                            %{--                            <g:if test="${existeMedioProp == 0}">--}%
+                            %{--                                <div class=" texto agregado ui-corner-all md btn btn-success varios edicion" pref="mp_"--}%
+                            %{--                                     id="mp_0"--}%
+                            %{--                                     ml="Proposito" div="mp_0" indicador="0" tipo="2"--}%
+                            %{--                                     identificador="0"><i class="fa fa-folder-plus"></i> Agregar</div>--}%
+                            %{--                            </g:if>--}%
                         </div>
                     </div>
                 </div>
@@ -330,14 +331,103 @@
                                  div="sp_${su.id}" identificador="${su.id}" tipo="3"
                                  indicador="${proposito?.id}">${su.descripcion}</div>
                         </g:each>
-                         <g:if test="${proposito?.id}">
-                             <div class="agregado ui-corner-all btn btn-success varios editar edicion" id="sp_0"
-                                  ml="Proposito"
-                                  div="sp_0" identificador="0" tipo="3" indicador="${proposito?.id}"><i class="fa fa-folder-plus"></i> Agregar</div>
-                         </g:if>
+                        <g:if test="${proposito?.id}">
+                            <div class="agregado ui-corner-all btn btn-success varios editar edicion" id="sp_0"
+                                 ml="Proposito"
+                                 div="sp_0" identificador="0" tipo="3" indicador="${proposito?.id}"><i class="fa fa-folder-plus"></i> Agregar</div>
+                        </g:if>
                     </div>
                 </div>
             </div>%{--end del proposito--}%
+
+        %{--            inicio componente--}%
+
+            <g:each in="${componentes}" var="componente">
+                <div style="width: 100%;float: left;" class="panel panel-primary">
+                    <div class="matriz ui-corner-all campo cmp datos " ml="Componente" div="div_componente"
+                         identificador="${componente?.id}">
+                        <div class="titulo">Componente</div>
+
+                        <div class="texto agregado ui-corner-all componente cmp" style="min-height: 75px;" id="div_componente"
+                             identificador="${componente?.id}">
+                            ${componente?.objeto}
+                        </div>
+                    </div>
+
+                    <div class="matriz ui-corner-all campo cmpDoble " id="div_indi_medios_componente">
+                        <div class="filaMedio" style="min-height: 25px;margin-top: 0px">
+                            <div class="titulo">Indicadores</div>
+                        </div>
+
+                        <div class="filaMedio2" style="min-height: 25px;margin-top: 0px">
+                            <div class="titulo">Medios de Verificación</div>
+                        </div>
+                        <g:set var="band" value="0"/>
+                        <g:each in="${proyectos.Indicador.findAllByMarcoLogico(componente).sort{it.descripcion}}" var="indicador" status="i">
+                            <g:set var="band" value="1"/>
+                            <div class="matriz ui-corner-all fila " id="ind"
+                                 style="${(i == 0) ? 'margin-top:-10px;' : ''}">
+                                <div class="filaMedio izq ">
+                                    <div class="texto agregado ui-corner-all componente varios  " pref="ic_"
+                                         id="ic_${indicador.id}" ml="Componente" tipo="1" div="ic_${indicador.id}"
+                                         identificador="${indicador.id}" indicador="${componente.id}">
+                                        ${indicador?.descripcion}
+                                    </div>
+                                </div>
+
+                                <div class="filaMedio2 der">
+                                    <g:each in="${proyectos.MedioVerificacion.findAllByIndicador(indicador)}" var="med">
+                                        <div class="texto agregado ui-corner-all md componente varios" pref="mc_"
+                                             id="mc_${med.id}"
+                                             ml="Componente" tipo="2" div="mc_${med.id}" indicador="${indicador.id}"
+                                             identificador="${med.id}">${med.descripcion}</div>
+                                    </g:each>
+                                    <div class=" texto agregado ui-corner-all md varios edicion btn btn-success" pref="mc_"
+                                         id="mc_0${i + 1}" ml="Componente" div="mc_0${i + 1}" tipo="2"
+                                         indicador="${indicador.id}"
+                                         identificador="0"><i class="fa fa-folder-plus"></i> Agregar</div>
+                                </div>
+                            </div>
+                        </g:each>
+
+                        <div class="matriz ui-corner-all  fila " id="ind"
+                             style="${(band.toInteger() == 0) ? 'margin-top:-10px;' : ''}">
+                            <div class="filaMedio izq ">
+                                <g:if test="${fin?.id}">
+                                    <div class="texto agregado ui-corner-all varios edicion btn btn-success " pref="ic_" id="ic_0"
+                                         ml="Componente"
+                                         div="ic_0" tipo="1" identificador="0" indicador="${componente?.id}"><i class="fa fa-folder-plus"></i>
+                                        Agregar
+                                    </div>
+                                </g:if>
+                            </div>
+
+                            <div class="filaMedio der">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="matriz ui-corner-all campo supuesto">
+                        <div class="titulo">Supuestos</div>
+
+                        <div class="texto" style=" min-height: 75px;" id="div_sup_comp">
+                            <g:each in="${proyectos.Supuesto.findAllByMarcoLogico(componente).sort{it.descripcion}}" var="su">
+                                <div class="agregado ui-corner-all componente varios" id="sc_${su.id}" ml="Componente"
+                                     div="sc_${su.id}"
+                                     identificador="${su.id}" tipo="3"
+                                     indicador="${componente?.id}">${su.descripcion}</div>
+                            </g:each>
+                            <g:if test="${fin?.id}">
+                                <div class="agregado ui-corner-all md varios editar edicion btn btn-success " id="sc_0" ml="Fin"
+                                     div="sc_0"
+                                     identificador="0" tipo="3" indicador="${componente?.id}"><i class="fa fa-folder-plus"></i> Agregar</div>
+                            </g:if>
+                        </div>
+                    </div>
+                </div>%{--end del fin--}%
+            </g:each>
+
         </div>
     </g:form>
 </div>

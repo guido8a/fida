@@ -542,7 +542,11 @@ class MarcoLogicoController {
                 supProp = Supuesto.findAllByMarcoLogico(proposito).sort{it.descripcion}
             }
 
-            [fin: fin, indicadores: indicadores, medios: medios, sup: sup, proyecto: proyecto, proposito: proposito, indiProps: indiProps, mediosProp: mediosProp, supProp: supProp]
+
+            def componentes = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Componente"))
+
+
+            [fin: fin, indicadores: indicadores, medios: medios, sup: sup, proyecto: proyecto, proposito: proposito, indiProps: indiProps, mediosProp: mediosProp, supProp: supProp, componentes: componentes]
         }
 
     }
@@ -708,6 +712,8 @@ class MarcoLogicoController {
             def sup
             def indiProps
             def mediosProp = []
+            def indiComp
+            def mediosComp = []
             def supProp
             if (proyecto) {
                 fin = MarcoLogico.findByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Fin"))
@@ -729,7 +735,9 @@ class MarcoLogicoController {
                 supProp = Supuesto.findAllByMarcoLogico(proposito).sort{it.descripcion}
             }
 
-            [fin: fin, indicadores: indicadores, medios: medios, sup: sup, proyecto: proyecto, proposito: proposito, indiProps: indiProps, mediosProp: mediosProp, supProp: supProp]
+            def componentes = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto, TipoElemento.findByDescripcion("Componente"))
+
+            [fin: fin, indicadores: indicadores, medios: medios, sup: sup, proyecto: proyecto, proposito: proposito, indiProps: indiProps, mediosProp: mediosProp, supProp: supProp, componentes: componentes]
         }
     }
 
