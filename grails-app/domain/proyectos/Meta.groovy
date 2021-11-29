@@ -16,14 +16,6 @@ class Meta implements Auditable{
      */
     Unidad unidad
     /**
-     * Parroquia a la cual pertenece la meta
-     */
-    Parroquia parroquia
-    /**
-     * Marco lón de la meta
-     */
-    MarcoLogico marcoLogico
-    /**
      * Indicador orms de la meta
      */
     IndicadorOrms indicadorOrms
@@ -32,9 +24,13 @@ class Meta implements Auditable{
      */
     String descripcion
     /**
-     * valor de la meta
+     * Indicador
      */
-    double valor
+    Indicador indicador
+
+    int lineaBase = 0
+    int disenio = 0
+    int restructuracion  = 0
 
     /**
      * Define los campos que se van a ignorar al momento de hacer logs
@@ -52,12 +48,13 @@ class Meta implements Auditable{
         version false
         columns {
             id column: 'meta__id'
-            parroquia column: 'parr__id'
-            marcoLogico column: 'mrlg__id'
             unidad column: 'undd__id'
             indicadorOrms column: 'orms__id'
+            indicador column: 'indi__id'
             descripcion column: 'metadscr'
-            valor column: 'metavlor'
+            lineaBase column: 'metalnbs'
+            disenio column: 'metadise'
+            restructuracion column: 'metarest'
         }
     }
 
@@ -65,12 +62,13 @@ class Meta implements Auditable{
      * Define las restricciones de cada uno de los campos
      */
     static constraints = {
-        parroquia(blank: false, nullable: false, attributes: [mensaje: 'Parroquia en la cual se verificará la meta'])
-        marcoLogico(blank: true, nullable: true, attributes: [mensaje: 'Componente del marco lógico'])
         unidad(blank: true, nullable: true, attributes: [mensaje: 'Unidad de medida'])
         indicadorOrms(blank: true, nullable: true, attributes: [mensaje: 'Indicador orms'])
+        indicador(blank: true, nullable: true, attributes: [mensaje: 'Indicador'])
+        lineaBase(blank: true, nullable: true, attributes: [mensaje: 'Indicador orms'])
+        restructuracion(blank: true, nullable: true, attributes: [mensaje: 'Indicador orms'])
+        restructuracion(blank: true, nullable: true, attributes: [mensaje: 'Indicador orms'])
         descripcion(size: 1..255, blank: false, nullable: false, attributes: [mensaje: 'Descripción de la meta a alcanzar'])
-        valor(blank: true, nullable: true, attributes: [mensaje: 'Valor de la meta'])
     }
 
     /**

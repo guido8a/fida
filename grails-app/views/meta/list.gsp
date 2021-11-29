@@ -35,24 +35,23 @@
 <table class="table table-condensed table-bordered table-striped table-hover">
     <thead>
     <tr>
-        <th>Parroquia</th>
         <th>Actividad (Marco lógico)</th>
         <th>Unidad</th>
         <th>Indicador ORMS</th>
         <th>Descripción</th>
-        <th>Valor</th>
     </tr>
     </thead>
     <tbody>
     <g:if test="${metas?.size() > 0}">
         <g:each in="${metas}" status="i" var="meta">
             <tr data-id="${meta.id}">
-                <td>${meta?.parroquia?.nombre}</td>
-                <td>${meta?.marcoLogico?.objeto}</td>
                 <td>${meta?.unidad?.descripcion}</td>
                 <td>${meta?.indicadorOrms?.descripcion}</td>
+                <td>${meta?.indicador?.descripcion}</td>
                 <td>${meta?.descripcion}</td>
-                <td>${meta?.valor}</td>
+                <td>${meta?.lineaBase}</td>
+                <td>${meta?.disenio}</td>
+                <td>${meta?.restructuracion}</td>
             </tr>
         </g:each>
     </g:if>

@@ -1,3 +1,4 @@
+<%@ page import="proyectos.Indicador" %>
 <%--
   Created by IntelliJ IDEA.
   User: fabricio
@@ -8,35 +9,6 @@
 <div class="modal-contenido">
     <g:form class="form-horizontal" name="frmMeta" role="form" action="saveMeta_ajax" method="POST">
         <g:hiddenField name="id" value="${meta?.id}"/>
-        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'parroquia', 'error')} ">
-            <span class="grupo">
-                <label for="parroquia" class="col-md-3 control-label">
-                    Parroquia
-                </label>
-                <div class="col-md-9">
-                    <g:hiddenField name="parroquia" value="${meta?.parroquia?.id}"/>
-                    <span class="grupo">
-                        <div class="input-group input-group-sm" >
-                            <input type="text" class="form-control buscarParroquia required" name="parrroquiaName" id="parroquiaTexto" value="${meta?.parroquia?.nombre}">
-                            <span class="input-group-btn">
-                                <a href="#" class="btn btn-info buscarParroquia" title="Buscar Parroquia"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                </a>
-                            </span>
-                        </div>
-                    </span>
-                </div>
-            </span>
-        </div>
-        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'marcoLogico', 'error')} ">
-            <span class="grupo">
-                <label for="marcoLogico" class="col-md-3 control-label">
-                    Actividad (Marco lógico)
-                </label>
-                <div class="col-md-9">
-                    <g:select name="marcoLogico" from="${actividades}" optionKey="id" optionValue="objeto" value="${meta?.marcoLogico?.id}" class="many-to-one form-control input-sm"/>
-                </div>
-            </span>
-        </div>
         <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'unidad', 'error')} ">
             <span class="grupo">
                 <label for="unidad" class="col-md-3 control-label">
@@ -57,6 +29,16 @@
                 </div>
             </span>
         </div>
+        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'indicadorOrms', 'error')} ">
+            <span class="grupo">
+                <label for="indicador" class="col-md-3 control-label">
+                    Indicador
+                </label>
+                <div class="col-md-9">
+                    <g:select name="indicador" from="${indicadores}" optionKey="id" optionValue="descripcion" value="${meta?.indicador?.id}" class="many-to-one form-control input-sm"/>
+                </div>
+            </span>
+        </div>
         <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'descripcion', 'error')} ">
             <span class="grupo">
                 <label for="descripcion" class="col-md-3 control-label">
@@ -67,13 +49,33 @@
                 </div>
             </span>
         </div>
-        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'descripcion', 'error')} ">
+        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'lineaBase', 'error')} ">
             <span class="grupo">
-                <label for="valor" class="col-md-3 control-label">
-                    Valor
+                <label for="lineaBase" class="col-md-3 control-label">
+                    Línea Base
                 </label>
                 <div class="col-md-4">
-                    <g:textField name="valor" value="${meta?.valor}" class="many-to-one form-control input-sm"/>
+                    <g:textField name="lineaBase" value="${meta?.lineaBase}" class="many-to-one form-control input-sm"/>
+                </div>
+            </span>
+        </div>
+        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'disenio', 'error')} ">
+            <span class="grupo">
+                <label for="disenio" class="col-md-3 control-label">
+                    Diseño
+                </label>
+                <div class="col-md-4">
+                    <g:textField name="disenio" value="${meta?.disenio}" class="many-to-one form-control input-sm"/>
+                </div>
+            </span>
+        </div>
+        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'restructuracion', 'error')} ">
+            <span class="grupo">
+                <label for="restructuracion" class="col-md-3 control-label">
+                    Restructuración
+                </label>
+                <div class="col-md-4">
+                    <g:textField name="restructuracion" value="${meta?.restructuracion}" class="many-to-one form-control input-sm"/>
                 </div>
             </span>
         </div>
@@ -82,43 +84,42 @@
 
 <script type="text/javascript">
 
-    var bp
+    // var bp
 
-    $(document).ready(function() {
+    %{--$(document).ready(function() {--}%
 
-        $(".buscarParroquia").click(function () {
-            var dialog = cargarLoader("Cargando...");
-            $(this).attr('disabled','disabled');
-            $.ajax({
-                type: 'POST',
-                url: '${createLink(controller: 'parroquia', action: 'buscarParroquia_ajax')}',
-                data:{
-                },
-                success:function (msg) {
-                    dialog.modal('hide');
-                    // $(".buscarParroquia").removeAttr('disabled');
-                    bp = bootbox.dialog({
-                        id    : "dlgBuscarParroquia",
-                        title : "Buscar Parroquia",
-                        class : "modal-lg",
-                        message : msg,
-                        buttons : {
-                            cancelar : {
-                                label     : "Cancelar",
-                                className : "btn-primary",
-                                callback  : function () {
-                                    $(".buscarParroquia").removeAttr('disabled');
-                                }
-                            }
-                        } //buttons
-                    }); //dialog
-                }
-            });
-        });
-    });
+    %{--    $(".buscarParroquia").click(function () {--}%
+    %{--        var dialog = cargarLoader("Cargando...");--}%
+    %{--        $(this).attr('disabled','disabled');--}%
+    %{--        $.ajax({--}%
+    %{--            type: 'POST',--}%
+    %{--            url: '${createLink(controller: 'parroquia', action: 'buscarParroquia_ajax')}',--}%
+    %{--            data:{--}%
+    %{--            },--}%
+    %{--            success:function (msg) {--}%
+    %{--                dialog.modal('hide');--}%
+    %{--                bp = bootbox.dialog({--}%
+    %{--                    id    : "dlgBuscarParroquia",--}%
+    %{--                    title : "Buscar Parroquia",--}%
+    %{--                    class : "modal-lg",--}%
+    %{--                    message : msg,--}%
+    %{--                    buttons : {--}%
+    %{--                        cancelar : {--}%
+    %{--                            label     : "Cancelar",--}%
+    %{--                            className : "btn-primary",--}%
+    %{--                            callback  : function () {--}%
+    %{--                                $(".buscarParroquia").removeAttr('disabled');--}%
+    %{--                            }--}%
+    %{--                        }--}%
+    %{--                    } //buttons--}%
+    %{--                }); //dialog--}%
+    %{--            }--}%
+    %{--        });--}%
+    %{--    });--}%
+    %{--});--}%
 
-    function cerrarDialogoParroquia(){
-        bp.dialog().dialog('open');
-        bp.modal("hide");
-    }
+    // function cerrarDialogoParroquia(){
+    //     bp.dialog().dialog('open');
+    //     bp.modal("hide");
+    // }
 </script>

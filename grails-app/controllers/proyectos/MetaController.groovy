@@ -5,12 +5,33 @@ import parametros.proyectos.TipoElemento
 
 class MetaController {
 
+    def dbConnectionService
+
     def list(){
 //        println("params" + params)
         def proyecto = Proyecto.get(params.id)
-        def marco = MarcoLogico.findAllByProyecto(proyecto)
-        def metas = Meta.findAllByMarcoLogicoInList(marco)
-        return[proyecto: proyecto, metas: metas]
+        def sql = "select * from indicador(${proyecto?.id})"
+        def cn = dbConnectionService.getConnection()
+        def res = cn.rows(sql.toString())
+
+        def metas = []
+
+        res.each{d->
+            def indicador = Indicador.get(d.indi__id)
+            if(Meta.findByIndicador(indicador)){
+                metas.add(Meta.findByIndicador(indicador))
+            }
+
+        }
+
+        def indicadores = res.indi__id
+
+        println("r2 " +metas)
+
+//        def metas2 = Meta.findAllByIndicadorInList(indicadores)
+//        println("r1 " +metas2)
+//
+        return[proyecto: proyecto, metas: metas, indicadores: indicadores]
     }
 
     def form_ajax() {
@@ -24,8 +45,10 @@ class MetaController {
         }
 
         def actividades = MarcoLogico.findAllByProyectoAndTipoElemento(proyecto, TipoElemento.get(4))
+        def marcoLogicoIndicadores = MarcoLogico.findAllByTipoElemento(TipoElemento.get(3))
+        def indicadores = Indicador.findAllByMarcoLogicoInList(marcoLogicoIndicadores).sort{it.descripcion}
 
-        return [meta: meta, actividades: actividades]
+        return [meta: meta, actividades: actividades, indicadores: indicadores]
     }
 
 
