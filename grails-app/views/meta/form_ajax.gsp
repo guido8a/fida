@@ -55,7 +55,7 @@
                     Línea Base
                 </label>
                 <div class="col-md-2">
-                    <g:textField name="lineaBase" value="${meta?.lineaBase}" class="number many-to-one form-control input-sm"/>
+                    <g:textField name="lineaBase" value="${meta?.lineaBase}" class="digits many-to-one form-control input-sm"/>
                 </div>
             </span>
             <span class="grupo">
@@ -63,7 +63,7 @@
                     Diseño
                 </label>
                 <div class="col-md-2">
-                    <g:textField name="disenio" value="${meta?.disenio}" class="number many-to-one form-control input-sm"/>
+                    <g:textField name="disenio" value="${meta?.disenio}" class="digits many-to-one form-control input-sm"/>
                 </div>
             </span>
             <span class="grupo">
@@ -71,7 +71,7 @@
                     Restructuración
                 </label>
                 <div class="col-md-2">
-                    <g:textField name="restructuracion" value="${meta?.restructuracion}" class="number many-to-one form-control input-sm"/>
+                    <g:textField name="restructuracion" value="${meta?.restructuracion}" class="digits many-to-one form-control input-sm"/>
                 </div>
             </span>
         </div>
