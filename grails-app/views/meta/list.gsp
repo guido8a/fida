@@ -35,23 +35,26 @@
 <table class="table table-condensed table-bordered table-striped table-hover">
     <thead>
     <tr>
-        <th>Actividad (Marco lógico)</th>
-        <th>Unidad</th>
         <th>Indicador ORMS</th>
+        <th>Indicador</th>
+        <th>Unidad</th>
         <th>Descripción</th>
+        <th>Línea Base</th>
+        <th>Diseño</th>
+        <th>Restructuración</th>
     </tr>
     </thead>
     <tbody>
     <g:if test="${metas?.size() > 0}">
         <g:each in="${metas}" status="i" var="meta">
             <tr data-id="${meta.id}">
-                <td>${meta?.unidad?.descripcion}</td>
-                <td>${meta?.indicadorOrms?.descripcion}</td>
-                <td>${meta?.indicador?.descripcion}</td>
-                <td>${meta?.descripcion}</td>
-                <td>${meta?.lineaBase}</td>
-                <td>${meta?.disenio}</td>
-                <td>${meta?.restructuracion}</td>
+                <td style="width: 14%">${meta?.indicadorOrms?.descripcion}</td>
+                <td style="width: 28%">${meta?.indicador?.descripcion}</td>
+                <td style="width: 8%">${meta?.unidad?.descripcion}</td>
+                <td style="width: 28%">${meta?.descripcion}</td>
+                <td style="width: 7%; text-align: center">${meta?.lineaBase}</td>
+                <td style="width: 7%; text-align: center">${meta?.disenio}</td>
+                <td style="width: 8%; text-align: center">${meta?.restructuracion}</td>
             </tr>
         </g:each>
     </g:if>
@@ -188,34 +191,34 @@
                     label  : "Acciones",
                     header : true
                 },
-                ver      : {
-                    label  : "Ver",
-                    icon   : "fa fa-search",
-                    action : function ($element) {
-                        var id = $element.data("id");
-                        $.ajax({
-                            type    : "POST",
-                            url     : "${createLink(controller:'meta', action:'show_ajax')}",
-                            data    : {
-                                id : id
-                            },
-                            success : function (msg) {
-                                bootbox.dialog({
-                                    title   : "Ver Meta",
-                                    message : msg,
-                                    buttons : {
-                                        ok : {
-                                            label     : "Aceptar",
-                                            className : "btn-primary",
-                                            callback  : function () {
-                                            }
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    }
-                },
+                %{--ver      : {--}%
+                %{--    label  : "Ver",--}%
+                %{--    icon   : "fa fa-search",--}%
+                %{--    action : function ($element) {--}%
+                %{--        var id = $element.data("id");--}%
+                %{--        $.ajax({--}%
+                %{--            type    : "POST",--}%
+                %{--            url     : "${createLink(controller:'meta', action:'show_ajax')}",--}%
+                %{--            data    : {--}%
+                %{--                id : id--}%
+                %{--            },--}%
+                %{--            success : function (msg) {--}%
+                %{--                bootbox.dialog({--}%
+                %{--                    title   : "Ver Meta",--}%
+                %{--                    message : msg,--}%
+                %{--                    buttons : {--}%
+                %{--                        ok : {--}%
+                %{--                            label     : "Aceptar",--}%
+                %{--                            className : "btn-primary",--}%
+                %{--                            callback  : function () {--}%
+                %{--                            }--}%
+                %{--                        }--}%
+                %{--                    }--}%
+                %{--                });--}%
+                %{--            }--}%
+                %{--        });--}%
+                %{--    }--}%
+                %{--},--}%
                 editar   : {
                     label  : "Editar",
                     icon   : "fa fa-edit",

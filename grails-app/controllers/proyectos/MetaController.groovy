@@ -21,7 +21,6 @@ class MetaController {
             if(Meta.findByIndicador(indicador)){
                 metas.add(Meta.findByIndicador(indicador))
             }
-
         }
 
         def indicadores = res.indi__id
@@ -53,7 +52,7 @@ class MetaController {
 
 
     def saveMeta_ajax () {
-//        println("params sm " + params)
+        println("params sm " + params)
 
         def meta
 
@@ -63,9 +62,10 @@ class MetaController {
             meta = new Meta()
         }
 
-        params.valor = params.valor.toDouble()
+        params.lineaBase = params.lineaBase.toInteger()
+        params.disenio = params.disenio.toInteger()
+        params.restructuracion = params.restructuracion.toInteger()
         meta.properties = params
-
 
         if(!meta.save(flush: true)){
             println("error al guardar la meta " + meta.errors)

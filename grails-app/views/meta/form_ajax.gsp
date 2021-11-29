@@ -9,16 +9,6 @@
 <div class="modal-contenido">
     <g:form class="form-horizontal" name="frmMeta" role="form" action="saveMeta_ajax" method="POST">
         <g:hiddenField name="id" value="${meta?.id}"/>
-        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'unidad', 'error')} ">
-            <span class="grupo">
-                <label for="unidad" class="col-md-3 control-label">
-                    Unidad
-                </label>
-                <div class="col-md-9">
-                    <g:select name="unidad" from="${parametros.proyectos.Unidad.list().sort{it.descripcion}}" optionKey="id" optionValue="descripcion" value="${meta?.unidad?.id}" class="many-to-one form-control input-sm"/>
-                </div>
-            </span>
-        </div>
         <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'indicadorOrms', 'error')} ">
             <span class="grupo">
                 <label for="indicadorOrms" class="col-md-3 control-label">
@@ -39,6 +29,16 @@
                 </div>
             </span>
         </div>
+        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'unidad', 'error')} ">
+            <span class="grupo">
+                <label for="unidad" class="col-md-3 control-label">
+                    Unidad
+                </label>
+                <div class="col-md-9">
+                    <g:select name="unidad" from="${parametros.proyectos.Unidad.list().sort{it.descripcion}}" optionKey="id" optionValue="descripcion" value="${meta?.unidad?.id}" class="many-to-one form-control input-sm"/>
+                </div>
+            </span>
+        </div>
         <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'descripcion', 'error')} ">
             <span class="grupo">
                 <label for="descripcion" class="col-md-3 control-label">
@@ -51,34 +51,50 @@
         </div>
         <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'lineaBase', 'error')} ">
             <span class="grupo">
-                <label for="lineaBase" class="col-md-3 control-label">
+                <label for="lineaBase" class="col-md-2 control-label">
                     Línea Base
                 </label>
-                <div class="col-md-4">
-                    <g:textField name="lineaBase" value="${meta?.lineaBase}" class="many-to-one form-control input-sm"/>
+                <div class="col-md-2">
+                    <g:textField name="lineaBase" value="${meta?.lineaBase}" class="number many-to-one form-control input-sm"/>
                 </div>
             </span>
-        </div>
-        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'disenio', 'error')} ">
             <span class="grupo">
-                <label for="disenio" class="col-md-3 control-label">
+                <label for="disenio" class="col-md-2 control-label">
                     Diseño
                 </label>
-                <div class="col-md-4">
-                    <g:textField name="disenio" value="${meta?.disenio}" class="many-to-one form-control input-sm"/>
+                <div class="col-md-2">
+                    <g:textField name="disenio" value="${meta?.disenio}" class="number many-to-one form-control input-sm"/>
                 </div>
             </span>
-        </div>
-        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'restructuracion', 'error')} ">
             <span class="grupo">
-                <label for="restructuracion" class="col-md-3 control-label">
+                <label for="restructuracion" class="col-md-2 control-label">
                     Restructuración
                 </label>
-                <div class="col-md-4">
-                    <g:textField name="restructuracion" value="${meta?.restructuracion}" class="many-to-one form-control input-sm"/>
+                <div class="col-md-2">
+                    <g:textField name="restructuracion" value="${meta?.restructuracion}" class="number many-to-one form-control input-sm"/>
                 </div>
             </span>
         </div>
+%{--        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'disenio', 'error')} ">--}%
+%{--            <span class="grupo">--}%
+%{--                <label for="disenio" class="col-md-3 control-label">--}%
+%{--                    Diseño--}%
+%{--                </label>--}%
+%{--                <div class="col-md-4">--}%
+%{--                    <g:textField name="disenio" value="${meta?.disenio}" class="number many-to-one form-control input-sm"/>--}%
+%{--                </div>--}%
+%{--            </span>--}%
+%{--        </div>--}%
+%{--        <div class="form-group keeptogether ${hasErrors(bean: meta, field: 'restructuracion', 'error')} ">--}%
+%{--            <span class="grupo">--}%
+%{--                <label for="restructuracion" class="col-md-3 control-label">--}%
+%{--                    Restructuración--}%
+%{--                </label>--}%
+%{--                <div class="col-md-4">--}%
+%{--                    <g:textField name="restructuracion" value="${meta?.restructuracion}" class="number many-to-one form-control input-sm"/>--}%
+%{--                </div>--}%
+%{--            </span>--}%
+%{--        </div>--}%
     </g:form>
 </div>
 
