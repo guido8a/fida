@@ -67,7 +67,7 @@ class Meta implements Auditable{
         indicador(blank: true, nullable: true, attributes: [mensaje: 'Indicador'])
         lineaBase(blank: true, nullable: true, attributes: [mensaje: 'Indicador orms'])
         restructuracion(blank: true, nullable: true, attributes: [mensaje: 'Indicador orms'])
-        restructuracion(blank: true, nullable: true, attributes: [mensaje: 'Indicador orms'])
+        disenio(blank: true, nullable: true, attributes: [mensaje: 'Indicador orms'])
         descripcion(size: 1..255, blank: false, nullable: false, attributes: [mensaje: 'Descripción de la meta a alcanzar'])
     }
 
