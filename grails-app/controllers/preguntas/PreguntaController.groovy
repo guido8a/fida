@@ -248,15 +248,23 @@ class PreguntaController {
         def pregunta
         def indicador = Indicador.get(params.indicador)
 
-        def numeroExiste = Pregunta.findAllByNumero(params.numero.toInteger())
+        def numeroExiste = Pregunta.findByNumero(params.numero.toInteger())
 
-        if(numeroExiste){
-            render "er"
-        }else{
             if(params.id){
                 pregunta = Pregunta.get(params.id)
+
+                if(numeroExiste.id != pregunta.id){
+                 render "er"
+                 return true
+                }
+
             }else{
                 pregunta = new Pregunta()
+
+                if(numeroExiste){
+                    render "er"
+                    return true
+                }
             }
 
             pregunta.indicador = indicador
@@ -268,8 +276,6 @@ class PreguntaController {
             }else{
                 render "ok"
             }
-        }
-
     }
 
 

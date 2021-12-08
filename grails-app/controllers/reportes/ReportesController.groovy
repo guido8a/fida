@@ -954,7 +954,7 @@ class ReportesController {
             label = new Label(3, fila,  organizacion?.mail?.toString(), times16formatN); sheet.addCell(label);
             label = new Label(4, fila,  organizacion?.referencia?.toString(), times16formatN); sheet.addCell(label);
             label = new Label(5, fila,  organizacion?.actividad?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(6, fila,  (dtor?.hombresSocios?.sum() + dtor?.mujeresSocias?.sum())?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(6, fila,  ((dtor?.hombresSocios?.sum() ?: 0) + (dtor?.mujeresSocias?.sum() ?: 0))?.toString(), times16formatN); sheet.addCell(label);
             label = new Label(7, fila,  dtor?.hombresSocios?.sum()?.toString(), times16formatN); sheet.addCell(label);
             label = new Label(8, fila,  dtor?.mujeresSocias?.sum()?.toString(), times16formatN); sheet.addCell(label);
             label = new Label(9, fila,  dtor?.jovenes?.sum()?.toString(), times16formatN); sheet.addCell(label);
