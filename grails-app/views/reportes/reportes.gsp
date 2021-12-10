@@ -313,6 +313,8 @@
 
 <script type="text/javascript">
 
+    var dialogoOrganizacion
+
     $("#btnEncuestas").click(function () {
         $.ajax({
             type: 'POST',
@@ -417,9 +419,10 @@
             type: 'POST',
             url: '${createLink(controller: 'reportes', action: 'organizaciones_ajax')}',
             data:{
+                tipo: 3
             },
             success: function (msg) {
-                var b = bootbox.dialog({
+                dialogoOrganizacion = bootbox.dialog({
                     id    : "dlOrganizacion",
                     title : "Seleccione una Organización",
                     message : msg,
@@ -430,14 +433,14 @@
                             callback  : function () {
                             }
                         },
-                        aceptar  : {
-                            id        : "btnSave",
-                            label     : "<i class='fa fa-check'></i> Aceptar",
-                            className : "btn-success",
-                            callback  : function () {
-                                location.href="${createLink(controller: 'reportes', action: 'reportesConveniosExcel')}/" + $("#organizacion option:selected").val()
-                            } //callback
-                        } //guardar
+                        %{--aceptar  : {--}%
+                        %{--    id        : "btnSave",--}%
+                        %{--    label     : "<i class='fa fa-check'></i> Aceptar",--}%
+                        %{--    className : "btn-success",--}%
+                        %{--    callback  : function () {--}%
+                        %{--        location.href="${createLink(controller: 'reportes', action: 'reportesConveniosExcel')}/" + $("#organizacion option:selected").val()--}%
+                        %{--    } //callback--}%
+                        %{--} //guardar--}%
                     } //buttons
                 }); //dialog
             }
@@ -548,9 +551,10 @@
             type: 'POST',
             url: '${createLink(controller: 'reportes', action: 'organizaciones_ajax')}',
             data:{
+                tipo: 2
             },
             success: function (msg) {
-                var b = bootbox.dialog({
+                dialogoOrganizacion = bootbox.dialog({
                     id    : "dlOrganizacion",
                     title : "Seleccione una Organización",
                     message : msg,
@@ -561,28 +565,31 @@
                             callback  : function () {
                             }
                         },
-                        aceptar  : {
-                            id        : "btnSave",
-                            label     : "<i class='fa fa-check'></i> Aceptar",
-                            className : "btn-success",
-                            callback  : function () {
-                                location.href="${createLink(controller: 'reportes', action: 'reporteTalleresExcel')}/" + $("#organizacion option:selected").val()
-                            } //callback
-                        } //guardar
+                        %{--aceptar  : {--}%
+                        %{--    id        : "btnSave",--}%
+                        %{--    label     : "<i class='fa fa-check'></i> Aceptar",--}%
+                        %{--    className : "btn-success",--}%
+                        %{--    callback  : function () {--}%
+                        %{--        location.href="${createLink(controller: 'reportes', action: 'reporteTalleresExcel')}/" + $("#organizacion option:selected").val()--}%
+                        %{--    } //callback--}%
+                        %{--} //guardar--}%
                     } //buttons
                 }); //dialog
             }
         })
     });
 
+
+
     $("#btnSocios").click(function () {
         $.ajax({
             type: 'POST',
             url: '${createLink(controller: 'reportes', action: 'organizaciones_ajax')}',
             data:{
+                tipo: 1
             },
             success: function (msg) {
-                var b = bootbox.dialog({
+                dialogoOrganizacion = bootbox.dialog({
                     id    : "dlOrganizacion",
                     title : "Seleccione una Organización",
                     message : msg,
@@ -606,6 +613,11 @@
             }
         })
     });
+
+
+    function cerrarDialogo(){
+        dialogoOrganizacion.modal("hide");
+    }
 
     $("#btnOrganizaciones").click(function () {
         $.ajax({

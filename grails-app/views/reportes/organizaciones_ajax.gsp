@@ -23,11 +23,13 @@
 %{--    <div class="col-md-4">--}%
 %{--        <g:select from="${[0: 'Provincia', 1: 'Código', 2 : 'Nombre']}" class="form-control" name="campo" optionValue="value" optionKey="key"/>--}%
 %{--    </div>--}%
-    <div class="col-md-6">
+    <div class="col-md-7">
         <input id="buscar" type="search" class="form-control">
     </div>
 %{--    <div class="col-md-2">--}%
         <a href="#" name="busqueda" class="btn btn-info btnBusqueda btn-ajax"><i class="fas fa-search"></i> Buscar
+        </a>
+        <a href="#" name="limpiar" class="btn btn-warning btnLimpiar btn-ajax"><i class="fas fa-eraser"></i> Limpiar
         </a>
 %{--    </div>--}%
 
@@ -41,7 +43,7 @@
     <p class="css-vertical-text">Resultado - Organizaciones</p>
 
     <div class="linea"></div>
-    <table class="table table-bordered table-hover table-condensed" style="width: 1070px;background-color: #a39e9e">
+    <table class="table table-bordered table-hover table-condensed" style="width: 100%;background-color: #a39e9e">
         <thead>
         <tr>
 %{--            <th class="alinear" style="width: 30%">Provincia</th>--}%
@@ -58,14 +60,25 @@
 
 <script type="text/javascript">
 
-    cargarOrganizaciones();
+    $(".btnLimpiar").click(function () {
+        $("#buscar").val("")
+        cargarOrganizaciones(null)
+    });
 
-    function cargarOrganizaciones() {
+    $(".btnBusqueda").click(function () {
+        var texto = $("#buscar").val();
+       cargarOrganizaciones(texto)
+    });
+
+    cargarOrganizaciones(null);
+
+    function cargarOrganizaciones(texto) {
         $.ajax({
             type: 'POST',
             url: '${createLink(controller: 'reportes', action: 'tablaOrganizaciones_ajax')}',
             data:{
-
+                texto: texto,
+                tipo: '${tipo}'
             },
             success: function (msg) {
                 $("#bandeja").html(msg)
