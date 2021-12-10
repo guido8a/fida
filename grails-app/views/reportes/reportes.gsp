@@ -593,14 +593,14 @@
                             callback  : function () {
                             }
                         },
-                        aceptar  : {
-                            id        : "btnSave",
-                            label     : "<i class='fa fa-check'></i> Aceptar",
-                            className : "btn-success",
-                            callback  : function () {
-                                location.href="${createLink(controller: 'reportes', action: 'reporteSociosExcel')}/" + $("#organizacion option:selected").val()
-                            } //callback
-                        } //guardar
+                        %{--aceptar  : {--}%
+                        %{--    id        : "btnSave",--}%
+                        %{--    label     : "<i class='fa fa-check'></i> Aceptar",--}%
+                        %{--    className : "btn-success",--}%
+                        %{--    callback  : function () {--}%
+                        %{--        location.href="${createLink(controller: 'reportes', action: 'reporteSociosExcel')}/" + $("#organizacion option:selected").val()--}%
+                        %{--    } //callback--}%
+                        %{--} //guardar--}%
                     } //buttons
                 }); //dialog
             }
