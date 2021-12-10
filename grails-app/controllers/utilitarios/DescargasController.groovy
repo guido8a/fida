@@ -58,8 +58,19 @@ class DescargasController {
     }
 
     def manualEvaluaciones() {
-        def nombre = "manual evaluaciones.pdf"
+        def nombre = "manual_evaluaciones.pdf"
         def path = '/var/fida/manual evaluaciones.pdf'
+        def file = new File(path)
+        def b = file.getBytes()
+        response.setContentType('pdf')
+        response.setHeader("Content-disposition", "attachment; filename=" + nombre)
+        response.setContentLength(b.length)
+        response.getOutputStream().write(b)
+    }
+
+    def manualConvenios() {
+        def nombre = "manual_convenios_y_talleres.pdf"
+        def path = '/var/fida/manual convenios y talleres.pdf'
         def file = new File(path)
         def b = file.getBytes()
         response.setContentType('pdf')
