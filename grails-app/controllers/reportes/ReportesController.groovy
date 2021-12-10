@@ -1785,5 +1785,10 @@ class ReportesController {
 
     }
 
+    def tablaOrganizaciones_ajax(){
+        def oraganizaciones = seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2)).sort{it.nombre}
+        return [organizaciones: oraganizaciones]
+    }
+
 
 }
