@@ -30,7 +30,7 @@ class WardInterceptor {
                     flash.message = "Usted ha superado el tiempo de inactividad máximo de la sesión"
                 }
                 render grailsLinkGenerator.link(controller: 'login', action: 'login', absolute: true)
-                redirect(controller: 'login', action: 'login')
+//                redirect(controller: 'login', action: 'login')
                 render "<script type='text/javascript'> window.location.href = '/' </script>"
                 session.finalize()
                 return false
