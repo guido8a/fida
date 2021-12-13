@@ -64,7 +64,7 @@
         height        : 30px;
         line-height   : 30px;
         text-align    : center;
-        font-family   : fantasy;
+        /*font-family   : fantasy;*/
         font-style    : italic;
         border-bottom : 1px solid black;
 
@@ -77,7 +77,7 @@
         height        : 40px;
         line-height   : 40px;
         text-align    : center;
-        font-family   : fantasy;
+        /*font-family   : fantasy;*/
         font-style    : italic;
         border-bottom : 1px solid black;
     }
