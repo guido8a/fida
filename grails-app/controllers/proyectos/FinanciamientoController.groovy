@@ -39,7 +39,7 @@ class FinanciamientoController {
                 order("descripcion", "asc")
             }
         }
-        return [proyecto: proyecto, financiamientos: financiamientos]
+        return [proyecto: proyecto, financiamientos: financiamientos, anio: anio]
     }
 
     /**

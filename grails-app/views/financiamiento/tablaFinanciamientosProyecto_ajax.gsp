@@ -81,7 +81,7 @@
                     log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
                     if (parts[0] == "SUCCESS") {
 //                        $("#tr_" + id).remove();
-                        reloadTabla();
+                        reloadTabla('${anio?.id}');
                     }
                 }
             });
