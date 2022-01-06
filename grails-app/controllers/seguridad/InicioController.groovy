@@ -375,7 +375,7 @@ class InicioController {
 
     def cargaTaller(rgst) {
         def errores = ""
-        def cnta = 0
+        def cnta = 0, cntaInas = 0
         def insertados = 0
         def repetidos = 0
         def cn = dbConnectionService.getConnection()
@@ -397,11 +397,11 @@ class InicioController {
 //            sqlParr = "select parr__id from parr where parrnmbr ilike '%${tx}%'"
             sqlParr = "select parr__id from parr, cntn, prov where parrnmbr ilike '%${tx}%' and " +
                     "cntn.cntn__id = parr.cntn__id and prov.prov__id = cntn.prov__id and " +
-                    "provnmbr ilike '${rgst[2].toString().trim()}'"
-//            println "sqlParr: $sqlParr"
+                    "provnmbr ilike '%${rgst[2].toString().trim()}%'"
+            println "sqlParr: $sqlParr"
             parr = cn.rows(sqlParr.toString())[0]?.parr__id
 
-//            println "parr: $parr"
+            println "parr: ${tx} --> $parr"
             if (!parr) {
                 sqlParr = "select cntn__id from cntn where cntnnmbr ilike '%${rgst[3]}%'"
                 def cntn = cn.rows(sqlParr.toString())[0]?.cntn__id
@@ -419,14 +419,42 @@ class InicioController {
             }
 
             def unejnmbr = rgst[8][rgst[8].indexOf(' ') + 1..-1]
+            def unej_ruc = rgst[9].toString().trim()
             def tllrfcha
 
             def comilla = rgst[22] ? "'" : ""
 
-            sql = "select unej__id from unej where unejnmbr ilike '%${unejnmbr.trim()}%'"
+//            sql = "select unej__id from unej where unejnmbr ilike '%${unejnmbr.trim()}%'"
+            sql = "select unej__id from unej where unej_ruc = '${unej_ruc}'"
             unej = cn.rows(sql.toString())[0]?.unej__id
+
+            /** Inserta la Organización si no existe */
+            if(!unej) {
+                zona = rgst[1].split(' ').last()
+                sql = "insert into unej (unej__id, unejinst, unejfcin, unejnmbr, unejnmsr, parr__id, unejdire, " +
+                        "unejlgal, unej_ruc, tpin__id) " +
+                        "values(default, 'IEPS', '1-jan-2019', '${rgst[8]}', ${zona}, ${parr}, 'ND', " +
+                        "'S', '${rgst[9]}', 2) returning unej__id"
+                println "sql ---> ${sql}"
+                    cn.eachRow(sql.toString()) { d ->
+                        unej = d.unej__id
+                    }
+                    println "UNEJ --> $unej"
+            }
+
             sql = "select tptl__id from tptl where tptldscr ilike '%${rgst[19]}%'"
             tptl = cn.rows(sql.toString())[0]?.tptl__id
+
+            if(!tptl) {
+                sql = "insert into tptl (tptl__id, tptldscr) " +
+                        "values(default, '${rgst[19]}') returning tptl__id"
+                println "sql ---> ${sql}"
+                cn.eachRow(sql.toString()) { d ->
+                    tptl = d.tptl__id
+                }
+                println "TPTL --> $tptl"
+            }
+
 
             rgst[20] = rgst[20] ?: ''
             if (rgst[20]?.size() > 6) {
@@ -447,7 +475,7 @@ class InicioController {
                         "values(default, '${parr}', '${unej}', 2, ${tptl}, 'Taller ${tllrfcha}', " +
                         "'${rgst[19]}', '${tllrfcha}', ${comilla}${rgst[22] ?: null}${comilla}) " +
                         "returning tllr__id"
-//                println "sql ---> ${sql}"
+                println "sql ---> ${sql}"
 
                 try {
                     cn.eachRow(sql.toString()) { d ->
@@ -456,8 +484,8 @@ class InicioController {
                     }
                 } catch (Exception ex) {
                     repetidos++
-//                    println "Error taller $ex"
-                    println "Error taller ${rgst[8]}"
+                    println "Error taller $ex --> ${rgst[8]}"
+//                    println "Error taller ${rgst[8]}"
 //                    println "sql: $sql"
                 }
             } else {
@@ -505,12 +533,16 @@ class InicioController {
                     insertados++
 
                     if (rgst[21]?.size() > 2) {
-                        inas = rgst[21].split('/')
+                        inas = rgst[21].split(',')
                         inas.each { d ->
                             sql = "select inst__id from inst where instdscr ilike '%${d.trim()}%'"
                             inst = cn.rows(sql.toString())[0]?.inst__id
-                            sql = "insert into inas(tllr__id, inst__id) values (${id}, ${inst})"
-                            cn.execute(sql.toString())
+                            sql = "select count(*) cnta from inas where inst__id = ${inst}"
+                            cntaInas = cn.rows(sql.toString())[0]?.cnta
+                            if(!cntaInas) {
+                                sql = "insert into inas(tllr__id, inst__id) values (${id}, ${inst})"
+                                cn.execute(sql.toString())
+                            }
                         }
                     }
 
@@ -530,6 +562,5 @@ class InicioController {
         cnta++
         return [errores: errores, insertados: insertados, repetidos: repetidos]
     }
-
 
 }
