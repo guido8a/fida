@@ -937,6 +937,7 @@ class ReportesController {
 
         def label
         def fila = 6;
+        def number
 
         label = new Label(0, 2, "REPORTE CRONOGRAMA DE EJECUCIÓN DEL AÑO:  " + (anio?.anio ?: ''), times16format); sheet.addCell(label);
         label = new Label(0, 3, "PROYECTO: " + proyecto?.descripcion ?: '', times16format); sheet.addCell(label);
@@ -948,7 +949,7 @@ class ReportesController {
         res.each{crono->
             label = new Label(0, fila, crono?.mrlgcomp?.toString() ?: '', times16formatN); sheet.addCell(label);
             label = new Label(1, fila, crono?.mrlgactv?.toString() ?: '', times16formatN); sheet.addCell(label);
-            label = new Label(2, fila, crono?.mrlgtotl?.toString() ?: '0', times16formatN); sheet.addCell(label);
+            number = new jxl.write.Number(2, fila, crono?.mrlgtotl ?: 0 ); sheet.addCell(number);
             fila++
         }
 
