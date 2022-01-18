@@ -153,6 +153,10 @@
                         <i class="fa fa-handshake fa-4x text-success"></i>
                         <br/> Convenios
                     </a>
+                    <a href="#" id="btnCronograma" class="btn btn-info btn-ajax example_c item" texto="cngr">
+                        <i class="fa fa-tasks fa-4x text-success"></i>
+                        <br/> Cronograma de ejecución
+                    </a>
                 </p>
             </div>
         </div>
@@ -311,6 +315,11 @@
     <p>Listado de capacitaciones por provincia</p>
 </div>
 
+<div id="cngr" style="display:none">
+    <h3>Cronograma</h3><br>
+    <p>Reporte del cronograma de ejecución por año</p>
+</div>
+
 <script type="text/javascript">
 
     var dialogoOrganizacion
@@ -347,6 +356,40 @@
             }
         })
     });
+
+    $("#btnCronograma").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'cronograma_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlCronograma",
+                    title : "Seleccione el año",
+                    message : msg,
+                    class   : "modal-sm",
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reporteCronogramaExcel')}?anio=" + $("#anioCrono option:selected").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
+
 
     $("#btnPoaGrupo").click(function () {
         $.ajax({

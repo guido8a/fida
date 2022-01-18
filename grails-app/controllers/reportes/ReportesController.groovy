@@ -805,6 +805,8 @@ class ReportesController {
 
     def encuesta_ajax(){}
 
+    def cronograma_ajax(){}
+
     def grupoGasto_ajax(){
         def sql =  "select prspnmro from prsp where prspnmro ilike '%0000' order by prspnmro;"
         def cn = dbConnectionService.getConnection()
@@ -889,6 +891,71 @@ class ReportesController {
         workbook.close();
         def output = response.getOutputStream()
         def header = "attachment; filename=" + "reporteExcelEncuestas_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+    }
+
+    def reporteCronogramaExcel(){
+        println("params rcex " + params)
+
+        def anio = Anio.get(params.anio)
+        def sql ="select * from cronograma(${anio.id})"
+        def cn = dbConnectionService.getConnection()
+        def res = cn.rows(sql.toString())
+
+        def proyecto = Proyecto.get(res.unique().proy__id)
+
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        def row = 0
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+//        sheet.setRowView(4,34)
+
+        // fija el ancho de la columna
+        sheet.setColumnView(0,60)
+        sheet.setColumnView(1,60)
+        sheet.setColumnView(2,30)
+        sheet.setColumnView(3,40)
+        sheet.setColumnView(4,40)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+//        autoSizeColumns(sheet, 10)
+
+        def label
+        def fila = 6;
+
+        label = new Label(0, 2, "REPORTE CRONOGRAMA DE EJECUCIÓN DEL AÑO:  " + (anio?.anio ?: ''), times16format); sheet.addCell(label);
+        label = new Label(0, 3, "PROYECTO: " + proyecto?.descripcion ?: '', times16format); sheet.addCell(label);
+        label = new Label(0, 5, "COMPONENTE", times16format); sheet.addCell(label);
+        label = new Label(1, 5, "ACTIVIDAD", times16format); sheet.addCell(label);
+        label = new Label(2, 5, "TOTAL AÑO", times16format); sheet.addCell(label);
+
+
+        res.each{crono->
+            label = new Label(0, fila, crono?.mrlgcomp?.toString() ?: '', times16formatN); sheet.addCell(label);
+            label = new Label(1, fila, crono?.mrlgactv?.toString() ?: '', times16formatN); sheet.addCell(label);
+            label = new Label(2, fila, crono?.mrlgtotl?.toString() ?: '0', times16formatN); sheet.addCell(label);
+            fila++
+        }
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteCronogramaEjecucion_" + new Date().format("dd-MM-yyyy") + ".xls";
         response.setContentType("application/octet-stream")
         response.setHeader("Content-Disposition", header);
         output.write(file.getBytes());
