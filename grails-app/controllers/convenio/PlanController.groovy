@@ -215,7 +215,7 @@ class PlanController {
         def cnvn = Convenio.findByPlanesNegocio(plns)
         def periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(plns)
         def planes = Plan.findAllByPlanesNegocio(plns, [sort: 'grupoActividad.descripcion'])
-        println "planesConvenio --> ${plns.id}"
+//        println "planesConvenio --> ${plns.id}"
         return[planNs: plns, planes: planes, cnvn: cnvn, periodo: periodo]
     }
 

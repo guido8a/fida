@@ -134,6 +134,10 @@
                         <i class="fa fa-paste fa-4x text-success"></i>
                         <br/> Encuestas
                     </a>
+                    <a href="#" id="btnTaller" class="btn btn-info btn-ajax example_c item" texto="pttl">
+                        <i class="fa fa-user-graduate fa-4x text-success"></i>
+                        <br/> Participantes por taller
+                    </a>
                 </p>
             </div>
         </div>
@@ -238,6 +242,11 @@
 <div id="undd" style="display:none">
     <h3>Reporte de encuestas</h3><br>
     <p>Reporte de las encuestas generadas en el sistema</p>
+</div>
+
+<div id="pttl" style="display:none">
+    <h3>Reporte de participantes de talleres</h3><br>
+    <p>Reporte de participantes de talleres por año</p>
 </div>
 
 <div id="trnp" style="display:none">
@@ -349,6 +358,39 @@
                             className : "btn-success",
                             callback  : function () {
                                 location.href="${createLink(controller: 'reportes', action: 'reportesEncuestasExcel')}?fi=" + $("#fechaInicio").val() + "&ff=" + $("#fechaFin").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
+
+    $("#btnTaller").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'talleres_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlParxTaller",
+                    title : "Seleccione",
+                    message : msg,
+                    class   : "modal-sm",
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reporteParticipantesXTallerExcel')}?anio=" + $("#anio_1").val()
                             } //callback
                         } //guardar
                     } //buttons

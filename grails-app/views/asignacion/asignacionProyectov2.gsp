@@ -23,9 +23,9 @@
                 <i class="fa fa-plus"></i> Agregar Asignaciones
             </g:link>
     --}%
-        <a class="btn btn-default btn-sm" id="btnReporteAsignaciones">
-            <i class="fa fa-print"></i> Reporte Asignaciones
-        </a>
+%{--        <a class="btn btn-default btn-sm" id="btnReporteAsignaciones">--}%
+%{--            <i class="fa fa-print"></i> Reporte Asignaciones--}%
+%{--        </a>--}%
 %{--        <a class="btn btn-default btn-sm" id="reporte2">--}%
 %{--            <i class="fa fa-print"></i> Reporte Asignaciones planificado--}%
 %{--        </a>--}%
