@@ -906,9 +906,9 @@ class ReportesController {
 
         println("params " + params)
 
-//        def anio = Anio.get(params.anio)
-//        def anioEntero = anio.anio.toInteger()
-        def anioEntero = params.anio.toInteger()
+        def anio = Anio.get(params.anio)
+        def anioEntero = anio.anio.toInteger()
+//        def anioEntero = params.anio.toInteger()
 
         //excel
         WorkbookSettings workbookSettings = new WorkbookSettings()
@@ -926,9 +926,9 @@ class ReportesController {
 //        sheet.setRowView(4,34)
 
         // fija el ancho de la columna
-        sheet.setColumnView(0,20)
+        sheet.setColumnView(0,60)
         sheet.setColumnView(1,20)
-        sheet.setColumnView(2,60)
+        sheet.setColumnView(2,20)
         sheet.setColumnView(3,30)
         sheet.setColumnView(4,30)
         sheet.setColumnView(5,20)
@@ -944,11 +944,10 @@ class ReportesController {
         def fila = 5;
         def number
 
-        label = new Label(1, 1, "PARTICIPANTES DE TALLER POR AÑO", times16format); sheet.addCell(label);
-        label = new Label(1, 2, "AÑO: ${anioEntero}", times16format); sheet.addCell(label);
-        label = new Label(0, 4, "RAZA", times16format); sheet.addCell(label);
-        label = new Label(1, 4, "SEXO", times16format); sheet.addCell(label);
-        label = new Label(2, 4, "TIPO DE TALLER", times16format); sheet.addCell(label);
+        label = new Label(1, 1, "PARTICIPANTES DEL TALLER DEL AÑO: ${anioEntero}", times16format); sheet.addCell(label);
+        label = new Label(0, 4, "TIPO DE TALLER", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "RAZA", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "SEXO", times16format); sheet.addCell(label);
         label = new Label(3, 4, "PARTICIPANTES JÓVENES", times16format); sheet.addCell(label);
         label = new Label(4, 4, "PARTICIPANTES NO JÓVENES", times16format); sheet.addCell(label);
         label = new Label(5, 4, "TOTAL", times16format); sheet.addCell(label);
@@ -957,11 +956,10 @@ class ReportesController {
         def cn = dbConnectionService.getConnection()
         def res = cn.rows(sql.toString())
 
-
         res.each{socio->
-            label = new Label(0, fila,  socio?.raza?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(1, fila,  socio?.sexo?.toString() == 'F' ? 'FEMENINO' : 'MASCULINO', times16formatN); sheet.addCell(label);
-            label = new Label(2, fila,  socio?.tptl?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(0, fila,  socio?.tptl?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(1, fila,  socio?.raza?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(2, fila,  socio?.sexo?.toString() == 'F' ? 'FEMENINO' : 'MASCULINO', times16formatN); sheet.addCell(label);
             number = new jxl.write.Number(3, fila, socio?.jovn); sheet.addCell(number);
             number = new jxl.write.Number(4, fila, socio?.nojv); sheet.addCell(number);
             number = new jxl.write.Number(5, fila, socio?.cntd); sheet.addCell(number);
