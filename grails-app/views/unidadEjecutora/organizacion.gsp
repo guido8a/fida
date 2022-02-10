@@ -124,20 +124,8 @@
         </div>
         <div class="form-group ${hasErrors(bean: unidad, field: 'codigo', 'error')}  ${hasErrors(bean: unidad, field: 'fechaInicio', 'error')}">
             <span class="grupo">
-                <label class="col-md-2 control-label text-info">
-                    Fecha Inicio
-                </label>
-
-                <div class="col-md-2">
-                    <input name="fechaInicio" id='datetimepicker1' type='text' class="form-control"
-                           value="${unidad?.fechaInicio?.format("dd-MM-yyyy")}"/>
-
-                    <p class="help-block ui-helper-hidden"></p>
-                </div>
-            </span>
-            <span class="grupo">
-                <label for="ruc" class="col-md-1 control-label text-info">
-                    Ruc
+                <label for="ruc" class="col-md-2 control-label text-info">
+                    RUC
                 </label>
 
                 <div class="col-md-2">
@@ -150,12 +138,27 @@
 
             </span>
             <span class="grupo">
-                <label for="rup" class="col-md-1 control-label text-info">
-                    Rup
+                <label class="col-md-1 control-label text-info">
+                    Fecha Inicio
                 </label>
 
                 <div class="col-md-2">
-                    <g:textField name="rup" maxlength="13" class="form-control input-sm" value="${unidad?.rup}"/>
+                    <input name="fechaInicio" id='datetimepicker1' type='text' class="form-control"
+                           value="${unidad?.fechaInicio?.format("dd-MM-yyyy")}"/>
+
+                    <p class="help-block ui-helper-hidden"></p>
+                </div>
+            </span>
+            <span class="grupo">
+                <label for="rup" class="col-md-1 control-label text-info">
+                    Tipo
+                </label>
+
+                <div class="col-md-2">
+                    <g:select name="tipoOrganizacion" from="${taller.TipoOrganizacion.list().sort{it.descripcion}}"
+                              class="form-control" value="${unidad?.tipoOrganizacion?.id}"
+                              optionValue="descripcion" optionKey="id"/>
+%{--                    <g:textField name="rup" maxlength="13" class="form-control input-sm" value="${unidad?.rup}"/>--}%
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>
@@ -326,13 +329,27 @@
                 </label>
 
                 <div class="col-md-1">
-%{--                    <g:textField name="anio" maxlength="2" class="form-control digits input-sm" value="${unidad?.anio ?: ''}"/>--}%
                      <g:textField name="anio" maxlength="2" class="form-control digits input-sm" readonly=""
                          value="${anios}"/>
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>
         </div>
+%{--
+        <div class="form-group ${hasErrors(bean: unidad, field: 'legal', 'error')}${hasErrors(bean: unidad, field: 'anio', 'error')} ">
+            <span class="grupo">
+                <label for="anio" class="col-md-2 control-label text-info">
+                    Capacitado en Fortalecimiento INúmero de Años
+                </label>
+
+                <div class="col-md-1">
+                     <g:textField name="anio" maxlength="2" class="form-control digits input-sm" readonly=""
+                         value="${anios}"/>
+                    <p class="help-block ui-helper-hidden"></p>
+                </div>
+            </span>
+        </div>
+--}%
     </g:form>
 
 </div>

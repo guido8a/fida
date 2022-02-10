@@ -95,7 +95,7 @@
                     </label>
 
                     <div class="col-md-9">
-                        <g:select id="tipoTaller" name="tipoTaller.id" from="${taller.TipoTaller.list()}"
+                        <g:select id="tipoTaller" name="tipoTaller.id" from="${taller.TipoTaller.list([sort: 'descripcion'])}"
                                   optionKey="id" value="${tallerInstance?.tipoTaller?.id}"
                                   class="many-to-one form-control input-sm required"/>
                     </div>
