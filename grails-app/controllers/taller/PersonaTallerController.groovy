@@ -113,6 +113,10 @@ class PersonaTallerController {
                 texto = "Persona creada correctamente"
             }
 
+            if(!params.edad){
+                params.edad = 0
+            }
+
             personaTaller.properties = params
             personaTaller.fecha = new Date()
             personaTaller.parroquia = parroquia

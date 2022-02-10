@@ -104,7 +104,7 @@
                 </label>
                 <span class="grupo">
                     <div class="col-md-3">
-                        <g:select from="${[0: 'NO', 1: 'SI']}" optionKey="key" optionValue="value" name="discapacidad" class="form-control"/>
+                        <g:select from="${['0': 'NO', '1': 'SI']}" value="${beneficiario?.discapacidad ?: 0}" optionKey="key" optionValue="value" name="discapacidad" class="form-control"/>
                     </div>
                 </span>
             </div>
@@ -147,13 +147,13 @@
                            value="${beneficiario?.fechaInicio?.format("dd-MM-yyyy")}"/>
                 </div>
             </div>
-            <div class="form-group keeptogether ${hasErrors(bean: beneficiario, field: 'raza', 'error')} ">
+            <div class="form-group keeptogether ${hasErrors(bean: beneficiario, field: 'jefeFamilia', 'error')} ">
                 <label for="jefeFamilia" class="col-md-3 control-label">
                     Jefe de familia
                 </label>
                 <span class="grupo">
                     <div class="col-md-3">
-                        <g:select from="${[0: 'NO', 1: 'SI']}" optionKey="key" optionValue="value" name="jefeFamilia" class="form-control"/>
+                        <g:select from="${[0: 'NO', 1: 'SI']}" value="${beneficiario?.jefeFamilia ?: 0}" optionKey="key" optionValue="value" name="jefeFamilia" class="form-control"/>
                     </div>
                 </span>
             </div>

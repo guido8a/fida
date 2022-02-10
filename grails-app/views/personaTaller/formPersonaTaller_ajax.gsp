@@ -59,8 +59,8 @@
                     </label>
                     <span class="grupo">
                         <div class="col-md-2">
-                            <g:textField name="edad" maxlength="10" class="form-control input-sm digits"
-                                         value="${prtlInstance?.edad ?: ''}"/>
+                            <g:textField name="edad" maxlength="2" class="form-control input-sm digits"
+                                         value="${prtlInstance?.edad != 0 ? prtlInstance?.edad : ''}"/>
                         </div>
                     </span>
                 </span>
@@ -157,7 +157,7 @@
                 </label>
                 <span class="grupo">
                     <div class="col-md-3">
-                        <g:select from="${[0: 'NO', 1: 'SI']}" optionKey="key" optionValue="value" name="discapacidad" class="form-control"/>
+                        <g:select from="${[0: 'NO', 1: 'SI']}" optionKey="key" value="${prtlInstance?.discapacidad}" optionValue="value" name="discapacidad" class="form-control"/>
                     </div>
                 </span>
             </div>
@@ -190,6 +190,17 @@
                     <div class="col-md-5">
                         <g:textField name="mail" maxlength="63" class="form-control input-sm email"
                                      value="${prtlInstance?.mail ?: ''}"/>
+                    </div>
+                </span>
+            </div>
+
+            <div class="form-group keeptogether ${hasErrors(bean: prtlInstance, field: 'jefeFamilia', 'error')} ">
+                <label for="jefeFamilia" class="col-md-3 control-label">
+                    Jefe de familia
+                </label>
+                <span class="grupo">
+                    <div class="col-md-3">
+                        <g:select from="${[0: 'NO', 1: 'SI']}" value="${prtlInstance?.jefeFamilia ?: 0}" optionKey="key" optionValue="value" name="jefeFamilia" class="form-control"/>
                     </div>
                 </span>
             </div>

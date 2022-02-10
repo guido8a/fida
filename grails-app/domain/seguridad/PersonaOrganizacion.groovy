@@ -66,7 +66,7 @@ class PersonaOrganizacion implements Auditable{
         mail(size: 3..63, blank: true, nullable: true)
         fecha(blank: true, nullable: true)
         telefono(size: 0..31, blank: true, nullable: true, attributes: [title: 'teléfono'])
-        discapacidad(size: 0..15, blank: true, nullable: true)
+        discapacidad(size: 1..1, blank: true, nullable: true)
         direccion(size: 0..255, blank: true, nullable: true)
         referencia(size: 0..255, blank: true, nullable: true)
 //        representante(blank: true, nullable: true)
