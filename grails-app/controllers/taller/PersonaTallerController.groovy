@@ -95,6 +95,7 @@ class PersonaTallerController {
         def texto
         def cmnd = null
 
+        println "save_ajax --> $params"
         if(params.parroquia){
             def parroquia = Parroquia.get(params.parroquia)
 
@@ -102,8 +103,7 @@ class PersonaTallerController {
                 cmnd = Comunidad.get(params.comunidad.toInteger())
             }
 
-            params.fechaInicio = params.fechaInicio ? new Date().parse("dd-MM-yyyy", params.fechaInicio) : null
-            params.fechaFin = params.fechaFin ? new Date().parse("dd-MM-yyyy", params.fechaFin) : null
+            params.fechaNacimiento = params.fechaNacimiento ? new Date().parse("dd-MM-yyyy", params.fechaNacimiento) : null
 
             if(params.id){
                 personaTaller = PersonaTaller.get(params.id)

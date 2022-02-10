@@ -24,7 +24,7 @@ class PersonaTaller implements Auditable {
     String telefono
     int edad
     String celular
-    Date fechaNacimeinto
+    Date fechaNacimiento
     String jefeFamilia
 
     static auditable = true
@@ -56,7 +56,7 @@ class PersonaTaller implements Auditable {
             telefono column: 'prtltelf'
             edad column: 'prtledad'
             celular column: 'prtlcell'
-            fechaNacimeinto column: 'prtlfcna'
+            fechaNacimiento column: 'prtlfcna'
             jefeFamilia column: 'prtljffm'
         }
     }
@@ -77,7 +77,7 @@ class PersonaTaller implements Auditable {
         mail(blank: true, nullable: true)
         edad(blank: true, nullable: true)
         celular(blank: true, nullable: true)
-        fechaNacimeinto(blank: true, nullable: true)
+        fechaNacimiento(blank: true, nullable: true)
         jefeFamilia(blank: false, nullable: false)
 
     }

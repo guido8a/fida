@@ -54,15 +54,18 @@
                         <g:textField name="cedula" maxlength="10" class="form-control input-sm required digits"
                                      value="${prtlInstance?.cedula}"/>
                     </div>
-                    <label for="edad" class="col-md-2 control-label">
-                        Edad
+                    <button class="col-md-1 btn btn-sm" id="btnCedula">
+                        <i class="fa fa-info-circle"></i>
+                    </button>
+                    <label class="col-md-2 control-label">
+                        Fecha nacimiento
                     </label>
-                    <span class="grupo">
-                        <div class="col-md-2">
-                            <g:textField name="edad" maxlength="2" class="form-control input-sm digits"
-                                         value="${prtlInstance?.edad != 0 ? prtlInstance?.edad : ''}"/>
-                        </div>
-                    </span>
+                    <div class="col-md-3" >
+                        <input name="fechaNacimiento" id='fechaNa' type='text' class="form-control"
+                               value="${prtlInstance?.fechaNacimiento?.format("dd-MM-yyyy")}"/>
+                    </div>
+
+
                 </span>
             </div>
 
@@ -203,11 +206,31 @@
                         <g:select from="${[0: 'NO', 1: 'SI']}" value="${prtlInstance?.jefeFamilia ?: 0}" optionKey="key" optionValue="value" name="jefeFamilia" class="form-control"/>
                     </div>
                 </span>
+                <label for="edad" class="col-md-2 control-label">
+                    Edad
+                </label>
+                <span class="grupo">
+                    <div class="col-md-2">
+                        <g:textField name="edad" maxlength="2" class="form-control input-sm digits"
+                                     value="${prtlInstance?.edad != 0 ? prtlInstance?.edad : ''}"  readOnly='true' />
+                    </div>
+                </span>
+
             </div>
+
+
         </g:form>
     </div>
 
     <script type="text/javascript">
+
+        $('#fechaNa').datetimepicker({
+            locale: 'es',
+            format: 'DD-MM-YYYY',
+            daysOfWeekDisabled: [0, 6],
+            sideBySide: true,
+            showClose: true,
+        });
 
 
         $(".form-control").keydown(function (ev) {
@@ -291,6 +314,26 @@
             })
         }
 
+        $('#btnCedula').click(function () {
+            var cdla = $("#cedula").val();
+            $.ajax({
+                type    : "POST",
+                url     : '${createLink(controller: 'personaOrganizacion', action:'cedula_ajax')}',
+                data    : {cdla: cdla},
+                success : function (msg) {
+                    var parts = msg.split("*");
+                    if (parts[0] == "SUCCESS") {
+                        $("#nombre").val(parts[1])
+                        $("#apellido").val(parts[1])
+                        $("#fechaNa").val(parts[2])
+                        $("#direccion").val(parts[3])
+                    } else {
+                        log('No se ha encontrado la cédula', "error");
+                    }
+                }
+            });
+            return false;
+        });
 
 
     </script>
