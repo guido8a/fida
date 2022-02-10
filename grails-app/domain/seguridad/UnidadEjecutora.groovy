@@ -7,6 +7,7 @@ import parametros.Anio
 import poa.Asignacion
 import proyectos.MarcoLogico
 import proyectos.Proyecto
+import taller.TipoOrganizacion
 
 class UnidadEjecutora implements Auditable{
 
@@ -36,6 +37,7 @@ class UnidadEjecutora implements Auditable{
     String actividad
     String actividadSecundaria
     String fortaleza
+    TipoOrganizacion tipoOrganizacion
 
     static auditable = true
 
@@ -73,6 +75,7 @@ class UnidadEjecutora implements Auditable{
             actividad column: 'unejactv'
             actividadSecundaria column: 'unejacsc'
             fortaleza column: 'unejfort'
+            tipoOrganizacion column: 'tpor__id'
         }
     }
     static constraints = {
@@ -102,6 +105,7 @@ class UnidadEjecutora implements Auditable{
         actividad(blank: true, nullable: true)
         actividadSecundaria(blank: true, nullable: true)
         fortaleza(blank: true, nullable: true)
+        tipoOrganizacion(blank: false, nullable: false)
     }
 
     @Override

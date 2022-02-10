@@ -6,11 +6,9 @@ import javax.xml.soap.SOAPConnection
 import javax.xml.soap.SOAPConnectionFactory
 import javax.xml.soap.SOAPMessage
 
+class ConsultaService {
 
-class ConsultaController {
-
-
-    def soap() {
+    def soap(id, cedula, ruc) {
         MessageFactory msgFactory     = MessageFactory.newInstance();
         SOAPMessage message           = msgFactory.createMessage();
 
@@ -26,22 +24,21 @@ class ConsultaController {
         String url = 'http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl';
 
         /* id: 1 Cédula, 2, RUC, 3 Organización */
-        println "--> params: ${params.id}"
 //        def sobre_xml = consulta(cédula o ruc, paquete)
         def sobre_xml
-        switch (params.id) {
+        switch (id) {
             case '1':
-                sobre_xml = consulta(params.cedula, 185)
+                sobre_xml = consulta(cedula, 185)
                 break
             case '2':
-                sobre_xml = consultaRuc(params.ruc) //186
+                sobre_xml = consultaRuc(ruc) //186
                 break
             case '3':
-                sobre_xml = consultaSeps(params.ruc)  //1119
+                sobre_xml = consultaSeps(ruc)  //1119
                 break
         }
 
-        println sobre_xml
+//        println sobre_xml
 
 //        SOAPBody body = message.setSOAPBody(sobre_xml);
         SOAPMessage soapRequest = MessageFactory.newInstance().createMessage(mimeHeaders,
@@ -52,18 +49,16 @@ class ConsultaController {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         soapResponse.writeTo(out);
         String strMsg = new String(out.toByteArray())
-        println "xml: ${strMsg}"
+//        println "xml: ${strMsg}"
 
-        switch (params.id) {
+        switch (id) {
             case '1':
-                println "respuesta: ${parseXml(strMsg)}"
-                render( "Persona: " + parseXml(strMsg) )
+//                println "respuesta: ${parseXml(strMsg)}"
                 return parseXml(strMsg)
                 break
             case '2':
-                println "respuesta: ${parseXmlRuc(strMsg)}"
-                render( "razón social: " + parseXmlRuc(strMsg)."RAZON SOCIAL" )
-
+//                println "respuesta: ${parseXmlRuc(strMsg)}"
+                return parseXmlRuc(strMsg)
                 break
             case '3':
                 println "respuesta: ${parseXmlOrganizacion(strMsg)}"
@@ -85,115 +80,12 @@ class ConsultaController {
         def lugar = response.Body.getFichaGeneralResponse.return.instituciones.datosPrincipales.registros[3].valor
         def nacionalidad = response.Body.getFichaGeneralResponse.return.instituciones.datosPrincipales.registros[4].valor
 
-        return ["PERSONA":  nombre.text(), "FCNA": fecha.text(),
-                "LUGAR": lugar.text(), "NACIONALIDAD": nacionalidad.text()]
-
-        println("CP:  " + codigoPaquete.text())
-        println("NOMBRE:  " + nombre.text())
-        println("CONDICION:  " + ciudadano.text())
-        println("FECHA  " + fecha.text())
-        println("LUGAR  " + lugar.text())
-        println("NACIONALIDAD  " + nacionalidad.text())
-//        println("list " + list)
-
-        return [nombre: nombre.text()]
+        return ["persona":  nombre.text(), "fcna": fecha.text(),
+                "lugar": lugar.text(), "nacionalidad": nacionalidad.text()]
     }
 
 
     def parseXmlRuc(text){
-
-//
-//        def text = '''
-//<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-//<soap:Body>
-//<ns2:getFichaGeneralResponse xmlns:ns2="http://servicio.interoperadorws.interoperacion.dinardap.gob.ec/">
-//<return>
-//<codigoPaquete>186</codigoPaquete>
-//<instituciones>
-//<datosPrincipales>
-//<registros>
-//<campo>personaSociedad</campo>
-//<codigo>115</codigo>
-//<valor>SCD</valor>
-//</registros>
-//<registros>
-//<campo>razonSocial</campo>
-//<codigo>116</codigo>
-//<valor>TEDEIN S.A.</valor>
-//</registros>
-//<registros>
-//<campo>actividadEconomicaPrincipal</campo>
-//<codigo>124</codigo>
-//<valor>VENTA AL POR MENOR DE PROGRAMAS INFORMATICOS NO PERSONALIZADOS, EN ESTABLECIMIENTOS ESPECIALIZADOS.</valor>
-//</registros>
-//<registros>
-//<campo>estadoSociedad</campo>
-//<codigo>126</codigo>
-//<valor>ACT</valor>
-//</registros>
-//<registros>
-//<campo>tipoContribuyente</campo>
-//<codigo>127</codigo>
-//<valor>COMPAÑIAS ANONIMAS</valor>
-//</registros>
-//<registros>
-//<campo>DESCRIPCION UBICACION GEAOGRAFICA</campo>
-//<codigo>1073</codigo>
-//<valor>\\ COSTA\\ GUAYAS</valor>
-//</registros>
-//</datosPrincipales>
-//<detalle>
-//<items>
-//<nombre>SRI Establecimiento</nombre>
-//<registros>
-//<campo>numeroEstableciminiento</campo>
-//<codigo>130</codigo>
-//<valor>1</valor>
-//</registros>
-//<registros>
-//<campo>nombreFantasiaComercial</campo>
-//<codigo>131</codigo>
-//<valor></valor>
-//</registros>
-//<registros>
-//<campo>estadoEstablecimiento</campo>
-//<codigo>132</codigo>
-//<valor>ABIERTO</valor>
-//</registros>
-//<registros>
-//<campo>calle</campo>
-//<codigo>133</codigo>
-//<valor>TUNGURAHUA</valor>
-//</registros>
-//<registros>
-//<campo>interseccion</campo>
-//<codigo>134</codigo>
-//<valor>HURTADO</valor>
-//</registros>
-//<registros>
-//<campo>numero</campo>
-//<codigo>135</codigo>
-//<valor>600</valor>
-//</registros>
-//</items>
-//<items>
-//<nombre>REPRESENTANTE LEGAL</nombre>
-//<registros>
-//<campo>REPRESENTANTE LEGAL::IDENTIFICACION</campo>
-//<codigo>1106</codigo>
-//<valor>0601983869</valor>
-//</registros><registros>
-//<campo>REPRESENTANTE LEGAL::NOMBRE</campo>
-//<codigo>1107</codigo>
-//<valor>OCHOA MORENO GUIDO EDUARDO</valor>
-//</registros>
-//</items>
-//</detalle>
-//<nombre>SRI</nombre>
-//</instituciones>
-//</return>
-//</ns2:getFichaGeneralResponse></soap:Body></soap:Envelope>
-//        '''
         def response = new XmlSlurper().parseText(text)
         def codigoPaquete = response.Body.getFichaGeneralResponse.return.codigoPaquete
         def personaSociedad = response.Body.getFichaGeneralResponse.return.instituciones.datosPrincipales.registros[0].valor
@@ -211,151 +103,30 @@ class ConsultaController {
         def representanteLegalId = response.Body.getFichaGeneralResponse.return.instituciones.detalle.items[1].registros[0].valor
         def representanteLegalNombre = response.Body.getFichaGeneralResponse.return.instituciones.detalle.items[1].registros[1].valor
 
-        return ["CP": codigoPaquete.text(), "PERSONA SOCIEDAD": personaSociedad.text(),
-                "RAZON SOCIAL": razonSocial.text(), "ACTIVIDAD ECONOMICA": actividadEconomicaPrincipal.text()]
-        /*
-                        println("ESTADO SOCIEDAD:  " + estadoSociedad.text())
-                        println("TIPO DE CONTRIBUYENTE:  " + tipoContribuyente.text())
-                        println("UBICACION:  " + ubicacion.text())
-                        println("NUMERO ESTABLECIMIENTO:  " + numeroEstableciminiento.text())
-                        println("FANTASIA COMERCIAL:  " + nombreFantasiaComercial.text())
-                        println("ESTADO ESTABLECIMIENTO:  " + estadoEstablecimiento.text())
-                        println("CALLE:  " + calle.text())
-                        println("INTERSECCION:  " + interseccion.text())
-                        println("NUMERO:  " + numero.text())
-                        println("REPRESENTANTE LEGAL IDENTIFICACION:  " + representanteLegalId.text())
-                        println("REPRESENTANTE LEGAL NOMBRE:  " + representanteLegalNombre.text())
-        ]
-*/
-        println("CP:  " + codigoPaquete.text())
-        println("PERSONA SOCIEDAD:  " + personaSociedad.text())
-        println("RAZON SOCIAL:  " + razonSocial.text())
-        println("ACTIVIDAD ECONOMICA:  " + actividadEconomicaPrincipal.text())
-        println("ESTADO SOCIEDAD:  " + estadoSociedad.text())
-        println("TIPO DE CONTRIBUYENTE:  " + tipoContribuyente.text())
-        println("UBICACION:  " + ubicacion.text())
-        println("NUMERO ESTABLECIMIENTO:  " + numeroEstableciminiento.text())
-        println("FANTASIA COMERCIAL:  " + nombreFantasiaComercial.text())
-        println("ESTADO ESTABLECIMIENTO:  " + estadoEstablecimiento.text())
-        println("CALLE:  " + calle.text())
-        println("INTERSECCION:  " + interseccion.text())
-        println("NUMERO:  " + numero.text())
-        println("REPRESENTANTE LEGAL IDENTIFICACION:  " + representanteLegalId.text())
-        println("REPRESENTANTE LEGAL NOMBRE:  " + representanteLegalNombre.text())
+        return ["persona": personaSociedad.text(), "nombre": razonSocial.text(),
+                "actividad": actividadEconomicaPrincipal.text(), lugar: ubicacion.text()]
+
+//        println("CP:  " + codigoPaquete.text())
+//        println("PERSONA SOCIEDAD:  " + personaSociedad.text())
+//        println("RAZON SOCIAL:  " + razonSocial.text())
+//        println("ACTIVIDAD ECONOMICA:  " + actividadEconomicaPrincipal.text())
+//        println("ESTADO SOCIEDAD:  " + estadoSociedad.text())
+//        println("TIPO DE CONTRIBUYENTE:  " + tipoContribuyente.text())
+//        println("UBICACION:  " + ubicacion.text())
+//        println("NUMERO ESTABLECIMIENTO:  " + numeroEstableciminiento.text())
+//        println("FANTASIA COMERCIAL:  " + nombreFantasiaComercial.text())
+//        println("ESTADO ESTABLECIMIENTO:  " + estadoEstablecimiento.text())
+//        println("CALLE:  " + calle.text())
+//        println("INTERSECCION:  " + interseccion.text())
+//        println("NUMERO:  " + numero.text())
+//        println("REPRESENTANTE LEGAL IDENTIFICACION:  " + representanteLegalId.text())
+//        println("REPRESENTANTE LEGAL NOMBRE:  " + representanteLegalNombre.text())
 
     }
 
 
     def parseXmlOrganizacion(text) {
 
-//        def text = '''
-//
-//<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-//<soap:Body>
-//<ns2:getFichaGeneralResponse xmlns:ns2="http://servicio.interoperadorws.interoperacion.dinardap.gob.ec/">
-//<return>
-//<codigoPaquete>1119</codigoPaquete>
-//<instituciones>
-//<datosPrincipales>
-//<registros>
-//<campo>calle</campo>
-//<codigo>930</codigo>
-//<valor>QUINTA</valor>
-//</registros>
-//<registros>
-//<campo>canton</campo>
-//<codigo>931</codigo>
-//<valor>ESMERALDAS</valor>
-//</registros>
-//<registros>
-//<campo>cedulaRepresentante</campo>
-//<codigo>932</codigo>
-//<valor>0800822207</valor>
-//</registros>
-//<registros>
-//<campo>claseOrganizacion</campo>
-//<codigo>934</codigo>
-//<valor>TEXTIL</valor>
-//</registros>
-//<registros>
-//<campo>correoOrganizacion</campo>
-//<codigo>937</codigo>
-//<valor>perlatex_2014@hotmail.com</valor>
-//</registros>
-//<registros>
-//<campo>estadoOrganizacion</campo>
-//<codigo>939</codigo>
-//<valor>ACTIVA</valor>
-//</registros>
-//<registros>
-//<campo>fechaRegistroSeps</campo>
-//<codigo>940</codigo>
-//<valor>2014-05-19T00:00:00-05:00</valor>
-//</registros>
-//<registros>
-//<campo>grupoOrganizacion</campo>
-//<codigo>941</codigo>
-//<valor>PRODUCCION</valor>
-//</registros>
-//<registros>
-//<campo>interseccion</campo>
-//<codigo>942</codigo>
-//<valor>OCTAVA</valor>
-//</registros>
-//<registros>
-//<campo>nombreRepresentanteLegal</campo>
-//<codigo>943</codigo>
-//<valor>ORTIZ ARIAS ANGEL ROSENDO</valor>
-//</registros>
-//<registros>
-//<campo>numero</campo>
-//<codigo>945</codigo>
-//<valor>S/N</valor>
-//</registros>
-//<registros>
-//<campo>numeroResolucionSeps</campo>
-//<codigo>946</codigo>
-//<valor>SEPS-ROEPS-2014-900322</valor>
-//</registros>
-//<registros>
-//<campo>parroquia</campo>
-//<codigo>947</codigo>
-//<valor>SIMÓN PLATA TORRES</valor>
-//</registros>
-//<registros>
-//<campo>provincia</campo>
-//<codigo>948</codigo>
-//<valor>ESMERALDAS</valor>
-//</registros>
-//<registros>
-//<campo>razonSocial</campo>
-//<codigo>949</codigo>
-//<valor>ASOCIACION DE CONFECCIONISTAS TEXTILES PERLATEX ASOPERLAT</valor>
-//</registros>
-//<registros>
-//<campo>ruc</campo>
-//<codigo>951</codigo>
-//<valor>0891744609001</valor>
-//</registros>
-//<registros>
-//<campo>telefono</campo>
-//<codigo>952</codigo>
-//<valor>022156123</valor>
-//</registros>
-//<registros>
-//<campo>tipoOrganizacion</campo>
-//<codigo>953</codigo>
-//<valor>ASOCIACION</valor>
-//</registros>
-//</datosPrincipales>
-//<nombre>Superintendencia de Economía Popular y Solidaria</nombre>
-//</instituciones>
-//</return>
-//</ns2:getFichaGeneralResponse>
-//</soap:Body>
-//</soap:Envelope>
-//
-//        '''
         def response = new XmlSlurper().parseText(text)
         def codigoPaquete = response.Body.getFichaGeneralResponse.return.codigoPaquete
         def calle = response.Body.getFichaGeneralResponse.return.instituciones.datosPrincipales.registros[0].valor
@@ -379,7 +150,7 @@ class ConsultaController {
 
         return ["CP": codigoPaquete.text(), "RAZON SOCIAL": razonSocial.text(), "TIPO": tipoOrganizacion.text()]
 
-      println("CP:  " + codigoPaquete.text())
+        println("CP:  " + codigoPaquete.text())
         println("CALLE:  " + calle.text())
         println("CANTON:  " + canton.text())
         println("CEDULA REPRESENTANTE:  " + cedulaRepresentante.text())
@@ -403,7 +174,7 @@ class ConsultaController {
 
 
     String consulta(cedula, paquete) {
-        println "llega: $cedula, $paquete"
+//        println "llega: $cedula, $paquete"
         def sobre_xml = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
               xmlns:ser="http://servicio.interoperadorws.interoperacion.dinardap.gob.ec/">
                 <soapenv:Header/>
@@ -448,4 +219,4 @@ class ConsultaController {
         return sobre_xml
     }
 
-} //fin controller
+}

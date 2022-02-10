@@ -12,6 +12,7 @@ class UnidadEjecutoraController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def dbConnectionService
+    def consultaService
 
     def form_ajax(){
 
@@ -558,4 +559,18 @@ class UnidadEjecutoraController {
         def beneficiarios = PersonaOrganizacion.findAllByUnidadEjecutoraAndFechaFinIsNull(unidad).sort{it.apellido}
         return[beneficiarios: beneficiarios, unidad:unidad]
     }
+
+//    return ["persona": personaSociedad.text(), "nombre": razonSocial.text(),
+//    "actividad": actividadEconomicaPrincipal.text(), lugar: ubicacion.text()]
+    def ruc_ajax(){
+        def retorna = consultaService.soap(2, null, params.cdla)
+        def res = "NO*"
+        if(retorna.persona) {
+            res = "SUCCESS*${retorna.nombre}*${retorna.lugar}*${retorna.actividad}"
+        }
+        println "--> $retorna --> $res"
+
+        render(res)
+    }
+
 }

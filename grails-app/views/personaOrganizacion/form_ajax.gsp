@@ -21,12 +21,15 @@
                         <g:textField name="cedula" maxlength="10" class="form-control input-sm required digits"
                                      value="${beneficiario?.cedula}"/>
                     </div>
-                    <label class="col-md-3 control-label">
-                        Fecha inicio
+                    <button class="col-md-1 btn btn-sm" id="btnCedula">
+                        <i class="fa fa-info-circle"></i>
+                    </button>
+                    <label class="col-md-2 control-label">
+                        Fecha nacimiento
                     </label>
                     <div class="col-md-3" >
-                        <input name="fechaInicio" id='fechaInicio' type='text' class="form-control"
-                               value="${beneficiario?.fechaInicio?.format("dd-MM-yyyy")}"/>
+                        <input name="fechaNacimiento" id='fechaNa' type='text' class="form-control"
+                               value="${beneficiario?.fechaNacimiento?.format("dd-MM-yyyy")}"/>
                     </div>
                 </span>
             </div>
@@ -73,7 +76,7 @@
                     </label>
 
                     <div class="col-md-9">
-                        <g:textArea name="direccion" rows="2" maxlength="255" class="form-control input-sm" style="resize: none"
+                        <g:textField name="direccion" rows="2" maxlength="255" class="form-control input-sm" style="resize: none"
                                     value="${beneficiario?.direccion}"/>
                     </div>
                 </span>
@@ -131,8 +134,26 @@
                     Etnia
                 </label>
                 <span class="grupo">
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <g:select name="raza" from="${taller.Raza.list().sort{it.descripcion}}" class="form-control" value="${beneficiario?.raza?.id}" optionValue="descripcion" optionKey="id"/>
+                    </div>
+                </span>
+
+                <label class="col-md-2 control-label">
+                    Fecha inicio
+                </label>
+                <div class="col-md-3" >
+                    <input name="fechaInicio" id='fechaInicio' type='text' class="form-control"
+                           value="${beneficiario?.fechaInicio?.format("dd-MM-yyyy")}"/>
+                </div>
+            </div>
+            <div class="form-group keeptogether ${hasErrors(bean: beneficiario, field: 'raza', 'error')} ">
+                <label for="jefeFamilia" class="col-md-3 control-label">
+                    Jefe de familia
+                </label>
+                <span class="grupo">
+                    <div class="col-md-3">
+                        <g:select from="${[0: 'NO', 1: 'SI']}" optionKey="key" optionValue="value" name="jefeFamilia" class="form-control"/>
                     </div>
                 </span>
             </div>
@@ -149,12 +170,33 @@
             showClose: true,
         });
 
-        // $('#fechaFin').datetimepicker({
-        //     locale: 'es',
-        //     format: 'DD-MM-YYYY',
-        //     daysOfWeekDisabled: [0, 6],
-        //     sideBySide: true,
-        //     showClose: true,
-        // });
+        $('#fechaNa').datetimepicker({
+            locale: 'es',
+            format: 'DD-MM-YYYY',
+            daysOfWeekDisabled: [0, 6],
+            sideBySide: true,
+            showClose: true,
+        });
+
+        $('#btnCedula').click(function () {
+            var cdla = $("#cedula").val();
+                $.ajax({
+                    type    : "POST",
+                    url     : '${createLink(action:'cedula_ajax')}',
+                    data    : {cdla: cdla},
+                    success : function (msg) {
+                        var parts = msg.split("*");
+                        if (parts[0] == "SUCCESS") {
+                            $("#nombre").val(parts[1])
+                            $("#apellido").val(parts[1])
+                            $("#fechaNa").val(parts[2])
+                            $("#direccion").val(parts[3])
+                        } else {
+                            log('No se ha encontrado la cédula', "error");
+                        }
+                    }
+                });
+            return false;
+        });
     </script>
 

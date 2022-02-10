@@ -6,6 +6,7 @@ import taller.Raza
 class PersonaOrganizacionController {
 
     def dbConnectionService
+    def consultaService
 
     def show_ajax(){
         def beneficiario = PersonaOrganizacion.get(params.id)
@@ -31,6 +32,9 @@ class PersonaOrganizacionController {
 
         if(params.fechaInicio){
             params.fechaInicio = new Date().parse("dd-MM-yyy",params.fechaInicio)
+        }
+        if(params.fechaNacimiento){
+            params.fechaNacimiento = new Date().parse("dd-MM-yyy",params.fechaNacimiento)
         }
 
         if(params.id){
@@ -76,5 +80,16 @@ class PersonaOrganizacionController {
         def res = cn.rows(sql.toString())
 
         return[etnias:res]
+    }
+
+    def cedula_ajax(){
+        def retorna = consultaService.soap(1, params.cdla, null)
+        def res = "NO*"
+        if(retorna.persona) {
+            res = "SUCCESS*${retorna.persona}*${retorna.fcna.toString().replaceAll('/','-')}*${retorna.lugar}"
+        }
+        println "--> ${retorna} --> $res"
+
+        render(res)
     }
 }

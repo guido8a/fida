@@ -21,6 +21,8 @@ class PersonaOrganizacion implements Auditable{
     String direccion
     String referencia
     Raza raza
+    Date fechaNacimiento
+    String jefeFamilia
 
     static auditable = true
 
@@ -48,6 +50,8 @@ class PersonaOrganizacion implements Auditable{
             direccion column: 'prordire'
             referencia column: 'prorrefe'
             raza column: 'raza__id'
+            fechaNacimiento column: 'prorfcna'
+            jefeFamilia column: 'prorjffm'
         }
     }
     static constraints = {
@@ -67,6 +71,8 @@ class PersonaOrganizacion implements Auditable{
         referencia(size: 0..255, blank: true, nullable: true)
 //        representante(blank: true, nullable: true)
         raza(blank:true, nullable: true)
+        fechaNacimiento(blank:true, nullable: true)
+        jefeFamilia(blank:false, nullable: false)
     }
 
     String toString() {

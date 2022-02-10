@@ -122,6 +122,45 @@
                 <i class="fa fa-search"></i> Buscar
             </a>
         </div>
+        <div class="form-group ${hasErrors(bean: unidad, field: 'codigo', 'error')}  ${hasErrors(bean: unidad, field: 'fechaInicio', 'error')}">
+            <span class="grupo">
+                <label class="col-md-2 control-label text-info">
+                    Fecha Inicio
+                </label>
+
+                <div class="col-md-2">
+                    <input name="fechaInicio" id='datetimepicker1' type='text' class="form-control"
+                           value="${unidad?.fechaInicio?.format("dd-MM-yyyy")}"/>
+
+                    <p class="help-block ui-helper-hidden"></p>
+                </div>
+            </span>
+            <span class="grupo">
+                <label for="ruc" class="col-md-1 control-label text-info">
+                    Ruc
+                </label>
+
+                <div class="col-md-2">
+                    <g:textField name="ruc" maxlength="13" class="form-control valid input-sm" value="${unidad?.ruc}"/>
+                    <p class="help-block ui-helper-hidden"></p>
+                </div>
+                <button class="col-md-1 btn btn-sm" id="btnCedula">
+                    <i class="fa fa-info-circle"></i>
+                </button>
+
+            </span>
+            <span class="grupo">
+                <label for="rup" class="col-md-1 control-label text-info">
+                    Rup
+                </label>
+
+                <div class="col-md-2">
+                    <g:textField name="rup" maxlength="13" class="form-control input-sm" value="${unidad?.rup}"/>
+                    <p class="help-block ui-helper-hidden"></p>
+                </div>
+            </span>
+        </div>
+
         <div class="form-group ${hasErrors(bean: unidad, field: 'nombre', 'error')} ${hasErrors(bean: unidad, field: 'sigla', 'error')}">
             <span class="grupo">
                 <label for="nombre" class="col-md-2 control-label text-info">
@@ -141,40 +180,6 @@
 
                 <div class="col-md-1">
                     <g:textField name="sigla" maxlength="7" class="form-control input-sm" value="${unidad?.sigla}"/>
-                    <p class="help-block ui-helper-hidden"></p>
-                </div>
-            </span>
-        </div>
-        <div class="form-group ${hasErrors(bean: unidad, field: 'codigo', 'error')}  ${hasErrors(bean: unidad, field: 'fechaInicio', 'error')}">
-            <span class="grupo">
-                <label class="col-md-2 control-label text-info">
-                    Fecha Inicio
-                </label>
-
-                <div class="col-md-2">
-                    <input name="fechaInicio" id='datetimepicker1' type='text' class="form-control"
-                           value="${unidad?.fechaInicio?.format("dd-MM-yyyy")}"/>
-
-                    <p class="help-block ui-helper-hidden"></p>
-                </div>
-            </span>
-            <span class="grupo">
-                <label for="ruc" class="col-md-2 control-label text-info">
-                    Ruc
-                </label>
-
-                <div class="col-md-2">
-                    <g:textField name="ruc" maxlength="13" class="form-control valid input-sm" value="${unidad?.ruc}"/>
-                    <p class="help-block ui-helper-hidden"></p>
-                </div>
-            </span>
-            <span class="grupo">
-                <label for="rup" class="col-md-1 control-label text-info">
-                    Rup
-                </label>
-
-                <div class="col-md-2">
-                    <g:textField name="rup" maxlength="13" class="form-control input-sm" value="${unidad?.rup}"/>
                     <p class="help-block ui-helper-hidden"></p>
                 </div>
             </span>
@@ -702,6 +707,27 @@
             } //success
         }); //ajax
     });
+
+    $('#btnCedula').click(function () {
+        var cdla = $("#ruc").val();
+        $.ajax({
+            type    : "POST",
+            url     : '${createLink(action:'ruc_ajax')}',
+            data    : {cdla: cdla},
+            success : function (msg) {
+                var parts = msg.split("*");
+                if (parts[0] == "SUCCESS") {
+                    $("#nombre").val(parts[1])
+                    $("#direccion").val(parts[2])
+                    $("#objetivo").val(parts[3])
+                } else {
+                    log('No se ha encontrado el RUC', "error");
+                }
+            }
+        });
+        return false;
+    });
+
 
 </script>
 </body>
