@@ -135,19 +135,30 @@
                 </label>
                 <span class="grupo">
                     <div class="col-md-4">
-                        <g:select name="raza" from="${taller.Raza.list().sort{it.descripcion}}" class="form-control" value="${beneficiario?.raza?.id}" optionValue="descripcion" optionKey="id"/>
+                        <g:select name="raza" from="${taller.Raza.list().sort{it.descripcion}}" class="form-control"
+                                  value="${beneficiario?.raza?.id}" optionValue="descripcion" optionKey="id"/>
                     </div>
                 </span>
 
-                <label class="col-md-2 control-label">
+                <label for="raza" class="col-md-2 control-label text-info">
+                    Nacionalidad
+                </label>
+                <span class="grupo">
+                    <div class="col-md-3">
+                        <g:select name="nacionalidad" from="${taller.Nacionalidad.list().sort{it.descripcion}}"
+                                  class="form-control" value="${beneficiario?.nacionalidad?.id}"
+                                  optionValue="descripcion" optionKey="id" noSelection="['': '- - -']" />
+                    </div>
+                </span>
+            </div>
+            <div class="form-group keeptogether ${hasErrors(bean: beneficiario, field: 'jefeFamilia', 'error')} ">
+                <label class="col-md-3 control-label">
                     Fecha inicio
                 </label>
                 <div class="col-md-3" >
                     <input name="fechaInicio" id='fechaInicio' type='text' class="form-control"
                            value="${beneficiario?.fechaInicio?.format("dd-MM-yyyy")}"/>
                 </div>
-            </div>
-            <div class="form-group keeptogether ${hasErrors(bean: beneficiario, field: 'jefeFamilia', 'error')} ">
                 <label for="jefeFamilia" class="col-md-3 control-label">
                     Jefe de familia
                 </label>

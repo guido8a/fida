@@ -1,6 +1,7 @@
 package seguridad
 
 import audita.Auditable
+import taller.Nacionalidad
 import taller.Raza
 
 class PersonaOrganizacion implements Auditable{
@@ -23,6 +24,7 @@ class PersonaOrganizacion implements Auditable{
     Raza raza
     Date fechaNacimiento
     String jefeFamilia
+    Nacionalidad nacionalidad
 
     static auditable = true
 
@@ -52,6 +54,7 @@ class PersonaOrganizacion implements Auditable{
             raza column: 'raza__id'
             fechaNacimiento column: 'prorfcna'
             jefeFamilia column: 'prorjffm'
+            nacionalidad column: 'nacn__id'
         }
     }
     static constraints = {
@@ -73,6 +76,7 @@ class PersonaOrganizacion implements Auditable{
         raza(blank:true, nullable: true)
         fechaNacimiento(blank:true, nullable: true)
         jefeFamilia(blank:false, nullable: false)
+        nacionalidad(blank:true, nullable: true)
     }
 
     String toString() {
