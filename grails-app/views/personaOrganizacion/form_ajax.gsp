@@ -104,7 +104,8 @@
                 </label>
                 <span class="grupo">
                     <div class="col-md-3">
-                        <g:select from="${['0': 'NO', '1': 'SI']}" value="${beneficiario?.discapacidad ?: 0}" optionKey="key" optionValue="value" name="discapacidad" class="form-control"/>
+                        <g:select from="${['0': 'NO', '1': 'SI']}" value="${beneficiario?.discapacidad ?: 0}"
+                                  optionKey="key" optionValue="value" name="discapacidad" class="form-control"/>
                     </div>
                 </span>
             </div>
@@ -168,6 +169,19 @@
                     </div>
                 </span>
             </div>
+
+            <div class="form-group keeptogether ${hasErrors(bean: beneficiario, field: 'titulo', 'error')} ">
+                <label for="bono" class="col-md-9 control-label">
+                    Es beneficiario del Bono de desarrrollo humano
+                </label>
+                <span class="grupo">
+                    <div class="col-md-3">
+                        <g:select from="${['0': 'NO', '1': 'SI']}" value="${beneficiario?.bono ?: 0}"
+                                  optionKey="key" optionValue="value" name="bono" class="form-control"/>
+                    </div>
+                </span>
+            </div>
+
         </g:form>
     </div>
 
