@@ -83,7 +83,7 @@ class UnidadEjecutora implements Auditable{
         codigo(size: 1..4, blank: true, nullable: true, attributes: [title: 'codigo'])
         direccion(size: 1..127, blank: true, nullable: true, attributes: [title: 'direccion'])
         sigla(size: 0..7, blank: true, nullable: true, attributes: [title: 'sigla'])
-        objetivo(size: 0..63, blank: true, nullable: true, attributes: [title: 'objetivo'])
+        objetivo(size: 0..255, blank: true, nullable: true, attributes: [title: 'objetivo'])
         telefono(size: 0..63, blank: true, nullable: true, attributes: [title: 'telefono'])
         observaciones(size: 0..127, blank: true, nullable: true, attributes: [title: 'observaciones'])
         zona(blank: true, nullable: true, attributes: [title: 'numero'])

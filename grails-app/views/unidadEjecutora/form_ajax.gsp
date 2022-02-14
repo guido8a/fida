@@ -175,7 +175,7 @@
                 Objetivo
             </label>
             <div class="col-md-9">
-                <g:textField name="objetivo"  maxlength="63" class="form-control input-sm" value="${unidad?.objetivo}"/>
+                <g:textField name="objetivo"  maxlength="255" class="form-control input-sm" value="${unidad?.objetivo}"/>
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </span>
