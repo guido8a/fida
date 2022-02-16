@@ -26,6 +26,7 @@ class PersonaOrganizacion implements Auditable{
     String jefeFamilia
     Nacionalidad nacionalidad
     String bono
+    String socio
 
     static auditable = true
 
@@ -57,6 +58,7 @@ class PersonaOrganizacion implements Auditable{
             jefeFamilia column: 'prorjffm'
             nacionalidad column: 'nacn__id'
             bono column: 'prorbono'
+            socio column: 'prorsoco'
         }
     }
     static constraints = {
@@ -79,7 +81,8 @@ class PersonaOrganizacion implements Auditable{
         fechaNacimiento(blank:true, nullable: true)
         jefeFamilia(blank:false, nullable: false)
         nacionalidad(blank:true, nullable: true)
-        bono(size: 1..1, blank: true, nullable: true)
+        bono(size: 1..1, blank: false, nullable: false)
+        socio(size: 1..1, blank: false, nullable: false)
     }
 
     String toString() {

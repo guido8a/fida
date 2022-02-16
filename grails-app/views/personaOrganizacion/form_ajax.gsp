@@ -156,11 +156,11 @@
                 <label class="col-md-3 control-label">
                     Fecha inicio
                 </label>
-                <div class="col-md-3" >
+                <div class="col-md-4" >
                     <input name="fechaInicio" id='fechaInicio' type='text' class="form-control"
                            value="${beneficiario?.fechaInicio?.format("dd-MM-yyyy")}"/>
                 </div>
-                <label for="jefeFamilia" class="col-md-3 control-label">
+                <label for="jefeFamilia" class="col-md-2 control-label">
                     Jefe de familia
                 </label>
                 <span class="grupo">
@@ -171,13 +171,22 @@
             </div>
 
             <div class="form-group keeptogether ${hasErrors(bean: beneficiario, field: 'titulo', 'error')} ">
-                <label for="bono" class="col-md-9 control-label">
+                <label for="bono" class="col-md-4 control-label">
                     Es beneficiario del Bono de desarrrollo humano
                 </label>
                 <span class="grupo">
                     <div class="col-md-3">
                         <g:select from="${['0': 'NO', '1': 'SI']}" value="${beneficiario?.bono ?: 0}"
                                   optionKey="key" optionValue="value" name="bono" class="form-control"/>
+                    </div>
+                </span>
+                <label for="socio" class="col-md-2 control-label">
+                    Es socio
+                </label>
+                <span class="grupo">
+                    <div class="col-md-3">
+                        <g:select from="${['0': 'NO', '1': 'SI']}" value="${beneficiario?.socio ?: 0}"
+                                  optionKey="key" optionValue="value" name="socio" class="form-control"/>
                     </div>
                 </span>
             </div>
