@@ -20,7 +20,7 @@
     </tr>
     </thead>
 </table>
-<div class="" style="width: 99.7%;height: 320px; overflow-y: auto;float: right; margin-top: -20px">
+<div class="" style="width: 99.7%;height: 620px; overflow-y: auto;float: right; margin-top: -20px">
     <table class="table-bordered table-condensed table-hover" style="width: 100%">
         <tbody>
         <g:each in="${beneficiarios}" var="beneficiario">
