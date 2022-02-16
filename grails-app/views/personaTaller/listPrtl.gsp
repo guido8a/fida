@@ -2,11 +2,11 @@
 <html>
 <head>
 <meta name="layout" content="main">
-<title>Asistentes</title>
+<title>Asistentes (Antigua lista)</title>
 </head>
 
 <div class="panel panel-primary col-md-12">
-    <h3>Asistentes al Taller "${taller.nombre}"</h3>
+    <h3>Asistentes al Taller "${taller.nombre}" (Antigua lista)</h3>
     <div class="panel-info" style="padding: 3px; margin-top: 2px">
     <div class="btn-toolbar toolbar">
 

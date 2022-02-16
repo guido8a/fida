@@ -100,11 +100,20 @@
                         }
                     },
                     Asistentes: {
-                        label: "Asistentes al Taller",
+                        label: "Asistentes al Taller (Antiguo)",
                         icon: "fas fa-user-friends",
                         action: function ($element) {
                             var id = $element.data("id");
                             var url = "${createLink(controller:'personaTaller', action:'listPrtl')}";
+                            location.href = url + "/" + id;
+                        }
+                    },
+                    asistentesNuevos: {
+                        label: "Asistentes al Taller",
+                        icon: "fas fa-user-friends",
+                        action: function ($element) {
+                            var id = $element.data("id");
+                            var url = "${createLink(controller:'asiste', action:'listaTallerAsistentes')}";
                             location.href = url + "/" + id;
                         }
                     },
