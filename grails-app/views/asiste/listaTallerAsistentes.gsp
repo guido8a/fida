@@ -80,7 +80,7 @@
                     message : msg,
                     buttons : {
                         cancelar : {
-                            label     : "Cancelar",
+                            label     : "<i class='fa fa-times'></i> Salir",
                             className : "btn-primary",
                             callback  : function () {
                             }
