@@ -22,6 +22,9 @@
     </tr>
     </thead>
 </table>
+<div id="tablaBeneficiariosAsiste" class="row">
+
+</div>
 %{--<div class="" style="width: 99.7%;height: 320px; overflow-y: auto;float: right; margin-top: -20px">--}%
 %{--    <table class="table-bordered table-condensed table-hover" style="width: 100%">--}%
 %{--        <tbody>--}%
@@ -53,12 +56,13 @@
     function cargarTablaBeneficiarios(){
         $.ajax({
             type    : "POST",
-            url     : "${createLink(controller:'personaTaller', action:'tablaPrtl_ajax')}",
+            url     : "${createLink(controller:'asiste', action:'tablaBeneficiariosAsiste_ajax')}",
             data    : {
-
+                    id: '${unidad?.id}',
+                    taller: '${taller?.id}'
             },
             success : function (msg) {
-                $("#tabla").html(msg);
+                $("#tablaBeneficiariosAsiste").html(msg);
             }
         });
     }

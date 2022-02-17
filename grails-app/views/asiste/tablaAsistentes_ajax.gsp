@@ -24,13 +24,13 @@
         <tbody id="tbDoc">
         <g:each in="${prsnTaller}" var="pt">
             <tr data-id="${pt.id}" style="width: 100%">
-                <td style="width: 10%">${pt.cedula}</td>
-                <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">${pt.nombre}</elm:textoBusqueda></td>
-                <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">${pt.apellido}</elm:textoBusqueda></td>
-                <td style="width: 10%">${pt.cargo}</td>
-                <td style="width: 10%; text-align: center">${pt.sexo == 'M' ? 'Masculino' : 'Femenino'}</td>
-                <td style="width: 15%">${pt.parroquia.nombre}</td>
-                <td style="width: 15%">${pt?.comunidad?.nombre}</td>
+                <td style="width: 10%">${pt.personaOrganizacion.cedula}</td>
+                <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">${pt.personaOrganizacion.nombre}</elm:textoBusqueda></td>
+                <td style="width: 20%"><elm:textoBusqueda busca="${params.search}">${pt.personaOrganizacion.apellido}</elm:textoBusqueda></td>
+                <td style="width: 10%">${pt.personaOrganizacion.cargo}</td>
+                <td style="width: 10%; text-align: center">${pt.personaOrganizacion.sexo == 'M' ? 'Masculino' : 'Femenino'}</td>
+                <td style="width: 15%">${pt.taller.parroquia.nombre}</td>
+                <td style="width: 15%">${pt?.taller?.comunidad?.nombre}</td>
                 <g:if test="${prsnTaller?.size() < 7}">
                     <td style="width: 1%"></td>
                 </g:if>

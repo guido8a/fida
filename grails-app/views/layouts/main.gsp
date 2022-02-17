@@ -32,7 +32,7 @@
     <asset:stylesheet src="/apli/font-awesome.min.css"/>
     <asset:stylesheet src="/apli/CustomSvt.css"/>
     <asset:stylesheet src="/apli/tulpen/stylesheet.css"/>
-
+    <asset:stylesheet src="/apli/switcher.css"/>
 
 
     <asset:stylesheet src="/fonts/fontawesome-webfont.woff"/>
@@ -61,6 +61,7 @@
 
     <asset:javascript src="/apli/bootstrap-datetimepicker.min.js"/>
     <asset:javascript src="/apli/bootstrap-maxlength.min.js"/>
+    <asset:javascript src="/apli/jquery.switcher.min.js"/>
 
 
     <asset:javascript src="/bootstrap-3.3.2/dist/js/bootstrap.min.js"/>
