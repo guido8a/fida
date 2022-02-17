@@ -25,7 +25,7 @@
 
             <div class="btn-group">
                 <a href="#" class="btn btn-sm btn-success" id="btnPrtl">
-                    <i class="fa fa-plus"></i> Agregar Asistentes
+                    <i class="fa fa-plus"></i> Ver y Agregar Asistentes
                 </a>
             </div>
 
