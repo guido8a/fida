@@ -40,7 +40,7 @@
                     </label>
 
                     <div class="col-md-9">
-                        <g:textField name="nombre" maxlength="31" minlength="4" class="form-control input-sm required"
+                        <g:textField name="nombre" maxlength="31" minlength="3" class="form-control input-sm required"
                                      value="${beneficiario?.nombre}"/>
                     </div>
                 </span>
@@ -52,7 +52,7 @@
                     </label>
 
                     <div class="col-md-9">
-                        <g:textField name="apellido" maxlength="31" minlength="4" class="form-control input-sm required"
+                        <g:textField name="apellido" maxlength="31" minlength="3" class="form-control input-sm required"
                                      value="${beneficiario?.apellido}"/>
                     </div>
                 </span>
