@@ -125,14 +125,13 @@ environments:
     development:
         dataSource:
             dbCreate: update
-#            url: jdbc:postgresql://127.0.0.1:5432/fida
-#            url: jdbc:postgresql://127.0.0.1:5432/fida_brre
-            url: jdbc:postgresql://127.0.0.1:5432/fida_prod
+            url: jdbc:postgresql://127.0.0.1:5432/fida
+#            url: jdbc:postgresql://127.0.0.1:5432/fida_prod
             username: postgres
             password: 'postgres'
 
         grails:
-            serverURL: http://192.168.0.100:8080
+            serverURL: http://192.168.200.5:8080
     test:
         dataSource:
             dbCreate: update
