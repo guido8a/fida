@@ -92,4 +92,36 @@ class PersonaOrganizacionController {
 
         render(res)
     }
+
+    def validarCedula_ajax(){
+//        println("params " + params)
+        def unidad = UnidadEjecutora.get(params.unidad)
+
+        def existente
+        def beneficiario
+
+        if(params.id){
+            beneficiario = PersonaOrganizacion.get(params.id)
+            existente = PersonaOrganizacion.findByCedulaAndUnidadEjecutora(params.cedula?.trim(),unidad)
+
+            if(existente){
+                if(existente.cedula == beneficiario.cedula){
+                    existente = false
+                }else{
+                    existente = true
+                }
+            }else{
+                existente = false
+            }
+        }else{
+            existente = PersonaOrganizacion.findByCedulaAndUnidadEjecutora(params.cedula?.trim(),unidad)
+        }
+
+        if(existente){
+            render false
+        }else{
+            render true
+        }
+
+    }
 }

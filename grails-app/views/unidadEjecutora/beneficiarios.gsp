@@ -184,22 +184,38 @@
     } //createEdit
 
 
-    var validator = $("#frmBeneficiario").validate({
-        errorClass     : "help-block",
-        errorPlacement : function (error, element) {
-            if (element.parent().hasClass("input-group")) {
-                error.insertAfter(element.parent());
-            } else {
-                error.insertAfter(element);
-            }
-            element.parents(".grupo").addClass('has-error');
-        },
-        success        : function (label) {
-            label.parents(".grupo").removeClass('has-error');
-            label.remove();
-        }
+    %{--var validator = $("#frmBeneficiario").validate({--}%
+    %{--    errorClass     : "help-block",--}%
+    %{--    errorPlacement : function (error, element) {--}%
+    %{--        if (element.parent().hasClass("input-group")) {--}%
+    %{--            error.insertAfter(element.parent());--}%
+    %{--        } else {--}%
+    %{--            error.insertAfter(element);--}%
+    %{--        }--}%
+    %{--        element.parents(".grupo").addClass('has-error');--}%
+    %{--    },--}%
+    %{--    success        : function (label) {--}%
+    %{--        label.parents(".grupo").removeClass('has-error');--}%
+    %{--        label.remove();--}%
+    %{--    },--}%
+    %{--    rules         : {--}%
+    %{--        cedula : {--}%
+    %{--            remote: {--}%
+    %{--                url : "${createLink(action: 'validarCédula_ajax')}",--}%
+    %{--                type: "post",--}%
+    %{--                data: {--}%
+    %{--                    id: "${beneficiario?.id}"--}%
+    %{--                }--}%
+    %{--            }--}%
+    %{--        }--}%
+    %{--    },--}%
+    %{--    messages      : {--}%
+    %{--        cedula : {--}%
+    %{--            remote: "Número de cédula ya existente"--}%
+    %{--        }--}%
+    %{--    }--}%
 
-    });
+    %{--});--}%
 
 
 

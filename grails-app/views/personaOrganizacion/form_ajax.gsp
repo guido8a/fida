@@ -21,9 +21,9 @@
                         <g:textField name="cedula" maxlength="10" class="form-control input-sm required digits"
                                      value="${beneficiario?.cedula}"/>
                     </div>
-                    <button class="col-md-1 btn btn-sm" id="btnCedula">
-                        <i class="fa fa-info-circle"></i>
-                    </button>
+%{--                    <button class="col-md-1 btn btn-sm" id="btnCedula">--}%
+%{--                        <i class="fa fa-info-circle"></i>--}%
+%{--                    </button>--}%
                     <label class="col-md-2 control-label">
                         Fecha nacimiento
                     </label>
@@ -40,7 +40,7 @@
                     </label>
 
                     <div class="col-md-9">
-                        <g:textField name="nombre" maxlength="31" class="form-control input-sm required"
+                        <g:textField name="nombre" maxlength="31" minlength="4" class="form-control input-sm required"
                                      value="${beneficiario?.nombre}"/>
                     </div>
                 </span>
@@ -52,7 +52,7 @@
                     </label>
 
                     <div class="col-md-9">
-                        <g:textField name="apellido" maxlength="31" class="form-control input-sm required"
+                        <g:textField name="apellido" maxlength="31" minlength="4" class="form-control input-sm required"
                                      value="${beneficiario?.apellido}"/>
                     </div>
                 </span>
@@ -212,25 +212,63 @@
             showClose: true,
         });
 
-        $('#btnCedula').click(function () {
-            var cdla = $("#cedula").val();
-                $.ajax({
-                    type    : "POST",
-                    url     : '${createLink(action:'cedula_ajax')}',
-                    data    : {cdla: cdla},
-                    success : function (msg) {
-                        var parts = msg.split("*");
-                        if (parts[0] == "SUCCESS") {
-                            $("#nombre").val(parts[1])
-                            $("#apellido").val(parts[1])
-                            $("#fechaNa").val(parts[2])
-                            $("#direccion").val(parts[3])
-                        } else {
-                            log('No se ha encontrado la cédula', "error");
+        %{--$('#btnCedula').click(function () {--}%
+        %{--    var cdla = $("#cedula").val();--}%
+        %{--        $.ajax({--}%
+        %{--            type    : "POST",--}%
+        %{--            url     : '${createLink(action:'cedula_ajax')}',--}%
+        %{--            data    : {cdla: cdla},--}%
+        %{--            success : function (msg) {--}%
+        %{--                var parts = msg.split("*");--}%
+        %{--                if (parts[0] == "SUCCESS") {--}%
+        %{--                    $("#nombre").val(parts[1])--}%
+        %{--                    $("#apellido").val(parts[1])--}%
+        %{--                    $("#fechaNa").val(parts[2])--}%
+        %{--                    $("#direccion").val(parts[3])--}%
+        %{--                } else {--}%
+        %{--                    log('No se ha encontrado la cédula', "error");--}%
+        %{--                }--}%
+        %{--            }--}%
+        %{--        });--}%
+        %{--    return false;--}%
+        %{--});--}%
+
+
+        var validator = $("#frmBeneficiario").validate({
+            errorClass     : "help-block",
+            errorPlacement : function (error, element) {
+                if (element.parent().hasClass("input-group")) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+                element.parents(".grupo").addClass('has-error');
+            },
+            success        : function (label) {
+                label.parents(".grupo").removeClass('has-error');
+                label.remove();
+            }
+            ,
+            rules         : {
+                cedula : {
+                    remote: {
+                        url : "${createLink(action: 'validarCedula_ajax')}",
+                        type: "post",
+                        data: {
+                            id: "${beneficiario?.id}",
+                            unidad: '${unidad?.id}'
                         }
                     }
-                });
-            return false;
+                }
+            },
+            messages      : {
+                cedula : {
+                    remote: "Número de cédula ya existente"
+                }
+            }
+
         });
+
+
     </script>
 
