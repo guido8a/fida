@@ -21,9 +21,9 @@
                         <g:textField name="cedula" maxlength="10" class="form-control input-sm required digits"
                                      value="${beneficiario?.cedula}"/>
                     </div>
-%{--                    <button class="col-md-1 btn btn-sm" id="btnCedula">--}%
-%{--                        <i class="fa fa-info-circle"></i>--}%
-%{--                    </button>--}%
+                    <button class="col-md-1 btn btn-sm" id="btnCedula">
+                        <i class="fa fa-info-circle"></i>
+                    </button>
                     <label class="col-md-2 control-label">
                         Fecha nacimiento
                     </label>
@@ -212,26 +212,26 @@
             showClose: true,
         });
 
-        %{--$('#btnCedula').click(function () {--}%
-        %{--    var cdla = $("#cedula").val();--}%
-        %{--        $.ajax({--}%
-        %{--            type    : "POST",--}%
-        %{--            url     : '${createLink(action:'cedula_ajax')}',--}%
-        %{--            data    : {cdla: cdla},--}%
-        %{--            success : function (msg) {--}%
-        %{--                var parts = msg.split("*");--}%
-        %{--                if (parts[0] == "SUCCESS") {--}%
-        %{--                    $("#nombre").val(parts[1])--}%
-        %{--                    $("#apellido").val(parts[1])--}%
-        %{--                    $("#fechaNa").val(parts[2])--}%
-        %{--                    $("#direccion").val(parts[3])--}%
-        %{--                } else {--}%
-        %{--                    log('No se ha encontrado la cédula', "error");--}%
-        %{--                }--}%
-        %{--            }--}%
-        %{--        });--}%
-        %{--    return false;--}%
-        %{--});--}%
+        $('#btnCedula').click(function () {
+            var cdla = $("#cedula").val();
+                $.ajax({
+                    type    : "POST",
+                    url     : '${createLink(action:'cedula_ajax')}',
+                    data    : {cdla: cdla},
+                    success : function (msg) {
+                        var parts = msg.split("*");
+                        if (parts[0] == "SUCCESS") {
+                            $("#nombre").val(parts[1])
+                            $("#apellido").val(parts[1])
+                            $("#fechaNa").val(parts[2])
+                            $("#direccion").val(parts[3])
+                        } else {
+                            log('No se ha encontrado la cédula', "error");
+                        }
+                    }
+                });
+            return false;
+        });
 
 
         var validator = $("#frmBeneficiario").validate({
