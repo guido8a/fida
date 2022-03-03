@@ -170,7 +170,7 @@ class MarcoLogico implements Auditable{
     def getTotalPlanificadoAnio(Anio anio) {
 //        println "get total planificado anio " + anio.anio
         def total = 0
-        if (this.tipoElemento.id == 3.toLong()) {
+        if (this.tipoElemento.id == 4.toLong()) {
 //            println "caso 1"
             Asignacion.findAllByMarcoLogicoAndAnio(this, anio).each {
 //                println "\t\tplanificado=" + it.planificado
@@ -179,9 +179,9 @@ class MarcoLogico implements Auditable{
 //            println "total ml = " + total
             return total
         } else {
-            def marcos = findAllByMarcoLogico(this)
+            def marcos = Asignacion.findAllByMarcoLogico(this)
             if (marcos.size() > 0) {
-//                println "caso 2"
+                println "caso 2"
                 Asignacion.findAllByMarcoLogicoInListAndAnio(marcos, anio).each { a ->
 //                    println "\t\tplanificado=" + a.planificado
                     total += a.planificado

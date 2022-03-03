@@ -313,7 +313,7 @@ class Proyecto implements Auditable{
     def getValorPlanificadoAnio(Anio anio) {
 //        println "PROYECTO " + this.nombre
         def total = 0
-        def marcos = MarcoLogico.findAllByProyectoAndTipoElemento(this, TipoElemento.get(3))
+        def marcos = MarcoLogico.findAllByProyectoAndTipoElemento(this, TipoElemento.get(4))
         if (marcos.size() > 0) {
             marcos.each { m ->
                 total += m.getTotalPlanificadoAnio(anio)
