@@ -1,5 +1,8 @@
 package parametros
 
+import poa.Asignacion
+import proyectos.Proyecto
+
 
 class AnioController {
 
@@ -136,6 +139,70 @@ class AnioController {
         }
     } //show para cargar con ajax en un dialog
 
+    def vistaAprobarAño() {
+        def anios = Anio.findAllByEstado(0)
+        [anios: anios]
+    }
+
+    def aprobarAnio() {
+        if (request.method == 'POST') {
+
+            def anio = Anio.get(params.anio)
+
+
+            def asignaciones = Asignacion.findAllByAnio(anio)
+
+//            println("asig " + asignaciones)
+
+
+            if(asignaciones.size() > 0){
+
+                anio.estado = 1
+                anio.save(flush: true)
+
+                asignaciones.each {a->
+                    a.priorizado = a.planificado
+                    a.priorizadoOriginal = a.planificado
+                    a.save(flush:true)
+                }
+
+                flash.message = "Las asignaciones del año ${anio.anio} han sido aprobadas."
+                render "ok"
+
+            }else{
+                flash.message = "No existen asignaciones del año ${anio.anio}."
+                render "ok"
+            }
+
+//            Asignacion.executeUpdate("UPDATE Asignacion SET priorizado = planificado WHERE anio=${anio.id}")
+//            Asignacion.executeUpdate("UPDATE Asignacion SET priorizadoOriginal = planificado WHERE anio=${anio.id}")
+//            flash.message = "Las asignaciones del año ${anio.anio} han sido aprobadas."
+//            render "ok"
+        } else {
+            redirect(controller: "shield", action: "ataques")
+        }
+    }
+
+    def detalleAnio() {
+        def anio = Anio.get(params.anio)
+        def proyectos = Proyecto.list([sort: "codigo"])
+
+        def arr = []
+        def total = 0
+        proyectos.each { proy ->
+//            def tot = proy.getValorPlanificado()
+            def tot = proy.getValorPlanificadoAnio(anio)
+            def m = [:]
+            m.proyecto = proy
+            m.total = tot
+            arr += m
+            total += tot
+        }
+
+        arr = arr.sort { -it.total }
+
+        return [anio: anio, arr: arr, total: total]
+    }
 
 
 }

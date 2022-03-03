@@ -29,7 +29,7 @@
 </table>
 
 <g:if test="${anio.estado == 0}">
-    <a href="#" style="margin-top: 10px;margin-bottom: 10px" class="btn btn-primary" id="aprobar">Aprobar proforma</a>
+    <a href="#" style="margin-top: 10px;margin-bottom: 10px" class="btn btn-primary" id="aprobar"><i class="fa fa-check"></i> Aprobar proforma</a>
 </g:if>
 <g:else>
     Las asignaciones ya han sido aprobadas para este año
@@ -40,7 +40,7 @@
     $("#aprobar").click(function () {
         var boton = $(this);
         bootbox.confirm({
-                    message  : "Esta seguro?",
+                    message  : "<i class='fa fa-exclamation-triangle fa-3x text-warning'></i> Esta seguro que desea aprobar el año?",
                     title    : "Advertencia",
                     class    : "modal-error",
                     callback : function (result) {

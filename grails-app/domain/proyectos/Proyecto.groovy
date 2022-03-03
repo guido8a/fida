@@ -2,6 +2,8 @@ package proyectos
 
 import audita.Auditable
 import parametros.Anio
+import parametros.proyectos.TipoElemento
+
 //import seguridad.UnidadEjecutora
 
 /*Proyecto*/

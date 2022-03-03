@@ -3,6 +3,8 @@ package proyectos
 import audita.Auditable
 import parametros.proyectos.TipoElemento
 import parametros.Anio
+import poa.Asignacion
+
 //import poa.Asignacion
 
 /*Marco lógico con cada uno de sus componentes */
