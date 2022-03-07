@@ -25,18 +25,24 @@
                     <i class="fa fa-plus"></i> Agregar nuevo beneficiario
                 </a>
 
-%{--                <form class="form-inline col-md-8">--}%
-                    <label for="buscarPor">Buscar Por:</label>
-                    <g:select name="buscarPor" class="form-control" from="${[0: 'Nombre', 1: 'Apellido', 2: 'Cédula']}" optionKey="key" optionValue="value"/>
-                    <label for="texto">Criterio:</label>
-                    <input type="text" id="texto" class="form-control input-sm" style="width: 200px;"/>
+                <div class="col-md-8">
+                    <label for="buscarPor" class="col-md-1">Buscar Por:</label>
+                    <div class="col-md-3">
+                        <g:select name="buscarPor" class="form-control" from="${[0: 'Nombre', 1: 'Apellido', 2: 'Cédula']}" optionKey="key" optionValue="value"/>
+                    </div>
+
+                    <label for="texto" class="col-md-1">Criterio:</label>
+                    <div class="col-md-4">
+                        <input type="text" id="texto" class="form-control input-sm" style="width: 200px;"/>
+                    </div>
+
                     <a href="#" class="btn btn-info btn-sm" id="btnBuscar">
                         <i class="fa fa-search-plus"></i> Buscar
                     </a>
                     <a href="#" class="btn btn-warning btn-sm" id="btnLimpiar">
                         <i class="fa fa-eraser"></i> Limpiar
                     </a>
-%{--                </form>--}%
+                </div>
             </div>
 
         </div>
