@@ -26,9 +26,9 @@
                 </a>
 
                 <form class="form-inline col-md-8">
-                    <label for="texto">Buscar:</label>
+                    <label for="texto">Criterio:</label>
                     <input type="text" id="texto" class="form-control input-sm" style="width: 200px;"/>
-                    <label for="buscarPor">Criterio:</label>
+                    <label for="buscarPor">Buscar Por:</label>
                     <g:select name="buscarPor" class="form-control" from="${[0: 'Nombre', 1: 'Apellido', 2: 'Cédula']}" optionKey="key" optionValue="value"/>
                     <a href="#" class="btn btn-info btn-sm" id="btnBuscar">
                         <i class="fa fa-search-plus"></i> Buscar
