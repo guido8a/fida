@@ -25,7 +25,9 @@
                     <i class="fa fa-plus"></i> Agregar nuevo beneficiario
                 </a>
 
-                <form class="form-inline col-md-8">
+
+
+%{--                <form class="form-inline col-md-8">--}%
                     <label for="buscarPor">Buscar Por:</label>
                     <g:select name="buscarPor" class="form-control" from="${[0: 'Nombre', 1: 'Apellido', 2: 'Cédula']}" optionKey="key" optionValue="value"/>
                     <label for="texto">Criterio:</label>
@@ -36,7 +38,7 @@
                     <a href="#" class="btn btn-warning btn-sm" id="btnLimpiar">
                         <i class="fa fa-eraser"></i> Limpiar
                     </a>
-                </form>
+%{--                </form>--}%
             </div>
 
         </div>
