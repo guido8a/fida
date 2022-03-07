@@ -25,15 +25,16 @@
                     <i class="fa fa-plus"></i> Agregar nuevo beneficiario
                 </a>
 
-                <div class="col-md-8">
+                <div class="col-md-2"></div>
+                <div class="col-md-6">
                     <label for="buscarPor" class="col-md-1">Buscar Por:</label>
                     <div class="col-md-3">
                         <g:select name="buscarPor" class="form-control" from="${[0: 'Nombre', 1: 'Apellido', 2: 'Cédula']}" optionKey="key" optionValue="value"/>
                     </div>
 
                     <label for="texto" class="col-md-1">Criterio:</label>
-                    <div class="col-md-4">
-                        <input type="text" id="texto" class="form-control input-sm" style="width: 200px;"/>
+                    <div class="col-md-3">
+                        <input type="text" id="texto" class="form-control input-sm"/>
                     </div>
 
                     <a href="#" class="btn btn-info btn-sm" id="btnBuscar">
