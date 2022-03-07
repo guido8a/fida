@@ -555,8 +555,36 @@ class UnidadEjecutoraController {
     }
 
     def tablaBeneficiarios_ajax(){
+        println("params --> " + params)
         def unidad = UnidadEjecutora.get(params.id)
-        def beneficiarios = PersonaOrganizacion.findAllByUnidadEjecutoraAndFechaFinIsNull(unidad).sort{it.apellido}
+//        def beneficiarios = PersonaOrganizacion.findAllByUnidadEjecutoraAndFechaFinIsNull(unidad).sort{it.apellido}
+        def cr = ''
+
+        switch (params.criterio){
+            case '0':
+                cr = 'nombre'
+                break
+            case '1':
+                cr = 'apellido'
+                break
+            case '2':
+                cr = 'cedula'
+                break
+        }
+
+        def beneficiarios = PersonaOrganizacion.withCriteria {
+            eq("unidadEjecutora", unidad)
+            isNull("fechaFin")
+
+            if(cr != ''){
+                or {
+                    ilike(cr, "%" + params.texto + "%")
+                }
+            }
+
+            order("apellido", "asc")
+        }
+
         return[beneficiarios: beneficiarios, unidad:unidad]
     }
 

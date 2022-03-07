@@ -17,23 +17,28 @@
     <div class="panel-info" style="padding: 3px; margin-top: 2px">
         <div class="btn-toolbar toolbar">
 
-            <div class="btn-group">
+            <div class="btn-group col-md-12">
                 <g:link controller="unidadEjecutora" action="organizacion" id="${unidad?.id}" class="btn btn-sm btn-default">
                     <i class="fa fa-arrow-left"></i> Regresar a organización
                 </g:link>
                 <a href="#" class="btn btn-sm btn-success" id="btnAgregarBeneficiario">
                     <i class="fa fa-plus"></i> Agregar nuevo beneficiario
                 </a>
+
+                <form class="form-inline col-md-8">
+                    <label for="texto">Buscar:</label>
+                    <input type="text" id="texto" class="form-control input-sm" style="width: 200px;"/>
+                    <label for="buscarPor">Criterio:</label>
+                    <g:select name="buscarPor" class="form-control" from="${[0: 'Nombre', 1: 'Apellido', 2: 'Cédula']}" optionKey="key" optionValue="value"/>
+                    <a href="#" class="btn btn-info btn-sm" id="btnBuscar">
+                        <i class="fa fa-search-plus"></i> Buscar
+                    </a>
+                    <a href="#" class="btn btn-warning btn-sm" id="btnLimpiar">
+                        <i class="fa fa-eraser"></i> Limpiar
+                    </a>
+                </form>
             </div>
 
-            <div class="btn-group col-md-3 pull-right">
-                <div class="input-group input-group-sm">
-                    <input type="text" class="form-control input-sm " id="searchDoc" placeholder="Buscar"/>
-                    <span class="input-group-btn">
-                        <a href="#" class="btn btn-default" id="btnSearchDoc"><i class="fa fa-search"></i></a>
-                    </span>
-                </div><!-- /input-group -->
-            </div>
         </div>
     </div>
     <div id="tablaBeneficiarios">
@@ -45,26 +50,35 @@
 
 <script type="text/javascript">
 
+    $("#btnBuscar").click(function () {
+        cargarTablaBeneficiarios();
+    });
+
+    $("#btnLimpiar").click(function () {
+        $("#texto").val('');
+        $("#buscarPor").val(0);
+        cargarTablaBeneficiarios();
+    });
+
     $("#btnAgregarBeneficiario").click(function () {
         createEditBeneficiario();
     });
-
 
     var bm;
 
     cargarTablaBeneficiarios();
 
-    function cargarTablaBeneficiarios(search) {
-        var data = {
-            id : "${unidad.id}"
-        };
-        if (search) {
-            data.search = search;
-        }
+    function cargarTablaBeneficiarios() {
+        var texto = $("#texto").val();
+        var criterio = $("#buscarPor option:selected").val();
         $.ajax({
             type    : "POST",
             url     : "${createLink(controller:'unidadEjecutora', action:'tablaBeneficiarios_ajax')}",
-            data    : data,
+            data    : {
+                id : "${unidad.id}",
+                texto: texto,
+                criterio: criterio
+            },
             success : function (msg) {
                 $("#tablaBeneficiarios").html(msg);
             }
@@ -86,8 +100,8 @@
                     dialog.modal('hide');
                     if(msg == 'ok'){
                         log("Beneficiario creado correctamente", "success");
-                            cargarTablaBeneficiarios();
-                            bm.modal("hide")
+                        cargarTablaBeneficiarios();
+                        bm.modal("hide")
                     }else{
                         log("Error al crear el beneficiario","error")
                     }
