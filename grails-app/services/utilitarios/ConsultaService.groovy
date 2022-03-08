@@ -18,6 +18,9 @@ class ConsultaService {
         MimeHeaders mimeHeaders = message.getMimeHeaders();
         mimeHeaders.addHeader("Authorization", "Basic " + basicAuth);
 
+        System.setProperty("java.net.useSystemProxies", "true");  //proxy
+        println ".... proxy....."
+
         SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
         SOAPConnection soapConnection = soapConnectionFactory.createConnection();
 
