@@ -18,8 +18,8 @@ class ConsultaService {
         MimeHeaders mimeHeaders = message.getMimeHeaders();
         mimeHeaders.addHeader("Authorization", "Basic " + basicAuth);
 
-        System.setProperty("java.net.useSystemProxies", "true");  //proxy
-        println ".... proxy....."
+//        System.setProperty("java.net.useSystemProxies", "false");  //proxy
+        println ".... sin proxy....."
 
         SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
         SOAPConnection soapConnection = soapConnectionFactory.createConnection();
@@ -27,16 +27,18 @@ class ConsultaService {
 //        String url = 'http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl';
 
         URL endpoint =
-                new URL(new URL("http://interoperabilidad.dinardap.gob.ec:7979/"),
-                        "interoperador?wsdl",
+//                new URL(new URL("http://interoperabilidad.dinardap.gob.ec:7979/"),
+//                        "interoperador?wsdl",
+                new URL (new URL("http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl"),
+                        "",
                         new URLStreamHandler() {
                             @Override
                             protected URLConnection openConnection(URL url) throws IOException {
                                 URL target = new URL(url.toString());
                                 URLConnection connection = target.openConnection();
                                 // Connection settings
-                                connection.setConnectTimeout(10000); // 10 sec
-                                connection.setReadTimeout(60000); // 1 min
+                                connection.setConnectTimeout(30000); // 30 sec
+                                connection.setReadTimeout(30000); // 30 sec
                                 return (connection);
                             }
                         });

@@ -215,12 +215,12 @@
             <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'fichaTecnica', 'error')} ">
                 <span class="grupo">
                     <label for="fichaTecnica" class="col-md-3 control-label">
-                        Ficha Técnica
+                        Archivo de soporte
                     </label>
 
                     <div class="col-md-9">
                         <g:textField name="fichaTecnica" class="form-control input-sm"
-                                     value="${tallerInstance?.fichaTecnica}" maxlength="15"/>
+                                     value="${tallerInstance?.fichaTecnica}" maxlength="63"/>
                     </div>
                 </span>
             </div>
