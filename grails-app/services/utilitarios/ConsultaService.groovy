@@ -68,6 +68,7 @@ class ConsultaService {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         soapResponse.writeTo(out);
         String strMsg = new String(out.toByteArray())
+        soapConnection.close();
 //        println "xml: ${strMsg}"
 
         switch (id) {

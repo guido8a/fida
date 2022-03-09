@@ -23,8 +23,8 @@
                 <label for="descripcion" class="col-md-2 control-label text-info">
                     Descripción
                 </label>
-                <div class="col-md-8">
-                    <g:textArea name="descripcion" maxlength="63" class="form-control required"
+                <div class="col-md-10">
+                    <g:textArea name="descripcion" maxlength="255" class="form-control required"
                                 value="${indicadorOrmsInstance?.descripcion}" style="height: 75px; resize: none"/>
                 </div>
 
