@@ -24,24 +24,22 @@ class ConsultaService {
         SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
         SOAPConnection soapConnection = soapConnectionFactory.createConnection();
 
-//        String url = 'http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl';
+        String url = 'http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl';
 
-        URL endpoint =
-//                new URL(new URL("http://interoperabilidad.dinardap.gob.ec:7979/"),
-//                        "interoperador?wsdl",
-                new URL (new URL("http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl"),
-                        "",
-                        new URLStreamHandler() {
-                            @Override
-                            protected URLConnection openConnection(URL url) throws IOException {
-                                URL target = new URL(url.toString());
-                                URLConnection connection = target.openConnection();
-                                // Connection settings
-                                connection.setConnectTimeout(30000); // 30 sec
-                                connection.setReadTimeout(30000); // 30 sec
-                                return (connection);
-                            }
-                        });
+//        URL endpoint =
+//                new URL (new URL("http://interoperabilidad.dinardap.gob.ec:7979/interoperador?wsdl"),
+//                        "",
+//                        new URLStreamHandler() {
+//                            @Override
+//                            protected URLConnection openConnection(URL url) throws IOException {
+//                                URL target = new URL(url.toString());
+//                                URLConnection connection = target.openConnection();
+//                                // Connection settings
+//                                connection.setConnectTimeout(30000); // 30 sec
+//                                connection.setReadTimeout(30000); // 30 sec
+//                                return (connection);
+//                            }
+//                        });
 
         /* id: 1 Cédula, 2, RUC, 3 Organización */
 //        def sobre_xml = consulta(cédula o ruc, paquete)
@@ -64,8 +62,8 @@ class ConsultaService {
         SOAPMessage soapRequest = MessageFactory.newInstance().createMessage(mimeHeaders,
                 new ByteArrayInputStream(sobre_xml.getBytes()));
 
-//        SOAPMessage soapResponse = soapConnection.call(soapRequest, url);
-        SOAPMessage soapResponse = soapConnection.call(soapRequest, endpoint);
+        SOAPMessage soapResponse = soapConnection.call(soapRequest, url);
+//        SOAPMessage soapResponse = soapConnection.call(soapRequest, endpoint);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         soapResponse.writeTo(out);

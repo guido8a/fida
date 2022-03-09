@@ -512,24 +512,21 @@ class UnidadEjecutoraController {
         def existente = Representante.findByPersonaOrganizacionInListAndFechaFinIsNull(personas)
         def persona = PersonaOrganizacion.get(params.persona)
         def representante
-//        if(existente){
-//            render "er"
-//        }else{
+        if (existente) {
+            existente.fechaFin = new Date().parse("dd-MM-yyyy", params.fechaInicio)
+            existente.save(flush: true)
+        } else {
+            representante = new Representante()
+            representante.personaOrganizacion = persona
+            representante.fechaInicio = new Date().parse("dd-MM-yyyy", params.fechaInicio)
 
-        existente.fechaFin = new Date().parse("dd-MM-yyyy",params.fechaInicio)
-        existente.save(flush:true)
-
-        representante = new Representante()
-        representante.personaOrganizacion = persona
-        representante.fechaInicio = new Date().parse("dd-MM-yyyy",params.fechaInicio)
-
-        if(!representante.save(flush:true)){
-            println("error al guardar el representante" + representante.errors)
-            render "no"
-        }else{
-            render "ok"
+            if (!representante.save(flush: true)) {
+                println("error al guardar el representante" + representante.errors)
+                render "no"
+            } else {
+                render "ok"
+            }
         }
-//        }
     }
 
     def observacionesRep_ajax(){
