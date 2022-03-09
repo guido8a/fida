@@ -194,7 +194,7 @@ class ConsultaService {
 
     String consulta(cedula, paquete) {
 //        println "llega: $cedula, $paquete"
-        def sobre_xml = """<?xml version="1.0" encoding="utf-8"?>
+        def sobre_xml = """<?xml version="1.0" encoding="UTF-8"?>
               <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
               xmlns:ser="http://servicio.interoperadorws.interoperacion.dinardap.gob.ec/">
                 <soapenv:Header/>
@@ -210,7 +210,7 @@ class ConsultaService {
     }
 
     String consultaRuc(ruc) {
-        def sobre_xml = """<?xml version="1.0" encoding="utf-8"?>
+        def sobre_xml = """<?xml version="1.0" encoding="UTF-8"?>
               <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
               xmlns:ser="http://servicio.interoperadorws.interoperacion.dinardap.gob.ec/">
                 <soapenv:Header/>
