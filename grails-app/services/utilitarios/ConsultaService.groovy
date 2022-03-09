@@ -56,7 +56,7 @@ class ConsultaService {
                 break
         }
 
-//        println sobre_xml
+        println sobre_xml
 
 //        SOAPBody body = message.setSOAPBody(sobre_xml);
         SOAPMessage soapRequest = MessageFactory.newInstance().createMessage(mimeHeaders,
@@ -194,7 +194,8 @@ class ConsultaService {
 
     String consulta(cedula, paquete) {
 //        println "llega: $cedula, $paquete"
-        def sobre_xml = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+        def sobre_xml = """<?xml version="1.0" encoding="utf-8"?>
+              <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
               xmlns:ser="http://servicio.interoperadorws.interoperacion.dinardap.gob.ec/">
                 <soapenv:Header/>
                 <soapenv:Body>
@@ -209,7 +210,8 @@ class ConsultaService {
     }
 
     String consultaRuc(ruc) {
-        def sobre_xml = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+        def sobre_xml = """<?xml version="1.0" encoding="utf-8"?>
+              <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
               xmlns:ser="http://servicio.interoperadorws.interoperacion.dinardap.gob.ec/">
                 <soapenv:Header/>
                 <soapenv:Body>
