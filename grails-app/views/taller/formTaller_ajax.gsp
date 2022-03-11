@@ -16,11 +16,11 @@
                         Parroquia
                     </label>
                     <div class="col-md-9">
-                        <g:hiddenField name="parroquia" id="parroquia" value="${tallerInstance?.parroquia?.id}"/>
+                        <g:hiddenField name="parroquia" id="parroquia" value="${tallerInstance?.parroquia ? tallerInstance?.parroquia?.id : tallerInstance?.unidadEjecutora?.parroquia?.id}"/>
                         <span class="grupo">
                             <div class="input-group input-group-sm" >
                                 <input type="text" class="form-control buscarParroquia" name="parroquiaName"
-                                       id="parroquiaTexto" value="${lugar}">
+                                       id="parroquiaTexto" value="${tallerInstance?.parroquia ? tallerInstance?.parroquia?.nombre : tallerInstance?.unidadEjecutora?.parroquia?.nombre}">
                                 <span class="input-group-btn">
                                     <a href="#" class="btn btn-info buscarParroquia" title="Buscar Parroquia">
                                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -60,7 +60,7 @@
             <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'unidadEps', 'error')} ">
                 <span class="grupo">
                     <label for="unidadEps" class="col-md-3 control-label">
-                        Imparte taller
+                        Imparte el taller
                     </label>
 
                     <div class="col-md-9">
