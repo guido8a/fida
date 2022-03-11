@@ -23,13 +23,17 @@
             </div>
 
             <div class="row">
-                <div class="col-md-3 show-label">Organización</div>
-                <div class="col-md-9">${tallerInstance?.unidadEjecutora}</div>
+%{--                <div class="col-md-3 show-label">Organización</div>--}%
+                <div class="col-md-3 show-label">Imparte</div>
+%{--                <div class="col-md-9">${tallerInstance?.unidadEjecutora}</div>--}%
+                <div class="col-md-9">${tallerInstance?.unidadEps}</div>
             </div>
 
             <div class="row">
-                <div class="col-md-3 show-label">Unidad EPS</div>
-                <div class="col-md-9">${tallerInstance?.unidadEps}</div>
+%{--                <div class="col-md-3 show-label">Unidad EPS</div>--}%
+                <div class="col-md-3 show-label">Recibe</div>
+                <div class="col-md-9">${tallerInstance?.unidadEjecutora}</div>
+%{--                <div class="col-md-9">${tallerInstance?.unidadEps}</div>--}%
             </div>
 
 %{--
