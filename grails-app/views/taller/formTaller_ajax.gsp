@@ -60,13 +60,18 @@
             <div class="form-group keeptogether ${hasErrors(bean: tallerInstance, field: 'unidadEps', 'error')} ">
                 <span class="grupo">
                     <label for="unidadEps" class="col-md-3 control-label">
-                        Unidad EPS
+                        Imparte taller
                     </label>
 
                     <div class="col-md-9">
+%{--                        <g:select id="unidadEps" name="unidadEps.id"--}%
+%{--                                  from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2))}"--}%
+%{--                                  optionKey="id" value="${tallerInstance?.unidadEjecutora?.id}"--}%
+%{--                                  class="many-to-one form-control input-sm"/>--}%
+
                         <g:select id="unidadEps" name="unidadEps.id"
                                   from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2))}"
-                                  optionKey="id" value="${tallerInstance?.unidadEjecutora?.id}"
+                                  optionKey="id" value="${tallerInstance?.unidadEps?.id}"
                                   class="many-to-one form-control input-sm"/>
                     </div>
                 </span>
