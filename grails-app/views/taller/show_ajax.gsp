@@ -8,79 +8,81 @@
 <g:else>
 
     <div class="modal-contenido">
-            <g:hiddenField name="id" value="${tallerInstance?.id}"/>
+        <g:hiddenField name="id" value="${tallerInstance?.id}"/>
 
 
-            <div class="row">
-                <div class="col-md-3 show-label">Comunidad</div>
-                <div class="col-md-9">${tallerInstance?.comunidad?.nombre}</div>
-            </div>
+        <div class="row">
+            <div class="col-md-3 show-label">Comunidad</div>
+            <div class="col-md-9">${tallerInstance?.comunidad?.nombre}</div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-3 show-label">Parroquia</div>
-                <div class="col-md-9">${tallerInstance.parroquia.nombre} Cantón: ${tallerInstance.parroquia.canton.nombre}
-                Provincia: ${tallerInstance.parroquia.canton.provincia.nombre}</div>
-            </div>
+        <div class="row">
+            <div class="col-md-3 show-label">Parroquia</div>
+            <div class="col-md-9">${tallerInstance.parroquia.nombre} Cantón: ${tallerInstance.parroquia.canton.nombre}
+            Provincia: ${tallerInstance.parroquia.canton.provincia.nombre}</div>
+        </div>
 
-            <div class="row">
-%{--                <div class="col-md-3 show-label">Organización</div>--}%
-                <div class="col-md-3 show-label">Imparte</div>
-%{--                <div class="col-md-9">${tallerInstance?.unidadEjecutora}</div>--}%
-                <div class="col-md-9">${tallerInstance?.unidadEps}</div>
-            </div>
+        <div class="row">
+            %{--                <div class="col-md-3 show-label">Unidad EPS</div>--}%
+            <div class="col-md-3 show-label">Recibe el taller</div>
+            <div class="col-md-9">${tallerInstance?.unidadEjecutora}</div>
+            %{--                <div class="col-md-9">${tallerInstance?.unidadEps}</div>--}%
+        </div>
 
-            <div class="row">
-%{--                <div class="col-md-3 show-label">Unidad EPS</div>--}%
-                <div class="col-md-3 show-label">Recibe</div>
-                <div class="col-md-9">${tallerInstance?.unidadEjecutora}</div>
-%{--                <div class="col-md-9">${tallerInstance?.unidadEps}</div>--}%
-            </div>
+        <div class="row">
+            %{--                <div class="col-md-3 show-label">Organización</div>--}%
+            <div class="col-md-3 show-label">Imparte el taller</div>
+            %{--                <div class="col-md-9">${tallerInstance?.unidadEjecutora}</div>--}%
+            <div class="col-md-9">${tallerInstance?.unidadEps}</div>
+        </div>
 
-%{--
-        <g:if test="${tallerInstance?.institucion}">
-            <div class="row">
-                <div class="col-md-3 show-label">Institución</div>
-                <div class="col-md-9">${tallerInstance?.institucion?.descripcion}</div>
-            </div>
-        </g:if>
---}%
 
-            <div class="row">
-                <div class="col-md-3 show-label">Tipo de Taller</div>
-                <div class="col-md-9">${tallerInstance?.tipoTaller?.descripcion}</div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-3 show-label">Capacidad del PFI</div>
-                <div class="col-md-9">${tallerInstance?.capacidad?.descripcion}</div>
-            </div>
+        %{--
+                <g:if test="${tallerInstance?.institucion}">
+                    <div class="row">
+                        <div class="col-md-3 show-label">Institución</div>
+                        <div class="col-md-9">${tallerInstance?.institucion?.descripcion}</div>
+                    </div>
+                </g:if>
+        --}%
 
-            <div class="row">
-                <div class="col-md-3 show-label">Nombre</div>
-                <div class="col-md-9">${tallerInstance?.nombre}</div>
-            </div>
+        <div class="row">
+            <div class="col-md-3 show-label">Tipo de Taller</div>
+            <div class="col-md-9">${tallerInstance?.tipoTaller?.descripcion}</div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-3 show-label">Objetivo</div>
-                <div class="col-md-9">${tallerInstance?.objetivo}</div>
-            </div>
+        <div class="row">
+            <div class="col-md-3 show-label">Capacidad del PFI</div>
+            <div class="col-md-9">${tallerInstance?.capacidad?.descripcion}</div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-3 show-label">Fecha Inicio</div>
-                <div class="col-md-3">${tallerInstance?.fechaInicio?.format("dd-MM-yyyy")}</div>
-                <div class="col-md-3 show-label">Fecha Fin</div>
-                <div class="col-md-3">${tallerInstance?.fechaFin?.format("dd-MM-yyyy")}</div>
-            </div>
+        <div class="row">
+            <div class="col-md-3 show-label">Nombre</div>
+            <div class="col-md-9">${tallerInstance?.nombre}</div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-3 show-label">Valor del taller</div>
-                <div class="col-md-9">${tallerInstance?.valor}</div>
-            </div>
+        <div class="row">
+            <div class="col-md-3 show-label">Objetivo</div>
+            <div class="col-md-9">${tallerInstance?.objetivo}</div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-3 show-label">Instructor</div>
-                <div class="col-md-9">${tallerInstance?.instructor}</div>
-            </div>
+        <div class="row">
+            <div class="col-md-3 show-label">Fecha Inicio</div>
+            <div class="col-md-3">${tallerInstance?.fechaInicio?.format("dd-MM-yyyy")}</div>
+            <div class="col-md-3 show-label">Fecha Fin</div>
+            <div class="col-md-3">${tallerInstance?.fechaFin?.format("dd-MM-yyyy")}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 show-label">Valor del taller</div>
+            <div class="col-md-9">${tallerInstance?.valor}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 show-label">Instructor</div>
+            <div class="col-md-9">${tallerInstance?.instructor}</div>
+        </div>
 
     </div>
 
