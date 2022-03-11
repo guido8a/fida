@@ -154,11 +154,12 @@ class TallerController {
                 return
             }
             try {
-                def path = servletContext.getRealPath("/") + "tallersProyecto/" + tallerInstance.taller
-                tallerInstance.delete(flush: true)
-                println path
-                def f = new File(path)
-                println f.delete()
+//                def path = servletContext.getRealPath("/") + "tallersProyecto/" + tallerInstance.taller
+//                tallerInstance.delete(flush: true)
+//                println path
+//                def f = new File(path)
+//                println f.delete()
+                tallerInstance.delete(flush:true)
                 render "SUCCESS*Eliminación de Taller exitosa."
                 return
             } catch (DataIntegrityViolationException e) {
