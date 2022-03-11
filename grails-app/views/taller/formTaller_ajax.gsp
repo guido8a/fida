@@ -307,7 +307,7 @@
             showClose: true
         });
 
-        if('${tallerInstance?.id}'){
+        if('${tallerInstance?.parroquia?.id}'){
             comboComunidadPrincipal('${tallerInstance?.parroquia?.id}')
         }
 

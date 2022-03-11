@@ -82,15 +82,19 @@ class TallerController {
         def tallerInstance = new Taller()
         if (params.id) {
             tallerInstance = Taller.get(params.id)
-            if (!tallerInstance) {
+        } else {
+//                println "...1"
                 tallerInstance = new Taller()
-            }
+                tallerInstance.parroquia = unidad.parroquia
+                tallerInstance.comunidad = Comunidad.findByParroquia(unidad.parroquia)
         }
 
         if(tallerInstance?.parroquia){
             lugar = "${tallerInstance.parroquia.nombre} " +
                     "(${tallerInstance.parroquia.canton.provincia.nombre})"
         }
+        println "parr: ${tallerInstance?.parroquia?.id} --> $lugar"
+
         return [tallerInstance: tallerInstance, lugar: lugar,unidad: unidad]
     } //form para cargar con ajax en un dialog
 
