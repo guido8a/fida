@@ -70,7 +70,7 @@
 %{--                                  class="many-to-one form-control input-sm"/>--}%
 
                         <g:select id="unidadEps" name="unidadEps.id"
-                                  from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2))}"
+                                  from="${seguridad.UnidadEjecutora.list().sort{it.nombre}}"
                                   optionKey="id" value="${tallerInstance?.unidadEps?.id}"
                                   class="many-to-one form-control input-sm"/>
                     </div>
