@@ -631,33 +631,50 @@
         })
     });
 
+    %{--$("#btnTalleres").click(function () {--}%
+    %{--    $.ajax({--}%
+    %{--        type: 'POST',--}%
+    %{--        url: '${createLink(controller: 'reportes', action: 'organizaciones_ajax')}',--}%
+    %{--        data:{--}%
+    %{--            tipo: 2--}%
+    %{--        },--}%
+    %{--        success: function (msg) {--}%
+    %{--            dialogoOrganizacion = bootbox.dialog({--}%
+    %{--                id    : "dlOrganizacion",--}%
+    %{--                title : "Seleccione una Organización",--}%
+    %{--                message : msg,--}%
+    %{--                buttons : {--}%
+    %{--                    cancelar : {--}%
+    %{--                        label     : "Cancelar",--}%
+    %{--                        className : "btn-primary",--}%
+    %{--                        callback  : function () {--}%
+    %{--                        }--}%
+    %{--                    }--}%
+    %{--                } //buttons--}%
+    %{--            }); //dialog--}%
+    %{--        }--}%
+    %{--    })--}%
+    %{--});--}%
+
+
     $("#btnTalleres").click(function () {
         $.ajax({
             type: 'POST',
-            url: '${createLink(controller: 'reportes', action: 'organizaciones_ajax')}',
+            url: '${createLink(controller: 'reportes', action: 'botones_ajax')}',
             data:{
-                tipo: 2
             },
             success: function (msg) {
-                dialogoOrganizacion = bootbox.dialog({
+              bootbox.dialog({
                     id    : "dlOrganizacion",
-                    title : "Seleccione una Organización",
-                    message : msg,
+                    title : "Seleccione el tipo de reporte",
+                    message :msg,
                     buttons : {
                         cancelar : {
                             label     : "Cancelar",
                             className : "btn-primary",
                             callback  : function () {
                             }
-                        },
-                        %{--aceptar  : {--}%
-                        %{--    id        : "btnSave",--}%
-                        %{--    label     : "<i class='fa fa-check'></i> Aceptar",--}%
-                        %{--    className : "btn-success",--}%
-                        %{--    callback  : function () {--}%
-                        %{--        location.href="${createLink(controller: 'reportes', action: 'reporteTalleresExcel')}/" + $("#organizacion option:selected").val()--}%
-                        %{--    } //callback--}%
-                        %{--} //guardar--}%
+                        }
                     } //buttons
                 }); //dialog
             }
