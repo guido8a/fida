@@ -316,7 +316,8 @@ class DocumentoController {
                 'application/download'                                                     : 'pdf',
                 'application/vnd.ms-pdf'                                                   : 'pdf',
 
-                'application/excel'                                                        : 'xls',
+//                'application/excel'                                                        : 'xls',
+                'application/vnd.ms-excel'                                                 : 'xls',
                 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'        : 'xlsx',
 
                 'application/mspowerpoint'                                                 : 'pps',
@@ -347,6 +348,8 @@ class DocumentoController {
                     fileName += obj
                 }
             }
+
+//            println("-----> " + f.getContentType())
 
             if (okContents.containsKey(f.getContentType())) {
                 ext = okContents[f.getContentType()]
