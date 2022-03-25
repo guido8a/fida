@@ -203,6 +203,8 @@ class DocumentoController {
             }
             order("descripcion", "asc")
         }
+
+
         return [documentos: documentos]
     }
 

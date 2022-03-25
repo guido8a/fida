@@ -15,7 +15,7 @@
     <tbody id="tbDoc">
         <g:each in="${documentos}" var="doc">
             <tr data-id="${doc.id}" style="width: 100%">
-                <td style="width: 12%">${doc.grupoProcesos.descripcion}</td>
+                <td style="width: 12%">${doc.grupoProcesos ? doc.grupoProcesos.descripcion : ''}</td>
                 <td style="width: 15%"><elm:textoBusqueda busca="${params.search}">${doc.descripcion}</elm:textoBusqueda></td>
                 <td style="width: 15%"><elm:textoBusqueda busca="${params.search}">${doc.clave}</elm:textoBusqueda></td>
                 <td style="width: 50%"><elm:textoBusqueda busca="${params.search}">${doc.resumen}</elm:textoBusqueda></td>
@@ -40,11 +40,11 @@
 
 <script type="text/javascript">
     $(function () {
-        setTimeout(function () {
-            $("#tblDocumentos").fixedHeaderTable({
-                height : 250
-            });
-        }, 500);
+        // setTimeout(function () {
+        //     $("#tblDocumentos").fixedHeaderTable({
+        //         height : 250
+        //     });
+        // }, 500);
 
         $(".btnDelDoc").click(function () {
             deleteDocumento($(this).data("id"));

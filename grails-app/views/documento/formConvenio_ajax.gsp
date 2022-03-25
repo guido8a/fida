@@ -18,7 +18,7 @@
                     <div class="col-md-6">
                         <g:select id="grupoProcesos" name="grupoProcesos.id" from="${parametros.proyectos.GrupoProcesos.list()}"
                                   optionKey="id" value="${documentoInstance?.grupoProcesos?.id}"
-                                  class="many-to-one form-control input-sm" noSelection="['null': 'Seleccione...']"/>
+                                  class="many-to-one form-control input-sm"/>
                     </div>
                 </span>
             </div>
