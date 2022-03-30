@@ -99,6 +99,7 @@
                             cargarInstituciones(id);
                         }
                     },
+/*
                     Asistentes: {
                         label: "Asistentes al Taller (Antiguo)",
                         icon: "fas fa-user-friends",
@@ -108,6 +109,7 @@
                             location.href = url + "/" + id;
                         }
                     },
+*/
                     asistentesNuevos: {
                         label: "Asistentes al Taller",
                         icon: "fas fa-user-friends",
