@@ -71,6 +71,7 @@
                     </span>
                 </div>
             </g:if>
+            Archivos permitidos: jpeg, jpg, png, pdf, xls, xlsx, pps, ppt, pptx, doc, docx, odt, ods, odp, zip
         </g:uploadForm>
     </div>
 
