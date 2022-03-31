@@ -334,7 +334,10 @@ class DocumentoController {
 
                 'application/vnd.oasis.opendocument.presentation'                          : 'odp',
 
-                'application/vnd.oasis.opendocument.spreadsheet'                           : 'ods'
+                'application/vnd.oasis.opendocument.spreadsheet'                           : 'ods',
+                'application/zip'                                                          : 'zip',
+                'application/x-zip-compressed'                                             : 'zip',
+                'multipart/x-zip'                                                          : 'zip'
         ]
 
         if (f && !f.empty) {
@@ -555,6 +558,9 @@ class DocumentoController {
             case "xls":
             case "xlsx":
                 tipo = "application/vnd.ms-excel"
+                break;
+            case "zip":
+                tipo = "application/zip"
                 break;
             default:
                 tipo = "application/pdf"
