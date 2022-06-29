@@ -220,7 +220,7 @@ class PlanController {
     }
 
     def savePlan_ajax(){
-//        println "savePlan_ajac $params"
+//        println "savePlan_ajax $params"
 
         def plan
 
