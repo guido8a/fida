@@ -64,6 +64,7 @@ class PlanController {
         }
 
         def sql = "select * from planes(${plns?.id}, ${params.periodo}) order by comp__id"
+        println "sql: $sql"
         def cn = dbConnectionService.getConnection()
         def res = cn.rows(sql.toString())
 
@@ -115,26 +116,31 @@ class PlanController {
 
         def pl = Plan.get(params.id)
         def periodoNumero = (params.anio == '1' ? params.periodo : params.periodo.toInteger() + ((params.anio.toInteger() - 1) * 12))
-        def periodo = Periodo.findByNumero(periodoNumero)
+//        def periodo = Periodo.findByNumero(periodoNumero)
+        def periodo = Periodo.findByNumeroAndPlanesNegocio(periodoNumero, PlanesNegocio.get(params.plns.toInteger()) )
 
-        def planP = PlanPeriodo.findByPeriodoAndPlan(periodo, pl)
+        println "prdo: ${periodo.id}, plan: ${pl.id}"
+        def planP = new PlanPeriodo()
+        planP = PlanPeriodo.findByPeriodoAndPlan(periodo, pl)
 
         return [periodo: planP]
     }
 
     def guardarValorPeriodo_ajax () {
 
-//        println("params pax " + params)
+        println "params guardarValorPeriodo_ajax " + params
 
         def convenio = Convenio.get(params.convenio)
         def pl = Plan.get(params.plan)
         def periodoNumero = (params.anio == '1' ? params.periodo : params.periodo.toInteger() + ((params.anio.toInteger() - 1) * 12))
-        def periodoId = Periodo.findByNumero(periodoNumero)
+//        def periodoId = Periodo.findByNumero(periodoNumero)
+        def periodo = Periodo.findByNumeroAndPlanesNegocio(periodoNumero, convenio.planesNegocio)
 
-//        println("pn " + periodoNumero)
+        println "pn $periodoNumero prdo: ${periodo.id}, plan: ${pl.id}"
 
-        def planP = PlanPeriodo.findByPeriodoAndPlan(periodoId,pl)
+        def planP = PlanPeriodo.findByPeriodoAndPlan(periodo,pl)
         def planPeriodo
+        println "plan perdiodo: ${planP?.id}"
 
         if(planP){
             if(convenio?.fechaRegistro){
@@ -154,12 +160,12 @@ class PlanController {
                 }
 
             }else{
-
+                planPeriodo = planP
             }
         }else{
             planPeriodo = new PlanPeriodo()
             planPeriodo.plan = pl
-            planPeriodo.periodo = periodoId
+            planPeriodo.periodo = periodo
             planPeriodo.fecha = new Date()
         }
 
@@ -168,7 +174,7 @@ class PlanController {
 //        }else{
 //            planPeriodo = new PlanPeriodo()
 //            planPeriodo.plan = pl
-//            planPeriodo.periodo = periodoId
+//            planPeriodo.periodo = periodo
 //        }
 
         planPeriodo.valor = params.valor.toDouble()
@@ -561,6 +567,7 @@ class PlanController {
         def dias = 0
         def nmro = 1
         def prdo
+        def fechaFin = cnvn.fechaInicio + cnvn.plazo - 1
 
 /*
         if(prdo) {
@@ -573,10 +580,13 @@ class PlanController {
         while(dias < cnvn.plazo) {
             prdo = Periodo.findByPlanesNegocioAndNumero(plns, nmro)
             prdo.fechaInicio = fcin
+            if(fcfn > fechaFin ) {
+                fcfn = fechaFin
+            }
             prdo.fechaFin = fcfn
             prdo.save(flush: true)
-//            println "prdo: ${prdo.numero} --> $nmro"
-//            println "fecha: $fcin -- $fcfn"
+            println "prdo: ${prdo.numero} --> $nmro"
+            println "fecha: $fcin -- $fcfn"
             dias += 30
             fcin = fcfn + 1
             fcfn = fcin + 30 - 1

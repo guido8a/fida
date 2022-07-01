@@ -162,19 +162,18 @@ class ConvenioController {
         def convenio
         def planes = PlanesNegocio.list()
         def unidades = []
+        def plan = PlanesNegocio.get(params.plan)
         planes.each { p ->
             unidades.add(p.unidadEjecutora)
         }
         if(params.id){
             convenio = Convenio.get(params.id)
         } else if(params.plan) {
-            def plan = PlanesNegocio.get(params.plan)
-            println "PNS: $plan"
             convenio = Convenio.findByPlanesNegocio(plan)
         } else {
             convenio = new Convenio()
         }
-        return[convenio: convenio, unidades: unidades]
+        return[convenio: convenio, unidades: unidades, plns: plan]
     }
 
     def buscarConvenio_ajax(){

@@ -165,7 +165,8 @@
                 data: {
                     id: id,
                     anio: '${anio}',
-                    periodo: per
+                    periodo: per,
+                    plns: '${planNs.id}'
                 },
                 success: function (msg) {
                     bootbox.dialog({

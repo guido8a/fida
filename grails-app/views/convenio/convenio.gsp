@@ -264,11 +264,11 @@
 
                 <div class="row izquierda" style="margin-bottom: 20px">
                     <div class="col-md-12 input-group">
-                        <span class="col-md-2 label label-primary text-info mediano">Plazo</span>
+                        <span class="col-md-2 label label-primary text-info mediano">Plazo en días</span>
 
                         <div class="col-md-2">
                             <g:textField name="plazo" class="form-control input-sm required"
-                                         value="${convenio?.plazo}"/>
+                                         value="${convenio?.plazo?: plns.plazo}" readOnly="true"/>
                         </div>
                         <span class="col-md-2 mediano"></span>
                         <span class="col-md-2 label label-primary text-info mediano">Informar cada:</span>
