@@ -151,7 +151,7 @@
                 <span class="col-md-2 label label-primary text-info mediano">Número de garantía</span>
                 <div class="col-md-4">
                     <span class="grupo">
-                        <g:textField name="codigo" class="form-control required allCaps"/>
+                        <g:textField name="codigo" class="form-control required allCaps" maxlength="31"/>
                     </span>
                 </div>
                 <span class="col-md-1 label label-primary text-info mediano">Monto</span>

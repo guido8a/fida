@@ -56,7 +56,7 @@ class Garantia implements Auditable{
         estado(blank: true, nullable: true, attributes: [title: 'código'])
         aseguradora(blank: true, nullable: true, attributes: [title: 'código'])
         padre(blank: true, nullable: true, attributes: [title: 'código'])
-        codigo(size: 1..15, blank: true, nullable: true, attributes: [title: 'código'])
+        codigo(size: 1..31, blank: true, nullable: true, attributes: [title: 'código'])
         numeroRenovaciones(blank: true, nullable: true, attributes: [title: 'código'])
         estadoGarantia(size: 1..1, blank: true, nullable: true, attributes: [title: 'código'])
         monto(blank: true, nullable: true, attributes: [title: 'código'])

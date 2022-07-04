@@ -50,77 +50,77 @@
                 </div>
             </span>
         </div>
-        <div class="form-group keeptogether">
-            <span class="grupo">
-                <div class="col-md-1"></div>
-                <div class="col-md-3">
-                    <label>
-                        Unidad de compras públicas
-                    </label>
-                </div>
-                <div class="col-md-2">
-                    <g:select name="unidadComprasPublicas"
-                              from="${convenio.UnidadComprasPublicas.list().sort{it.descripcion}}"
-                              optionKey="id" optionValue="descripcion" class="form-control" value="${plan?.unidadComprasPublicas?.id}"/>
-                </div>
-            </span>
+        %{--<div class="form-group keeptogether">--}%
+            %{--<span class="grupo">--}%
+                %{--<div class="col-md-1"></div>--}%
+                %{--<div class="col-md-3">--}%
+                    %{--<label>--}%
+                        %{--Unidad de compras públicas--}%
+                    %{--</label>--}%
+                %{--</div>--}%
+                %{--<div class="col-md-2">--}%
+                    %{--<g:select name="unidadComprasPublicas"--}%
+                              %{--from="${convenio.UnidadComprasPublicas.list().sort{it.descripcion}}"--}%
+                              %{--optionKey="id" optionValue="descripcion" class="form-control" value="${plan?.unidadComprasPublicas?.id}"/>--}%
+                %{--</div>--}%
+            %{--</span>--}%
 
-            <span class="grupo">
-                <div class="col-md-1"></div>
-                <div class="col-md-2">
-                    <label>
-                        Tipo de proceso
-                    </label>
-                </div>
-                <div class="col-md-3">
-                    <g:select name="tipoProcesoComprasPublicas"
-                              from="${convenio.TipoProcesoComprasPublicas.list().sort{it.descripcion}}"
-                              optionKey="id" optionValue="descripcion" class="form-control"
-                              value="${plan?.tipoProcesoComprasPublicas?.id?:1}"/>
-                </div>
-            </span>
-        </div>
-        <div class="form-group keeptogether">
-            <span class="grupo">
-                <div class="col-md-1"></div>
-                <div class="col-md-3">
-                    <label for="codigoComprasPublicas" class="control-label">
-                        Código CPC
-                    </label>
-                </div>
-                <div class="col-md-7">
-                    <g:hiddenField name="codigoComprasPublicas" value="${plan?.codigoComprasPublicas?.id}"/>
-                    <g:textField name="codigoComprasPublicasNombre" readonly=""
-                                 class="form-control" value="${plan?.codigoComprasPublicas ? (plan?.codigoComprasPublicas?.numero + " - " + plan?.codigoComprasPublicas?.descripcion) : ''}"/>
-                </div>
-                <div class="col-md-1">
-                    <a href="#" class="btn btn-info btnBuscarCPC">
-                        <i class="fa fa-search"></i>
-                    </a>
-                </div>
-            </span>
-        </div>
+            %{--<span class="grupo">--}%
+                %{--<div class="col-md-1"></div>--}%
+                %{--<div class="col-md-2">--}%
+                    %{--<label>--}%
+                        %{--Tipo de proceso--}%
+                    %{--</label>--}%
+                %{--</div>--}%
+                %{--<div class="col-md-3">--}%
+                    %{--<g:select name="tipoProcesoComprasPublicas"--}%
+                              %{--from="${convenio.TipoProcesoComprasPublicas.list().sort{it.descripcion}}"--}%
+                              %{--optionKey="id" optionValue="descripcion" class="form-control"--}%
+                              %{--value="${plan?.tipoProcesoComprasPublicas?.id?:1}"/>--}%
+                %{--</div>--}%
+            %{--</span>--}%
+        %{--</div>--}%
+        %{--<div class="form-group keeptogether">--}%
+            %{--<span class="grupo">--}%
+                %{--<div class="col-md-1"></div>--}%
+                %{--<div class="col-md-3">--}%
+                    %{--<label for="codigoComprasPublicas" class="control-label">--}%
+                        %{--Código CPC--}%
+                    %{--</label>--}%
+                %{--</div>--}%
+                %{--<div class="col-md-7">--}%
+                    %{--<g:hiddenField name="codigoComprasPublicas" value="${plan?.codigoComprasPublicas?.id}"/>--}%
+                    %{--<g:textField name="codigoComprasPublicasNombre" readonly=""--}%
+                                 %{--class="form-control" value="${plan?.codigoComprasPublicas ? (plan?.codigoComprasPublicas?.numero + " - " + plan?.codigoComprasPublicas?.descripcion) : ''}"/>--}%
+                %{--</div>--}%
+                %{--<div class="col-md-1">--}%
+                    %{--<a href="#" class="btn btn-info btnBuscarCPC">--}%
+                        %{--<i class="fa fa-search"></i>--}%
+                    %{--</a>--}%
+                %{--</div>--}%
+            %{--</span>--}%
+        %{--</div>--}%
 
-        <div class="form-group keeptogether">
-            <span class="grupo">
-                <div class="col-md-1"></div>
-                <div class="col-md-3">
-                    <label for="partida1" class="control-label">
-                        Partida
-                    </label>
-                </div>
-                <div class="col-md-7">
-                    <g:hiddenField name="partida1" value="${plan?.presupuesto?.id}"/>
-                    <g:textField name="partida1Texto" readonly=""
-                                 class="form-control" value="${plan?.presupuesto ? (plan?.presupuesto?.numero + " - " + plan?.presupuesto?.descripcion) : ''}"/>
-                </div>
-                <div class="col-md-1">
-                    <a href="#" class="btn btn-info btnBuscarPartida">
-                        <i class="fa fa-search"></i>
-                    </a>
-                </div>
-            </span>
-        </div>
+        %{--<div class="form-group keeptogether">--}%
+            %{--<span class="grupo">--}%
+                %{--<div class="col-md-1"></div>--}%
+                %{--<div class="col-md-3">--}%
+                    %{--<label for="partida1" class="control-label">--}%
+                        %{--Partida--}%
+                    %{--</label>--}%
+                %{--</div>--}%
+                %{--<div class="col-md-7">--}%
+                    %{--<g:hiddenField name="partida1" value="${plan?.presupuesto?.id}"/>--}%
+                    %{--<g:textField name="partida1Texto" readonly=""--}%
+                                 %{--class="form-control" value="${plan?.presupuesto ? (plan?.presupuesto?.numero + " - " + plan?.presupuesto?.descripcion) : ''}"/>--}%
+                %{--</div>--}%
+                %{--<div class="col-md-1">--}%
+                    %{--<a href="#" class="btn btn-info btnBuscarPartida">--}%
+                        %{--<i class="fa fa-search"></i>--}%
+                    %{--</a>--}%
+                %{--</div>--}%
+            %{--</span>--}%
+        %{--</div>--}%
         <div class="form-group keeptogether">
             <span class="grupo">
                 <div class="col-md-1"></div>

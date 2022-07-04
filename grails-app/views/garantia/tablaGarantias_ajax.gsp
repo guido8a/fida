@@ -17,10 +17,10 @@ table
     <table class="table table-condensed table-hover table-striped table-bordered">
         <thead>
         <tr style="width: 100%">
-            <th style="width: 18%">Tipo</th>
-            <th style="width: 10%">N.Garantía</th>
+            <th style="width: 14%">Tipo</th>
+            <th style="width: 18%">N.Garantía</th>
             <th style="width: 20%">Aseguradora</th>
-            <th style="width: 16%">Documento</th>
+            <th style="width: 12%">Documento</th>
             <th style="width: 7%">Estado</th>
             <th style="width: 7%">Emision</th>
             <th style="width: 7%">Vencimiento</th>
@@ -36,10 +36,10 @@ table
         <tbody>
         <g:each in="${garantias}" var="garantia">
             <tr style="width: 100%">
-                <td style="width:18%">${garantia?.tipoGarantia?.descripcion}</td>
-                <td style="width:10%">${garantia?.codigo}</td>
+                <td style="width:14%">${garantia?.tipoGarantia?.descripcion}</td>
+                <td style="width:18%">${garantia?.codigo}</td>
                 <td style="width:20%">${garantia?.aseguradora?.nombre}</td>
-                <td style="width:16%">${garantia?.tipoDocumentoGarantia?.descripcion}</td>
+                <td style="width:12%">${garantia?.tipoDocumentoGarantia?.descripcion}</td>
                 <td style="width:7%; background-color: ${garantia?.estado?.descripcion == 'Vigente' ? '#78B665' : garantia?.estado?.descripcion == 'Renovada' ? '#C19345' : ''}">${garantia?.estado?.descripcion}</td>
                 <td style="width:7%">${garantia?.fechaInicio?.format("dd-MM-yyyy")}</td>
                 <td style="width:7%">${garantia?.fechaFinalizacion?.format("dd-MM-yyyy")}</td>
