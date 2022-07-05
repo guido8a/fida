@@ -1,6 +1,9 @@
 package poa
 
+import convenio.Plan
 import org.springframework.dao.DataIntegrityViolationException
+import planes.GrupoActividad
+
 //import vesta.seguridad.Shield
 
 /**
@@ -241,16 +244,18 @@ class PresupuestoController {
      * @render ERROR*[mensaje] cuando no se pudo eliminar correctamente, SUCCESS*[mensaje] cuando se eliminó correctamente
      */
     def delete_ajax() {
+        println "delete_ajax, $params"
         if (params.id) {
-            def presupuestoInstance = Presupuesto.get(params.id)
-            if (!presupuestoInstance) {
+            def grupoActividadInstance = GrupoActividad.get(params.id)
+            if (!grupoActividadInstance) {
                 render "ERROR*No se encontró Presupuesto."
                 return
             }
-            def hijos = Presupuesto.findAllByPresupuesto(presupuestoInstance)
-            if (hijos == 0) {
+            def hijos = Plan.findAllByGrupoActividad(grupoActividadInstance)
+            println "hijos: $hijos"
+            if (hijos.size() == 0) {
                 try {
-                    presupuestoInstance.delete(flush: true)
+                    grupoActividadInstance.delete(flush: true)
                     render "SUCCESS*Eliminación de Presupuesto exitosa."
                     return
                 } catch (DataIntegrityViolationException e) {
