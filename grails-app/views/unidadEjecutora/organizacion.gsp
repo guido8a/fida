@@ -390,7 +390,7 @@
     });
 
     $("#btnPlanes").click(function () {
-        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/" + '${unidad?.id}'
+        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/?unej=" + '${unidad?.id}'
     });
 
     $("#btnBeneficiario").click(function (){

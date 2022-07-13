@@ -120,6 +120,7 @@ class ConvenioController {
                 println "Error en save de convenio ejecutora\n" + convenio.errors
                 render "no*Error al guardar la convenio"
             }else{
+                println "--> convenio: ${convenio.id}"
                 render "SUCCESS*" + texto + "*" + convenio?.id
             }
 //        }else{
@@ -160,12 +161,12 @@ class ConvenioController {
     def convenio(){
         println "convenio $params"
         def convenio
-        def planes = PlanesNegocio.list()
+//        def planes = PlanesNegocio.list()
         def unidades = []
         def plan = PlanesNegocio.get(params.plan)
-        planes.each { p ->
-            unidades.add(p.unidadEjecutora)
-        }
+//        planes.each { p ->
+//            unidades.add(p.unidadEjecutora)
+//        }
         if(params.id){
             convenio = Convenio.get(params.id)
         } else if(params.plan) {
@@ -173,6 +174,14 @@ class ConvenioController {
         } else {
             convenio = new Convenio()
         }
+
+        if(plan) {
+            unidades.add(plan.unidadEjecutora)
+        } else {
+            unidades.add(convenio.planesNegocio.unidadEjecutora)
+            plan = convenio.planesNegocio
+        }
+
         return[convenio: convenio, unidades: unidades, plns: plan]
     }
 

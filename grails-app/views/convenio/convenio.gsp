@@ -39,7 +39,7 @@
 
 <body>
 <div class="btn-group">
-    <g:if test="${convenio?.id}">
+    <g:if test="${plns?.id}">
         <a href="#" class="btn btn-sm btn-default" id="btnRegresar" >
             <i class="fa fa-arrow-left"></i> Ir al Plan de Negocio Solidario
         </a>
@@ -47,11 +47,11 @@
 </div>
 
 <div class="btn-group">
-    <a href="${createLink(controller: 'convenio', action: 'convenio')}" id="btnNuevoConvenio"
-       class="btn btn-sm btn-success" title="Consultar artículo">
+    <a href="${createLink(controller: 'convenio', action: 'convenio')}/?plan=${params.plan}" id="btnNuevoConvenio"
+       class="btn btn-sm btn-success" title="Nuevo convenio">
         <i class="fas fa-plus"></i> Nuevo convenio
     </a>
-    <g:if test="${convenio?.estado == 'N'}">
+    <g:if test="${convenio?.estado?:'N' == 'N'}">
         <a href="#" id="btnGuardar" class="btn btn-sm btn-success" title="Guardar información">
             <i class="fa fa-save"></i> Guardar
         </a>
@@ -350,8 +350,9 @@
 
     $("#btnRegresar").click(function () {
         %{--console.log('regresa', "${convenio?.planesNegocio?.unidadEjecutora?.id}")--}%
-        var id = "${convenio?.planesNegocio?.unidadEjecutora?.id}"
-        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}" + "/?id=" + id
+        var id = "${plns?.unidadEjecutora?.id}"
+        %{--var id = "${plns?.id}"--}%
+        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}" + "/?unej=" + id
     });
 
     $("#btnAdministradorCon").click(function () {
