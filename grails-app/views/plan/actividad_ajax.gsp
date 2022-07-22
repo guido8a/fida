@@ -5,5 +5,5 @@
   Time: 15:55
 --%>
 
-<g:select name="grupoActividad" from="${actividades}" optionValue="descripcion" optionKey="id" class="form-control"
+<g:select name="grupoActividad" from="${actividades}" optionValue="${{it.numero + " " + it.descripcion}}" optionKey="id" class="form-control"
           value="${plan?.grupoActividad?.id}"/>

@@ -392,10 +392,10 @@ class LoginController {
 //        println "permisos menu " + session.permisos
     }
 
-//    def saludo() {
-//        def mensaje = [saludo: "Hola", ok: true]
-//        render mensaje as JSON
-//    }
+    def saludo() {
+        def mensaje = [saludo: "Hola", ok: true]
+        render mensaje as JSON
+    }
 
 
 }
