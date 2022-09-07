@@ -181,7 +181,7 @@
     });
 
     $("#btnPlanNegocio").click(function () {
-        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/?unej=" + '${planNs?.unidadEjecutora.id}'
+        location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/?unej=" + '${planNs?.unidadEjecutora?.id}'
     });
 
     function agregarPlan(id) {

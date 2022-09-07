@@ -178,8 +178,8 @@ class ConvenioController {
         if(plan) {
             unidades.add(plan.unidadEjecutora)
         } else {
-            unidades.add(convenio.planesNegocio.unidadEjecutora)
-            plan = convenio.planesNegocio
+//            unidades.add(convenio.planesNegocio.unidadEjecutora)
+//            plan = convenio.planesNegocio
         }
 
         return[convenio: convenio, unidades: unidades, plns: plan]
