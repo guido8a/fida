@@ -223,6 +223,7 @@ class PlanesNegocioController {
         plan.van = params?.van?.toDouble()
         plan.tir = params?.tir?.toDouble()
         plan.tasa = params?.tasa?.toDouble()
+        plan.numeroSocios = params?.numeroSocios?.toDouble()
 
 
         if(suma > params.monto?.toDouble()){

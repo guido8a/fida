@@ -216,13 +216,15 @@ class PlanController {
     }
 
     def planesConvenio (){
-//        println "planesConvenio: ${params}"
-        def plns = PlanesNegocio.get(params.id)
-        def cnvn = Convenio.findByPlanesNegocio(plns)
-        def periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(plns)
-        def planes = Plan.findAllByPlanesNegocio(plns, [sort: 'grupoActividad.descripcion'])
+        println "planesConvenio: ${params}"
+//        def plns = PlanesNegocio.get(params.id)
+//        def cnvn = Convenio.findByPlanesNegocio(plns)
+        def cnvn = Convenio.get(params.id)
+//        def periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(plns)
+        def periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(cnvn.planesNegocio)
+        def planes = Plan.findAllByPlanesNegocio(cnvn.planesNegocio, [sort: 'grupoActividad.descripcion'])
 //        println "planesConvenio --> ${plns.id}"
-        return[planNs: plns, planes: planes, cnvn: cnvn, periodo: periodo]
+        return[planNs: cnvn.planesNegocio, planes: planes, cnvn: cnvn, periodo: periodo]
     }
 
     def savePlan_ajax(){
