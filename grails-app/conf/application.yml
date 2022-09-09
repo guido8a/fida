@@ -125,13 +125,13 @@ environments:
     development:
         dataSource:
             dbCreate: update
-            url: jdbc:postgresql://127.0.0.1:5432/fida
-#            url: jdbc:postgresql://127.0.0.1:5432/fida_prod
+#            url: jdbc:postgresql://127.0.0.1:5432/fida
+            url: jdbc:postgresql://192.168.200.9:5432/fida
             username: postgres
             password: 'postgres'
 
         grails:
-            serverURL: http://192.168.200.5:8080
+            serverURL: http://127.0.0.1:8080
     test:
         dataSource:
             dbCreate: update
@@ -186,3 +186,23 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+
+
+
+#grails:
+#    cors:
+#        enabled: true
+#        allowedOrigins:
+#            - http://fabricio:3000
+
+grails:
+    cors:
+        enabled: true
+        allowedOrigins: ['http://fabricio:3000', 'http://localhost:3000']
+#        allowedOrigins: ['*']
+        allowedMethods: ['GET','POST','PUT','DELETE']
+        allowedHeaders: ['Origin', 'Content-Type', 'Accept', 'token', 'X-Requested-With',
+                         'Authorization']
+        AllowCredentials: [true]
+
+
