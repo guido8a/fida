@@ -413,7 +413,7 @@
     });
 
     $("#btnPlanificacion").click(function () {
-        location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/" + '${plns?.id}'
+        location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/?plan=" + '${plns?.id}'
 
     });
 

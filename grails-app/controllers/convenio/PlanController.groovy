@@ -217,14 +217,32 @@ class PlanController {
 
     def planesConvenio (){
         println "planesConvenio: ${params}"
-        def plns = PlanesNegocio.get(params.id)
-        def cnvn = Convenio.findByPlanesNegocio(plns)
+//        def plns = PlanesNegocio.get(params.id)
+//        def cnvn = Convenio.findByPlanesNegocio(plns)
+        def plns
+        def cnvn
+        def periodo
+        def planes
+        if(params?.plan?.toInteger() > 0) {
+            println "usa PLNS: ${params.plan}"
+            plns = PlanesNegocio.get(params.plan)
+            cnvn = Convenio.findByPlanesNegocio(plns)
+            periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(plns)
+            planes = Plan.findAllByPlanesNegocio(plns, [sort: 'grupoActividad.descripcion'])
+        } else {
+            println "usa convenio: ${params.id}"
+            cnvn = Convenio.get(params.id)
+            plns = cnvn.planesNegocio
+            periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(cnvn.planesNegocio)
+            planes = Plan.findAllByPlanesNegocio(cnvn.planesNegocio, [sort: 'grupoActividad.descripcion'])
+        }
 //        def cnvn = Convenio.get(params.id)
-        def periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(plns)
+//        def periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(plns)
 //        def periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(cnvn.planesNegocio)
-        def planes = Plan.findAllByPlanesNegocio(cnvn.planesNegocio, [sort: 'grupoActividad.descripcion'])
-        println "planesConvenio --> ${plns.id} == ${cnvn.planesNegocio.id}, org: ${cnvn.planesNegocio?.unidadEjecutora?.id}"
-        return[planNs: cnvn.planesNegocio, planes: planes, cnvn: cnvn, periodo: periodo]
+//        def planes = Plan.findAllByPlanesNegocio(cnvn.planesNegocio, [sort: 'grupoActividad.descripcion'])
+//        println "planesConvenio --> ${plns.id} == ${cnvn.planesNegocio.id}, org: ${cnvn.planesNegocio?.unidadEjecutora?.id}"
+        println "PLNS --> ${cnvn?.planesNegocio?.id}, org: ${cnvn?.planesNegocio?.unidadEjecutora?.id} cnvn: ${cnvn?.id}"
+        return[planNs: plns, planes: planes, cnvn: cnvn, periodo: periodo]
     }
 
     def savePlan_ajax(){
