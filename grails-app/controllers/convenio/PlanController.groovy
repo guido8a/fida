@@ -217,13 +217,13 @@ class PlanController {
 
     def planesConvenio (){
         println "planesConvenio: ${params}"
-//        def plns = PlanesNegocio.get(params.id)
-//        def cnvn = Convenio.findByPlanesNegocio(plns)
-        def cnvn = Convenio.get(params.id)
-//        def periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(plns)
-        def periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(cnvn.planesNegocio)
+        def plns = PlanesNegocio.get(params.id)
+        def cnvn = Convenio.findByPlanesNegocio(plns)
+//        def cnvn = Convenio.get(params.id)
+        def periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(plns)
+//        def periodo = Periodo.findByPlanesNegocioAndFechaInicioIsNotNull(cnvn.planesNegocio)
         def planes = Plan.findAllByPlanesNegocio(cnvn.planesNegocio, [sort: 'grupoActividad.descripcion'])
-//        println "planesConvenio --> ${plns.id}"
+        println "planesConvenio --> ${plns.id} == ${cnvn.planesNegocio.id}, org: ${cnvn.planesNegocio?.unidadEjecutora?.id}"
         return[planNs: cnvn.planesNegocio, planes: planes, cnvn: cnvn, periodo: periodo]
     }
 

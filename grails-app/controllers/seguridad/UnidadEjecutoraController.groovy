@@ -425,6 +425,7 @@ class UnidadEjecutoraController {
     def organizacion(){
         def unidad
         def anios
+        println "unej: ${params?.id}"
         if(params.id){
             unidad = UnidadEjecutora.get(params.id)
         }else{
