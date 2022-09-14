@@ -16,9 +16,13 @@
 
 <div class="btn-toolbar toolbar">
     <div class="btn-group col-md-12">
-        <g:link controller="plan" action="planesConvenio" id="${planNs?.id}" class="btn btn-sm btn-default">
+        %{--<g:link controller="plan" action="planesConvenio" id="${planNs?.id}" class="btn btn-sm btn-default">--}%
+            %{--<i class="fa fa-arrow-left"></i> Planificación--}%
+        %{--</g:link>--}%
+        <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-default" title="Ir al Plan de Negocio">
             <i class="fa fa-arrow-left"></i> Planificación
-        </g:link>
+        </a>
+
         <div class="panel-primary col-md-9" style="text-align: center; font-size: 14px; margin-bottom: 10px">
             <span class="col-md-3"></span>
             <span class="col-md-3 panel-primary">Seleccione el Año</span>
@@ -80,6 +84,10 @@
         })
 
     }
+
+    $("#btnPlanNegocio").click(function () {
+        location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/?plan=" + '${planNs?.id}'
+    });
 
 </script>
 

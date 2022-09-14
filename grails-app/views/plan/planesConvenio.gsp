@@ -27,10 +27,13 @@
         <g:link controller="unidadEjecutora" action="organizacion" id="${planNs?.unidadEjecutora?.id}" class="btn btn-sm btn-default">
             <i class="fa fa-arrow-left"></i> Organización
         </g:link>
-        <g:link controller="convenio" action="convenio" id="${cnvn?.id}" class="btn btn-sm btn-default">
+        %{--<g:link controller="convenio" action="convenio" id="${cnvn?.id}" plan="${planNs?.id}" class="btn btn-sm btn-default">--}%
+            %{--<i class="fa fa-arrow-left"></i> Convenio--}%
+        %{--</g:link>--}%
+        <a href="#" id="btnConvenio" class="btn btn-sm btn-default" title="Ir al Convenio">
             <i class="fa fa-arrow-left"></i> Convenio
-        </g:link>
-        <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-default" title="Consultar documentos">
+        </a>
+        <a href="#" id="btnPlanNegocio" class="btn btn-sm btn-default" title="Ir al Plan de Negocio">
             <i class="fa fa-arrow-left"></i> Plan de Negocios Solidario
         </a>
         <a href="#" id="btnCronograma" class="btn btn-sm btn-info" title="Cronograma">
@@ -182,6 +185,11 @@
 
     $("#btnPlanNegocio").click(function () {
         location.href="${createLink(controller: 'planesNegocio', action: 'planes')}/?unej=" + '${planNs?.unidadEjecutora?.id}'
+    });
+
+    $("#btnConvenio").click(function () {
+        %{--<g:link controller="convenio" action="convenio" id="${cnvn?.id}" plan="${planNs?.id}"        --}%
+        location.href="${createLink(controller: 'convenio', action: 'convenio')}/?plan=" + '${planNs?.id}'
     });
 
     function agregarPlan(id) {

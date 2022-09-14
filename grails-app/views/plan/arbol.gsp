@@ -40,9 +40,12 @@
 
     <div class="row" style="margin-bottom: 10px;">
         <div class="btn-group">
-            <g:link controller="plan" action="planesConvenio" id="${plns}" class="btn btn-default">
+            %{--<g:link controller="plan" action="planesConvenio" id="${plns}" class="btn btn-default">--}%
+                %{--<i class="fa fa-arrow-left"></i> Regresar--}%
+            %{--</g:link>--}%
+            <a href="#" id="btnConvenio" class="btn btn-sm btn-default" title="Ir al Convenio">
                 <i class="fa fa-arrow-left"></i> Regresar
-            </g:link>
+            </a>
 
             <div class="col-md-4">
                 <div class="input-group input-group-sm">
@@ -389,6 +392,11 @@
                     scrollToRoot();
                     $("#divSearchRes").addClass("hidden");
                     $("#spanSearchRes").text("");
+                });
+
+                $("#btnConvenio").click(function () {
+                    %{-- controller="plan" action="planesConvenio" id="${plns}"       --}%
+                    location.href="${createLink(controller: 'plan', action: 'planesConvenio')}/?plan=" + '${plns}'
                 });
 
             });
