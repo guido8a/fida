@@ -1124,6 +1124,81 @@ class ReportesController {
         output.write(file.getBytes());
     }
 
+    def reporteSociosTotalExcel(){
+
+//        def provincia = Provincia.get(params.id)
+//        def cantones = Canton.findAllByProvincia(provincia)
+//        def parroquias = Parroquia.findAllByCantonInList(cantones)
+//        def tipo = TipoInstitucion.get(2)
+//        def organizaciones = UnidadEjecutora.findAllByParroquiaInListAndTipoInstitucion(parroquias,tipo)
+        def cn = dbConnectionService.getConnection()
+        def sql = "select unejnmbr, prornmbr, prorapll, prorsexo, (now()::date - prorfcna)/365.25::int edad, " +
+                "case when prorbono = '1' then 'S' else 'N' end bono " +
+                "from pror, unej where unej.unej__id = pror.unej__id order by unejnmbr, prorsexo, prorapll "
+        println "sql: $sql"
+
+        def data = cn.rows(sql.toString())
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        def row = 0
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+//        sheet.setRowView(4,34)
+
+        // fija el ancho de la columna
+        sheet.setColumnView(0,30)
+        sheet.setColumnView(1,30)
+        sheet.setColumnView(2,30)
+        sheet.setColumnView(3,30)
+        sheet.setColumnView(4,30)
+        sheet.setColumnView(5,30)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+        autoSizeColumns(sheet, 10)
+
+        def label
+        def fila = 5;
+
+        label = new Label(0, 1, "ORGANIZACIONES REGISTRADAS EN EL SISTEMA", times16format); sheet.addCell(label);
+        label = new Label(0, 2, "Reporte de todas las personas registradas en las OEPS", times16format); sheet.addCell(label);
+        label = new Label(0, 4, "Organización", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "Nombres", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "Apellidos", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "Sexo", times16format); sheet.addCell(label);
+        label = new Label(4, 4, "Edad", times16format); sheet.addCell(label);
+        label = new Label(5, 4, "Bono", times16format); sheet.addCell(label);
+
+        data.each {d ->
+            label = new Label(0, fila,  d?.unejnmbr?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(1, fila,  d?.prornmbr?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(2, fila,  d?.prorapll?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(3, fila,  d?.prorsexo?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(4, fila,  d?.edad?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(5, fila,  d?.bono?.toString(), times16formatN); sheet.addCell(label);
+            fila++
+        }
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteExcelOrganizaciones_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+    }
+
 
     def reporteSociosExcel(){
         def organizacion = UnidadEjecutora.get(params.id)

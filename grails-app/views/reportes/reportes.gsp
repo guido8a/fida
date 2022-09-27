@@ -138,6 +138,10 @@
                         <i class="fa fa-user-graduate fa-4x text-success"></i>
                         <br/> Participantes por taller
                     </a>
+                    <a href="#" id="btnPersonas" class="btn btn-info btn-ajax example_c item" texto="socios">
+                        <i class="fas fa-user-friends fa-4x text-success"></i>
+                        <br/>  Socios organizaciones
+                    </a>
                 </p>
             </div>
         </div>
@@ -327,6 +331,11 @@
 <div id="cngr" style="display:none">
     <h3>Cronograma</h3><br>
     <p>Reporte del cronograma de ejecución por año</p>
+</div>
+
+<div id="socios" style="display:none">
+    <h3>Socios de Organizaciones</h3><br>
+    <p>Reporte de socios de todas las organziaciones en excel</p>
 </div>
 
 <script type="text/javascript">
@@ -752,6 +761,39 @@
                 }); //dialog
             }
         })
+    });
+
+    $("#btnPersonas").click(function () {
+//        $.ajax({
+//            type: 'POST',
+            %{--url: '${createLink(controller: 'reportes', action: 'provincia_ajax')}',--}%
+//            data:{
+//            },
+//            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlProvincia",
+                    title : "Socios de todas las Organizaciones",
+                    message : '¿Generar el reporte en excel de los socios de todas las organizaciones?',
+                    class   : "modal-sm",
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reporteSociosTotalExcel')}/" + $("#provincia option:selected").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+//            }
+//        })
     });
 
     %{--$("#btnIva").click(function () {--}%
