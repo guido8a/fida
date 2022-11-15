@@ -1,8 +1,6 @@
 package taller
 
 import audita.Auditable
-import geografia.Comunidad
-import geografia.Parroquia
 import seguridad.PersonaOrganizacion
 
 class Asiste implements Auditable {

@@ -1453,6 +1453,8 @@ class ReportesController {
     }
 
     def reporteCapacitacionesExcel(){
+        def cn = dbConnectionService.getConnection()
+        def sql = ""
         def provincia = Provincia.get(params.id)
         def cantones = Canton.findAllByProvincia(provincia)
         def parroquias = Parroquia.findAllByCantonInList(cantones)
@@ -1509,17 +1511,25 @@ class ReportesController {
         label = new Label(8, 4, "MUJERES", times16format); sheet.addCell(label);
         label = new Label(9, 4, "TOTAL", times16format); sheet.addCell(label);
 
-        talleres.each{taller->
-            def hombres = PersonaTaller.countBySexoAndTaller('A',taller)
-            def mujeres = PersonaTaller.countBySexoAndTaller('E',taller)
+        talleres.each{tllr->
+//            def hombres = PersonaTaller.countBySexoAndTaller('A',tllr)
+//            def mujeres = PersonaTaller.countBySexoAndTaller('E',tllr)
+            sql = "select count(*) cuenta from asst, pror where tllr__id = ${tllr.id} and " +
+                    "pror.pror__id = asst.pror__id and prorsexo = 'M'"
+//            println "reporteCapacitacionesExcel: $sql"
+            def hombres = cn.rows(sql.toString())[0].cuenta
+            sql = "select count(*) cuenta from asst, pror where tllr__id = ${tllr.id} and " +
+                    "pror.pror__id = asst.pror__id and prorsexo = 'F'"
+            println "reporteCapacitacionesExcel: $sql"
+            def mujeres = cn.rows(sql.toString())[0].cuenta
 
-            label = new Label(0, fila, taller?.parroquia?.nombre?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(1, fila, taller?.unidadEjecutora?.nombre?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(2, fila, taller?.tipoTaller?.descripcion?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(3, fila, taller?.nombre?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(4, fila, taller?.objetivo?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(5, fila, taller?.fechaInicio?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(6, fila, taller?.fechaFin?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(0, fila, tllr?.parroquia?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(1, fila, tllr?.unidadEjecutora?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(2, fila, tllr?.tipoTaller?.descripcion?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(3, fila, tllr?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(4, fila, tllr?.objetivo?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(5, fila, tllr?.fechaInicio?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(6, fila, tllr?.fechaFin?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
             label = new Label(7, fila, hombres?.toString(), times16formatN); sheet.addCell(label);
             label = new Label(8, fila, mujeres?.toString(), times16formatN); sheet.addCell(label);
             label = new Label(9, fila, (hombres.plus(mujeres))?.toString(), times16formatN); sheet.addCell(label);

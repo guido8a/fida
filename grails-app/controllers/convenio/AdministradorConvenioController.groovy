@@ -15,6 +15,7 @@ class AdministradorConvenioController {
         }else{
             administradores = Persona.findAllByUnidadEjecutora(convenio?.planesNegocio?.unidadEjecutora)
         }
+        println "administradores: $administradores"
 
         return [administradores: administradores, convenio: convenio]
     }
