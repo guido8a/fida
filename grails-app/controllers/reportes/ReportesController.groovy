@@ -23,6 +23,8 @@ import groovy.json.JsonBuilder
 import groovy.xml.DOMBuilder
 import jxl.CellView
 import jxl.WorkbookSettings
+import jxl.write.DateFormat
+import jxl.write.DateTime
 import jxl.write.Label
 import jxl.write.NumberFormat
 import jxl.write.WritableCellFormat
@@ -1481,7 +1483,7 @@ class ReportesController {
         sheet.setColumnView(1,40)
         sheet.setColumnView(2,40)
         sheet.setColumnView(3,25)
-        sheet.setColumnView(4,35)
+        sheet.setColumnView(4,50)
         sheet.setColumnView(5,20)
         sheet.setColumnView(6,20)
         sheet.setColumnView(7,10)
@@ -1493,9 +1495,8 @@ class ReportesController {
         WritableCellFormat times16format = new WritableCellFormat(times16font);
         WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
 
-//        autoSizeColumns(sheet, 10)
-
         def label
+        def number
         def fila = 5;
 
         label = new Label(1, 2, "REPORTE CAPACITACIONES POR PROVINCIA", times16format); sheet.addCell(label);
@@ -1520,19 +1521,32 @@ class ReportesController {
             def hombres = cn.rows(sql.toString())[0].cuenta
             sql = "select count(*) cuenta from asst, pror where tllr__id = ${tllr.id} and " +
                     "pror.pror__id = asst.pror__id and prorsexo = 'F'"
-            println "reporteCapacitacionesExcel: $sql"
+//            println "reporteCapacitacionesExcel: $sql"
             def mujeres = cn.rows(sql.toString())[0].cuenta
+
+            DateFormat df = new DateFormat("d/MM/yyyy");
+            df.getDateFormat().setTimeZone(TimeZone.getTimeZone("GMT"))
+            def DATE_CELL_FRMT = new WritableCellFormat(df);
 
             label = new Label(0, fila, tllr?.parroquia?.nombre?.toString(), times16formatN); sheet.addCell(label);
             label = new Label(1, fila, tllr?.unidadEjecutora?.nombre?.toString(), times16formatN); sheet.addCell(label);
             label = new Label(2, fila, tllr?.tipoTaller?.descripcion?.toString(), times16formatN); sheet.addCell(label);
             label = new Label(3, fila, tllr?.nombre?.toString(), times16formatN); sheet.addCell(label);
             label = new Label(4, fila, tllr?.objetivo?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(5, fila, tllr?.fechaInicio?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(6, fila, tllr?.fechaFin?.format("dd-MM-yyyy")?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(7, fila, hombres?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(8, fila, mujeres?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(9, fila, (hombres.plus(mujeres))?.toString(), times16formatN); sheet.addCell(label);
+            if(tllr?.fechaInicio){
+                label = new DateTime(5, fila, tllr?.fechaInicio, DATE_CELL_FRMT); sheet.addCell(label);
+            }else{
+                label = new Label(5, fila, "", times16formatN); sheet.addCell(label);
+            }
+            if(tllr?.fechaFin){
+                label = new DateTime(6, fila, tllr?.fechaFin, DATE_CELL_FRMT); sheet.addCell(label);
+            }else{
+                label = new Label(6, fila, "", times16formatN); sheet.addCell(label);
+            }
+
+            number = new jxl.write.Number(7, fila,hombres); sheet.addCell(number);
+            number = new jxl.write.Number(8, fila,mujeres); sheet.addCell(number);
+            number = new jxl.write.Number(9, fila,hombres.plus(mujeres)); sheet.addCell(number);
             fila++
         }
 
