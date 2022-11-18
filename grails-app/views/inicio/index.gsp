@@ -228,7 +228,7 @@
         </div>
     </a>
 --}%
-    <a href= "${createLink(controller:'convenio', action: 'convenio')}" style="text-decoration: none">
+    <a href= "${createLink(controller:'unidadEjecutora', action: 'organizacion')}" style="text-decoration: none">
         <div class="col-lg-6 mbr-col-md-10">
             <div class="wrap">
                 <div style="width: 200px; height: 120px">

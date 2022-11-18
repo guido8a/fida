@@ -23,6 +23,7 @@ class InformeAvanceController {
     def tablaInforme_ajax() {
         println "tablaInforme_ajax $params"
         def convenio = Convenio.get(params.id)
+//        def administrador = AdministradorConvenio.findByConvenioAndFechaFinIsNotNull(convenio)
         def administrador = AdministradorConvenio.findByConvenioAndFechaFinIsNull(convenio)
         def informe = InformeAvance.withCriteria {
             eq("administradorConvenio", administrador)
@@ -67,7 +68,9 @@ class InformeAvanceController {
         def convenio = Convenio.get(params.convenio)
         def infoInstance = new InformeAvance()
         def desembolso = Desembolso.findAllByConvenio(convenio)
-        def administrador = AdministradorConvenio.findAllByConvenio(convenio)
+//        def administrador = AdministradorConvenio.findAllByConvenio(convenio)
+        def administrador = AdministradorConvenio.findByConvenioAndFechaFinIsNull(convenio)
+
         if (params.id) {
             infoInstance = InformeAvance.get(params.id)
             if (!infoInstance) {
@@ -111,6 +114,7 @@ class InformeAvanceController {
                 render "no*Error al guardar la informe"
             }else{
                 render "SUCCESS*" + texto
+                println "informe: ${informe.id}"
             }
         }else{
             render "er*Validacion de desemboplsos"
