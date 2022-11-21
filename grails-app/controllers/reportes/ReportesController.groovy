@@ -1,7 +1,8 @@
 package reportes
 
 import avales.ProcesoAsignacion
-import com.itextpdf.text.Font
+//import com.itextpdf.text.Font
+import com.lowagie.text.Font
 import com.lowagie.text.Document
 import com.lowagie.text.Element
 import com.lowagie.text.pdf.BaseFont;
@@ -98,20 +99,19 @@ class ReportesController {
         logo.setAlignment(Image.RIGHT | Image.TEXTWRAP)
 //        logo.setAlignment(Image.RIGHT)
 
+        BaseFont bfTimes = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, false);
+
+        def titulo = new Color(40, 140, 180)
+
         def baos = new ByteArrayOutputStream()
         def name = "${tipoRfrm.toLowerCase()}_" + new Date().format("ddMMyyyy_hhmm") + ".pdf";
-        Font times12bold = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
-        Font times10bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font times10normal = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);
-        Font times14bold = new Font(Font.TIMES_ROMAN, 14, Font.BOLD);
-        Font times18bold = new Font(Font.TIMES_ROMAN, 18, Font.BOLD);
-        Font times8bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD)
-        Font times8normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL)
-        Font times10boldWhite = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font times8boldWhite = new Font(Font.TIMES_ROMAN, 8, Font.BOLD)
-        def titulo = new Color(40, 140, 180)
-        Font fontProyecto = new Font(Font.HELVETICA, 18, Font.NORMAL, titulo);
-        Font fontTitulo = new Font(Font.TIMES_ROMAN, 16, Font.BOLD, titulo);
+        com.lowagie.text.Font times12bold = new com.lowagie.text.Font(com.lowagie.text.Font.TIMES_ROMAN, 12, Font.BOLD);
+        com.lowagie.text.Font times10bold = new com.lowagie.text.Font(com.lowagie.text.Font.TIMES_ROMAN, 10, Font.BOLD);
+        com.lowagie.text.Font times10normal = new com.lowagie.text.Font(com.lowagie.text.Font.TIMES_ROMAN, 10, Font.NORMAL);
+        com.lowagie.text.Font times8bold = new com.lowagie.text.Font(com.lowagie.text.Font.TIMES_ROMAN, 8, Font.BOLD);
+        com.lowagie.text.Font times8normal = new com.lowagie.text.Font(com.lowagie.text.Font.TIMES_ROMAN, 8, Font.NORMAL);
+        com.lowagie.text.Font fontProyecto = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 18, Font.NORMAL, titulo);
+        com.lowagie.text.Font fontTitulo = new com.lowagie.text.Font(com.lowagie.text.Font.TIMES_ROMAN, 16, Font.BOLD, titulo);
 
         Document document
         document = new Document(PageSize.A4);
