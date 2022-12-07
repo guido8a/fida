@@ -1936,7 +1936,7 @@ class ReportesController {
             }else{
                 label = new Label(10, fila,'', times16formatN); sheet.addCell(label);
             }
-            label = new Label(11, fila, d?.prorjffm, times16formatN); sheet.addCell(label);
+            label = new Label(11, fila, d?.prorjffm == 1 ? 'SI' : 'NO', times16formatN); sheet.addCell(label);
             label = new Label(12, fila, d?.prorbono == 1 ? 'SI' : 'NO', times16formatN); sheet.addCell(label);
             label = new Label(13, fila, d?.prorsoco == 1 ? 'SI' : 'NO', times16formatN); sheet.addCell(label);
             label = new Label(14, fila, d?.nacndscr, times16formatN); sheet.addCell(label);
