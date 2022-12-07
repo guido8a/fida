@@ -1920,7 +1920,7 @@ class ReportesController {
             label = new Label(4, fila, d?.prornmbr, times16formatN); sheet.addCell(label);
             label = new Label(5, fila, d?.prorapll, times16formatN); sheet.addCell(label);
             label = new Label(6, fila, d?.prorsexo == 'F' ? 'FEMENINO' : 'MASCULINO', times16formatN); sheet.addCell(label);
-            label = new Label(7, fila, d?.prordscp, times16formatN); sheet.addCell(label);
+            label = new Label(7, fila, d?.prordscp.toString().trim() == '1' ? 'SI' : 'NO', times16formatN); sheet.addCell(label);
             if(d?.prorfcna){
                 label = new DateTime(8, fila, d?.prorfcna, DATE_CELL_FRMT); sheet.addCell(label);
             }else{
@@ -1936,9 +1936,9 @@ class ReportesController {
             }else{
                 label = new Label(10, fila,'', times16formatN); sheet.addCell(label);
             }
-            label = new Label(11, fila, d?.prorjffm == 1 ? 'SI' : 'NO', times16formatN); sheet.addCell(label);
-            label = new Label(12, fila, d?.prorbono == 1 ? 'SI' : 'NO', times16formatN); sheet.addCell(label);
-            label = new Label(13, fila, d?.prorsoco == 1 ? 'SI' : 'NO', times16formatN); sheet.addCell(label);
+            label = new Label(11, fila, d?.prorjffm.toString().trim() == '1' ? 'SI' : 'NO', times16formatN); sheet.addCell(label);
+            label = new Label(12, fila, d?.prorbono.toString().trim() == '1' ? 'SI' : 'NO', times16formatN); sheet.addCell(label);
+            label = new Label(13, fila, d?.prorsoco.toString().trim() == '1' ? 'SI' : 'NO', times16formatN); sheet.addCell(label);
             label = new Label(14, fila, d?.nacndscr, times16formatN); sheet.addCell(label);
             fila++
         }
