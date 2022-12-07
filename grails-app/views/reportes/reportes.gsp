@@ -117,11 +117,6 @@
         <div class="row">
             <div class="col-md-12 col-xs-5">
                 <p>
-                    %{--                    <g:link class="link btn btn-info btn-ajax example_c item" texto="grgf"  controller="reportes" action="mapa">--}%
-                    %{--                        <i class="fa fa-map-marked-alt fa-4x text-success"></i>--}%
-                    %{--                        <br/> Localización de proyectos--}%
-                    %{--                    </g:link>--}%
-
                     <a href="#" id="btnOrganizaciones" class="btn btn-info btn-ajax example_c item" texto="trnp">
                         <i class="fa fa-building fa-4x text-success"></i>
                         <br/> Organizaciones
@@ -164,6 +159,10 @@
                     <a href="#" id="btnCronograma" class="btn btn-info btn-ajax example_c item" texto="cngr">
                         <i class="fa fa-tasks fa-4x text-success"></i>
                         <br/> Cronograma de ejecución
+                    </a>
+                    <a href="#" id="btnBeneficiarios" class="btn btn-info btn-ajax example_c item" texto="bnf">
+                        <i class="fa fa-users fa-4x text-success"></i>
+                        <br/> Beneficiarios
                     </a>
                 </p>
             </div>
@@ -332,6 +331,12 @@
     <h3>Cronograma</h3><br>
     <p>Reporte del cronograma de ejecución por año</p>
 </div>
+
+<div id="bnf" style="display:none">
+    <h3>Beneficiarios</h3><br>
+    <p>Reporte de beneficiarios por organización</p>
+</div>
+
 
 <div id="socios" style="display:none">
     <h3>Socios de Organizaciones</h3><br>
@@ -710,15 +715,32 @@
                             className : "btn-primary",
                             callback  : function () {
                             }
-                        },
-                        %{--aceptar  : {--}%
-                        %{--    id        : "btnSave",--}%
-                        %{--    label     : "<i class='fa fa-check'></i> Aceptar",--}%
-                        %{--    className : "btn-success",--}%
-                        %{--    callback  : function () {--}%
-                        %{--        location.href="${createLink(controller: 'reportes', action: 'reporteSociosExcel')}/" + $("#organizacion option:selected").val()--}%
-                        %{--    } //callback--}%
-                        %{--} //guardar--}%
+                        }
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
+
+    $("#btnBeneficiarios").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'organizaciones_ajax')}',
+            data:{
+                tipo: 5
+            },
+            success: function (msg) {
+                dialogoOrganizacion = bootbox.dialog({
+                    id    : "dlOrganizacion",
+                    title : "Seleccione una Organización",
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        }
                     } //buttons
                 }); //dialog
             }

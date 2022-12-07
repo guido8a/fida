@@ -1843,6 +1843,116 @@ class ReportesController {
         output.write(file.getBytes());
     }
 
+    def reporteBeneficiariosExcel(){
+
+        def organizacion = UnidadEjecutora.get(params.id)
+
+        def cn = dbConnectionService.getConnection()
+        def sql = "select * from rp_beneficiarios(${params.id})"
+        def data = cn.rows(sql.toString())
+
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+
+        // fija el ancho de la columna
+        sheet.setColumnView(0,50)
+        sheet.setColumnView(1,30)
+        sheet.setColumnView(2,30)
+        sheet.setColumnView(3,30)
+        sheet.setColumnView(4,30)
+        sheet.setColumnView(5,30)
+        sheet.setColumnView(6,20)
+        sheet.setColumnView(7,20)
+        sheet.setColumnView(8,30)
+        sheet.setColumnView(9,30)
+        sheet.setColumnView(10,30)
+        sheet.setColumnView(11,30)
+        sheet.setColumnView(12,30)
+        sheet.setColumnView(13,30)
+        sheet.setColumnView(14,30)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+        def label
+        def fila = 5;
+        def number
+
+        DateFormat df = new DateFormat("d/MM/yyyy");
+        df.getDateFormat().setTimeZone(TimeZone.getTimeZone("GMT"))
+        def DATE_CELL_FRMT = new WritableCellFormat(df);
+
+        label = new Label(1, 2, "REPORTE DE BENEFICIARIOS", times16format); sheet.addCell(label);
+        label = new Label(1, 3, "ORGANIZACIÓN: " + organizacion?.nombre, times16format); sheet.addCell(label);
+        label = new Label(0, 4, "NOMBRE ORGANIZACIÓN", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "PROVINCIA", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "CANTÓN", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "PARROQUIA", times16format); sheet.addCell(label);
+        label = new Label(4, 4, "NOMBRE", times16format); sheet.addCell(label);
+        label = new Label(5, 4, "APELLIDO", times16format); sheet.addCell(label);
+        label = new Label(6, 4, "SEXO", times16format); sheet.addCell(label);
+        label = new Label(7, 4, "DISCAPACIDAD", times16format); sheet.addCell(label);
+        label = new Label(8, 4, "FECHA NACIMIENTO", times16format); sheet.addCell(label);
+        label = new Label(9, 4, "FECHA ", times16format); sheet.addCell(label);
+        label = new Label(10, 4, "EDAD", times16format); sheet.addCell(label);
+        label = new Label(11, 4, "JEFE DE FAMILIA", times16format); sheet.addCell(label);
+        label = new Label(12, 4, "BONO", times16format); sheet.addCell(label);
+        label = new Label(13, 4, "SOCIO", times16format); sheet.addCell(label);
+        label = new Label(14, 4, "NACIONALIDAD", times16format); sheet.addCell(label);
+
+        data.each { d->
+            label = new Label(0, fila, d?.unejnmbr, times16formatN); sheet.addCell(label);
+            label = new Label(1, fila, d?.unejprov, times16formatN); sheet.addCell(label);
+            label = new Label(2, fila, d?.unejcntn, times16formatN); sheet.addCell(label);
+            label = new Label(3, fila, d?.unejparr, times16formatN); sheet.addCell(label);
+            label = new Label(4, fila, d?.prornmbr, times16formatN); sheet.addCell(label);
+            label = new Label(5, fila, d?.prorapll, times16formatN); sheet.addCell(label);
+            label = new Label(6, fila, d?.prorsexo == 'F' ? 'FEMENINO' : 'MASCULINO', times16formatN); sheet.addCell(label);
+            label = new Label(7, fila, d?.prordscp, times16formatN); sheet.addCell(label);
+            if(d?.prorfcna){
+                label = new DateTime(8, fila, d?.prorfcna, DATE_CELL_FRMT); sheet.addCell(label);
+            }else{
+                label = new Label(8, fila,'', times16formatN); sheet.addCell(label);
+            }
+            if(d?.dsmbfcha){
+                label = new DateTime(9, fila, d?.dsmbfcha, DATE_CELL_FRMT); sheet.addCell(label);
+            }else{
+                label = new Label(9, fila,'', times16formatN); sheet.addCell(label);
+            }
+            if(d?.proredad){
+                number = new jxl.write.Number(10, fila, d?.proredad); sheet.addCell(number);
+            }else{
+                label = new Label(10, fila,'', times16formatN); sheet.addCell(label);
+            }
+            label = new Label(11, fila, d?.prorjffm, times16formatN); sheet.addCell(label);
+            label = new Label(12, fila, d?.prorbono == 1 ? 'SI' : 'NO', times16formatN); sheet.addCell(label);
+            label = new Label(13, fila, d?.prorsoco == 1 ? 'SI' : 'NO', times16formatN); sheet.addCell(label);
+            label = new Label(14, fila, d?.nacndscr, times16formatN); sheet.addCell(label);
+            fila++
+        }
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteExcelBeneficiarios_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+
+    }
+
     def reportePoaxGrupoExcel(){
 
         println("params " + params)

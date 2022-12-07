@@ -38,7 +38,11 @@
             if(${tipo == '2'}){
                 location.href="${createLink(controller: 'reportes', action: 'reporteTalleresExcel')}/" + idOrganizacion
             }else{
-                location.href="${createLink(controller: 'reportes', action: 'reportesConveniosExcel')}/" + idOrganizacion
+                if(${tipo == '5'}){
+                    location.href="${createLink(controller: 'reportes', action: 'reporteBeneficiariosExcel')}/" + idOrganizacion
+                }else{
+                    location.href="${createLink(controller: 'reportes', action: 'reportesConveniosExcel')}/" + idOrganizacion
+                }
             }
         }
 
