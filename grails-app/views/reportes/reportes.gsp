@@ -167,6 +167,21 @@
                 </p>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12 col-xs-5">
+                <p>
+                    <a href="#" id="btnEjecutado" class="btn btn-info btn-ajax example_c item" texto="func">
+                        <i class="fa fa-tasks fa-4x text-success"></i>
+                        <br/> Valores ejecutados del PNS
+                    </a>
+                    <a href="#" id="btnAportes" class="btn btn-info btn-ajax example_c item" texto="ddlb">
+                        <i class="fa fa-tasks fa-4x text-success"></i>
+                        <br/> Aportes extras y multas
+                    </a>
+                </p>
+            </div>
+        </div>
     </div>
 
     <div id="obra" class="tab-pane fade">

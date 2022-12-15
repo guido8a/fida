@@ -32,8 +32,12 @@
             <th>Actividad</th>
             <th>Planificado</th>
             <th>Costo</th>
+            <th>Ejecutado</th>
             <th>Cantidad</th>
             <th>Acumulado</th>
+            <th>Ap. Extra</th>
+            <th>Multas</th>
+            <th>Intereses</th>
             <th>Actual</th>
             <th>Observaciones</th>
         </tr>
@@ -47,6 +51,10 @@
                 <td align="left" width="25%">${avnc?.plandscr}</td>
                 <td align="left" width="6%">${avnc?.plancsto}</td>
                 <td align="left" width="6%">${avnc?.plancntd}</td>
+                <td align="left" width="6%">${avnc?.planejec}</td>
+                <td align="left" width="6%">${avnc?.planejec}</td>
+                <td align="left" width="6%">${avnc?.planejec}</td>
+                <td align="left" width="6%">${avnc?.planejec}</td>
                 <td align="left" width="6%">${avnc?.planejec}</td>
                 <td class="editable" id="${avnc?.plan__id}"
                     data-original="${avnc?.avncvlor}" data-valor="${avnc?.avncvlor}"  data-plan="${avnc?.plan__id}"
