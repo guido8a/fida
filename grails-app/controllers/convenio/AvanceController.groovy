@@ -231,6 +231,12 @@ class AvanceController {
         }else{
             avance = new Avance()
         }
+
+        params.extra = params.extra.toDouble()
+        params.multa = params.multa.toDouble()
+        params.interes = params.interes.toDouble()
+        params.valor = params.valor.toDouble()
+
         avance.properties = params
 
         if(!avance.save(flush: true)){
