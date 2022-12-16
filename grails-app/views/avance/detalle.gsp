@@ -25,8 +25,7 @@
             <a href="#" class="btn btn-azul" id="btn-consultar"><i class="fa fa-search"></i> Recargar Detalle</a>
         </div>
         <div class="btn-group col-sm-3" style="margin-top: 20px; margin-left: -0px; width: 300px;">
-            <a href="#" class="btn btn-success btn-actualizar"><i class="fa fa-save"></i> Guardar</a>
-%{--            <a href="#" class="btn btn-warning btn-generar" style="margin-left: 5px"><i class="fa fa-users"></i> Generar Alíc.</a>--}%
+%{--            <a href="#" class="btn btn-success btn-actualizar"><i class="fa fa-save"></i> Guardar</a>--}%
         </div>
 
     </div>
@@ -117,9 +116,9 @@
                     data += "&obsr=" + id + "_inor" + inor + "_ob" + obsr
                 }
 */
-                console.log('obsr:',obsr != '');
-                if ((parseFloat(valor) > 0 && obsr != '' && parseFloat(data1) != parseFloat(valor) || (obsr != obsrog) )) {
-                    if (data != "") {
+                console.log('obsr:',obsr !== '');
+                if ((parseFloat(valor) > 0 && obsr !== '' && parseFloat(data1) !== parseFloat(valor) || (obsr !== obsrog) )) {
+                    if (data !== "") {
                         data += "&";
                     }
                     var val = valor ? valor : data1;

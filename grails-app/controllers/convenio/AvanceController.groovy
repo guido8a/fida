@@ -32,7 +32,7 @@ class AvanceController {
         def data = cn.rows(sql.toString())
 
 //        def par = [oblg:7, controller:'vivienda', format:null, action:'tabla']
-        [avance: data]
+        [avance: data, informe: params.info]
     }
 
     /**
@@ -148,6 +148,7 @@ class AvanceController {
 
     def actualizar() {
         println "actualizar AV: $params"
+
         if (params.item instanceof java.lang.String) {
             params.item = [params.item]
         }
@@ -167,7 +168,6 @@ class AvanceController {
 
                 def plan = parts[0]
                 def valor  = parts[1].toDouble()
-//                def plan  = parts[2]
                 def obsr = null
                 if(it.contains('_ob')) {
                     obsr   = parts[3]
@@ -177,14 +177,6 @@ class AvanceController {
                         obsr = null
                     }
                 }
-
-/*
-                if(plan.size() > 4) {
-                    plan = plan[4..-1]
-                } else {
-                    plan = null
-                }
-*/
 
                 println "info: ${params.info}, plan: $plan, valor: $valor, obsr: $obsr"
 
@@ -203,24 +195,50 @@ class AvanceController {
                 avance.valor = valor
                 avance.descripcion = obsr
 
-                if (!avance.save(flush: true)) {
-                    println "error $parts, --> ${avance.errors}"
-                    if (nos != "") {
-                        nos += ","
-                    }
-                    nos += "#" + plan
-                } else {
-                    if (oks != "") {
-                        oks += ","
-                    }
-                    oks += "#" + plan
-                }
+//                if (!avance.save(flush: true)) {
+//                    println "error $parts, --> ${avance.errors}"
+//                    if (nos != "") {
+//                        nos += ","
+//                    }
+//                    nos += "#" + plan
+//                } else {
+//                    if (oks != "") {
+//                        oks += ","
+//                    }
+//                    oks += "#" + plan
+//                }
             }
         }
         println "--> ${oks}"
         render oks + "_" + nos
     }
 
+    def formValores_ajax (){
 
+        def info = InformeAvance.get(params.informe)
+        def planificacion = Plan.get(params.plan)
+        def avance = Avance.findByInformeAvanceAndPlan(info, planificacion)
+
+        return [avance: avance, informe: info, plan: planificacion]
+    }
+
+    def saveValores_ajax() {
+
+        def avance
+
+        if(params.id){
+            avance = Avance.get(params.id)
+        }else{
+            avance = new Avance()
+        }
+        avance.properties = params
+
+        if(!avance.save(flush: true)){
+            render "no"
+            println("error al guardar los valores del avance " + avance.errors)
+        }else{
+            render "ok"
+        }
+    }
 
 }
