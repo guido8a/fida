@@ -62,7 +62,7 @@
                 </label>
 
                 <span class="col-md-8">
-                    <g:textArea name="descripcion" style="resize: none;" cols="40" rows="5" maxlength="1024" class="form-control input-sm"
+                    <g:textArea name="descripcion" style="resize: none;" cols="40" rows="5" required="true" maxlength="1024" class="form-control input-sm required"
                                 value="${avance?.descripcion ?: ''}"/>
                 </span>
             </span>
