@@ -339,7 +339,7 @@
                     Plan de negocios
                 </label>
                 <span class="col-md-1">
-                    <g:select name="plan" from="${[1:'SI',0:'NO']}" class="form-control" optionKey="key" optionValue="value" value="${unidad?.plan}"/>
+                    <g:select name="plan" from="${['S':'SI','N':'NO']}" class="form-control" optionKey="key" optionValue="value" value="${unidad?.plan}"/>
                     <p class="help-block ui-helper-hidden"></p>
                 </span>
             </span>
@@ -348,7 +348,7 @@
                     Fortalecimiento
                 </label>
                 <span class="col-md-1">
-                    <g:select name="fortalecimiento" from="${[1:'SI',0:'NO']}" class="form-control" optionKey="key" optionValue="value" value="${unidad?.fortalecimiento}"/>
+                    <g:select name="fortalecimiento" from="${['S':'SI', 'N':'NO']}" class="form-control" optionKey="key" optionValue="value" value="${unidad?.fortalecimiento}"/>
                     <p class="help-block ui-helper-hidden"></p>
                 </span>
             </span>
@@ -357,7 +357,7 @@
                     Financiación
                 </label>
                 <span class="col-md-1">
-                    <g:select name="financiacion" from="${[1:'SI',0:'NO']}" class="form-control" optionKey="key" optionValue="value" value="${unidad?.financiacion}"/>
+                    <g:select name="financiacion" from="${['S':'SI', 'N':'NO']}" class="form-control" optionKey="key" optionValue="value" value="${unidad?.financiacion}"/>
                     <p class="help-block ui-helper-hidden"></p>
                 </span>
             </span>
