@@ -38,6 +38,9 @@ class UnidadEjecutora implements Auditable{
     String actividadSecundaria
     String fortaleza
     TipoOrganizacion tipoOrganizacion
+    String plan
+    String fortalecimiento
+    String financiacion
 
     static auditable = true
 
@@ -76,6 +79,10 @@ class UnidadEjecutora implements Auditable{
             actividadSecundaria column: 'unejacsc'
             fortaleza column: 'unejfort'
             tipoOrganizacion column: 'tpor__id'
+            plan column: 'unej_pns'
+            fortalecimiento column: 'unej_pfi'
+            financiacion column: 'unej_fin'
+
         }
     }
     static constraints = {
@@ -106,6 +113,9 @@ class UnidadEjecutora implements Auditable{
         actividadSecundaria(blank: true, nullable: true)
         fortaleza(blank: true, nullable: true)
         tipoOrganizacion(blank: false, nullable: false)
+        plan(blank: true, nullable: true)
+        fortalecimiento(blank: true, nullable: true)
+        financiacion(blank: true, nullable: true)
     }
 
     @Override
