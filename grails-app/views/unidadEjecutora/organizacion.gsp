@@ -328,28 +328,40 @@
                     Número de Años
                 </label>
 
-                <div class="col-md-1">
+                <span class="col-md-1">
                      <g:textField name="anio" maxlength="2" class="form-control digits input-sm" readonly=""
                          value="${anios}"/>
                     <p class="help-block ui-helper-hidden"></p>
-                </div>
+                </span>
             </span>
-        </div>
-%{--
-        <div class="form-group ${hasErrors(bean: unidad, field: 'legal', 'error')}${hasErrors(bean: unidad, field: 'anio', 'error')} ">
             <span class="grupo">
-                <label for="anio" class="col-md-2 control-label text-info">
-                    Capacitado en Fortalecimiento INúmero de Años
+                <label for="plan" class="col-md-2 control-label text-info">
+                    Plan de negocios
                 </label>
-
-                <div class="col-md-1">
-                     <g:textField name="anio" maxlength="2" class="form-control digits input-sm" readonly=""
-                         value="${anios}"/>
+                <span class="col-md-1">
+                    <g:select name="plan" from="${[1:'SI',0:'NO']}" class="form-control" optionKey="key" optionValue="value" value="${unidad?.plan}"/>
                     <p class="help-block ui-helper-hidden"></p>
-                </div>
+                </span>
+            </span>
+            <span class="grupo">
+                <label for="fortalecimiento" class="col-md-2 control-label text-info">
+                    Fortalecimiento
+                </label>
+                <span class="col-md-1">
+                    <g:select name="fortalecimiento" from="${[1:'SI',0:'NO']}" class="form-control" optionKey="key" optionValue="value" value="${unidad?.fortalecimiento}"/>
+                    <p class="help-block ui-helper-hidden"></p>
+                </span>
+            </span>
+            <span class="grupo">
+                <label for="financiacion" class="col-md-1 control-label text-info">
+                    Financiación
+                </label>
+                <span class="col-md-1">
+                    <g:select name="financiacion" from="${[1:'SI',0:'NO']}" class="form-control" optionKey="key" optionValue="value" value="${unidad?.financiacion}"/>
+                    <p class="help-block ui-helper-hidden"></p>
+                </span>
             </span>
         </div>
---}%
     </g:form>
 
 </div>
