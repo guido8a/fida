@@ -74,7 +74,7 @@ class EncuestaController {
 //        println "rp ${rp} --> actual: $actual, total: $total, ${actual.class} == ${total.class}"
         render (view: 'pregunta',
                 model: [encu: encu__id, actual: actual, total: total.toInteger(), pregunta: pregunta, rp: rp,
-                resp: resp, unidad: unej.id])
+                        resp: resp, unidad: unej.id])
     }
 
     def seleccionaPregunta(actual, encu){
@@ -191,6 +191,10 @@ class EncuestaController {
 //        println "finalizaEncu: $tx"
         cn.execute(tx.toString())
         redirect action: 'index'
+    }
+
+    def buscarOrganizacion_ajax(){
+
     }
 
 

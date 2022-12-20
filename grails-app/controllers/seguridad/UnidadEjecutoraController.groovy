@@ -481,7 +481,7 @@ class UnidadEjecutoraController {
 
 //        println("sql " + sql)
 
-        return [convenios: res]
+        return [convenios: res, tipo: params.tipo]
     }
 
     def representante_ajax(){
