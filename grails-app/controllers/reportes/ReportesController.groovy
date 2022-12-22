@@ -2281,7 +2281,7 @@ class ReportesController {
         WritableCellFormat times16format = new WritableCellFormat(times16font);
         WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
 
-        autoSizeColumns(sheet, 10)
+        autoSizeColumns(sheet, 25)
 
         def label
         def number
@@ -2291,12 +2291,52 @@ class ReportesController {
         label = new Label(0, 4, "NOMBRE", times16format); sheet.addCell(label);
         label = new Label(1, 4, "FAMILIAS LEGALES", times16format); sheet.addCell(label);
         label = new Label(2, 4, "SOCIAS LEGALES", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "FAMILIAS NO LEGALES", times16format); sheet.addCell(label);
+        label = new Label(4, 4, "SOCIOS LEGALES", times16format); sheet.addCell(label);
+        label = new Label(5, 4, "SOCIOS DE LA ORGANIZACIÓN LEGALES", times16format); sheet.addCell(label);
+        label = new Label(6, 4, "SOCIOS DE LA ORGANIZACIÓN NO LEGALES", times16format); sheet.addCell(label);
+        label = new Label(7, 4, "JÓVENES (18-29) SOCIOS LEGALES QUE PARTICIPAN EN EL NEGOCIO", times16format); sheet.addCell(label);
+        label = new Label(8, 4, "EMPLEADOS/OBREROS DEL NEGOCIO (PERSONAL EXTERNO) ", times16format); sheet.addCell(label);
+        label = new Label(9, 4, "SOCIOS ADULTOS", times16format); sheet.addCell(label);
+        label = new Label(10, 4, "SOCIAS DIRIGENTES MUJERES", times16format); sheet.addCell(label);
+        label = new Label(11, 4, "SOCIOS DIRIGENTES HOMBRES", times16format); sheet.addCell(label);
+        label = new Label(12, 4, "SOCIAS JÓVENES MUJERES", times16format); sheet.addCell(label);
+        label = new Label(13, 4, "SOCIOS JÓVENES HOMBRES", times16format); sheet.addCell(label);
+        label = new Label(14, 4, "SOCIOS ADULTOS MAYORES MUJERES", times16format); sheet.addCell(label);
+        label = new Label(15, 4, "SOCIOS ADULTOS MAYORES HOMBRES", times16format); sheet.addCell(label);
+        label = new Label(16, 4, "SOCIOS CON DISCAPACIDAD MUJERES", times16format); sheet.addCell(label);
+        label = new Label(17, 4, "SOCIOS CON DISCAPACIDAD HOMBRES", times16format); sheet.addCell(label);
+        label = new Label(18, 4, "SOCIOS MUJERES USUARIOS DEL BONO DE DESARROLLO HUMANO", times16format); sheet.addCell(label);
+        label = new Label(19, 4, "SOCIOS HOMBRES USUARIOS DEL BONO DE DESARROLLO HUMANO", times16format); sheet.addCell(label);
+        label = new Label(20, 4, "SOCIOS MUJERES USUARIOS DEL CRÉDITO DE DESARROLLO HUMANO", times16format); sheet.addCell(label);
+        label = new Label(21, 4, "SOCIOS HOMBRES USUARIOS DEL CRÉDITO DE DESARROLLO HUMANO", times16format); sheet.addCell(label);
+        label = new Label(22, 4, "SOCIOS MUJERES CABEZA DEL HOGAR", times16format); sheet.addCell(label);
 
         organizaciones.each {organizacion->
             def dtor = DatosOrganizacion.findByUnidadEjecutora(organizacion)
             label = new Label(0, fila,  organizacion?.nombre?.toString(), times16formatN); sheet.addCell(label);
             number = new jxl.write.Number(1, fila, dtor?.familiasLegales ?: 0); sheet.addCell(number);
             number = new jxl.write.Number(2, fila, dtor?.mujeresSocias ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(3, fila, dtor?.familiasNoLegales ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(4, fila, dtor?.hombresSocios ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(5, fila, dtor?.legales ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(6, fila, dtor?.noLegales ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(7, fila, dtor?.jovenes ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(8, fila, dtor?.obreros ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(9, fila, dtor?.adultos ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(10, fila, dtor?.dirigentesMujeres ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(11, fila, dtor?.dirigentesHombres ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(12, fila, dtor?.sociosJovenesMujeres ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(13, fila, dtor?.sociosJovenesHombres ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(14, fila, dtor?.adultosMayoresMujeres ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(15, fila, dtor?.adultosMayoresHombres ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(16, fila, dtor?.discapacitadosMujeres ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(17, fila, dtor?.discapacitadosHombres ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(18, fila, dtor?.usuariosBonoMujeres ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(19, fila, dtor?.usuariosBonoHombres ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(20, fila, dtor?.usuariosCreditoMujeres ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(21, fila, dtor?.usuariosCreditoHombres ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(22, fila, dtor?.mujeresCabezaHogar ?: 0); sheet.addCell(number);
             fila++
         }
 
