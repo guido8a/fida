@@ -30,6 +30,7 @@
     <div class="panel-info" style="padding: 3px; margin-top: 2px">
         <g:form class="form-horizontal" name="frmSaveDatos" controller="datosOrganizacion" action="saveDatos_ajax">
             <g:hiddenField name="id" value="${dato?.id}"/>
+            <g:hiddenField name="unidadEjecutora" value="${unidad?.id}"/>
 
 %{--
             <div class="form-group ${hasErrors(bean: dato, field: 'unidadEjecutora', 'error')}  ">
@@ -38,7 +39,7 @@
                         Organización
                     </label>
                     <div class="col-md-7">
-                        <g:hiddenField name="unidadEjecutora" value="${unidad?.id}"/>
+
                         <g:select from="${seguridad.UnidadEjecutora.list().sort{it.nombre}}" name="unidadEjecutora_nombre" class="form-control input-sm"
                                   value="${unidad?.id}" optionKey="id" optionValue="nombre" disabled=""/>
                         <p class="help-block ui-helper-hidden"></p>
