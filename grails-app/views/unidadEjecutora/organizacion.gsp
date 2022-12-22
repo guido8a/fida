@@ -138,8 +138,8 @@
 
             </span>
             <span class="grupo">
-                <label class="col-md-1 control-label text-info">
-                    Fecha Inicio
+                <label class="col-md-2 control-label text-info">
+                    Fecha del PFI
                 </label>
 
                 <div class="col-md-2">
