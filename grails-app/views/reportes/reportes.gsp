@@ -1,18 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: fabricio
-  Date: 21/09/20
-  Time: 10:22
---%>
-
 <%@ page contentType="text/html" %>
 
 <html>
 <head>
     <meta name="layout" content="main"/>
     <title>Reportes</title>
-
-    %{--    <script type="text/javascript" src="${resource(dir: 'js/jquery/plugins', file: 'jquery.cookie.js')}"></script>--}%
 
     <style type="text/css">
 
@@ -179,6 +170,10 @@
                         <i class="fa fa-tasks fa-4x text-success"></i>
                         <br/> Aportes extras y multas
                     </a>
+                    <a href="#" id="btnDatosOrganizacion" class="btn btn-info btn-ajax example_c item" texto="dao">
+                        <i class="fa fa-scroll fa-4x text-success"></i>
+                        <br/> Datos organización
+                    </a>
                 </p>
             </div>
         </div>
@@ -252,115 +247,115 @@
 
 </div>
 
-<div id="grgf" style="display:none">
-    <h3>Localización geográfica</h3><br>
-    <p>Mapa que contiene la localización geográfica de los proyectos</p>
-</div>
+%{--<div id="grgf" style="display:none">--}%
+%{--    <h3>Localización geográfica</h3><br>--}%
+%{--    <p>Mapa que contiene la localización geográfica de los proyectos</p>--}%
+%{--</div>--}%
 
-<div id="undd" style="display:none">
-    <h3>Reporte de encuestas</h3><br>
-    <p>Reporte de las encuestas generadas en el sistema</p>
-</div>
+%{--<div id="undd" style="display:none">--}%
+%{--    <h3>Reporte de encuestas</h3><br>--}%
+%{--    <p>Reporte de las encuestas generadas en el sistema</p>--}%
+%{--</div>--}%
 
-<div id="pttl" style="display:none">
-    <h3>Reporte de participantes de talleres</h3><br>
-    <p>Reporte de participantes de talleres por año</p>
-</div>
+%{--<div id="pttl" style="display:none">--}%
+%{--    <h3>Reporte de participantes de talleres</h3><br>--}%
+%{--    <p>Reporte de participantes de talleres por año</p>--}%
+%{--</div>--}%
 
-<div id="trnp" style="display:none">
-    <h3>Organizaciones</h3><br>
-    <p>Listado de organizaciones por provincia.</p>
-</div>
+%{--<div id="trnp" style="display:none">--}%
+%{--    <h3>Organizaciones</h3><br>--}%
+%{--    <p>Listado de organizaciones por provincia.</p>--}%
+%{--</div>--}%
 
-<div id="dpto" style="display:none">
-    <h3>Socios</h3><br>
-    <p>Listado de socios por organización.</p>
-</div>
+%{--<div id="dpto" style="display:none">--}%
+%{--    <h3>Socios</h3><br>--}%
+%{--    <p>Listado de socios por organización.</p>--}%
+%{--</div>--}%
 
-<div id="dire" style="display:none">
-    <h3>Socios</h3><br>
-    <p>Listado de socios por organización.</p>
-</div>
+%{--<div id="dire" style="display:none">--}%
+%{--    <h3>Socios</h3><br>--}%
+%{--    <p>Listado de socios por organización.</p>--}%
+%{--</div>--}%
 
-<div id="func" style="display:none">
-    <h3>Talleres</h3><br>
-    <p>Listado de capacitaciones que ha recibido una organización.</p>
-</div>
+%{--<div id="func" style="display:none">--}%
+%{--    <h3>Talleres</h3><br>--}%
+%{--    <p>Listado de capacitaciones que ha recibido una organización.</p>--}%
+%{--</div>--}%
 
-<div id="crit" style="display:none">
-    <h3>POA por grupo de gasto</h3><br>
-    <p>Ejecución del POA por grupo de gasto</p>
-</div>
+%{--<div id="crit" style="display:none">--}%
+%{--    <h3>POA por grupo de gasto</h3><br>--}%
+%{--    <p>Ejecución del POA por grupo de gasto</p>--}%
+%{--</div>--}%
 
-<div id="tpob" style="display:none">
-    <h3>POA por fuente</h3><br>
-    <p>Ejecución del POA por fuente de financiamiento.</p>
-</div>
-<div id="csob" style="display:none">
-    <h3>Clase de Obra</h3><br>
-    <p>Clase de obra, ejemplo: aulas, pavimento, cubierta, estructuras, adoquinado, puentes, mejoramiento, etc.</p>
-</div>
-<div id="prsp" style="display:none">
-    <h3>POA por componente</h3><br>
-    <p>Ejecución del POA por componente y actividad.</p>
-</div>
-<div id="edob" style="display:none">
-    <h3>Estado de la Obra</h3><br>
-    <p>Estado de la obra durante el proyecto de construcción, para distinguir entre: precontractual, ofertada, contratada, etc.</p>
-</div>
-<div id="prog" style="display:none">
-    <h3>Programa</h3><br>
-    <p>Programa del cual forma parte una obra o proyecto.</p>
-</div>
-<div id="auxl" style="display:none">
-    <h3>Convenios consolidados</h3><br>
-    <p>Listado de convenios.</p>
-</div>
-<div id="tpfp" style="display:none">
-    <h3>Tipo de fórmula polinómica</h3><br>
-    <p>Tipo de forma polínomica que tiene el contrato, puede ser contractual o de liquidación.</p>
-</div>
-<div id="var" style="display:none">
-    <h3>Variables</h3><br>
-    <p>Valores de parámetros de transporte y costos indirectos que se usan por defecto en las obras.</p>
-</div>
-<div id="anio" style="display:none">
-    <h3>Ingreso de Años</h3><br>
-    <p>Registro de los años para el control y manejo de los índices año por año.</p>
-</div>
-<div id="anua" style="display:none">
-    <h3>Cronograma valorado</h3><br>
-    <p>Cronograma valorado por año</p>
-</div>
-<div id="fnfn" style="display: none">
-    <h3>Fuente de financiamiento</h3>
-    <p>Fuente de financiamiento de las partidas presupuestarias</p>
-    <p>Entidad que financia la adquisición o construcción.</p>
-</div>
-<div id="ddlb" style="display:none">
-    <h3>Capacitaciones</h3><br>
-    <p>Listado de capacitaciones por provincia</p>
-</div>
+%{--<div id="tpob" style="display:none">--}%
+%{--    <h3>POA por fuente</h3><br>--}%
+%{--    <p>Ejecución del POA por fuente de financiamiento.</p>--}%
+%{--</div>--}%
+%{--<div id="csob" style="display:none">--}%
+%{--    <h3>Clase de Obra</h3><br>--}%
+%{--    <p>Clase de obra, ejemplo: aulas, pavimento, cubierta, estructuras, adoquinado, puentes, mejoramiento, etc.</p>--}%
+%{--</div>--}%
+%{--<div id="prsp" style="display:none">--}%
+%{--    <h3>POA por componente</h3><br>--}%
+%{--    <p>Ejecución del POA por componente y actividad.</p>--}%
+%{--</div>--}%
+%{--<div id="edob" style="display:none">--}%
+%{--    <h3>Estado de la Obra</h3><br>--}%
+%{--    <p>Estado de la obra durante el proyecto de construcción, para distinguir entre: precontractual, ofertada, contratada, etc.</p>--}%
+%{--</div>--}%
+%{--<div id="prog" style="display:none">--}%
+%{--    <h3>Programa</h3><br>--}%
+%{--    <p>Programa del cual forma parte una obra o proyecto.</p>--}%
+%{--</div>--}%
+%{--<div id="auxl" style="display:none">--}%
+%{--    <h3>Convenios consolidados</h3><br>--}%
+%{--    <p>Listado de convenios.</p>--}%
+%{--</div>--}%
+%{--<div id="tpfp" style="display:none">--}%
+%{--    <h3>Tipo de fórmula polinómica</h3><br>--}%
+%{--    <p>Tipo de forma polínomica que tiene el contrato, puede ser contractual o de liquidación.</p>--}%
+%{--</div>--}%
+%{--<div id="var" style="display:none">--}%
+%{--    <h3>Variables</h3><br>--}%
+%{--    <p>Valores de parámetros de transporte y costos indirectos que se usan por defecto en las obras.</p>--}%
+%{--</div>--}%
+%{--<div id="anio" style="display:none">--}%
+%{--    <h3>Ingreso de Años</h3><br>--}%
+%{--    <p>Registro de los años para el control y manejo de los índices año por año.</p>--}%
+%{--</div>--}%
+%{--<div id="anua" style="display:none">--}%
+%{--    <h3>Cronograma valorado</h3><br>--}%
+%{--    <p>Cronograma valorado por año</p>--}%
+%{--</div>--}%
+%{--<div id="fnfn" style="display: none">--}%
+%{--    <h3>Fuente de financiamiento</h3>--}%
+%{--    <p>Fuente de financiamiento de las partidas presupuestarias</p>--}%
+%{--    <p>Entidad que financia la adquisición o construcción.</p>--}%
+%{--</div>--}%
+%{--<div id="ddlb" style="display:none">--}%
+%{--    <h3>Capacitaciones</h3><br>--}%
+%{--    <p>Listado de capacitaciones por provincia</p>--}%
+%{--</div>--}%
 
-<div id="cngr" style="display:none">
-    <h3>Cronograma</h3><br>
-    <p>Reporte del cronograma de ejecución por año</p>
-</div>
+%{--<div id="cngr" style="display:none">--}%
+%{--    <h3>Cronograma</h3><br>--}%
+%{--    <p>Reporte del cronograma de ejecución por año</p>--}%
+%{--</div>--}%
 
-<div id="bnf" style="display:none">
-    <h3>Beneficiarios</h3><br>
-    <p>Reporte de beneficiarios por organización</p>
-</div>
+%{--<div id="bnf" style="display:none">--}%
+%{--    <h3>Beneficiarios</h3><br>--}%
+%{--    <p>Reporte de beneficiarios por organización</p>--}%
+%{--</div>--}%
 
 
-<div id="socios" style="display:none">
-    <h3>Socios de Organizaciones</h3><br>
-    <p>Reporte de socios de todas las organziaciones en excel</p>
-</div>
+%{--<div id="socios" style="display:none">--}%
+%{--    <h3>Socios de Organizaciones</h3><br>--}%
+%{--    <p>Reporte de socios de todas las organziaciones en excel</p>--}%
+%{--</div>--}%
 
 <script type="text/javascript">
 
-    var dialogoOrganizacion
+    var dialogoOrganizacion;
 
     $("#btnEncuestas").click(function () {
         $.ajax({
@@ -546,15 +541,7 @@
                             className : "btn-primary",
                             callback  : function () {
                             }
-                        },
-                        %{--aceptar  : {--}%
-                        %{--    id        : "btnSave",--}%
-                        %{--    label     : "<i class='fa fa-check'></i> Aceptar",--}%
-                        %{--    className : "btn-success",--}%
-                        %{--    callback  : function () {--}%
-                        %{--        location.href="${createLink(controller: 'reportes', action: 'reportesConveniosExcel')}/" + $("#organizacion option:selected").val()--}%
-                        %{--    } //callback--}%
-                        %{--} //guardar--}%
+                        }
                     } //buttons
                 }); //dialog
             }
@@ -660,32 +647,6 @@
         })
     });
 
-    %{--$("#btnTalleres").click(function () {--}%
-    %{--    $.ajax({--}%
-    %{--        type: 'POST',--}%
-    %{--        url: '${createLink(controller: 'reportes', action: 'organizaciones_ajax')}',--}%
-    %{--        data:{--}%
-    %{--            tipo: 2--}%
-    %{--        },--}%
-    %{--        success: function (msg) {--}%
-    %{--            dialogoOrganizacion = bootbox.dialog({--}%
-    %{--                id    : "dlOrganizacion",--}%
-    %{--                title : "Seleccione una Organización",--}%
-    %{--                message : msg,--}%
-    %{--                buttons : {--}%
-    %{--                    cancelar : {--}%
-    %{--                        label     : "Cancelar",--}%
-    %{--                        className : "btn-primary",--}%
-    %{--                        callback  : function () {--}%
-    %{--                        }--}%
-    %{--                    }--}%
-    %{--                } //buttons--}%
-    %{--            }); //dialog--}%
-    %{--        }--}%
-    %{--    })--}%
-    %{--});--}%
-
-
     $("#btnTalleres").click(function () {
         $.ajax({
             type: 'POST',
@@ -709,8 +670,6 @@
             }
         })
     });
-
-
 
     $("#btnSocios").click(function () {
         $.ajax({
@@ -762,7 +721,6 @@
         })
     });
 
-
     function cerrarDialogo(){
         dialogoOrganizacion.modal("hide");
     }
@@ -801,12 +759,6 @@
     });
 
     $("#btnPersonas").click(function () {
-//        $.ajax({
-//            type: 'POST',
-            %{--url: '${createLink(controller: 'reportes', action: 'provincia_ajax')}',--}%
-//            data:{
-//            },
-//            success: function (msg) {
                 var b = bootbox.dialog({
                     id    : "dlProvincia",
                     title : "Socios de todas las Organizaciones",
@@ -833,58 +785,6 @@
 //        })
     });
 
-    %{--$("#btnIva").click(function () {--}%
-    %{--    $.ajax({--}%
-    %{--        type: 'POST',--}%
-    %{--        url: '${createLink(controller: 'parametros', action: 'formIva_ajax')}',--}%
-    %{--        data:{--}%
-    %{--        },--}%
-    %{--        success: function (msg) {--}%
-    %{--            var b = bootbox.dialog({--}%
-    %{--                id    : "dlgIva",--}%
-    %{--                title : "Iva",--}%
-    %{--                message : msg,--}%
-    %{--                buttons : {--}%
-    %{--                    cancelar : {--}%
-    %{--                        label     : "Cancelar",--}%
-    %{--                        className : "btn-primary",--}%
-    %{--                        callback  : function () {--}%
-    %{--                        }--}%
-    %{--                    },--}%
-    %{--                    guardar  : {--}%
-    %{--                        id        : "btnSave",--}%
-    %{--                        label     : "<i class='fa fa-save'></i> Guardar",--}%
-    %{--                        className : "btn-success",--}%
-    %{--                        callback  : function () {--}%
-    %{--                            guardarIva($("#ivaExi").val());--}%
-    %{--                        } //callback--}%
-    %{--                    } //guardar--}%
-    %{--                } //buttons--}%
-    %{--            }); //dialog--}%
-    %{--        }--}%
-    %{--    })--}%
-    %{--});--}%
-
-
-
-    %{--function  guardarIva(iva){--}%
-    %{--    $.ajax({--}%
-    %{--        type: 'POST',--}%
-    %{--        url:'${createLink(controller: 'parametros', action: 'guardarIva_ajax')}',--}%
-    %{--        data:{--}%
-    %{--            iva:iva--}%
-    %{--        },--}%
-    %{--        success: function (msg) {--}%
-    %{--            if(msg == 'ok'){--}%
-    %{--                log("Iva guardado correctamente", "success")--}%
-    %{--            }else{--}%
-    %{--                log("Error al guardar el Iva","error")--}%
-    %{--            }--}%
-    %{--        }--}%
-    %{--    });--}%
-    %{--}--}%
-
-
     function prepare() {
         $(".fa-ul li span").each(function () {
             var id = $(this).parents(".tab-pane").attr("id");
@@ -904,58 +804,48 @@
         });
     });
 
-
-    %{--$("#btnCambiarIva").click(function () {--}%
-    %{--    $.ajax({--}%
-    %{--        type: "POST",--}%
-    %{--        url: "${createLink(controller: "obra", action:'formIva_ajax')}",--}%
-    %{--        data: {--}%
-
-    %{--        },--}%
-    %{--        success: function (msg) {--}%
-    %{--            var btnOk = $('<a href="#" data-dismiss="modal" class="btn">Cancelar</a>');--}%
-    %{--            var btnSave = $('<a href="#"  class="btn btn-success"><i class="icon-save"></i> Guardar</a>');--}%
-
-    %{--            btnSave.click(function () {--}%
-    %{--                $(this).replaceWith(spinner);--}%
-    %{--                $.ajax({--}%
-    %{--                    type: "POST",--}%
-    %{--                    url: "${createLink(controller: 'obra', action:'guardarIva_ajax')}",--}%
-    %{--                    data: $("#frmIva").serialize(),--}%
-    %{--                    success: function (msg) {--}%
-    %{--                        if(msg == 'ok'){--}%
-    %{--                            alert('Iva cambiado correctamente!');--}%
-    %{--                            $("#modal-TipoObra").modal("hide");--}%
-    %{--                        }else{--}%
-    %{--                            alert("Error al cambiar el Iva")--}%
-
-    %{--                        }--}%
-    %{--                        $("#modal-TipoObra").modal("hide");--}%
-    %{--                    }--}%
-    %{--                });--}%
-    %{--                return false;--}%
-
-    %{--            });--}%
-
-    %{--            $("#modalHeader_tipo").removeClass("btn-edit btn-show btn-delete");--}%
-    %{--            $("#modalTitle_tipo").html("Cambiar IVA");--}%
-    %{--            $("#modalBody_tipo").html(msg);--}%
-    %{--            $("#modalFooter_tipo").html("").append(btnOk).append(btnSave);--}%
-    %{--            $("#modal-TipoObra").modal("show");--}%
-    %{--        }--}%
-    %{--    });--}%
-    %{--    return false;--}%
-
-    %{--});--}%
-
-    $(document).ready(function () {
-        $('.item').hover(function () {
-            $('#tool').html($("#" + $(this).attr('texto')).html());
-            $('#tool').show();
-        }, function () {
-            $('#tool').hide();
-        });
+    $("#btnDatosOrganizacion").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'provincia_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlProvincia",
+                    title : "Seleccione una provincia",
+                    message : msg,
+                    class   : "modal-sm",
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reporteDatosOrganizacionesExcel')}/" + $("#provincia option:selected").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
     });
+
+
+    // $(document).ready(function () {
+    //     $('.item').hover(function () {
+    //         $('#tool').html($("#" + $(this).attr('texto')).html());
+    //         $('#tool').show();
+    //     }, function () {
+    //         $('#tool').hide();
+    //     });
+    // });
 </script>
 </body>
 </html>

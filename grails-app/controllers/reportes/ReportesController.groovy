@@ -2245,4 +2245,67 @@ class ReportesController {
 
         return [organizaciones: organizaciones, tipo: params.tipo]
     }
+
+    def reporteDatosOrganizacionesExcel(){
+
+        def provincia = Provincia.get(params.id)
+        def cantones = Canton.findAllByProvincia(provincia)
+        def parroquias = Parroquia.findAllByCantonInList(cantones)
+        def tipo = TipoInstitucion.get(2)
+        def organizaciones = UnidadEjecutora.findAllByParroquiaInListAndTipoInstitucion(parroquias,tipo)
+
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        def row = 0
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+
+        // fija el ancho de la columna
+        sheet.setColumnView(0,70)
+        sheet.setColumnView(1,32)
+        sheet.setColumnView(2,32)
+        sheet.setColumnView(3,30)
+        sheet.setColumnView(4,30)
+        sheet.setColumnView(5,30)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+        autoSizeColumns(sheet, 10)
+
+        def label
+        def number
+        def fila = 5;
+
+        label = new Label(0, 2, "REPORTE DATOS DE ORGANIZACIONES", times16format); sheet.addCell(label);
+        label = new Label(0, 4, "NOMBRE", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "FAMILIAS LEGALES", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "SOCIAS LEGALES", times16format); sheet.addCell(label);
+
+        organizaciones.each {organizacion->
+            def dtor = DatosOrganizacion.findByUnidadEjecutora(organizacion)
+            label = new Label(0, fila,  organizacion?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            number = new jxl.write.Number(1, fila, dtor?.familiasLegales ?: 0); sheet.addCell(number);
+            number = new jxl.write.Number(2, fila, dtor?.mujeresSocias ?: 0); sheet.addCell(number);
+            fila++
+        }
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteDatosOrganizaciones_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+    }
 }
