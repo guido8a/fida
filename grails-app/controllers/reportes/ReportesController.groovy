@@ -2311,6 +2311,9 @@ class ReportesController {
         label = new Label(20, 4, "SOCIOS MUJERES USUARIOS DEL CRÉDITO DE DESARROLLO HUMANO", times16format); sheet.addCell(label);
         label = new Label(21, 4, "SOCIOS HOMBRES USUARIOS DEL CRÉDITO DE DESARROLLO HUMANO", times16format); sheet.addCell(label);
         label = new Label(22, 4, "SOCIOS MUJERES CABEZA DEL HOGAR", times16format); sheet.addCell(label);
+        label = new Label(23, 4, "PLAN DE NEGOCIOS", times16format); sheet.addCell(label);
+        label = new Label(24, 4, "FORTALECIMIENTO", times16format); sheet.addCell(label);
+        label = new Label(25, 4, "FINANCIACIÓN", times16format); sheet.addCell(label);
 
         organizaciones.each {organizacion->
             def dtor = DatosOrganizacion.findByUnidadEjecutora(organizacion)
@@ -2337,6 +2340,9 @@ class ReportesController {
             number = new jxl.write.Number(20, fila, dtor?.usuariosCreditoMujeres ?: 0); sheet.addCell(number);
             number = new jxl.write.Number(21, fila, dtor?.usuariosCreditoHombres ?: 0); sheet.addCell(number);
             number = new jxl.write.Number(22, fila, dtor?.mujeresCabezaHogar ?: 0); sheet.addCell(number);
+            label = new Label(23, fila,  organizacion?.plan ? (organizacion?.plan == 'S' ? 'SI' : 'NO') : '', times16formatN); sheet.addCell(label);
+            label = new Label(24, fila,  organizacion?.fortalecimiento ? (organizacion?.fortalecimiento == 'S' ? 'SI' : 'NO') : '', times16formatN); sheet.addCell(label);
+            label = new Label(25, fila,  organizacion?.financiacion ? (organizacion?.financiacion == 'S' ? 'SI' : 'NO') : '', times16formatN); sheet.addCell(label);
             fila++
         }
 
