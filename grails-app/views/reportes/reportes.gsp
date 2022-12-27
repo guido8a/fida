@@ -174,6 +174,10 @@
                         <i class="fa fa-scroll fa-4x text-success"></i>
                         <br/> Datos organización
                     </a>
+                    <a href="#" id="btnBeneficiariosProvincia" class="btn btn-info btn-ajax example_c item" texto="bpp">
+                        <i class="fa fa-users fa-4x text-success"></i>
+                        <br/> Beneficiarios x provincia
+                    </a>
                 </p>
             </div>
         </div>
@@ -829,6 +833,39 @@
                             className : "btn-success",
                             callback  : function () {
                                 location.href="${createLink(controller: 'reportes', action: 'reporteDatosOrganizacionesExcel')}/" + $("#provincia option:selected").val()
+                            } //callback
+                        } //guardar
+                    } //buttons
+                }); //dialog
+            }
+        })
+    });
+
+    $("#btnBeneficiariosProvincia").click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'reportes', action: 'provincia_ajax')}',
+            data:{
+            },
+            success: function (msg) {
+                var b = bootbox.dialog({
+                    id    : "dlProvincia",
+                    title : "Seleccione una provincia",
+                    message : msg,
+                    class   : "modal-sm",
+                    buttons : {
+                        cancelar : {
+                            label     : "Cancelar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        },
+                        aceptar  : {
+                            id        : "btnSave",
+                            label     : "<i class='fa fa-check'></i> Aceptar",
+                            className : "btn-success",
+                            callback  : function () {
+                                location.href="${createLink(controller: 'reportes', action: 'reporteBeneficiariosProvinciaExcel')}/" + $("#provincia option:selected").val()
                             } //callback
                         } //guardar
                     } //buttons
