@@ -176,7 +176,7 @@
                     </a>
                     <a href="#" id="btnBeneficiariosProvincia" class="btn btn-info btn-ajax example_c item" texto="bpp">
                         <i class="fa fa-users fa-4x text-success"></i>
-                        <br/> Beneficiarios x provincia
+                        <br/> Beneficiarios por provincia
                     </a>
                 </p>
             </div>
