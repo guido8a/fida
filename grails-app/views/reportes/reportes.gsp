@@ -100,6 +100,7 @@
     <li class="active"><a data-toggle="pill" href="#generales">Generales</a></li>
     <li><a data-toggle="pill" href="#obra">POA</a></li>
     <li><a data-toggle="pill" href="#cont">Datos geográficos</a></li>
+    <li><a data-toggle="pill" href="#tall">Talleres</a></li>
 </ul>
 
 <div class="tab-content">
@@ -216,30 +217,28 @@
                         <i class="fa fa-map-marked-alt fa-4x text-success"></i>
                         <br/> Localización de proyectos
                     </g:link>
-                %{--                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="tpgr" controller="tipoGarantia" action="list">--}%
-                %{--                        <i class="fab fa-gofore fa-4x text-success disabled"></i>--}%
-                %{--                        <br/>Tipo de Garantía--}%
-                %{--                    </g:link>--}%
-                %{--                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="tdgr" controller="tipoDocumentoGarantia" action="list">--}%
-                %{--                        <i class="fab fa-gofore fa-4x text-success"></i>--}%
-                %{--                        <br/> Tipo de documento de garantía--}%
-                %{--                    </g:link>--}%
-                %{--                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="edgr" controller="estadoGarantia" action="list">--}%
-                %{--                        <i class="fab fa-gofore fa-4x text-success"></i>--}%
-                %{--                        <br/> Estado de la garantía--}%
-                %{--                    </g:link>--}%
-                %{--                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="asgr" controller="aseguradora" action="list">--}%
-                %{--                        <i class="fab fa-adn fa-4x text-success"></i>--}%
-                %{--                        <br/> Aseguradora--}%
-                %{--                    </g:link>--}%
-                %{--                    <g:link class="link btn btn-success btn-ajax example_c item disabled" texto="tpas" controller="tipoAseguradora" action="list">--}%
-                %{--                        <i class="fab fa-adn fa-4x text-success"></i>--}%
-                %{--                        <br/> Tipo de aseguradora--}%
-                %{--                    </g:link>--}%
-                %{--                    <g:link class="link btn btn-success btn-ajax example_c item disabled disabled" texto="itun" controller="unidadIncop" action="calendario">--}%
-                %{--                        <i class="fa fa-building fa-4x"></i>--}%
-                %{--                        <br/> Unidad del Item--}%
-                %{--                    </g:link>--}%
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="tall" class="tab-pane fade">
+        <div class="row">
+            <div class="col-md-12 col-xs-5">
+                <p>
+                    <a href="#" id="btnAsistentesMujeres" class="btn btn-info btn-ajax example_c item" texto="bpp">
+                        <i class="fa fa-users fa-4x text-success"></i>
+                        <br/> Asistentes <br/> Mujeres
+                    </a>
+                    <a href="#" id="btnAsistentesJovenes" class="btn btn-info btn-ajax example_c item" texto="bpp">
+                        <i class="fa fa-users fa-4x text-success"></i>
+                        <br/> Asistentes <br/> Jovenes
+                    </a>
+                    <a href="#" id="btnAsistentesTodos" class="btn btn-info btn-ajax example_c item" texto="bpp">
+                        <i class="fa fa-users fa-4x text-success"></i>
+                        <br/> Asistentes <br/> Todos
+                    </a>
                 </p>
             </div>
         </div>
@@ -360,6 +359,18 @@
 <script type="text/javascript">
 
     var dialogoOrganizacion;
+
+    $("#btnAsistentesMujeres").click(function () {
+        location.href="${createLink(controller: 'reportes', action: 'reporteAsistentesMujeresExcel')}"
+    });
+
+    $("#btnAsistentesJovenes").click(function () {
+        location.href="${createLink(controller: 'reportes', action: 'reporteAsistentesJovenesExcel')}"
+    });
+
+    $("#btnAsistentesTodos").click(function () {
+        location.href="${createLink(controller: 'reportes', action: 'reporteAsistentesTotalExcel')}"
+    });
 
     $("#btnEncuestas").click(function () {
         $.ajax({
@@ -658,7 +669,7 @@
             data:{
             },
             success: function (msg) {
-              bootbox.dialog({
+                bootbox.dialog({
                     id    : "dlOrganizacion",
                     title : "Seleccione el tipo de reporte",
                     message :msg,
@@ -763,28 +774,28 @@
     });
 
     $("#btnPersonas").click(function () {
-                var b = bootbox.dialog({
-                    id    : "dlProvincia",
-                    title : "Socios de todas las Organizaciones",
-                    message : '¿Generar el reporte en excel de los socios de todas las organizaciones?',
-                    class   : "modal-sm",
-                    buttons : {
-                        cancelar : {
-                            label     : "Cancelar",
-                            className : "btn-primary",
-                            callback  : function () {
-                            }
-                        },
-                        aceptar  : {
-                            id        : "btnSave",
-                            label     : "<i class='fa fa-check'></i> Aceptar",
-                            className : "btn-success",
-                            callback  : function () {
-                                location.href="${createLink(controller: 'reportes', action: 'reporteSociosTotalExcel')}/" + $("#provincia option:selected").val()
-                            } //callback
-                        } //guardar
-                    } //buttons
-                }); //dialog
+        var b = bootbox.dialog({
+            id    : "dlProvincia",
+            title : "Socios de todas las Organizaciones",
+            message : '¿Generar el reporte en excel de los socios de todas las organizaciones?',
+            class   : "modal-sm",
+            buttons : {
+                cancelar : {
+                    label     : "Cancelar",
+                    className : "btn-primary",
+                    callback  : function () {
+                    }
+                },
+                aceptar  : {
+                    id        : "btnSave",
+                    label     : "<i class='fa fa-check'></i> Aceptar",
+                    className : "btn-success",
+                    callback  : function () {
+                        location.href="${createLink(controller: 'reportes', action: 'reporteSociosTotalExcel')}/" + $("#provincia option:selected").val()
+                    } //callback
+                } //guardar
+            } //buttons
+        }); //dialog
 //            }
 //        })
     });

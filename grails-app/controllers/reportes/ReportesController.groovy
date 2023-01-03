@@ -2049,86 +2049,6 @@ class ReportesController {
         output.write(file.getBytes());
     }
 
-//    def reporteEncuestasPdf(){
-//
-//        def titulo = new Color(40, 140, 180)
-//        Font times12bold = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
-//        Font times10bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-//        Font fontProyecto = new Font(Font.HELVETICA, 18, Font.NORMAL, titulo);
-//        Font fontProyecto2 = new Font(Font.HELVETICA, 10, Font.NORMAL, titulo);
-//        Font times8bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD)
-//        Font times8normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL)
-//        def fondo = new Color(240, 248, 250);
-//        def frmtHd = [border: Color.LIGHT_GRAY, bwb: 0.1, bcb: Color.BLACK, bg: fondo, align: Element.ALIGN_CENTER, valign: Element.ALIGN_MIDDLE]
-//        def prmsCellHeadCentro = [border: Color.WHITE, align : Element.ALIGN_CENTER, valign: Element.ALIGN_LEFT]
-//        def frmtDato = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_LEFT, valign: Element.ALIGN_MIDDLE]
-//        def frmtDatoDerecha = [bwt: 0.1, bct: Color.BLACK, bwb: 0.1, bcb: Color.BLACK, border: Color.LIGHT_GRAY, align: Element.ALIGN_RIGHT, valign: Element.ALIGN_MIDDLE]
-//
-//        def baos = new ByteArrayOutputStream()
-//        Document document
-//        document = new Document(PageSize.A4);
-//        def pdfw = PdfWriter.getInstance(document, baos)
-//        document.open()
-//        document.addTitle("Encuestas " + new Date().format("dd_MM_yyyy"))
-//        document.addSubject("Generado por el sistema FIDA")
-//        document.addKeywords("reporte, fida, encuestas")
-//        document.addAuthor("FIDA")
-//        document.addCreator("Tedein SA")
-//
-//        Paragraph preface = new Paragraph();
-//        Paragraph pr_firma = new Paragraph();
-//        addEmptyLine(preface, 1);
-//        preface.setAlignment(Element.ALIGN_CENTER);
-//        preface.add(new Paragraph("PROYECTO FAREPS", fontProyecto))
-//        addEmptyLine(preface, 1);
-//        document.add(preface);
-//
-//        def actual
-//        def asignaciones = []
-//        def total = 0
-//
-//        def encuestas = Encuesta.findAllByEstado("C").sort{it.unidadEjecutora.id}
-//
-//        PdfPTable tablaCabecera2 = new PdfPTable(1)
-//        tablaCabecera2.setWidthPercentage(100)
-//        tablaCabecera2.setWidths(arregloEnteros([100]))
-//        addCellTabla(tablaCabecera2, new Paragraph("ENCUESTAS", fontProyecto2), prmsCellHeadCentro)
-//        addCellTabla(tablaCabecera2, new Paragraph('', times12bold), prmsCellHeadCentro)
-//        addCellTabla(tablaCabecera2, new Paragraph('', times12bold), prmsCellHeadCentro)
-//
-//        PdfPTable tablaHeader = new PdfPTable(3)
-//        tablaHeader.setWidthPercentage(100)
-//        tablaHeader.setWidths(arregloEnteros([20, 40, 40]))
-//
-//        addCellTabla(tablaHeader, new Paragraph("UNIDAD EJECUTORA", times8bold), frmtHd)
-//        addCellTabla(tablaHeader, new Paragraph("PREGUNTA", times8bold), frmtHd)
-//        addCellTabla(tablaHeader, new Paragraph("RESPUESTA", times8bold), frmtHd)
-//
-//        PdfPTable tablaDetalle = new PdfPTable(3)
-//        tablaDetalle.setWidthPercentage(100)
-//        tablaDetalle.setWidths(arregloEnteros([20, 40, 40]))
-//
-//        encuestas.each{encuesta->
-//            def detalles = DetalleEncuesta.findAllByEncuesta(encuesta).sort{it.respuestaPregunta.pregunta.descripcion}
-//            detalles.each {detalle->
-//                addCellTabla(tablaDetalle, new Paragraph(detalle?.encuesta?.unidadEjecutora?.nombre?.toString(), times8normal), frmtDato)
-//                addCellTabla(tablaDetalle, new Paragraph(detalle?.respuestaPregunta?.pregunta?.descripcion?.toString(), times8normal), frmtDato)
-//                addCellTabla(tablaDetalle, new Paragraph(detalle?.valor?.toString(), times8normal), frmtDato)
-//            }
-//        }
-//
-//        document.add(tablaCabecera2)
-//        document.add(tablaHeader)
-//        document.add(tablaDetalle)
-//        document.close();
-//        pdfw.close()
-//        byte[] b = baos.toByteArray();
-//        response.setContentType("application/pdf")
-//        response.setHeader("Content-disposition", "attachment; filename=" + "encuestas_" + new Date().format("dd-MM-yyyy"))
-//        response.setContentLength(b.length)
-//        response.getOutputStream().write(b)
-//    }
-
     def mapa2(){
         def cn = dbConnectionService.getConnection()
         def sql = "select * from rp_orgn() order by unejplns desc"
@@ -2469,5 +2389,220 @@ class ReportesController {
         response.setHeader("Content-Disposition", header);
         output.write(file.getBytes());
 
+    }
+
+    def reporteAsistentesMujeresExcel (){
+
+
+        def cn = dbConnectionService.getConnection()
+        def sql = "select count(*) cuenta, unejnmbr, provnmbr, prorcdla " +
+                "from asst, tllr, pror, unej, parr, cntn, prov " +
+                "where pror.pror__id = asst.pror__id and prorsexo = 'M' and" +
+                "  tptl__id in (1,7) and asst.tllr__id = tllr.tllr__id and" +
+                "  unej.unej__id = tllr.unej__id and parr.parr__id = unej.parr__id and" +
+                "  cntn.cntn__id = parr.cntn__id and prov.prov__id = cntn.prov__id " +
+                "group by unejnmbr, provnmbr, prorcdla order by provnmbr, unejnmbr"
+
+        println("sql " + sql)
+
+        def data = cn.rows(sql.toString())
+
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+
+        // fija el ancho de la columna
+        sheet.setColumnView(0,15)
+        sheet.setColumnView(1,60)
+        sheet.setColumnView(2,30)
+        sheet.setColumnView(3,30)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+        def label
+        def fila = 5;
+        def number
+        def cantidad = 0
+
+        label = new Label(1, 2, "REPORTE DE ASISTENTES A TALLERES: MUJERES", times16format); sheet.addCell(label);
+        label = new Label(1, 3, "" , times16format); sheet.addCell(label);
+        label = new Label(0, 4, "CURSOS", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "ORGANIZACIÓN", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "PROVINCIA", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "CÉDULA", times16format); sheet.addCell(label);
+
+        data.each { d->
+            number = new jxl.write.Number(0, fila, d?.cuenta ?: 0); sheet.addCell(number);
+            label = new Label(1, fila, d?.unejnmbr, times16formatN); sheet.addCell(label);
+            label = new Label(2, fila, d?.provnmbr, times16formatN); sheet.addCell(label);
+            label = new Label(3, fila, d?.prorcdla, times16formatN); sheet.addCell(label);
+            cantidad++
+            fila++
+        }
+
+        label = new Label(2, fila, "TOTAL", times16format); sheet.addCell(label);
+        number = new jxl.write.Number(3, fila, cantidad); sheet.addCell(number);
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteAsistentesMujeres_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+    }
+
+    def reporteAsistentesJovenesExcel (){
+
+
+        def cn = dbConnectionService.getConnection()
+        def sql = "select count(*) cuenta, unejnmbr, provnmbr, prorcdla " +
+                "from asst, tllr, pror, unej, parr, cntn, prov " +
+                "where pror.pror__id = asst.pror__id and " +
+                "  tptl__id in (1,7) and asst.tllr__id = tllr.tllr__id and" +
+                "  unej.unej__id = tllr.unej__id and parr.parr__id = unej.parr__id and" +
+                "  cntn.cntn__id = parr.cntn__id and prov.prov__id = cntn.prov__id and" +
+                "  (tllrfcin - prorfcna) < (365.25*30)" +
+                "group by unejnmbr, provnmbr, prorcdla order by provnmbr, unejnmbr;"
+
+        def data = cn.rows(sql.toString())
+
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+
+        // fija el ancho de la columna
+        sheet.setColumnView(0,15)
+        sheet.setColumnView(1,60)
+        sheet.setColumnView(2,30)
+        sheet.setColumnView(3,30)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+        def label
+        def fila = 5;
+        def number
+        def cantidad = 0
+
+        label = new Label(1, 2, "REPORTE DE ASISTENTES A TALLERES: JÓVENES", times16format); sheet.addCell(label);
+        label = new Label(1, 3, "" , times16format); sheet.addCell(label);
+        label = new Label(0, 4, "CURSOS", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "ORGANIZACIÓN", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "PROVINCIA", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "CÉDULA", times16format); sheet.addCell(label);
+
+        data.each { d->
+            number = new jxl.write.Number(0, fila, d?.cuenta ?: 0); sheet.addCell(number);
+            label = new Label(1, fila, d?.unejnmbr, times16formatN); sheet.addCell(label);
+            label = new Label(2, fila, d?.provnmbr, times16formatN); sheet.addCell(label);
+            label = new Label(3, fila, d?.prorcdla, times16formatN); sheet.addCell(label);
+            cantidad++
+            fila++
+        }
+
+        label = new Label(2, fila, "TOTAL", times16format); sheet.addCell(label);
+        number = new jxl.write.Number(3, fila, cantidad); sheet.addCell(number);
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteAsistentesJovenes_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+    }
+
+    def reporteAsistentesTotalExcel (){
+
+        def cn = dbConnectionService.getConnection()
+        def sql = "select count(*) cuenta, unejnmbr, provnmbr, prorcdla " +
+                "from asst, tllr, pror, unej, parr, cntn, prov " +
+                "where pror.pror__id = asst.pror__id and" +
+                "  tptl__id in (1,7) and asst.tllr__id = tllr.tllr__id and" +
+                "  unej.unej__id = tllr.unej__id and parr.parr__id = unej.parr__id and" +
+                "  cntn.cntn__id = parr.cntn__id and prov.prov__id = cntn.prov__id " +
+                "group by unejnmbr, provnmbr, prorcdla order by provnmbr, unejnmbr"
+
+        def data = cn.rows(sql.toString())
+
+        //excel
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile('myExcelDocument', '.xls')
+        file.deleteOnExit()
+
+        WritableWorkbook workbook = jxl.Workbook.createWorkbook(file, workbookSettings)
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        WritableSheet sheet = workbook.createSheet('MySheet', 0)
+
+        // fija el ancho de la columna
+        sheet.setColumnView(0,15)
+        sheet.setColumnView(1,60)
+        sheet.setColumnView(2,30)
+        sheet.setColumnView(3,30)
+
+        WritableFont times16font = new WritableFont(WritableFont.TIMES, 11, WritableFont.BOLD, false);
+        WritableFont times16fontNormal = new WritableFont(WritableFont.TIMES, 11, WritableFont.NO_BOLD, false);
+        WritableCellFormat times16format = new WritableCellFormat(times16font);
+        WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
+
+        def label
+        def fila = 5;
+        def number
+        def cantidad = 0
+
+        label = new Label(1, 2, "REPORTE DE ASISTENTES A TALLERES: JÓVENES", times16format); sheet.addCell(label);
+        label = new Label(1, 3, "" , times16format); sheet.addCell(label);
+        label = new Label(0, 4, "CURSOS", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "ORGANIZACIÓN", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "PROVINCIA", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "CÉDULA", times16format); sheet.addCell(label);
+
+        data.each { d->
+            number = new jxl.write.Number(0, fila, d?.cuenta ?: 0); sheet.addCell(number);
+            label = new Label(1, fila, d?.unejnmbr, times16formatN); sheet.addCell(label);
+            label = new Label(2, fila, d?.provnmbr, times16formatN); sheet.addCell(label);
+            label = new Label(3, fila, d?.prorcdla, times16formatN); sheet.addCell(label);
+            cantidad++
+            fila++
+        }
+
+        label = new Label(2, fila, "TOTAL", times16format); sheet.addCell(label);
+        number = new jxl.write.Number(3, fila, cantidad); sheet.addCell(number);
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + "reporteAsistentesTodos_" + new Date().format("dd-MM-yyyy") + ".xls";
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
     }
 }
