@@ -98,9 +98,9 @@
 %{--<ul class="nav nav-tabs">--}%
 <ul class="nav nav-pills">
     <li class="active"><a data-toggle="pill" href="#generales">Generales</a></li>
+    <li><a data-toggle="pill" href="#tall">Asistentes a Talleres</a></li>
     <li><a data-toggle="pill" href="#obra">POA</a></li>
     <li><a data-toggle="pill" href="#cont">Datos geográficos</a></li>
-    <li><a data-toggle="pill" href="#tall">Talleres</a></li>
 </ul>
 
 <div class="tab-content">

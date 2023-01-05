@@ -1517,11 +1517,11 @@ class ReportesController {
 //            def mujeres = PersonaTaller.countBySexoAndTaller('E',tllr)
             sql = "select count(*) cuenta from asst, pror where tllr__id = ${tllr.id} and " +
                     "pror.pror__id = asst.pror__id and prorsexo = 'M'"
-//            println "reporteCapacitacionesExcel: $sql"
+            println "reporteCapacitacionesExcel: $sql"
             def hombres = cn.rows(sql.toString())[0].cuenta
             sql = "select count(*) cuenta from asst, pror where tllr__id = ${tllr.id} and " +
                     "pror.pror__id = asst.pror__id and prorsexo = 'F'"
-//            println "reporteCapacitacionesExcel: $sql"
+            println "reporteCapacitacionesExcel: $sql"
             def mujeres = cn.rows(sql.toString())[0].cuenta
 
             DateFormat df = new DateFormat("d/MM/yyyy");
