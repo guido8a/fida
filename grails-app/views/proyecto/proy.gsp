@@ -296,7 +296,9 @@
         });
         </g:if>
         <g:else>
-        bootbox.alert( "<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> <span style='margin-left: 5px; font-weight: bold; font-size: 14px'> Revise el año actual! </span> <br/>  <span style='margin-left: 5px'> Para ingresar el año diríjase a Parametros > Año Fiscal </span> ");
+        bootbox.alert( "<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> " +
+            "<span style='margin-left: 5px; font-weight: bold; font-size: 14px'> No se ha ingresado el año actual! </span>" +
+            "<br/>  <span style='margin-left: 5px'> Para ingresarlo, diríjase a Parametros -> Año Fiscal </span> ");
         </g:else>
 
 
