@@ -7,6 +7,7 @@ import jxl.Workbook
 import jxl.WorkbookSettings
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.web.servlet.support.RequestContextUtils
+import parametros.Anio
 import parametros.proyectos.TipoElemento
 //import vesta.parametros.UnidadEjecutora
 //import vesta.seguridad.Persona
@@ -640,7 +641,9 @@ class ProyectoController {
 
         }
 
-        return [proy: proy, lista: list, contadorImas: contadorImas, contadorOtros: contadorOtros]
+        def anioActual = Anio.findByAnio(new Date().format('yyyy'))?.id
+
+        return [proy: proy, lista: list, contadorImas: contadorImas, contadorOtros: contadorOtros, anioActual: anioActual]
     }
 
 

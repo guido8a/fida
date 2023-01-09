@@ -127,14 +127,14 @@
                                         id : itemId
                                     },
                                     success : function (msg) {
-                                        var parts = msg.split("*");
-                                        log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                                        if (parts[0] == "SUCCESS") {
+                                        closeLoader();
+                                        if(msg === 'ok'){
+                                            log("Año borrado correctamente", "success");
                                             setTimeout(function() {
                                                 location.reload(true);
                                             }, 1000);
-                                        } else {
-                                            closeLoader();
+                                        }else{
+                                            log("Error al borrar el año", "error");
                                         }
                                     }
                                 });

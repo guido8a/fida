@@ -236,13 +236,13 @@
                             id: '${proy?.id}'
                         },
                         success: function (msg) {
-                            if(msg == 'ok'){
+                            if(msg === 'ok'){
                                 log("Estado cambiado correctamente","success");
                                 setTimeout(function () {
                                     location.reload(true)
                                 }, 1000);
                             }else{
-                                if(msg == 'er'){
+                                if(msg === 'er'){
                                     bootbox.alert({
                                         size: "small",
                                         title: "Alerta!!!",
@@ -270,6 +270,8 @@
 
     $("#btnFinanciamiento").click(function () {
         var id = '${proy?.id}';
+
+        <g:if test="${anioActual}">
         $.ajax({
             type    : "POST",
             url     : "${createLink(controller: 'financiamiento', action:'list_ajax')}",
@@ -292,6 +294,12 @@
                 });
             }
         });
+        </g:if>
+        <g:else>
+        bootbox.alert( "<i class='fa fa-exclamation-triangle fa-3x pull-left text-danger text-shadow'></i> <span style='margin-left: 5px; font-weight: bold; font-size: 14px'> Revise el año actual! </span> <br/>  <span style='margin-left: 5px'> Para ingresar el año diríjase a Parametros > Año Fiscal </span> ");
+        </g:else>
+
+
     });
 
     $("#btnVerMarco").click(function () {
@@ -321,7 +329,7 @@
                 success: function (msg) {
                     dialog.modal('hide');
                     var parte = msg.split("_");
-                    if(parte[0] == 'ok'){
+                    if(parte[0] === 'ok'){
                         log("Proyecto guardado correctamente","success");
                         setTimeout(function () {
                             reCargar(parte[1]);
@@ -336,10 +344,7 @@
     });
 
     function reCargar(id) {
-//        console.log('recargar', id)
-        var url = "${createLink(controller: 'proyecto', action: 'proy')}" + "/" + id
-//        console.log('link', url)
-        location.href = url
+        location.href = "${createLink(controller: 'proyecto', action: 'proy')}" + "/" + id;
     }
 
     /*
@@ -390,7 +395,7 @@
     });
 
     $(".form-control").keydown(function (ev) {
-        if (ev.keyCode == 13) {
+        if (ev.keyCode === 13) {
             submitForm();
             return false;
         }
@@ -433,7 +438,7 @@
         format: 'DD-MM-YYYY',
         daysOfWeekDisabled: [0, 6],
         sideBySide: true,
-        showClose: true,
+        showClose: true
     });
 
     $('#fechaFin').datetimepicker({
@@ -441,7 +446,7 @@
         format: 'DD-MM-YYYY',
         daysOfWeekDisabled: [0, 6],
         sideBySide: true,
-        showClose: true,
+        showClose: true
     });
 
     $("input[maxlength]").maxlength({
@@ -451,8 +456,6 @@
         limitReachedClass: "label label-danger"
     });
     $("textarea[maxlength]").maxlength();
-
-
 
 </script>
 

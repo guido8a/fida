@@ -5,7 +5,7 @@
     <form class="form-inline" id="frmFinanciamiento">
         <div class="form-group">
             <label for="fuente">Fuente</label>
-            <g:select name="fuente" from="${parametros.proyectos.Fuente.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion"
+            <g:select name="fuente" from="${Fuente.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion"
                       class="form-control input-sm" style="width:250px;"/>
         </div>
 
@@ -21,7 +21,7 @@
         <div class="form-group">
             <label for="anio">Año</label>
             <g:select name="anio" from="${Anio.list([sort: 'anio', order: 'asc'])}" optionKey="id" optionValue="anio"
-                      class="form-control input-sm" value="${parametros.Anio.findByAnio(new Date().format('yyyy')).id}"/>
+                      class="form-control input-sm" value="${Anio.findByAnio(new Date().format('yyyy')).id}"/>
         </div>
 
         <a href="#" class="btn btn-sm btn-success" id="btnAddFin"><i class="fa fa-plus"></i> Guardar</a>
@@ -75,7 +75,7 @@
     }
 
     $(function () {
-        var an = $("#anio option:selected").val()
+        var an = $("#anio option:selected").val();
         reloadTabla(an);
         var $frm = $("#frmFinanciamiento");
         $frm.validate({
@@ -119,7 +119,7 @@
                     var $this = $(this);
                     var fuente = $this.data("fuente");
                     var anio = $this.data("anio");
-                    if (fuente.toString() == fuenteId && anio.toString() == anioId) {
+                    if (fuente.toString() === fuenteId && anio.toString() === anioId) {
                         existe = true;
                     }
                 });
@@ -139,8 +139,8 @@
                         },
                         success : function (msg) {
                             var parts = msg.split("*");
-                            log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                            if (parts[0] == "SUCCESS") {
+                            log(parts[1], parts[0] === "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
+                            if (parts[0] === "SUCCESS") {
                                 reloadTabla(anioId);
                             }
                         }

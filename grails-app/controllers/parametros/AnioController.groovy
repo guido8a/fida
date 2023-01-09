@@ -108,15 +108,16 @@ class AnioController {
             if (anioInstance) {
                 try {
                     anioInstance.delete(flush: true)
-                    render "OK_Eliminación de Tema exitosa."
+                    render "ok"
                 } catch (e) {
-                    render "NO_No se pudo eliminar Tema."
+                    println("error al borrar el año " + anioInstance.errors)
+                    render "no"
                 }
             } else {
-                notFound_ajax()
+                render "no"
             }
         } else {
-            notFound_ajax()
+            render "no"
         }
     } //delete para eliminar via ajax
 
