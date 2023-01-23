@@ -2,6 +2,7 @@ package preguntas
 
 
 import preguntas.Respuesta
+import seguridad.PersonaOrganizacion
 import seguridad.UnidadEjecutora
 
 class EncuestaController {
@@ -21,6 +22,7 @@ class EncuestaController {
         println "iniciaEncu ----> $params"
         def cn = dbConnectionService.getConnection()
         def unidad = UnidadEjecutora.get(params.unej)
+        def informante = PersonaOrganizacion.get(params.info)
         def actual
         def encu
         def tx = "select count(*) nmro from preg"
@@ -47,6 +49,7 @@ class EncuestaController {
         encu.fecha = new Date()
         encu.estado = 'N'
         encu.unidadEjecutora = unidad
+        encu.personaOrganizacion = informante
 
         try{
             encu.save(flush: true)
