@@ -1089,31 +1089,41 @@ class ReportesController {
         def label
         def fila = 5;
 
-        label = new Label(1, 2, "REPORTE ORGANIZACIONES", times16format); sheet.addCell(label);
-        label = new Label(1, 3, "PROVINCIA: " + provincia?.nombre, times16format); sheet.addCell(label);
-        label = new Label(0, 4, "NOMBRE", times16format); sheet.addCell(label);
-        label = new Label(1, 4, "DIRECCIÓN", times16format); sheet.addCell(label);
-        label = new Label(2, 4, "TELÉFONO", times16format); sheet.addCell(label);
-        label = new Label(3, 4, "EMAIL", times16format); sheet.addCell(label);
-        label = new Label(4, 4, "REFERENCIA", times16format); sheet.addCell(label);
-        label = new Label(5, 4, "ACTIVIDAD", times16format); sheet.addCell(label);
-        label = new Label(6, 4, "# SOCIOS", times16format); sheet.addCell(label);
-        label = new Label(7, 4, "# HOMBRES", times16format); sheet.addCell(label);
-        label = new Label(8, 4, "# MUJERES", times16format); sheet.addCell(label);
-        label = new Label(9, 4, "# JÓVENES", times16format); sheet.addCell(label);
+        label = new Label(0, 2, "REPORTE ORGANIZACIONES", times16format); sheet.addCell(label);
+        label = new Label(0, 3, "PROVINCIA: " + provincia?.nombre, times16format); sheet.addCell(label);
+        label = new Label(0, 4, "CANTÓN", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "PARROQUIA", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "NOMBRE", times16format); sheet.addCell(label);
+        label = new Label(3, 4, "DIRECCIÓN", times16format); sheet.addCell(label);
+        label = new Label(4, 4, "TELÉFONO", times16format); sheet.addCell(label);
+        label = new Label(5, 4, "EMAIL", times16format); sheet.addCell(label);
+        label = new Label(6, 4, "REFERENCIA", times16format); sheet.addCell(label);
+        label = new Label(7, 4, "ACTIVIDAD", times16format); sheet.addCell(label);
+        label = new Label(8, 4, "# SOCIOS", times16format); sheet.addCell(label);
+        label = new Label(9, 4, "# HOMBRES", times16format); sheet.addCell(label);
+        label = new Label(10, 4, "# MUJERES", times16format); sheet.addCell(label);
+        label = new Label(11, 4, "# JÓVENES", times16format); sheet.addCell(label);
+        label = new Label(12, 4, "PLAN DE NEGOCIOS", times16format); sheet.addCell(label);
+        label = new Label(13, 4, "FORTALECIMIENTO", times16format); sheet.addCell(label);
+        label = new Label(14, 4, "FINANCIACIÓN", times16format); sheet.addCell(label);
 
         organizaciones.each {organizacion->
             def dtor = DatosOrganizacion.findAllByUnidadEjecutora(organizacion)
-            label = new Label(0, fila,  organizacion?.nombre?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(1, fila,  organizacion?.direccion?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(2, fila,  organizacion?.telefono?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(3, fila,  organizacion?.mail?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(4, fila,  organizacion?.referencia?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(5, fila,  organizacion?.actividad?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(6, fila,  ((dtor?.hombresSocios?.sum() ?: 0) + (dtor?.mujeresSocias?.sum() ?: 0))?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(7, fila,  dtor?.hombresSocios?.sum()?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(8, fila,  dtor?.mujeresSocias?.sum()?.toString(), times16formatN); sheet.addCell(label);
-            label = new Label(9, fila,  dtor?.jovenes?.sum()?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(0, fila,  organizacion?.parroquia?.canton?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(1, fila,  organizacion?.parroquia?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(2, fila,  organizacion?.nombre?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(3, fila,  organizacion?.direccion?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(4, fila,  organizacion?.telefono?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(5, fila,  organizacion?.mail?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(6, fila,  organizacion?.referencia?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(7, fila,  organizacion?.actividad?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(8, fila,  ((dtor?.hombresSocios?.sum() ?: 0) + (dtor?.mujeresSocias?.sum() ?: 0))?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(9, fila,  dtor?.hombresSocios?.sum()?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(10, fila,  dtor?.mujeresSocias?.sum()?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(11, fila,  dtor?.jovenes?.sum()?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(12, fila,  (organizacion?.plan == 'N' ? 'NO' : 'SI')?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(13, fila,  (organizacion?.fortalecimiento == 'N' ? 'NO' : 'SI')?.toString(), times16formatN); sheet.addCell(label);
+            label = new Label(14, fila,  (organizacion?.financiacion == 'N' ? 'NO' : 'SI')?.toString(), times16formatN); sheet.addCell(label);
             fila++
         }
 
