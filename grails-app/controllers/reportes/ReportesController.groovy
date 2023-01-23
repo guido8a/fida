@@ -869,18 +869,17 @@ class ReportesController {
             sheet.setColumnView(i+1, 40)
         }
 
-//        autoSizeColumns(sheet, (cantidadPreguntas.toInteger() + 1))
-
         def label
         def fila = 5;
 
         label = new Label(1, 2, "REPORTE ENCUESTAS", times16format); sheet.addCell(label);
         label = new Label(0, 4, "UNIDAD EJECUTORA", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "INFORMANTE", times16format); sheet.addCell(label);
 
         def preguntas = Pregunta.list().sort{it.numero}
 
         preguntas.eachWithIndex {pregunta, i->
-            label = new Label(i+1, 4, pregunta?.descripcion?.toString(), times16format); sheet.addCell(label);
+            label = new Label(i+2, 4, pregunta?.descripcion?.toString(), times16format); sheet.addCell(label);
         }
 
         def encuestas = Encuesta.findAllByEstadoAndFechaGreaterThanEqualsAndFechaLessThanEquals('C',fi,ff).sort{it.unidadEjecutora.nombre}
@@ -889,10 +888,11 @@ class ReportesController {
             def detalles = DetalleEncuesta.findAllByEncuesta(encuesta).sort{it.respuestaPregunta.pregunta.numero}
             detalles.eachWithIndex{detalle,j->
                 label = new Label(0, fila,  detalle?.encuesta?.unidadEjecutora?.nombre?.toString(), times16formatN); sheet.addCell(label);
+                label = new Label(1, fila,  ( (detalle?.encuesta?.personaOrganizacion?.nombre ?: '') + " " + (detalle?.encuesta?.personaOrganizacion?.apellido ?: ''))?.toString(), times16formatN); sheet.addCell(label);
                 if(detalle?.valor){
-                    label = new Label(j+1, fila, detalle?.valor?.toString(), times16formatN); sheet.addCell(label);
+                    label = new Label(j+2, fila, detalle?.valor?.toString(), times16formatN); sheet.addCell(label);
                 }else{
-                    label = new Label(j+1, fila, detalle?.respuestaPregunta?.respuesta?.opcion?.toString(), times16formatN); sheet.addCell(label);
+                    label = new Label(j+2, fila, detalle?.respuestaPregunta?.respuesta?.opcion?.toString(), times16formatN); sheet.addCell(label);
                 }
             }
             fila++
