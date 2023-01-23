@@ -2,6 +2,7 @@ package preguntas
 
 import audita.Auditable
 import proyectos.Indicador
+import seguridad.PersonaOrganizacion
 import seguridad.UnidadEjecutora
 
 class Encuesta implements Auditable {
@@ -10,6 +11,7 @@ class Encuesta implements Auditable {
     Date fecha
     String observaciones
     String estado = 'N'
+    PersonaOrganizacion personaOrganizacion
 
     static auditable = true
 
@@ -24,6 +26,7 @@ class Encuesta implements Auditable {
             fecha column: 'encufcha'
             observaciones column: 'encuobsr'
             estado column: 'encuetdo'
+            personaOrganizacion column: 'pror__id'
         }
     }
 
@@ -31,6 +34,7 @@ class Encuesta implements Auditable {
         unidadEjecutora(blank: false, nullable: false)
         fecha(blank: false, nullable: false)
         estado(nullable: false, blank: false)
+        personaOrganizacion(nullable: true, blank: true)
         observaciones(size: 1..255, nullable: true, blank: true)
     }
 

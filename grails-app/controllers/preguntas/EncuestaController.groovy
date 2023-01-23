@@ -197,5 +197,34 @@ class EncuestaController {
 
     }
 
+    def buscarInformante_ajax(){
+        return[unidad: params.unidad]
+    }
 
+    def tablaInformante_ajax(){
+
+        def sql = ''
+        def operador = ''
+        def unidad = UnidadEjecutora.get(params.unidad)
+
+        switch (params.operador) {
+            case "0":
+                operador = "prornmbr"
+                break;
+            case "1":
+                operador = "prorapll"
+                break;
+            case '2':
+                operador = "prorcdla"
+                break;
+        }
+
+        def cn = dbConnectionService.getConnection()
+        sql = "select * from pror where unej__id = ${unidad?.id} and ${operador} ilike '%${params.texto}%' " +
+                "order by prorapll asc limit 20"
+
+        def res = cn.rows(sql.toString())
+
+        return [informantes: res]
+    }
 }

@@ -36,7 +36,7 @@
         var id = $(this).data("id");
         var nombre = $(this).data("nombre");
 
-        ${tipo == '1'} ?  ($("#unidadEjecutoraName").val(nombre), $("#unidadEjecutora").val(id) ,  cerrarDialogoBuscarOrganizacion()) : location.href="${createLink(controller: 'unidadEjecutora', action: 'organizacion')}/" + id;
+        ${tipo == '1'} ?  ($("#unidadEjecutoraName").val(nombre), $("#unidadEjecutora").val(id) , $("#personaOrganizacion").val(''), $("#personaOrganizacionName").val(''),  cerrarDialogoBuscarOrganizacion()) : location.href="${createLink(controller: 'unidadEjecutora', action: 'organizacion')}/" + id;
     });
 
 </script>

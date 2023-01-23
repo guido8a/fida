@@ -44,7 +44,6 @@
 
             <div class="row izquierda" style="margin-top: 70px; margin-bottom: 15px">
                 <div class="col-md-12 input-group">
-                    %{--                    <span class="col-md-3 panel panel-info" style="height: 35px; text-align: end">Seleccione su Organización</span>--}%
                     <span class="col-md-3">
                         <a href="#" id="btnBuscarOrganizacion"
                            class="btn btn-sm btn-info" style="color: #fff" title="Buscar organización">
@@ -54,10 +53,7 @@
                     <div class="col-md-9">
                         <span class="grupo">
                             <g:hiddenField id="unidadEjecutora" name="unidadEjecutora.id" />
-                            %{--                            <g:select id="unidadEjecutora" name="unidadEjecutora.id"--}%
-                            %{--                                      from="${seguridad.UnidadEjecutora.findAllByTipoInstitucion(seguridad.TipoInstitucion.get(2), [sort: 'nombre'])}"--}%
-                            %{--                                      optionKey="id" value="${convenio?.planesNegocio?.unidadEjecutora?.id}"--}%
-                            %{--                                      class="many-to-one form-control input-sm"/>--}%
+
                             <g:textField id="unidadEjecutoraName" name="unidadEjecutora.nombre" class="form-control" readonly="true"/>
 
                         </span>
@@ -65,6 +61,22 @@
                 </div>
             </div>
 
+            <div class="row izquierda" style="margin-top: 10px; margin-bottom: 15px">
+                <div class="col-md-12 input-group">
+                    <span class="col-md-3">
+                        <a href="#" id="btnBuscarInformante"
+                           class="btn btn-sm btn-warning" style="color: #fff" title="Buscar informante">
+                            <i class="fas fa-user"></i> Seleccione su informante
+                        </a>
+                    </span>
+                    <div class="col-md-9">
+                        <span class="grupo">
+                            <g:hiddenField id="personaOrganizacion" name="personaOrganizacion.id" />
+                            <g:textField id="personaOrganizacionName" name="personaOrganizacion.nombre" class="form-control" readonly="true"/>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div style="align-items: center">
             <div class="btn-group">
@@ -85,6 +97,53 @@
 </div>
 <script type="text/javascript">
     var bm;
+
+    $("#btnBuscarInformante").click(function () {
+        if($("#unidadEjecutora").val() !== ''){
+            var dialog = cargarLoader("Cargando...");
+            $.ajax({
+                type: 'POST',
+                url: '${createLink(controller: 'encuesta', action: 'buscarInformante_ajax')}',
+                data: {
+                    unidad: $("#unidadEjecutora").val()
+                },
+                success: function (msg) {
+                    dialog.modal('hide');
+                    bm = bootbox.dialog({
+                        id: "dlgBuscarInformante",
+                        title: "Buscar Informante",
+                        class: "modal-lg",
+                        closeButton: false,
+                        message: msg,
+                        buttons: {
+                            cancelar: {
+                                label: "Cancelar",
+                                className: "btn-primary",
+                                callback: function () {
+                                }
+                            }
+                        }
+                    }); //dialog
+                }
+            });
+        }else{
+            var d = bootbox.dialog({
+                id: "dlgError",
+                title: "Alerta",
+                class: "modal-sm",
+                closeButton: false,
+                message: "<i class='fa fa-exclamation-triangle fa-2x pull-left text-danger text-shadow'></i> <h4> Seleccione una organización </h4>",
+                buttons: {
+                    cancelar: {
+                        label: "Cancelar",
+                        className: "btn-primary",
+                        callback: function () {
+                        }
+                    }
+                }
+            }); //dialog
+        }
+    });
 
     $("#btnBuscarOrganizacion").click(function () {
         var dialog = cargarLoader("Cargando...");
@@ -119,16 +178,35 @@
 
     $("#btnEncuesta").click(function () {
         var unej = $("#unidadEjecutora").val();
+        var informante = $("#personaOrganizacion").val();
 
         if(unej){
-            location.href="${createLink(controller: 'encuesta', action: 'iniciaEncu')}" + "?unej=" + unej
+            if(informante){
+                location.href="${createLink(controller: 'encuesta', action: 'iniciaEncu')}" + "?unej=" + unej + "&info=" + informante
+            }else{
+                var a = bootbox.dialog({
+                    id: "dlgError",
+                    title: "Alerta",
+                    class: "modal-sm",
+                    closeButton: false,
+                    message: "<i class='fa fa-exclamation-triangle fa-2x pull-left text-danger text-shadow'></i> <h4> Seleccione un informante </h4>",
+                    buttons: {
+                        cancelar: {
+                            label: "Cancelar",
+                            className: "btn-primary",
+                            callback: function () {
+                            }
+                        }
+                    }
+                }); //dialog
+            }
         }else{
             var d = bootbox.dialog({
                 id: "dlgError",
                 title: "Alerta",
                 class: "modal-sm",
                 closeButton: false,
-                message: "<i class='fa fa-exclamation-triangle fa-2x pull-left text-danger text-shadow'></i> <h3> Seleccione una organización </h3>",
+                message: "<i class='fa fa-exclamation-triangle fa-2x pull-left text-danger text-shadow'></i> <h4> Seleccione una organización </h4>",
                 buttons: {
                     cancelar: {
                         label: "Cancelar",
