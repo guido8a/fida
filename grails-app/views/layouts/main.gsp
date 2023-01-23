@@ -44,8 +44,6 @@
     <asset:javascript src="/apli/moment.js"/>
     <asset:javascript src="/apli/moment-with-locales.js"/>
 
-%{--    <asset:javascript src="/apli/bootstrap.min.js"/>--}%
-
     <asset:javascript src="/apli/funciones.js"/>
     <asset:javascript src="/apli/functions.js"/>
     <asset:javascript src="/apli/loader.js"/>
@@ -62,8 +60,6 @@
     <asset:javascript src="/apli/bootstrap-datetimepicker.min.js"/>
     <asset:javascript src="/apli/bootstrap-maxlength.min.js"/>
     <asset:javascript src="/apli/jquery.switcher.min.js"/>
-
-
     <asset:javascript src="/bootstrap-3.3.2/dist/js/bootstrap.min.js"/>
 
     <script type="text/javascript">

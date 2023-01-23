@@ -8,7 +8,7 @@ grails:
         nuevo3: '/var/bitacora'
     profile: web
     codegen:
-        defaultPackage: bitacora3
+        defaultPackage: fida
     gorm:
         reactor:
             # Whether to translate GORM events into Reactor events
@@ -125,8 +125,8 @@ environments:
     development:
         dataSource:
             dbCreate: update
-#            url: jdbc:postgresql://127.0.0.1:5432/fida
-            url: jdbc:postgresql://192.168.200.9:5432/fida
+#            url: jdbc:postgresql://192.168.200.9:5432/fida
+            url: jdbc:postgresql://192.168.200.9:5432/fida_brre
             username: postgres
             password: 'postgres'
 
