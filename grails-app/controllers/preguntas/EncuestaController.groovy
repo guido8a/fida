@@ -292,7 +292,7 @@ class EncuestaController {
 
     def tablaEncuestas_ajax() {
         def organizacion = UnidadEjecutora.get(params.organizacion)
-        def encuestas = Encuesta.findAllByUnidadEjecutora(organizacion)
+        def encuestas = Encuesta.findAllByUnidadEjecutora(organizacion, [sort: 'personaOrganizacion'])
         return[encuestas: encuestas, organizacion: organizacion]
     }
 

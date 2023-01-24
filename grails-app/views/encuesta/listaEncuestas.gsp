@@ -18,11 +18,11 @@
     <div class="col-md-1">
         <label>Organización:</label>
     </div>
-    <div class="col-md-6">
-        <g:select name="buscarU" from="${seguridad.UnidadEjecutora.list().sort{it.nombre}}" class="form-control" optionValue="nombre" optionKey="id"/>
+    <div class="col-md-9">
+        <g:select name="buscarU" from="${seguridad.UnidadEjecutora.list([sort: 'nombre'])}" class="form-control" optionValue="nombre" optionKey="id"/>
     </div>
 
-    <div class="col-md-2 btn-group">
+    <div class="col-md-1 btn-group">
         <a href="#" class="btn btn-success" id="btnBuscarEncuesta">
             <i class="fa fa-search"></i> Buscar
         </a>
@@ -32,10 +32,11 @@
 <table class="table table-condensed table-bordered table-striped table-hover" style="width:100%;margin-top: 20px !important;">
     <thead style="width: 100%">
     <tr>
-        <th style="width: 25%">Fecha</th>
+        <th style="width: 10%">Número</th>
+        <th style="width: 15%">Fecha</th>
         <th style="width: 10%">Estado</th>
-        <th style="width: 20%">Informante</th>
-        <th style="width: 10%"><i class="fa fa-user"></i> </th>
+        <th style="width: 50%">Informante</th>
+        <th style="width: 15%"><i class="fa fa-user"></i> </th>
     </tr>
     </thead>
 </table>

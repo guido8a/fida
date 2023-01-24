@@ -2,16 +2,19 @@
     <table class="table-bordered table-condensed table-hover" style="width: 100%">
         <g:each in="${encuestas}" var="encuesta">
             <tr style="width: 100%">
-                <td style="width: 25%">
+                <td style="width: 10%">
+                    ${encuesta.id}
+                </td>
+                <td style="width: 15%">
                     ${encuesta.fecha.format("dd-MM-yyyy")}
                 </td>
                 <td style="width: 10%">
                     ${encuesta.estado}
                 </td>
-                <td style="width: 20%">
+                <td style="width: 50%">
                     ${(encuesta?.personaOrganizacion?.nombre ?: '') + " " + (encuesta?.personaOrganizacion?.apellido ?: '')}
                 </td>
-                <td style="width: 10%; text-align: center">
+                <td style="width: 15%; text-align: center">
                     <a href="#" class="btn btn-xs btn-success btnSeleccion"  title="Seleccionar informante"
                        data-id="${encuesta.id}" >
                         <i class="fa fa-user"></i>
