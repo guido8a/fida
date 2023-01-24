@@ -10,6 +10,7 @@ class EncuestaController {
     def dbConnectionService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    def totalPreg = 0
 
     def index(Integer max) {
 
@@ -27,6 +28,7 @@ class EncuestaController {
         def encu
         def tx = "select count(*) nmro from preg"
         def total = cn.rows("select max(pregnmro) nmro from preg".toString())[0].nmro
+        totalPreg = total
 
         tx = "select max(coalesce(pregnmro,0)) nmro, encu.encu__id from dtec, rspg, encu, preg " +
                 "where unej__id = ${params.unej} and dtec.encu__id = encu.encu__id and " +
@@ -65,6 +67,9 @@ class EncuestaController {
 
     def ponePregunta(actual, total, encu__id, unej) {
         def cn = dbConnectionService.getConnection()
+        println "actual: $actual total: $total "
+        if(actual.toInteger() < 1) actual = 1
+        if(actual.toInteger() > total.toInteger()) actual = total
         def preg = seleccionaPregunta(actual, encu__id)
 //        println "preg:---> $preg"
         actual   = preg[0]
@@ -87,10 +92,10 @@ class EncuestaController {
         def resp = []
         def rp = [:]
         def contestado = []
-//        println " a ejecutar seleccionaPregunta: ${tx}"
+        println " a ejecutar seleccionaPregunta: ${tx}"
 
         def prte = cn.rows(tx.toString())[0]
-//        println "dscr: ${prte.dscr}"
+        println "dscr: ${prte.pregdscr}"
         preg.add(prte.pregnmro)
         preg.add([id: prte.id, dscr: prte.pregdscr])   //prte__id y pregunta respectiva
 
@@ -119,7 +124,7 @@ class EncuestaController {
         }
 
 
-//        println "+++++ resp: $resp"
+        println "+++++ resp: $resp"
         cn.close()
 //        println "+++++++ pregunta: $preg"
         return preg
@@ -130,6 +135,8 @@ class EncuestaController {
         def actual = params.actual.toInteger() - 1
         def unidad = UnidadEjecutora.get(params.unej)
         ponePregunta(actual, params.total, params.encu__id, unidad)
+//        grabar(params.unej, params.encu__id, params.preg__id, params.resp, params.texto, params.respuestas,
+//                params.actual, params.total, -1)
     }
 
     /** registra respuesta de preguntaPrit
@@ -138,12 +145,59 @@ class EncuestaController {
      * preg__id:  prte__id  **/
     def respuesta() {
         println "respuesta: $params"
+        grabar(params.unidad, params.encu__id, params.preg__id, params.resp, params.texto, params.respuestas,
+                params.actual, params.total, 1)
+//        def cn = dbConnectionService.getConnection()
+//        def dtec
+//        def unidad = UnidadEjecutora.get(params.unidad)
+//        def tx = "select dtec__id from dtec, rspg where encu__id = ${params.encu__id} and " +
+//                "rspg.rspg__id = dtec.rspg__id and rspg.preg__id = ${params.preg__id}"
+//        println "respuesta sql: $tx"
+//        dtec = cn.rows(tx.toString())[0]?.dtec__id
+//
+//        def numero = params.numero? Math.round(params?.numero?.toDouble()) : 0
+//        println "numero: $numero"
+//        if(dtec) {
+//            if(params.resp == '3') {
+//                tx = "update dtec set dtecvlor = ${numero} where dtec__id = ${dtec}"
+//            } else if(params.resp == '4') {
+//                tx = "update dtec set dtecvlor = '${params.texto}' where dtec__id = ${dtec}"
+//            } else {
+//                tx = "update dtec set rspg__id = ${params.respuestas} where dtec__id = ${dtec}"
+//            }
+//        } else if(params.resp == '3'){
+//            tx = "insert into dtec(rspg__id, encu__id, dtecvlor) " +
+//                    "values(${params.rspg}, ${params.encu__id}, ${numero})"
+//        } else if(params.resp == '4'){
+//            tx = "insert into dtec(rspg__id, encu__id, dtecvlor) " +
+//                    "values(${params.rspg}, ${params.encu__id}, '${params.texto}')"
+//        } else {
+//            tx = "insert into dtec(rspg__id, encu__id) " +
+//                    "values(${params.respuestas}, ${params.encu__id})"
+//        }
+//        try {
+//            cn.execute(tx.toString())
+//        }
+//        catch (e) {
+//            println e.getMessage()
+//        }
+//        cn.close()
+//        def actual = params.actual.toInteger() + 1
+//
+//        if(actual > params.total.toInteger()) {// ya ha terminado la ponePregunta
+//            finalizaEncuesta(params.encu__id)
+//        } else {
+//            ponePregunta(actual, params.total, params.encu__id, unidad)
+//        }
+    }
+
+    def grabar(pr_undd, pr_encu__id, pr_preg, pr_resp, texto, respuestas, pr_actual, pr_total, siguiente) {
         def cn = dbConnectionService.getConnection()
         def dtec
-        def unidad = UnidadEjecutora.get(params.unidad)
+        def unidad = UnidadEjecutora.get(pr_undd)
         //igual que en respuestaAsgn
-        def tx = "select dtec__id from dtec, rspg where encu__id = ${params.encu__id} and " +
-                "rspg.rspg__id = dtec.rspg__id and rspg.preg__id = ${params.preg__id}"
+        def tx = "select dtec__id from dtec, rspg where encu__id = ${pr_encu__id} and " +
+                "rspg.rspg__id = dtec.rspg__id and rspg.preg__id = ${pr_preg}"
         println "respuesta sql: $tx"
         dtec = cn.rows(tx.toString())[0]?.dtec__id
 
@@ -151,23 +205,24 @@ class EncuestaController {
         println "numero: $numero"
         //siempre se responde causa y respuesta
         if(dtec) {
-            if(params.resp == '3') {
+            if(pr_resp == '3') {
                 tx = "update dtec set dtecvlor = ${numero} where dtec__id = ${dtec}"
-            } else if(params.resp == '4') {
-                tx = "update dtec set dtecvlor = '${params.texto}' where dtec__id = ${dtec}"
+            } else if(pr_resp == '4') {
+                tx = "update dtec set dtecvlor = '${texto}' where dtec__id = ${dtec}"
             } else {
-                tx = "update dtec set rspg__id = ${params.respuestas} where dtec__id = ${dtec}"
+                tx = "update dtec set rspg__id = ${respuestas}, dtecvlor = null where dtec__id = ${dtec}"
             }
-        } else if(params.resp == '3'){
+        } else if(pr_resp == '3'){
             tx = "insert into dtec(rspg__id, encu__id, dtecvlor) " +
-                    "values(${params.rspg}, ${params.encu__id}, ${numero})"
-        } else if(params.resp == '4'){
+                    "values(${params.rspg}, ${pr_encu__id}, ${numero})"
+        } else if(pr_resp == '4'){
             tx = "insert into dtec(rspg__id, encu__id, dtecvlor) " +
-                    "values(${params.rspg}, ${params.encu__id}, '${params.texto}')"
+                    "values(${params.rspg}, ${pr_encu__id}, '${texto}')"
         } else {
             tx = "insert into dtec(rspg__id, encu__id) " +
-                    "values(${params.respuestas}, ${params.encu__id})"
+                    "values(${respuestas}, ${pr_encu__id})"
         }
+        println "ejecuta: $tx"
         try {
             cn.execute(tx.toString())
         }
@@ -177,20 +232,21 @@ class EncuestaController {
 //        println "... sql: $tx"
         cn.close()
         //llamar al a siguiente pregunta
-        def actual = params.actual.toInteger() + 1
+        def actual = pr_actual.toInteger() + siguiente
 
-        if(actual > params.total.toInteger()) {// ya ha terminado la ponePregunta
-            finalizaEncuesta(params.encu__id)
+        if(actual > pr_total.toInteger()) {// ya ha terminado la ponePregunta
+            finalizaEncuesta(pr_encu__id)
         } else {
 //            ponePregunta(actual, session.total, session.encuesta, session.tipoEncuesta)
-            ponePregunta(actual, params.total, params.encu__id, unidad)
+            ponePregunta(actual, pr_total, pr_encu__id, unidad)
         }
     }
 
     def finalizaEncuesta(encu) {
         println "llega encu: $encu"
         def cn = dbConnectionService.getConnection()
-        def tx = "update encu set encuetdo = 'C' where encu__id = $encu"
+//        def tx = "update encu set encuetdo = 'C' where encu__id = $encu"
+        def tx = "update encu set encuetdo = 'N' where encu__id = $encu"
 //        println "finalizaEncu: $tx"
         cn.execute(tx.toString())
         redirect action: 'index'

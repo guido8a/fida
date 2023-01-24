@@ -174,7 +174,9 @@
                     if(result) {
                         $("#anterior").replaceWith(spinner);
                         location.href = "${createLink(action: 'anterior')}" +
-                            "?encu__id=${encu}&actual=${actual}&total=${total}&unej=${unidad}"
+                            "?encu__id=${encu}&actual=${actual}&total=${total}&unej=${unidad}&preg__id=${pregunta.id}" +
+                            "&respuestas=${respuesta?.id}&texto=" + $('#texto').val() +
+                            "&numero=" + $('#numero').val() + "&resp=" + $('#resp').val()
                     }
                 }
             });
@@ -187,6 +189,7 @@
             } else {
                 respit = $('input[name=respuestas]:checked').length;
             }
+            console.log("--->", respit);
             if (respit == 0) {
                 bootbox.alert({
                     title: "No ha seleccionado una respuesta",

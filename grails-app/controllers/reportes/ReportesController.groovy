@@ -872,7 +872,7 @@ class ReportesController {
         def label
         def fila = 5;
 
-        label = new Label(1, 2, "REPORTE ENCUESTAS", times16format); sheet.addCell(label);
+        label = new Label(1, 2, "No.", times16format); sheet.addCell(label);
         label = new Label(0, 4, "UNIDAD EJECUTORA", times16format); sheet.addCell(label);
         label = new Label(1, 4, "INFORMANTE", times16format); sheet.addCell(label);
 
@@ -887,12 +887,13 @@ class ReportesController {
         encuestas.each{encuesta->
             def detalles = DetalleEncuesta.findAllByEncuesta(encuesta).sort{it.respuestaPregunta.pregunta.numero}
             detalles.eachWithIndex{detalle,j->
-                label = new Label(0, fila,  detalle?.encuesta?.unidadEjecutora?.nombre?.toString(), times16formatN); sheet.addCell(label);
-                label = new Label(1, fila,  ( (detalle?.encuesta?.personaOrganizacion?.nombre ?: '') + " " + (detalle?.encuesta?.personaOrganizacion?.apellido ?: ''))?.toString(), times16formatN); sheet.addCell(label);
+                label = new Label(0, fila,  detalle?.encuesta?.id?.toString(), times16formatN); sheet.addCell(label);
+                label = new Label(1, fila,  detalle?.encuesta?.unidadEjecutora?.nombre?.toString(), times16formatN); sheet.addCell(label);
+                label = new Label(2, fila,  ( (detalle?.encuesta?.personaOrganizacion?.nombre ?: '') + " " + (detalle?.encuesta?.personaOrganizacion?.apellido ?: ''))?.toString(), times16formatN); sheet.addCell(label);
                 if(detalle?.valor){
-                    label = new Label(j+2, fila, detalle?.valor?.toString(), times16formatN); sheet.addCell(label);
+                    label = new Label(j+3, fila, detalle?.valor?.toString(), times16formatN); sheet.addCell(label);
                 }else{
-                    label = new Label(j+2, fila, detalle?.respuestaPregunta?.respuesta?.opcion?.toString(), times16formatN); sheet.addCell(label);
+                    label = new Label(j+3, fila, detalle?.respuestaPregunta?.respuesta?.opcion?.toString(), times16formatN); sheet.addCell(label);
                 }
             }
             fila++
