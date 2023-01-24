@@ -257,11 +257,10 @@ class EncuestaController {
     }
 
     def buscarInformante_ajax(){
-        return[unidad: params.unidad]
+        return[unidad: params.unidad, encuesta: params.encuesta]
     }
 
     def tablaInformante_ajax(){
-
         def sql = ''
         def operador = ''
         def unidad = UnidadEjecutora.get(params.unidad)
@@ -284,6 +283,30 @@ class EncuestaController {
 
         def res = cn.rows(sql.toString())
 
-        return [informantes: res]
+        return [informantes: res, encuesta: params.encuesta, unidad: unidad]
+    }
+
+    def listaEncuestas(){
+
+    }
+
+    def tablaEncuestas_ajax() {
+        def organizacion = UnidadEjecutora.get(params.organizacion)
+        def encuestas = Encuesta.findAllByUnidadEjecutora(organizacion)
+        return[encuestas: encuestas, organizacion: organizacion]
+    }
+
+    def guardarInformante_ajax(){
+        def encuesta = Encuesta.get(params.encuesta)
+        def informante = PersonaOrganizacion.get(params.informante)
+
+        encuesta.personaOrganizacion = informante
+
+        if(!encuesta.save(flush: true)){
+            println("error al guardar el informante de la encuesta " + encuesta.errors)
+            render "no"
+        }else{
+            render "ok"
+        }
     }
 }

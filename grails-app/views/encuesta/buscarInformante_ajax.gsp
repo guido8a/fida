@@ -68,7 +68,8 @@
             data:{
                 operador: operador,
                 texto: texto,
-                unidad: '${unidad}'
+                unidad: '${unidad}',
+                encuesta: '${encuesta}'
             },
             success: function (msg) {
                 dialog.modal('hide');

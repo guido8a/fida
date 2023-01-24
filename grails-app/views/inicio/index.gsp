@@ -163,131 +163,131 @@
 
     <div class="row mbr-justify-content-center">
 
-    <a href= "${createLink(controller:'proyecto', action: 'proy', id:1)}" style="text-decoration: none">
-        <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap">
-                <div style="width: 200px; height: 120px">
-                    <asset:image src="apli/proyecto.png" title="Marco lógico de Proyecto"  width="80%" height="80%"/>
-                </div>
-                <div style="width: 450px; height: 120px">
-                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Proyecto</span></h2>
-                    <p class="mbr-fonts-style text1 mbr-text display-6">Fortalecimiento de los Actores Rurales de la Economía Popular y Solidaria</p>
-                </div>
-            </div>
-        </div>
-    </a>
-%{--
-    <a href= "${createLink(controller:'taller', action: 'listTaller')}" style="text-decoration: none">
-        <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap" style="width: 553px; height: 120px">
-                <div style="width: 200px; height: 120px">
-                    <asset:image src="apli/taller.png" title="Talleres" width="80%" height="80%"/>
-                </div>
-                <div style="width: 450px; height: 120px">
-                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
-                        <span>Talleres</span>
-                    </h2>
-                    <p class="mbr-fonts-style text1 mbr-text display-6"> Fortalecimiento de las capacidades de las familias y sus organizaciones</p>
+        <a href= "${createLink(controller:'proyecto', action: 'proy', id:1)}" style="text-decoration: none">
+            <div class="col-lg-6 mbr-col-md-10">
+                <div class="wrap">
+                    <div style="width: 200px; height: 120px">
+                        <asset:image src="apli/proyecto.png" title="Marco lógico de Proyecto"  width="80%" height="80%"/>
+                    </div>
+                    <div style="width: 450px; height: 120px">
+                        <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Proyecto</span></h2>
+                        <p class="mbr-fonts-style text1 mbr-text display-6">Fortalecimiento de los Actores Rurales de la Economía Popular y Solidaria</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </a>
---}%
-    <a href= "${createLink(controller:'unidadEjecutora', action: 'organizacion')}" style="text-decoration: none">
-        <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap">
-                <div style="width: 200px; height: 120px">
-                    <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
+        </a>
+        %{--
+            <a href= "${createLink(controller:'taller', action: 'listTaller')}" style="text-decoration: none">
+                <div class="col-lg-6 mbr-col-md-10">
+                    <div class="wrap" style="width: 553px; height: 120px">
+                        <div style="width: 200px; height: 120px">
+                            <asset:image src="apli/taller.png" title="Talleres" width="80%" height="80%"/>
+                        </div>
+                        <div style="width: 450px; height: 120px">
+                            <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
+                                <span>Talleres</span>
+                            </h2>
+                            <p class="mbr-fonts-style text1 mbr-text display-6"> Fortalecimiento de las capacidades de las familias y sus organizaciones</p>
+                        </div>
+                    </div>
                 </div>
-                <div style="width: 450px; height: 120px">
-                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
-                        <span>Organizaciones</span>
-                    </h2>
-                    <p class="mbr-fonts-style text1 mbr-text display-6">
-                        Organizaciones de Economía Polular y Solidaria
-                    </p>
+            </a>
+        --}%
+        <a href= "${createLink(controller:'unidadEjecutora', action: 'organizacion')}" style="text-decoration: none">
+            <div class="col-lg-6 mbr-col-md-10">
+                <div class="wrap">
+                    <div style="width: 200px; height: 120px">
+                        <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
+                    </div>
+                    <div style="width: 450px; height: 120px">
+                        <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
+                            <span>Organizaciones</span>
+                        </h2>
+                        <p class="mbr-fonts-style text1 mbr-text display-6">
+                            Organizaciones de Economía Polular y Solidaria
+                        </p>
 
+                    </div>
                 </div>
             </div>
-        </div>
-    </a>
-%{--
-    <a href= "${createLink(controller:'convenio', action: 'convenio')}" style="text-decoration: none">
-        <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap" style="width: 553px; height: 120px">
-                <div style="width: 200px; height: 120px">
-                    <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
+        </a>
+        %{--
+            <a href= "${createLink(controller:'convenio', action: 'convenio')}" style="text-decoration: none">
+                <div class="col-lg-6 mbr-col-md-10">
+                    <div class="wrap" style="width: 553px; height: 120px">
+                        <div style="width: 200px; height: 120px">
+                            <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
+                        </div>
+                        <div style="width: 450px; height: 120px">
+                            <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5 col-md-12">
+                                <span>Planes de Negocio</span>
+                            </h2>
+                            <p class="mbr-fonts-style text1 mbr-text display-6 col-md-12"> Planes de Negocio Solidarios</p>
+                        </div>
+                    </div>
                 </div>
-                <div style="width: 450px; height: 120px">
-                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5 col-md-12">
-                        <span>Planes de Negocio</span>
-                    </h2>
-                    <p class="mbr-fonts-style text1 mbr-text display-6 col-md-12"> Planes de Negocio Solidarios</p>
+            </a>
+        --}%
+        <a href= "${createLink(controller:'unidadEjecutora', action: 'organizacion')}" style="text-decoration: none">
+            <div class="col-lg-6 mbr-col-md-10">
+                <div class="wrap">
+                    <div style="width: 200px; height: 120px">
+                        <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
+                    </div>
+                    <div style="width: 450px; height: 120px">
+                        <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
+                            <span>Convenios</span>
+                        </h2>
+                        <p class="mbr-fonts-style text1 mbr-text display-6">
+                            Convenios para ejecutar los Planes de Negocio Solidarios</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </a>
---}%
-    <a href= "${createLink(controller:'unidadEjecutora', action: 'organizacion')}" style="text-decoration: none">
-        <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap">
-                <div style="width: 200px; height: 120px">
-                    <asset:image src="apli/convenio.png" title="Convenios" width="80%" height="80%"/>
+        </a>
+        <a href= "${createLink(controller:'asignacion', action: 'asignacionProyectov2')}" style="text-decoration: none">
+            <div class="col-lg-6 mbr-col-md-10">
+                <div class="wrap">
+                    <div style="width: 200px; height: 120px">
+                        <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="80%" height="80%"/>
+                    </div>
+                    <div style="width: 450px; height: 120px">
+                        <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
+                            <span>Plan operativo anual</span>
+                        </h2>
+                        <p class="mbr-fonts-style text1 mbr-text display-6">
+                            Plan operativo anual del Proyecto FAREPS</p>
+                    </div>
                 </div>
-                <div style="width: 450px; height: 120px">
-                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
-                        <span>Convenios</span>
-                    </h2>
-                    <p class="mbr-fonts-style text1 mbr-text display-6">
-                        Convenios para ejecutar los Planes de Negocio Solidarios</p>
-                </div>
             </div>
-        </div>
-    </a>
-    <a href= "${createLink(controller:'asignacion', action: 'asignacionProyectov2')}" style="text-decoration: none">
-    <div class="col-lg-6 mbr-col-md-10">
-        <div class="wrap">
-            <div style="width: 200px; height: 120px">
-                <asset:image src="apli/plan.png" title="Plan Operativo Anual" width="80%" height="80%"/>
-            </div>
-            <div style="width: 450px; height: 120px">
-                <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5">
-                    <span>Plan operativo anual</span>
-                </h2>
-                <p class="mbr-fonts-style text1 mbr-text display-6">
-                    Plan operativo anual del Proyecto FAREPS</p>
-            </div>
-        </div>
-    </div>
-    </a>
+        </a>
         <a href= "${createLink(controller:'ajuste', action: 'pendientes')}" style="text-decoration: none">
-        <div class="col-lg-6 mbr-col-md-10">
-            <div class="wrap">
-                <div style="width: 200px; height: 120px">
-                    <asset:image src="apli/plan.png" title="Ajustes al Plan Operativo Anual" width="80%" height="80%"/>
-                </div>
-                <div style="width: 450px; height: 120px">
-                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Ajustes al POA</span></h2>
-                    <p class="mbr-fonts-style text1 mbr-text display-6">Ajustes realizadas al Plan Operativo Anual.
-                    Los ajustes pueden ser movimiento de recursos, creación de partidas, etc.</p>
+            <div class="col-lg-6 mbr-col-md-10">
+                <div class="wrap">
+                    <div style="width: 200px; height: 120px">
+                        <asset:image src="apli/plan.png" title="Ajustes al Plan Operativo Anual" width="80%" height="80%"/>
+                    </div>
+                    <div style="width: 450px; height: 120px">
+                        <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Ajustes al POA</span></h2>
+                        <p class="mbr-fonts-style text1 mbr-text display-6">Ajustes realizadas al Plan Operativo Anual.
+                        Los ajustes pueden ser movimiento de recursos, creación de partidas, etc.</p>
 
+                    </div>
                 </div>
             </div>
-        </div>
         </a>
         <a href= "${createLink(controller:'reforma', action: 'pendientes')}" style="text-decoration: none">
-        <div class="col-lg-6 mbr-col-md-10">
-        <div class="wrap">
-            <div style="width: 200px; height: 120px">
-                <asset:image src="apli/plan.png" title="Reformas al Plan Operativo Anual" width="80%" height="80%"/>
+            <div class="col-lg-6 mbr-col-md-10">
+                <div class="wrap">
+                    <div style="width: 200px; height: 120px">
+                        <asset:image src="apli/plan.png" title="Reformas al Plan Operativo Anual" width="80%" height="80%"/>
+                    </div>
+                    <div style="width: 450px; height: 120px">
+                        <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Reformas al POA</span></h2>
+                        <p class="mbr-fonts-style text1 mbr-text display-6">Reformas realizadas al Plan Operativo Anual.
+                        Las reformas pueden ser movimiento de recursos, creación de partidas, etc.</p>
+                    </div>
+                </div>
             </div>
-            <div style="width: 450px; height: 120px">
-                <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Reformas al POA</span></h2>
-                <p class="mbr-fonts-style text1 mbr-text display-6">Reformas realizadas al Plan Operativo Anual.
-                Las reformas pueden ser movimiento de recursos, creación de partidas, etc.</p>
-            </div>
-        </div>
-        </div>
         </a>
 
         <a href= "${createLink(controller:'pregunta', action: 'pregunta')}" style="text-decoration: none">
@@ -320,8 +320,8 @@
             </div>
         </a>
         <a href= "${createLink(controller:'encuesta', action: 'index')}" style="text-decoration: none">
-            <div class="col-lg-12">
-                <div class="wrap" style="width: 100%; height: 70px">
+            <div class="col-lg-6 mbr-col-md-10">
+                <div class="wrap" style="height: 70px">
                     <div style="width: 100px; height: 60px">
                         <asset:image src="apli/evaluacion.png" title="Aplicar encuesta" width="80%" height="80%"/>
                     </div>
@@ -333,11 +333,20 @@
                 </div>
             </div>
         </a>
-
+        <a href= "${createLink(controller:'encuesta', action: 'listaEncuestas')}" style="text-decoration: none">
+            <div class="col-lg-6 mbr-col-md-10">
+                <div class="wrap" style="height: 70px">
+                    <div style="width: 100px; height: 60px">
+                        <asset:image src="apli/evaluacion.png" title="Aplicar encuesta" width="80%" height="80%"/>
+                    </div>
+                    <div style="width: 900px; height: 120px">
+                        <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><span>Asignar informante</span></h2>
+                        <p class="mbr-fonts-style text1 mbr-text display-6">Seleccionar el informante para la encuesta.</p>
+                    </div>
+                </div>
+            </div>
+        </a>
     </div>
-
-
-
 
 </div>
 <script type="text/javascript">

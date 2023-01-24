@@ -32,9 +32,34 @@
         var id = $(this).data("id");
         var nombre = $(this).data("nombre");
 
+        <g:if test="${encuesta != ''}">
+            guardarEncuesta('${encuesta}', id);
+        </g:if>
+        <g:else>
         $("#personaOrganizacionName").val(nombre);
         $("#personaOrganizacion").val(id);
-        cerrarDialogoBuscarOrganizacion()
+        cerrarDialogoBuscarOrganizacion();
+        </g:else>
     });
+
+    function guardarEncuesta (enc, id){
+        $.ajax({
+            type: 'POST',
+            url: '${createLink(controller: 'encuesta', action: 'guardarInformante_ajax')}',
+            data:{
+                encuesta: enc,
+                informante: id
+            },
+            success: function (msg) {
+                if(msg === 'ok'){
+                    log("Asignado correctamente", "success");
+                    cargarTablaEncuesta('${unidad?.id}');
+                    bootbox.hideAll();
+                }else{
+                    bootbox.alert("<i class='fa fa-exclamation-triangle fa-2x pull-left text-danger text-shadow'></i> <h4> Error al asignar el informante </h4>")
+                }
+            }
+        })
+    }
 
 </script>
