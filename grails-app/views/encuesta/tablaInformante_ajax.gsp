@@ -4,7 +4,7 @@
         <g:each in="${informantes}" var="informante">
             <tr style="width: 100%">
                 <td style="width: 10%; text-align: center">
-                    <a href="#" class="btn btn-xs btn-success btnSeleccion"  title="Seleccionar convenio"
+                    <a href="#" class="btn btn-xs btn-success btnSeleccion"  title="Seleccionar informante"
                        data-id="${informante.pror__id}" data-nombre="${informante.prornmbr + " " + informante.prorapll}">
                         <i class="fa fa-check"></i>
                     </a>

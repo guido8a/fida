@@ -2,9 +2,6 @@
     <table class="table-bordered table-condensed table-hover" style="width: 100%">
         <g:each in="${encuestas}" var="encuesta">
             <tr style="width: 100%">
-                %{--<td style="width: 35%">--}%
-                    %{--${encuesta.observaciones}--}%
-                %{--</td>--}%
                 <td style="width: 25%">
                     ${encuesta.fecha.format("dd-MM-yyyy")}
                 </td>
