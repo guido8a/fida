@@ -32,7 +32,7 @@
 <table class="table table-condensed table-bordered table-striped table-hover" style="width:100%;margin-top: 20px !important;">
     <thead style="width: 100%">
     <tr>
-        <th style="width: 35%">Observaciones</th>
+        %{--<th style="width: 35%">Observaciones</th>--}%
         <th style="width: 25%">Fecha</th>
         <th style="width: 10%">Estado</th>
         <th style="width: 20%">Informante</th>
