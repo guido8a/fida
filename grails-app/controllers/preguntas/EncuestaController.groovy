@@ -293,7 +293,22 @@ class EncuestaController {
 
     def tablaEncuestas_ajax() {
         def organizacion = UnidadEjecutora.get(params.organizacion)
-        def encuestas = Encuesta.findAllByUnidadEjecutora(organizacion, [sort: 'personaOrganizacion'])
+//        def encuestas = Encuesta.findAllByUnidadEjecutora(organizacion, [sort: 'personaOrganizacion'])
+        def cn = dbConnectionService.getConnection()
+        def tx = ""
+        tx = "select encu.encu__id from dtec, encu where unej__id = ${params.organizacion} and " +
+                "dtec.encu__id = encu.encu__id and encuetdo = 'N' group by encu.encu__id "
+        println "sql: $tx"
+
+        def lista = []
+        cn.eachRow(tx.toString()) { d ->
+            lista.add(d?.encu__id)
+        }
+
+        println "lista: $lista"
+        def encuestas = Encuesta.findAllByIdInList(lista, [sort: 'id'], [sort: 'personaOrganizacion'])
+
+
         return[encuestas: encuestas, organizacion: organizacion]
     }
 
