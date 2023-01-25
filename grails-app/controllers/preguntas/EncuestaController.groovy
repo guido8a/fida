@@ -31,8 +31,9 @@ class EncuestaController {
         totalPreg = total
 
         tx = "select max(coalesce(pregnmro,0)) nmro, encu.encu__id from dtec, rspg, encu, preg " +
-                "where unej__id = ${params.unej} and dtec.encu__id = encu.encu__id and " +
-                "rspg.rspg__id = dtec.rspg__id and preg.preg__id = rspg.preg__id and encuetdo = 'N' group by encu.encu__id"
+                "where unej__id = ${params.unej} and dtec.encu__id = encu.encu__id and pror__id = ${params.info} and " +
+                "rspg.rspg__id = dtec.rspg__id and preg.preg__id = rspg.preg__id and encuetdo = 'N' " +
+                "group by encu.encu__id"
         println "sql: $tx"
 
         cn.eachRow(tx.toString()) { d ->
