@@ -190,11 +190,11 @@
                 respit = $('input[name=respuestas]:checked').length;
             }
             console.log("--->", respit);
-            if (respit == 0) {
+            if (respit < 0) {
                 bootbox.alert({
                     title: "No ha seleccionado una respuesta",
-                    message: "Escoja una de las opciones de 'Seleccione una Respuesta', si ha seleccionado " +
-                    "ASIGNATURA, asegúrese de haber escogido una.",
+                    message: "Escoja una de las opciones de 'Seleccione una Respuesta', es un valor numérico, " +
+                    "debe ser cero o más",
                     buttons: {
                         ok: {
                             label: '<i class="fa fa-check"></i> Aceptar',
