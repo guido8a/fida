@@ -834,6 +834,8 @@ class ReportesController {
     }
 
     def reportesEncuestasExcel(){
+        def sql = ""
+        def cn = dbConnectionService.getConnection()
 
         def cantidadPreguntas = Pregunta.countByIdIsNotNull()
         def fi = new Date().parse("dd-MM-yyyy",params.fi)
@@ -864,25 +866,30 @@ class ReportesController {
         WritableCellFormat times16format = new WritableCellFormat(times16font);
         WritableCellFormat times16formatN = new WritableCellFormat(times16fontNormal);
 
-        sheet.setColumnView(0, 35)
+        sheet.setColumnView(0, 5)
         for(def i=0; i< cantidadPreguntas; i++){
             sheet.setColumnView(i+1, 40)
         }
 
         def label
-        def fila = 5;
+        def fila = 6;
 
-        label = new Label(1, 2, "No.", times16format); sheet.addCell(label);
-        label = new Label(0, 4, "UNIDAD EJECUTORA", times16format); sheet.addCell(label);
-        label = new Label(1, 4, "INFORMANTE", times16format); sheet.addCell(label);
+        label = new Label(0, 4, "No.", times16format); sheet.addCell(label);
+        label = new Label(1, 4, "UNIDAD EJECUTORA", times16format); sheet.addCell(label);
+        label = new Label(2, 4, "INFORMANTE", times16format); sheet.addCell(label);
 
         def preguntas = Pregunta.list().sort{it.numero}
 
         preguntas.eachWithIndex {pregunta, i->
-            label = new Label(i+2, 4, pregunta?.descripcion?.toString(), times16format); sheet.addCell(label);
+            label = new Label(i+3, 4, pregunta?.descripcion?.toString(), times16format); sheet.addCell(label);
         }
 
-        def encuestas = Encuesta.findAllByEstadoAndFechaGreaterThanEqualsAndFechaLessThanEquals('C',fi,ff).sort{it.unidadEjecutora.nombre}
+//        def encuestas = Encuesta.findAllByEstadoAndFechaGreaterThanEqualsAndFechaLessThanEquals('C',fi,ff).sort{it.unidadEjecutora.nombre}
+        sql = "select encu__id from dtec group by encu__id having count(*) >= 10"
+        def ids = cn.rows(sql).encu__id
+//        println "ids: $ids"
+        def encuestas =  Encuesta.findAllByIdInList(ids)
+
 
         encuestas.each{encuesta->
             def detalles = DetalleEncuesta.findAllByEncuesta(encuesta).sort{it.respuestaPregunta.pregunta.numero}
